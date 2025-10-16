@@ -1,1 +1,1 @@
-# ComfyUI-Qwen
+# ComfyUI-QwenVL
