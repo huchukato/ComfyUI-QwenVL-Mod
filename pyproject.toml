@@ -1,0 +1,14 @@
+[project]
+name = "ComfyUI-QwenVL"
+description = "ComfyUI custom node for Qwen3-VL: Effortlessly handle text creation, image understanding, and video analysis with advanced multimodal capabilities."
+version = "0.0.1"
+license = {file = "LICENSE"}
+dependencies = [""]
+
+[project.urls]
+Repository = "https://github.com/1038lab/ComfyUI-QwenVL"
+
+[tool.comfy]
+PublisherId = "ailab"
+DisplayName = "ComfyUI-QwenVL"
+Icon = ""
