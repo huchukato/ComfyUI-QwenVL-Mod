@@ -1,0 +1,92 @@
+{
+    "_preset_prompts": [
+        "Describe this image in detail.",
+        "Describe this video in detail.",
+        "Summarize the key events in this video.",
+        "Generate 5 descriptive keywords for this content.",
+        "Create a detailed text-to-image prompt from this image.",
+        "Analyze the main subject's emotional state or atmosphere.",
+        "Infer what might happen next based on the scene.",
+        "Write a short story inspired by this image.",
+        "Write a short poem inspired by this image.",
+        "Create a catchy advertising slogan for this image.",
+        "[For Batch Images] Describe each image individually."
+    ],
+    "Qwen3-VL-4B-Instruct": {
+        "repo_id": "Qwen/Qwen3-VL-4B-Instruct",
+        "default": true,
+        "quantized": false,
+        "vram_requirement": {
+            "full": 6.0,
+            "8bit": 3.5,
+            "4bit": 2.0
+        }
+    },
+    "Qwen3-VL-4B-Thinking": {
+        "repo_id": "Qwen/Qwen3-VL-4B-Thinking",
+        "default": false,
+        "quantized": false,
+        "vram_requirement": {
+            "full": 6.0,
+            "8bit": 3.5,
+            "4bit": 2.0
+        }
+    },
+    "Qwen3-VL-4B-Thinking-abliterated (NSFW)": {
+        "repo_id": "prithivMLmods/Qwen3-VL-4B-Thinking-abliterated",
+        "default": false,
+        "quantized": false,
+        "vram_requirement": {
+            "full": 6.0,
+            "8bit": 3.5,
+            "4bit": 2.0
+        }
+    },
+    "Qwen3-VL-4B-Instruct-FP8": {
+        "repo_id": "Qwen/Qwen3-VL-4B-Instruct-FP8",
+        "default": false,
+        "quantized": true,
+        "vram_requirement": {
+            "full": 2.5
+        }
+    },
+    "Qwen3-VL-4B-Thinking-FP8": {
+        "repo_id": "Qwen/Qwen3-VL-4B-Thinking-FP8",
+        "default": false,
+        "quantized": true,
+        "vram_requirement": {
+            "full": 2.5
+        }
+    },
+    "Qwen3-VL-8B-Instruct": {
+        "repo_id": "Qwen/Qwen3-VL-8B-Instruct",
+        "default": false,
+        "quantized": false,
+        "vram_requirement": {
+            "full": 12.0,
+            "8bit": 7.0,
+            "4bit": 4.5
+        }
+    },
+    "Qwen2.5-VL-3B-Instruct": {
+        "repo_id": "Qwen/Qwen2.5-VL-3B-Instruct",
+        "default": false,
+        "quantized": false,
+        "vram_requirement": {
+            "full": 6.0,
+            "8bit": 3.5,
+            "4bit": 2.0
+        }
+    },
+    "Qwen2.5-VL-7B-Instruct": {
+        "repo_id": "Qwen/Qwen2.5-VL-7B-Instruct",
+        "default": false,
+        "quantized": false,
+        "vram_requirement": {
+            "full": 15.0,
+            "8bit": 8.5,
+            "4bit": 5.0
+        }
+    }
+}
+

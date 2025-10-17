@@ -1,0 +1,15 @@
+transformers>=4.40.0
+torch
+huggingface-hub
+psutil
+numpy
+Pillow
+opencv-python
+bitsandbytes
+accelerate
+
+# For running GGUF models with vision support
+
+# The [server] extra installs necessary components for multimodal models
+
+llama-cpp-python[server]
