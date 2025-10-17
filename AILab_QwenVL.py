@@ -1,7 +1,6 @@
 # ComfyUI-QwenVL
 # This custom node integrates the Qwen-VL series, including the latest Qwen3-VL models,
-# including Qwen2.5-VL and the latest Qwen3-VL, to enable advanced multimodal AI for text generation,
-# image understanding, and video analysis.
+# to enable advanced multimodal AI for text generation, image understanding, and video analysis.
 #
 # Models License Notice:
 # - Qwen3-VL: Apache-2.0 License (https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct)
@@ -128,14 +127,17 @@ class ModelDownloader:
         model_folder_name = repo_id.split('/')[-1]
         model_path = self.models_dir / model_folder_name
         
-        print(f"Ensuring model '{model_name}' is available at {model_path}...")
-        snapshot_download(
-            repo_id=repo_id,
-            local_dir=str(model_path),
-            local_dir_use_symlinks=False,
-            ignore_patterns=["*.md", ".git*"]
-        )
-        print(f"Model '{model_name}' is ready.")
+        if not model_path.exists() or not any(model_path.iterdir()):
+            print(f"Downloading model '{model_name}' to {model_path}...")
+            snapshot_download(
+                repo_id=repo_id,
+                local_dir=str(model_path),
+                local_dir_use_symlinks=False,
+                ignore_patterns=["*.md", ".git*"]
+            )
+            print(f"Model '{model_name}' downloaded successfully.")
+        else:
+            print(f"Model '{model_name}' found at {model_path}.")
         return str(model_path)
 
 class AILab_QwenVL_Advanced:
@@ -238,10 +240,12 @@ class AILab_QwenVL_Advanced:
     CATEGORY = "🧪AILab/QwenVL"
 
     @torch.no_grad()
-    def process(self, model_name, quantization, preset_prompt, max_tokens, temperature, top_p, repetition_penalty, num_beams, frame_count, device, custom_prompt="", image=None, video=None, keep_model_loaded=True):
+    def process(self, model_name, quantization, preset_prompt, max_tokens, temperature, top_p, repetition_penalty, num_beams, frame_count, device, seed, custom_prompt="", image=None, video=None, keep_model_loaded=True):
         start_time = time.time()
         
         try:
+            torch.manual_seed(seed)
+            
             self.load_model(model_name, quantization, device)
             effective_device = self.current_device
             
@@ -258,6 +262,10 @@ class AILab_QwenVL_Advanced:
                     sampled_frames = [video_frames[i] for i in indices]
                 else:
                     sampled_frames = video_frames
+
+                if sampled_frames and len(sampled_frames) == 1:
+                    sampled_frames.append(sampled_frames[0])
+
                 if sampled_frames:
                     conversation[0]["content"].append({"type": "video", "video": sampled_frames})
 
@@ -317,8 +325,7 @@ class AILab_QwenVL(AILab_QwenVL_Advanced):
 
     FUNCTION = "process_standard"
     
-    def process_standard(self, model_name, quantization, preset_prompt, max_tokens, custom_prompt="", image=None, video=None, keep_model_loaded=True):
-        # Call the advanced process method with sensible defaults
+    def process_standard(self, model_name, quantization, preset_prompt, max_tokens, seed, custom_prompt="", image=None, video=None, keep_model_loaded=True):
         return self.process(
             model_name=model_name,
             quantization=quantization,
@@ -333,7 +340,8 @@ class AILab_QwenVL(AILab_QwenVL_Advanced):
             custom_prompt=custom_prompt,
             image=image,
             video=video,
-            keep_model_loaded=keep_model_loaded
+            keep_model_loaded=keep_model_loaded,
+            seed=seed
         )
 
 NODE_CLASS_MAPPINGS = {
@@ -344,4 +352,3 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "AILab_QwenVL": "QwenVL",
     "AILab_QwenVL_Advanced": "QwenVL (Advanced)",
 }
-
