@@ -142,4 +142,4 @@ This node utilizes the Qwen-VL series of models, developed by the Qwen Team at A
 
 ## **📜 License**
 
-This repository's code is released under the [GPL-3.0 License](https://www.gnu.org/licenses/gpl-3.0.en.html).
+This repository's code is released under the [GPL-3.0 License](LICENSE).

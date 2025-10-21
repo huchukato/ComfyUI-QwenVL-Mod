@@ -1,6 +1,7 @@
 # ComfyUI-QwenVL
 # This custom node integrates the Qwen-VL series, including the latest Qwen3-VL models,
-# to enable advanced multimodal AI for text generation, image understanding, and video analysis.
+# including Qwen2.5-VL and the latest Qwen3-VL, to enable advanced multimodal AI for text generation,
+# image understanding, and video analysis.
 #
 # Models License Notice:
 # - Qwen3-VL: Apache-2.0 License (https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct)
@@ -28,19 +29,21 @@ import gc
 
 NODE_DIR = Path(__file__).parent
 CONFIG_PATH = NODE_DIR / "config.json"
+MODEL_CONFIGS = {}
+SYSTEM_PROMPTS = {}
 
 def load_model_configs():
+    global MODEL_CONFIGS, SYSTEM_PROMPTS
     try:
         with open(CONFIG_PATH, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            MODEL_CONFIGS = json.load(f)
+            SYSTEM_PROMPTS = MODEL_CONFIGS.get("_system_prompts", {})
     except FileNotFoundError:
         print(f"Error: Configuration file not found at {CONFIG_PATH}")
-        return {}
     except json.JSONDecodeError:
         print(f"Error: Failed to parse configuration file.")
-        return {}
 
-MODEL_CONFIGS = load_model_configs()
+load_model_configs()
 
 class Quantization(str, Enum):
     Q4_BIT = "4-bit (VRAM-friendly)"
@@ -127,17 +130,14 @@ class ModelDownloader:
         model_folder_name = repo_id.split('/')[-1]
         model_path = self.models_dir / model_folder_name
         
-        if not model_path.exists() or not any(model_path.iterdir()):
-            print(f"Downloading model '{model_name}' to {model_path}...")
-            snapshot_download(
-                repo_id=repo_id,
-                local_dir=str(model_path),
-                local_dir_use_symlinks=False,
-                ignore_patterns=["*.md", ".git*"]
-            )
-            print(f"Model '{model_name}' downloaded successfully.")
-        else:
-            print(f"Model '{model_name}' found at {model_path}.")
+        print(f"Ensuring model '{model_name}' is available at {model_path}...")
+        snapshot_download(
+            repo_id=repo_id,
+            local_dir=str(model_path),
+            local_dir_use_symlinks=False,
+            ignore_patterns=["*.md", ".git*"]
+        )
+        print(f"Model '{model_name}' is ready.")
         return str(model_path)
 
 class AILab_QwenVL_Advanced:
@@ -197,7 +197,7 @@ class AILab_QwenVL_Advanced:
         device_map = "auto"
         if effective_device == "cuda" and torch.cuda.is_available(): device_map = {"": 0}
 
-        load_kwargs = {"device_map": device_map, "dtype": load_dtype, "attn_implementation": "flash_attention_2" if check_flash_attention() else "sdpa", "use_safetensors": True}
+        load_kwargs = {"device_map": device_map, "torch_dtype": load_dtype, "attn_implementation": "flash_attention_2" if check_flash_attention() else "sdpa", "use_safetensors": True}
         if quant_config: load_kwargs["quantization_config"] = quant_config
 
         print(f"Loading model '{model_name}'...")
@@ -212,23 +212,22 @@ class AILab_QwenVL_Advanced:
     def INPUT_TYPES(cls):
         model_names = [name for name in MODEL_CONFIGS.keys() if not name.startswith('_')]
         default_model = next((name for name in model_names if MODEL_CONFIGS[name].get("default")), model_names[0] if model_names else "")
-        
-        preset_prompts = MODEL_CONFIGS.get("_preset_prompts", ["Describe this in detail."])
+        preset_prompts = MODEL_CONFIGS.get("_preset_prompts", ["Describe this image in detail."])
 
         return {
             "required": {
                 "model_name": (model_names, {"default": default_model}),
-                "quantization": (list(Quantization.get_values()), {"default": Quantization.Q8_BIT}),
-                "preset_prompt": (preset_prompts, {"default": preset_prompts[0]}),
+                "quantization": (list(Quantization.get_values()), {"default": Quantization.NONE}),
+                "preset_prompt": (preset_prompts, {"default": preset_prompts[2]}),
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "placeholder": "If provided, this will override the preset prompt."}),
-                "max_tokens": ("INT", {"default": 1024, "min": 64, "max": 2048, "step": 16}),
-                "temperature": ("FLOAT", {"default": 0.6, "min": 0.1, "max": 1.0, "step": 0.1, "tooltip": "Used for sampling (num_beams=1). Higher values increase randomness."}),
-                "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01, "tooltip": "Used for sampling (num_beams=1). Filters vocabulary to most likely tokens."}),
-                "num_beams": ("INT", {"default": 1, "min": 1, "max": 10, "step": 1, "tooltip": "Set > 1 for beam search. Disables Temperature/Top_p."}),
+                "max_tokens": ("INT", {"default": 1024, "min": 64, "max": 4096, "step": 16}),
+                "temperature": ("FLOAT", {"default": 0.6, "min": 0.1, "max": 1.0, "step": 0.1}),
+                "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "num_beams": ("INT", {"default": 1, "min": 1, "max": 10, "step": 1}),
                 "repetition_penalty": ("FLOAT", {"default": 1.2, "min": 0.0, "max": 2.0, "step": 0.01}),
-                "frame_count": ("INT", {"default": 16, "min": 1, "max": 64, "step": 1, "tooltip": "Number of frames to sample from the video."}),
-                "device": (["auto", "cuda", "cpu", "mps"], {"default": "auto", "tooltip": "Override automatic device selection."}),
-                "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": "Keep the model in VRAM after generation for faster subsequent runs."}),
+                "frame_count": ("INT", {"default": 16, "min": 1, "max": 64, "step": 1}),
+                "device": (["auto", "cuda", "cpu", "mps"], {"default": "auto"}),
+                "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 0xFFFFFFFFFFFFFFFF}),
             },
             "optional": { "image": ("IMAGE",), "video": ("IMAGE",) }
@@ -242,14 +241,16 @@ class AILab_QwenVL_Advanced:
     @torch.no_grad()
     def process(self, model_name, quantization, preset_prompt, max_tokens, temperature, top_p, repetition_penalty, num_beams, frame_count, device, seed, custom_prompt="", image=None, video=None, keep_model_loaded=True):
         start_time = time.time()
+        torch.manual_seed(seed)
         
         try:
-            torch.manual_seed(seed)
-            
             self.load_model(model_name, quantization, device)
             effective_device = self.current_device
             
-            final_prompt = custom_prompt.strip() if custom_prompt and custom_prompt.strip() else preset_prompt
+            prompt_text = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
+            if custom_prompt and custom_prompt.strip():
+                prompt_text = custom_prompt.strip()
+            
             conversation = [{"role": "user", "content": []}]
             
             if image is not None:
@@ -265,11 +266,11 @@ class AILab_QwenVL_Advanced:
 
                 if sampled_frames and len(sampled_frames) == 1:
                     sampled_frames.append(sampled_frames[0])
-
+                    
                 if sampled_frames:
                     conversation[0]["content"].append({"type": "video", "video": sampled_frames})
 
-            conversation[0]["content"].append({"type": "text", "text": final_prompt})
+            conversation[0]["content"].append({"type": "text", "text": prompt_text})
 
             text_prompt = self.processor.apply_chat_template(conversation, tokenize=False, add_generation_prompt=True)
             
@@ -308,16 +309,16 @@ class AILab_QwenVL(AILab_QwenVL_Advanced):
     def INPUT_TYPES(cls):
         model_names = [name for name in MODEL_CONFIGS.keys() if not name.startswith('_')]
         default_model = next((name for name in model_names if MODEL_CONFIGS[name].get("default")), model_names[0] if model_names else "")
-        preset_prompts = MODEL_CONFIGS.get("_preset_prompts", ["Describe this in detail."])
+        preset_prompts = MODEL_CONFIGS.get("_preset_prompts", ["Describe this image in detail."])
 
         return {
             "required": {
                 "model_name": (model_names, {"default": default_model}),
-                "quantization": (list(Quantization.get_values()), {"default": Quantization.Q8_BIT}),
-                "preset_prompt": (preset_prompts, {"default": preset_prompts[0]}),
+                "quantization": (list(Quantization.get_values()), {"default": Quantization.NONE}),
+                "preset_prompt": (preset_prompts, {"default": preset_prompts[2]}),
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "placeholder": "If provided, this will override the preset prompt."}),
-                "max_tokens": ("INT", {"default": 1024, "min": 64, "max": 2048, "step": 16}),
-                "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": "Keep the model in VRAM after generation for faster subsequent runs."}),
+                "max_tokens": ("INT", {"default": 1024, "min": 64, "max": 4096, "step": 16}),
+                "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 0xFFFFFFFFFFFFFFFF}),
             },
             "optional": { "image": ("IMAGE",), "video": ("IMAGE",) }
@@ -352,3 +353,4 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "AILab_QwenVL": "QwenVL",
     "AILab_QwenVL_Advanced": "QwenVL (Advanced)",
 }
+

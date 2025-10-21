@@ -1,17 +1,65 @@
 {
     "_preset_prompts": [
-        "Describe this image in detail.",
-        "Describe this video in detail.",
-        "Summarize the key events in this video.",
-        "Generate 5 descriptive keywords for this content.",
-        "Create a detailed text-to-image prompt from this image.",
-        "Analyze the main subject's emotional state or atmosphere.",
-        "Infer what might happen next based on the scene.",
-        "Write a short story inspired by this image.",
-        "Write a short poem inspired by this image.",
-        "Create a catchy advertising slogan for this image.",
-        "[For Batch Images] Describe each image individually."
+        "Prompt Style - Tags",
+        "Prompt Style - Simple",
+        "Prompt Style - Detailed",
+        "Prompt Style - Extreme Detailed",
+        "Prompt Style - Cinematic",
+        "Creative - Detailed Analysis",
+        "Creative - Summarize Video",
+        "Creative - Short Story"
     ],
+    "_system_prompts": {
+        "Prompt Style - Tags": "Your task is to generate a clean list of comma-separated tags for a text-to-image AI, based *only* on the visual information in the image. Limit the output to a maximum of 50 unique tags. Strictly describe visual elements like subject, clothing, environment, colors, lighting, and composition. Do not include abstract concepts, interpretations, marketing terms, or technical jargon (e.g., no 'SEO', 'brand-aligned', 'viral potential'). The goal is a concise list of visual descriptors. Avoid repeating tags.",
+        "Prompt Style - Simple": "Analyze the image and generate a simple, single-sentence text-to-image prompt. Describe the main subject and the setting concisely.",
+        "Prompt Style - Detailed": "Generate a detailed, artistic text-to-image prompt based on the image. Combine the subject, their actions, the environment, lighting, and overall mood into a single, cohesive paragraph of about 2-3 sentences. Focus on key visual details.",
+        "Prompt Style - Extreme Detailed": "Generate an extremely detailed and descriptive text-to-image prompt from the image. Create a rich paragraph that elaborates on the subject's appearance, textures of clothing, specific background elements, the quality and color of light, shadows, and the overall atmosphere. Aim for a highly descriptive and immersive prompt.",
+        "Prompt Style - Cinematic": "Act as a master prompt engineer. Create a highly detailed and evocative prompt for an image generation AI. Describe the subject, their pose, the environment, the lighting, the mood, and the artistic style (e.g., photorealistic, cinematic, painterly). Weave all elements into a single, natural language paragraph, focusing on visual impact.",
+        "Creative - Detailed Analysis": "Describe this image in detail, breaking down the subject, attire, accessories, background, and composition into separate sections.",
+        "Creative - Summarize Video": "Summarize the key events and narrative points in this video.",
+        "Creative - Short Story": "Write a short, imaginative story inspired by this image or video."
+    },
+    "_gguf_models": {
+        "Qwen3-VL-4B-Instruct-GGUF": {
+            "author": "NexaAI",
+            "repo_name_override": "Qwen3-VL-4B-Instruct-GGUF",
+            "mmproj_file": "mmproj.Q8_0.gguf",
+            "model_files": [
+                "Qwen3-VL-4B-Instruct.F16.gguf",
+                "Qwen3-VL-4B-Instruct.Q4_0.gguf",
+                "Qwen3-VL-4B-Instruct.Q4_K.gguf",
+                "Qwen3-VL-4B-Instruct.Q5_K.gguf",
+                "Qwen3-VL-4B-Instruct.Q6_K.gguf",
+                "Qwen3-VL-4B-Instruct.Q8_0.gguf"
+            ]
+        },
+        "Qwen3-VL-8B-Instruct-GGUF": {
+            "author": "NexaAI",
+            "repo_name_override": "Qwen3-VL-8B-Instruct-GGUF",
+            "mmproj_file": "mmproj.F16.gguf",
+            "model_files": [
+                "qwen3-vl-8b-instruct-q2_k.gguf",
+                "qwen3-vl-8b-instruct-q3_k_m.gguf",
+                "qwen3-vl-8b-instruct-q4_k_m.gguf",
+                "qwen3-vl-8b-instruct-q5_k_m.gguf",
+                "qwen3-vl-8b-instruct-q6_k.gguf",
+                "qwen3-vl-8b-instruct-q8_0.gguf"
+            ]
+        },
+        "Qwen3-VL-8B-Thinking-GGUF": {
+            "author": "NexaAI",
+            "repo_name_override": "Qwen3-VL-8B-Thinking-GGUF",
+            "mmproj_file": "mmproj.F16.gguf",
+            "model_files": [
+                "qwen3-vl-8b-thinking-q2_k.gguf",
+                "qwen3-vl-8b-thinking-q3_k_m.gguf",
+                "qwen3-vl-8b-thinking-q4_k_m.gguf",
+                "qwen3-vl-8b-thinking-q5_k_m.gguf",
+                "qwen3-vl-8b-thinking-q6_k.gguf",
+                "qwen3-vl-8b-thinking-q8_0.gguf"
+            ]
+        }
+    },
     "Qwen3-VL-4B-Instruct": {
         "repo_id": "Qwen/Qwen3-VL-4B-Instruct",
         "default": true,
@@ -50,6 +98,14 @@
             "full": 2.5
         }
     },
+    "Qwen3-VL-4B-Thinking-FP8": {
+        "repo_id": "Qwen/Qwen3-VL-4B-Thinking-FP8",
+        "default": false,
+        "quantized": true,
+        "vram_requirement": {
+            "full": 2.5
+        }
+    },
     "Qwen3-VL-8B-Instruct": {
         "repo_id": "Qwen/Qwen3-VL-8B-Instruct",
         "default": false,
@@ -60,12 +116,30 @@
             "4bit": 4.5
         }
     },
-    "Qwen3-VL-8B-Thinking-FP8": {
-        "repo_id": "Qwen/Qwen3-VL-8B-Thinking-FP8",
+    "Qwen3-VL-8B-Thinking": {
+        "repo_id": "Qwen/Qwen3-VL-8B-Thinking",
+        "default": false,
+        "quantized": false,
+        "vram_requirement": {
+            "full": 12.0,
+            "8bit": 7.0,
+            "4bit": 4.5
+        }
+    },
+    "Qwen3-VL-8B-Instruct-FP8": {
+        "repo_id": "Qwen/Qwen3-VL-8B-Instruct-FP8",
         "default": false,
         "quantized": true,
         "vram_requirement": {
-            "full": 2.5
+            "full": 7.5
+        }
+    },
+    "Qwen3-VL-8B-Thinking-FP8": {
+        "repo_id": "Qwen/Qwen3-VL-B-Thinking-FP8",
+        "default": false,
+        "quantized": true,
+        "vram_requirement": {
+            "full": 7.5
         }
     },
     "Qwen2.5-VL-3B-Instruct": {
@@ -89,5 +163,4 @@
         }
     }
 }
-
 
