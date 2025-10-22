@@ -51,13 +51,22 @@ ComfyUI-QwenVL 是一款自定义节点，它集成了来自阿里云的强大 Q
 
 | 模型 | 链接 |
 | :---- | :---- |
+| Qwen3-VL-2B-Instruct | [下载](https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct) |
+| Qwen3-VL-2B-Thinking | [下载](https://huggingface.co/Qwen/Qwen3-VL-2B-Thinking) |
+| Qwen3-VL-2B-Instruct-FP8 | [下载](https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct-FP8) |
+| Qwen3-VL-2B-Thinking-FP8 | [下载](https://huggingface.co/Qwen/Qwen3-VL-2B-Thinking-FP8) |
 | Qwen3-VL-4B-Instruct | [下载](https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct) |
 | Qwen3-VL-4B-Thinking | [下载](https://huggingface.co/Qwen/Qwen3-VL-4B-Thinking) |
 | Qwen3-VL-4B-Instruct-FP8 | [下载](https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct-FP8) |
-| Qwen3-VL-8B-Instruct | [下载](https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct) |
-| Qwen3-VL-4B-Thinking | [下载](https://huggingface.co/Qwen/Qwen3-VL-4B-Thinking) |
-| Qwen3-VL-8B-Instruct-FP8 | [下载](https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct-FP8) |
 | Qwen3-VL-4B-Thinking-FP8 | [下载](https://huggingface.co/Qwen/Qwen3-VL-4B-Thinking-FP8) |
+| Qwen3-VL-8B-Instruct | [下载](https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct) |
+| Qwen3-VL-8B-Thinking | [下载](https://huggingface.co/Qwen/Qwen3-VL-8B-Thinking) |
+| Qwen3-VL-8B-Instruct-FP8 | [下载](https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct-FP8) |
+| Qwen3-VL-8B-Thinking-FP8 | [下载](https://huggingface.co/Qwen/Qwen3-VL-4B-Thinking-FP8) |
+| Qwen3-VL-32B-Instruct | [下载](https://huggingface.co/Qwen/Qwen3-VL-32B-Instruct) |
+| Qwen3-VL-32B-Thinking | [下载](https://huggingface.co/Qwen/Qwen3-VL-32B-Thinking) |
+| Qwen3-VL-32B-Instruct-FP8 | [下载](https://huggingface.co/Qwen/Qwen3-VL-32B-Instruct-FP8) |
+| Qwen3-VL-32B-Thinking-FP8 | [下载](https://huggingface.co/Qwen/Qwen3-VL-32B-Thinking-FP8) |
 | Qwen2.5-VL-3B-Instruct | [下载](https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct) |
 | Qwen2.5-VL-7B-Instruct | [下载](https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct) |
 
