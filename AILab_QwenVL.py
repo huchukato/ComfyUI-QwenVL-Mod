@@ -211,7 +211,7 @@ class AILab_QwenVL_Advanced:
     @classmethod
     def INPUT_TYPES(cls):
         model_names = [name for name in MODEL_CONFIGS.keys() if not name.startswith('_')]
-        default_model = next((name for name in model_names if MODEL_CONFIGS[name].get("default")), model_names[4] if model_names else "")
+        default_model = model_names[4] if len(model_names) > 4 else model_names[0]
         preset_prompts = MODEL_CONFIGS.get("_preset_prompts", ["Describe this image in detail."])
 
         return {
@@ -308,7 +308,7 @@ class AILab_QwenVL(AILab_QwenVL_Advanced):
     @classmethod
     def INPUT_TYPES(cls):
         model_names = [name for name in MODEL_CONFIGS.keys() if not name.startswith('_')]
-        default_model = next((name for name in model_names if MODEL_CONFIGS[name].get("default")), model_names[4] if model_names else "")
+        default_model = model_names[4] if len(model_names) > 4 else model_names[0]
         preset_prompts = MODEL_CONFIGS.get("_preset_prompts", ["Describe this image in detail."])
 
         return {
@@ -353,5 +353,6 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "AILab_QwenVL": "QwenVL",
     "AILab_QwenVL_Advanced": "QwenVL (Advanced)",
 }
+
 
 
