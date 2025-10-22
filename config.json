@@ -29,14 +29,6 @@
             "4bit": 1.5
         }
     },
-    "Qwen3-VL-2B-Instruct-FP8": {
-        "repo_id": "Qwen/Qwen3-VL-2B-Instruct-FP8",
-        "default": false,
-        "quantized": true,
-        "vram_requirement": {
-            "full": 2.5
-        }
-    },
     "Qwen3-VL-2B-Thinking": {
         "repo_id": "Qwen/Qwen3-VL-4B-Thinking",
         "default": false,
@@ -45,6 +37,14 @@
             "full": 4.0,
             "8bit": 2.5,
             "4bit": 1.5
+        }
+    },
+    "Qwen3-VL-2B-Instruct-FP8": {
+        "repo_id": "Qwen/Qwen3-VL-2B-Instruct-FP8",
+        "default": false,
+        "quantized": true,
+        "vram_requirement": {
+            "full": 2.5
         }
     },
     "Qwen3-VL-2B-Thinking-FP8": {
@@ -194,3 +194,4 @@
         }
     }
 }
+
