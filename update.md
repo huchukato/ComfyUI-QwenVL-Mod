@@ -1,4 +1,6 @@
 # ComfyUI-QwenVL Update Log
+## Version 1.0.3 (2025/10/22)
+- Added 8 more Qwen3-VL models 2B and 32B (FB16 and FP8 variants) have been integrated into our support list, catering to diverse requirements.
 
 ## Version 1.0.2 (2025/10/21)
 - Integrated additional Qwen3-VL models
