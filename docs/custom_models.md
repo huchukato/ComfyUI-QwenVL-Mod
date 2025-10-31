@@ -35,14 +35,14 @@ Use the following JSON structure:
         "full": 10
       }
     },
-    "Tiny QwenVL": {
-      "repo_id": "huggingface-user/qwenvl-tiny",
+    "QwenVL Mini 4bit": {
+      "repo_id": "huggingface-user/qwenvl-mini-4bit",
       "default": false,
       "quantized": false,
       "vram_requirement": {
         "4bit": 2,
-        "8bit": 3,
-        "full": 5
+        "8bit": 4,
+        "full": 8
       }
     }
   }
