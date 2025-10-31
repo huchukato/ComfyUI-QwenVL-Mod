@@ -5,7 +5,8 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 [![QwenVL_V1.0.0r](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/example_workflows/QWenVL.jpg)](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/example_workflows/QWenVL.json)
 
 ## **📰 News & Updates**
-* **2025/10/22**: **v1.0.3** Models list updated [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md)]
+* **2025/10/31**: **v1.0.4** Custom Models Supported [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-104-20251031)]
+* **2025/10/22**: **v1.0.3** Models list updated [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-103-20251022)]
 * **2025/10/17**: **v1.0.0** Initial Release  
   * Support for Qwen3-VL and Qwen2.5-VL series models.  
   * Automatic model downloading from Hugging Face.  
