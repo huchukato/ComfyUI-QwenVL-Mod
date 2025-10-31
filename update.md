@@ -1,4 +1,26 @@
 # ComfyUI-QwenVL Update Log
+### Version 1.0.4 (2025/10/31)
+
+🆕 **Custom Model Support Added**
+- Users can now add their own **custom Qwen-VL or Hugging Face models**  
+  by creating a `custom_models.json` file in the plugin directory.  
+  These models will automatically appear in the model selection list.
+
+- Added automatic merging of user-defined models from `custom_models.json`,  
+  following the same flexible mechanism as in *ComfyUI-JoyCaption*.
+
+- Added detailed documentation  
+  👉 [`docs/custom_models.md`](./docs/custom_models.md)  
+  and an editable example file [`custom_models_example.json`](./custom_models_example.json).
+
+⚙️ **Dependency Update**
+
+- Updated **Transformers** version requirement:  
+  `transformers>=4.57.0` (was `>=4.40.0`)  
+  to ensure full compatibility with **Qwen3-VL** models.  
+  [Reference: Qwen3-VL](https://github.com/QwenLM/Qwen3-VL?tab=readme-ov-file#quickstart)
+
+---
 ## Version 1.0.3 (2025/10/22)
 - Added 8 more Qwen3-VL models 2B and 32B (FB16 and FP8 variants) have been integrated into our support list, catering to diverse requirements.
 
