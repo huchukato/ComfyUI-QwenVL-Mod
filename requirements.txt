@@ -1,4 +1,4 @@
-transformers>=4.40.0
+transformers
 torch
 huggingface-hub
 psutil
@@ -12,3 +12,4 @@ accelerate
 
 # The [server] extra installs necessary components for multimodal models
 # llama-cpp-python[server]
+
