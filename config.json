@@ -77,16 +77,6 @@
             "4bit": 2.0
         }
     },
-    "Qwen3-VL-4B-Thinking-abliterated (NSFW)": {
-        "repo_id": "prithivMLmods/Qwen3-VL-4B-Thinking-abliterated",
-        "default": false,
-        "quantized": false,
-        "vram_requirement": {
-            "full": 6.0,
-            "8bit": 3.5,
-            "4bit": 2.0
-        }
-    },
     "Qwen3-VL-4B-Instruct-FP8": {
         "repo_id": "Qwen/Qwen3-VL-4B-Instruct-FP8",
         "default": false,
@@ -196,6 +186,7 @@
         }
     }
 }
+
 
 
 
