@@ -27,6 +27,8 @@ Use the following JSON structure:
   "hf_models": {
     "My QwenVL Finetune": {
       "repo_id": "myusername/MyQwenVL-Finetune",
+      "default": false,
+      "quantized": false,
       "vram_requirement": {
         "4bit": 4,
         "8bit": 6,
@@ -35,6 +37,8 @@ Use the following JSON structure:
     },
     "Tiny QwenVL": {
       "repo_id": "huggingface-user/qwenvl-tiny",
+      "default": false,
+      "quantized": false,
       "vram_requirement": {
         "4bit": 2,
         "8bit": 3,
