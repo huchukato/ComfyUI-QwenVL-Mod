@@ -1,3 +1,6 @@
+# ComfyUI-QwenVL requirements
+# Note: Qwen3-VL models require transformers >= 4.57.0
+
 transformers
 torch
 huggingface-hub
@@ -12,4 +15,5 @@ accelerate
 
 # The [server] extra installs necessary components for multimodal models
 # llama-cpp-python[server]
+
 
