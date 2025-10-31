@@ -2,6 +2,8 @@
   "hf_models": {
     "My QwenVL Finetune": {
       "repo_id": "myusername/MyQwenVL-Finetune",
+      "default": false,
+      "quantized": false,
       "vram_requirement": {
         "4bit": 4,
         "8bit": 6,
@@ -10,6 +12,8 @@
     },
     "QwenVL Mini 4bit": {
       "repo_id": "huggingface-user/qwenvl-mini-4bit",
+      "default": false,
+      "quantized": false,
       "vram_requirement": {
         "4bit": 2,
         "8bit": 4,
