@@ -40,10 +40,32 @@ def load_model_configs():
             SYSTEM_PROMPTS = MODEL_CONFIGS.get("_system_prompts", {})
     except FileNotFoundError:
         print(f"Error: Configuration file not found at {CONFIG_PATH}")
+        MODEL_CONFIGS, SYSTEM_PROMPTS = {}, {}
     except json.JSONDecodeError:
         print(f"Error: Failed to parse configuration file.")
+        MODEL_CONFIGS, SYSTEM_PROMPTS = {}, {}
 
-load_model_configs()
+    # --- user-defined custom models  ---
+    custom_path = NODE_DIR / "custom_models.json"
+    if custom_path.exists():
+        try:
+            with open(custom_path, "r", encoding="utf-8") as f:
+                custom_data = json.load(f) or {}
+
+            user_models = custom_data.get("hf_models", {}) or custom_data.get("models", {})
+
+            if user_models:
+                MODEL_CONFIGS.update(user_models)
+                print(f"[QwenVL] ✅ Loaded {len(user_models)} user-defined models from custom_models.json.")
+            else:
+                print("[QwenVL] ⚠️ custom_models.json found but no valid model entries.")
+        except Exception as e:
+            print(f"[QwenVL] ⚠️ Failed to load custom_models.json → {e}")
+    else:
+        print("[QwenVL] ℹ️ No custom_models.json found, skipping user-defined models.")
+
+if not MODEL_CONFIGS:
+    load_model_configs()
 
 class Quantization(str, Enum):
     Q4_BIT = "4-bit (VRAM-friendly)"
@@ -353,6 +375,3 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "AILab_QwenVL": "QwenVL",
     "AILab_QwenVL_Advanced": "QwenVL (Advanced)",
 }
-
-
-
