@@ -5,6 +5,8 @@
 
 This release introduces a full rework of the QwenVL runtime to significantly improve speed, stability, and GPU utilization.
 
+![QwenVL_V1.1.0](https://github.com/user-attachments/assets/13e89746-a04e-41a3-9026-7079b29e149c)
+
 ### 🚀 Core Improvements
 - **Flash Attention Integration (Auto Detection)**  
   Automatically leverages next-generation attention optimization for faster inference on supported GPUs, while falling back to SDPA when needed.
