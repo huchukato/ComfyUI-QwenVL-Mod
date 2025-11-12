@@ -5,6 +5,9 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 [![QwenVL_V1.0.0r](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/example_workflows/QWenVL.jpg)](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/example_workflows/QWenVL.json)
 
 ## **📰 News & Updates**
+
+* **2025/11/11**: **v1.1.0** Major Performance Updates [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-110-20251111)]
+![QwenVL_V1.1.0](https://github.com/user-attachments/assets/13e89746-a04e-41a3-9026-7079b29e149c)
 * **2025/10/31**: **v1.0.4** Custom Models Supported [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-104-20251031)]
 * **2025/10/22**: **v1.0.3** Models list updated [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-103-20251022)]
 * **2025/10/17**: **v1.0.0** Initial Release  
@@ -41,8 +44,8 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
    ```
 2. Install the required dependencies:  
    ```
-   cd ComfyUI/custom\_nodes/ComfyUI-QwenVL  
-   pip install \-r requirements.txt
+   cd ComfyUI/custom_nodes/ComfyUI-QwenVL  
+   pip install -r requirements.txt
    ```
 
 3. Restart ComfyUI.
