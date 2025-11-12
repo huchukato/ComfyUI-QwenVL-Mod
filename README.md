@@ -8,6 +8,10 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 ## **📰 News & Updates**
 
 * **2025/11/11**: **v1.1.0** Major Performance Updates [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-110-20251111)]
+  - New `attention_mode` option (`auto`, `flash_attention_2`, `sdpa`) with automatic Flash-Attention v2 detection.
+  - Added `use_torch_compile` (Torch 2.1+) to accelerate inference on CUDA with `torch.compile('reduce-overhead')`.
+  - Added `device` override allowing manual selection (`auto`, `cuda`, `cpu`, `mps`).
+  - Smarter VRAM management with automatic quantization downgrade when memory is low.
 * **2025/10/31**: **v1.0.4** Custom Models Supported [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-104-20251031)]
 * **2025/10/22**: **v1.0.3** Models list updated [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-103-20251022)]
 * **2025/10/17**: **v1.0.0** Initial Release
@@ -35,6 +39,11 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 * **Image & Video Support**: Accepts both single images and video frame sequences as input.  
 * **Robust Error Handling**: Provides clear error messages for hardware or memory issues.  
 * **Clean Console Output**: Minimal and informative console logs during operation.
+**Flash-Attention v2 Integration:** Automatically enabled when available for faster attention layers.
+**Torch Compile Optimization:** Optional JIT compilation via `use_torch_compile` for extra throughput.
+**Advanced Device Handling:** Auto-detects CUDA, Apple Silicon (MPS), or CPU; can be overridden manually.
+**Dynamic Memory Enforcement:** Automatically adjusts quantization level based on VRAM availability.
+
 
 ## **🚀 Installation**
 
@@ -96,6 +105,9 @@ For more control, use the **"QwenVL (Advanced)"** node. This gives you access to
 | :---- | :---- | :---- | :---- | :---- |
 | **model\_name** | The Qwen-VL model to use. | Qwen3-VL-4B-Instruct | \- | Standard & Advanced |
 | **quantization** | On-the-fly quantization. Ignored for pre-quantized models (e.g., FP8). | 8-bit (Balanced) | 4-bit, 8-bit, None | Standard & Advanced |
+| **attention_mode** | Attention backend. `auto` tries Flash-Attn v2 when available, falls back to SDPA. | auto                 | auto, flash_attention_2, sdpa | Standard & Advanced |
+| **use_torch_compile**  | Enable `torch.compile('reduce-overhead')` for extra CUDA throughput (Torch 2.1+).| Flase | - | Advanced Only |
+| **device** | Override automatic device selection. | auto | auto, cuda, cpu | Advanced Only |
 | **preset\_prompt** | A selection of pre-defined prompts for common tasks. | "Describe this..." | Any text | Standard & Advanced |
 | **custom\_prompt** | Overrides the preset prompt if provided. |  | Any text | Standard & Advanced |
 | **max\_tokens** | Maximum number of new tokens to generate. | 1024 | 64-2048 | Standard & Advanced |
@@ -106,7 +118,6 @@ For more control, use the **"QwenVL (Advanced)"** node. This gives you access to
 | **num\_beams** | Number of beams for beam search. \> 1 disables temperature/top\_p sampling. | 1 | 1-10 | Advanced Only |
 | **repetition\_penalty** | Discourages repeating tokens. | 1.2 | 0.0-2.0 | Advanced Only |
 | **frame\_count** | Number of frames to sample from the video input. | 16 | 1-64 | Advanced Only |
-| **device** | Override automatic device selection. | auto | auto, cuda, cpu | Advanced Only |
 
 ### **💡 Quantization Options**
 
