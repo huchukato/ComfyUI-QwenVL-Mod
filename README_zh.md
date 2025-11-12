@@ -2,11 +2,12 @@
 
 ComfyUI-QwenVL 是一款自定义节点，它集成了来自阿里云的强大 Qwen-VL 系列视觉语言模型（LVLMs），包括最新的 Qwen3-VL 和 Qwen2.5-VL。这款高级节点能够在您的 ComfyUI 工作流中实现无缝的多模态 AI 功能，支持高效的文本生成、图像理解和视频分析。
 
-[![QwenVL_V1.0.0r](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/example_workflows/QWenVL.jpg)](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/example_workflows/QWenVL.json)
+![QwenVL_V1.1.0](https://github.com/user-attachments/assets/13e89746-a04e-41a3-9026-7079b29e149c)
 
 ## **📰 新闻与更新**
 
-* **2025/10/17**: **v1.0.0** 初始版本发布  
+* **2025/10/17**: **v1.0.0** 初始版本发布
+[![QwenVL_V1.0.0r](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/example_workflows/QWenVL.jpg)](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/example_workflows/QWenVL.json)
   * 支持 Qwen3-VL 和 Qwen2.5-VL 系列模型。  
   * 自动从 Hugging Face 下载模型。  
   * 支持即时量化（4-bit、8-bit、FP16）。  
@@ -30,6 +31,10 @@ ComfyUI-QwenVL 是一款自定义节点，它集成了来自阿里云的强大 Q
 * **图像与视频支持**：接受单个图像和视频帧序列作为输入。  
 * **强大的错误处理**：为硬件或内存问题提供清晰的错误信息。  
 * **简洁的控制台输出**：在操作过程中提供最少且信息丰富的控制台日志。
+* **新增 attention_mode 参数，支持自动启用 Flash-Attention v2 加速。
+* **新增 use_torch_compile 参数，在 Torch 2.1+ 上可启用 JIT 优化，提高推理吞吐。
+* **新增 device 参数，支持在 CUDA、CPU 与 Apple MPS 之间手动切换。
+* **改进显存检测逻辑，可在内存不足时自动降低量化等级。
 
 ## **🚀 安装**
 
@@ -85,6 +90,8 @@ ComfyUI-QwenVL 是一款自定义节点，它集成了来自阿里云的强大 Q
 | :---- | :---- | :---- |
 | **model\_name** | 要使用的 Qwen-VL 模型。 | Qwen3-VL-4B-Instruct |
 | **quantization** | 即时量化级别。对于预量化模型（如 FP8）将被忽略。 | 8-bit (Balanced) |
+| **attention_mode** |	注意力机制模式。auto 会自动启用 Flash-Attn v2（若可用），否则回退为 SDPA。|	auto	auto、flash_attention_2、sdpa |	标准 & 高级 |
+| **use_torch_compile** |	启用 torch.compile('reduce-overhead') 优化以提升 CUDA 推理性能（需 Torch 2.1+）。	| False | - | 高级 |
 | **preset\_prompt** | 为常见任务预定义的一系列提示词。 | "Describe this..." |
 | **custom\_prompt** | 自定义文本提示词。如果提供，将覆盖预设提示词。 |  |
 | **max\_tokens** | 要生成的最大新词元（token）数量。 | 1024 |
