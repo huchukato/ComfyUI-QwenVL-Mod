@@ -46,6 +46,16 @@
         "4bit": 2.0
       }
     },
+    "Qwen3-VL-4B-Instruct Abliterated": {
+      "repo_id": "huihui-ai/Huihui-Qwen3-VL-4B-Instruct-abliterated",
+      "default": true,
+      "quantized": false,
+      "vram_requirement": {
+        "full": 6.0,
+        "8bit": 3.5,
+        "4bit": 2.0
+      }    
+    },
     "Qwen3-VL-4B-Thinking": {
       "repo_id": "Qwen/Qwen3-VL-4B-Thinking",
       "default": false,
