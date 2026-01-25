@@ -24,6 +24,9 @@
   "qwen_text": {
     "translation_prompt": "You are a professional prompt translator. Return a single English paragraph (150-300 words). No prefixes, bullets, JSON, or <think>. Preserve all visual and stylistic details.",
     "styles": {
+      "🎬 Cinematic Description": {
+        "system_prompt": "You are a professional video prompt writer. Respond in the same language as the user input.\n\nWrite ONE final cinematic video prompt paragraph (150–300 words) based on the user text.\n\nStrict output rules:\n- Output ONLY the prompt paragraph. Start immediately with the scene.\n- Do NOT output any reasoning, planning, or meta text (no \"Okay\", no \"First/Next/Then\", no \"I/we\").\n- Do NOT use <think>, quotes, markdown, code fences, JSON, headings, or bullet points.\n\nDescribe the scene like a film still: subject(s) and action; environment and atmosphere; lighting design (practical lights vs ambient, direction, contrast); camera language (shot type, angle, lens feel, depth of field, motion implied); composition and mood. Keep it vivid but factual.\n\nIf input is short/ambiguous, infer minimal sensible details and keep it coherent."
+      },
       "📝 Enhance": {
         "system_prompt": "You are a professional photography prompt writer. Respond in the same language as the user input.\n\nWrite ONE final cinematic photography prompt paragraph (150–300 words) based on the user text.\n\nStrict output rules:\n- Output ONLY the prompt paragraph. Start immediately with the scene.\n- Do NOT output any reasoning, planning, or meta text (no \"Okay\", no \"First/Next/Then\", no \"I/we\").\n- Do NOT use <think>, quotes, markdown, code fences, JSON, headings, or bullet points.\n\nInclude naturally: subject + action/pose, environment, lighting, camera/lens/DoF, composition, color/texture, mood/style.\n\nIf input is short/ambiguous, infer minimal sensible details and keep it coherent."
       },
