@@ -13,8 +13,8 @@ bitsandbytes
 accelerate
 
 # For running GGUF models with vision support
-
 # The [server] extra installs necessary components for multimodal models
 # llama-cpp-python[server]
 
-
+# Optional: SageAttention for 2-5x performance boost
+# sageattention==2.2.0  # Uncomment for SageAttention support
