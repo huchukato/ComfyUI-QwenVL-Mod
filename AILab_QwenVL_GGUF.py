@@ -532,9 +532,12 @@ class QwenVLGGUFBase:
     ):
         torch.manual_seed(int(seed))
 
-        prompt = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
+        prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
         if custom_prompt and custom_prompt.strip():
-            prompt = custom_prompt.strip()
+            # Combine template with user input like PromptEnhancer does
+            prompt = f"{prompt_template}\n\n{custom_prompt.strip()}"
+        else:
+            prompt = prompt_template
 
         images_b64: list[str] = []
         if image is not None:
@@ -594,7 +597,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
             "required": {
                 "model_name": (model_keys, {"default": default_model}),
                 "preset_prompt": (prompts, {"default": default_prompt}),
-                "custom_prompt": ("STRING", {"default": "", "multiline": True}),
+                "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": "Additional user input that gets combined with the preset template. Leave empty to use only the template."}),
                 "max_tokens": ("INT", {"default": 512, "min": 64, "max": 2048}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
@@ -664,7 +667,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
                 "model_name": (model_keys, {"default": default_model}),
                 "device": (device_options, {"default": "auto"}),
                 "preset_prompt": (prompts, {"default": default_prompt}),
-                "custom_prompt": ("STRING", {"default": "", "multiline": True}),
+                "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": "Additional user input that gets combined with the preset template. Leave empty to use only the template."}),
                 "max_tokens": ("INT", {"default": 512, "min": 64, "max": 4096}),
                 "temperature": ("FLOAT", {"default": 0.6, "min": 0.0, "max": 2.0}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0}),
