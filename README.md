@@ -31,6 +31,7 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 * **Standard & Advanced Nodes**: Includes a simple QwenVL node for quick use and a QwenVL (Advanced) node with fine-grained control over generation.  
 * **Prompt Enhancers**: Dedicated text-only prompt enhancers for both HF and GGUF backends.  
 * **Preset & Custom Prompts**: Choose from a list of convenient preset prompts or write your own for full control.  
+* **WAN 2.2 Integration**: Specialized prompts for WAN 2.2 I2V (image-to-video) and T2V (text-to-video) generation with cinematic timeline structure.  
 * **Multi-Model Support**: Easily switch between various official Qwen-VL models.  
 * **Automatic Model Download**: Models are downloaded automatically on first use.  
 * **Smart Quantization**: Balance VRAM and performance with 4-bit, 8-bit, and FP16 options.  
@@ -276,6 +277,48 @@ python -c "import torch; print(f'GPU capability: {torch.cuda.get_device_capabili
 - [SageAttention Paper](https://arxiv.org/abs/2410.02367)
 - [Performance Benchmarks](https://github.com/thu-ml/SageAttention#performance)
 
+## **🎬 WAN 2.2 Integration**
+
+This enhanced version includes specialized prompts for **WAN 2.2** video generation, supporting both I2V (image-to-video) and T2V (text-to-video) workflows.
+
+### **🎯 Available WAN 2.2 Prompts**
+
+| Prompt Type | Use Case | Input | Output | Location |
+|:---|:---|:---|:---|:---|
+| **🍿 Wan 2.2 I2V** | Image-to-Video | Image + Text | 5-second cinematic timeline | QwenVL nodes |
+| **🍿 Wan 2.2 T2V** | Text-to-Video | Text only | 5-second cinematic timeline | Prompt Enhancer nodes |
+
+### **⚡ Features**
+
+- **Cinematic Timeline Structure**: 5-second videos with second-by-second descriptions
+- **Multilingual Support**: Italian/English input → English optimized output
+- **Professional Scene Description**: Film-style direction including lighting, camera, composition
+- **NSFW Handling**: Appropriate content filtering and description
+- **WAN 2.2 Optimization**: Specifically formatted for best video generation results
+
+### **📝 Output Format Example**
+
+```
+(At 0 seconds: A young woman stands facing a rack of clothes...)
+(At 1 second: The blouse falls to the floor around her feet...)
+(At 2 seconds: She reaches out with her right hand...)
+(At 3 seconds: She turns her body slightly towards the mirror...)
+(At 4 seconds: Lifting the hanger, she holds the dark fabric...)
+(At 5 seconds: A subtle, thoughtful expression crosses her face...)
+```
+
+### **🔧 Usage**
+
+1. **For I2V**: Use "🍿 Wan 2.2 I2V" preset in QwenVL nodes with image input
+2. **For T2V**: Use "🍿 Wan 2.2 T2V" style in Prompt Enhancer nodes with text only
+
+### **🎨 Best Practices**
+
+- Provide clear, descriptive input for better scene interpretation
+- Use specific camera and lighting directions when possible
+- Include mood and atmosphere details for cinematic results
+- The system automatically handles timeline optimization for WAN 2.2
+
 ## **🗺️ Roadmap**
 
 ### **✅ Completed (v1.0.0)**
@@ -285,7 +328,8 @@ python -c "import torch; print(f'GPU capability: {torch.cuda.get_device_capabili
 * ✅ On-the-fly 4-bit, 8-bit, and FP16 quantization.  
 * ✅ Hardware compatibility checks for FP8 models.  
 * ✅ Image and Video (frame sequence) input support.  
-* ✅ SageAttention integration for 2-5x performance boost.
+* ✅ SageAttention integration for 2-5x performance boost.  
+* ✅ WAN 2.2 I2V and T2V prompt integration for video generation.
 
 
 ## **🙏 Credits**
