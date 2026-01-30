@@ -1,10 +1,10 @@
 {
   "author": "huchukato",
   "title": "Enhanced QwenVL with SageAttention",
-  "description": "Enhanced QwenVL node with SageAttention support for 2-5x performance boost, additional models, and improved compatibility",
+  "description": "Enhanced QwenVL node with SageAttention support for 2-5x performance boost, WAN 2.2 I2V/T2V integration, additional models, and improved compatibility",
   "reference": "https://github.com/huchukato/ComfyUI-QwenVL-Mod",
   "install_type": "git",
   "category": "image",
-  "tags": ["vision", "language", "multimodal", "qwen", "sageattention", "performance"],
+  "tags": ["vision", "language", "multimodal", "qwen", "sageattention", "performance", "wan2.2", "video", "i2v", "t2v"],
   "version": "2.0.1-enhanced"
 }
