@@ -7,7 +7,8 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 ## **📰 News & Updates**
 * **2026/01/30**: **v2.0.1-enhanced** Added SageAttention support and WAN 2.2 integration. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-201-enhanced-20260130)]
 > [!NOTE]  
-> SageAttention provides 2-5x performance boost with 8-bit quantized attention for compatible GPUs. WAN 2.2 I2V/T2V prompts enable cinematic video generation.
+> 🚀 **SageAttention**: 2-5x performance boost with 8-bit quantized attention for RTX 30+ GPUs.  
+> 🎬 **WAN 2.2 Integration**: New specialized prompts for cinematic video generation - convert images/videos to 5-second timeline descriptions (I2V) or text to video (T2V) with professional scene direction.
 > 
 * **2025/12/22**: **v2.0.0** Added GGUF supported nodes and Prompt Enhancer nodes. [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-200-20251222)]
 > [!IMPORTANT]  
