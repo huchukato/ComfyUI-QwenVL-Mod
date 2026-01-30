@@ -5,6 +5,10 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 ![QwenVL_V1.1.0](https://github.com/user-attachments/assets/13e89746-a04e-41a3-9026-7079b29e149c)
 
 ## **📰 News & Updates**
+* **2026/01/30**: **v2.0.1-enhanced** Added SageAttention support and WAN 2.2 integration. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-201-enhanced-20260130)]
+> [!NOTE]  
+> SageAttention provides 2-5x performance boost with 8-bit quantized attention for compatible GPUs. WAN 2.2 I2V/T2V prompts enable cinematic video generation.
+> 
 * **2025/12/22**: **v2.0.0** Added GGUF supported nodes and Prompt Enhancer nodes. [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-200-20251222)]
 > [!IMPORTANT]  
 > Install llama-cpp-python before running GGUF nodes [instruction](docs/LLAMA_CPP_PYTHON_VISION_INSTALL.md)
