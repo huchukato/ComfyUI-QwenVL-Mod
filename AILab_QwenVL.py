@@ -46,7 +46,7 @@ TOOLTIPS = {
     "quantization": "Precision vs VRAM. FP16 gives the best quality if memory allows; 8-bit suits 8–16 GB GPUs; 4-bit fits 6 GB or lower but is slower.",
     "attention_mode": "auto tries flash-attn v2 when installed and falls back to SDPA. SageAttention provides 2-5x speedup vs FlashAttention with 8-bit quantization. Only override when debugging attention backends.",
     "preset_prompt": "Built-in instruction describing how Qwen-VL should analyze the media input.",
-    "custom_prompt": "Optional override—when filled it completely replaces the preset template.",
+    "custom_prompt": "Additional user input that gets combined with the preset template. Leave empty to use only the template.",
     "max_tokens": "Maximum number of new tokens to decode. Larger values yield longer answers but consume more time and memory.",
     "keep_model_loaded": "Keeps the model resident in VRAM/RAM after the run so the next prompt skips loading.",
     "seed": "Seed controlling sampling and frame picking; reuse it to reproduce results.",
@@ -519,9 +519,14 @@ class QwenVLBase:
 
     def run(self, model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device):
         torch.manual_seed(seed)
-        prompt = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
+        prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
+        
         if custom_prompt and custom_prompt.strip():
-            prompt = custom_prompt.strip()
+            # Combine template with user input like PromptEnhancer does
+            prompt = f"{prompt_template}\n\n{custom_prompt.strip()}"
+        else:
+            prompt = prompt_template
+            
         self.load_model(
             model_name,
             quantization,
