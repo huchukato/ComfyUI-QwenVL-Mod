@@ -1,0 +1,10 @@
+{
+  "author": "tuo-username",
+  "title": "Enhanced QwenVL with SageAttention",
+  "description": "Enhanced QwenVL node with SageAttention support for 2-5x performance boost, additional models, and improved compatibility",
+  "reference": "https://github.com/tuo-username/ComfyUI-QwenVL-Mod",
+  "install_type": "git",
+  "category": "image",
+  "tags": ["vision", "language", "multimodal", "qwen", "sageattention", "performance"],
+  "version": "2.0.1-enhanced"
+}

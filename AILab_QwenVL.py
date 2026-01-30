@@ -24,7 +24,11 @@ import psutil
 import torch
 from PIL import Image
 from huggingface_hub import snapshot_download
-from transformers import AutoModelForVision2Seq, AutoProcessor, AutoTokenizer, BitsAndBytesConfig
+from transformers import AutoProcessor, AutoTokenizer, BitsAndBytesConfig
+try:
+    from transformers import AutoModelForVision2Seq
+except ImportError:
+    from transformers import AutoModelForImageTextToText as AutoModelForVision2Seq
 
 import folder_paths
 
@@ -40,7 +44,7 @@ PRESET_PROMPTS: list[str] = ["Describe this image in detail."]
 TOOLTIPS = {
     "model_name": "Pick the Qwen-VL checkpoint. First run downloads weights into models/LLM/Qwen-VL, so leave disk space.",
     "quantization": "Precision vs VRAM. FP16 gives the best quality if memory allows; 8-bit suits 8–16 GB GPUs; 4-bit fits 6 GB or lower but is slower.",
-    "attention_mode": "auto tries flash-attn v2 when installed and falls back to SDPA. Only override when debugging attention backends.",
+    "attention_mode": "auto tries flash-attn v2 when installed and falls back to SDPA. SageAttention provides 2-5x speedup vs FlashAttention with 8-bit quantization. Only override when debugging attention backends.",
     "preset_prompt": "Built-in instruction describing how Qwen-VL should analyze the media input.",
     "custom_prompt": "Optional override—when filled it completely replaces the preset template.",
     "max_tokens": "Maximum number of new tokens to decode. Larger values yield longer answers but consume more time and memory.",
@@ -71,7 +75,7 @@ class Quantization(str, Enum):
                 return item
         raise ValueError(f"Unsupported quantization: {value}")
 
-ATTENTION_MODES = ["auto", "flash_attention_2", "sdpa"]
+ATTENTION_MODES = ["auto", "flash_attention_2", "sdpa", "sageattention"]
 
 def load_model_configs():
     global HF_VL_MODELS, HF_TEXT_MODELS, HF_ALL_MODELS, SYSTEM_PROMPTS, PRESET_PROMPTS
@@ -196,6 +200,27 @@ def normalize_device_choice(device: str) -> str:
 
     return device
 
+def sageattention_available():
+    if not torch.cuda.is_available():
+        return False
+
+    major, _ = torch.cuda.get_device_capability()
+    if major < 8:
+        return False
+
+    try:
+        import sageattention  # noqa: F401
+    except Exception:
+        return False
+
+    try:
+        import importlib.metadata as importlib_metadata
+        _ = importlib_metadata.version("sageattention")
+    except Exception:
+        return False
+
+    return True
+
 def flash_attn_available():
     #if platform.system() != "Linux":
     #    return False
@@ -219,6 +244,46 @@ def flash_attn_available():
 
     return True
 
+def apply_sageattention_patch(model):
+    """Applica monkey patch per utilizzare SageAttention al posto dell'attention standard"""
+    try:
+        from sageattention import sageattn
+        import torch.nn.functional as F
+        
+        def patched_scaled_dot_product_attention(
+            query, key, value, attn_mask=None, dropout_p=0.0, is_causal=False, scale=None
+        ):
+            # Converte gli input in formato HND se necessario
+            if query.dim() == 4 and query.size(1) != query.size(2):
+                # Formato NHD -> HND
+                query = query.transpose(1, 2)
+                key = key.transpose(1, 2)
+                value = value.transpose(1, 2)
+                transpose_back = True
+            else:
+                transpose_back = False
+            
+            # Applica SageAttention
+            attn_output = sageattn(query, key, value, tensor_layout="HND", is_causal=is_causal)
+            
+            # Ripristina il formato originale se necessario
+            if transpose_back:
+                attn_output = attn_output.transpose(1, 2)
+            
+            return attn_output
+        
+        # Patch della funzione SDPA
+        import transformers.models.qwen2.modeling_qwen2
+        original_sdpa = transformers.models.qwen2.modeling_qwen2.F.scaled_dot_product_attention
+        transformers.models.qwen2.modeling_qwen2.F.scaled_dot_product_attention = patched_scaled_dot_product_attention
+        
+        print("[QwenVL] SageAttention patch applied successfully")
+        return True
+        
+    except Exception as e:
+        print(f"[QwenVL] Failed to apply SageAttention patch: {e}")
+        return False
+
 def resolve_attention_mode(mode):
     if mode == "sdpa":
         return "sdpa"
@@ -226,6 +291,11 @@ def resolve_attention_mode(mode):
         if flash_attn_available():
             return "flash_attention_2"
         print("[QwenVL] Flash-Attn forced but unavailable, falling back to SDPA")
+        return "sdpa"
+    if mode == "sageattention":
+        if sageattention_available():
+            return "sageattention"
+        print("[QwenVL] SageAttention forced but unavailable, falling back to SDPA")
         return "sdpa"
     if flash_attn_available():
         return "flash_attention_2"
@@ -343,16 +413,33 @@ class QwenVLBase:
         self.clear()
         model_path = ensure_model(model_name)
         quant_config, dtype = quantization_config(model_name, quant)
-        load_kwargs = {
-            "device_map": device if device != "auto" else "auto",
-            "dtype": dtype,
-            "attn_implementation": attn_impl,
-            "use_safetensors": True,
-        }
+        
+        # Per SageAttention, usiamo sempre "sdpa" come base e poi applichiamo il patch
+        if attn_impl == "sageattention":
+            load_kwargs = {
+                "device_map": device if device != "auto" else "auto",
+                "dtype": dtype,
+                "attn_implementation": "sdpa",
+                "use_safetensors": True,
+            }
+        else:
+            load_kwargs = {
+                "device_map": device if device != "auto" else "auto",
+                "dtype": dtype,
+                "attn_implementation": attn_impl,
+                "use_safetensors": True,
+            }
+            
         if quant_config:
             load_kwargs["quantization_config"] = quant_config
         print(f"[QwenVL] Loading {model_name} ({quant.value}, attn={attn_impl})")
         self.model = AutoModelForVision2Seq.from_pretrained(model_path, **load_kwargs).eval()
+        
+        # Applica il patch di SageAttention se richiesto
+        if attn_impl == "sageattention":
+            if not apply_sageattention_patch(self.model):
+                print("[QwenVL] SageAttention patch failed, continuing with SDPA")
+                
         self.model.config.use_cache = True
         if hasattr(self.model, "generation_config"):
             self.model.generation_config.use_cache = True
