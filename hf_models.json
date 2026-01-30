@@ -158,23 +158,33 @@
     }
   },
   "hf_text_models": {
-    "Qwen3-4B-abliterated": {
-      "repo_id": "huihui-ai/Qwen3-4B-abliterated",
+    "Qwen3-4B-abliterated-TIES": {
+      "repo_id": "nbeerbower/Qwen3-4B-abliterated-TIES",
       "default": true,
       "quantized": true
     },
-    "Qwen3-8B-abliterated": {
-      "repo_id": "huihui-ai/Qwen3-8B-abliterated",
-      "default": false,
-      "quantized": false
-    },
     "Qwen3-4B-Instruct": {
       "repo_id": "Qwen/Qwen3-4B-Instruct",
+      "default": false,
+      "quantized": true
+    },
+    "Qwen3-8B-abliterated-TIES": {
+      "repo_id": "nbeerbower/Qwen3-8B-abliterated-TIES",
       "default": false,
       "quantized": false
     },
     "Qwen3-8B-Instruct": {
       "repo_id": "Qwen/Qwen3-8B-Instruct",
+      "default": false,
+      "quantized": false
+    },
+    "Qwen3-4B-abliterated": {
+      "repo_id": "huihui-ai/Qwen3-4B-abliterated",
+      "default": false,
+      "quantized": true
+    },
+    "Qwen3-8B-abliterated": {
+      "repo_id": "huihui-ai/Qwen3-8B-abliterated",
       "default": false,
       "quantized": false
     },
