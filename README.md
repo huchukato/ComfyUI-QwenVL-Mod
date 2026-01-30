@@ -48,11 +48,11 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 1. Clone this repository to your ComfyUI/custom\_nodes directory:  
    ```
    cd ComfyUI/custom\_nodes  
-   git clone https://github.com/1038lab/ComfyUI-QwenVL.git
+   git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git
    ```
 2. Install the required dependencies:  
    ```
-   cd ComfyUI/custom\_nodes/ComfyUI-QwenVL  
+   cd ComfyUI/custom\_nodes/ComfyUI-QwenVL-Mod  
    pip install \-r requirements.txt
    ```
 
