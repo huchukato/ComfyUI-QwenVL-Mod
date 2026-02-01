@@ -249,16 +249,17 @@ def apply_sageattention_patch(model):
     try:
         from sageattention import sageattn
         import torch.nn.functional as F
+        import transformers.models.qwen2.modeling_qwen2
         
         def patched_scaled_dot_product_attention(
             query, key, value, attn_mask=None, dropout_p=0.0, is_causal=False, scale=None
         ):
-            # Converte gli input in formato HND se necessario
-            if query.dim() == 4 and query.size(1) != query.size(2):
-                # Formato NHD -> HND
-                query = query.transpose(1, 2)
-                key = key.transpose(1, 2)
-                value = value.transpose(1, 2)
+            # Gestisce il formato dei tensori per SageAttention
+            if query.dim() == 4 and query.shape[1] == 1:
+                # Caso Qwen2: da (batch, 1, seq_len, head_dim) a (batch, seq_len, head_dim)
+                query = query.squeeze(1)
+                key = key.squeeze(1)
+                value = value.squeeze(1)
                 transpose_back = True
             else:
                 transpose_back = False
@@ -268,14 +269,13 @@ def apply_sageattention_patch(model):
             
             # Ripristina il formato originale se necessario
             if transpose_back:
-                attn_output = attn_output.transpose(1, 2)
+                attn_output = attn_output.unsqueeze(1)
             
             return attn_output
         
-        # Patch della funzione SDPA
-        import transformers.models.qwen2.modeling_qwen2
-        original_sdpa = transformers.models.qwen2.modeling_qwen2.F.scaled_dot_product_attention
-        transformers.models.qwen2.modeling_qwen2.F.scaled_dot_product_attention = patched_scaled_dot_product_attention
+        # Applica il patch in modo sicuro
+        original_sdpa = F.scaled_dot_product_attention
+        F.scaled_dot_product_attention = patched_scaled_dot_product_attention
         
         print("[QwenVL] SageAttention patch applied successfully")
         return True
