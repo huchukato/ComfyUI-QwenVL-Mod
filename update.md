@@ -1,5 +1,46 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.0.2 (2026/02/01)
+
+🎯 **User Experience & Model Management Update**
+
+This release focuses on improving user accessibility, model management, and content generation capabilities based on community feedback.
+
+### 🚀 Enhanced Model Accessibility
+- **Free Abliterated Models**: Added `Qwen3-4B-abliterated-TIES` and `Qwen3-8B-abliterated-TIES` (nbeerbower) as default options
+- **No Token Required**: These models provide uncensored performance without Hugging Face authentication
+- **Smart Model Ordering**: 4B models prioritized before 8B for better VRAM accessibility
+- **8-Bit Quantization Default**: Optimized VRAM usage for both VL and text models
+
+**New Default Models:**
+- **VL**: `Qwen3-VL-4B-Instruct-Abliterated` (8-bit quantized)
+- **Text**: `Qwen3-4B-abliterated-TIES` (8-bit quantized, no token)
+
+### 🔧 Improved Custom Prompt Logic
+- **Template Combination**: Fixed custom prompts to combine with preset templates instead of replacing them
+- **Consistent Behavior**: All nodes (HF, GGUF, PromptEnhancer) now handle custom prompts identically
+- **Better UX**: Users can now add their input while keeping preset instructions intact
+- **WAN 2.2 Compatibility**: Fixed I2V preset to work properly with custom user input
+
+### 📝 Enhanced NSFW Content Generation
+- **Comprehensive Descriptions**: Expanded NSFW rules to include detailed sexual act descriptions
+- **Clear Instructions**: Added "body parts and acts being performed" specification
+- **Complete Coverage**: Includes blowjob, paizuri, deepthroat, handjob, cunnilingus, anal, missionary, doggystyle, cowgirl, reverse cowgirl, masturbation, fingering, squirting, cumshot, facial
+- **Applied Universally**: Enhanced both WAN 2.2 I2V and T2V presets
+
+### 🎬 Preset Priority Optimization
+- **WAN 2.2 I2V First**: Moved most-used video generation preset to top position
+- **Better Workflow**: Faster access to primary video generation functionality
+- **Maintained Order**: Preserved logical organization of remaining presets
+
+### 🐛 Bug Fixes
+- **Custom Prompt Override**: Fixed issue where custom prompts completely replaced preset templates
+- **GGUF Consistency**: Applied same prompt logic fixes to GGUF nodes
+- **Tooltip Updates**: Updated all custom prompt tooltips to reflect new behavior
+- **JSON Validation**: Removed duplicate model entries for cleaner configuration
+
+---
+
 ## Version 2.0.1-enhanced (2026/01/30)
 
 🚀 **Major Performance & Video Generation Update**
