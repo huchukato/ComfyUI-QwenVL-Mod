@@ -1,10 +1,10 @@
 {
   "author": "huchukato",
-  "title": "Enhanced QwenVL with SageAttention",
-  "description": "Enhanced QwenVL node with SageAttention support for 2-5x performance boost, WAN 2.2 I2V/T2V integration, additional models, and improved compatibility",
+  "title": "QwenVL-Mod: Enhanced Vision-Language with SageAttention",
+  "description": "Advanced QwenVL node with 2-5x SageAttention boost, WAN 2.2 video generation, free abliterated models, and comprehensive NSFW support. Enhanced fork with major improvements over original.",
   "reference": "https://github.com/huchukato/ComfyUI-QwenVL-Mod",
   "install_type": "git",
   "category": "image",
-  "tags": ["vision", "language", "multimodal", "qwen", "sageattention", "performance", "wan2.2", "video", "i2v", "t2v"],
+  "tags": ["vision", "language", "multimodal", "qwen", "sageattention", "performance", "wan2.2", "video", "i2v", "t2v", "abliterated", "nsfw", "enhanced", "fork"],
   "version": "2.0.3"
 }
