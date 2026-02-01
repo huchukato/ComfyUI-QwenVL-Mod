@@ -1,3 +1,14 @@
+"""
+{
+  "name": "QwenVL-Mod: Enhanced Vision-Language",
+  "description": "Enhanced QwenVL node with Flash Attention 2, WAN 2.2 video generation, free abliterated models, and comprehensive NSFW support. Advanced fork with major improvements over original for stable multimodal AI workflows.",
+  "author": "huchukato",
+  "version": "2.0.4",
+  "url": "https://github.com/huchukato/ComfyUI-QwenVL-Mod",
+  "category": "image"
+}
+"""
+
 import importlib.util
 import os
 import sys
