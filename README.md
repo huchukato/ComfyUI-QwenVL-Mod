@@ -1,4 +1,4 @@
-# **QwenVL for ComfyUI**
+# **QwenVL-Mod for ComfyUI**
 
 The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-language models (LVLMs) from Alibaba Cloud, including the latest Qwen3-VL and Qwen2.5-VL, plus GGUF backends and text-only Qwen3 support. This advanced node enables seamless multimodal AI capabilities within your ComfyUI workflows, allowing for efficient text generation, image understanding, and video analysis.
 
@@ -58,15 +58,15 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 
 ## **🚀 Installation**
 
-1. Clone this repository to your ComfyUI/custom\_nodes directory:  
+1. Clone this repository to your ComfyUI/custom_nodes directory:  
    ```
-   cd ComfyUI/custom\_nodes  
+   cd ComfyUI/custom_nodes  
    git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git
    ```
 2. Install the required dependencies:  
    ```
-   cd ComfyUI/custom\_nodes/ComfyUI-QwenVL-Mod  
-   pip install \-r requirements.txt
+   cd ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod  
+   pip install -r requirements.txt
    ```
 
 3. Restart ComfyUI.
