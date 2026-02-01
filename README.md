@@ -5,6 +5,13 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 ![QwenVL_V1.1.0](https://github.com/user-attachments/assets/13e89746-a04e-41a3-9026-7079b29e149c)
 
 ## **📰 News & Updates**
+* **2026/02/01**: **v2.0.2** Enhanced model accessibility, improved custom prompt logic, and expanded NSFW content generation. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-202-20260201)]
+> [!NOTE]  
+> 🚀 **Free Abliterated Models**: Added token-free uncensored models as defaults for better accessibility.  
+> 🔧 **Custom Prompt Fix**: Now combines with preset templates instead of replacing them across all nodes.  
+> 📝 **Enhanced NSFW**: Comprehensive descriptions for adult content generation with detailed act specifications.  
+> 🎬 **WAN 2.2 Priority**: Moved video generation preset to top position for faster workflow access.
+
 * **2026/01/30**: **v2.0.1-enhanced** Added SageAttention support and WAN 2.2 integration. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-201-enhanced-20260130)]
 > [!NOTE]  
 > 🚀 **SageAttention**: 2-5x performance boost with 8-bit quantized attention for RTX 30+ GPUs.  
@@ -35,11 +42,12 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 
 * **Standard & Advanced Nodes**: Includes a simple QwenVL node for quick use and a QwenVL (Advanced) node with fine-grained control over generation.  
 * **Prompt Enhancers**: Dedicated text-only prompt enhancers for both HF and GGUF backends.  
-* **Preset & Custom Prompts**: Choose from a list of convenient preset prompts or write your own for full control.  
-* **WAN 2.2 Integration**: Specialized prompts for WAN 2.2 I2V (image-to-video) and T2V (text-to-video) generation with cinematic timeline structure.  
-* **Multi-Model Support**: Easily switch between various official Qwen-VL models.  
+* **Preset & Custom Prompts**: Choose from a list of convenient preset prompts or write your own for full control. Custom prompts now combine with preset templates for enhanced flexibility.  
+* **WAN 2.2 Integration**: Specialized prompts for WAN 2.2 I2V (image-to-video) and T2V (text-to-video) generation with cinematic timeline structure. I2V preset prioritized for faster workflow access.  
+* **Free Abliterated Models**: Default models include token-free uncensored options (Qwen3-4B-abliterated-TIES, Qwen3-8B-abliterated-TIES) for immediate accessibility.  
+* **Multi-Model Support**: Easily switch between various official Qwen-VL models with smart 4B-first ordering for VRAM efficiency.  
 * **Automatic Model Download**: Models are downloaded automatically on first use.  
-* **Smart Quantization**: Balance VRAM and performance with 4-bit, 8-bit, and FP16 options.  
+* **Smart Quantization**: Balance VRAM and performance with 4-bit, 8-bit, and FP16 options. 8-bit quantization enabled by default for optimal accessibility.  
 * **Hardware-Aware**: Automatically detects GPU capabilities and prevents errors with incompatible models (e.g., FP8).  
 * **Reproducible Generation**: Use the seed parameter to get consistent outputs.  
 * **Memory Management**: "Keep Model Loaded" option to retain the model in VRAM for faster processing.  
@@ -326,15 +334,21 @@ This enhanced version includes specialized prompts for **WAN 2.2** video generat
 
 ## **🗺️ Roadmap**
 
-### **✅ Completed (v1.0.0)**
+### **✅ Completed (v2.0.2)**
 
 * ✅ Support for Qwen3-VL and Qwen2.5-VL models.  
+* ✅ GGUF backend support for faster inference.  
+* ✅ Prompt Enhancer nodes for text-only workflows.  
+* ✅ SageAttention integration for 2-5x performance boost.  
+* ✅ WAN 2.2 I2V and T2V video generation prompts.  
+* ✅ Free abliterated models without token requirements.  
+* ✅ Enhanced custom prompt logic across all nodes.  
+* ✅ Comprehensive NSFW content generation support.  
+* ✅ Optimized model ordering and quantization defaults.  
 * ✅ Automatic model downloading and management.  
 * ✅ On-the-fly 4-bit, 8-bit, and FP16 quantization.  
 * ✅ Hardware compatibility checks for FP8 models.  
-* ✅ Image and Video (frame sequence) input support.  
-* ✅ SageAttention integration for 2-5x performance boost.  
-* ✅ WAN 2.2 I2V and T2V prompt integration for video generation.
+* ✅ Image and Video (frame sequence) input support.
 
 
 ## **🙏 Credits**
