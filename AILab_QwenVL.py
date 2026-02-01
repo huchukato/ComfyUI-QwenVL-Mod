@@ -251,6 +251,9 @@ def apply_sageattention_patch(model):
         import torch.nn.functional as F
         import transformers.models.qwen2.modeling_qwen2
         
+        # Salva la funzione originale per evitare ricorsione
+        original_sdpa = F.scaled_dot_product_attention
+        
         def patched_scaled_dot_product_attention(*args, **kwargs):
             # Estrai gli argomenti comuni
             query = kwargs.get('query', args[0] if args else None)
@@ -265,8 +268,8 @@ def apply_sageattention_patch(model):
             if query is not None:
                 headdim = query.shape[-1] if query.dim() >= 3 else None
                 if headdim not in [64, 96, 128]:
-                    # Fallback to SDPA se headdim non compatibile
-                    return F.scaled_dot_product_attention(*args, **kwargs)
+                    # Fallback to SDPA originale se headdim non compatibile
+                    return original_sdpa(*args, **kwargs)
             
             # Ignora argomenti non supportati come enable_gqa
             # Gestisce il formato dei tensori per SageAttention
@@ -289,7 +292,6 @@ def apply_sageattention_patch(model):
             return attn_output
         
         # Applica il patch in modo sicuro
-        original_sdpa = F.scaled_dot_product_attention
         F.scaled_dot_product_attention = patched_scaled_dot_product_attention
         
         print("[QwenVL] SageAttention patch applied successfully")
