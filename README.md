@@ -5,6 +5,11 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
+* **2026/02/01**: **v2.0.3** SageAttention compatibility fix for proper patching across transformer versions. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-203-20260201)]
+> [!NOTE]  
+> 🔧 **Critical Fix**: Resolved AttributeError preventing SageAttention from working with certain transformer versions.  
+> ⚡ **Performance Restored**: 2-5x speedup now works correctly with 8-bit quantization on compatible hardware.
+
 * **2026/02/01**: **v2.0.2** Enhanced model accessibility, improved custom prompt logic, and expanded NSFW content generation. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-202-20260201)]
 > [!NOTE]  
 > 🚀 **Free Abliterated Models**: Added token-free uncensored models as defaults for better accessibility.  
@@ -334,7 +339,7 @@ This enhanced version includes specialized prompts for **WAN 2.2** video generat
 
 ## **🗺️ Roadmap**
 
-### **✅ Completed (v2.0.2)**
+### **✅ Completed (v2.0.3)**
 
 * ✅ Support for Qwen3-VL and Qwen2.5-VL models.  
 * ✅ GGUF backend support for faster inference.  
@@ -345,10 +350,7 @@ This enhanced version includes specialized prompts for **WAN 2.2** video generat
 * ✅ Enhanced custom prompt logic across all nodes.  
 * ✅ Comprehensive NSFW content generation support.  
 * ✅ Optimized model ordering and quantization defaults.  
-* ✅ Automatic model downloading and management.  
-* ✅ On-the-fly 4-bit, 8-bit, and FP16 quantization.  
-* ✅ Hardware compatibility checks for FP8 models.  
-* ✅ Image and Video (frame sequence) input support.
+* ✅ SageAttention compatibility fixes across transformer versions.
 
 
 ## **🙏 Credits**
