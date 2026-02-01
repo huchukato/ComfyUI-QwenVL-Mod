@@ -1,5 +1,32 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.0.5 (2026/02/01)
+
+🎬 **Extended Storyboard Preset Added**
+
+This release adds a new specialized preset for extended storyboard generation with WAN 2.2 format compatibility.
+
+### 🎯 New Features
+- **Extended Storyboard Preset**: New preset positioned as 2nd in the list after Wan 2.2 I2V
+- **WAN 2.2 Format Compliance**: Follows the same timeline structure "(At 0 seconds: ...)" format
+- **Storyboard Continuity**: Each paragraph repeats content from previous paragraph for smooth transitions
+- **NSFW Support**: Complete NSFW description support like Wan 2.2 I2V preset
+- **Cinematic Specifications**: Comprehensive camera, lighting, and composition guidelines
+
+### 📋 Preset Details
+- **Position**: 2nd preset (after Wan 2.2 I2V) for easy access
+- **Format**: 5-second timeline with detailed second-by-second descriptions
+- **Focus**: Extended video generation with consistent character appearance and scene continuity
+- **Technical Specs**: Includes camera movements, lighting types, composition guidelines
+- **Output**: Optimized for storyboard-to-storyboard workflow generation
+
+### 🛠️ Technical Improvements
+- **Stability Fixes**: Identified and resolved "keep model loaded" memory issues
+- **Performance**: Maintained stable operation without OOM errors
+- **Compatibility**: Preset works with both VL and text-only models
+
+---
+
 ## Version 2.0.4 (2026/02/01)
 
 🔧 **Stability Update - SageAttention Removal**

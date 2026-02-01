@@ -5,6 +5,12 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
+* **2026/02/01**: **v2.0.5** Extended Storyboard preset added for WAN 2.2 format continuity. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-205-20260201)]
+> [!NOTE]  
+> 🎬 **Extended Storyboard**: New preset for seamless storyboard-to-storyboard generation with timeline format.  
+> 🔄 **Continuity Focus**: Each paragraph repeats previous content for smooth transitions.  
+> 🎯 **WAN 2.2 Compatible**: Same timeline structure and NSFW support as I2V preset.
+
 * **2026/02/01**: **v2.0.4** Stability update - removed SageAttention for better compatibility and model output reliability. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-204-20260201)]
 > [!NOTE]  
 > 🔧 **SageAttention Removed**: Eliminated complexity and interference issues for stable model performance.  
@@ -55,6 +61,7 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 * **Prompt Enhancers**: Dedicated text-only prompt enhancers for both HF and GGUF backends.  
 * **Preset & Custom Prompts**: Choose from a list of convenient preset prompts or write your own for full control. Custom prompts now combine with preset templates for enhanced flexibility.  
 * **WAN 2.2 Integration**: Specialized prompts for WAN 2.2 I2V (image-to-video) and T2V (text-to-video) generation with cinematic timeline structure. I2V preset prioritized for faster workflow access.  
+* **Extended Storyboard**: New preset for seamless storyboard-to-storyboard generation with WAN 2.2 format compatibility and continuity focus.  
 * **Free Abliterated Models**: Default models include token-free uncensored options (Qwen3-4B-abliterated-TIES, Qwen3-8B-abliterated-TIES) for immediate accessibility.  
 * **Multi-Model Support**: Easily switch between various official Qwen-VL models with smart 4B-first ordering for VRAM efficiency.  
 * **Automatic Model Download**: Models are downloaded automatically on first use.  
@@ -345,13 +352,14 @@ This enhanced version includes specialized prompts for **WAN 2.2** video generat
 
 ## **🗺️ Roadmap**
 
-### **✅ Completed (v2.0.4)**
+### **✅ Completed (v2.0.5)**
 
 * ✅ Support for Qwen3-VL and Qwen2.5-VL models.  
 * ✅ GGUF backend support for faster inference.  
 * ✅ Prompt Enhancer nodes for text-only workflows.  
 * ✅ Flash Attention 2 integration for 2-3x performance boost.  
 * ✅ WAN 2.2 I2V and T2V video generation prompts.  
+* ✅ Extended Storyboard preset for seamless continuity generation.  
 * ✅ Free abliterated models without token requirements.  
 * ✅ Enhanced custom prompt logic across all nodes.  
 * ✅ Comprehensive NSFW content generation support.  
