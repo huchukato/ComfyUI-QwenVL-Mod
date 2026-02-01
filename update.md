@@ -1,5 +1,36 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.0.4 (2026/02/01)
+
+🔧 **Stability Update - SageAttention Removal**
+
+This release focuses on stability by removing SageAttention integration that was causing compatibility issues and model interference.
+
+### 🛠️ Major Changes
+- **SageAttention Removed**: Completely removed SageAttention integration due to compatibility and stability issues
+- **Simplified Attention Modes**: Now supports auto, flash_attention_2, and sdpa only
+- **Clean Codebase**: Removed 100+ lines of complex patching code
+- **Stable Performance**: SDPA provides excellent performance with zero interference
+
+### 🎯 Attention Modes Available
+- **Auto**: Automatically chooses best available attention implementation
+- **Flash Attention 2**: High-performance attention when available (RTX 20+)
+- **SDPA**: Scaled Dot Product Attention - stable and well-tested fallback
+
+### 🐛 Issues Resolved
+- **Model Output Problems**: Fixed prompt generation issues caused by SageAttention interference
+- **Recursion Errors**: Eliminated infinite recursion in attention patching
+- **Head Dimension Compatibility**: Removed headdim restrictions that were causing crashes
+- **VAE Compatibility**: Fixed VAE encoding/decoding interference
+
+### ⚡ Performance Impact
+- **Flash Attention 2**: Still available for 2-3x speedup on compatible hardware
+- **SDPA**: Highly optimized baseline performance
+- **Zero Interference**: Clean attention pipeline without patching complications
+- **Better Stability**: More reliable across different model architectures
+
+---
+
 ## Version 2.0.3 (2026/02/01)
 
 🔧 **SageAttention Compatibility Fix**

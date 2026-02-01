@@ -5,6 +5,12 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
+* **2026/02/01**: **v2.0.4** Stability update - removed SageAttention for better compatibility and model output reliability. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-204-20260201)]
+> [!NOTE]  
+> 🔧 **SageAttention Removed**: Eliminated complexity and interference issues for stable model performance.  
+> ⚡ **Flash Attention 2**: Still available for 2-3x speedup on compatible hardware.  
+> 🛡️ **Enhanced Stability**: Clean attention pipeline with SDPA as reliable fallback.
+
 * **2026/02/01**: **v2.0.3** SageAttention compatibility fix for proper patching across transformer versions. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-203-20260201)]
 > [!NOTE]  
 > 🔧 **Critical Fix**: Resolved AttributeError preventing SageAttention from working with certain transformer versions.  
@@ -53,13 +59,13 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 * **Multi-Model Support**: Easily switch between various official Qwen-VL models with smart 4B-first ordering for VRAM efficiency.  
 * **Automatic Model Download**: Models are downloaded automatically on first use.  
 * **Smart Quantization**: Balance VRAM and performance with 4-bit, 8-bit, and FP16 options. 8-bit quantization enabled by default for optimal accessibility.  
+* **Optimized Attention**: Clean attention pipeline with Flash Attention 2 support and stable SDPA fallback. No complex patching that could interfere with model output.  
 * **Hardware-Aware**: Automatically detects GPU capabilities and prevents errors with incompatible models (e.g., FP8).  
 * **Reproducible Generation**: Use the seed parameter to get consistent outputs.  
 * **Memory Management**: "Keep Model Loaded" option to retain the model in VRAM for faster processing.  
 * **Image & Video Support**: Accepts both single images and video frame sequences as input.  
 * **Robust Error Handling**: Provides clear error messages for hardware or memory issues.  
-* **Clean Console Output**: Minimal and informative console logs during operation.  
-* **SageAttention Support**: Optional 2-5x speedup with 8-bit quantized attention for compatible GPUs.
+* **Clean Console Output**: Minimal and informative console logs during operation.
 
 ## **🚀 Installation**
 
@@ -339,18 +345,19 @@ This enhanced version includes specialized prompts for **WAN 2.2** video generat
 
 ## **🗺️ Roadmap**
 
-### **✅ Completed (v2.0.3)**
+### **✅ Completed (v2.0.4)**
 
 * ✅ Support for Qwen3-VL and Qwen2.5-VL models.  
 * ✅ GGUF backend support for faster inference.  
 * ✅ Prompt Enhancer nodes for text-only workflows.  
-* ✅ SageAttention integration for 2-5x performance boost.  
+* ✅ Flash Attention 2 integration for 2-3x performance boost.  
 * ✅ WAN 2.2 I2V and T2V video generation prompts.  
 * ✅ Free abliterated models without token requirements.  
 * ✅ Enhanced custom prompt logic across all nodes.  
 * ✅ Comprehensive NSFW content generation support.  
 * ✅ Optimized model ordering and quantization defaults.  
-* ✅ SageAttention compatibility fixes across transformer versions.
+* ✅ Clean attention pipeline with SDPA stability.  
+* ✅ Removed complexity for better model output reliability.
 
 
 ## **🙏 Credits**
