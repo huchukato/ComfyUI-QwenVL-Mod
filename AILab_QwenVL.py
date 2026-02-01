@@ -455,6 +455,9 @@ class QwenVLBase:
         
         # Combine all parts
         prompt = "\n\n".join(prompt_parts)
+        
+        # Debug: Print final prompt to verify lora_trigger inclusion
+        print(f"[QwenVL] Final prompt built: {prompt}")
             
         self.load_model(
             model_name,
