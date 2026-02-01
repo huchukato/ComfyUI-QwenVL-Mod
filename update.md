@@ -1,5 +1,24 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.0.3 (2026/02/01)
+
+🔧 **SageAttention Compatibility Fix**
+
+This hotfix release addresses a critical compatibility issue with SageAttention integration that prevented proper patching in certain transformer versions.
+
+### 🐛 Bug Fixes
+- **SageAttention Patch**: Fixed AttributeError when accessing `transformers.models.qwen2.modeling_qwen2.F`
+- **Proper Module Access**: Changed patch target to `torch.nn.functional.F.scaled_dot_product_attention`
+- **Compatibility**: Ensured SageAttention works across different transformer versions
+- **Safer Imports**: Added better error handling for module imports
+
+### ⚡ Performance Impact
+- SageAttention now works correctly with 8-bit quantization
+- Maintains 2-5x performance boost on compatible hardware
+- Graceful fallback to SDPA when patching fails
+
+---
+
 ## Version 2.0.2 (2026/02/01)
 
 🎯 **User Experience & Model Management Update**
