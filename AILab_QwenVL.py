@@ -251,9 +251,17 @@ def apply_sageattention_patch(model):
         import torch.nn.functional as F
         import transformers.models.qwen2.modeling_qwen2
         
-        def patched_scaled_dot_product_attention(
-            query, key, value, attn_mask=None, dropout_p=0.0, is_causal=False, scale=None
-        ):
+        def patched_scaled_dot_product_attention(*args, **kwargs):
+            # Estrai gli argomenti comuni
+            query = kwargs.get('query', args[0] if args else None)
+            key = kwargs.get('key', args[1] if len(args) > 1 else None)
+            value = kwargs.get('value', args[2] if len(args) > 2 else None)
+            attn_mask = kwargs.get('attn_mask', args[3] if len(args) > 3 else None)
+            dropout_p = kwargs.get('dropout_p', args[4] if len(args) > 4 else 0.0)
+            is_causal = kwargs.get('is_causal', args[5] if len(args) > 5 else False)
+            scale = kwargs.get('scale', args[6] if len(args) > 6 else None)
+            
+            # Ignora argomenti non supportati come enable_gqa
             # Gestisce il formato dei tensori per SageAttention
             if query.dim() == 4 and query.shape[1] == 1:
                 # Caso Qwen2: da (batch, 1, seq_len, head_dim) a (batch, seq_len, head_dim)
