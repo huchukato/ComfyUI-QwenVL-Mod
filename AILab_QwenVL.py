@@ -47,6 +47,7 @@ TOOLTIPS = {
     "attention_mode": "auto tries flash-attn v2 when installed and falls back to SDPA. Only override when debugging attention backends.",
     "preset_prompt": "Built-in instruction describing how Qwen-VL should analyze the media input.",
     "custom_prompt": "Additional user input that gets combined with the preset template. Leave empty to use only the template.",
+    "lora_trigger": "LoRA trigger text that gets prepended to the beginning of the generated prompt. Useful for activating specific LoRA styles or concepts.",
     "max_tokens": "Maximum number of new tokens to decode. Larger values yield longer answers but consume more time and memory.",
     "keep_model_loaded": "Keeps the model resident in VRAM/RAM after the run so the next prompt skips loading.",
     "seed": "Seed controlling sampling and frame picking; reuse it to reproduce results.",
@@ -434,15 +435,26 @@ class QwenVLBase:
         text = self.tokenizer.decode(outputs[0, input_len:], skip_special_tokens=True)
         return text.strip()
 
-    def run(self, model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device):
+    def run(self, model_name, quantization, preset_prompt, custom_prompt, lora_trigger, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device):
         torch.manual_seed(seed)
         prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
         
+        # Build prompt with lora_trigger at the beginning
+        prompt_parts = []
+        
+        # Add lora_trigger first if provided
+        if lora_trigger and lora_trigger.strip():
+            prompt_parts.append(lora_trigger.strip())
+        
+        # Add the template
+        prompt_parts.append(prompt_template)
+        
+        # Add custom_prompt if provided
         if custom_prompt and custom_prompt.strip():
-            # Combine template with user input like PromptEnhancer does
-            prompt = f"{prompt_template}\n\n{custom_prompt.strip()}"
-        else:
-            prompt = prompt_template
+            prompt_parts.append(custom_prompt.strip())
+        
+        # Combine all parts
+        prompt = "\n\n".join(prompt_parts)
             
         self.load_model(
             model_name,
@@ -483,6 +495,7 @@ class AILab_QwenVL(QwenVLBase):
                 "quantization": (Quantization.get_values(), {"default": Quantization.FP16.value, "tooltip": TOOLTIPS["quantization"]}),
                 "attention_mode": (ATTENTION_MODES, {"default": "auto", "tooltip": TOOLTIPS["attention_mode"]}),
                 "preset_prompt": (prompts, {"default": default_prompt, "tooltip": TOOLTIPS["preset_prompt"]}),
+                "lora_trigger": ("STRING", {"default": "", "tooltip": TOOLTIPS["lora_trigger"]}),
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": TOOLTIPS["custom_prompt"]}),
                 "max_tokens": ("INT", {"default": 512, "min": 64, "max": 2048, "tooltip": TOOLTIPS["max_tokens"]}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": TOOLTIPS["keep_model_loaded"]}),
@@ -499,8 +512,8 @@ class AILab_QwenVL(QwenVLBase):
     FUNCTION = "process"
     CATEGORY = "🧪AILab/QwenVL"
 
-    def process(self, model_name, quantization, preset_prompt, custom_prompt, attention_mode, max_tokens, keep_model_loaded, seed, image=None, video=None):
-        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, video, 16, max_tokens, 0.6, 0.9, 1, 1.2, seed, keep_model_loaded, attention_mode, False, "auto")
+    def process(self, model_name, quantization, preset_prompt, lora_trigger, custom_prompt, attention_mode, max_tokens, keep_model_loaded, seed, image=None, video=None):
+        return self.run(model_name, quantization, preset_prompt, custom_prompt, lora_trigger, image, video, 16, max_tokens, 0.6, 0.9, 1, 1.2, seed, keep_model_loaded, attention_mode, False, "auto")
 
 class AILab_QwenVL_Advanced(QwenVLBase):
     @classmethod
@@ -523,6 +536,7 @@ class AILab_QwenVL_Advanced(QwenVLBase):
                 "use_torch_compile": ("BOOLEAN", {"default": False, "tooltip": TOOLTIPS["use_torch_compile"]}),
                 "device": (device_options, {"default": "auto", "tooltip": TOOLTIPS["device"]}),
                 "preset_prompt": (prompts, {"default": default_prompt, "tooltip": TOOLTIPS["preset_prompt"]}),
+                "lora_trigger": ("STRING", {"default": "", "tooltip": TOOLTIPS["lora_trigger"]}),
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": TOOLTIPS["custom_prompt"]}),
                 "max_tokens": ("INT", {"default": 512, "min": 64, "max": 4096, "tooltip": TOOLTIPS["max_tokens"]}),
                 "temperature": ("FLOAT", {"default": 0.6, "min": 0.1, "max": 1.0, "tooltip": TOOLTIPS["temperature"]}),
@@ -544,8 +558,8 @@ class AILab_QwenVL_Advanced(QwenVLBase):
     FUNCTION = "process"
     CATEGORY = "🧪AILab/QwenVL"
 
-    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, custom_prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, frame_count, keep_model_loaded, seed, image=None, video=None):
-        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device)
+    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, lora_trigger, custom_prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, frame_count, keep_model_loaded, seed, image=None, video=None):
+        return self.run(model_name, quantization, preset_prompt, custom_prompt, lora_trigger, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device)
 
 NODE_CLASS_MAPPINGS = {
     "AILab_QwenVL": AILab_QwenVL,
