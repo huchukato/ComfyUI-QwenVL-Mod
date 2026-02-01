@@ -261,6 +261,13 @@ def apply_sageattention_patch(model):
             is_causal = kwargs.get('is_causal', args[5] if len(args) > 5 else False)
             scale = kwargs.get('scale', args[6] if len(args) > 6 else None)
             
+            # Verifica la head dimension per compatibilità SageAttention
+            if query is not None:
+                headdim = query.shape[-1] if query.dim() >= 3 else None
+                if headdim not in [64, 96, 128]:
+                    # Fallback to SDPA se headdim non compatibile
+                    return F.scaled_dot_product_attention(*args, **kwargs)
+            
             # Ignora argomenti non supportati come enable_gqa
             # Gestisce il formato dei tensori per SageAttention
             if query.dim() == 4 and query.shape[1] == 1:
