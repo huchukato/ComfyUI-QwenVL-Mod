@@ -16,5 +16,5 @@ accelerate
 # The [server] extra installs necessary components for multimodal models
 # llama-cpp-python[server]
 
-# Optional: SageAttention for 2-5x performance boost
-# sageattention==2.2.0  # Uncomment for SageAttention support
+# Optional: Flash Attention 2 for 2-3x performance boost (RTX 20+)
+# flash-attn>=2.0.0  # Uncomment for Flash Attention 2 support
