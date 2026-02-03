@@ -1,5 +1,40 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.0.6 (2026/02/03)
+
+🎬 **Professional Cinematography Enhancement**
+
+This release adds comprehensive professional cinematography specifications to all WAN 2.2 presets and updates naming for consistency.
+
+### 🎯 Major Enhancements
+- **Professional Specifications**: All WAN 2.2 presets now include comprehensive cinematography technical details
+- **Light Sources**: 8 types (sunlight, artificial, moonlight, practical, firelight, fluorescent, cloudy, mixed)
+- **Light Quality**: 9 qualities (soft, hard, top, side, back, bottom, edge, silhouette, low/high contrast)
+- **Time Periods**: 6 periods (daytime, nighttime, dusk, sunset, dawn, sunrise)
+- **Shot Types**: 6 types (close-up, medium shot, medium close-up, medium full shot, full shot, wide angle)
+- **Composition Types**: 5 types (central, balanced, side, symmetrical, short side)
+- **Lens Specifications**: 5 focal lengths + 6 angles for complete camera control
+- **Camera Movements**: 9 movement types for dynamic cinematography
+- **Color Tone**: 4 tone options (warm, cool, high saturation, low saturation)
+
+### 🏷️ Branding Updates
+- **Wan 2.2 T2V**: Updated to "🍿 Wan 2.2 T2V" with proper emoji
+- **Extended Storyboard**: Updated to "🍿 Wan Extended Storyboard" for WAN family consistency
+- **Cinematic Video**: Updated to "🎥 Wan Cinematic Video" to align with WAN branding
+
+### 📋 Enhanced Presets
+- **🍿 Wan 2.2 I2V**: Timeline structure + professional specs
+- **🍿 Wan 2.2 T2V**: Timeline structure + professional specs  
+- **🍿 Wan Extended Storyboard**: Timeline + continuity + professional specs
+- **🎥 Wan Cinematic Video**: Single scene + professional specs
+
+### 🛠️ Technical Improvements
+- **Consistent Organization**: All WAN presets now follow family branding
+- **Professional Quality**: Industry-standard cinematography specifications
+- **Comprehensive Coverage**: Complete technical details for professional video generation
+
+---
+
 ## Version 2.0.5 (2026/02/01)
 
 🎬 **Extended Storyboard Preset Added**

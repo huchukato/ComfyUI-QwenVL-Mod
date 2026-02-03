@@ -5,6 +5,12 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
+* **2026/02/03**: **v2.0.6** Professional cinematography enhancement for all WAN 2.2 presets. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-206-20260203)]
+> [!NOTE]  
+> 🎬 **Professional Specs**: All WAN 2.2 presets now include comprehensive cinematography specifications.  
+> 📹 **Technical Details**: Light sources, shot types, lens specs, camera movements, color tone requirements.  
+> 🎯 **Consistent Branding**: Updated preset names with WAN family branding for better organization.
+
 * **2026/02/01**: **v2.0.5** Extended Storyboard preset added for WAN 2.2 format continuity. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-205-20260201)]
 > [!NOTE]  
 > 🎬 **Extended Storyboard**: New preset for seamless storyboard-to-storyboard generation with timeline format.  
@@ -60,8 +66,10 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 * **Standard & Advanced Nodes**: Includes a simple QwenVL node for quick use and a QwenVL (Advanced) node with fine-grained control over generation.  
 * **Prompt Enhancers**: Dedicated text-only prompt enhancers for both HF and GGUF backends.  
 * **Preset & Custom Prompts**: Choose from a list of convenient preset prompts or write your own for full control. Custom prompts now combine with preset templates for enhanced flexibility.  
-* **WAN 2.2 Integration**: Specialized prompts for WAN 2.2 I2V (image-to-video) and T2V (text-to-video) generation with cinematic timeline structure. I2V preset prioritized for faster workflow access.  
-* **Extended Storyboard**: New preset for seamless storyboard-to-storyboard generation with WAN 2.2 format compatibility and continuity focus.  
+* **WAN 2.2 Integration**: Specialized prompts for WAN 2.2 I2V (image-to-video) and T2V (text-to-video) generation with professional cinematography specifications and cinematic timeline structure. I2V preset prioritized for faster workflow access.  
+* **Professional Cinematography**: All WAN 2.2 presets include comprehensive technical specifications - light sources, shot types, lens specifications, camera movements, and color tone requirements for professional video generation.  
+* **Extended Storyboard**: New preset for seamless storyboard-to-storyboard generation with WAN 2.2 format compatibility, continuity focus, and professional cinematography details.  
+* **WAN Family Branding**: Consistent naming across all WAN 2.2 presets for better organization and workflow clarity.  
 * **Free Abliterated Models**: Default models include token-free uncensored options (Qwen3-4B-abliterated-TIES, Qwen3-8B-abliterated-TIES) for immediate accessibility.  
 * **Multi-Model Support**: Easily switch between various official Qwen-VL models with smart 4B-first ordering for VRAM efficiency.  
 * **Automatic Model Download**: Models are downloaded automatically on first use.  
@@ -342,23 +350,29 @@ This enhanced version includes specialized prompts for **WAN 2.2** video generat
 
 1. **For I2V**: Use "🍿 Wan 2.2 I2V" preset in QwenVL nodes with image input
 2. **For T2V**: Use "🍿 Wan 2.2 T2V" style in Prompt Enhancer nodes with text only
+3. **For Storyboard**: Use "🍿 Wan Extended Storyboard" for seamless scene continuity
+4. **For General Video**: Use "🎥 Wan Cinematic Video" for professional single-scene descriptions
 
 ### **🎨 Best Practices**
 
 - Provide clear, descriptive input for better scene interpretation
 - Use specific camera and lighting directions when possible
 - Include mood and atmosphere details for cinematic results
-- The system automatically handles timeline optimization for WAN 2.2
+- Leverage professional cinematography specs for optimal video quality
+- The system automatically handles timeline optimization for WAN 2.2 presets
 
 ## **🗺️ Roadmap**
 
-### **✅ Completed (v2.0.5)**
+### **✅ Completed (v2.0.6)**
 
 * ✅ Support for Qwen3-VL and Qwen2.5-VL models.  
 * ✅ GGUF backend support for faster inference.  
 * ✅ Prompt Enhancer nodes for text-only workflows.  
 * ✅ Flash Attention 2 integration for 2-3x performance boost.  
 * ✅ WAN 2.2 I2V and T2V video generation prompts.  
+* ✅ Extended Storyboard preset for scene continuity.  
+* ✅ Professional cinematography specifications for all WAN 2.2 presets.  
+* ✅ WAN family branding and consistent naming.  
 * ✅ Extended Storyboard preset for seamless continuity generation.  
 * ✅ Free abliterated models without token requirements.  
 * ✅ Enhanced custom prompt logic across all nodes.  
