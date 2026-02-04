@@ -236,7 +236,6 @@ def _download_single_file(repo_ids: list[str], filename: str, target_path: Path)
                 filename=filename,
                 repo_type="model",
                 local_dir=str(target_path.parent),
-                local_dir_use_symlinks=False,
             )
             downloaded_path = Path(downloaded)
             if downloaded_path.exists() and downloaded_path.resolve() != target_path.resolve():
