@@ -1,5 +1,47 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.0.7 (2026/02/04)
+
+🧠 **Smart Prompt Caching System**
+
+This release introduces intelligent prompt caching with Fixed Seed Mode for dramatic performance improvements and workflow stability.
+
+### 🎯 Major Features
+- **Smart Prompt Caching**: Automatic caching system prevents regeneration of identical prompts
+- **Fixed Seed Mode**: Set seed = 1 to ignore image/video changes and maintain consistent prompts
+- **Persistent Cache**: Cache survives across ComfyUI restarts via `prompt_cache.json`
+- **Dual Cache Keys**: Separate caching for fixed seed (text-only) vs variable seed (full input)
+- **Performance Boost**: Instant response for cached prompts with zero model loading time
+
+### 🔧 Technical Implementation
+- **Hash-based Cache Keys**: MD5 hashes generated from model, preset, custom prompt, and media
+- **Media Hash Sampling**: Efficient image/video tensor hashing using pixel sampling
+- **Cache File Storage**: JSON-based cache with automatic save/load functionality
+- **Fixed Seed Detection**: Special text-only cache when seed = 1
+- **Console Logging**: Clear feedback on cache hits/misses and mode detection
+
+### 📋 Cache Behavior
+- **Fixed Seed Mode (seed = 1)**: Ignores media completely, caches based only on text
+- **Variable Seed (seed > 1)**: Includes media in cache key for full input matching
+- **Cache Persistence**: Automatic saving to `prompt_cache.json` after each generation
+- **Cache Loading**: Automatic cache restoration on ComfyUI startup
+- **Memory Efficient**: Cache only stores generated text and metadata
+
+### 🎨 User Experience
+- **Updated Tooltips**: Enhanced seed parameter tooltips explaining cache behavior
+- **Instant Response**: Zero wait time for cached prompts
+- **Workflow Stability**: Same prompt guaranteed with fixed seed regardless of media
+- **Performance Gains**: Dramatic speedup for repeated prompt generation
+- **Transparent Operation**: Clear console messages indicating cache usage
+
+### 🛠️ Compatibility
+- **Backward Compatible**: Existing workflows continue to work unchanged
+- **Optional Feature**: Fixed Seed Mode is opt-in via seed = 1
+- **Cache Management**: Automatic cache cleanup and management
+- **Cross-Session**: Cache persists between ComfyUI restarts
+
+---
+
 ## Version 2.0.6 (2026/02/03)
 
 🎬 **Professional Cinematography Enhancement**

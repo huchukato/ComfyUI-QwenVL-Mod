@@ -5,6 +5,12 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
+* **2026/02/04**: **v2.0.7** Smart prompt caching system with Fixed Seed Mode. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-207-20260204)]
+> [!NOTE]  
+> 🧠 **Smart Caching**: Automatic prompt caching prevents regeneration of identical prompts.  
+> 🔒 **Fixed Seed Mode**: Set seed = 1 to ignore media changes and maintain same prompt regardless of image/video variations.  
+> ⚡ **Performance Boost**: Instant response for cached prompts with zero model loading time.
+
 * **2026/02/03**: **v2.0.6** Professional cinematography enhancement for all WAN 2.2 presets. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-206-20260203)]
 > [!NOTE]  
 > 🎬 **Professional Specs**: All WAN 2.2 presets now include comprehensive cinematography specifications.  
@@ -66,6 +72,8 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 * **Standard & Advanced Nodes**: Includes a simple QwenVL node for quick use and a QwenVL (Advanced) node with fine-grained control over generation.  
 * **Prompt Enhancers**: Dedicated text-only prompt enhancers for both HF and GGUF backends.  
 * **Preset & Custom Prompts**: Choose from a list of convenient preset prompts or write your own for full control. Custom prompts now combine with preset templates for enhanced flexibility.  
+* **Smart Prompt Caching**: Automatic caching system prevents regeneration of identical prompts, dramatically improving performance for repeated inputs. Cache persists across ComfyUI restarts.  
+* **Fixed Seed Mode**: Set seed = 1 to ignore image/video changes and maintain consistent prompts regardless of media variations. Perfect for stable workflow outputs.  
 * **WAN 2.2 Integration**: Specialized prompts for WAN 2.2 I2V (image-to-video) and T2V (text-to-video) generation with professional cinematography specifications and cinematic timeline structure. I2V preset prioritized for faster workflow access.  
 * **Professional Cinematography**: All WAN 2.2 presets include comprehensive technical specifications - light sources, shot types, lens specifications, camera movements, and color tone requirements for professional video generation.  
 * **Extended Storyboard**: New preset for seamless storyboard-to-storyboard generation with WAN 2.2 format compatibility, continuity focus, and professional cinematography details.  
@@ -76,7 +84,7 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 * **Smart Quantization**: Balance VRAM and performance with 4-bit, 8-bit, and FP16 options. 8-bit quantization enabled by default for optimal accessibility.  
 * **Optimized Attention**: Clean attention pipeline with Flash Attention 2 support and stable SDPA fallback. No complex patching that could interfere with model output.  
 * **Hardware-Aware**: Automatically detects GPU capabilities and prevents errors with incompatible models (e.g., FP8).  
-* **Reproducible Generation**: Use the seed parameter to get consistent outputs.  
+* **Reproducible Generation**: Use the seed parameter to get consistent outputs, with Fixed Seed Mode for ultimate stability.  
 * **Memory Management**: "Keep Model Loaded" option to retain the model in VRAM for faster processing.  
 * **Image & Video Support**: Accepts both single images and video frame sequences as input.  
 * **Robust Error Handling**: Provides clear error messages for hardware or memory issues.  
@@ -363,7 +371,7 @@ This enhanced version includes specialized prompts for **WAN 2.2** video generat
 
 ## **🗺️ Roadmap**
 
-### **✅ Completed (v2.0.6)**
+### **✅ Completed (v2.0.7)**
 
 * ✅ Support for Qwen3-VL and Qwen2.5-VL models.  
 * ✅ GGUF backend support for faster inference.  
@@ -379,7 +387,10 @@ This enhanced version includes specialized prompts for **WAN 2.2** video generat
 * ✅ Comprehensive NSFW content generation support.  
 * ✅ Optimized model ordering and quantization defaults.  
 * ✅ Clean attention pipeline with SDPA stability.  
-* ✅ Removed complexity for better model output reliability.
+* ✅ Removed complexity for better model output reliability.  
+* ✅ Smart prompt caching system for performance optimization.  
+* ✅ Fixed Seed Mode for stable outputs regardless of media variations.  
+* ✅ Persistent cache across ComfyUI restarts.
 
 
 ## **🙏 Credits**
