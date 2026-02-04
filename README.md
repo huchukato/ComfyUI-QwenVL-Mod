@@ -10,7 +10,7 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 > 🧠 **Smart Caching**: Automatic prompt caching prevents regeneration of identical prompts.  
 > 🔒 **Fixed Seed Mode**: Set seed = 1 to ignore media changes and maintain same prompt regardless of image/video variations.  
 > ⚡ **Performance Boost**: Instant response for cached prompts with zero model loading time.  
-> 🔧 **Code Maintenance**: Removed deprecated parameters for future compatibility.
+> 🔧 **Code Maintenance**: Removed deprecated parameters across all download functions for future compatibility.
 
 * **2026/02/03**: **v2.0.6** Professional cinematography enhancement for all WAN 2.2 presets. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-206-20260203)]
 > [!NOTE]  

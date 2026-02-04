@@ -39,7 +39,7 @@ This release introduces intelligent prompt caching with Fixed Seed Mode for dram
 - **Optional Feature**: Fixed Seed Mode is opt-in via seed = 1
 - **Cache Management**: Automatic cache cleanup and management
 - **Cross-Session**: Cache persists between ComfyUI restarts
-- **Code Maintenance**: Removed deprecated parameters for future compatibility
+- **Code Maintenance**: Removed deprecated parameters across all download functions (HF, GGUF, PromptEnhancer) for future compatibility
 
 ---
 
