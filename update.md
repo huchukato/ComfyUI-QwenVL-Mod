@@ -41,6 +41,7 @@ This release introduces intelligent prompt caching with Fixed Seed Mode for dram
 - **Cross-Session**: Cache persists between ComfyUI restarts
 - **Code Maintenance**: Removed deprecated parameters across all download functions (HF, GGUF, PromptEnhancer) for future compatibility
 - **GGUF Performance**: Increased default context size from 8192 to 32768 across all GGUF models for better utilization
+- **Universal Caching**: Fixed Seed Mode and smart caching now available across all node types (HF, GGUF, PromptEnhancer) with shared cache file
 
 ---
 
