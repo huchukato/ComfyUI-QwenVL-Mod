@@ -375,26 +375,14 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         device,
         seed,
     ):
-        # Check if seed is fixed (common convention: seed = 1 means fixed)
-        # We'll use a special cache key that ignores media when seed is 1
-        ignore_media = (seed == 1)
-        
-        if ignore_media:
-            # For fixed seed, only use text-based cache key
-            cache_key = get_cache_key(model_name, preset_system_prompt, prompt_text, ignore_media=True)
-            print(f"[QwenVL PromptEnhancer GGUF] Fixed seed mode - using text-only cache key: {cache_key[:8]}...")
-        else:
-            # For PromptEnhancer, always use text-only cache (no media input)
-            cache_key = get_cache_key(model_name, preset_system_prompt, prompt_text, ignore_media=True)
+        # Generate cache key with all inputs including seed
+        cache_key = get_cache_key(model_name, preset_system_prompt, prompt_text, seed=seed)
         
         # Check cache first
         if cache_key in PROMPT_CACHE:
             cached_text = PROMPT_CACHE[cache_key].get("text", "")
             if cached_text:
-                if ignore_media:
-                    print(f"[QwenVL PromptEnhancer GGUF] Fixed seed - Using cached text prompt")
-                else:
-                    print(f"[QwenVL PromptEnhancer GGUF] Using cached prompt for key: {cache_key[:8]}...")
+                print(f"[QwenVL PromptEnhancer GGUF] Using cached prompt for seed {seed}: {cache_key[:8]}...")
                 return (cached_text.strip(),)
         
         style_entry = self.styles.get(preset_system_prompt, {})
@@ -442,14 +430,11 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
             "timestamp": None,  # GGUF PromptEnhancer doesn't have CUDA events
             "model": model_name,
             "preset": preset_system_prompt,
-            "ignore_media": ignore_media
+            "seed": seed
         }
         save_prompt_cache()  # Save cache to file
         
-        if ignore_media:
-            print(f"[QwenVL PromptEnhancer GGUF] Fixed seed - Cached new text prompt")
-        else:
-            print(f"[QwenVL PromptEnhancer GGUF] Cached new prompt with key: {cache_key[:8]}...")
+        print(f"[QwenVL PromptEnhancer GGUF] Cached new prompt for seed {seed}: {cache_key[:8]}...")
         
         return (final,)
 
