@@ -10,17 +10,25 @@
 #
 # Source: https://github.com/1038lab/ComfyUI-QwenVL
 
+import base64
+import gc
+import hashlib
 import json
 import os
-import re
+import time
+from dataclasses import dataclass
 from pathlib import Path
-
 import torch
 from huggingface_hub import hf_hub_download, snapshot_download
 from llama_cpp import Llama
 
 import folder_paths
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output
+
+# Import cache functions from main module
+import sys
+sys.path.append(str(Path(__file__).parent))
+from AILab_QwenVL import PROMPT_CACHE, get_cache_key, save_prompt_cache
 
 NODE_DIR = Path(__file__).parent
 GGUF_CONFIG_PATH = NODE_DIR / "gguf_models.json"
@@ -367,13 +375,35 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         device,
         seed,
     ):
+        # Check if seed is fixed (common convention: seed = 1 means fixed)
+        # We'll use a special cache key that ignores media when seed is 1
+        ignore_media = (seed == 1)
+        
+        if ignore_media:
+            # For fixed seed, only use text-based cache key
+            cache_key = get_cache_key(model_name, preset_system_prompt, prompt_text, ignore_media=True)
+            print(f"[QwenVL PromptEnhancer GGUF] Fixed seed mode - using text-only cache key: {cache_key[:8]}...")
+        else:
+            # For PromptEnhancer, always use text-only cache (no media input)
+            cache_key = get_cache_key(model_name, preset_system_prompt, prompt_text, ignore_media=True)
+        
+        # Check cache first
+        if cache_key in PROMPT_CACHE:
+            cached_text = PROMPT_CACHE[cache_key].get("text", "")
+            if cached_text:
+                if ignore_media:
+                    print(f"[QwenVL PromptEnhancer GGUF] Fixed seed - Using cached text prompt")
+                else:
+                    print(f"[QwenVL PromptEnhancer GGUF] Using cached prompt for key: {cache_key[:8]}...")
+                return (cached_text.strip(),)
+        
         style_entry = self.styles.get(preset_system_prompt, {})
         system_prompt = (custom_system_prompt.strip() or style_entry.get("system_prompt") or "").strip()
         if not system_prompt:
             raise ValueError("system_prompt is empty; check AILab_System_Prompts.json or preset selection.")
         system_prompt = (
             f"{system_prompt}\n\n"
-            "Return only the final prompt text. No preface, no explanations, no analysis, no JSON, no markdown fences, and no <think>.\n"
+            "Return only the final prompt text. No preface, no explanations, no analysis, no JSON, no markdown fences, and no </think>.\n"
             "Do not write planning steps (no 'First', 'Next', 'Then') and do not use first-person ('I', 'we')."
         )
         user_prompt = prompt_text.strip() or "Describe a scene vividly."
@@ -392,7 +422,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
             translated = self._invoke_llama(
                 system_prompt=(
                     PROMPT_CONFIG.get("translation_prompt")
-                    or "Return a single English paragraph (150-300 words). No prefixes, bullets, JSON, or <think>. "
+                    or "Return a single English paragraph (150-300 words). No prefixes, bullets, JSON, or </think>. "
                     "Cover subject, environment, lighting, camera settings, composition, color/texture, and style. Output only the prompt."
                 ),
                 user_prompt=enhanced,
@@ -405,6 +435,22 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
             final = clean_model_output(translated, OutputCleanConfig(mode="prompt")) or translated.strip()
         else:
             final = clean_model_output(enhanced, OutputCleanConfig(mode="prompt")) or enhanced.strip()
+        
+        # Cache the generated text
+        PROMPT_CACHE[cache_key] = {
+            "text": final,
+            "timestamp": None,  # GGUF PromptEnhancer doesn't have CUDA events
+            "model": model_name,
+            "preset": preset_system_prompt,
+            "ignore_media": ignore_media
+        }
+        save_prompt_cache()  # Save cache to file
+        
+        if ignore_media:
+            print(f"[QwenVL PromptEnhancer GGUF] Fixed seed - Cached new text prompt")
+        else:
+            print(f"[QwenVL PromptEnhancer GGUF] Cached new prompt with key: {cache_key[:8]}...")
+        
         return (final,)
 
     @staticmethod

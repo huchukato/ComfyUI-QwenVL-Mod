@@ -11,18 +11,25 @@
 
 import base64
 import gc
+import hashlib
 import io
 import inspect
 import json
 import os
+import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
 import torch
-from huggingface_hub import hf_hub_download
+from huggingface_hub import hf_hub_download, snapshot_download
+from llama_cpp import Llama
 from PIL import Image
+
+# Import cache functions from main module
+sys.path.append(str(Path(__file__).parent))
+from AILab_QwenVL import PROMPT_CACHE, get_cache_key, get_image_hash, get_video_hash, save_prompt_cache
 
 import folder_paths
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output
@@ -532,6 +539,31 @@ class QwenVLGGUFBase:
         torch.manual_seed(int(seed))
 
         prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
+        
+        # Check if seed is fixed (common convention: seed = 1 means fixed)
+        # We'll use a special cache key that ignores media when seed is 1
+        ignore_media = (int(seed) == 1)
+        
+        if ignore_media:
+            # For fixed seed, only use text-based cache key
+            cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, ignore_media=True)
+            print(f"[QwenVL GGUF] Fixed seed mode - using text-only cache key: {cache_key[:8]}...")
+        else:
+            # Generate cache key with media for variable seeds
+            image_hash = get_image_hash(image)
+            video_hash = get_video_hash(video)
+            cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash)
+        
+        # Check cache first
+        if cache_key in PROMPT_CACHE:
+            cached_text = PROMPT_CACHE[cache_key].get("text", "")
+            if cached_text:
+                if ignore_media:
+                    print(f"[QwenVL GGUF] Fixed seed - Using cached text prompt (ignoring media)")
+                else:
+                    print(f"[QwenVL GGUF] Using cached prompt for key: {cache_key[:8]}...")
+                return cached_text.strip()
+
         if custom_prompt and custom_prompt.strip():
             # Combine template with user input like PromptEnhancer does
             prompt = f"{prompt_template}\n\n{custom_prompt.strip()}"
@@ -575,6 +607,22 @@ class QwenVLGGUFBase:
                 repetition_penalty=repetition_penalty,
                 seed=seed,
             )
+            
+            # Cache the generated text
+            PROMPT_CACHE[cache_key] = {
+                "text": text,
+                "timestamp": None,  # GGUF doesn't have CUDA events
+                "model": model_name,
+                "preset": preset_prompt,
+                "ignore_media": ignore_media
+            }
+            save_prompt_cache()  # Save cache to file
+            
+            if ignore_media:
+                print(f"[QwenVL GGUF] Fixed seed - Cached new text prompt (ignoring media)")
+            else:
+                print(f"[QwenVL GGUF] Cached new prompt with key: {cache_key[:8]}...")
+            
             return (text,)
         finally:
             if not keep_model_loaded:
