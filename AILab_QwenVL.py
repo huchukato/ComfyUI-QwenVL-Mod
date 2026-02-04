@@ -51,24 +51,16 @@ def save_prompt_cache():
     except Exception as e:
         print(f"[QwenVL] Failed to save prompt cache: {e}")
 
-def get_cache_key(model_name, preset_prompt, custom_prompt, image_hash=None, video_hash=None, ignore_media=False):
+def get_cache_key(model_name, preset_prompt, custom_prompt, image_hash=None, video_hash=None, seed=None):
     """Generate cache key from inputs"""
-    if ignore_media:
-        # For fixed seed mode, ignore image/video and only use text inputs
-        key_data = {
-            "model": model_name,
-            "preset": preset_prompt,
-            "custom": custom_prompt.strip() if custom_prompt else "",
-            "ignore_media": True
-        }
-    else:
-        key_data = {
-            "model": model_name,
-            "preset": preset_prompt,
-            "custom": custom_prompt.strip() if custom_prompt else "",
-            "image": image_hash,
-            "video": video_hash
-        }
+    key_data = {
+        "model": model_name,
+        "preset": preset_prompt,
+        "custom": custom_prompt.strip() if custom_prompt else "",
+        "image": image_hash,
+        "video": video_hash,
+        "seed": seed  # Always include seed to ensure proper caching behavior
+    }
     # Create deterministic hash
     key_str = json.dumps(key_data, sort_keys=True)
     return hashlib.md5(key_str.encode()).hexdigest()
@@ -510,28 +502,16 @@ class QwenVLBase:
         torch.manual_seed(seed)
         prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
         
-        # Check if seed is fixed (common convention: seed = 1 means fixed)
-        # We'll use a special cache key that ignores media when seed is 1
-        ignore_media = (seed == 1)
-        
-        if ignore_media:
-            # For fixed seed, only use text-based cache key
-            cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, ignore_media=True)
-            print(f"[QwenVL] Fixed seed mode - using text-only cache key: {cache_key[:8]}...")
-        else:
-            # Generate cache key with media for variable seeds
-            image_hash = get_image_hash(image)
-            video_hash = get_video_hash(video)
-            cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash)
+        # Generate cache key with all inputs including seed
+        image_hash = get_image_hash(image)
+        video_hash = get_video_hash(video)
+        cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash, seed)
         
         # Check cache first
         if cache_key in PROMPT_CACHE:
             cached_text = PROMPT_CACHE[cache_key].get("text", "")
             if cached_text:
-                if ignore_media:
-                    print(f"[QwenVL] Fixed seed - Using cached text prompt (ignoring media)")
-                else:
-                    print(f"[QwenVL] Using cached prompt for key: {cache_key[:8]}...")
+                print(f"[QwenVL] Using cached prompt for seed {seed}: {cache_key[:8]}...")
                 return (cached_text,)
         
         if custom_prompt and custom_prompt.strip():
@@ -567,14 +547,11 @@ class QwenVLBase:
                 "timestamp": torch.cuda.Event().record() if torch.cuda.is_available() else None,
                 "model": model_name,
                 "preset": preset_prompt,
-                "ignore_media": ignore_media
+                "seed": seed
             }
             save_prompt_cache()  # Save cache to file
             
-            if ignore_media:
-                print(f"[QwenVL] Fixed seed - Cached new text prompt (ignoring media)")
-            else:
-                print(f"[QwenVL] Cached new prompt with key: {cache_key[:8]}...")
+            print(f"[QwenVL] Cached new prompt for seed {seed}: {cache_key[:8]}...")
             return (text,)
         finally:
             if not keep_model_loaded:

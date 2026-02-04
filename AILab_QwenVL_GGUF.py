@@ -540,28 +540,16 @@ class QwenVLGGUFBase:
 
         prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
         
-        # Check if seed is fixed (common convention: seed = 1 means fixed)
-        # We'll use a special cache key that ignores media when seed is 1
-        ignore_media = (int(seed) == 1)
-        
-        if ignore_media:
-            # For fixed seed, only use text-based cache key
-            cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, ignore_media=True)
-            print(f"[QwenVL GGUF] Fixed seed mode - using text-only cache key: {cache_key[:8]}...")
-        else:
-            # Generate cache key with media for variable seeds
-            image_hash = get_image_hash(image)
-            video_hash = get_video_hash(video)
-            cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash)
+        # Generate cache key with all inputs including seed
+        image_hash = get_image_hash(image)
+        video_hash = get_video_hash(video)
+        cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash, int(seed))
         
         # Check cache first
         if cache_key in PROMPT_CACHE:
             cached_text = PROMPT_CACHE[cache_key].get("text", "")
             if cached_text:
-                if ignore_media:
-                    print(f"[QwenVL GGUF] Fixed seed - Using cached text prompt (ignoring media)")
-                else:
-                    print(f"[QwenVL GGUF] Using cached prompt for key: {cache_key[:8]}...")
+                print(f"[QwenVL GGUF] Using cached prompt for seed {seed}: {cache_key[:8]}...")
                 return cached_text.strip()
 
         if custom_prompt and custom_prompt.strip():
@@ -614,14 +602,11 @@ class QwenVLGGUFBase:
                 "timestamp": None,  # GGUF doesn't have CUDA events
                 "model": model_name,
                 "preset": preset_prompt,
-                "ignore_media": ignore_media
+                "seed": int(seed)
             }
             save_prompt_cache()  # Save cache to file
             
-            if ignore_media:
-                print(f"[QwenVL GGUF] Fixed seed - Cached new text prompt (ignoring media)")
-            else:
-                print(f"[QwenVL GGUF] Cached new prompt with key: {cache_key[:8]}...")
+            print(f"[QwenVL GGUF] Cached new prompt for seed {seed}: {cache_key[:8]}...")
             
             return (text,)
         finally:
