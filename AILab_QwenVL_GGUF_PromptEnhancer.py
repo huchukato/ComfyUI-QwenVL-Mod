@@ -264,7 +264,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         resolved = self._resolve_model_path(model_name)
         self._maybe_download_model(model_name, resolved)
         model_cfg = self.gguf_models["models"].get(model_name, {})
-        context_length = model_cfg.get("context_length", 8192)
+        context_length = model_cfg.get("context_length", 32768)
         signature = (resolved, context_length, device)
         if self.llm is not None and self.current_signature == signature:
             return
