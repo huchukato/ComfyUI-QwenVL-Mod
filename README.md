@@ -8,11 +8,12 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 * **2026/02/04**: **v2.0.7** Smart prompt caching system with Fixed Seed Mode. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-207-20260204)]
 > [!NOTE]  
 > 🧠 **Smart Caching**: Automatic prompt caching prevents regeneration of identical prompts.  
-> 🔒 **Fixed Seed Mode**: Set seed = 1 to ignore media changes and maintain same prompt regardless of image/video variations.  
+> 🔒 **Fixed Seed Mode**: Set any fixed seed value to maintain consistent prompts regardless of media variations.  
 > ⚡ **Performance Boost**: Instant response for cached prompts with zero model loading time.  
 > 🔧 **Code Maintenance**: Removed deprecated parameters across all download functions for future compatibility.  
 > 📈 **GGUF Enhancement**: Increased default context size from 8192 to 32768 for better model utilization.  
-> 🔄 **Universal Caching**: Fixed Seed Mode and smart caching now available across all nodes (HF, GGUF, PromptEnhancer).
+> 🔄 **Universal Caching**: Fixed Seed Mode and smart caching now available across all nodes (HF, GGUF, PromptEnhancer).  
+> 🎯 **Simplified Logic**: Streamlined caching system that always includes seed for predictable behavior across all seed values.
 
 * **2026/02/03**: **v2.0.6** Professional cinematography enhancement for all WAN 2.2 presets. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-206-20260203)]
 > [!NOTE]  

@@ -6,23 +6,25 @@
 
 This release introduces intelligent prompt caching with Fixed Seed Mode for dramatic performance improvements and workflow stability.
 
-### 🎯 Major Features
-- **Smart Prompt Caching**: Automatic caching system prevents regeneration of identical prompts
-- **Fixed Seed Mode**: Set seed = 1 to ignore image/video changes and maintain consistent prompts
-- **Persistent Cache**: Cache survives across ComfyUI restarts via `prompt_cache.json`
-- **Dual Cache Keys**: Separate caching for fixed seed (text-only) vs variable seed (full input)
+### 🎯 Key Features
+- **Smart Caching**: Automatic prompt caching prevents regeneration of identical prompts
+- **Fixed Seed Mode**: Set any fixed seed value to maintain consistent prompts regardless of media variations
+- **Universal Coverage**: Works across all node types (HF, GGUF, PromptEnhancer)
 - **Performance Boost**: Instant response for cached prompts with zero model loading time
+- **Simplified Logic**: Streamlined caching system that always includes seed for predictable behavior across all seed values
 
 ### 🔧 Technical Implementation
-- **Hash-based Cache Keys**: MD5 hashes generated from model, preset, custom prompt, and media
+- **Hash-based Cache Keys**: MD5 hashes generated from model, preset, custom prompt, media, and seed
 - **Media Hash Sampling**: Efficient image/video tensor hashing using pixel sampling
 - **Cache File Storage**: JSON-based cache with automatic save/load functionality
-- **Fixed Seed Detection**: Special text-only cache when seed = 1
-- **Console Logging**: Clear feedback on cache hits/misses and mode detection
+- **Seed-based Logic**: Always includes seed in cache key for consistent behavior
+- **Console Logging**: Clear feedback on cache hits/misses with seed information
 
 ### 📋 Cache Behavior
-- **Fixed Seed Mode (seed = 1)**: Ignores media completely, caches based only on text
-- **Variable Seed (seed > 1)**: Includes media in cache key for full input matching
+- **Fixed Seed Mode**: Any fixed seed value maintains consistent prompts regardless of media variations
+- **Random Mode**: Different seeds generate different prompts even with identical inputs
+- **Cache Hit**: Same seed + same inputs = instant response from cache
+- **Cache Miss**: Different seed or different inputs = new generation and cache storage
 - **Cache Persistence**: Automatic saving to `prompt_cache.json` after each generation
 - **Cache Loading**: Automatic cache restoration on ComfyUI startup
 - **Memory Efficient**: Cache only stores generated text and metadata
@@ -36,12 +38,13 @@ This release introduces intelligent prompt caching with Fixed Seed Mode for dram
 
 ### 🛠️ Compatibility
 - **Backward Compatible**: Existing workflows continue to work unchanged
-- **Optional Feature**: Fixed Seed Mode is opt-in via seed = 1
+- **Optional Feature**: Fixed Seed Mode works with any seed value
 - **Cache Management**: Automatic cache cleanup and management
 - **Cross-Session**: Cache persists between ComfyUI restarts
 - **Code Maintenance**: Removed deprecated parameters across all download functions (HF, GGUF, PromptEnhancer) for future compatibility
 - **GGUF Performance**: Increased default context size from 8192 to 32768 across all GGUF models for better utilization
 - **Universal Caching**: Fixed Seed Mode and smart caching now available across all node types (HF, GGUF, PromptEnhancer) with shared cache file
+- **Simplified Logic**: Streamlined caching system that always includes seed for predictable behavior across all seed values
 
 ---
 
