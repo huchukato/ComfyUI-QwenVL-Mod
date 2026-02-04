@@ -18,6 +18,7 @@ import json
 import platform
 from enum import Enum
 from pathlib import Path
+import hashlib
 
 import numpy as np
 import psutil
@@ -25,6 +26,69 @@ import torch
 from PIL import Image
 from huggingface_hub import snapshot_download
 from transformers import AutoProcessor, AutoTokenizer, BitsAndBytesConfig
+
+# Global cache for generated prompts
+PROMPT_CACHE = {}
+CACHE_FILE = Path(__file__).parent / "prompt_cache.json"
+
+def load_prompt_cache():
+    """Load prompt cache from file"""
+    global PROMPT_CACHE
+    try:
+        if CACHE_FILE.exists():
+            with open(CACHE_FILE, "r", encoding="utf-8") as f:
+                PROMPT_CACHE = json.load(f)
+                print(f"[QwenVL] Loaded {len(PROMPT_CACHE)} cached prompts")
+    except Exception as e:
+        print(f"[QwenVL] Failed to load prompt cache: {e}")
+        PROMPT_CACHE = {}
+
+def save_prompt_cache():
+    """Save prompt cache to file"""
+    try:
+        with open(CACHE_FILE, "w", encoding="utf-8") as f:
+            json.dump(PROMPT_CACHE, f, indent=2)
+    except Exception as e:
+        print(f"[QwenVL] Failed to save prompt cache: {e}")
+
+def get_cache_key(model_name, preset_prompt, custom_prompt, image_hash=None, video_hash=None):
+    """Generate cache key from inputs"""
+    key_data = {
+        "model": model_name,
+        "preset": preset_prompt,
+        "custom": custom_prompt.strip() if custom_prompt else "",
+        "image": image_hash,
+        "video": video_hash
+    }
+    # Create deterministic hash
+    key_str = json.dumps(key_data, sort_keys=True)
+    return hashlib.md5(key_str.encode()).hexdigest()
+
+def get_image_hash(image):
+    """Generate hash for image tensor"""
+    if image is None:
+        return None
+    try:
+        # Use image tensor properties for hash
+        shape = str(image.shape)
+        dtype = str(image.dtype)
+        # Sample a few pixels for content hash (avoid full tensor for performance)
+        if len(image.shape) >= 3:
+            sample_pixels = image.flatten()[:100].tolist() if image.numel() > 0 else []
+        else:
+            sample_pixels = image.flatten().tolist() if image.numel() > 0 else []
+        
+        content = f"{shape}_{dtype}_{sample_pixels[:10]}"  # Limit sample size
+        return hashlib.md5(content.encode()).hexdigest()[:16]
+    except:
+        return None
+
+def get_video_hash(video):
+    """Generate hash for video tensor (same as image)"""
+    return get_image_hash(video)
+
+# Load cache on module import
+load_prompt_cache()
 try:
     from transformers import AutoModelForVision2Seq
 except ImportError:
@@ -438,6 +502,18 @@ class QwenVLBase:
         torch.manual_seed(seed)
         prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
         
+        # Generate cache key
+        image_hash = get_image_hash(image)
+        video_hash = get_video_hash(video)
+        cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash)
+        
+        # Check cache first
+        if cache_key in PROMPT_CACHE:
+            cached_text = PROMPT_CACHE[cache_key].get("text", "")
+            if cached_text:
+                print(f"[QwenVL] Using cached prompt for key: {cache_key[:8]}...")
+                return (cached_text,)
+        
         if custom_prompt and custom_prompt.strip():
             # Combine template with user input like PromptEnhancer does
             prompt = f"{prompt_template}\n\n{custom_prompt.strip()}"
@@ -464,6 +540,17 @@ class QwenVLBase:
                 num_beams,
                 repetition_penalty,
             )
+            
+            # Cache the generated text
+            PROMPT_CACHE[cache_key] = {
+                "text": text,
+                "timestamp": torch.cuda.Event().record() if torch.cuda.is_available() else None,
+                "model": model_name,
+                "preset": preset_prompt
+            }
+            save_prompt_cache()  # Save cache to file
+            
+            print(f"[QwenVL] Cached new prompt with key: {cache_key[:8]}...")
             return (text,)
         finally:
             if not keep_model_loaded:
@@ -486,7 +573,7 @@ class AILab_QwenVL(QwenVLBase):
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": TOOLTIPS["custom_prompt"]}),
                 "max_tokens": ("INT", {"default": 512, "min": 64, "max": 2048, "tooltip": TOOLTIPS["max_tokens"]}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": TOOLTIPS["keep_model_loaded"]}),
-                "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1, "tooltip": TOOLTIPS["seed"]}),
+                "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1, "tooltip": TOOLTIPS["seed"] + "\n\n💡 Cache Info: Prompts are cached automatically. Use the same inputs (model, preset, custom prompt, image/video) to reuse cached prompts and avoid regeneration."}),
             },
             "optional": {
                 "image": ("IMAGE",),
@@ -531,7 +618,7 @@ class AILab_QwenVL_Advanced(QwenVLBase):
                 "repetition_penalty": ("FLOAT", {"default": 1.2, "min": 0.5, "max": 2.0, "tooltip": TOOLTIPS["repetition_penalty"]}),
                 "frame_count": ("INT", {"default": 16, "min": 1, "max": 64, "tooltip": TOOLTIPS["frame_count"]}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": TOOLTIPS["keep_model_loaded"]}),
-                "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1, "tooltip": TOOLTIPS["seed"]}),
+                "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1, "tooltip": TOOLTIPS["seed"] + "\n\n💡 Cache Info: Prompts are cached automatically. Use the same inputs (model, preset, custom prompt, image/video) to reuse cached prompts and avoid regeneration."}),
             },
             "optional": {
                 "image": ("IMAGE",),
