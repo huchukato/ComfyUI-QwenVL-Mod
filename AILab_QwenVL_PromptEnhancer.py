@@ -4,7 +4,11 @@
 #
 # Source: https://github.com/1038lab/ComfyUI-QwenVL
 
+import gc
+import hashlib
 import json
+import platform
+from enum import Enum
 from pathlib import Path
 
 import torch
@@ -14,6 +18,9 @@ from AILab_QwenVL import (
     ATTENTION_MODES,
     HF_TEXT_MODELS,
     HF_VL_MODELS,
+    PROMPT_CACHE,
+    get_cache_key,
+    save_prompt_cache,
     QwenVLBase,
     Quantization,
     TOOLTIPS,
@@ -242,6 +249,29 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         seed,
     ):
         torch.manual_seed(seed)
+        
+        # Check if seed is fixed (common convention: seed = 1 means fixed)
+        # We'll use a special cache key that ignores media when seed is 1
+        ignore_media = (seed == 1)
+        
+        if ignore_media:
+            # For fixed seed, only use text-based cache key
+            cache_key = get_cache_key(model_name, style, custom_prompt, ignore_media=True)
+            print(f"[QwenVL PromptEnhancer HF] Fixed seed mode - using text-only cache key: {cache_key[:8]}...")
+        else:
+            # For PromptEnhancer, always use text-only cache (no media input)
+            cache_key = get_cache_key(model_name, style, custom_prompt, ignore_media=True)
+        
+        # Check cache first
+        if cache_key in PROMPT_CACHE:
+            cached_text = PROMPT_CACHE[cache_key].get("text", "")
+            if cached_text:
+                if ignore_media:
+                    print(f"[QwenVL PromptEnhancer HF] Fixed seed - Using cached text prompt")
+                else:
+                    print(f"[QwenVL PromptEnhancer HF] Using cached prompt for key: {cache_key[:8]}...")
+                return (cached_text.strip(),)
+        
         self._load_text_model(model_name, quantization, device)
 
         if device == "auto":
@@ -263,6 +293,21 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         decoded = self.text_tokenizer.decode(outputs[0], skip_special_tokens=True)
         prefix = self.text_tokenizer.decode(inputs["input_ids"][0], skip_special_tokens=True)
         result = decoded[len(prefix) :].strip()
+        
+        # Cache the generated text
+        PROMPT_CACHE[cache_key] = {
+            "text": result,
+            "timestamp": None,  # PromptEnhancer doesn't have CUDA events
+            "model": model_name,
+            "preset": style,
+            "ignore_media": ignore_media
+        }
+        save_prompt_cache()  # Save cache to file
+        
+        if ignore_media:
+            print(f"[QwenVL PromptEnhancer HF] Fixed seed - Cached new text prompt")
+        else:
+            print(f"[QwenVL PromptEnhancer HF] Cached new prompt with key: {cache_key[:8]}...")
 
         if not keep_model_loaded:
             self.text_model = None
