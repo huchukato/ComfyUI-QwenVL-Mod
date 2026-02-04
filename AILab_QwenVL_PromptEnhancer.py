@@ -250,26 +250,14 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
     ):
         torch.manual_seed(seed)
         
-        # Check if seed is fixed (common convention: seed = 1 means fixed)
-        # We'll use a special cache key that ignores media when seed is 1
-        ignore_media = (seed == 1)
-        
-        if ignore_media:
-            # For fixed seed, only use text-based cache key
-            cache_key = get_cache_key(model_name, style, custom_prompt, ignore_media=True)
-            print(f"[QwenVL PromptEnhancer HF] Fixed seed mode - using text-only cache key: {cache_key[:8]}...")
-        else:
-            # For PromptEnhancer, always use text-only cache (no media input)
-            cache_key = get_cache_key(model_name, style, custom_prompt, ignore_media=True)
+        # Generate cache key with all inputs including seed
+        cache_key = get_cache_key(model_name, style, custom_prompt, seed=seed)
         
         # Check cache first
         if cache_key in PROMPT_CACHE:
             cached_text = PROMPT_CACHE[cache_key].get("text", "")
             if cached_text:
-                if ignore_media:
-                    print(f"[QwenVL PromptEnhancer HF] Fixed seed - Using cached text prompt")
-                else:
-                    print(f"[QwenVL PromptEnhancer HF] Using cached prompt for key: {cache_key[:8]}...")
+                print(f"[QwenVL PromptEnhancer HF] Using cached prompt for seed {seed}: {cache_key[:8]}...")
                 return (cached_text.strip(),)
         
         self._load_text_model(model_name, quantization, device)
@@ -300,14 +288,11 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
             "timestamp": None,  # PromptEnhancer doesn't have CUDA events
             "model": model_name,
             "preset": style,
-            "ignore_media": ignore_media
+            "seed": seed
         }
         save_prompt_cache()  # Save cache to file
         
-        if ignore_media:
-            print(f"[QwenVL PromptEnhancer HF] Fixed seed - Cached new text prompt")
-        else:
-            print(f"[QwenVL PromptEnhancer HF] Cached new prompt with key: {cache_key[:8]}...")
+        print(f"[QwenVL PromptEnhancer HF] Cached new prompt for seed {seed}: {cache_key[:8]}...")
 
         if not keep_model_loaded:
             self.text_model = None
