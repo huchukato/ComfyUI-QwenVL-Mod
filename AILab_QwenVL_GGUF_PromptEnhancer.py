@@ -232,7 +232,6 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
                     filename=filename,
                     repo_type="model",
                     local_dir=str(target_dir),
-                    local_dir_use_symlinks=False,
                 )
                 downloaded_path = Path(downloaded)
                 if downloaded_path.exists() and downloaded_path.resolve() != resolved.resolve():
@@ -247,7 +246,6 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
                     repo_id=repo_id,
                     repo_type="model",
                     local_dir=str(target_dir),
-                    local_dir_use_symlinks=False,
                     allow_patterns=[filename, f"**/{filename}"],
                 )
             except Exception as exc:
