@@ -1,5 +1,53 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.0.8 (2026/02/06)
+
+🐛 **Bug Fixes and Stability Improvements**
+
+This release addresses critical issues identified in v2.0.7 and enhances multilingual capabilities.
+
+### 🔧 Bug Fixes
+- **JSON Syntax Error**: Fixed trailing comma in `AILab_System_Prompts.json` at line 26
+- **Undefined Variable Error**: Resolved `name 'image_hash' is not defined` in GGUF Advanced node
+- **Fixed Seed Stability**: Reverted problematic fixed seed improvements that caused undefined variable errors
+- **Node Loading**: Ensured all nodes load correctly without missing variable errors
+
+### 🌐 Multilingual Support Enhancement
+- **Complete Multilingual Support**: All WAN 2.2 presets now support "user prompts from any language"
+- **Updated Presets**: 
+  - 🍿 Wan 2.2 I2V: Multilingual + style detection
+  - 🍿 Wan Extended Storyboard: Multilingual + style detection  
+  - 🎥 Wan Cinematic Video: Multilingual + style detection
+  - 🍿 Wan 2.2 T2V: Multilingual + style detection
+
+### 🎨 Visual Style Detection
+- **Enhanced Style Detection**: Comprehensive support for artistic styles:
+  - Anime style
+  - 3D cartoon
+  - Pixel art
+  - Puppet animation
+  - 3D game style
+  - Claymation
+  - Watercolor
+  - Black and white animation
+  - Oil painting style
+  - Felt style
+  - Tilt-shift photography
+  - Time-lapse photography
+
+### 🔧 Technical Improvements
+- **JSON Validation**: All system prompts now validate correctly
+- **Error Handling**: Improved error messages for debugging
+- **Code Stability**: Removed complex seed tracking that caused undefined variables
+- **Documentation**: Updated README and changelog with comprehensive changes
+
+### 🔄 Repository Management
+- **Clean Revert**: Properly reverted problematic commits
+- **Version Control**: Maintained stable commit history
+- **Documentation**: Comprehensive update logs for transparency
+
+---
+
 ## Version 2.0.7 (2026/02/04)
 
 🧠 **Smart Prompt Caching System**

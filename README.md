@@ -5,6 +5,14 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
+* **2026/02/06**: **v2.0.8** Bug fixes and stability improvements. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-208-20260206)]
+> [!NOTE]  
+> 🐛 **Bug Fixes**: Fixed JSON syntax error in system prompts and undefined variable issues.  
+> 🌐 **Multilingual Support**: Complete multilingual support added to all WAN 2.2 presets.  
+> 🎨 **Style Detection**: Enhanced visual style detection for anime, 3D, pixel art, and more.  
+> 🔧 **Stability**: Reverted problematic fixed seed improvements to maintain stable operation.  
+> 📝 **Documentation**: Updated README and changelog with today's improvements.
+
 * **2026/02/04**: **v2.0.7** Smart prompt caching system with Fixed Seed Mode. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-207-20260204)]
 > [!NOTE]  
 > 🧠 **Smart Caching**: Automatic prompt caching prevents regeneration of identical prompts.  
