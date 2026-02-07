@@ -43,22 +43,27 @@ This template is perfect for:
 
 ## 📦 Pre-installed Components
 
-### **Custom Nodes (30+)**
+### **Custom Nodes (26)**
 - **ComfyUI-QwenVL-Mod**: Enhanced vision-language with WAN 2.2
 - **ComfyUI-Manager**: Node and model management
 - **ComfyUI-GGUF**: GGUF model support
 - **ComfyUI-VideoHelperSuite**: Video processing utilities
 - **ComfyUI-Impact-Pack**: Advanced functionality
+- **ComfyUI-RunpodDirect**: RunPod-specific optimizations
+- **ComfyUI-Upscaler-Tensorrt**: TensorRT upscaling support
+- **ComfyUI-RIFE-TensorRT-Auto**: TensorRT frame interpolation
 - **PainterI2V Series**: Professional image-to-video workflows
 - **ComfyUI-MMAudio**: Audio processing
 - **ComfyUI-VFI**: Video frame interpolation
-- And 20+ more essential nodes
+- And 15+ more essential nodes
 
-### **Workflows Included**
+### **Workflows Included (10)**
 > **🎬 Pre-installed QwenVL-Mod Workflows**: Complete WAN 2.2 video generation with auto-prompt enhancement:
 - **WAN 2.2 T2V**: Text-to-video with automatic prompt optimization
 - **WAN 2.2 I2V**: Image-to-video with style detection and enhancement
 - **WAN 2.2 I2V-SVI**: Advanced image-to-video with SVI processing
+- **WAN 2.2 T2V/I2V GGUF**: GGUF-optimized versions
+- **WAN 2.2 MMAudio**: Audio-enhanced video generation
 - **SDXL LoRA Stack**: Professional image generation with upscaling
 - **Extended Storyboard**: Seamless storyboard sequences with continuity
 - **Multilingual Support**: Process prompts from any language
@@ -82,13 +87,13 @@ This template is perfect for:
 ### **Quick Start**
 ```bash
 # Build the image
-docker build -t huchukato/comfyui-qwenvl-runpod .
+docker build -t huchukato/comfyui-qwenvl-runpod -f Dockerfile .
 
 # Run locally (for testing)
-docker run -p 8080:8080 --gpus all huchukato/comfyui-qwenvl-runpod
+docker run -p 8188:8188 -p 8080:8080 -p 8888:8888 --gpus all huchukato/comfyui-qwenvl-runpod
 
-# Push to Docker Hub
-docker push huchukato/comfyui-qwenvl-runpod
+# Use pre-built image
+docker run -p 8188:8188 -p 8080:8080 -p 8888:8888 --gpus all huchukato/comfyui-qwenvl-runpod:latest
 ```
 
 ### **RunPod Deployment**
@@ -177,8 +182,13 @@ docker run -p 8080:8080 --gpus all comfyui-qwenvl-runpod
 ### **Health Check**
 The container includes a health check that monitors ComfyUI availability:
 ```bash
-curl -f http://localhost:8080/system_stats
+curl -f http://0.0.0.0:8188/system_stats
 ```
+
+### **Access Ports**
+- **ComfyUI**: http://0.0.0.0:8188 (main interface)
+- **FileBrowser**: http://0.0.0.0:8080 (file management)
+- **JupyterLab**: http://0.0.0.0:8888 (development environment)
 
 ## 📄 License
 
