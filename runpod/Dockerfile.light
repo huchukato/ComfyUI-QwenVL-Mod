@@ -64,7 +64,6 @@ RUN cd ComfyUI-QwenVL-Mod && pip install -r requirements.txt
 RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
     git clone https://github.com/cubiq/ComfyUI_essentials.git && \
     git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
-    git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git && \
     git clone https://github.com/MadiatorLabs/ComfyUI-RunpodDirect.git && \
     git clone https://github.com/ltdrdata/was-node-suite-comfyui.git && \
     git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git && \
