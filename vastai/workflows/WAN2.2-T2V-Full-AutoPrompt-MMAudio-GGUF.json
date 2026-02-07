@@ -5086,57 +5086,6 @@
       "bgcolor": "#353"
     },
     {
-      "id": 1546,
-      "type": "ColorMatch",
-      "pos": [
-        -1292.8809207994009,
-        575.759598455633
-      ],
-      "size": [
-        281.26670703125,
-        127.21141796875008
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 128,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image_ref",
-          "type": "IMAGE",
-          "link": 5441
-        },
-        {
-          "name": "image_target",
-          "type": "IMAGE",
-          "link": 5412
-        }
-      ],
-      "outputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "links": [
-            5410,
-            5413
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-kjnodes",
-        "ver": "e8b70f28be7fd71ee72c3848cfa09e1a89e3061b",
-        "Node name for S&R": "ColorMatch"
-      },
-      "widgets_values": [
-        "mkl",
-        1,
-        true
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
       "id": 1549,
       "type": "GetNode",
       "pos": [
@@ -5618,85 +5567,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 1547,
-      "type": "VHS_VideoCombine",
-      "pos": [
-        -1336.6920964921808,
-        400.9555425221336
-      ],
-      "size": [
-        340,
-        828
-      ],
-      "flags": {},
-      "order": 146,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 5413
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": null
-        },
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "Filenames",
-          "type": "VHS_FILENAMES",
-          "links": []
-        }
-      ],
-      "title": "Final Video",
-      "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "993082e4f2473bf4acaf06f51e33877a7eb38960",
-        "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
-      },
-      "widgets_values": {
-        "frame_rate": 16,
-        "loop_count": 0,
-        "filename_prefix": "wan22_%date:dd_hh-mm-ss%",
-        "format": "video/h264-mp4",
-        "pix_fmt": "yuv420p",
-        "crf": 19,
-        "save_metadata": true,
-        "trim_to_audio": false,
-        "pingpong": false,
-        "save_output": true,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "wan22_07_07-07-00_00001.mp4",
-            "subfolder": "",
-            "type": "output",
-            "format": "video/h264-mp4",
-            "frame_rate": 16,
-            "workflow": "wan22_07_07-07-00_00001.png",
-            "fullpath": "/workspace/ComfyUI/output/wan22_07_07-07-00_00001.mp4"
-          }
-        }
-      }
-    },
-    {
       "id": 1533,
       "type": "UpscalerTensorrt",
       "pos": [
@@ -5817,30 +5687,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 1575,
-      "type": "MarkdownNote",
-      "pos": [
-        -1865.9623778463224,
-        1185.50686586227
-      ],
-      "size": [
-        450.75994318181824,
-        196.61221590909076
-      ],
-      "flags": {},
-      "order": 99,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "🎨 Visual Style Detection",
-      "properties": {},
-      "widgets_values": [
-        "**Enhanced Style Detection: Comprehensive support for artistic styles:**\n\n- Anime style\n\n- 3D cartoon\n\n- Pixel art\n\n- Puppet animation\n\n- 3D game style\n\n- Claymation\n\n- Watercolor\n\n- Black and white animation\n\n- Oil painting style\n\n- Felt style\n\n- Tilt-shift photography\n\n- Time-lapse photography\n\n"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 1576,
       "type": "AutoLoadRifeTensorrtModel",
       "pos": [
@@ -5854,7 +5700,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 100,
+      "order": 99,
       "mode": 4,
       "inputs": [
         {
@@ -5947,7 +5793,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 101,
+      "order": 100,
       "mode": 4,
       "inputs": [
         {
@@ -6210,7 +6056,7 @@
         130
       ],
       "flags": {},
-      "order": 102,
+      "order": 101,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6247,7 +6093,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 103,
+      "order": 102,
       "mode": 4,
       "inputs": [
         {
@@ -6420,7 +6266,7 @@
         106
       ],
       "flags": {},
-      "order": 104,
+      "order": 103,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6573,7 +6419,7 @@
         60
       ],
       "flags": {},
-      "order": 105,
+      "order": 104,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -6654,7 +6500,7 @@
         70
       ],
       "flags": {},
-      "order": 106,
+      "order": 105,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -7557,6 +7403,160 @@
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1575,
+      "type": "MarkdownNote",
+      "pos": [
+        -1865.9623778463224,
+        1185.50686586227
+      ],
+      "size": [
+        450.75994318181824,
+        196.61221590909076
+      ],
+      "flags": {},
+      "order": 106,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🎨 Visual Style Detection",
+      "properties": {},
+      "widgets_values": [
+        "**Enhanced Style Detection: Comprehensive support for artistic styles:**\n\n- Anime style\n\n- 3D cartoon\n\n- Pixel art\n\n- Puppet animation\n\n- 3D game style\n\n- Claymation\n\n- Watercolor\n\n- Black and white animation\n\n- Oil painting style\n\n- Felt style\n\n- Tilt-shift photography\n\n- Time-lapse photography\n\n"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1546,
+      "type": "ColorMatch",
+      "pos": [
+        -1292.8809207994009,
+        575.759598455633
+      ],
+      "size": [
+        281.26670703125,
+        127.21141796875008
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 128,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_ref",
+          "type": "IMAGE",
+          "link": 5441
+        },
+        {
+          "name": "image_target",
+          "type": "IMAGE",
+          "link": 5412
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            5410,
+            5413
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "e8b70f28be7fd71ee72c3848cfa09e1a89e3061b",
+        "Node name for S&R": "ColorMatch"
+      },
+      "widgets_values": [
+        "mkl",
+        0.4,
+        true
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 1547,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        -1339.1261672810208,
+        406.7068693860375
+      ],
+      "size": [
+        340,
+        828
+      ],
+      "flags": {},
+      "order": 146,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5413
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": []
+        }
+      ],
+      "title": "Final Video",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "993082e4f2473bf4acaf06f51e33877a7eb38960",
+        "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+      },
+      "widgets_values": {
+        "frame_rate": 16,
+        "loop_count": 0,
+        "filename_prefix": "wan22_%date:dd_hh-mm-ss%",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "wan22_07_07-07-00_00001.mp4",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/h264-mp4",
+            "frame_rate": 16,
+            "workflow": "wan22_07_07-07-00_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/wan22_07_07-07-00_00001.mp4"
+          }
+        }
+      }
     }
   ],
   "links": [
@@ -9063,7 +9063,7 @@
               130
             ],
             "flags": {},
-            "order": 1,
+            "order": 0,
             "mode": 0,
             "inputs": [],
             "outputs": [
@@ -9449,7 +9449,7 @@
               382
             ],
             "flags": {},
-            "order": 0,
+            "order": 1,
             "mode": 0,
             "inputs": [],
             "outputs": [
@@ -9496,7 +9496,7 @@
               200
             ],
             "flags": {},
-            "order": 3,
+            "order": 2,
             "mode": 0,
             "inputs": [
               {
@@ -9542,7 +9542,7 @@
               301.6534167617692
             ],
             "flags": {},
-            "order": 2,
+            "order": 3,
             "mode": 0,
             "inputs": [
               {
@@ -10086,7 +10086,7 @@
               2327.1484102497425
             ],
             "size": [
-              217.1728515625,
+              218.1728515625,
               98
             ],
             "flags": {
@@ -11632,7 +11632,7 @@
               2342.506244097444
             ],
             "size": [
-              217.1728515625,
+              218.1728515625,
               98
             ],
             "flags": {
@@ -12994,7 +12994,7 @@
               2342.506244097444
             ],
             "size": [
-              217.1728515625,
+              218.1728515625,
               98
             ],
             "flags": {
@@ -14298,10 +14298,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.7132399946224062,
+      "scale": 0.5458421037503317,
       "offset": [
-        993.9320461298186,
-        347.5506675955331
+        2994.1724404801535,
+        325.4964898330661
       ]
     }
   },
