@@ -47,7 +47,7 @@ RUN python3.12 -m venv /opt/venv && \
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Install PyTorch with CUDA 13.1 support - optimized for RTX 5090
-RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+RUN pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cu128
 
 # Install ComfyUI
 WORKDIR /ComfyUI
