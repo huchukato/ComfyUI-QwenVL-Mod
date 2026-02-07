@@ -31,14 +31,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install CUDA 12.8 toolkit
+# Install CUDA 12.8 minimal build (RunPod approach)
 RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb && \
     dpkg -i cuda-keyring_1.1-1_all.deb && \
     apt-get update && \
-    apt-get install -y cuda-toolkit-12-8 && \
-    rm cuda-keyring_1.1-1_all.deb && \
+    apt-get install -y --no-install-recommends cuda-minimal-build-12-8 && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    rm cuda-keyring_1.1-1_all.deb
 
 # Create Python virtual environment and setup pip
 RUN python3.12 -m venv /opt/venv && \
