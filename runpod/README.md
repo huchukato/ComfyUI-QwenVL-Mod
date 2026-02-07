@@ -2,6 +2,8 @@
 
 Professional ComfyUI environment optimized for RunPod with QwenVL-Mod enhanced vision-language capabilities and WAN 2.2 video generation workflows.
 
+**Clean template** - Add your own HF_TOKEN and CIVITAI_TOKEN when creating endpoints for restricted model access.
+
 ---
 
 ## 🎯 Who is this for?
@@ -91,18 +93,20 @@ docker push huchukato/comfyui-qwenvl-runpod
 
 ### **RunPod Deployment**
 1. **[Create RunPod Account](https://runpod.io?ref_id=188688)** (Use referral ID: 188688)
-2. Create a new RunPod endpoint
-3. Use the image: `huchukato/comfyui-qwenvl-runpod`
-4. Select GPU: RTX 5090 or equivalent
-5. Set container port: 8080
-6. Deploy and access via provided URL
+2. Create a new RunPod endpoint using the template
+3. Select GPU: RTX 5090 or equivalent  
+4. **Optional**: Add `HF_TOKEN` and `CIVITAI_TOKEN` for restricted model access
+5. Deploy and access via provided URL
+
+> **🔑 Authentication**: Add your own tokens in environment variables when creating endpoints for access to premium/restricted models.
 
 ### **Environment Variables**
 - `COMFYUI_ARGS`: ComfyUI startup arguments (pre-optimized)
 - `PYTHONUNBUFFERED`: Python output buffering
-- `DEBIAN_FRONTEND`: Non-interactive package installation
-- `HF_TOKEN`: Hugging Face token for restricted models (optional)
-- `CIVITAI_TOKEN`: CivitAI token for premium models (optional)
+- `HF_TOKEN`: Hugging Face token for restricted models (add when creating endpoint)
+- `CIVITAI_TOKEN`: CivitAI token for premium models (add when creating endpoint)
+
+> **💡 Note**: The template is provided without authentication tokens for security and flexibility. Add your own tokens when creating endpoints for access to restricted models.
 
 ## 🎯 Optimizations
 
