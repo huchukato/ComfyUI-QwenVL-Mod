@@ -1,4 +1,4 @@
-# OneClick-ComfyUI-WAN2.2-I2V-T2V-Qwen3VL-AutoPrompt
+# ComfyUI-QwenVL-Mod RunPod Worker
 
 Professional ComfyUI with QwenVL-Mod enhanced vision-language and WAN 2.2 video generation.
 
@@ -32,10 +32,9 @@ Professional ComfyUI with QwenVL-Mod enhanced vision-language and WAN 2.2 video 
 - NSFW Support: Comprehensive content generation
 
 ### **⚡ Performance Optimizations**
-- RTX 5090/4090 optimized (CUDA 13.1, Python 3.12.12, PyTorch latest, FP16 accumulation, sage attention, async offload, FP8 support)
-- Sage Attention: Optimized attention mechanisms
-- Async Offload: Efficient memory management
-- FP8 Support: Latest hardware acceleration
+- RTX 5090/4090 optimized (CUDA 13.0, Python 3.12.12, PyTorch 2.10.0)
+- FP16 accumulation, Sage Attention, Async Offload, FP8 support
+- TensorRT support for upscaling and frame interpolation
 - FileBrowser: Built-in file manager on port 8080
 - JupyterLab: Terminal and development environment on port 8888
 
@@ -43,18 +42,22 @@ Professional ComfyUI with QwenVL-Mod enhanced vision-language and WAN 2.2 video 
 
 ## 📦 Pre-installed Components
 
-### **Custom Nodes (30+)**
+### **Custom Nodes (26)**
 - ComfyUI-QwenVL-Mod: Enhanced vision-language with WAN 2.2
 - ComfyUI-Manager: Node and model management
 - ComfyUI-GGUF: GGUF model support
 - ComfyUI-VideoHelperSuite: Video processing utilities
 - ComfyUI-Impact-Pack: Advanced functionality
-- And 25+ more essential nodes
+- ComfyUI-RunpodDirect: RunPod-specific optimizations
+- ComfyUI-Upscaler-Tensorrt: TensorRT upscaling
+- ComfyUI-RIFE-TensorRT-Auto: TensorRT frame interpolation
+- And 18+ more essential nodes
 
-### **🎬 Pre-installed Workflows**
-- WAN 2.2 T2V: Text-to-video with auto prompt optimization
-- WAN 2.2 I2V: Image-to-video with style detection
+### **🎬 Pre-installed Workflows (10)**
+- WAN 2.2 T2V/I2V: Text/Image-to-video with auto prompt optimization
 - WAN 2.2 I2V-SVI: Advanced image-to-video with SVI
+- WAN 2.2 GGUF: Optimized versions for efficiency
+- WAN 2.2 MMAudio: Audio-enhanced video generation
 - SDXL LoRA Stack: Professional image generation with upscaling
 - Extended Storyboard: Seamless storyboard sequences
 - Multilingual Support: Process prompts from any language
@@ -107,12 +110,6 @@ Professional ComfyUI with QwenVL-Mod enhanced vision-language and WAN 2.2 video 
 --fast cublas_ops autotune  # BLAS optimization
 ```
 
-### **Memory Management**
-- Automatic VRAM optimization for RTX 5090
-- Efficient model loading and unloading
-- Smart caching for repeated operations
-- Async processing for better throughput
-
 ---
 
 ## 📋 System Requirements
@@ -148,7 +145,7 @@ Professional ComfyUI with QwenVL-Mod enhanced vision-language and WAN 2.2 video 
 ### **Health Check**
 Container health check monitors ComfyUI:
 ```bash
-curl -f http://localhost:8080/system_stats
+curl -f http://0.0.0.0:8188/system_stats
 ```
 
 ---
