@@ -209,8 +209,8 @@ DB_FILE="/filebrowser/database/filebrowser.db"\n\
 \n\
 # Function to download latest workflows\n\
 update_workflows() {\n\
-    echo "� Updating workflows from latest versions..."\n\
-    cd /ComfyUI/workflows\n\
+    echo "🔄 Updating workflows from latest versions..."\n\
+    cd /ComfyUI/user/default/workflows\n\
     \n\
     # List of latest workflows\n\
     workflows=(\n\
@@ -250,7 +250,7 @@ echo "📁 FileBrowser: http://0.0.0.0:8080"\n\
 echo "📓 JupyterLab:  http://0.0.0.0:8888"\n\
 echo "🎨 ComfyUI:    http://0.0.0.0:8188"\n\
 echo "📋 Available workflows:"\n\
-ls -la /ComfyUI/workflows/\n\
+ls -la /ComfyUI/user/default/workflows/\n\
 echo ""\n\
 echo "💡 Models pre-loaded for immediate use"\n\
 echo ""\n\
