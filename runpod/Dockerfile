@@ -2,7 +2,7 @@
 # Enhanced with WAN 2.2 workflows, multilingual support, and GGUF backend
 # Optimized for RTX 5090 and professional video generation
 
-FROM nvidia/cuda:12.4.1-cudnn-devel-ubuntu22.04
+FROM nvidia/cuda:12.6.2-cudnn-devel-ubuntu24.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -11,29 +11,29 @@ ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:$CUDA_HOME/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
 
-# Install system dependencies including Python 3.12
-RUN apt-get update && apt-get install -y \
-    software-properties-common \
-    gpg-agent \
+# Install system dependencies (Python 3.12 is default in Ubuntu 24.04)
+RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     wget \
     curl \
+    ca-certificates \
     build-essential \
     python3.12 \
     python3.12-venv \
     python3.12-dev \
+    python3-pip \
     libgl1-mesa-glx \
     libglib2.0-0 \
     libsm6 \
     libxext6 \
     libxrender-dev \
     libgomp1 \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Create Python virtual environment and install pip
+# Create Python virtual environment and setup pip
 RUN python3.12 -m venv /opt/venv && \
-    curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12 && \
-    python3.12 -m pip install --upgrade pip wheel setuptools
+    /opt/venv/bin/pip install --upgrade pip wheel setuptools
 
 ENV PATH="/opt/venv/bin:$PATH"
 
