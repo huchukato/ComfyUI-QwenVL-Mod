@@ -22,7 +22,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3.12-venv \
     python3.12-dev \
     python3-pip \
-    libgl1-mesa-glx \
     libglx-mesa0 \
     libglib2.0-0 \
     libsm6 \
