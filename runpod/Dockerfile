@@ -2,12 +2,14 @@
 # Enhanced with WAN 2.2 workflows, multilingual support, and GGUF backend
 # Optimized for RTX 5090 and professional video generation
 
-FROM runpod/worker-comfy:latest
+FROM nvidia/cuda:12.4.1-cudnn-devel-ubuntu22.04
 
 # Set environment variables
-ENV COMFYUI_ARGS="--disable-auto-launch --port 8080 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune --vram-mode 0"
-ENV PYTHONUNBUFFERED=1
 ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV CUDA_HOME=/usr/local/cuda
+ENV PATH=$PATH:$CUDA_HOME/bin
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -15,15 +17,36 @@ RUN apt-get update && apt-get install -y \
     wget \
     curl \
     build-essential \
-    python3-dev \
+    python3.10 \
+    python3.10-dev \
+    python3-pip \
+    python3.10-venv \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
     && rm -rf /var/lib/apt/lists/*
+
+# Create Python virtual environment
+RUN python3.10 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
 # Upgrade pip and install wheel
 RUN pip install --upgrade pip wheel setuptools
 
-# Install llama-cpp-python for GGUF support (CUDA 13.0 optimized)
+# Install PyTorch with CUDA 12.4 support
+RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+
+# Install ComfyUI
+WORKDIR /ComfyUI
+RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
+    pip install -r requirements.txt
+
+# Install llama-cpp-python for GGUF support (CUDA 12.4 optimized)
 RUN pip install --upgrade --force-reinstall \
-    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.23-cu130-Basic-linux-20260129/llama_cpp_python-0.3.23+cu130.basic-cp312-cp312-linux_x86_64.whl
+    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.23-cu124-Basic-linux-20260129/llama_cpp_python-0.3.23+cu124.basic-cp310-cp310-linux_x86_64.whl
 
 # Install ComfyUI-QwenVL-Mod
 WORKDIR /ComfyUI/custom_nodes
@@ -97,6 +120,9 @@ RUN wget -O /ComfyUI/models/vae/wan_2.1_vae.safetensors \
     https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth && \
     wget -O /ComfyUI/models/text_encoders/nsfw_wan_umt5-xxl_fp8_scaled.safetensors \
     https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors
+
+# Set ComfyUI arguments
+ENV COMFYUI_ARGS="--disable-auto-launch --port 8080 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune --vram-mode 0"
 
 # Create startup script
 RUN echo '#!/bin/bash\n\
