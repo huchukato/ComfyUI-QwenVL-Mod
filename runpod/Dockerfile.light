@@ -64,7 +64,8 @@ RUN cd ComfyUI-QwenVL-Mod && pip install -r requirements.txt
 RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
     git clone https://github.com/cubiq/ComfyUI_essentials.git && \
     git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
-    git clone https://github.com/city96/ComfyUI-GGUF.git && \
+    git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git && \
+    git clone https://github.com/MadiatorLabs/ComfyUI-RunpodDirect.git && \
     git clone https://github.com/ltdrdata/was-node-suite-comfyui.git && \
     git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git && \
     git clone https://github.com/rgthree/rgthree-comfy.git && \
@@ -81,7 +82,8 @@ RUN cd ComfyUI-Manager && pip install -r requirements.txt && \
     cd ../was-node-suite-comfyui && pip install -r requirements.txt && \
     cd ../rgthree-comfy && pip install -r requirements.txt && \
     cd ../ComfyUI-Easy-Use && pip install -r requirements.txt && \
-    cd ../ComfyUI-KJNodes && pip install -r requirements.txt
+    cd ../ComfyUI-KJNodes && pip install -r requirements.txt && \
+    cd ../ComfyUI-RunpodDirect && pip install -r requirements.txt
 
 # Install additional common dependencies for custom nodes
 RUN pip install opencv-python-headless scikit-image spandrel safetensors
