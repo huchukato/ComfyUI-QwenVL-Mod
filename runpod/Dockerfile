@@ -11,11 +11,14 @@ ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:$CUDA_HOME/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
 
-# Install system dependencies (no CUDA toolkit - using conda)
+# Install system dependencies (including CUDA toolkit for TensorRT)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
+    make \
     wget \
     curl \
+    unzip \
+    pkg-config \
     ca-certificates \
     build-essential \
     python3.12 \
@@ -28,8 +31,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxext6 \
     libxrender-dev \
     libgomp1 \
+    ffmpeg \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Install CUDA toolkit for TensorRT support
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb && \
+    dpkg -i cuda-keyring_1.1-1_all.deb && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends cuda-toolkit-12-8 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm cuda-keyring_1.1-1_all.deb
 
 # Install Miniconda for robust Python environment management
 RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
@@ -66,6 +79,7 @@ RUN cd ComfyUI-QwenVL-Mod && pip install -r requirements.txt
 RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
     git clone https://github.com/cubiq/ComfyUI_essentials.git && \
     git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
+    git clone https://github.com/MadiatorLabs/ComfyUI-RunpodDirect.git && \
     git clone https://github.com/MoonGoblinDev/Civicomfy.git && \
     git clone https://github.com/huchukato/comfy-tagcomplete.git && \
     git clone https://github.com/Koishi-Star/Euler-Smea-Dyn-Sampler.git && \
