@@ -141,26 +141,27 @@ cd /ComfyUI\n\
 jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password=""\n\
 ' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
 
-# Download all workflows from provisioning.sh (latest versions)
-RUN wget -O /ComfyUI/workflows/SDXL-LoRaStack-Upscale.json \
+# Create user directory structure and download workflows
+RUN mkdir -p /ComfyUI/user/default/workflows && \
+    wget -O /ComfyUI/user/default/workflows/SDXL-LoRaStack-Upscale.json \
     https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/SDXL-LoRaStack-Upscale.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-I2V-AutoPrompt-1-4.json \
+    wget -O /ComfyUI/user/default/workflows/WAN2.2-I2V-AutoPrompt-1-4.json \
     https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-1-4.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-I2V-AutoPrompt-GGUF-1-4.json \
+    wget -O /ComfyUI/user/default/workflows/WAN2.2-I2V-AutoPrompt-GGUF-1-4.json \
     https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-GGUF-1-4.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-T2V-AutoPrompt-1-5.json \
+    wget -O /ComfyUI/user/default/workflows/WAN2.2-T2V-AutoPrompt-1-5.json \
     https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-1-5.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-T2V-AutoPrompt-GGUF-1-4.json \
+    wget -O /ComfyUI/user/default/workflows/WAN2.2-T2V-AutoPrompt-GGUF-1-4.json \
     https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-GGUF-1-4.json && \
-    wget -O /ComfyUI/workflows/Wan2.2-I2V-SVI-AutoPrompt-1-3.json \
+    wget -O /ComfyUI/user/default/workflows/Wan2.2-I2V-SVI-AutoPrompt-1-3.json \
     https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-1-3.json && \
-    wget -O /ComfyUI/workflows/Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-1.json \
+    wget -O /ComfyUI/user/default/workflows/Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-1.json \
     https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-1.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-8.json \
+    wget -O /ComfyUI/user/default/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-8.json \
     https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-8.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-5.json \
+    wget -O /ComfyUI/user/default/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-5.json \
     https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-5.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF.json \
+    wget -O /ComfyUI/user/default/workflows/WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF.json \
     https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF.json
 
 # Create models directories
