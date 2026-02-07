@@ -1,8 +1,8 @@
 {
   "id": "599b4f0a-1e8f-4105-9e92-96726e9d46e1",
   "revision": 0,
-  "last_node_id": 219,
-  "last_link_id": 422,
+  "last_node_id": 221,
+  "last_link_id": 427,
   "nodes": [
     {
       "id": 52,
@@ -48,7 +48,7 @@
         }
       },
       "widgets_values": [
-        "074712_00004_.png",
+        "080229_00001_.png",
         "image"
       ],
       "color": "#233",
@@ -66,7 +66,7 @@
         1018.6959960937501
       ],
       "flags": {},
-      "order": 43,
+      "order": 41,
       "mode": 0,
       "inputs": [
         {
@@ -132,13 +132,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22__00002.mp4",
+            "filename": "wan22__00006.mp4",
             "subfolder": "2026-02-07",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 16,
-            "workflow": "wan22__00002.png",
-            "fullpath": "/workspace/ComfyUI/output/2026-02-07/wan22__00002.mp4"
+            "workflow": "wan22__00006.png",
+            "fullpath": "/workspace/ComfyUI/output/2026-02-07/wan22__00006.mp4"
           }
         }
       },
@@ -160,7 +160,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 33,
+      "order": 34,
       "mode": 0,
       "inputs": [
         {
@@ -200,7 +200,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 38,
+      "order": 37,
       "mode": 0,
       "inputs": [
         {
@@ -261,7 +261,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 39,
+      "order": 36,
       "mode": 0,
       "inputs": [
         {
@@ -424,7 +424,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 30,
+      "order": 28,
       "mode": 0,
       "inputs": [
         {
@@ -496,8 +496,8 @@
       "flags": {
         "collapsed": true
       },
-      "order": 44,
-      "mode": 4,
+      "order": 42,
+      "mode": 0,
       "inputs": [
         {
           "name": "anything",
@@ -510,7 +510,7 @@
           "name": "output",
           "type": "*",
           "links": [
-            419
+            426
           ]
         }
       ],
@@ -537,7 +537,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 45,
+      "order": 43,
       "mode": 4,
       "inputs": [
         {
@@ -551,7 +551,7 @@
           "name": "output",
           "type": "*",
           "links": [
-            421
+            423
           ]
         }
       ],
@@ -578,7 +578,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 28,
+      "order": 26,
       "mode": 0,
       "inputs": [
         {
@@ -618,7 +618,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 36,
+      "order": 31,
       "mode": 0,
       "inputs": [
         {
@@ -779,7 +779,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 46,
+      "order": 45,
       "mode": 0,
       "inputs": [
         {
@@ -819,7 +819,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 47,
+      "order": 44,
       "mode": 0,
       "inputs": [
         {
@@ -859,7 +859,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 42,
+      "order": 39,
       "mode": 0,
       "inputs": [
         {
@@ -909,7 +909,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 41,
+      "order": 40,
       "mode": 0,
       "inputs": [
         {
@@ -1061,7 +1061,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 29,
+      "order": 27,
       "mode": 0,
       "inputs": [
         {
@@ -1213,7 +1213,7 @@
         76
       ],
       "flags": {},
-      "order": 40,
+      "order": 38,
       "mode": 0,
       "inputs": [
         {
@@ -1264,7 +1264,7 @@
         332
       ],
       "flags": {},
-      "order": 27,
+      "order": 25,
       "mode": 0,
       "inputs": [
         {
@@ -1342,7 +1342,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 31,
+      "order": 29,
       "mode": 0,
       "inputs": [
         {
@@ -1380,7 +1380,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 32,
+      "order": 30,
       "mode": 0,
       "inputs": [
         {
@@ -1544,28 +1544,43 @@
       "bgcolor": "#353"
     },
     {
-      "id": 215,
-      "type": "MarkdownNote",
+      "id": 197,
+      "type": "VAELoader",
       "pos": [
-        -2350,
-        850
+        -1842.2096852504496,
+        550.8059108037014
       ],
       "size": [
-        450,
-        420
+        210,
+        58
       ],
       "flags": {},
       "order": 18,
       "mode": 0,
       "inputs": [],
-      "outputs": [],
-      "title": "QWEN3-VL GGUF",
-      "properties": {},
-      "widgets_values": [
-        "## 🔖 To use the Qwen3-VL GGUF Quantized models you have to install *llama-cpp-python*\n\n\n**🛑 STOP COMFYUI**\n\n**📂 Activate the ComfyUI Virtual Enviroment**\n\nIn your ComfyUI root installation folder type:\non Windows:\n\nCommand Prompt:\n```\n\\venv\\Scripts\\activate.bat\n```\nor Power Shell:\n```\n\\venv\\Scripts\\Activate.ps1\n```\non Linux:\n```\n. /venv/bin/activate\n```\n**⬇️ Install llama-cpp-python**\n```\npip install --upgrade --force-reinstall --no-cache-dir \"llama-cpp-python @ git+https://github.com/JamePeng/llama-cpp-python.git\"\n```\n**🔄 Restart ComfyUI and enjoy**\n\n"
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 0,
+          "links": [
+            398
+          ]
+        }
       ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "VAELoader",
+        "widget_ue_connectable": {
+          "vae_name": true
+        }
+      },
+      "widgets_values": [
+        "wan_2.1_vae.safetensors"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
     },
     {
       "id": 190,
@@ -1575,8 +1590,8 @@
         -140
       ],
       "size": [
-        463.02788981183585,
-        927.7756625975518
+        470,
+        960
       ],
       "flags": {},
       "order": 19,
@@ -1592,119 +1607,322 @@
       "bgcolor": "#355"
     },
     {
-      "id": 218,
-      "type": "AutoLoadRifeTensorrtModel",
+      "id": 215,
+      "type": "MarkdownNote",
       "pos": [
-        -193.92513275700674,
-        1623.6660013785922
+        -2360,
+        890
       ],
       "size": [
-        322.5669921875,
-        106
+        460,
+        420
       ],
-      "flags": {
-        "collapsed": true
-      },
+      "flags": {},
       "order": 20,
-      "mode": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "QWEN3-VL GGUF",
+      "properties": {},
+      "widgets_values": [
+        "## 🔖 To use the Qwen3-VL GGUF Quantized models you have to install *llama-cpp-python*\n\n\n**🛑 STOP COMFYUI**\n\n**📂 Activate the ComfyUI Virtual Enviroment**\n\nIn your ComfyUI root installation folder type:\non Windows:\n\nCommand Prompt:\n```\n\\venv\\Scripts\\activate.bat\n```\nor Power Shell:\n```\n\\venv\\Scripts\\Activate.ps1\n```\non Linux:\n```\n. /venv/bin/activate\n```\n**⬇️ Install llama-cpp-python**\n```\npip install --upgrade --force-reinstall --no-cache-dir \"llama-cpp-python @ git+https://github.com/JamePeng/llama-cpp-python.git\"\n```\n**🔄 Restart ComfyUI and enjoy**\n\n"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 109,
+      "type": "Power Lora Loader (rgthree)",
+      "pos": [
+        -1351.3657304491278,
+        -87.75910787437984
+      ],
+      "size": [
+        400,
+        290
+      ],
+      "flags": {},
+      "order": 33,
+      "mode": 0,
       "inputs": [
         {
-          "name": "custom_config",
-          "shape": 7,
-          "type": "RIFE_RESOLUTION_CONFIG",
+          "dir": 3,
+          "name": "model",
+          "type": "MODEL",
+          "link": 401
+        },
+        {
+          "dir": 3,
+          "name": "clip",
+          "type": "CLIP",
           "link": null
         }
       ],
       "outputs": [
         {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
+          "dir": 4,
+          "name": "MODEL",
+          "shape": 3,
+          "type": "MODEL",
           "links": [
-            416
+            360
           ]
+        },
+        {
+          "dir": 4,
+          "name": "CLIP",
+          "shape": 3,
+          "type": "CLIP",
+          "links": null
         }
       ],
+      "title": "HIGH LORA LOADER",
       "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "b55f69970d666949232b16b31e473fc879b5a51d",
-        "Node name for S&R": "AutoLoadRifeTensorrtModel"
+        "cnr_id": "rgthree-comfy",
+        "ver": "944d5353a1b0a668f40844018c3dc956b95a67d7",
+        "Show Strengths": "Single Strength",
+        "aux_id": "rgthree/rgthree-comfy",
+        "widget_ue_connectable": {}
       },
       "widgets_values": [
-        "rife49_ensemble_True_scale_1_sim",
-        "fp16",
-        "small"
-      ]
+        {},
+        {
+          "type": "PowerLoraLoaderHeaderWidget"
+        },
+        {
+          "on": true,
+          "lora": "wan22-f4c3spl4sh-100epoc-high-k3nk.safetensors",
+          "strength": 0.7,
+          "strengthTwo": null
+        },
+        {},
+        ""
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
     },
     {
-      "id": 217,
-      "type": "AutoLoadRifeTensorrtModel",
+      "id": 110,
+      "type": "Power Lora Loader (rgthree)",
       "pos": [
-        -721.7165127813817,
-        1613.529546481991
+        -1350.8132177197901,
+        324.63322709471225
       ],
       "size": [
-        322.5669921875,
-        106
+        400,
+        270
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "model",
+          "type": "MODEL",
+          "link": 402
+        },
+        {
+          "dir": 3,
+          "name": "clip",
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "MODEL",
+          "shape": 3,
+          "type": "MODEL",
+          "links": [
+            361
+          ]
+        },
+        {
+          "dir": 4,
+          "name": "CLIP",
+          "shape": 3,
+          "type": "CLIP",
+          "links": null
+        }
+      ],
+      "title": "LOW LORA LOADER",
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "944d5353a1b0a668f40844018c3dc956b95a67d7",
+        "Show Strengths": "Single Strength",
+        "aux_id": "rgthree/rgthree-comfy",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        {},
+        {
+          "type": "PowerLoraLoaderHeaderWidget"
+        },
+        {
+          "on": true,
+          "lora": "wan22-f4c3spl4sh-154epoc-low-k3nk.safetensors",
+          "strength": 0.79,
+          "strengthTwo": null
+        },
+        {},
+        ""
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 199,
+      "type": "UnetLoaderGGUF",
+      "pos": [
+        -1850.1167179013244,
+        33.73399958133991
+      ],
+      "size": [
+        427.982666015625,
+        66.5729751586914
       ],
       "flags": {
-        "collapsed": true
+        "collapsed": false
       },
       "order": 21,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "custom_config",
-          "shape": 7,
-          "type": "RIFE_RESOLUTION_CONFIG",
-          "link": null
-        }
-      ],
+      "mode": 0,
+      "inputs": [],
       "outputs": [
         {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
           "links": [
-            415
+            402
           ]
         }
       ],
+      "title": "Unet Loader (GGUF) Low",
       "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "b55f69970d666949232b16b31e473fc879b5a51d",
-        "Node name for S&R": "AutoLoadRifeTensorrtModel"
+        "cnr_id": "comfyui-gguf",
+        "ver": "b3ec875a68d94b758914fd48d30571d953bb7a54",
+        "Node name for S&R": "UnetLoaderGGUF",
+        "widget_ue_connectable": {
+          "unet_name": true
+        }
       },
       "widgets_values": [
-        "rife49_ensemble_True_scale_1_sim",
-        "fp16",
-        "small"
-      ]
+        "wan22RemixI2VGGUFV21_lowQ80.gguf"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
     },
     {
-      "id": 216,
-      "type": "AutoRifeTensorrt",
+      "id": 198,
+      "type": "UnetLoaderGGUF",
       "pos": [
-        -718.6694116569478,
-        1690.3587667408356
+        -1853.7462576971452,
+        -88.02311032537857
       ],
       "size": [
-        321.8046875,
-        150
+        432.2243347167969,
+        72.50918579101562
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            401
+          ]
+        }
+      ],
+      "title": "Unet Loader (GGUF) High",
+      "properties": {
+        "cnr_id": "comfyui-gguf",
+        "ver": "b3ec875a68d94b758914fd48d30571d953bb7a54",
+        "Node name for S&R": "UnetLoaderGGUF",
+        "widget_ue_connectable": {
+          "unet_name": true
+        }
+      },
+      "widgets_values": [
+        "wan22RemixI2VGGUFV21_highQ80.gguf"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 155,
+      "type": "mxSlider",
+      "pos": [
+        -1866.0745374995613,
+        1904.6931508132222
+      ],
+      "size": [
+        540,
+        30
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "INT",
+          "links": [
+            318
+          ]
+        }
+      ],
+      "title": "Steps",
+      "properties": {
+        "cnr_id": "comfyui-mxtoolkit",
+        "ver": "7f7a0e584f12078a1c589645d866ae96bad0cc35",
+        "Node name for S&R": "mxSlider",
+        "value": 8,
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "decimals": 0,
+        "snap": true
+      },
+      "widgets_values": [
+        8,
+        8,
+        0
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 221,
+      "type": "RIFE VFI",
+      "pos": [
+        -728.1618109165106,
+        1617.8051646718295
+      ],
+      "size": [
+        362.91953125,
+        198
       ],
       "flags": {
         "collapsed": true
       },
-      "order": 48,
-      "mode": 4,
+      "order": 46,
+      "mode": 0,
       "inputs": [
         {
           "name": "frames",
           "type": "IMAGE",
-          "link": 419
+          "link": 426
         },
         {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "link": 415
+          "name": "optional_interpolation_states",
+          "shape": 7,
+          "type": "INTERPOLATION_STATES",
+          "link": null
         }
       ],
       "outputs": [
@@ -1712,41 +1930,43 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            420
+            427
           ]
         }
       ],
       "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "b55f69970d666949232b16b31e473fc879b5a51d",
-        "Node name for S&R": "AutoRifeTensorrt"
+        "cnr_id": "comfyui-frame-interpolation",
+        "ver": "a969c01dbccd9e5510641be04eb51fe93f6bfc3d",
+        "Node name for S&R": "RIFE VFI"
       },
       "widgets_values": [
-        100,
+        "rife49.pth",
+        10,
         2,
         true,
-        false
+        true,
+        1
       ]
     },
     {
       "id": 77,
       "type": "VHS_VideoCombine",
       "pos": [
-        -774.136708566642,
-        1502.4237903434596
+        -773.7879652009558,
+        1500.4378906221891
       ],
       "size": [
         479.3177795410156,
-        334
+        1021.6660766601562
       ],
       "flags": {},
-      "order": 50,
-      "mode": 4,
+      "order": 48,
+      "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 420
+          "link": 427
         },
         {
           "name": "audio",
@@ -1795,13 +2015,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "000509_00001.mp4",
-            "subfolder": "30FPS/2026-02-04",
+            "filename": "082044_00001.mp4",
+            "subfolder": "30FPS/2026-02-07",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 32,
-            "workflow": "000509_00001.png",
-            "fullpath": "/workspace/ComfyUI/output/30FPS/2026-02-04/000509_00001.mp4"
+            "workflow": "082044_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/30FPS/2026-02-07/082044_00001.mp4"
           }
         }
       },
@@ -1810,31 +2030,32 @@
       "shape": 2
     },
     {
-      "id": 219,
-      "type": "AutoRifeTensorrt",
+      "id": 220,
+      "type": "RIFE VFI",
       "pos": [
-        -159.98430115710127,
-        1697.034207932513
+        -194.73461480953077,
+        1625.2111175348136
       ],
       "size": [
-        321.8046875,
-        150
+        362.91953125,
+        198
       ],
       "flags": {
         "collapsed": true
       },
-      "order": 49,
+      "order": 47,
       "mode": 4,
       "inputs": [
         {
           "name": "frames",
           "type": "IMAGE",
-          "link": 421
+          "link": 423
         },
         {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "link": 416
+          "name": "optional_interpolation_states",
+          "shape": 7,
+          "type": "INTERPOLATION_STATES",
+          "link": null
         }
       ],
       "outputs": [
@@ -1842,41 +2063,43 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            422
+            424
           ]
         }
       ],
       "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "b55f69970d666949232b16b31e473fc879b5a51d",
-        "Node name for S&R": "AutoRifeTensorrt"
+        "cnr_id": "comfyui-frame-interpolation",
+        "ver": "a969c01dbccd9e5510641be04eb51fe93f6bfc3d",
+        "Node name for S&R": "RIFE VFI"
       },
       "widgets_values": [
-        100,
+        "rife49.pth",
+        10,
         4,
         true,
-        false
+        true,
+        1
       ]
     },
     {
       "id": 186,
       "type": "VHS_VideoCombine",
       "pos": [
-        -249.34842936901194,
-        1507.0299953973524
+        -253.58178633581883,
+        1504.2400484718619
       ],
       "size": [
         479.3177795410156,
         334
       ],
       "flags": {},
-      "order": 51,
+      "order": 49,
       "mode": 4,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 422
+          "link": 424
         },
         {
           "name": "audio",
@@ -1951,7 +2174,7 @@
         130
       ],
       "flags": {},
-      "order": 22,
+      "order": 24,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -1974,311 +2197,6 @@
       "bgcolor": "#533"
     },
     {
-      "id": 155,
-      "type": "mxSlider",
-      "pos": [
-        -1866.0745374995613,
-        1904.6931508132222
-      ],
-      "size": [
-        540,
-        30
-      ],
-      "flags": {},
-      "order": 23,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "",
-          "type": "INT",
-          "links": [
-            318
-          ]
-        }
-      ],
-      "title": "Steps",
-      "properties": {
-        "cnr_id": "comfyui-mxtoolkit",
-        "ver": "7f7a0e584f12078a1c589645d866ae96bad0cc35",
-        "Node name for S&R": "mxSlider",
-        "value": 5,
-        "min": 0,
-        "max": 20,
-        "step": 1,
-        "decimals": 0,
-        "snap": true
-      },
-      "widgets_values": [
-        5,
-        5,
-        0
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
-      "id": 198,
-      "type": "UnetLoaderGGUF",
-      "pos": [
-        -1853.7462576971452,
-        -88.02311032537857
-      ],
-      "size": [
-        432.2243347167969,
-        72.50918579101562
-      ],
-      "flags": {},
-      "order": 24,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            401
-          ]
-        }
-      ],
-      "title": "Unet Loader (GGUF) High",
-      "properties": {
-        "cnr_id": "comfyui-gguf",
-        "ver": "b3ec875a68d94b758914fd48d30571d953bb7a54",
-        "Node name for S&R": "UnetLoaderGGUF",
-        "widget_ue_connectable": {
-          "unet_name": true
-        }
-      },
-      "widgets_values": [
-        "wan22EnhancedNSFWSVICamera_nsfwV2Q8High.gguf"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 199,
-      "type": "UnetLoaderGGUF",
-      "pos": [
-        -1850.1167179013244,
-        33.73399958133991
-      ],
-      "size": [
-        427.982666015625,
-        66.5729751586914
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 25,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            402
-          ]
-        }
-      ],
-      "title": "Unet Loader (GGUF) Low",
-      "properties": {
-        "cnr_id": "comfyui-gguf",
-        "ver": "b3ec875a68d94b758914fd48d30571d953bb7a54",
-        "Node name for S&R": "UnetLoaderGGUF",
-        "widget_ue_connectable": {
-          "unet_name": true
-        }
-      },
-      "widgets_values": [
-        "wan22EnhancedNSFWSVICamera_nsfwV2Q8Low.gguf"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 197,
-      "type": "VAELoader",
-      "pos": [
-        -1842.2096852504496,
-        550.8059108037014
-      ],
-      "size": [
-        210,
-        58
-      ],
-      "flags": {},
-      "order": 26,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "VAE",
-          "type": "VAE",
-          "slot_index": 0,
-          "links": [
-            398
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.46",
-        "Node name for S&R": "VAELoader",
-        "widget_ue_connectable": {
-          "vae_name": true
-        }
-      },
-      "widgets_values": [
-        "wan_2.1_vae.safetensors"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 109,
-      "type": "Power Lora Loader (rgthree)",
-      "pos": [
-        -1351.3657304491278,
-        -87.75910787437984
-      ],
-      "size": [
-        400,
-        290
-      ],
-      "flags": {},
-      "order": 34,
-      "mode": 0,
-      "inputs": [
-        {
-          "dir": 3,
-          "name": "model",
-          "type": "MODEL",
-          "link": 401
-        },
-        {
-          "dir": 3,
-          "name": "clip",
-          "type": "CLIP",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "dir": 4,
-          "name": "MODEL",
-          "shape": 3,
-          "type": "MODEL",
-          "links": [
-            360
-          ]
-        },
-        {
-          "dir": 4,
-          "name": "CLIP",
-          "shape": 3,
-          "type": "CLIP",
-          "links": null
-        }
-      ],
-      "title": "HIGH LORA LOADER",
-      "properties": {
-        "cnr_id": "rgthree-comfy",
-        "ver": "944d5353a1b0a668f40844018c3dc956b95a67d7",
-        "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
-        "widget_ue_connectable": {}
-      },
-      "widgets_values": [
-        {},
-        {
-          "type": "PowerLoraLoaderHeaderWidget"
-        },
-        {
-          "on": true,
-          "lora": "WAN-2.2-I2V-BreastPlay-HIGH-v2.safetensors",
-          "strength": 0.7,
-          "strengthTwo": null
-        },
-        {},
-        ""
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 110,
-      "type": "Power Lora Loader (rgthree)",
-      "pos": [
-        -1350.8132177197901,
-        324.63322709471225
-      ],
-      "size": [
-        400,
-        270
-      ],
-      "flags": {},
-      "order": 35,
-      "mode": 0,
-      "inputs": [
-        {
-          "dir": 3,
-          "name": "model",
-          "type": "MODEL",
-          "link": 402
-        },
-        {
-          "dir": 3,
-          "name": "clip",
-          "type": "CLIP",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "dir": 4,
-          "name": "MODEL",
-          "shape": 3,
-          "type": "MODEL",
-          "links": [
-            361
-          ]
-        },
-        {
-          "dir": 4,
-          "name": "CLIP",
-          "shape": 3,
-          "type": "CLIP",
-          "links": null
-        }
-      ],
-      "title": "LOW LORA LOADER",
-      "properties": {
-        "cnr_id": "rgthree-comfy",
-        "ver": "944d5353a1b0a668f40844018c3dc956b95a67d7",
-        "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
-        "widget_ue_connectable": {}
-      },
-      "widgets_values": [
-        {},
-        {
-          "type": "PowerLoraLoaderHeaderWidget"
-        },
-        {
-          "on": true,
-          "lora": "WAN-2.2-I2V-BreastPlay-LOW-v2.safetensors",
-          "strength": 0.69,
-          "strengthTwo": null
-        },
-        {},
-        ""
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 161,
       "type": "f838c097-47c7-4eda-971d-a4ca071e3b81",
       "pos": [
@@ -2290,7 +2208,7 @@
         638.0599545311666
       ],
       "flags": {},
-      "order": 37,
+      "order": 35,
       "mode": 0,
       "inputs": [
         {
@@ -2739,50 +2657,34 @@
       "FLOAT"
     ],
     [
-      415,
-      217,
-      0,
-      216,
-      1,
-      "RIFE_TRT_MODEL"
-    ],
-    [
-      416,
-      218,
-      0,
-      219,
-      1,
-      "RIFE_TRT_MODEL"
-    ],
-    [
-      419,
-      76,
-      0,
-      216,
-      0,
-      "IMAGE"
-    ],
-    [
-      420,
-      216,
-      0,
-      77,
-      0,
-      "IMAGE"
-    ],
-    [
-      421,
+      423,
       184,
       0,
-      219,
+      220,
       0,
       "IMAGE"
     ],
     [
-      422,
-      219,
+      424,
+      220,
       0,
       186,
+      0,
+      "IMAGE"
+    ],
+    [
+      426,
+      76,
+      0,
+      221,
+      0,
+      "IMAGE"
+    ],
+    [
+      427,
+      221,
+      0,
+      77,
       0,
       "IMAGE"
     ]
@@ -3707,7 +3609,7 @@
               "Huihui-Qwen3-VL-4B-Instruct-abliterated-Q8_0.gguf",
               "auto",
               "🍿 Wan 2.2 I2V",
-              "",
+              "she starts recieving a cumshot on her face from the penis. The stream of semen is directed towards her mouth. The force of the ejaculation is strong, and the trajectory of the semen is aimed directly at her open mouth. The quantity of semen is substantial, covering a significant portion of her face and neck area",
               512,
               0.6,
               0.9,
@@ -3720,7 +3622,7 @@
               0,
               4194304,
               true,
-              1258816874,
+              2190949868,
               "randomize"
             ],
             "color": "#474539",
@@ -3769,7 +3671,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "nipPull. (At 0 seconds: A crimson-haired anime girl with piercing eyes and a confident smirk sits on a bed, her arms crossed over her chest as she pulls a white tank top off her shoulders; golden-hour sunlight streams through the window behind her, casting warm highlights across her toned torso and creating deep shadows that emphasize her form. The background is a blurred cityscape at dusk, with buildings silhouetted against an orange sky, while a dark red jacket drapes over her lap. She wears blue denim shorts and has a small tattoo on her left hip.) (At 1 seconds: Her gaze shifts slightly as the light catches her skin in soft glows; she exhales slowly, her lips parting just enough to reveal a hint of teeth, while the camera subtly tilts upward to frame her face more fully. The city lights begin to flicker faintly on the horizon.) (At 2 seconds: She leans forward slightly, fingers pressing against her collarbone as if adjusting something unseen; the light continues to dance across her skin like liquid gold, and a single tear rolls down her cheek unnoticed by the viewer. A framed painting hangs in the corner of the room, its edges softly blurred.) (At 3 seconds: Her expression softens into a serene smile, eyes now closed as if lost in thought; the camera zooms out slightly to reveal more of the bedroom’s minimalist decor and the window frame behind her. The sun dips lower, turning the sky from orange to deep violet, casting long shadows across the bed.) (At 4 seconds: She opens her eyes again, looking directly at the viewer with a knowing stare; the light now falls in sharp contrast on her cheekbones and collarbone, highlighting every curve. A faint breeze stirs her hair as she shifts position slightly, revealing more of the red jacket’s texture.) (At 5 seconds: The camera pulls back to reveal her full body from waist up, standing with a confident posture; the room is now bathed in twilight hues, and distant city lights twinkle through the window. Her expression remains unreadable, eyes fixed on the viewer as if inviting them into her private world.)"
+              "f4c3spl4sh (At 0 seconds: A silver-haired anime girl with amber eyes stares forward, her mouth open as a translucent penis ejaculates a thick stream of semen directly into her lips; sunlight streams through a window, illuminating the scene in warm, cinematic lighting. She wears black lace lingerie and grips the shaft tightly, sweat glistening on her skin under the glow. The background is softly blurred with wooden furniture and shadows, emphasizing her expression and the motion of the fluid.) (At 1 seconds: As the semen arcs toward her mouth, droplets fly outward in slow-motion detail, catching light like liquid glass; her eyes widen slightly as she receives the impact, lips parted to absorb the forceful stream. The camera tilts down subtly, revealing the wetness pooling on her neck and collarbone.) (At 2 seconds: The semen continues its trajectory, coating her face and shoulders in a glossy sheen that reflects the ambient light; her expression remains focused yet vulnerable, eyes locked forward as she drinks deeply from the stream. The lighting intensifies around her features, casting dramatic highlights on wet skin.) (At 3 seconds: A second wave of ejaculation erupts with greater force, splashing across her cheeks and chin in a spray that catches the light like liquid mercury; her hands tighten around the shaft as she swallows, eyes closing briefly then reopening with intensity. The camera pulls back slightly to show more of the room’s dimly lit corner.) (At 4 seconds: She leans forward slightly, letting the final droplets fall onto her chest and neck, leaving trails of glistening moisture; her gaze remains fixed on the viewer, lips parted as she absorbs the last remnants of the stream. The lighting dims subtly, focusing attention on her wet skin and the lingering texture of the fluid.) (At 5 seconds: She exhales slowly, still gripping the shaft tightly, eyes half-lidded with satisfaction as the semen pools around her neck; the camera holds steady, capturing the aftermath in soft focus as light catches the droplets clinging to her hair and shoulders. The scene ends with a hazy glow of warmth fading into darkness.)"
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -3816,7 +3718,7 @@
               "Node name for S&R": "StringConcatenate"
             },
             "widgets_values": [
-              "nipPull. ",
+              "f4c3spl4sh ",
               "",
               ""
             ]
@@ -4074,10 +3976,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.7331517767468245,
+      "scale": 0.8064669544215071,
       "offset": [
-        2887.6457883542435,
-        194.63570321885587
+        2784.1492613748806,
+        -1103.5733846511848
       ]
     }
   },
