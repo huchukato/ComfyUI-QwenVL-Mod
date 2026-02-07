@@ -111,7 +111,8 @@ RUN wget -O /tmp/filebrowser.tar.gz https://github.com/filebrowser/filebrowser/r
 RUN mkdir -p /filebrowser && \
     mkdir -p /filebrowser/database && \
     mkdir -p /filebrowser/files && \
-    ln -sf /ComfyUI /filebrowser/files/ComfyUI
+    ln -sf /ComfyUI /filebrowser/files/ComfyUI && \
+    echo '{"port": 8080, "baseURL": "", "address": "0.0.0.0", "log": "stdout", "database": "/filebrowser/database/filebrowser.db", "root": "/filebrowser/files", "noauth": true}' > /filebrowser/.config.json
 
 # Create FileBrowser startup script
 RUN echo '#!/bin/bash\n\
@@ -120,7 +121,7 @@ echo "🌐 Access at: http://localhost:8080"\n\
 echo "👤 No authentication required"\n\
 echo ""\n\
 cd /filebrowser\n\
-filebrowser --database /filebrowser/database/filebrowser.db --root /filebrowser/files --address 0.0.0.0 --port 8080 --no-auth\n\
+filebrowser --config /filebrowser/.config.json\n\
 ' > /usr/local/bin/start-filebrowser.sh && chmod +x /usr/local/bin/start-filebrowser.sh
 
 # Create directories (no pre-downloaded models)
@@ -155,19 +156,48 @@ echo "� Services starting:"\n\
 echo "�� FileBrowser: http://localhost:8080"\n\
 echo "📓 JupyterLab:  http://localhost:8888"\n\
 echo "🎨 ComfyUI:    http://localhost:8188"\n\
-echo ""\n\
 echo "📋 Available workflows:"\n\
 ls -la /ComfyUI/workflows/\n\
 echo ""\n\
 echo "💡 Models will be downloaded automatically when needed"\n\
 echo ""\n\
-# Start FileBrowser in background\n\
-/usr/local/bin/start-filebrowser.sh &\n\
-\n\
-# Start JupyterLab in background\n\
-/usr/local/bin/start-jupyter.sh &\n\
-\n\
-# Start ComfyUI\n\
+# Start FileBrowser in background
+echo "🔧 Starting FileBrowser..."
+/usr/local/bin/start-filebrowser.sh &
+FB_PID=$!
+echo "✅ FileBrowser started (PID: $FB_PID)"
+
+# Start JupyterLab in background
+echo "🔧 Starting JupyterLab..."
+/usr/local/bin/start-jupyter.sh &
+JL_PID=$!
+echo "✅ JupyterLab started (PID: $JL_PID)"
+
+# Wait a moment for services to start
+sleep 5
+
+# Check if services are running
+echo "🔍 Checking services..."
+if kill -0 $FB_PID 2>/dev/null; then
+    echo "✅ FileBrowser is running"
+else
+    echo "❌ FileBrowser failed to start"
+fi
+
+if kill -0 $JL_PID 2>/dev/null; then
+    echo "✅ JupyterLab is running"
+else
+    echo "❌ JupyterLab failed to start"
+fi
+
+echo ""
+echo "🚀 Starting ComfyUI..."
+echo "🌐 ComfyUI will be available at: http://localhost:8188"
+echo "📁 FileBrowser is available at: http://localhost:8080"
+echo "📓 JupyterLab is available at: http://localhost:8888"
+echo ""
+
+# Start ComfyUI
 exec python main.py $COMFYUI_ARGS\n\
 ' > /ComfyUI/start.sh && chmod +x /ComfyUI/start.sh
 
