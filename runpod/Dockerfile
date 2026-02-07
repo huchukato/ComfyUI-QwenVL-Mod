@@ -38,7 +38,7 @@ RUN python3.12 -m venv /opt/venv && \
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Install PyTorch with CUDA 13.1 support - optimized for RTX 5090
-RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130
 
 # Install ComfyUI
 WORKDIR /ComfyUI
@@ -46,7 +46,7 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
     pip install -r requirements.txt
 
 # Install llama-cpp-python for GGUF support (CUDA 13.1 optimized)
-RUN pip install --upgrade --force-reinstall llama-cpp-python --prefer-binary --extra-index-url=https://download.pytorch.org/whl/cu121
+RUN pip install --upgrade --force-reinstall llama-cpp-python --prefer-binary --extra-index-url=https://download.pytorch.org/whl/cu130
 
 # Install ComfyUI-QwenVL-Mod
 WORKDIR /ComfyUI/custom_nodes
@@ -114,7 +114,7 @@ RUN mkdir -p /filebrowser && \
 # Create FileBrowser startup script
 RUN echo '#!/bin/bash\n\
 echo "📁 Starting FileBrowser on port 8080"\n\
-echo "🌐 Access at: http://localhost:8080"\n\
+echo "🌐 Access at: http://0.0.0.0:8080"\n\
 echo "👤 No authentication required"\n\
 echo ""\n\
 cd /filebrowser\n\
@@ -124,7 +124,7 @@ filebrowser --config /filebrowser/.config.json\n\
 # Create JupyterLab startup script
 RUN echo '#!/bin/bash\n\
 echo "📓 Starting JupyterLab on port 8888"\n\
-echo "🌐 Access at: http://localhost:8888"\n\
+echo "🌐 Access at: http://0.0.0.0:8888"\n\
 echo "🔑 No token required"\n\
 echo ""\n\
 cd /ComfyUI\n\
