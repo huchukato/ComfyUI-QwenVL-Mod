@@ -2,6 +2,21 @@
 
 Professional ComfyUI environment optimized for RunPod with QwenVL-Mod enhanced vision-language capabilities and WAN 2.2 video generation workflows.
 
+---
+
+## 🎯 Who is this for?
+
+This template is perfect for:
+
+- **AI Video Creators** wanting professional WAN 2.2 video generation
+- **Content Creators** needing multilingual prompt processing
+- **Digital Artists** requiring visual style detection and enhancement
+- **ML Engineers** deploying production-ready video workflows
+- **Researchers** experimenting with vision-language models
+- **Professionals** needing NSFW-capable content generation
+
+---
+
 ## 🚀 Features
 
 ### **🎬 WAN 2.2 Video Generation**
@@ -37,17 +52,28 @@ Professional ComfyUI environment optimized for RunPod with QwenVL-Mod enhanced v
 - **ComfyUI-VFI**: Video frame interpolation
 - And 20+ more essential nodes
 
+### **Workflows Included**
+> **🎬 Pre-installed QwenVL-Mod Workflows**: Complete WAN 2.2 video generation with auto-prompt enhancement:
+- **WAN 2.2 T2V**: Text-to-video with automatic prompt optimization
+- **WAN 2.2 I2V**: Image-to-video with style detection and enhancement
+- **WAN 2.2 I2V-SVI**: Advanced image-to-video with SVI processing
+- **SDXL LoRA Stack**: Professional image generation with upscaling
+- **Extended Storyboard**: Seamless storyboard sequences with continuity
+- **Multilingual Support**: Process prompts from any language
+- **Visual Style Detection**: Automatic detection of anime, 3D, pixel art styles
+
 ### **Pre-loaded Models**
+> **📦 Essential Models Included**: Ready for immediate workflow execution:
 - **WAN 2.2 VAE**: High-quality video generation VAE
 - **SDXL VAE**: Professional image generation VAE
-- **ESRGAN Upscalers**: 2x upscaling models
-- **NSFW Text Encoder**: Uncensored text processing
+- **ESRGAN Upscalers**: 2x upscaling models (standard & sharp variants)
+- **NSFW Text Encoder**: Uncensored text processing for WAN 2.2
+- **Complete model suite**: Ready for professional video and image generation
 
-### **Workflows Included**
-- WAN 2.2 I2V AutoPrompt (HF & GGUF variants)
-- WAN 2.2 T2V AutoPrompt (HF & GGUF variants)
-- WAN 2.2 I2V SVI AutoPrompt
-- SDXL LoRA Stack Upscale
+> **🔧 Auto-installed Dependencies**: The Docker image automatically includes:
+> - **llama-cpp-python**: Required for Qwen3-VL GGUF backend support
+> - **All QwenVL-Mod dependencies**: Complete environment for vision-language processing
+> - **WAN 2.2 model libraries**: Ready for video generation workflows
 
 ## 🔧 Usage
 
@@ -64,7 +90,7 @@ docker push huchukato/comfyui-qwenvl-runpod
 ```
 
 ### **RunPod Deployment**
-1. Push the image to Docker Hub
+1. **[Create RunPod Account](https://runpod.io?ref_id=188688)** (Use referral ID: 188688)
 2. Create a new RunPod endpoint
 3. Use the image: `huchukato/comfyui-qwenvl-runpod`
 4. Select GPU: RTX 5090 or equivalent
@@ -75,6 +101,8 @@ docker push huchukato/comfyui-qwenvl-runpod
 - `COMFYUI_ARGS`: ComfyUI startup arguments (pre-optimized)
 - `PYTHONUNBUFFERED`: Python output buffering
 - `DEBIAN_FRONTEND`: Non-interactive package installation
+- `HF_TOKEN`: Hugging Face token for restricted models (optional)
+- `CIVITAI_TOKEN`: CivitAI token for premium models (optional)
 
 ## 🎯 Optimizations
 
@@ -87,7 +115,6 @@ docker push huchukato/comfyui-qwenvl-runpod
 --async-offload             # Async model offloading
 --supports-fp8-compute      # FP8 acceleration
 --fast cublas_ops autotune  # BLAS optimization
---vram-mode 0               # Maximum VRAM usage
 ```
 
 ### **Memory Management**
