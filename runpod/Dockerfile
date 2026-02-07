@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxrender-dev \
     libgomp1 \
     ffmpeg \
+    openssh-server \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
