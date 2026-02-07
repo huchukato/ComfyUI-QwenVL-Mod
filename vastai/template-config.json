@@ -44,7 +44,7 @@
   },
   "environment_variables": {
     "WORKSPACE": "/workspace",
-    "COMFYUI_ARGS": "--disable-auto-launch --port 18188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune --vram-mode 0",
+    "COMFYUI_ARGS": "--disable-auto-launch --port 18188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune",
     "PROVISIONING_SCRIPT": "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/provisioning.sh",
     "HF_TOKEN": null,
     "CIVITAI_TOKEN": null,

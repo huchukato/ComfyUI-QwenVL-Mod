@@ -45,8 +45,7 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
     pip install -r requirements.txt
 
 # Install llama-cpp-python for GGUF support (CUDA 12.4 optimized)
-RUN pip install --upgrade --force-reinstall \
-    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.23-cu124-Basic-linux-20260129/llama_cpp_python-0.3.23+cu124.basic-cp310-cp310-linux_x86_64.whl
+RUN pip install --upgrade --force-reinstall llama-cpp-python --prefer-binary --extra-index-url=https://download.pytorch.org/whl/cu124
 
 # Install ComfyUI-QwenVL-Mod
 WORKDIR /ComfyUI/custom_nodes
@@ -122,7 +121,7 @@ RUN wget -O /ComfyUI/models/vae/wan_2.1_vae.safetensors \
     https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors
 
 # Set ComfyUI arguments
-ENV COMFYUI_ARGS="--disable-auto-launch --port 8080 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune --vram-mode 0"
+ENV COMFYUI_ARGS="--disable-auto-launch --port 8080 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune"
 
 # Create startup script
 RUN echo '#!/bin/bash\n\

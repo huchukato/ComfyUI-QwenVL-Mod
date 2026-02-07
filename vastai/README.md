@@ -218,7 +218,7 @@ ComfyUI organizes models in the following directories:
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `WORKSPACE` | `/workspace` | ComfyUI workspace directory |
-| `COMFYUI_ARGS` | `--disable-auto-launch --port 18188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune --vram-mode 0` | ComfyUI startup arguments optimized for RTX 5090 |
+| `COMFYUI_ARGS` | `--disable-auto-launch --port 18188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune` | ComfyUI startup arguments optimized for RTX 5090 |
 | `PROVISIONING_SCRIPT` | (none) | Auto-setup script URL |
 | `HF_TOKEN` | (none) | Hugging Face token for restricted model downloads |
 | `CIVITAI_TOKEN` | (none) | CivitAI token for premium model downloads |

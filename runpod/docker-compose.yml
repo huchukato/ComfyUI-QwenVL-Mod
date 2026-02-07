@@ -14,7 +14,7 @@ services:
       - ./outputs:/ComfyUI/output
       - ./input:/ComfyUI/input
     environment:
-      - COMFYUI_ARGS=--disable-auto-launch --port 8080 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune --vram-mode 0
+      - COMFYUI_ARGS=--disable-auto-launch --port 8080 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune
       - PYTHONUNBUFFERED=1
     deploy:
       resources:
