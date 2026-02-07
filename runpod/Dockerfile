@@ -131,27 +131,9 @@ cd /ComfyUI\n\
 jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password=""\n\
 ' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
 
-# Download essential WAN 2.2 workflows (updated from provisioning.sh - latest versions)
+# Download essential WAN 2.2 workflows (base set - will be updated at startup)
 RUN wget -O /ComfyUI/workflows/SDXL-LoRaStack-Upscale.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/SDXL-LoRaStack-Upscale.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-I2V-AutoPrompt-1-4.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-1-4.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-I2V-AutoPrompt-GGUF-1-4.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-GGUF-1-4.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-T2V-AutoPrompt-1-5.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-1-5.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-T2V-AutoPrompt-GGUF-1-4.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-GGUF-1-4.json && \
-    wget -O /ComfyUI/workflows/Wan2.2-I2V-SVI-AutoPrompt-1-3.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-1-3.json && \
-    wget -O /ComfyUI/workflows/Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-1.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-1.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-8.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-8.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-5.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-5.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF.json
+    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/SDXL-LoRaStack-Upscale.json
 
 # Create models directories
 RUN mkdir -p /ComfyUI/models/vae && \
@@ -171,7 +153,7 @@ RUN wget -O /ComfyUI/models/vae/wan_2.1_vae.safetensors \
 # Set ComfyUI arguments
 ENV COMFYUI_ARGS="--disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune"
 
-# Create startup script (RunPod style)
+# Create startup script (RunPod style with dynamic workflow updates)
 RUN echo '#!/bin/bash\n\
 set -e  # Exit the script if any statement returns a non-true return value\n\
 \n\
@@ -179,18 +161,49 @@ COMFYUI_DIR="/ComfyUI"\n\
 FILEBROWSER_CONFIG="/filebrowser/.config.json"\n\
 DB_FILE="/filebrowser/database/filebrowser.db"\n\
 \n\
-echo "🚀 Starting ComfyUI-QwenVL-Mod on RunPod (Full Version)"\n\
-echo "🎬 WAN 2.2 workflows loaded"\n\
+# Function to download latest workflows\n\
+update_workflows() {\n\
+    echo "� Updating workflows from latest versions..."\n\
+    cd /ComfyUI/workflows\n\
+    \n\
+    # List of latest workflows\n\
+    workflows=(\n\
+        "SDXL-LoRaStack-Upscale.json"\n\
+        "WAN2.2-I2V-AutoPrompt-1-4.json"\n\
+        "WAN2.2-I2V-AutoPrompt-GGUF-1-4.json"\n\
+        "WAN2.2-T2V-AutoPrompt-1-5.json"\n\
+        "WAN2.2-T2V-AutoPrompt-GGUF-1-4.json"\n\
+        "Wan2.2-I2V-SVI-AutoPrompt-1-3.json"\n\
+        "Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-1.json"\n\
+        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-8.json"\n\
+        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-5.json"\n\
+        "WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF.json"\n\
+    )\n\
+    \n\
+    for workflow in "${workflows[@]}"; do\n\
+        echo "  📥 Downloading: $workflow"\n\
+        wget -q "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/$workflow" -O "$workflow" || echo "  ⚠️ Failed to download $workflow"\n\
+    done\n\
+    \n\
+    echo "✅ Workflow update completed"\n\
+}\n\
+\n\
+echo "�🚀 Starting ComfyUI-QwenVL-Mod on RunPod (Full Version)"\n\
+echo "🎬 WAN 2.2 workflows ready"\n\
 echo "🌐 Multilingual support enabled"\n\
 echo "🎨 Visual style detection ready"\n\
 echo "⚡ GGUF backend optimized"\n\
 echo "🔧 RTX 5090 optimizations active"\n\
 echo ""\n\
-echo "� Services starting:"\n\
+\n\
+# Update workflows to latest versions\n\
+update_workflows\n\
+\n\
+echo "🔧 Services starting:"\n\
 echo "📁 FileBrowser: http://0.0.0.0:8080"\n\
 echo "📓 JupyterLab:  http://0.0.0.0:8888"\n\
 echo "🎨 ComfyUI:    http://0.0.0.0:8188"\n\
-echo "� Available workflows:"\n\
+echo "📋 Available workflows:"\n\
 ls -la /ComfyUI/workflows/\n\
 echo ""\n\
 echo "💡 Models pre-loaded for immediate use"\n\
