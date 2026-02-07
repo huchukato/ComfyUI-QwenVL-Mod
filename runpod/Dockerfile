@@ -2,7 +2,7 @@
 # Enhanced with WAN 2.2 workflows, multilingual support, and GGUF backend
 # Optimized for RTX 5090 and professional video generation
 
-FROM nvidia/cuda:12.6.2-cudnn-devel-ubuntu24.04
+FROM nvidia/cuda:13.1.1-cudnn-devel-ubuntu24.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
