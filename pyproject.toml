@@ -1,14 +1,15 @@
 [project]
-name = "ComfyUI-QwenVL"
-description = "ComfyUI-QwenVL custom node: Integrates the Qwen-VL series, including Qwen2.5-VL and the latest Qwen3-VL, with GGUF support for advanced multimodal AI in text generation, image understanding, and video analysis."
-version = "2.0.0"
+name = "ComfyUI-QwenVL-Mod"
+description = "Enhanced QwenVL node with WAN 2.2 workflows, multilingual support, visual style detection, smart prompt caching, and GGUF backend for professional video generation and multimodal AI."
+version = "2.0.8"
 license = {file = "LICENSE"}
-dependencies = ["transformers", "torch", "huggingface-hub", "hf_xet", "psutil", "numpy", "Pillow", "opencv-python", "bitsandbytes", "accelerate"]
+dependencies = ["transformers", "torch", "huggingface-hub", "hf_xet", "psutil", "numpy", "Pillow", "opencv-python", "bitsandbytes", "accelerate", "llama-cpp-python"]
 
 [project.urls]
-Repository = "https://github.com/1038lab/ComfyUI-QwenVL"
+Repository = "https://github.com/huchukato/ComfyUI-QwenVL-Mod"
 
 [tool.comfy]
-PublisherId = "ailab"
-DisplayName = "ComfyUI-QwenVL"
+PublisherId = "huchukato"
+DisplayName = "ComfyUI-QwenVL-Mod"
 Icon = ""
+Category = "video"
