@@ -2732,7 +2732,7 @@
       ],
       "size": [
         537.6962890624998,
-        334
+        1107.2878906249998
       ],
       "flags": {},
       "order": 112,
@@ -2791,13 +2791,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22_06_07-43-35_00001.mp4",
+            "filename": "wan22_07_11-02-05_00001.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 16,
-            "workflow": "wan22_06_07-43-35_00001.png",
-            "fullpath": "/workspace/ComfyUI/output/wan22_06_07-43-35_00001.mp4"
+            "workflow": "wan22_07_11-02-05_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/wan22_07_11-02-05_00001.mp4"
           }
         }
       }
@@ -5516,57 +5516,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 1546,
-      "type": "ColorMatch",
-      "pos": [
-        -1256.8192555328649,
-        867.7977648018423
-      ],
-      "size": [
-        281.26670703125,
-        127.21141796875008
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 125,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image_ref",
-          "type": "IMAGE",
-          "link": 5411
-        },
-        {
-          "name": "image_target",
-          "type": "IMAGE",
-          "link": 5412
-        }
-      ],
-      "outputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "links": [
-            5410,
-            5413
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-kjnodes",
-        "ver": "e8b70f28be7fd71ee72c3848cfa09e1a89e3061b",
-        "Node name for S&R": "ColorMatch"
-      },
-      "widgets_values": [
-        "mkl",
-        1,
-        true
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
       "id": 1461,
       "type": "GetNode",
       "pos": [
@@ -6157,85 +6106,6 @@
       "color": "#233",
       "bgcolor": "#355",
       "shape": 2
-    },
-    {
-      "id": 1547,
-      "type": "VHS_VideoCombine",
-      "pos": [
-        -1338.1172418349013,
-        706.5624017979211
-      ],
-      "size": [
-        340,
-        334
-      ],
-      "flags": {},
-      "order": 142,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 5413
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": null
-        },
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "Filenames",
-          "type": "VHS_FILENAMES",
-          "links": []
-        }
-      ],
-      "title": "Final Video",
-      "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "993082e4f2473bf4acaf06f51e33877a7eb38960",
-        "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
-      },
-      "widgets_values": {
-        "frame_rate": 16,
-        "loop_count": 0,
-        "filename_prefix": "wan22_%date:dd_hh-mm-ss%",
-        "format": "video/h264-mp4",
-        "pix_fmt": "yuv420p",
-        "crf": 19,
-        "save_metadata": false,
-        "trim_to_audio": false,
-        "pingpong": false,
-        "save_output": false,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "wan22_06_07-53-08_00001.mp4",
-            "subfolder": "",
-            "type": "temp",
-            "format": "video/h264-mp4",
-            "frame_rate": 16,
-            "workflow": "wan22_06_07-53-08_00001.png",
-            "fullpath": "/workspace/ComfyUI/temp/wan22_06_07-53-08_00001.mp4"
-          }
-        }
-      }
     },
     {
       "id": 1531,
@@ -7627,6 +7497,136 @@
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1546,
+      "type": "ColorMatch",
+      "pos": [
+        -1256.8192555328649,
+        867.7977648018423
+      ],
+      "size": [
+        281.26670703125,
+        127.21141796875008
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 125,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_ref",
+          "type": "IMAGE",
+          "link": 5411
+        },
+        {
+          "name": "image_target",
+          "type": "IMAGE",
+          "link": 5412
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            5410,
+            5413
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "e8b70f28be7fd71ee72c3848cfa09e1a89e3061b",
+        "Node name for S&R": "ColorMatch"
+      },
+      "widgets_values": [
+        "mkl",
+        0.4,
+        true
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 1547,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        -1334.6239651578167,
+        712.3736088375254
+      ],
+      "size": [
+        340,
+        334
+      ],
+      "flags": {},
+      "order": 142,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5413
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": []
+        }
+      ],
+      "title": "Final Video",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "993082e4f2473bf4acaf06f51e33877a7eb38960",
+        "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+      },
+      "widgets_values": {
+        "frame_rate": 16,
+        "loop_count": 0,
+        "filename_prefix": "wan22_%date:dd_hh-mm-ss%",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": false,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": false,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "wan22_06_07-53-08_00001.mp4",
+            "subfolder": "",
+            "type": "temp",
+            "format": "video/h264-mp4",
+            "frame_rate": 16,
+            "workflow": "wan22_06_07-53-08_00001.png",
+            "fullpath": "/workspace/ComfyUI/temp/wan22_06_07-53-08_00001.mp4"
+          }
+        }
+      }
     }
   ],
   "links": [
@@ -9138,7 +9138,7 @@
             "flags": {
               "collapsed": false
             },
-            "order": 3,
+            "order": 2,
             "mode": 0,
             "inputs": [
               {
@@ -9190,7 +9190,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 6,
+            "order": 5,
             "mode": 0,
             "inputs": [
               {
@@ -9232,7 +9232,7 @@
             "flags": {
               "collapsed": false
             },
-            "order": 2,
+            "order": 1,
             "mode": 0,
             "inputs": [
               {
@@ -9285,7 +9285,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 5,
+            "order": 4,
             "mode": 0,
             "inputs": [
               {
@@ -9346,7 +9346,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 7,
+            "order": 6,
             "mode": 0,
             "inputs": [
               {
@@ -9390,7 +9390,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 8,
+            "order": 7,
             "mode": 0,
             "inputs": [
               {
@@ -9440,7 +9440,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 10,
+            "order": 9,
             "mode": 0,
             "inputs": [
               {
@@ -9484,7 +9484,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 9,
+            "order": 8,
             "mode": 0,
             "inputs": [
               {
@@ -9532,7 +9532,7 @@
               234
             ],
             "flags": {},
-            "order": 12,
+            "order": 11,
             "mode": 0,
             "inputs": [
               {
@@ -9697,7 +9697,7 @@
               426
             ],
             "flags": {},
-            "order": 11,
+            "order": 10,
             "mode": 0,
             "inputs": [
               {
@@ -9819,7 +9819,7 @@
               468
             ],
             "flags": {},
-            "order": 13,
+            "order": 12,
             "mode": 0,
             "inputs": [
               {
@@ -9885,7 +9885,7 @@
               310.7156811858463
             ],
             "flags": {},
-            "order": 4,
+            "order": 3,
             "mode": 0,
             "inputs": [
               {
@@ -9935,7 +9935,7 @@
               200
             ],
             "flags": {},
-            "order": 1,
+            "order": 13,
             "mode": 0,
             "inputs": [
               {
@@ -10547,7 +10547,7 @@
               318
             ],
             "flags": {},
-            "order": 3,
+            "order": 2,
             "mode": 4,
             "inputs": [
               {
@@ -10709,7 +10709,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 8,
+            "order": 7,
             "mode": 4,
             "inputs": [
               {
@@ -10770,7 +10770,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 10,
+            "order": 9,
             "mode": 4,
             "inputs": [
               {
@@ -10852,7 +10852,7 @@
               151.07669280513005
             ],
             "flags": {},
-            "order": 9,
+            "order": 8,
             "mode": 4,
             "inputs": [
               {
@@ -10904,7 +10904,7 @@
             "flags": {
               "collapsed": false
             },
-            "order": 4,
+            "order": 3,
             "mode": 4,
             "inputs": [
               {
@@ -10957,7 +10957,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 7,
+            "order": 6,
             "mode": 4,
             "inputs": [
               {
@@ -11011,7 +11011,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 2,
+            "order": 1,
             "mode": 4,
             "inputs": [
               {
@@ -11078,7 +11078,7 @@
             "flags": {
               "collapsed": false
             },
-            "order": 5,
+            "order": 4,
             "mode": 4,
             "inputs": [
               {
@@ -11131,7 +11131,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 6,
+            "order": 5,
             "mode": 4,
             "inputs": [
               {
@@ -11181,7 +11181,7 @@
               426
             ],
             "flags": {},
-            "order": 11,
+            "order": 10,
             "mode": 4,
             "inputs": [
               {
@@ -11303,7 +11303,7 @@
               468
             ],
             "flags": {},
-            "order": 12,
+            "order": 11,
             "mode": 4,
             "inputs": [
               {
@@ -11369,7 +11369,7 @@
               200
             ],
             "flags": {},
-            "order": 1,
+            "order": 12,
             "mode": 4,
             "inputs": [
               {
@@ -11964,7 +11964,7 @@
             "flags": {
               "collapsed": false
             },
-            "order": 5,
+            "order": 4,
             "mode": 4,
             "inputs": [
               {
@@ -12017,7 +12017,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 2,
+            "order": 1,
             "mode": 4,
             "inputs": [
               {
@@ -12084,7 +12084,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 6,
+            "order": 5,
             "mode": 4,
             "inputs": [
               {
@@ -12136,7 +12136,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 7,
+            "order": 6,
             "mode": 4,
             "inputs": [
               {
@@ -12188,7 +12188,7 @@
               318
             ],
             "flags": {},
-            "order": 3,
+            "order": 2,
             "mode": 4,
             "inputs": [
               {
@@ -12350,7 +12350,7 @@
             "flags": {
               "collapsed": false
             },
-            "order": 4,
+            "order": 3,
             "mode": 4,
             "inputs": [
               {
@@ -12403,7 +12403,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 10,
+            "order": 9,
             "mode": 4,
             "inputs": [
               {
@@ -12487,7 +12487,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 8,
+            "order": 7,
             "mode": 4,
             "inputs": [
               {
@@ -12546,7 +12546,7 @@
               120.59335083329233
             ],
             "flags": {},
-            "order": 9,
+            "order": 8,
             "mode": 4,
             "inputs": [
               {
@@ -12596,7 +12596,7 @@
               426
             ],
             "flags": {},
-            "order": 11,
+            "order": 10,
             "mode": 4,
             "inputs": [
               {
@@ -12718,7 +12718,7 @@
               468
             ],
             "flags": {},
-            "order": 12,
+            "order": 11,
             "mode": 4,
             "inputs": [
               {
@@ -12784,7 +12784,7 @@
               200
             ],
             "flags": {},
-            "order": 1,
+            "order": 12,
             "mode": 4,
             "inputs": [
               {
@@ -13379,7 +13379,7 @@
             "flags": {
               "collapsed": false
             },
-            "order": 5,
+            "order": 4,
             "mode": 4,
             "inputs": [
               {
@@ -13432,7 +13432,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 2,
+            "order": 1,
             "mode": 4,
             "inputs": [
               {
@@ -13499,7 +13499,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 7,
+            "order": 6,
             "mode": 4,
             "inputs": [
               {
@@ -13553,7 +13553,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 8,
+            "order": 7,
             "mode": 4,
             "inputs": [
               {
@@ -13612,7 +13612,7 @@
               318
             ],
             "flags": {},
-            "order": 3,
+            "order": 2,
             "mode": 4,
             "inputs": [
               {
@@ -13774,7 +13774,7 @@
             "flags": {
               "collapsed": false
             },
-            "order": 4,
+            "order": 3,
             "mode": 4,
             "inputs": [
               {
@@ -13827,7 +13827,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 10,
+            "order": 9,
             "mode": 4,
             "inputs": [
               {
@@ -13909,7 +13909,7 @@
               140.45595319950144
             ],
             "flags": {},
-            "order": 9,
+            "order": 8,
             "mode": 4,
             "inputs": [
               {
@@ -13961,7 +13961,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 6,
+            "order": 5,
             "mode": 4,
             "inputs": [
               {
@@ -14011,7 +14011,7 @@
               426
             ],
             "flags": {},
-            "order": 11,
+            "order": 10,
             "mode": 4,
             "inputs": [
               {
@@ -14133,7 +14133,7 @@
               468
             ],
             "flags": {},
-            "order": 12,
+            "order": 11,
             "mode": 4,
             "inputs": [
               {
@@ -14199,7 +14199,7 @@
               200
             ],
             "flags": {},
-            "order": 1,
+            "order": 12,
             "mode": 4,
             "inputs": [
               {
@@ -14794,10 +14794,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.6514863802161521,
+      "scale": 0.44497396367471637,
       "offset": [
-        1696.3695564166405,
-        181.2270931673529
+        2956.1235378839824,
+        1245.8912549288564
       ]
     }
   },
