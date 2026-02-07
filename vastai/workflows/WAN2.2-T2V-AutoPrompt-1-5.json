@@ -1,7 +1,7 @@
 {
   "id": "14eb78d3-100a-4170-9036-65841d9c9281",
   "revision": 0,
-  "last_node_id": 205,
+  "last_node_id": 206,
   "last_link_id": 404,
   "nodes": [
     {
@@ -18,7 +18,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 32,
+      "order": 33,
       "mode": 0,
       "inputs": [
         {
@@ -79,7 +79,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 33,
+      "order": 34,
       "mode": 0,
       "inputs": [
         {
@@ -238,7 +238,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 35,
+      "order": 36,
       "mode": 4,
       "inputs": [
         {
@@ -279,7 +279,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 36,
+      "order": 37,
       "mode": 4,
       "inputs": [
         {
@@ -370,8 +370,8 @@
       "id": 153,
       "type": "SetNode",
       "pos": [
-        -2290.1247784047696,
-        744.8825054438447
+        -2300,
+        1160
       ],
       "size": [
         210,
@@ -380,7 +380,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 25,
+      "order": 26,
       "mode": 0,
       "inputs": [
         {
@@ -410,8 +410,8 @@
       "id": 151,
       "type": "SetNode",
       "pos": [
-        -2283.823614025913,
-        813.9549442362546
+        -2300,
+        1230
       ],
       "size": [
         210,
@@ -420,7 +420,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 30,
+      "order": 31,
       "mode": 0,
       "inputs": [
         {
@@ -460,7 +460,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 39,
+      "order": 40,
       "mode": 4,
       "inputs": [
         {
@@ -514,7 +514,7 @@
         334
       ],
       "flags": {},
-      "order": 43,
+      "order": 44,
       "mode": 4,
       "inputs": [
         {
@@ -595,7 +595,7 @@
         76
       ],
       "flags": {},
-      "order": 31,
+      "order": 32,
       "mode": 0,
       "inputs": [
         {
@@ -643,10 +643,10 @@
       ],
       "size": [
         495.594700387423,
-        1061.3920505811345
+        334
       ],
       "flags": {},
-      "order": 34,
+      "order": 35,
       "mode": 0,
       "inputs": [
         {
@@ -777,7 +777,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 40,
+      "order": 41,
       "mode": 4,
       "inputs": [
         {
@@ -831,7 +831,7 @@
         334
       ],
       "flags": {},
-      "order": 44,
+      "order": 45,
       "mode": 4,
       "inputs": [
         {
@@ -1040,7 +1040,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 41,
+      "order": 42,
       "mode": 0,
       "inputs": [
         {
@@ -1080,7 +1080,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 42,
+      "order": 43,
       "mode": 0,
       "inputs": [
         {
@@ -1120,7 +1120,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 38,
+      "order": 39,
       "mode": 0,
       "inputs": [
         {
@@ -1170,7 +1170,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 37,
+      "order": 38,
       "mode": 0,
       "inputs": [
         {
@@ -1218,7 +1218,7 @@
         230
       ],
       "flags": {},
-      "order": 28,
+      "order": 29,
       "mode": 0,
       "inputs": [
         {
@@ -1282,7 +1282,7 @@
         240
       ],
       "flags": {},
-      "order": 29,
+      "order": 30,
       "mode": 0,
       "inputs": [
         {
@@ -1406,8 +1406,8 @@
       "id": 175,
       "type": "SetNode",
       "pos": [
-        -2293.8384563773106,
-        920.9721405077652
+        -2310,
+        1330
       ],
       "size": [
         210,
@@ -1416,7 +1416,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 23,
+      "order": 24,
       "mode": 0,
       "inputs": [
         {
@@ -1444,8 +1444,8 @@
       "id": 176,
       "type": "SetNode",
       "pos": [
-        -2063.210622922358,
-        918.3703291720457
+        -2080,
+        1330
       ],
       "size": [
         210,
@@ -1454,7 +1454,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 24,
+      "order": 25,
       "mode": 0,
       "inputs": [
         {
@@ -1482,8 +1482,8 @@
       "id": 177,
       "type": "SamplerSelector",
       "pos": [
-        -2337.6593171733625,
-        894.447763189707
+        -2350,
+        1310
       ],
       "size": [
         210,
@@ -1517,8 +1517,8 @@
       "id": 178,
       "type": "SchedulerSelector",
       "pos": [
-        -2112.0933404211987,
-        894.7147142272639
+        -2130,
+        1310
       ],
       "size": [
         210,
@@ -1552,8 +1552,8 @@
       "id": 157,
       "type": "mxSlider",
       "pos": [
-        -2341.211321200989,
-        724.7147142272648
+        -2360,
+        1140
       ],
       "size": [
         440,
@@ -1606,7 +1606,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 26,
+      "order": 27,
       "mode": 0,
       "inputs": [
         {
@@ -1646,7 +1646,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 27,
+      "order": 28,
       "mode": 0,
       "inputs": [
         {
@@ -1916,8 +1916,8 @@
       "id": 155,
       "type": "mxSlider",
       "pos": [
-        -2341.211321200989,
-        804.7147142272646
+        -2360,
+        1220
       ],
       "size": [
         440,
@@ -1968,7 +1968,7 @@
         831.5204918531986
       ],
       "flags": {},
-      "order": 22,
+      "order": 23,
       "mode": 0,
       "inputs": [
         {
@@ -2078,6 +2078,10 @@
             "scheduler"
           ],
           [
+            "179",
+            "string_a"
+          ],
+          [
             "178",
             "prompt_text"
           ],
@@ -2132,8 +2136,8 @@
       "id": 132,
       "type": "Fast Groups Bypasser (rgthree)",
       "pos": [
-        -2348.9791587438463,
-        1043.071490076768
+        -2360,
+        1460
       ],
       "size": [
         460,
@@ -2162,6 +2166,30 @@
       },
       "color": "#322",
       "bgcolor": "#533"
+    },
+    {
+      "id": 206,
+      "type": "MarkdownNote",
+      "pos": [
+        -2340,
+        620
+      ],
+      "size": [
+        440,
+        200
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🎨 Visual Style Detection",
+      "properties": {},
+      "widgets_values": [
+        "**Enhanced Style Detection: Comprehensive support for artistic styles:**\n\n- Anime style\n\n- 3D cartoon\n\n- Pixel art\n\n- Puppet animation\n\n- 3D game style\n\n- Claymation\n\n- Watercolor\n\n- Black and white animation\n\n- Oil painting style\n\n- Felt style\n\n- Tilt-shift photography\n\n- Time-lapse photography\n\n"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
     }
   ],
   "links": [
@@ -2552,8 +2580,8 @@
       "id": 21,
       "title": "PARAMETERS",
       "bounding": [
-        -2351.211321200989,
-        651.1147142272652,
+        -2370,
+        1060,
         460,
         323.6
       ],
@@ -2569,8 +2597,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 17,
-          "lastNodeId": 178,
-          "lastLinkId": 406,
+          "lastNodeId": 179,
+          "lastLinkId": 408,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -2750,7 +2778,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 5,
+            "order": 6,
             "mode": 0,
             "inputs": [
               {
@@ -2836,7 +2864,7 @@
             "flags": {
               "collapsed": false
             },
-            "order": 6,
+            "order": 7,
             "mode": 0,
             "inputs": [
               {
@@ -2873,55 +2901,6 @@
             "shape": 2
           },
           {
-            "id": 89,
-            "type": "easy showAnything",
-            "pos": [
-              -824.3226265552914,
-              673.4603599793522
-            ],
-            "size": [
-              409.77364229183786,
-              459.12324555869156
-            ],
-            "flags": {},
-            "order": 2,
-            "mode": 0,
-            "inputs": [
-              {
-                "label": " ",
-                "localized_name": "anything",
-                "name": "anything",
-                "shape": 7,
-                "type": "*",
-                "link": 406
-              }
-            ],
-            "outputs": [
-              {
-                "label": " ",
-                "localized_name": "output",
-                "name": "output",
-                "type": "*",
-                "links": [
-                  306
-                ]
-              }
-            ],
-            "title": "Final prompt preview",
-            "properties": {
-              "cnr_id": "comfyui-easy-use",
-              "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
-              "Node name for S&R": "easy showAnything",
-              "widget_ue_connectable": {}
-            },
-            "widgets_values": [
-              "(At 0 seconds: A lone figure with flowing light purple hair and aqua eyes stands dramatically in a shadowed canyon at twilight, bathed in golden-hued stage lights casting strong backlighting that silhouettes her form against the rugged cliffs — she wears a sleek sleeveless leather dress cinched by a chastity belt beneath a sheer naked hoodie, her posture poised yet sensual.)  \n(At 1 seconds: Close-up on her face as she opens her mouth slightly, tongue flickering outward, droplets of saliva glistening mid-air before cascading down her chest — soft ambient glow highlights the texture of her skin and the fabric’s matte sheen under low-angle spotlighting.)  \n(At 2 seconds: Camera tilts upward tracking the arc of her long hair swaying gently in the wind while revealing the impossible shirt clinging to her torso, subtly stretched across her curves — deep shadows pool behind her, enhancing the chiaroscuro effect of the canyon walls.)  \n(At 3 seconds: Slow push-in through a shallow depth-of-field blur, focusing sharply on one breast as a subtle nipple tweak causes a ripple of tension visible beneath the thin material — warm amber spotlights caress her silhouette, contrasting with cool blues bleeding from the sky above.)  \n(At 4 seconds: As the final beam of twilight fades, the scene dissolves into high-contrast noir tones — camera pans left past her shoulder to reveal the vast emptiness of the canyon floor, emphasizing isolation and raw eroticism rendered in anime-inspired line work and saturated palettes.)  \n(At 5 seconds: Freeze frame on her parted lips dripping saliva onto her collarbone — background blurs into painterly streaks of violet and indigo, evoking watercolor washes and emotional intensity as if captured by a dreamlike hand-painted still life.)"
-            ],
-            "color": "#232",
-            "bgcolor": "#353",
-            "shape": 2
-          },
-          {
             "id": 177,
             "type": "EmptyHunyuanLatentVideo",
             "pos": [
@@ -2933,7 +2912,7 @@
               130
             ],
             "flags": {},
-            "order": 8,
+            "order": 9,
             "mode": 0,
             "inputs": [
               {
@@ -3000,7 +2979,7 @@
               426
             ],
             "flags": {},
-            "order": 7,
+            "order": 8,
             "mode": 0,
             "inputs": [
               {
@@ -3117,7 +3096,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 4,
+            "order": 5,
             "mode": 0,
             "inputs": [
               {
@@ -3176,7 +3155,7 @@
               94.53972656250005
             ],
             "flags": {},
-            "order": 3,
+            "order": 4,
             "mode": 0,
             "inputs": [
               {
@@ -3214,6 +3193,55 @@
             "shape": 2
           },
           {
+            "id": 89,
+            "type": "easy showAnything",
+            "pos": [
+              -793.2909274251801,
+              975.0070917502014
+            ],
+            "size": [
+              391.449060044323,
+              364.80077499380707
+            ],
+            "flags": {},
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": " ",
+                "localized_name": "anything",
+                "name": "anything",
+                "shape": 7,
+                "type": "*",
+                "link": 408
+              }
+            ],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "output",
+                "name": "output",
+                "type": "*",
+                "links": [
+                  306
+                ]
+              }
+            ],
+            "title": "Final prompt preview",
+            "properties": {
+              "cnr_id": "comfyui-easy-use",
+              "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
+              "Node name for S&R": "easy showAnything",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "(At 0 seconds: A lone figure with flowing light purple hair and aqua eyes stands dramatically in a shadowed canyon at twilight, bathed in golden-hued stage lights casting strong backlighting that silhouettes her form against the rugged cliffs — she wears a sleek sleeveless leather dress cinched by a chastity belt beneath a sheer naked hoodie, her posture poised yet sensual.)  \n(At 1 seconds: Close-up on her face as she opens her mouth slightly, tongue flickering outward, droplets of saliva glistening mid-air before cascading down her chest — soft ambient glow highlights the texture of her skin and the fabric’s matte sheen under low-angle spotlighting.)  \n(At 2 seconds: Camera tilts upward tracking the arc of her long hair swaying gently in the wind while revealing the impossible shirt clinging to her torso, subtly stretched across her curves — deep shadows pool behind her, enhancing the chiaroscuro effect of the canyon walls.)  \n(At 3 seconds: Slow push-in through a shallow depth-of-field blur, focusing sharply on one breast as a subtle nipple tweak causes a ripple of tension visible beneath the thin material — warm amber spotlights caress her silhouette, contrasting with cool blues bleeding from the sky above.)  \n(At 4 seconds: As the final beam of twilight fades, the scene dissolves into high-contrast noir tones — camera pans left past her shoulder to reveal the vast emptiness of the canyon floor, emphasizing isolation and raw eroticism rendered in anime-inspired line work and saturated palettes.)  \n(At 5 seconds: Freeze frame on her parted lips dripping saliva onto her collarbone — background blurs into painterly streaks of violet and indigo, evoking watercolor washes and emotional intensity as if captured by a dreamlike hand-painted still life.)"
+            ],
+            "color": "#232",
+            "bgcolor": "#353",
+            "shape": 2
+          },
+          {
             "id": 178,
             "type": "AILab_QwenVL_PromptEnhancer",
             "pos": [
@@ -3234,7 +3262,7 @@
                 "name": "ENHANCED_OUTPUT",
                 "type": "STRING",
                 "links": [
-                  406
+                  407
                 ]
               }
             ],
@@ -3262,6 +3290,52 @@
             ],
             "color": "#374445",
             "bgcolor": "#474539"
+          },
+          {
+            "id": 179,
+            "type": "StringConcatenate",
+            "pos": [
+              -788.1305202260967,
+              685.5736987836198
+            ],
+            "size": [
+              400,
+              200
+            ],
+            "flags": {},
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string_b",
+                "name": "string_b",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_b"
+                },
+                "link": 407
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  408
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.12.3",
+              "Node name for S&R": "StringConcatenate"
+            },
+            "widgets_values": [
+              "",
+              "",
+              ""
+            ]
           }
         ],
         "groups": [],
@@ -3419,8 +3493,16 @@
             "type": "INT"
           },
           {
-            "id": 406,
+            "id": 407,
             "origin_id": 178,
+            "origin_slot": 0,
+            "target_id": 179,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 408,
+            "origin_id": 179,
             "origin_slot": 0,
             "target_id": 89,
             "target_slot": 0,
@@ -3444,10 +3526,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.6094842964824125,
+      "scale": 0.5540766331658296,
       "offset": [
-        3333.948736280353,
-        153.10620113040454
+        3379.8142649485644,
+        645.1938046499757
       ]
     }
   },
