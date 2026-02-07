@@ -32,8 +32,7 @@ Professional ComfyUI with QwenVL-Mod enhanced vision-language and WAN 2.2 video 
 - NSFW Support: Comprehensive content generation
 
 ### **⚡ Performance Optimizations**
-- RTX 5090 Optimized: CUDA 13.0 with advanced optimizations
-- FP16 Accumulation: Faster mixed precision computation
+- RTX 5090/4090 optimized (CUDA 13.1, Python 3.12.12, PyTorch latest, FP16 accumulation, sage attention, async offload, FP8 support)
 - Sage Attention: Optimized attention mechanisms
 - Async Offload: Efficient memory management
 - FP8 Support: Latest hardware acceleration
