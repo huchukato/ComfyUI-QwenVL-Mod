@@ -47,7 +47,7 @@ RUN python3.12 -m venv /opt/venv && \
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Install PyTorch with CUDA 13.1 support - optimized for RTX 5090
-RUN pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cu128
+RUN pip install torch==2.9.1 torchvision==0.24.1 torchaudio==2.9.1 --index-url https://download.pytorch.org/whl/cu128
 
 # Install ComfyUI
 WORKDIR /ComfyUI
@@ -136,24 +136,52 @@ RUN mkdir -p /ComfyUI/workflows && \
     mkdir -p /ComfyUI/models/checkpoints && \
     mkdir -p /ComfyUI/models/loras
 
-# Download essential workflows only (small JSON files)
-RUN wget -O /ComfyUI/workflows/WAN2.2-I2V-AutoPrompt.json \
+# Create user directory structure and download essential workflows
+RUN mkdir -p /ComfyUI/user/default/workflows && \
+    wget -O /ComfyUI/user/default/workflows/WAN2.2-I2V-AutoPrompt.json \
     https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-1-4.json && \
-    wget -O /ComfyUI/workflows/WAN2.2-T2V-AutoPrompt.json \
+    wget -O /ComfyUI/user/default/workflows/WAN2.2-T2V-AutoPrompt.json \
     https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-1-5.json && \
-    wget -O /ComfyUI/workflows/SDXL-LoRaStack-Upscale.json \
+    wget -O /ComfyUI/user/default/workflows/SDXL-LoRaStack-Upscale.json \
     https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/SDXL-LoRaStack-Upscale.json
 
 # Set ComfyUI arguments
 ENV COMFYUI_ARGS="--disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune"
 
-# Create startup script (RunPod style)
+# Create startup script (RunPod style with dynamic workflow updates)
 RUN echo '#!/bin/bash\n\
 set -e  # Exit the script if any statement returns a non-true return value\n\
 \n\
 COMFYUI_DIR="/ComfyUI"\n\
 FILEBROWSER_CONFIG="/filebrowser/.config.json"\n\
 DB_FILE="/filebrowser/database/filebrowser.db"\n\
+\n\
+# Function to download latest workflows\n\
+update_workflows() {\n\
+    echo "🔄 Updating workflows from latest versions..."\n\
+    cd /ComfyUI/user/default/workflows\n\
+    \n\
+    # List of latest workflows\n\
+    workflows=(\n\
+        "SDXL-LoRaStack-Upscale.json"\n\
+        "WAN2.2-I2V-AutoPrompt-1-4.json"\n\
+        "WAN2.2-I2V-AutoPrompt-GGUF-1-4.json"\n\
+        "WAN2.2-T2V-AutoPrompt-1-5.json"\n\
+        "WAN2.2-T2V-AutoPrompt-GGUF-1-4.json"\n\
+        "Wan2.2-I2V-SVI-AutoPrompt-1-3.json"\n\
+        "Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-1.json"\n\
+        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-8.json"\n\
+        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-5.json"\n\
+        "WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF.json"\n\
+    )\n\
+    \n\
+    for workflow in "${workflows[@]}"; do\n\
+        echo "  📥 Downloading: $workflow"\n\
+        wget -q "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/$workflow" -O "$workflow" || echo "  ⚠️ Failed to download $workflow"\n\
+    done\n\
+    \n\
+    echo "✅ Workflow update completed"\n\
+}\n\
 \n\
 echo "🚀 Starting ComfyUI-QwenVL-Mod on RunPod (Lightweight)"\n\
 echo "🎬 WAN 2.2 workflows ready (models downloaded on-demand)"\n\
@@ -162,27 +190,28 @@ echo "🎨 Visual style detection ready"\n\
 echo "⚡ GGUF backend optimized"\n\
 echo "🔧 RTX 5090 optimizations active"\n\
 echo ""\n\
+\n\
+# Update workflows to latest versions\n\
+update_workflows\n\
+\n\
 echo "🔧 Services starting:"\n\
 echo "📁 FileBrowser: http://0.0.0.0:8080"\n\
 echo "📓 JupyterLab:  http://0.0.0.0:8888"\n\
 echo "🎨 ComfyUI:    http://0.0.0.0:8188"\n\
 echo "📋 Available workflows:"\n\
-ls -la /ComfyUI/workflows/\n\
+ls -la /ComfyUI/user/default/workflows/\n\
 echo ""\n\
 echo "💡 Models will be downloaded automatically when needed"\n\
 echo ""\n\
 \n\
-# Start FileBrowser\n\
 echo "🔧 Starting FileBrowser..."\n\
 nohup /usr/local/bin/start-filebrowser.sh &> /filebrowser.log &\n\
 echo "✅ FileBrowser started"\n\
 \n\
-# Start JupyterLab\n\
 echo "🔧 Starting JupyterLab..."\n\
 nohup /usr/local/bin/start-jupyter.sh &> /jupyter.log &\n\
 echo "✅ JupyterLab started"\n\
 \n\
-# Start ComfyUI\n\
 echo "🚀 Starting ComfyUI..."\n\
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\n\
 echo "🔧 COMFYUI_ARGS: $COMFYUI_ARGS"\n\
@@ -190,7 +219,6 @@ cd $COMFYUI_DIR\n\
 nohup python main.py --disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune &> /comfyui.log &\n\
 echo "✅ ComfyUI started"\n\
 \n\
-# Tail the ComfyUI log\n\
 tail -f /comfyui.log\n\
 ' > /ComfyUI/start.sh && chmod +x /ComfyUI/start.sh
 
