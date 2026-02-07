@@ -1,4 +1,4 @@
-# ComfyUI-QwenVL-Mod RunPod Worker
+# OneClick-ComfyUI-WAN2.2-I2V-T2V-Qwen3VL-AutoPrompt
 
 Professional ComfyUI with QwenVL-Mod enhanced vision-language and WAN 2.2 video generation.
 
