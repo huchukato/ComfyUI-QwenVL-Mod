@@ -2,7 +2,7 @@
   "id": "d40a02f0-8c72-4d49-8df5-3b1302b986f9",
   "revision": 0,
   "last_node_id": 1575,
-  "last_link_id": 5455,
+  "last_link_id": 5456,
   "nodes": [
     {
       "id": 738,
@@ -1939,13 +1939,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22_07_03-12-28_00001.mp4",
+            "filename": "wan22_07_04-17-10_00002.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 16,
-            "workflow": "wan22_07_03-12-28_00001.png",
-            "fullpath": "/workspace/ComfyUI/output/wan22_07_03-12-28_00001.mp4"
+            "workflow": "wan22_07_04-17-10_00002.png",
+            "fullpath": "/workspace/ComfyUI/output/wan22_07_04-17-10_00002.mp4"
           }
         }
       }
@@ -3053,7 +3053,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 155,
+      "order": 156,
       "mode": 4,
       "inputs": [
         {
@@ -3105,7 +3105,7 @@
         334
       ],
       "flags": {},
-      "order": 154,
+      "order": 155,
       "mode": 4,
       "inputs": [
         {
@@ -3578,13 +3578,13 @@
       "flags": {
         "collapsed": true
       },
-      "order": 156,
+      "order": 154,
       "mode": 0,
       "inputs": [
         {
           "name": "IMAGE",
           "type": "IMAGE",
-          "link": 5453
+          "link": 5456
         }
       ],
       "outputs": [
@@ -4082,7 +4082,7 @@
         "collapsed": true
       },
       "order": 141,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "upscale_model",
@@ -5330,30 +5330,6 @@
       ]
     },
     {
-      "id": 1466,
-      "type": "MarkdownNote",
-      "pos": [
-        -1870,
-        310
-      ],
-      "size": [
-        460,
-        290
-      ],
-      "flags": {},
-      "order": 84,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "AUTOPROMPT | MMAUDIO",
-      "properties": {},
-      "widgets_values": [
-        "## 🔖 AUTOPROMPT\n\nInstall this modified node that allows you to use an uncensored QwenVL model\n\n\n`git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod`\n\n----\n\n## 🔈 MMAUDIO \n\nAll of these files should be downloaded to `ComfyUI\\models\\mmaudio`\n\n[🔗MMAudio Model](https://huggingface.co/phazei/NSFW_MMaudio/resolve/main/mmaudio_large_44k_nsfw_gold_8.5k_final_fp16.safetensors)\n\n[🔗MMAudio VAE](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/5984623e6b436818c6ff287ef6eec93e3e05aa3f/mmaudio_vae_44k_fp16.safetensors)\n\n[🔗MMAudio Synchformer](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/main/mmaudio_synchformer_fp16.safetensors)\n\n[🔗MMAudio CLIP](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/main/apple_DFN5B-CLIP-ViT-H-14-384_fp16.safetensors)"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 939,
       "type": "SetNode",
       "pos": [
@@ -5552,7 +5528,7 @@
         30
       ],
       "flags": {},
-      "order": 85,
+      "order": 84,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5597,7 +5573,7 @@
         70
       ],
       "flags": {},
-      "order": 86,
+      "order": 85,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5632,7 +5608,7 @@
         82
       ],
       "flags": {},
-      "order": 87,
+      "order": 86,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -5682,7 +5658,7 @@
         82
       ],
       "flags": {},
-      "order": 88,
+      "order": 87,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -5772,85 +5748,6 @@
       "bgcolor": "#335"
     },
     {
-      "id": 1547,
-      "type": "VHS_VideoCombine",
-      "pos": [
-        -1336.6920964921808,
-        400.9555425221336
-      ],
-      "size": [
-        340,
-        828
-      ],
-      "flags": {},
-      "order": 143,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 5413
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": null
-        },
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "Filenames",
-          "type": "VHS_FILENAMES",
-          "links": []
-        }
-      ],
-      "title": "Final Video",
-      "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "993082e4f2473bf4acaf06f51e33877a7eb38960",
-        "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
-      },
-      "widgets_values": {
-        "frame_rate": 16,
-        "loop_count": 0,
-        "filename_prefix": "wan22_%date:dd_hh-mm-ss%",
-        "format": "video/h264-mp4",
-        "pix_fmt": "yuv420p",
-        "crf": 19,
-        "save_metadata": false,
-        "trim_to_audio": false,
-        "pingpong": false,
-        "save_output": false,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "wan22_07_03-12-28_00001.mp4",
-            "subfolder": "",
-            "type": "temp",
-            "format": "video/h264-mp4",
-            "frame_rate": 16,
-            "workflow": "wan22_07_03-12-28_00001.png",
-            "fullpath": "/workspace/ComfyUI/temp/wan22_07_03-12-28_00001.mp4"
-          }
-        }
-      }
-    },
-    {
       "id": 1549,
       "type": "GetNode",
       "pos": [
@@ -5864,7 +5761,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 89,
+      "order": 88,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5899,7 +5796,7 @@
         "collapsed": true
       },
       "order": 116,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "anything",
@@ -5935,8 +5832,8 @@
         60
       ],
       "flags": {},
-      "order": 90,
-      "mode": 0,
+      "order": 89,
+      "mode": 4,
       "inputs": [],
       "outputs": [
         {
@@ -5973,7 +5870,7 @@
         "collapsed": true
       },
       "order": 132,
-      "mode": 4,
+      "mode": 0,
       "inputs": [
         {
           "name": "anything",
@@ -5998,88 +5895,6 @@
       "widgets_values": []
     },
     {
-      "id": 1534,
-      "type": "LoadUpscalerTensorrtModel",
-      "pos": [
-        -466.6295477026452,
-        1495.4628674368744
-      ],
-      "size": [
-        273.71736774643216,
-        82
-      ],
-      "flags": {},
-      "order": 91,
-      "mode": 4,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "links": [
-            5399
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "ComfyUI-Upscaler-Tensorrt",
-        "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
-        "Node name for S&R": "LoadUpscalerTensorrtModel"
-      },
-      "widgets_values": [
-        "4x-UltraSharp",
-        "fp16"
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
-      "id": 1533,
-      "type": "UpscalerTensorrt",
-      "pos": [
-        -462.17130487358463,
-        1622.622502818308
-      ],
-      "size": [
-        270,
-        76
-      ],
-      "flags": {},
-      "order": 145,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 5452
-        },
-        {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "link": 5399
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": []
-        }
-      ],
-      "properties": {
-        "cnr_id": "ComfyUI-Upscaler-Tensorrt",
-        "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
-        "Node name for S&R": "UpscalerTensorrt"
-      },
-      "widgets_values": [
-        "2x",
-        1024,
-        1024
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
       "id": 1532,
       "type": "ImageScaleBy",
       "pos": [
@@ -6094,7 +5909,7 @@
         "collapsed": true
       },
       "order": 150,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "image",
@@ -6106,9 +5921,7 @@
         {
           "name": "IMAGE",
           "type": "IMAGE",
-          "links": [
-            5453
-          ]
+          "links": []
         }
       ],
       "properties": {
@@ -6122,41 +5935,6 @@
       ],
       "color": "#323",
       "bgcolor": "#535"
-    },
-    {
-      "id": 1438,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -931.8728168445652,
-        899.1641638038511
-      ],
-      "size": [
-        340,
-        130
-      ],
-      "flags": {},
-      "order": 92,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Upscale and Interpolation",
-      "properties": {
-        "matchColors": "red",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#322",
-      "bgcolor": "#533"
     },
     {
       "id": 1344,
@@ -6395,7 +6173,7 @@
         110
       ],
       "flags": {},
-      "order": 93,
+      "order": 90,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6442,7 +6220,7 @@
         82
       ],
       "flags": {},
-      "order": 94,
+      "order": 91,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -6492,7 +6270,7 @@
         82
       ],
       "flags": {},
-      "order": 95,
+      "order": 92,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -6542,7 +6320,7 @@
         58
       ],
       "flags": {},
-      "order": 96,
+      "order": 93,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6579,7 +6357,7 @@
         60
       ],
       "flags": {},
-      "order": 97,
+      "order": 94,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6616,7 +6394,7 @@
         60
       ],
       "flags": {},
-      "order": 98,
+      "order": 95,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6653,7 +6431,7 @@
         58
       ],
       "flags": {},
-      "order": 99,
+      "order": 96,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -7129,30 +6907,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 301,
-      "type": "MarkdownNote",
-      "pos": [
-        -1880,
-        -1120
-      ],
-      "size": [
-        470,
-        1370
-      ],
-      "flags": {},
-      "order": 100,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "README",
-      "properties": {},
-      "widgets_values": [
-        "# WAN 2.2 NSFW T2V LONG VIDEO with AUTOPROMPT, MMAUDIO and GGUF support \n\n## 🖥️ Civitai Model \n\n**T2V MODELS**\n\n*Credits to* [DigitalPastel](https://civitai.com/user/DigitalPastel) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n⚙️ **GGUF VERSION**\n- [🔗 Smooth Mix T2V V2 Q6 K High](https://civitai.com/models/2083588?modelVersionId=2357890)\n- [🔗 Smooth Mix T2V V2 Q6 K Low](https://civitai.com/models/2083588?modelVersionId=2357892)\n- [🔗 Smooth Mix T2V V2 Q8 High](https://civitai.com/models/2083588?modelVersionId=2358087)\n- [🔗 Smooth Mix T2V V2 Q8 Low](https://civitai.com/models/2083588?modelVersionId=2358187)\n\n⚙️ **FP8 VERSION**\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou)\n\n- [🔗 WAN REMIX T2V v2.0 High](https://civitai.com/models/2003153?modelVersionId=2424167)\n- [🔗 WAN REMIX T2V v2.0 Low](https://civitai.com/models/2003153?modelVersionId=2424912)\n\n**I2V MODELS**\n\n⚙️ **GGUF VERSION**\n\n*Credits to* [taek75799](https://civitai.com/user/taek75799)\n\n- [🔗 NSFW V2 Q6 K High](https://civitai.com/models/2053259?modelVersionId=2524233)\n- [🔗 NSFW V2 Q6 K Low](https://civitai.com/models/2053259?modelVersionId=2524236)\n- [🔗 NSFW V2 Q8 High](https://civitai.com/models/2053259?modelVersionId=2584698)\n- [🔗 NSFW V2 Q8 Low](https://civitai.com/models/2053259?modelVersionId=2584707)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 WAN REMIX v2.1 Q6 K High](https://civitai.com/models/2347977?modelVersionId=2641160)\n- [🔗 WAN REMIX v2.1 Q6 K Low](https://civitai.com/models/2347977?modelVersionId=2641158)\n- [🔗 WAN REMIX v2.1 Q8 High](https://civitai.com/models/2347977?modelVersionId=2641236)\n- [🔗 WAN REMIX v.2.1 Q8 Low](https://civitai.com/models/2347977?modelVersionId=2641234)\n\n---\n\n## Text Encoders\n- **FP8**: [🔗 umt5_xxl_fp8 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors)\n- **FP16**: [🔗 umt5_xxl_fp16 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors)\n- **NSFW FP8**: [🔗 nsfw_wan_umt5-xxl_fp8_scaled](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors)\n- **NSFW BF16**: [🔗 nsfw_wan_umt5-xxl_bf16](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_bf16.safetensors)\n\n⚙️ **GGUF VERSION**\n- **Q6 K**: [🔗 umt5-xxl-encoder-Q6_K](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q6_K.gguf)\n- **Q8**: [🔗 umt5-xxl-encoder-Q8_0](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q8_0.gguf)\n\n## VAE\n- **BF16:**: [🔗 wan_2.1_vae](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors)\n- **FP32:**: [🔗 wan_2.1_fp32_vae](https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors)\n\n## UPSCALE MODEL\n\n- [🔗 2xLexicaRRDBNet](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth)\n- [🔗 2xLexicaRRDBNet_Sharp](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth)\n\n\n---\n\n# 🎬 Motion Settings\n\n## Motion Amplitude\n*Motion intensity multiplier* \n- **1.0** = normal\n- **1.15** = recommended  \n**Range:** 1.0 – 2.0\n\n## Motion Frames\n*Number of trailing frames from `previous_video` used as motion reference* \n\n**Default:** 5\n\n---\n\n# 🎨 Color Strenght\n\nControls color drift correction strength.\n\n- **0.0** → no color issues  \n- **0.01 – 0.05** → slight drift  \n- **0.1 – 0.15** → strong shift  \n- **0.2 – 0.3** → severe drift\n"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
       "id": 923,
       "type": "Fast Groups Bypasser (rgthree)",
       "pos": [
@@ -7164,7 +6918,7 @@
         120
       ],
       "flags": {},
-      "order": 101,
+      "order": 97,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -7188,30 +6942,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 1529,
-      "type": "MarkdownNote",
-      "pos": [
-        -1870,
-        660
-      ],
-      "size": [
-        460,
-        420
-      ],
-      "flags": {},
-      "order": 102,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "QWEN3-VL GGUF",
-      "properties": {},
-      "widgets_values": [
-        "## 🔖 To use the Qwen3-VL GGUF Quantized models you have to install *llama-cpp-python*\n\n\n**🛑 STOP COMFYUI**\n\n**📂 Activate the ComfyUI Virtual Enviroment**\n\nIn your ComfyUI root installation folder type:\non Windows:\n\nCommand Prompt:\n```\n\\venv\\Scripts\\activate.bat\n```\nor Power Shell:\n```\n\\venv\\Scripts\\Activate.ps1\n```\non Linux:\n```\n. /venv/bin/activate\n```\n**⬇️ Install llama-cpp-python**\n```\npip install --upgrade --force-reinstall --no-cache-dir \"llama-cpp-python @ git+https://github.com/JamePeng/llama-cpp-python.git\"\n```\n**🔄 Restart ComfyUI and enjoy**\n\n"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
       "id": 1575,
       "type": "MarkdownNote",
       "pos": [
@@ -7223,7 +6953,7 @@
         196.61221590909076
       ],
       "flags": {},
-      "order": 103,
+      "order": 98,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -7234,6 +6964,204 @@
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1438,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -931.8728168445652,
+        899.1641638038511
+      ],
+      "size": [
+        340,
+        130
+      ],
+      "flags": {},
+      "order": 99,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Upscale and Interpolation",
+      "properties": {
+        "matchColors": "red",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 1534,
+      "type": "LoadUpscalerTensorrtModel",
+      "pos": [
+        -464.01236020264514,
+        1496.1152111868744
+      ],
+      "size": [
+        273.71736774643216,
+        82
+      ],
+      "flags": {},
+      "order": 100,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "links": [
+            5399
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-Upscaler-Tensorrt",
+        "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
+        "Node name for S&R": "LoadUpscalerTensorrtModel"
+      },
+      "widgets_values": [
+        "4x-UltraSharp",
+        "fp16"
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 1547,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        -1336.6920964921808,
+        400.9555425221336
+      ],
+      "size": [
+        340,
+        828
+      ],
+      "flags": {},
+      "order": 143,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5413
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": []
+        }
+      ],
+      "title": "Final Video",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "993082e4f2473bf4acaf06f51e33877a7eb38960",
+        "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+      },
+      "widgets_values": {
+        "frame_rate": 16,
+        "loop_count": 0,
+        "filename_prefix": "wan22_%date:dd_hh-mm-ss%",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "wan22_07_04-17-10_00001.mp4",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/h264-mp4",
+            "frame_rate": 16,
+            "workflow": "wan22_07_04-17-10_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/wan22_07_04-17-10_00001.mp4"
+          }
+        }
+      }
+    },
+    {
+      "id": 1533,
+      "type": "UpscalerTensorrt",
+      "pos": [
+        -463.55127752983446,
+        1620.511495005808
+      ],
+      "size": [
+        270,
+        76
+      ],
+      "flags": {},
+      "order": 145,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5452
+        },
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "link": 5399
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5456
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-Upscaler-Tensorrt",
+        "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
+        "Node name for S&R": "UpscalerTensorrt"
+      },
+      "widgets_values": [
+        "2x",
+        1024,
+        1024
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
     },
     {
       "id": 1252,
@@ -7421,6 +7349,78 @@
         "simple",
         2,
         5
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1529,
+      "type": "MarkdownNote",
+      "pos": [
+        -1870,
+        710
+      ],
+      "size": [
+        460,
+        420
+      ],
+      "flags": {},
+      "order": 101,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "QWEN3-VL GGUF",
+      "properties": {},
+      "widgets_values": [
+        "## 🔖 To use the Qwen3-VL GGUF Quantized models you have to install *llama-cpp-python*\n\n\n**🛑 STOP COMFYUI**\n\n**📂 Activate the ComfyUI Virtual Enviroment**\n\nIn your ComfyUI root installation folder type:\non Windows:\n\nCommand Prompt:\n```\n\\venv\\Scripts\\activate.bat\n```\nor Power Shell:\n```\n\\venv\\Scripts\\Activate.ps1\n```\non Linux:\n```\n. /venv/bin/activate\n```\n**⬇️ Install llama-cpp-python**\n```\npip install --upgrade --force-reinstall --no-cache-dir \"llama-cpp-python @ git+https://github.com/JamePeng/llama-cpp-python.git\"\n```\n**🔄 Restart ComfyUI and enjoy**\n\n"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 301,
+      "type": "MarkdownNote",
+      "pos": [
+        -1880,
+        -1120
+      ],
+      "size": [
+        480,
+        1410
+      ],
+      "flags": {},
+      "order": 102,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "README",
+      "properties": {},
+      "widgets_values": [
+        "# WAN 2.2 NSFW T2V LONG VIDEO with AUTOPROMPT, MMAUDIO and GGUF support \n\n## 🖥️ Civitai Model \n\n**T2V MODELS**\n⚙️ **GGUF VERSION**\n\n*Credits to* [DigitalPastel](https://civitai.com/user/DigitalPastel) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 Smooth Mix T2V V2 Q6 K High](https://civitai.com/models/2083588?modelVersionId=2357890)\n- [🔗 Smooth Mix T2V V2 Q6 K Low](https://civitai.com/models/2083588?modelVersionId=2357892)\n- [🔗 Smooth Mix T2V V2 Q8 High](https://civitai.com/models/2083588?modelVersionId=2358087)\n- [🔗 Smooth Mix T2V V2 Q8 Low](https://civitai.com/models/2083588?modelVersionId=2358187)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 WAN REMIX T2V v2.0 Q6 K High](https://civitai.com/models/2094656?modelVersionId=2372121)\n- [🔗 WAN REMIX T2V v2.0 Q6 K Low](https://civitai.com/models/2094656?modelVersionId=2372034)\n- [🔗 WAN REMIX T2V v2.0 Q8 High](https://civitai.com/models/2094656?modelVersionId=2372201)\n- [🔗 WAN REMIX T2V v2.0 Q8 Low](https://civitai.com/models/2094656?modelVersionId=2372149)\n\n⚙️ **FP8 VERSION**\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou)\n\n- [🔗 WAN REMIX T2V v2.0 High](https://civitai.com/models/2003153?modelVersionId=2424167)\n- [🔗 WAN REMIX T2V v2.0 Low](https://civitai.com/models/2003153?modelVersionId=2424912)\n\n**I2V MODELS**\n\n⚙️ **GGUF VERSION**\n\n*Credits to* [taek75799](https://civitai.com/user/taek75799)\n\n- [🔗 NSFW V2 Q6 K High](https://civitai.com/models/2053259?modelVersionId=2524233)\n- [🔗 NSFW V2 Q6 K Low](https://civitai.com/models/2053259?modelVersionId=2524236)\n- [🔗 NSFW V2 Q8 High](https://civitai.com/models/2053259?modelVersionId=2584698)\n- [🔗 NSFW V2 Q8 Low](https://civitai.com/models/2053259?modelVersionId=2584707)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 WAN REMIX v2.1 Q6 K High](https://civitai.com/models/2347977?modelVersionId=2641160)\n- [🔗 WAN REMIX v2.1 Q6 K Low](https://civitai.com/models/2347977?modelVersionId=2641158)\n- [🔗 WAN REMIX v2.1 Q8 High](https://civitai.com/models/2347977?modelVersionId=2641236)\n- [🔗 WAN REMIX v.2.1 Q8 Low](https://civitai.com/models/2347977?modelVersionId=2641234)\n\n---\n\n## Text Encoders\n- **FP8**: [🔗 umt5_xxl_fp8 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors)\n- **FP16**: [🔗 umt5_xxl_fp16 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors)\n- **NSFW FP8**: [🔗 nsfw_wan_umt5-xxl_fp8_scaled](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors)\n- **NSFW BF16**: [🔗 nsfw_wan_umt5-xxl_bf16](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_bf16.safetensors)\n\n⚙️ **GGUF VERSION**\n- **Q6 K**: [🔗 umt5-xxl-encoder-Q6_K](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q6_K.gguf)\n- **Q8**: [🔗 umt5-xxl-encoder-Q8_0](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q8_0.gguf)\n\n## VAE\n- **BF16:**: [🔗 wan_2.1_vae](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors)\n- **FP32:**: [🔗 wan_2.1_fp32_vae](https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors)\n\n## UPSCALE MODEL\n\n- [🔗 2xLexicaRRDBNet](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth)\n- [🔗 2xLexicaRRDBNet_Sharp](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth)\n\n\n---\n\n# 🎬 Motion Settings\n\n## Motion Amplitude\n*Motion intensity multiplier* \n- **1.0** = normal\n- **1.15** = recommended  \n**Range:** 1.0 – 2.0\n\n## Motion Frames\n*Number of trailing frames from `previous_video` used as motion reference* \n\n**Default:** 5\n\n---\n\n# 🎨 Color Strenght\n\nControls color drift correction strength.\n\n- **0.0** → no color issues  \n- **0.01 – 0.05** → slight drift  \n- **0.1 – 0.15** → strong shift  \n- **0.2 – 0.3** → severe drift\n"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 1466,
+      "type": "MarkdownNote",
+      "pos": [
+        -1870,
+        360
+      ],
+      "size": [
+        460,
+        294.09891860027403
+      ],
+      "flags": {},
+      "order": 103,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "AUTOPROMPT | MMAUDIO",
+      "properties": {},
+      "widgets_values": [
+        "## 🔖 AUTOPROMPT\n\nInstall this modified node that allows you to use an uncensored QwenVL model\n\n```\ngit clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod\n```\n\n----\n\n## 🔈 MMAUDIO \n\nAll of these files should be downloaded to `ComfyUI\\models\\mmaudio`\n\n[🔗MMAudio Model](https://huggingface.co/phazei/NSFW_MMaudio/resolve/main/mmaudio_large_44k_nsfw_gold_8.5k_final_fp16.safetensors)\n\n[🔗MMAudio VAE](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/5984623e6b436818c6ff287ef6eec93e3e05aa3f/mmaudio_vae_44k_fp16.safetensors)\n\n[🔗MMAudio Synchformer](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/main/mmaudio_synchformer_fp16.safetensors)\n\n[🔗MMAudio CLIP](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/main/apple_DFN5B-CLIP-ViT-H-14-384_fp16.safetensors)"
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
@@ -8340,14 +8340,6 @@
       "IMAGE"
     ],
     [
-      5453,
-      1532,
-      0,
-      1421,
-      0,
-      "IMAGE"
-    ],
-    [
       5454,
       1570,
       0,
@@ -8362,6 +8354,14 @@
       940,
       0,
       "MODEL"
+    ],
+    [
+      5456,
+      1533,
+      0,
+      1421,
+      0,
+      "IMAGE"
     ]
   ],
   "groups": [
@@ -8834,56 +8834,6 @@
             "bgcolor": "#533"
           },
           {
-            "id": 1257,
-            "type": "easy showAnything",
-            "pos": [
-              -830.5647963453863,
-              2240.7213948678964
-            ],
-            "size": [
-              367.29366928693776,
-              310.7156811858463
-            ],
-            "flags": {},
-            "order": 2,
-            "mode": 0,
-            "inputs": [
-              {
-                "label": " ",
-                "localized_name": "anything",
-                "name": "anything",
-                "shape": 7,
-                "type": "*",
-                "link": 4927
-              }
-            ],
-            "outputs": [
-              {
-                "label": " ",
-                "localized_name": "output",
-                "name": "output",
-                "type": "*",
-                "links": [
-                  4881
-                ]
-              }
-            ],
-            "title": "Final prompt preview",
-            "properties": {
-              "cnr_id": "comfyui-easy-use",
-              "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
-              "Node name for S&R": "easy showAnything",
-              "aux_id": "yolain/ComfyUI-Easy-Use",
-              "widget_ue_connectable": {}
-            },
-            "widgets_values": [
-              "(At 0 seconds: A 3D game-style scene opens in a dimly lit infirmary with harsh underlighting and dramatic window shadows casting geometric patterns across the floor; a lone girl with white hair styled in an absurdly long, spiky Oseledets fashion stands center frame, green eyes wide, wearing a tight, midriff-baring bitchsuit that defies physics — her slim body curves unnaturally under the stylized lighting.  \nAt 1 seconds: She raises one hand to grip her own breast while the other twists slightly upward as if adjusting something impossible; saliva drips from her tongue in slow-mo motion, catching light like liquid glass against the stark white walls and metal IV poles around her.  \nAt 2 seconds: Her expression shifts — eyes flicker with playful defiance as she presses one breast against her torso while the other hand remains near her hip; the camera tilts slightly to follow her movement, emphasizing the exaggerated proportions of her body within the game’s stylized geometry.  \nAt 3 seconds: A sudden flash of light from a nearby window pierces through the shadows — a beam hits her shoulder and glints off the wet droplets on her chest — the scene is saturated with high-contrast color grading typical of 3D game aesthetics, emphasizing texture and form over realism.  \nAt 4 seconds: She freezes mid-motion, tongue still extended, saliva clinging to her collarbone and cleavage; the camera zooms in slightly as the window’s shadow shifts behind her, revealing a glitchy, pixelated edge to the light — reinforcing the game-like aesthetic with motion blur and chromatic aberration.  \nAt 5 seconds: The screen cuts to black as she exhales — one last droplet of saliva falls from her lips, streaking down her neck in slow-motion, leaving only faint residue on the skin — the scene ends with a glitched visual artifact fading into darkness.)"
-            ],
-            "color": "#232",
-            "bgcolor": "#353",
-            "shape": 2
-          },
-          {
             "id": 1258,
             "type": "CLIPTextEncode",
             "pos": [
@@ -8976,7 +8926,7 @@
             },
             "widgets_values": [
               "Huihui-Qwen3-VL-4B-Instruct-abliterated-Q8_0.gguf",
-              "3D game style, profile, in a infirmary, day, light rays, underlighting, window shadow, 1girl, white hair, absurdly long hair, oseledets hair, spiky hair, green eyes, slim body, large breasts, bitchsuit, midriff, solo, impossible shirt, grabbing own breast, breast press, tongue out, saliva drip, saliva on breasts",
+              "upper body, in a garage, day, sunbeam, sidelighting, dark, 1girl, katsuragi misato, neon genesis evangelion, purple hair, brown eyes, large breasts,  pajamas, naked overalls, solo, breastless clothes, mouth open, tongue out, saliva drip, saliva on breasts, breasts squeezed together",
               "🍿 Wan 2.2 T2V",
               "",
               512,
@@ -8985,7 +8935,7 @@
               1.1,
               false,
               "auto",
-              4251147273,
+              3324292749,
               "randomize"
             ],
             "color": "#374445",
@@ -9376,6 +9326,56 @@
               "aux_id": "yolain/ComfyUI-Easy-Use"
             },
             "widgets_values": []
+          },
+          {
+            "id": 1257,
+            "type": "easy showAnything",
+            "pos": [
+              -830.5647963453863,
+              2240.7213948678964
+            ],
+            "size": [
+              367.29366928693776,
+              310.7156811858463
+            ],
+            "flags": {},
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": " ",
+                "localized_name": "anything",
+                "name": "anything",
+                "shape": 7,
+                "type": "*",
+                "link": 4927
+              }
+            ],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "output",
+                "name": "output",
+                "type": "*",
+                "links": [
+                  4881
+                ]
+              }
+            ],
+            "title": "Final prompt preview",
+            "properties": {
+              "cnr_id": "comfyui-easy-use",
+              "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
+              "Node name for S&R": "easy showAnything",
+              "aux_id": "yolain/ComfyUI-Easy-Use",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "(At 0 seconds: A low-angle shot captures Katsuragi Misato standing in a dim garage, sidelit by a single sunbeam slicing through the window; her purple hair glows with ambient neon reflections as she wears oversized pajamas over a bare torso, nipples visible under loose fabric, mouth open and tongue out, saliva dripping down her chin and pooling on her chest.)  \n(At 1 seconds: The camera slowly tilts up as her hands grip the waistband of her overalls, pulling them tighter around her hips; light catches the wet sheen of saliva on her skin and breasts, which are visibly squeezed together under tension, nipples exposed against the fabric.)  \n(At 2 seconds: A shallow depth-of-field blurs the background garage tools and rusted metal while focusing sharply on her face—eyes wide with intensity, lips parted as if gasping—and the droplets of saliva trailing down her neck toward her collarbone.)  \n(At 3 seconds: The camera pans slightly left, revealing a cracked concrete floor and flickering fluorescent light overhead; Misato’s expression shifts to one of primal hunger, teeth bared slightly, while her body remains rigid under the oppressive shadow of the garage ceiling.)  \n(At 4 seconds: A single drop of saliva splashes onto the ground near her foot as she exhales sharply; her eyes flash with heat and desire, pupils dilated, lips trembling with suppressed emotion, breasts still pressed together beneath the strained fabric.)  \n(At 5 seconds: The sunbeam dims slightly as a shadow falls across her face—she closes her eyes for a moment, then opens them wide again, tongue flicking out once more, saliva now forming a thin thread between her lips and chest, capturing the raw tension of the moment in motion.)"
+            ],
+            "color": "#232",
+            "bgcolor": "#353",
+            "shape": 2
           }
         ],
         "groups": [],
@@ -9973,7 +9973,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: A woman with vibrant purple hair styled in a high bun stands under a wooden pergola, her gaze fixed forward as sunlight filters through leaves casting dappled shadows on the ground. She wears a form-fitting taupe dress with fur-trimmed sleeves and long gloves, one hand resting gently over her chest while the other hangs loosely at her side. The background reveals classical architecture and greenery under a clear blue sky, suggesting an elegant outdoor setting.)  \n(At 1 seconds: Her eyes widen slightly as she turns her head subtly to the left, revealing more of the architectural archway behind her; sunlight catches the fur trim on her sleeves, highlighting texture and depth. The camera slowly pans right, following her movement with a shallow depth of field that blurs the background while keeping her sharply in focus.)  \n(At 2 seconds: She raises her right hand slightly, fingers curling as if adjusting something invisible near her neck; her lips part just enough to show intent or surprise. A faint breeze stirs her hair and fur-trimmed sleeves, adding movement to the otherwise still scene.)  \n(At 3 seconds: The camera tilts upward, revealing more of the pergola’s wooden structure above her head as she continues to look forward with a soft expression; shadows intensify around her shoulders from the shifting sun angle. She takes a small step backward, causing the fur trim to ripple slightly in response.)  \n(At 4 seconds: Her gaze shifts downward briefly before returning to meet the camera directly again — eyes now half-lidded and lips parted wider as if she’s about to speak or react. The lighting becomes softer around her face, with warm tones accentuating skin texture and fur details while cooler shadows deepen behind her.)  \n(At 5 seconds: She lowers both hands slowly toward her sides, palms facing inward; the camera zooms in slightly on her upper body as sunlight glints off the fur trim once more. The background remains blurred but retains recognizable architectural lines — a sense of place and time is established through consistent environmental cues.)"
+              "(At 0 seconds: A woman with vibrant purple hair stands in a dimly lit garage, her blue button-up shirt partially unbuttoned and pulled down to reveal her bare torso; sunlight slants through a window, casting dramatic shadows across the concrete floor and her body. Her hands grip the waistband of her trousers as she looks directly at the camera with an intense gaze, sweat glistening on her skin under the harsh light. The background features cluttered tools, a red vehicle partially visible behind shelves, and exposed wooden beams overhead.) (At 1 seconds: She slowly lowers her head, tilting it slightly to the left while maintaining eye contact with the viewer; the sunlight shifts subtly as if moving across the room, illuminating patches of wet concrete beneath her feet. Her fingers twitch nervously against the fabric of her pants, suggesting tension or anticipation. The camera remains static but subtly zooms in on her face and upper body.) (At 2 seconds: As she lifts her head again, her expression softens into a smirk; the light catches her nipples as they glisten with moisture, emphasizing their shape under the harsh glare. Behind her, a faint glow from an electrical outlet flickers briefly before dimming out of frame. The camera pans slightly to the right, following her gaze toward the distant red car.) (At 3 seconds: She begins to unbutton her shirt further, revealing more skin as she turns slightly to the side; the movement is slow and deliberate, creating a sense of vulnerability or preparation for something imminent. Shadows deepen behind her, while light continues to carve sharp edges around her form. The camera tilts upward, focusing on the exposed collarbone and shoulder line.) (At 4 seconds: She lifts one hand toward her chest, fingers curling slightly as if adjusting her shirt; a bead of sweat rolls down her neck into the crease between her collarbones. Her eyes flicker briefly to the left before returning to the camera with an almost predatory smile. The garage floor reflects the overhead light in distorted patterns.) (At 5 seconds: She pulls the shirt completely off, revealing her full torso and waist; the fabric falls away from her body as she leans forward slightly, exposing more skin under the harsh lighting. Her expression shifts to a confident smirk as she looks directly into the camera, now fully exposed with no clothing covering her form.)"
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -10215,7 +10215,7 @@
               0,
               4194304,
               false,
-              3411411153,
+              2316862211,
               "randomize"
             ],
             "color": "#474539",
@@ -11560,7 +11560,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: A strikingly beautiful woman with vibrant purple hair styled in a high bun stands under a wooden pergola, sunlight filtering through leaves to create dappled patterns on her skin and fur-trimmed dress. Her direct gaze meets the camera with an intense, mysterious expression as she slightly tilts her head, emphasizing her sharp cheekbones and piercing eyes. The background reveals classical architecture blurred by depth of field, suggesting a secluded garden or courtyard under clear blue skies.) (At 1 seconds: She slowly lowers her hands, revealing delicate fingers adorned with minimalistic rings, while the fur trim on her sleeves catches the light as she subtly shifts weight to one foot—motion captured in crisp detail. The camera remains steady but slightly zooms in on her face, heightening tension and focus on her unblinking stare. Shadows deepen behind her as sunlight moves across her shoulders, casting stark contrasts that accentuate her sculpted form.) (At 2 seconds: A soft breeze stirs the air around her, causing strands of purple hair to flutter gently against her skin; she exhales slowly, releasing a faint scent implied by the cinematic lighting. The camera tilts subtly upward, revealing more of the pergola’s intricate wooden beams and distant greenery beyond—still out of focus but hinting at an expansive world. Her lips part slightly as if about to speak or breathe deeply.) (At 3 seconds: She raises her right hand slowly toward her chest, fingers curling into a loose fist before relaxing again—the gesture ambiguous yet deliberate. The fur trim on her sleeves now glows with warm golden highlights from the sun’s angle shifting behind her. Camera remains fixed but subtly pans to follow her movement, keeping her centered as she turns slightly to face away from the viewer.) (At 4 seconds: As she steps forward a fraction, the camera tracks backward smoothly, revealing more of the architectural arches and trees surrounding her—now blurred into soft bokeh that frames her silhouette. Her expression remains unreadable, eyes fixed ahead with quiet intensity, suggesting anticipation or resolve. The light now falls across her left shoulder in sharp relief, emphasizing texture and volume without losing detail.) (At 5 seconds: She halts mid-step, arms falling loosely at her sides as if caught between movement and stillness—her posture poised yet relaxed. The camera lingers for a moment on the fur trim catching final rays of sunlight before fading into soft shadow beneath the pergola’s structure. Her gaze remains locked forward, unblinking,"
+              "(At 0 seconds: A woman with vibrant purple hair stands in a dimly lit room, sunlight streaming through a window behind her, illuminating her bare shoulders and chest as she pulls open a blue button-up shirt. Her expression is calm and direct, eyes locked on the viewer, while soft shadows define her form against the blurred background of cluttered shelves and furniture. The lighting creates high contrast with warm highlights and deep shadows, emphasizing texture and contours in a photorealistic style.) (At 1 seconds: She slowly lowers her hands, letting the shirt fall open further as light catches the fabric’s edge, revealing more skin beneath — the camera subtly pans right to follow her movement, maintaining focus on her torso while background elements remain softly out of focus. The atmosphere remains intimate and sensual, with naturalistic lighting still dominating the scene.) (At 2 seconds: As she continues to lower the shirt, a single drop of sweat glistens on her collarbone — captured in ultra-high detail by a shallow depth-of-field lens, emphasizing realism through skin texture and ambient light quality. The shot remains static except for slight motion blur around her arms as they move downward.) (At 3 seconds: She pauses mid-motion, looking slightly away from the camera with a hint of vulnerability in her gaze — the lighting shifts subtly to cast more shadow across her face and upper body, deepening the mood while preserving photorealistic detail. The background remains indistinct but suggests an industrial or workshop setting.) (At 4 seconds: Her hand reaches toward the fabric near her waist as if preparing to pull it off completely — the camera tilts slightly downward, tracking her movement with smooth motion blur that enhances realism without losing focus on her figure. Light continues to play across skin and clothing in naturalistic tones.) (At 5 seconds: The shirt slips from her shoulder entirely, revealing more of her body as she turns her head back toward the viewer — a momentary pause captured in cinematic framing with soft bokeh around edges, emphasizing intimacy through controlled lighting and precise focus on her expression and form. The scene ends with lingering tension between exposure and mystery.)"
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -11628,7 +11628,7 @@
               0,
               4194304,
               false,
-              3479954687,
+              1896206110,
               "randomize"
             ],
             "color": "#474539",
@@ -12869,7 +12869,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: Two anime-style women embrace tenderly in a sunlit traditional Japanese room, one with brown hair and black lingerie, the other with vibrant blue hair and a light blue shirt; soft golden light filters through lattice windows, casting warm shadows across their skin and wooden beams. Their eyes are closed, lips slightly parted, conveying intimacy and quiet affection as hands rest gently on each other’s bodies.)  \n(At 1 seconds: The camera slowly pans right, revealing more of the serene room with sliding paper screens and faintly visible greenery outside; the blue-haired woman shifts her head to nuzzle the brown-haired woman’s neck while maintaining eye contact, both breathing softly as sunlight glints off their skin in a cinematic shallow depth-of-field.)  \n(At 2 seconds: A subtle tilt-shift effect begins, blurring the edges of the frame while preserving focus on their intertwined limbs and expressions; the blue-haired woman’s hand moves upward to cradle the brown-haired woman’s shoulder, fingers curling slightly as if preparing for movement or comfort.)  \n(At 3 seconds: The camera pulls back slightly, capturing a wider view of the room with soft bokeh from window panes; both women remain still, their bodies pressed close, eyes closed in peaceful repose under the golden hour glow that highlights skin textures and fabric folds with cinematic realism.)  \n(At 4 seconds: A slow zoom-in begins on their faces as they exhale gently, lips barely moving — a moment frozen in quiet intimacy; light catches their cheeks, emphasizing anime-style softness and emotional connection while maintaining consistent color grading and composition from the previous frame.)  \n(At 5 seconds: The camera remains still, capturing the final lingering shot of their embrace under warm sunlight filtering through lattice windows; shadows deepen subtly across the wooden floorboards as they hold each other, eyes closed in a silent vow of closeness — cinematic silence broken only by ambient warmth and soft motion blur around their forms.)"
+              "(At 0 seconds: A woman with long, vibrant purple hair stands in a dimly lit garage, sunlight streaming through high windows casting sharp shadows across the concrete floor. She is partially draped in an unbuttoned blue denim shirt, her bare shoulders and back illuminated by the dramatic backlighting, creating a chiaroscuro effect that emphasizes her form. The background reveals blurred tools and equipment, reinforcing the industrial setting while keeping focus on her intense gaze.)  \n(At 1 seconds: As she slowly turns her head to look directly into the camera, her expression remains calm yet commanding, eyes reflecting the harsh light with an unnerving clarity. Her fingers tighten slightly around the shirt’s sleeve, suggesting tension beneath her composed demeanor. The shallow depth of field blurs the surrounding clutter, isolating her as the sole focal point.)  \n(At 2 seconds: She begins to lift the denim shirt higher over her shoulder, revealing more skin while maintaining eye contact with the viewer — a deliberate act that intensifies the mood of seduction and power. Light catches the fabric’s texture, highlighting its worn seams and subtle creases as it moves. The camera subtly tilts upward, tracking her motion without losing focus.)  \n(At 3 seconds: Her gaze narrows slightly, lips parted just enough to hint at something unspoken — perhaps desire or threat. A faint sheen of sweat glistens on her collarbone where the light hits most intensely, adding a layer of physicality and vulnerability. The background remains out of focus but retains its gritty realism.)  \n(At 4 seconds: She raises one hand slowly toward her face, fingers brushing near her temple as if to adjust something unseen — or perhaps to signal an impending shift in control. Her expression softens momentarily before hardening again, eyes locking onto the viewer with unwavering intensity. The camera remains steady but subtly shifts angle to emphasize the gesture’s significance.)  \n(At 5 seconds: As she lowers her hand and turns slightly away from the lens, the light catches the curve of her collarbone once more — now bathed in a warmer glow that contrasts sharply with the cold shadows behind her. Her posture suggests readiness for action or confrontation, leaving the viewer suspended between anticipation and uncertainty.)"
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -12989,7 +12989,7 @@
               0,
               4194304,
               false,
-              2058950483,
+              1760335983,
               "randomize"
             ],
             "color": "#474539",
@@ -13770,7 +13770,7 @@
               20,
               50,
               4.5,
-              189881227204446,
+              590435898878539,
               "randomize",
               "",
               "man, boy, male, man's voice, boy's voice, male's voice, ",
@@ -13925,10 +13925,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 1,
+      "scale": 0.9329823602118534,
       "offset": [
-        2193.9525333753345,
-        82.16357340812726
+        2369.5627313174923,
+        1482.6406623678406
       ]
     }
   },
