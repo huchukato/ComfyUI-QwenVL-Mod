@@ -53,7 +53,7 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
     pip install -r requirements.txt
 
 # Install llama-cpp-python for GGUF support (CUDA 13.0 optimized)
-RUN pip install --upgrade --force-reinstall llama-cpp-python --prefer-binary --extra-index-url=https://download.pytorch.org/whl/cu130
+RUN pip install --upgrade --force-reinstall --no-cache-dir https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.23-cu130-Basic-linux-20260129/llama_cpp_python-0.3.23+cu130.basic-cp312-cp312-linux_x86_64.whl
 
 # Install ComfyUI-QwenVL-Mod
 WORKDIR /ComfyUI/custom_nodes
