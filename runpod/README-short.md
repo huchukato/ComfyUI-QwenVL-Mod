@@ -37,7 +37,8 @@ Professional ComfyUI with QwenVL-Mod enhanced vision-language and WAN 2.2 video 
 - Sage Attention: Optimized attention mechanisms
 - Async Offload: Efficient memory management
 - FP8 Support: Latest hardware acceleration
-- FileBrowser: Built-in file manager on port 8081
+- FileBrowser: Built-in file manager on port 8080
+- JupyterLab: Terminal and development environment on port 8888
 
 ---
 
@@ -78,8 +79,9 @@ Professional ComfyUI with QwenVL-Mod enhanced vision-language and WAN 2.2 video 
 3. Select GPU: RTX 5090 or equivalent  
 4. Optional: Add HF_TOKEN and CIVITAI_TOKEN for restricted model access
 5. Deploy and access via provided URLs:
-   - ComfyUI: main endpoint URL
-   - FileBrowser: endpoint URL:8081 (no authentication required)
+   - ComfyUI: main endpoint URL (port 8188)
+   - FileBrowser: endpoint URL:8080 (no authentication required)
+   - JupyterLab: endpoint URL:8888 (no token required)
 
 > **🔑 Authentication**: Add your own tokens in environment variables when creating endpoints for access to premium/restricted models.
 

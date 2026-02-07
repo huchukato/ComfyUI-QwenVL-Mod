@@ -86,6 +86,20 @@ RUN cd ComfyUI-Manager && pip install -r requirements.txt && \
 # Install additional common dependencies for custom nodes
 RUN pip install opencv-python-headless scikit-image spandrel safetensors
 
+# Install JupyterLab for terminal access
+RUN pip install jupyterlab && \
+    jupyter server --generate-config
+
+# Create JupyterLab startup script
+RUN echo '#!/bin/bash\n\
+echo "📓 Starting JupyterLab on port 8888"\n\
+echo "🌐 Access at: http://localhost:8888"\n\
+echo "🔑 No token required"\n\
+echo ""\n\
+cd /ComfyUI\n\
+jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password=""\n\
+' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
+
 # Install FileBrowser for file management
 RUN wget -O /tmp/filebrowser.tar.gz https://github.com/filebrowser/filebrowser/releases/download/v2.28.0/linux-amd64-filebrowser.tar.gz && \
     tar -xzf /tmp/filebrowser.tar.gz -C /tmp && \
@@ -101,12 +115,12 @@ RUN mkdir -p /filebrowser && \
 
 # Create FileBrowser startup script
 RUN echo '#!/bin/bash\n\
-echo "📁 Starting FileBrowser on port 8081"\n\
-echo "🌐 Access at: http://localhost:8081"\n\
-echo "👤 Default: admin/admin"\n\
+echo "📁 Starting FileBrowser on port 8080"\n\
+echo "🌐 Access at: http://localhost:8080"\n\
+echo "👤 No authentication required"\n\
 echo ""\n\
 cd /filebrowser\n\
-filebrowser --database /filebrowser/database/filebrowser.db --root /filebrowser/files --address 0.0.0.0 --port 8081 --no-auth\n\
+filebrowser --database /filebrowser/database/filebrowser.db --root /filebrowser/files --address 0.0.0.0 --port 8080 --no-auth\n\
 ' > /usr/local/bin/start-filebrowser.sh && chmod +x /usr/local/bin/start-filebrowser.sh
 
 # Create directories (no pre-downloaded models)
@@ -126,7 +140,7 @@ RUN wget -O /ComfyUI/workflows/WAN2.2-I2V-AutoPrompt.json \
     https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/SDXL-LoRaStack-Upscale.json
 
 # Set ComfyUI arguments
-ENV COMFYUI_ARGS="--disable-auto-launch --port 8080 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune"
+ENV COMFYUI_ARGS="--disable-auto-launch --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune"
 
 # Create startup script
 RUN echo '#!/bin/bash\n\
@@ -136,17 +150,22 @@ echo "🌐 Multilingual support enabled"\n\
 echo "🎨 Visual style detection ready"\n\
 echo "⚡ GGUF backend optimized"\n\
 echo "🔧 RTX 5090 optimizations active"\n\
-echo "📁 FileBrowser available on port 8081"\n\
+echo ""\n\
+echo "� Services starting:"\n\
+echo "�� FileBrowser: http://localhost:8080"\n\
+echo "📓 JupyterLab:  http://localhost:8888"\n\
+echo "🎨 ComfyUI:    http://localhost:8188"\n\
 echo ""\n\
 echo "📋 Available workflows:"\n\
 ls -la /ComfyUI/workflows/\n\
 echo ""\n\
 echo "💡 Models will be downloaded automatically when needed"\n\
-echo "🌐 ComfyUI will be available at: http://localhost:8080"\n\
-echo "📁 FileBrowser at: http://localhost:8081"\n\
 echo ""\n\
 # Start FileBrowser in background\n\
 /usr/local/bin/start-filebrowser.sh &\n\
+\n\
+# Start JupyterLab in background\n\
+/usr/local/bin/start-jupyter.sh &\n\
 \n\
 # Start ComfyUI\n\
 exec python main.py $COMFYUI_ARGS\n\
@@ -156,11 +175,11 @@ exec python main.py $COMFYUI_ARGS\n\
 WORKDIR /ComfyUI
 
 # Expose ports
-EXPOSE 8080 8081
+EXPOSE 8080 8188 8888
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD curl -f http://localhost:8080/system_stats || exit 1
+    CMD curl -f http://localhost:8188/system_stats || exit 1
 
 # Start ComfyUI
 CMD ["/ComfyUI/start.sh"]
