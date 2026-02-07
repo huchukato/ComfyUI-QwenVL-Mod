@@ -161,43 +161,43 @@ ls -la /ComfyUI/workflows/\n\
 echo ""\n\
 echo "💡 Models will be downloaded automatically when needed"\n\
 echo ""\n\
-# Start FileBrowser in background
-echo "🔧 Starting FileBrowser..."
-/usr/local/bin/start-filebrowser.sh &
-FB_PID=$!
-echo "✅ FileBrowser started (PID: $FB_PID)"
+# Start FileBrowser in background\n\
+echo "🔧 Starting FileBrowser..."\n\
+/usr/local/bin/start-filebrowser.sh &\n\
+FB_PID=$!\n\
+echo "✅ FileBrowser started (PID: $FB_PID)"\n\
 
-# Start JupyterLab in background
-echo "🔧 Starting JupyterLab..."
-/usr/local/bin/start-jupyter.sh &
-JL_PID=$!
-echo "✅ JupyterLab started (PID: $JL_PID)"
+# Start JupyterLab in background\n\
+echo "🔧 Starting JupyterLab..."\n\
+/usr/local/bin/start-jupyter.sh &\n\
+JL_PID=$!\n\
+echo "✅ JupyterLab started (PID: $JL_PID)"\n\
 
-# Wait a moment for services to start
-sleep 5
+# Wait a moment for services to start\n\
+sleep 5\n\
 
-# Check if services are running
-echo "🔍 Checking services..."
-if kill -0 $FB_PID 2>/dev/null; then
-    echo "✅ FileBrowser is running"
-else
-    echo "❌ FileBrowser failed to start"
-fi
+# Check if services are running\n\
+echo "🔍 Checking services..."\n\
+if kill -0 $FB_PID 2>/dev/null; then\n\
+    echo "✅ FileBrowser is running"\n\
+else\n\
+    echo "❌ FileBrowser failed to start"\n\
+fi\n\
 
-if kill -0 $JL_PID 2>/dev/null; then
-    echo "✅ JupyterLab is running"
-else
-    echo "❌ JupyterLab failed to start"
-fi
+if kill -0 $JL_PID 2>/dev/null; then\n\
+    echo "✅ JupyterLab is running"\n\
+else\n\
+    echo "❌ JupyterLab failed to start"\n\
+fi\n\
 
-echo ""
-echo "🚀 Starting ComfyUI..."
-echo "🌐 ComfyUI will be available at: http://localhost:8188"
-echo "📁 FileBrowser is available at: http://localhost:8080"
-echo "📓 JupyterLab is available at: http://localhost:8888"
-echo ""
+echo ""\n\
+echo "🚀 Starting ComfyUI..."\n\
+echo "🌐 ComfyUI will be available at: http://localhost:8188"\n\
+echo "📁 FileBrowser is available at: http://localhost:8080"\n\
+echo "📓 JupyterLab is available at: http://localhost:8888"\n\
+echo ""\n\
 
-# Start ComfyUI
+# Start ComfyUI\n\
 exec python main.py $COMFYUI_ARGS\n\
 ' > /ComfyUI/start.sh && chmod +x /ComfyUI/start.sh
 
