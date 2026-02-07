@@ -17,8 +17,6 @@ RUN apt-get update && apt-get install -y \
     wget \
     curl \
     build-essential \
-    python3.10 \
-    python3.10-dev \
     python3-pip \
     python3.10-venv \
     libgl1-mesa-glx \
@@ -30,14 +28,14 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Create Python virtual environment
-RUN python3.10 -m venv /opt/venv
+RUN python3.12 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Upgrade pip and install wheel
 RUN pip install --upgrade pip wheel setuptools
 
-# Install PyTorch with CUDA 12.4 support
-RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+# Install PyTorch with CUDA 13.1 support - optimized for RTX 5090
+RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 
 # Install ComfyUI
 WORKDIR /ComfyUI
@@ -47,8 +45,8 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
 # Install additional ComfyUI dependencies
 RUN pip install torchsde triton
 
-# Install llama-cpp-python for GGUF support (CUDA 12.4 optimized)
-RUN pip install --upgrade --force-reinstall llama-cpp-python --prefer-binary --extra-index-url=https://download.pytorch.org/whl/cu124
+# Install llama-cpp-python for GGUF support (CUDA 13.1 optimized)
+RUN pip install --upgrade --force-reinstall llama-cpp-python --prefer-binary --extra-index-url=https://download.pytorch.org/whl/cu121
 
 # Install sageattention for optimized attention mechanisms
 RUN pip install sageattention
@@ -139,6 +137,7 @@ ENV COMFYUI_ARGS="--disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-co
 
 # Create startup script
 RUN echo '#!/bin/bash\n\
+set -e  # Exit on any error\n\
 echo "🚀 Starting ComfyUI-QwenVL-Mod on RunPod (Lightweight)"\n\
 echo "🎬 WAN 2.2 workflows ready (models downloaded on-demand)"\n\
 echo "🌐 Multilingual support enabled"\n\
@@ -146,52 +145,26 @@ echo "🎨 Visual style detection ready"\n\
 echo "⚡ GGUF backend optimized"\n\
 echo "🔧 RTX 5090 optimizations active"\n\
 echo ""\n\
-echo "� Services starting:"\n\
-echo "�� FileBrowser: http://localhost:8080"\n\
-echo "📓 JupyterLab:  http://localhost:8888"\n\
-echo "🎨 ComfyUI:    http://localhost:8188"\n\
+echo "🔧 Services starting:"\n\
+echo "📁 FileBrowser: http://0.0.0.0:8080"\n\
+echo "📓 JupyterLab:  http://0.0.0.0:8888"\n\
+echo "🎨 ComfyUI:    http://0.0.0.0:8188"\n\
 echo "📋 Available workflows:"\n\
 ls -la /ComfyUI/workflows/\n\
 echo ""\n\
 echo "💡 Models will be downloaded automatically when needed"\n\
 echo ""\n\
-# Start FileBrowser in background\n\
 echo "🔧 Starting FileBrowser..."\n\
 /usr/local/bin/start-filebrowser.sh &\n\
 FB_PID=$!\n\
 echo "✅ FileBrowser started (PID: $FB_PID)"\n\
-
-# Start JupyterLab in background\n\
 echo "🔧 Starting JupyterLab..."\n\
 /usr/local/bin/start-jupyter.sh &\n\
 JL_PID=$!\n\
 echo "✅ JupyterLab started (PID: $JL_PID)"\n\
-
-# Wait a moment for services to start\n\
-sleep 5\n\
-
-# Check if services are running\n\
-echo "🔍 Checking services..."\n\
-if kill -0 $FB_PID 2>/dev/null; then\n\
-    echo "✅ FileBrowser is running"\n\
-else\n\
-    echo "❌ FileBrowser failed to start"\n\
-fi\n\
-
-if kill -0 $JL_PID 2>/dev/null; then\n\
-    echo "✅ JupyterLab is running"\n\
-else\n\
-    echo "❌ JupyterLab failed to start"\n\
-fi\n\
-
-echo ""\n\
-echo "🚀 Starting ComfyUI..."\n\
-echo "🌐 ComfyUI will be available at: http://localhost:8188"\n\
-echo "📁 FileBrowser is available at: http://localhost:8080"\n\
-echo "📓 JupyterLab is available at: http://localhost:8888"\n\
-echo ""\n\
-
-# Start ComfyUI\n\
+sleep 3\n\
+echo " Starting ComfyUI..."\n\
+echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\n\
 exec python main.py $COMFYUI_ARGS\n\
 ' > /ComfyUI/start.sh && chmod +x /ComfyUI/start.sh
 
