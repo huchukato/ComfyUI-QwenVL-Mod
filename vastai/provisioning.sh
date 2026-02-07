@@ -45,15 +45,15 @@ NODES=(
 )
 
 WORKFLOWS=(
-    "https://huggingface.co/huchukato/favs/resolve/main/workflows/SDXL-LoRaStack-Upscale.json"
-    "https://huggingface.co/huchukato/favs/resolve/main/workflows/Wan2.2-I2V-SVI-AutoPrompt-1-2.json"
-    "https://huggingface.co/huchukato/favs/resolve/main/workflows/Wan2.2-I2V-SVI-AutoPrompt-GGUF.json"
-    "https://huggingface.co/huchukato/favs/resolve/main/workflows/WAN2.2-I2V-AutoPrompt-1-4.json"
-    "https://huggingface.co/huchukato/favs/resolve/main/workflows/WAN2.2-I2V-AutoPrompt-GGUF-1-4.json"
-    "https://huggingface.co/huchukato/favs/resolve/main/workflows/WAN2.2-T2V-AutoPrompt-1-4.json"
-    "https://huggingface.co/huchukato/favs/resolve/main/workflows/WAN2.2-T2V-AutoPrompt-GGUF-1-3.json"
-    "https://huggingface.co/huchukato/favs/resolve/main/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-7.json"
-    "https://huggingface.co/huchukato/favs/resolve/main/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-4.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/SDXL-LoRaStack-Upscale.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-1-2.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-GGUF.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-1-4.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-GGUF-1-4.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-1-4.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-GGUF-1-3.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-7.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-4.json"
 )
 
 
