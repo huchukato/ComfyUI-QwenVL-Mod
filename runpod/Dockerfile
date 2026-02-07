@@ -269,7 +269,7 @@ echo "✅ JupyterLab started"\n\
 echo "🚀 Starting ComfyUI..."\n\
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\n\
 cd $COMFYUI_DIR\n\
-nohup /opt/venv/bin/python main.py --disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune &> /comfyui.log &\n\
+nohup python main.py --disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune &> /comfyui.log &\n\
 echo "✅ ComfyUI started"\n\
 \n\
 # Tail the ComfyUI log\n\
