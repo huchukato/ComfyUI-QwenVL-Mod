@@ -47,6 +47,9 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
 # Install llama-cpp-python for GGUF support (CUDA 12.4 optimized)
 RUN pip install --upgrade --force-reinstall llama-cpp-python --prefer-binary --extra-index-url=https://download.pytorch.org/whl/cu124
 
+# Install sageattention for optimized attention mechanisms
+RUN pip install sageattention
+
 # Install ComfyUI-QwenVL-Mod
 WORKDIR /ComfyUI/custom_nodes
 RUN git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git
