@@ -2,7 +2,7 @@
 # Essential components only - models downloaded on-demand
 # Optimized for RTX 5090 and professional video generation
 
-FROM nvidia/cuda:12.8.1-cudnn-devel-ubuntu24.04
+FROM ubuntu:24.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -11,7 +11,7 @@ ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:$CUDA_HOME/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
 
-# Install system dependencies (Python 3.12 is default in Ubuntu 24.04)
+# Install system dependencies and CUDA toolkit
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     wget \
@@ -30,6 +30,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgomp1 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Install CUDA 12.8 toolkit
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb && \
+    dpkg -i cuda-keyring_1.1-1_all.deb && \
+    apt-get update && \
+    apt-get install -y cuda-toolkit-12-8 && \
+    rm cuda-keyring_1.1-1_all.deb && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create Python virtual environment and setup pip
 RUN python3.12 -m venv /opt/venv && \
