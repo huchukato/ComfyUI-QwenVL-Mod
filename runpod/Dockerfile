@@ -44,6 +44,16 @@ RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86
     rm -rf /var/lib/apt/lists/* && \
     rm cuda-keyring_1.1-1_all.deb
 
+# Configure SSH for root login
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    mkdir -p /run/sshd && \
+    rm -f /etc/ssh/ssh_host_*
+
+# Set Python 3.12 as default system-wide
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 && \
+    update-alternatives --set python3 /usr/bin/python3.12
+
 # Install Miniconda for robust Python environment management
 RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
     bash /tmp/miniconda.sh -b -p /opt/miniconda3 && \
@@ -51,7 +61,9 @@ RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.s
     /opt/miniconda3/bin/conda clean -afy
 
 # Create conda environment for ComfyUI with Python 3.12.12
-RUN /opt/miniconda3/bin/conda create -n comfyui python=3.12.12 -y && \
+RUN /opt/miniconda3/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
+    /opt/miniconda3/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
+    /opt/miniconda3/bin/conda create -n comfyui python=3.12.12 -y && \
     /opt/miniconda3/bin/conda clean -afy
 
 ENV PATH="/opt/miniconda3/envs/comfyui/bin:$PATH"
@@ -59,23 +71,18 @@ ENV PATH="/opt/miniconda3/envs/comfyui/bin:$PATH"
 # Install PyTorch with CUDA 13.0 - optimized for RTX 5090
 RUN pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130
 
-# Install ComfyUI 0.12.13
+# Install ComfyUI 0.12.3 (latest stable)
 WORKDIR /ComfyUI
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
-    git checkout v0.12.13 && \
-    pip install -r requirements.txt
+    git checkout v0.12.3 && \
+    pip install -r requirements.txt && \
+    pip install GitPython opencv-python
 
 # Install llama-cpp-python for GGUF support (CUDA 13.0 optimized)
 RUN pip install --upgrade --force-reinstall --no-cache-dir https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.23-cu130-Basic-linux-20260129/llama_cpp_python-0.3.23+cu130.basic-cp312-cp312-linux_x86_64.whl
 
-# Install ComfyUI-QwenVL-Mod
-WORKDIR /ComfyUI/custom_nodes
-RUN git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git
-
-# Install QwenVL-Mod dependencies
-RUN cd ComfyUI-QwenVL-Mod && pip install -r requirements.txt
-
 # Install all custom nodes from provisioning.sh
+WORKDIR /ComfyUI/custom_nodes
 RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
     git clone https://github.com/cubiq/ComfyUI_essentials.git && \
     git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
@@ -105,19 +112,16 @@ RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
     git clone https://github.com/stduhpf/ComfyUI-WanMoeKSampler.git && \
     git clone https://github.com/melMass/comfy_mtb.git
 
-# Install additional dependencies
-RUN pip install sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab && \
-    cd ComfyUI-Manager && pip install -r requirements.txt && \
-    cd ../ComfyUI_essentials && pip install -r requirements.txt && \
-    cd ../ComfyUI-Impact-Pack && pip install -r requirements.txt && \
-    cd ../ComfyUI-VideoHelperSuite && pip install -r requirements.txt && \
-    cd ../ComfyUI-GGUF && pip install -r requirements.txt && \
-    cd ../ComfyUI-MMAudio && pip install -r requirements.txt && \
-    cd ../ComfyUI-VFI && pip install -r requirements.txt && \
-    cd ../ComfyUI-RIFE-TensorRT-Auto && pip install -r requirements.txt
+# Install custom node dependencies automatically
+RUN for node_dir in */; do \
+        if [ -f "$node_dir/requirements.txt" ]; then \
+            echo "Installing requirements for $node_dir"; \
+            pip install --no-cache-dir -r "$node_dir/requirements.txt" || true; \
+        fi; \
+    done
 
-# Create workflows directory
-RUN mkdir -p /ComfyUI/workflows
+# Install additional essential dependencies
+RUN pip install sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab
 
 # Install FileBrowser for file management
 RUN wget -O /tmp/filebrowser.tar.gz https://github.com/filebrowser/filebrowser/releases/download/v2.28.0/linux-amd64-filebrowser.tar.gz && \
@@ -279,7 +283,7 @@ EXPOSE 8080 8188 8888
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD curl -f http://localhost:8188/system_stats || exit 1
+    CMD curl -f http://0.0.0.0:8188/system_stats || exit 1
 
 # Start ComfyUI
 CMD ["/ComfyUI/start.sh"]
