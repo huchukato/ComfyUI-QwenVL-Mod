@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  comfyui-qwenvl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: huchukato/comfyui-qwenvl-runpod:latest
+    container_name: comfyui-qwenvl-test
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./models:/ComfyUI/models:ro
+      - ./outputs:/ComfyUI/output
+      - ./input:/ComfyUI/input
+    environment:
+      - COMFYUI_ARGS=--disable-auto-launch --port 8080 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune --vram-mode 0
+      - PYTHONUNBUFFERED=1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/system_stats"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - comfyui-network
+
+networks:
+  comfyui-network:
+    driver: bridge
