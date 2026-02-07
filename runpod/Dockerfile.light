@@ -185,6 +185,7 @@ echo "✅ JupyterLab started"\n\
 # Start ComfyUI\n\
 echo "🚀 Starting ComfyUI..."\n\
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\n\
+echo "🔧 COMFYUI_ARGS: $COMFYUI_ARGS"\n\
 cd $COMFYUI_DIR\n\
 nohup python main.py $COMFYUI_ARGS &> /comfyui.log &\n\
 echo "✅ ComfyUI started"\n\
