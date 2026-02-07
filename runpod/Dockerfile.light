@@ -77,7 +77,6 @@ RUN cd ComfyUI-Manager && pip install -r requirements.txt && \
     cd ../ComfyUI_essentials && pip install -r requirements.txt && \
     cd ../ComfyUI-Impact-Pack && pip install -r requirements.txt && \
     cd ../ComfyUI-VideoHelperSuite && pip install -r requirements.txt && \
-    cd ../ComfyUI-GGUF && pip install -r requirements.txt && \
     cd ../was-node-suite-comfyui && pip install -r requirements.txt && \
     cd ../rgthree-comfy && pip install -r requirements.txt && \
     cd ../ComfyUI-Easy-Use && pip install -r requirements.txt && \
