@@ -2,7 +2,7 @@
 # Enhanced with WAN 2.2 workflows, multilingual support, and GGUF backend
 # Optimized for RTX 5090 and professional video generation
 
-FROM nvidia/cuda:13.1.1-cudnn-devel-ubuntu24.04
+FROM ubuntu:24.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -11,7 +11,7 @@ ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:$CUDA_HOME/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
 
-# Install system dependencies (Python 3.12 is default in Ubuntu 24.04)
+# Install system dependencies and CUDA toolkit
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     wget \
@@ -31,6 +31,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install CUDA 12.8 minimal build (RunPod approach)
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb && \
+    dpkg -i cuda-keyring_1.1-1_all.deb && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends cuda-minimal-build-12-8 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm cuda-keyring_1.1-1_all.deb
+
 # Create Python virtual environment and setup pip
 RUN python3.12 -m venv /opt/venv && \
     /opt/venv/bin/pip install --upgrade pip wheel setuptools
@@ -38,7 +47,7 @@ RUN python3.12 -m venv /opt/venv && \
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Install PyTorch with CUDA 13.1 support - optimized for RTX 5090
-RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130
+RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
 
 # Install ComfyUI
 WORKDIR /ComfyUI
@@ -46,7 +55,7 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
     pip install -r requirements.txt
 
 # Install llama-cpp-python for GGUF support (CUDA 13.1 optimized)
-RUN pip install --upgrade --force-reinstall llama-cpp-python --prefer-binary --extra-index-url=https://download.pytorch.org/whl/cu130
+RUN pip install --upgrade --force-reinstall llama-cpp-python --prefer-binary --extra-index-url=https://download.pytorch.org/whl/cu128
 
 # Install ComfyUI-QwenVL-Mod
 WORKDIR /ComfyUI/custom_nodes
@@ -55,13 +64,14 @@ RUN git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git
 # Install QwenVL-Mod dependencies
 RUN cd ComfyUI-QwenVL-Mod && pip install -r requirements.txt
 
-# Install essential custom nodes
+# Install all custom nodes from provisioning.sh
 RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
     git clone https://github.com/cubiq/ComfyUI_essentials.git && \
     git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
     git clone https://github.com/MoonGoblinDev/Civicomfy.git && \
     git clone https://github.com/huchukato/comfy-tagcomplete.git && \
     git clone https://github.com/Koishi-Star/Euler-Smea-Dyn-Sampler.git && \
+    git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git && \
     git clone https://github.com/ltdrdata/was-node-suite-comfyui.git && \
     git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git && \
     git clone https://github.com/rgthree/rgthree-comfy.git && \
@@ -131,9 +141,27 @@ cd /ComfyUI\n\
 jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password=""\n\
 ' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
 
-# Download essential WAN 2.2 workflows (base set - will be updated at startup)
+# Download all workflows from provisioning.sh (latest versions)
 RUN wget -O /ComfyUI/workflows/SDXL-LoRaStack-Upscale.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/SDXL-LoRaStack-Upscale.json
+    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/SDXL-LoRaStack-Upscale.json && \
+    wget -O /ComfyUI/workflows/WAN2.2-I2V-AutoPrompt-1-4.json \
+    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-1-4.json && \
+    wget -O /ComfyUI/workflows/WAN2.2-I2V-AutoPrompt-GGUF-1-4.json \
+    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-GGUF-1-4.json && \
+    wget -O /ComfyUI/workflows/WAN2.2-T2V-AutoPrompt-1-5.json \
+    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-1-5.json && \
+    wget -O /ComfyUI/workflows/WAN2.2-T2V-AutoPrompt-GGUF-1-4.json \
+    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-GGUF-1-4.json && \
+    wget -O /ComfyUI/workflows/Wan2.2-I2V-SVI-AutoPrompt-1-3.json \
+    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-1-3.json && \
+    wget -O /ComfyUI/workflows/Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-1.json \
+    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-1.json && \
+    wget -O /ComfyUI/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-8.json \
+    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-8.json && \
+    wget -O /ComfyUI/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-5.json \
+    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-5.json && \
+    wget -O /ComfyUI/workflows/WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF.json \
+    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF.json
 
 # Create models directories
 RUN mkdir -p /ComfyUI/models/vae && \
