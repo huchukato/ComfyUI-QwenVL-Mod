@@ -1,0 +1,53 @@
+{
+  "name": "ComfyUI - Wan 2.2 I2V/T2V - 5090 Blackwell",
+  "description": "Complete AI video generation environment with ComfyUI, QwenVL-Mod enhanced vision-language capabilities, and WAN 2.2 workflows. Features professional video generation, multilingual support, visual style detection, and pre-installed custom nodes.",
+  "version": "1.0.0",
+  "author": "huchukato",
+  "referral_id": "188688",
+  "creator_id": "188688",
+  "tags": [
+    "comfyui",
+    "wan2.2",
+    "video-generation",
+    "qwenvl-mod",
+    "vision-language",
+    "multilingual",
+    "style-detection",
+    "professional",
+    "5090-blackwell",
+    "rtx-5090"
+  ],
+  "features": {
+    "gpu_optimized": true,
+    "pre_installed_nodes": 30,
+    "pre_installed_workflows": 9,
+    "pre_installed_models": true,
+    "multilingual_support": true,
+    "style_detection": true,
+    "nsfw_support": true,
+    "gguf_backend": true
+  },
+  "requirements": {
+    "min_vram": "24GB",
+    "recommended_gpu": "RTX 5090",
+    "cuda_version": "13.0+"
+  },
+  "provisioning": {
+    "script_url": "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/provisioning.sh",
+    "supports_tokens": ["HF_TOKEN", "CIVITAI_TOKEN"],
+    "auto_download": true
+  },
+  "links": {
+    "repository": "https://github.com/huchukato/ComfyUI-QwenVL-Mod",
+    "documentation": "https://github.com/huchukato/ComfyUI-QwenVL-Mod/tree/main/vastai",
+    "issues": "https://github.com/huchukato/ComfyUI-QwenVL-Mod/issues"
+  },
+  "environment_variables": {
+    "WORKSPACE": "/workspace",
+    "COMFYUI_ARGS": "--disable-auto-launch --port 18188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune --vram-mode 0",
+    "PROVISIONING_SCRIPT": "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/provisioning.sh",
+    "HF_TOKEN": null,
+    "CIVITAI_TOKEN": null,
+    "ENABLE_HTTPS": false
+  }
+}
