@@ -11,16 +11,17 @@ ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:$CUDA_HOME/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
 
-# Install system dependencies
+# Install system dependencies including Python 3.12
 RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    gpg-agent \
     git \
     wget \
     curl \
     build-essential \
-    python3.10 \
-    python3.10-dev \
-    python3-pip \
-    python3.10-venv \
+    python3.12 \
+    python3.12-venv \
+    python3.12-dev \
     libgl1-mesa-glx \
     libglib2.0-0 \
     libsm6 \
@@ -29,23 +30,23 @@ RUN apt-get update && apt-get install -y \
     libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
-# Create Python virtual environment
-RUN python3.10 -m venv /opt/venv
+# Create Python virtual environment and install pip
+RUN python3.12 -m venv /opt/venv && \
+    curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12 && \
+    python3.12 -m pip install --upgrade pip wheel setuptools
+
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Upgrade pip and install wheel
-RUN pip install --upgrade pip wheel setuptools
-
-# Install PyTorch with CUDA 12.4 support
-RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+# Install PyTorch with CUDA 13.1 support - optimized for RTX 5090
+RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 
 # Install ComfyUI
 WORKDIR /ComfyUI
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
     pip install -r requirements.txt
 
-# Install llama-cpp-python for GGUF support (CUDA 12.4 optimized)
-RUN pip install --upgrade --force-reinstall llama-cpp-python --prefer-binary --extra-index-url=https://download.pytorch.org/whl/cu124
+# Install llama-cpp-python for GGUF support (CUDA 13.1 optimized)
+RUN pip install --upgrade --force-reinstall llama-cpp-python --prefer-binary --extra-index-url=https://download.pytorch.org/whl/cu121
 
 # Install ComfyUI-QwenVL-Mod
 WORKDIR /ComfyUI/custom_nodes
@@ -82,8 +83,9 @@ RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
     git clone https://github.com/stduhpf/ComfyUI-WanMoeKSampler.git && \
     git clone https://github.com/melMass/comfy_mtb.git
 
-# Install node dependencies
-RUN cd ComfyUI-Manager && pip install -r requirements.txt && \
+# Install additional dependencies
+RUN pip install sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab && \
+    cd ComfyUI-Manager && pip install -r requirements.txt && \
     cd ../ComfyUI_essentials && pip install -r requirements.txt && \
     cd ../ComfyUI-Impact-Pack && pip install -r requirements.txt && \
     cd ../ComfyUI-VideoHelperSuite && pip install -r requirements.txt && \
@@ -94,6 +96,40 @@ RUN cd ComfyUI-Manager && pip install -r requirements.txt && \
 
 # Create workflows directory
 RUN mkdir -p /ComfyUI/workflows
+
+# Install FileBrowser for file management
+RUN wget -O /tmp/filebrowser.tar.gz https://github.com/filebrowser/filebrowser/releases/download/v2.28.0/linux-amd64-filebrowser.tar.gz && \
+    tar -xzf /tmp/filebrowser.tar.gz -C /tmp && \
+    mv /tmp/filebrowser /usr/local/bin/ && \
+    chmod +x /usr/local/bin/filebrowser && \
+    rm /tmp/filebrowser.tar.gz
+
+# Create FileBrowser database and directories
+RUN mkdir -p /filebrowser && \
+    mkdir -p /filebrowser/database && \
+    mkdir -p /filebrowser/files && \
+    ln -sf /ComfyUI /filebrowser/files/ComfyUI && \
+    echo '{"port": 8080, "baseURL": "", "address": "0.0.0.0", "log": "stdout", "database": "/filebrowser/database/filebrowser.db", "root": "/filebrowser/files", "noauth": true}' > /filebrowser/.config.json
+
+# Create FileBrowser startup script
+RUN echo '#!/bin/bash\n\
+echo "📁 Starting FileBrowser on port 8080"\n\
+echo "🌐 Access at: http://localhost:8080"\n\
+echo "👤 No authentication required"\n\
+echo ""\n\
+cd /filebrowser\n\
+filebrowser --config /filebrowser/.config.json\n\
+' > /usr/local/bin/start-filebrowser.sh && chmod +x /usr/local/bin/start-filebrowser.sh
+
+# Create JupyterLab startup script
+RUN echo '#!/bin/bash\n\
+echo "📓 Starting JupyterLab on port 8888"\n\
+echo "🌐 Access at: http://localhost:8888"\n\
+echo "🔑 No token required"\n\
+echo ""\n\
+cd /ComfyUI\n\
+jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password=""\n\
+' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
 
 # Download essential WAN 2.2 workflows
 RUN wget -O /ComfyUI/workflows/WAN2.2-I2V-AutoPrompt.json \
@@ -121,34 +157,63 @@ RUN wget -O /ComfyUI/models/vae/wan_2.1_vae.safetensors \
     https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors
 
 # Set ComfyUI arguments
-ENV COMFYUI_ARGS="--disable-auto-launch --port 8080 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune"
+ENV COMFYUI_ARGS="--disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune"
 
-# Create startup script
+# Create startup script (RunPod style)
 RUN echo '#!/bin/bash\n\
-echo "🚀 Starting ComfyUI-QwenVL-Mod on RunPod"\n\
+set -e  # Exit the script if any statement returns a non-true return value\n\
+\n\
+COMFYUI_DIR="/ComfyUI"\n\
+FILEBROWSER_CONFIG="/filebrowser/.config.json"\n\
+DB_FILE="/filebrowser/database/filebrowser.db"\n\
+\n\
+echo "🚀 Starting ComfyUI-QwenVL-Mod on RunPod (Full Version)"\n\
 echo "🎬 WAN 2.2 workflows loaded"\n\
 echo "🌐 Multilingual support enabled"\n\
 echo "🎨 Visual style detection ready"\n\
 echo "⚡ GGUF backend optimized"\n\
 echo "🔧 RTX 5090 optimizations active"\n\
 echo ""\n\
-echo "📋 Available workflows:"\n\
+echo "� Services starting:"\n\
+echo "📁 FileBrowser: http://0.0.0.0:8080"\n\
+echo "📓 JupyterLab:  http://0.0.0.0:8888"\n\
+echo "🎨 ComfyUI:    http://0.0.0.0:8188"\n\
+echo "� Available workflows:"\n\
 ls -la /ComfyUI/workflows/\n\
 echo ""\n\
-echo "🌐 ComfyUI will be available at: http://localhost:8080"\n\
+echo "💡 Models pre-loaded for immediate use"\n\
 echo ""\n\
-exec python main.py $COMFYUI_ARGS\n\
+\n\
+# Start FileBrowser\n\
+echo "🔧 Starting FileBrowser..."\n\
+nohup /usr/local/bin/start-filebrowser.sh &> /filebrowser.log &\n\
+echo "✅ FileBrowser started"\n\
+\n\
+# Start JupyterLab\n\
+echo "🔧 Starting JupyterLab..."\n\
+nohup /usr/local/bin/start-jupyter.sh &> /jupyter.log &\n\
+echo "✅ JupyterLab started"\n\
+\n\
+# Start ComfyUI\n\
+echo "🚀 Starting ComfyUI..."\n\
+echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\n\
+cd $COMFYUI_DIR\n\
+nohup python main.py $COMFYUI_ARGS &> /comfyui.log &\n\
+echo "✅ ComfyUI started"\n\
+\n\
+# Tail the ComfyUI log\n\
+tail -f /comfyui.log\n\
 ' > /ComfyUI/start.sh && chmod +x /ComfyUI/start.sh
 
 # Set working directory
 WORKDIR /ComfyUI
 
-# Expose port
-EXPOSE 8080
+# Expose ports
+EXPOSE 8080 8188 8888
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD curl -f http://localhost:8080/system_stats || exit 1
+    CMD curl -f http://localhost:8188/system_stats || exit 1
 
 # Start ComfyUI
 CMD ["/ComfyUI/start.sh"]
