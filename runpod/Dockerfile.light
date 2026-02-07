@@ -44,6 +44,9 @@ WORKDIR /ComfyUI
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
     pip install -r requirements.txt
 
+# Install additional ComfyUI dependencies
+RUN pip install torchsde triton
+
 # Install llama-cpp-python for GGUF support (CUDA 12.4 optimized)
 RUN pip install --upgrade --force-reinstall llama-cpp-python --prefer-binary --extra-index-url=https://download.pytorch.org/whl/cu124
 
@@ -74,7 +77,14 @@ RUN cd ComfyUI-Manager && pip install -r requirements.txt && \
     cd ../ComfyUI_essentials && pip install -r requirements.txt && \
     cd ../ComfyUI-Impact-Pack && pip install -r requirements.txt && \
     cd ../ComfyUI-VideoHelperSuite && pip install -r requirements.txt && \
-    cd ../ComfyUI-GGUF && pip install -r requirements.txt
+    cd ../ComfyUI-GGUF && pip install -r requirements.txt && \
+    cd ../was-node-suite-comfyui && pip install -r requirements.txt && \
+    cd ../rgthree-comfy && pip install -r requirements.txt && \
+    cd ../ComfyUI-Easy-Use && pip install -r requirements.txt && \
+    cd ../ComfyUI-KJNodes && pip install -r requirements.txt
+
+# Install additional common dependencies for custom nodes
+RUN pip install opencv-python-headless scikit-image spandrel safetensors
 
 # Create directories (no pre-downloaded models)
 RUN mkdir -p /ComfyUI/workflows && \
