@@ -1,5 +1,16 @@
 # **QwenVL-Mod for ComfyUI**
 
+[![ComfyUI](https://img.shields.io/badge/ComfyUI-Custom%20Node-blue?style=for-the-badge&logo=python)](https://github.com/comfyanonymous/ComfyUI)
+[![License](https://img.shields.io/badge/License-GPL--3.0-green?style=for-the-badge)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-2.0.8-orange?style=for-the-badge)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/releases)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)](https://python.org)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red?style=for-the-badge&logo=pytorch)](https://pytorch.org)
+[![CUDA](https://img.shields.io/badge/CUDA-12.8%2B-black?style=for-the-badge&logo=nvidia)](https://developer.nvidia.com/cuda-zone)
+[![HuggingFace](https://img.shields.io/badge/Models-Hugging%20Face-yellow?style=for-the-badge&logo=huggingface)](https://huggingface.co/Qwen)
+[![Downloads](https://img.shields.io/github/downloads/huchukato/ComfyUI-QwenVL-Mod/total?style=for-the-badge&logo=github)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+[![Stars](https://img.shields.io/github/stars/huchukato/ComfyUI-QwenVL-Mod?style=for-the-badge&logo=github)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+[![Issues](https://img.shields.io/github/issues/huchukato/ComfyUI-QwenVL-Mod?style=for-the-badge&logo=github)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/issues)
+
 The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-language models (LVLMs) from Alibaba Cloud, including the latest Qwen3-VL and Qwen2.5-VL, plus GGUF backends and text-only Qwen3 support. This advanced node enables seamless multimodal AI capabilities within your ComfyUI workflows, allowing for efficient text generation, image understanding, and video analysis.
 
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
@@ -80,6 +91,13 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 [![QwenVL_V1.0.0r](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/example_workflows/QWenVL.jpg)](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/example_workflows/QWenVL.json)
 
 ## **✨ Features**
+
+[![Multimodal](https://img.shields.io/badge/Multimodal-Image%20%7C%20Video%20%7C%20Text-purple?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+[![Models](https://img.shields.io/badge/Models-Qwen3%20%7C%20Qwen2.5%20%7C%20GGUF-blue?style=flat-square)](https://huggingface.co/Qwen)
+[![Quantization](https://img.shields.io/badge/Quantization-4%20%7C%208%20%7C%2016%20bit-orange?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+[![Performance](https://img.shields.io/badge/Performance-Flash%20Attention%20%7C%20SDPA-green?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+[![WAN2.2](https://img.shields.io/badge/WAN%202.2-Video%20Generation-red?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+[![Caching](https://img.shields.io/badge/Caching-Smart%20%7C%20Persistent-yellow?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
 
 * **Standard & Advanced Nodes**: Includes a simple QwenVL node for quick use and a QwenVL (Advanced) node with fine-grained control over generation.  
 * **Prompt Enhancers**: Dedicated text-only prompt enhancers for both HF and GGUF backends.  
@@ -405,15 +423,20 @@ This enhanced version includes specialized prompts for **WAN 2.2** video generat
 * ✅ Persistent cache across ComfyUI restarts.  
 * ✅ Code maintenance updates for future compatibility.
 
-
 ## **🙏 Credits**
 
-* **Qwen Team**: [Alibaba Cloud](https://github.com/QwenLM) \- For developing and open-sourcing the powerful Qwen-VL models.  
-* **ComfyUI**: [comfyanonymous](https://github.com/comfyanonymous/ComfyUI) \- For the incredible and extensible ComfyUI platform.  
-* **llama-cpp-python**: [JamePeng/llama-cpp-python](https://github.com/JamePeng/llama-cpp-python) \- GGUF backend with vision support used by the GGUF nodes.  
-* **SageAttention Team**: [THU-ML](https://github.com/thu-ml) \- For developing the high-performance SageAttention implementation.  
-* **ComfyUI Integration**: [1038lab](https://github.com/1038lab) \- Developer of this custom node.
+* **Qwen Team**: [Alibaba Cloud](https://github.com/QwenLM) - For development and open-source powerful Qwen-VL models.  
+* **ComfyUI**: [comfyanonymous](https://github.com/comfyanonymous/ComfyUI) - For incredible and extensible ComfyUI platform.  
+* **llama-cpp-python**: [JamePeng/llama-cpp-python](https://github.com/JamePeng/llama-cpp-python) - GGUF backend with vision support used by GGUF nodes.  
+* **ComfyUI Integration**: [1038lab](https://github.com/1038lab) - Developer of this custom node.
+
+## **👥 Author**
+
+- **huchukato**
+  - 🐙 [GitHub](https://github.com/huchukato)
+  - 🐦 [X (Twitter)](https://twitter.com/huchukato)
+  - 🎨 [Civitai](https://civitai.com/user/huchukato) - Check out my AI art models!
 
 ## **📜 License**
 
-This repository's code is released under the [GPL-3.0 License](LICENSE).
+This repository code is released under [GPL-3.0 License](LICENSE).
