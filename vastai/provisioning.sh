@@ -204,7 +204,7 @@ function provisioning_get_nodes() {
 function provisioning_copy_wildcards() {
     echo "Copying wildcards from ComfyUI-QwenVL-Mod to Impact-Pack..."
     
-    local source_dir="${WORKSPACE}/ComfyUI-QwenVL-Mod/vastai/wildcards/mbe"
+    local source_dir="${COMFYUI_DIR}/custom_nodes/ComfyUI-QwenVL-Mod/vastai/wildcards/mbe"
     local target_dir="${COMFYUI_DIR}/custom_nodes/ComfyUI-Impact-Pack/wildcards"
     
     # Create target directory if it doesn't exist
@@ -217,6 +217,16 @@ function provisioning_copy_wildcards() {
         echo "  ✓ Wildcards copied successfully to $target_dir/mbe"
     else
         echo "  ⚠ Source directory not found: $source_dir"
+        echo "  → Trying alternative path..."
+        # Try alternative path if ComfyUI-QwenVL-Mod is in workspace
+        local alt_source_dir="/workspace/ComfyUI-QwenVL-Mod/vastai/wildcards/mbe"
+        if [[ -d "$alt_source_dir" ]]; then
+            echo "  → Found at alternative path, copying..."
+            cp -r "$alt_source_dir" "$target_dir/"
+            echo "  ✓ Wildcards copied successfully from alternative path"
+        else
+            echo "  ⚠ Source directory not found at: $alt_source_dir"
+        fi
     fi
 }
 
