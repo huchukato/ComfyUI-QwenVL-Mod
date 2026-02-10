@@ -244,7 +244,7 @@
         "Node name for S&R": "KSampler"
       },
       "widgets_values": [
-        1085086056107576,
+        318291071874207,
         "randomize",
         30,
         5,
@@ -399,7 +399,7 @@
       ],
       "flags": {},
       "order": 12,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "images",
@@ -506,79 +506,6 @@
       ]
     },
     {
-      "id": 21,
-      "type": "ImpactWildcardEncode",
-      "pos": [
-        257.9352111816406,
-        -247.78758239746094
-      ],
-      "size": [
-        422.0667724609375,
-        484.359375
-      ],
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 84
-        },
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 85
-        }
-      ],
-      "outputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            22,
-            87
-          ]
-        },
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "slot_index": 1,
-          "links": []
-        },
-        {
-          "name": "conditioning",
-          "type": "CONDITIONING",
-          "slot_index": 2,
-          "links": [
-            23
-          ]
-        },
-        {
-          "name": "populated_text",
-          "type": "STRING",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-impact-pack",
-        "ver": "2804f7944f125b1c10bc9d1fbb5a997a25a62726",
-        "Node name for S&R": "ImpactWildcardEncode"
-      },
-      "widgets_values": [
-        "score_9, score_8_up, score_7_up, __mbe/prmpt/imgcmp/frmngbd__, in a __mbe/prmpt/lctns/*__, __MBE/prmpt/light/rndmlight__, __mbe/prmpt/char/rndmchar__, __mbe/prmpt/clths/rndmclth__, __mbe/prmpt/clths/nudty__, __mbe/actsolo/brstplng__ ",
-        "score_9, score_8_up, score_7_up, cut-in, in a power plant, night, dim lighting, underlighting, shadow, 1girl, blue hair, medium hair, tri braids, curly hair, brown eyes, slim body, large breasts, collar, unfastened, solo, breast slip, nipple stimulation, nipple tweak, mouth open, tongue out, saliva drip, saliva on breasts,  ",
-        "populate",
-        "Select the LoRA to add to the text",
-        "Select Wildcard 🟢 Full Cache",
-        183943091304854,
-        "randomize"
-      ],
-      "color": "#322",
-      "bgcolor": "#533"
-    },
-    {
       "id": 4,
       "type": "CheckpointLoaderSimple",
       "pos": [
@@ -643,7 +570,7 @@
       ],
       "flags": {},
       "order": 3,
-      "mode": 0,
+      "mode": 4,
       "inputs": [],
       "outputs": [
         {
@@ -663,6 +590,79 @@
         "4x-AnimeSharp",
         "fp16"
       ]
+    },
+    {
+      "id": 21,
+      "type": "ImpactWildcardEncode",
+      "pos": [
+        257.9352111816406,
+        -247.78758239746094
+      ],
+      "size": [
+        422.0667724609375,
+        484.359375
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 84
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 85
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            22,
+            87
+          ]
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "slot_index": 1,
+          "links": []
+        },
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "slot_index": 2,
+          "links": [
+            23
+          ]
+        },
+        {
+          "name": "populated_text",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-impact-pack",
+        "ver": "2804f7944f125b1c10bc9d1fbb5a997a25a62726",
+        "Node name for S&R": "ImpactWildcardEncode"
+      },
+      "widgets_values": [
+        "score_9, score_8_up, score_7_up, __mbe/prmpt/imgcmp/shots__, __mbe/prmpt/lctns/rndmlctns__, __mbe/prmpt/light/rndmlight__, __mbe/prmpt/char/rndmcharlb__, __mbe/prmpt/clths/rndmclth__, __mbe/prmpt/clths/nudty_brsts__, __mbe/actsolo/brstplng__ ",
+        "score_9, score_8_up, score_7_up, __mbe/prmpt/imgcmp/frmngbd__, in a studio, twilight, sunbeam, underlighting, window shadow, 1girl, aqua hair, long hair, professional cut hair, hair flaps, amber eyes, petite body, large breasts, average height, smile, bra, __mbe/prmpt/clths/nudty__, solo, impossible shirt, grabbing own breast, breast lift, tongue out, saliva drip, saliva on breasts, ",
+        "populate",
+        "Select the LoRA to add to the text",
+        "Select Wildcard 🟢 Full Cache",
+        390713709290023,
+        "randomize"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
     }
   ],
   "links": [
@@ -823,11 +823,11 @@
     "ds": {
       "scale": 1,
       "offset": [
-        1240.7553914326197,
-        409.38675570875375
+        1150.1421101826197,
+        382.14456820875375
       ]
     },
-    "frontendVersion": "1.36.14",
+    "frontendVersion": "1.37.11",
     "workflowRendererVersion": "LG",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
