@@ -99,7 +99,10 @@ function provisioning_start() {
     echo "🔧 Installing custom nodes..."
     provisioning_get_nodes
     
-    echo "📥 Installing PIP packages..."
+    echo "� Copying wildcards to Impact-Pack..."
+    provisioning_copy_wildcards
+    
+    echo "� Installing PIP packages..."
     provisioning_get_pip_packages
     
     echo "📁 Downloading workflows..."
@@ -196,6 +199,25 @@ function provisioning_get_nodes() {
         echo "  ✓ Node $dir completed"
     done
     echo "All nodes processed successfully!"
+}
+
+function provisioning_copy_wildcards() {
+    echo "Copying wildcards from ComfyUI-QwenVL-Mod to Impact-Pack..."
+    
+    local source_dir="${WORKSPACE}/ComfyUI-QwenVL-Mod/vastai/wildcards/mbe"
+    local target_dir="${COMFYUI_DIR}/custom_nodes/ComfyUI-Impact-Pack/wildcards"
+    
+    # Create target directory if it doesn't exist
+    mkdir -p "$target_dir"
+    
+    # Copy the entire mbe directory
+    if [[ -d "$source_dir" ]]; then
+        echo "  → Copying mbe wildcards..."
+        cp -r "$source_dir" "$target_dir/"
+        echo "  ✓ Wildcards copied successfully to $target_dir/mbe"
+    else
+        echo "  ⚠ Source directory not found: $source_dir"
+    fi
 }
 
 function provisioning_get_files() {
