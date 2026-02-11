@@ -40,7 +40,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb && \
     dpkg -i cuda-keyring_1.1-1_all.deb && \
     apt-get update && \
-    apt-get install -y --no-install-recommends cuda-toolkit-12-8 && \
+    apt-get install -y --no-install-recommends cuda-toolkit-13-0 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm cuda-keyring_1.1-1_all.deb
@@ -80,7 +80,7 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
     pip install GitPython opencv-python
 
 # Install llama-cpp-python for GGUF support (CUDA 13.0 optimized)
-RUN pip install --upgrade --force-reinstall --no-cache-dir https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.23-cu130-Basic-linux-20260129/llama_cpp_python-0.3.23+cu130.basic-cp312-cp312-linux_x86_64.whl
+RUN pip install --upgrade --force-reinstall --no-cache-dir https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.24-cu130-Basic-linux-20260208/llama_cpp_python-0.3.24+cu130.basic-cp312-cp312-linux_x86_64.whl
 
 # Install all custom nodes from provisioning.sh
 WORKDIR /ComfyUI/custom_nodes
