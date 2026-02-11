@@ -63,8 +63,9 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
     pip install -r requirements.txt && \
     pip install GitPython opencv-python
 
-# Install llama-cpp-python for GGUF support (with CUDA support)
-RUN pip install --upgrade --force-reinstall --no-cache-dir llama-cpp-python --force-reinstall --upgrade --no-cache-dir
+# Install llama-cpp-python for GGUF support (CUDA 13.0 optimized)
+RUN pip install --upgrade --force-reinstall --no-cache-dir \
+    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.24-cu130-Basic-linux-20260208/llama_cpp_python-0.3.24+cu130.basic-cp312-cp312-linux_x86_64.whl
 
 # Install all custom nodes from provisioning.sh
 WORKDIR /ComfyUI/custom_nodes
