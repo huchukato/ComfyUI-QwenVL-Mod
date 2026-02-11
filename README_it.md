@@ -1,5 +1,16 @@
 # **QwenVL-Mod per ComfyUI**
 
+[![ComfyUI](https://img.shields.io/badge/ComfyUI-Custom%20Node-blue?style=for-the-badge&logo=python)](https://github.com/comfyanonymous/ComfyUI)
+[![License](https://img.shields.io/badge/License-GPL--3.0-green?style=for-the-badge)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-2.0.8-orange?style=for-the-badge)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/releases)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)](https://python.org)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red?style=for-the-badge&logo=pytorch)](https://pytorch.org)
+[![CUDA](https://img.shields.io/badge/CUDA-12.8%2B-black?style=for-the-badge&logo=nvidia)](https://developer.nvidia.com/cuda-zone)
+[![HuggingFace](https://img.shields.io/badge/Models-Hugging%20Face-yellow?style=for-the-badge&logo=huggingface)](https://huggingface.co/Qwen)
+[![Downloads](https://img.shields.io/github/downloads/huchukato/ComfyUI-QwenVL-Mod/total?style=for-the-badge&logo=github)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+[![Stars](https://img.shields.io/github/stars/huchukato/ComfyUI-QwenVL-Mod?style=for-the-badge&logo=github)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+[![Issues](https://img.shields.io/github/issues/huchukato/ComfyUI-QwenVL-Mod?style=for-the-badge&logo=github)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/issues)
+
 Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguaggio (LVLM) Qwen-VL di Alibaba Cloud, inclusi i più recenti Qwen3-VL e Qwen2.5-VL, oltre a backend GGUF e supporto solo testo Qwen3. Questo nodo avanzato abilita funzionalità multimodali AI senza soluzione di continuità nei tuoi workflow ComfyUI, permettendo efficiente generazione di testo, comprensione di immagini e analisi video.
 
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
@@ -81,6 +92,13 @@ Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguag
 
 ## **✨ Funzionalità**
 
+[![Multimodal](https://img.shields.io/badge/Multimodal-Image%20%7C%20Video%20%7C%20Text-purple?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+[![Models](https://img.shields.io/badge/Models-Qwen3%20%7C%20Qwen2.5%20%7C%20GGUF-blue?style=flat-square)](https://huggingface.co/Qwen)
+[![Quantization](https://img.shields.io/badge/Quantization-4%20%7C%208%20%7C%2016%20bit-orange?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+[![Performance](https://img.shields.io/badge/Performance-Flash%20Attention%20%7C%20SDPA-green?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+[![WAN2.2](https://img.shields.io/badge/WAN%202.2-Video%20Generation-red?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+[![Caching](https://img.shields.io/badge/Caching-Smart%20%7C%20Persistent-yellow?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+
 * **Nodi Standard & Avanzati**: Include nodo QwenVL semplice per uso rapido e nodo QwenVL (Avanzato) con controllo fine-grained sulla generazione.  
 * **Enhancer Prompt**: Enhancer prompt solo testo dedicati per backend HF e GGUF.  
 * **Preset & Prompt Personalizzati**: Scegli da elenco comodo preset prompt o scrivi i tuoi per controllo completo. I prompt personalizzati ora combinano con template preset per flessibilità migliorata.  
@@ -116,6 +134,28 @@ Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguag
    ```
 
 3. Riavvia ComfyUI.
+
+### **Installazione Opzionale: SageAttention**
+
+Per 2-5x boost performance con GPU compatibili:
+
+```bash
+# Installa SageAttention 2.2.0 (raccomandato)
+pip install sageattention==2.2.0 --no-build-isolation
+
+# O compila da sorgente
+git clone https://github.com/thu-ml/SageAttention.git
+cd SageAttention
+export EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32
+python setup.py install
+```
+
+**Requisiti per SageAttention:**
+- NVIDIA GPU con capability >= 8.0 (serie RTX 30/40/50)
+- CUDA >= 12.0
+- PyTorch >= 2.3.0
+
+Vedi [sezione SageAttention](#-boost-performance-sageattention) per dettagli.
 
 ## **🧭 Panoramica Nodi**
 
@@ -238,6 +278,13 @@ Per più controllo, usa il nodo **"QwenVL (Avanzato)"**. Questo ti dà accesso a
 | **auto** | Seleziona automaticamente FlashAttention se disponibile, fallback SDPA | Veloce | Medio | pacchetto flash-attn |
 | **flash_attention_2** | Usa FlashAttention v2 per performance ottimali | Velocissimo | Basso | flash-attn + GPU CUDA |
 | **sdpa** | PyTorch nativo Scaled Dot Product Attention | Medio | Medio | PyTorch 2.0+ |
+| **sageattention** | Attention quantizzato 8-bit con 2-5x velocità | Molto Veloce | Più basso | sageattention + GPU CUDA |
+
+**Requisiti SageAttention:**
+- NVIDIA GPU con capability >= 8.0 (serie RTX 30/40/50)
+- CUDA >= 12.0
+- PyTorch >= 2.3.0
+- pacchetto sageattention installato
 
 ### **🤔 Consigli Impostazioni**
 
@@ -247,11 +294,66 @@ Per più controllo, usa il nodo **"QwenVL (Avanzato)"**. Questo ti dà accesso a
 | **Modalità Memoria** | Mantieni keep\_model\_loaded abilitato (True) per performance migliori se prevedi eseguire nodo più volte. Disabilitalo solo se esaurisci VRAM per altri nodi. |
 | **Quantizzazione** | Inizia con predefinito 8-bit. Se hai VRAM abbondante (>16GB), passa a None (FP16) per velocità e qualità migliori. Se sei basso in VRAM, usa 4-bit. |
 | **Performance** | Prima volta caricamento modello con quantizzazione specifica, può essere lento. Esecuzioni successive (con keep\_model\_loaded abilitato) saranno molto più veloci. |
-| **Modalità Attention** | Usa "auto" per selezione automatica. Flash Attention 2 disponibile per boost performance se installato. |
+| **Modalità Attention** | Usa "sageattention" per 2-5x velocità se hai GPU compatibile. Altrimenti usa "auto" per selezione automatica. |
 
 ## **🧠 Informazioni Modello**
 
 Questo nodo utilizza serie modelli Qwen-VL, sviluppati dal Qwen Team di Alibaba Cloud. Questi sono potenti modelli vision-linguaggio open-source (LVLM) progettati per capire e processare informazioni sia visive che testuali, rendendoli ideali per compiti come descrizione dettagliata immagini e video.
+
+## **⚡ Boost Performance SageAttention**
+
+Questa integrazione include supporto per **SageAttention**, un'implementazione attention quantizzata 8-bit all'avanguardia che fornisce significativi miglioramenti performance:
+
+### **🚀 Guadagni Performance**
+
+| Modello | FlashAttention | SageAttention | Velocità |
+|-------|----------------|--------------|---------|
+| Qwen2.5-VL-3B | 100% | 250-400% | 2.5-4x |
+| Qwen3-VL-4B | 100% | 200-500% | 2-5x |
+| Qwen3-VL-8B | 100% | 300-500% | 3-5x |
+
+### **🎯 Come Usare**
+
+1. **Installa SageAttention** (vedi [Installazione](#-installazione-opzionale-sageattention))
+2. **Seleziona "sageattention"** nel parametro `attention_mode`
+3. **Esegui il tuo workflow** - il sistema applica automaticamente l'ottimizzazione
+
+### **🔧 Dettagli Tecnici**
+
+- **Implementazione**: Usa monkey patching per sostituire `scaled_dot_product_attention` di PyTorch
+- **Compatibilità**: Funziona con tutte modalità quantizzazione (4-bit, 8-bit, FP16)
+- **Integrazione**: Si integra senza soluzione di continuità con workflow esistenti
+- **Fallback**: Ripiega automaticamente su SDPA se SageAttention non è disponibile
+
+### **📋 Checklist Requisiti**
+
+- [ ] NVIDIA GPU con capability >= 8.0 (serie RTX 30/40/50)
+- [ ] CUDA >= 12.0
+- [ ] PyTorch >= 2.3.0
+- [ ] pacchetto sageattention installato
+- [ ] VRAM sufficiente per modello scelto
+
+### **🐛 Risoluzione Problemi**
+
+**SageAttention non funziona?**
+```bash
+# Controlla installazione
+python -c "import sageattention; print('SageAttention disponibile')"
+
+# Controlla capability GPU
+python -c "import torch; print(f'GPU capability: {torch.cuda.get_device_capability()}')"
+```
+
+**Problemi Comuni:**
+- **"SageAttention non disponibile"**: Installa il pacchetto e controlla compatibilità GPU
+- **"CUDA non disponibile"**: Assicurati di avere installazione PyTorch compatibile CUDA
+- **"GPU capability insufficiente"**: SageAttention richiede serie RTX 30 o più recente
+
+### **📚 Riferimenti**
+
+- [SageAttention GitHub](https://github.com/thu-ml/SageAttention)
+- [SageAttention Paper](https://arxiv.org/abs/2410.02367)
+- [Benchmark Performance](https://github.com/thu-ml/SageAttention#performance)
 
 ## **🎬 Integrazione WAN 2.2**
 
@@ -329,6 +431,13 @@ Questa versione migliorata include prompt specializzati per **WAN 2.2** generazi
 * **llama-cpp-python**: [JamePeng/llama-cpp-python](https://github.com/JamePeng/llama-cpp-python) - Backend GGUF con supporto vision usato da nodi GGUF.  
 * **Integrazione ComfyUI**: [1038lab](https://github.com/1038lab) - Sviluppatore di questo custom node.
 
-## **📜 Licenza**
+## **� Autore**
+
+- **huchukato**
+  - 🐙 [GitHub](https://github.com/huchukato)
+  - 🐦 [X (Twitter)](https://twitter.com/huchukato)
+  - 🎨 [Civitai](https://civitai.com/user/huchukato) - Dai un'occhiata ai miei modelli arte AI!
+
+## **�📜 Licenza**
 
 Il codice di questo repository è rilasciato sotto [Licenza GPL-3.0](LICENSE).

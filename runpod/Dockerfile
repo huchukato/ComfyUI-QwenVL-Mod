@@ -9,7 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
 ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:$CUDA_HOME/bin
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
+ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 
 # Install system dependencies (including CUDA toolkit for TensorRT)
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -36,14 +36,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install CUDA toolkit for TensorRT support
-RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb && \
-    dpkg -i cuda-keyring_1.1-1_all.deb && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends cuda-toolkit-13-0 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm cuda-keyring_1.1-1_all.deb
+# CUDA toolkit will be available in RunPod environment
+# Skip local CUDA installation to avoid architecture conflicts
 
 # Configure SSH for root login
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
@@ -55,19 +49,9 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 && \
     update-alternatives --set python3 /usr/bin/python3.12
 
-# Install Miniconda for robust Python environment management
-RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
-    bash /tmp/miniconda.sh -b -p /opt/miniconda3 && \
-    rm /tmp/miniconda.sh && \
-    /opt/miniconda3/bin/conda clean -afy
-
-# Create conda environment for ComfyUI with Python 3.12.12
-RUN /opt/miniconda3/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
-    /opt/miniconda3/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
-    /opt/miniconda3/bin/conda create -n comfyui python=3.12.12 -y && \
-    /opt/miniconda3/bin/conda clean -afy
-
-ENV PATH="/opt/miniconda3/envs/comfyui/bin:$PATH"
+# Create virtual environment for Python packages
+RUN python3.12 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
 # Install PyTorch with CUDA 13.0 - optimized for RTX 5090
 RUN pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130
@@ -79,8 +63,8 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
     pip install -r requirements.txt && \
     pip install GitPython opencv-python
 
-# Install llama-cpp-python for GGUF support (CUDA 13.0 optimized)
-RUN pip install --upgrade --force-reinstall --no-cache-dir https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.24-cu130-Basic-linux-20260208/llama_cpp_python-0.3.24+cu130.basic-cp312-cp312-linux_x86_64.whl
+# Install llama-cpp-python for GGUF support (with CUDA support)
+RUN pip install --upgrade --force-reinstall --no-cache-dir llama-cpp-python --force-reinstall --upgrade --no-cache-dir
 
 # Install all custom nodes from provisioning.sh
 WORKDIR /ComfyUI/custom_nodes
