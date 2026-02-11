@@ -11,7 +11,7 @@ APT_PACKAGES=(
 )
 
 PIP_PACKAGES=(
-    "--upgrade --force-reinstall https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.23-cu130-Basic-linux-20260129/llama_cpp_python-0.3.23+cu130.basic-cp312-cp312-linux_x86_64.whl"
+    "--upgrade --force-reinstall https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.24-cu130-Basic-linux-20260208/llama_cpp_python-0.3.24+cu130.basic-cp312-cp312-linux_x86_64.whl"
 )
 
 NODES=(
