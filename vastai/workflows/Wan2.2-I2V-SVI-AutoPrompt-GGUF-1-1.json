@@ -3404,104 +3404,6 @@
       "bgcolor": "#335"
     },
     {
-      "id": 235,
-      "type": "2f110ae4-3df5-4e0f-9225-d35629e6f51f",
-      "pos": [
-        -264.7374969529607,
-        -1021.5295841751783
-      ],
-      "size": [
-        680,
-        382
-      ],
-      "flags": {},
-      "order": 49,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "CLIP",
-          "type": "CLIP",
-          "links": [
-            440
-          ]
-        },
-        {
-          "name": "VAE",
-          "type": "VAE",
-          "links": [
-            441
-          ]
-        },
-        {
-          "label": "MODEL LOW",
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            442
-          ]
-        },
-        {
-          "label": "MODEL HIGH",
-          "name": "MODEL_1",
-          "type": "MODEL",
-          "links": [
-            444,
-            447
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "239",
-            "model_name"
-          ],
-          [
-            "240",
-            "model_name"
-          ],
-          [
-            "141",
-            "lora_name"
-          ],
-          [
-            "142",
-            "lora_name"
-          ],
-          [
-            "101",
-            "lora_name"
-          ],
-          [
-            "101",
-            "strength_model"
-          ],
-          [
-            "102",
-            "lora_name"
-          ],
-          [
-            "102",
-            "strength_model"
-          ],
-          [
-            "206",
-            "vae_name"
-          ],
-          [
-            "84",
-            "clip_name"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.11.1"
-      },
-      "widgets_values": [],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
       "id": 309,
       "type": "MarkdownNote",
       "pos": [
@@ -3513,7 +3415,7 @@
         420
       ],
       "flags": {},
-      "order": 50,
+      "order": 49,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3537,7 +3439,7 @@
         196.61221590909076
       ],
       "flags": {},
-      "order": 51,
+      "order": 50,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3561,7 +3463,7 @@
         130
       ],
       "flags": {},
-      "order": 52,
+      "order": 51,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3595,7 +3497,7 @@
         110
       ],
       "flags": {},
-      "order": 53,
+      "order": 52,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4130,6 +4032,104 @@
       "widgets_values": [],
       "color": "#223",
       "bgcolor": "#335"
+    },
+    {
+      "id": 235,
+      "type": "2f110ae4-3df5-4e0f-9225-d35629e6f51f",
+      "pos": [
+        -264.7374969529607,
+        -1021.5295841751783
+      ],
+      "size": [
+        680,
+        382
+      ],
+      "flags": {},
+      "order": 53,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            440
+          ]
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            441
+          ]
+        },
+        {
+          "label": "MODEL LOW",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            442
+          ]
+        },
+        {
+          "label": "MODEL HIGH",
+          "name": "MODEL_1",
+          "type": "MODEL",
+          "links": [
+            444,
+            447
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "116",
+            "model_name"
+          ],
+          [
+            "117",
+            "model_name"
+          ],
+          [
+            "141",
+            "lora_name"
+          ],
+          [
+            "142",
+            "lora_name"
+          ],
+          [
+            "101",
+            "lora_name"
+          ],
+          [
+            "101",
+            "strength_model"
+          ],
+          [
+            "102",
+            "lora_name"
+          ],
+          [
+            "102",
+            "strength_model"
+          ],
+          [
+            "206",
+            "vae_name"
+          ],
+          [
+            "84",
+            "clip_name"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.11.1"
+      },
+      "widgets_values": [],
+      "color": "#233",
+      "bgcolor": "#355"
     }
   ],
   "links": [
@@ -7380,7 +7380,7 @@
         "state": {
           "lastGroupId": 2,
           "lastNodeId": 240,
-          "lastLinkId": 451,
+          "lastLinkId": 453,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -7736,63 +7736,6 @@
             "bgcolor": "#335"
           },
           {
-            "id": 102,
-            "type": "LoraLoaderModelOnly",
-            "pos": [
-              -109.03588675156642,
-              -487.0626614163395
-            ],
-            "size": [
-              608.3984728580194,
-              82
-            ],
-            "flags": {},
-            "order": 7,
-            "mode": 4,
-            "inputs": [
-              {
-                "localized_name": "model",
-                "name": "model",
-                "type": "MODEL",
-                "link": 451
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "MODEL",
-                "name": "MODEL",
-                "type": "MODEL",
-                "links": [
-                  280
-                ]
-              }
-            ],
-            "title": "Lightx2v Low",
-            "properties": {
-              "cnr_id": "comfy-core",
-              "ver": "0.3.49",
-              "Node name for S&R": "LoraLoaderModelOnly",
-              "models": [
-                {
-                  "name": "wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
-                  "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
-                  "directory": "loras"
-                }
-              ],
-              "ue_properties": {
-                "widget_ue_connectable": {},
-                "version": "7.1",
-                "input_ue_unconnectable": {}
-              }
-            },
-            "widgets_values": [
-              "lightx2v_I2V_14B_480p_cfg_step_distill_rank128_bf16.safetensors",
-              1.5
-            ],
-            "color": "#223",
-            "bgcolor": "#335"
-          },
-          {
             "id": 142,
             "type": "LoraLoaderModelOnly",
             "pos": [
@@ -7838,100 +7781,40 @@
             "bgcolor": "#335"
           },
           {
-            "id": 117,
-            "type": "DiffusionModelLoaderKJ",
+            "id": 206,
+            "type": "VAELoader",
             "pos": [
-              -651.7986638833613,
-              -602.8387057690804
+              -637.0681750140438,
+              -188.83801841650438
             ],
             "size": [
-              462.88596743521623,
-              179.8848783038777
+              351.4096845788663,
+              58
             ],
             "flags": {},
-            "order": 1,
-            "mode": 4,
-            "inputs": [
-              {
-                "localized_name": "extra_state_dict",
-                "name": "extra_state_dict",
-                "shape": 7,
-                "type": "STRING",
-                "link": null
-              }
-            ],
+            "order": 5,
+            "mode": 0,
+            "inputs": [],
             "outputs": [
               {
-                "localized_name": "MODEL",
-                "name": "MODEL",
-                "type": "MODEL",
-                "links": []
+                "localized_name": "VAE",
+                "name": "VAE",
+                "type": "VAE",
+                "links": [
+                  403
+                ]
               }
             ],
-            "title": "Diffusion Model Loader KJ Low",
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
-              "ver": "79f529a84a8c20fe5dcdfa984c6be7a94102c014",
-              "Node name for S&R": "DiffusionModelLoaderKJ"
+              "cnr_id": "comfy-core",
+              "ver": "0.6.0",
+              "Node name for S&R": "VAELoader"
             },
             "widgets_values": [
-              "wan22EnhancedNSFWSVICamera_nolightningSVICfFp8L.safetensors",
-              "default",
-              "default",
-              false,
-              "auto",
-              true
+              "wan_2.1_vae.safetensors"
             ],
-            "color": "#223",
-            "bgcolor": "#335"
-          },
-          {
-            "id": 116,
-            "type": "DiffusionModelLoaderKJ",
-            "pos": [
-              -651.1419794262836,
-              -841.1462307299165
-            ],
-            "size": [
-              482.2741117426717,
-              178
-            ],
-            "flags": {},
-            "order": 2,
-            "mode": 4,
-            "inputs": [
-              {
-                "localized_name": "extra_state_dict",
-                "name": "extra_state_dict",
-                "shape": 7,
-                "type": "STRING",
-                "link": null
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "MODEL",
-                "name": "MODEL",
-                "type": "MODEL",
-                "links": []
-              }
-            ],
-            "title": "Diffusion Model Loader KJ High",
-            "properties": {
-              "cnr_id": "comfyui-kjnodes",
-              "ver": "79f529a84a8c20fe5dcdfa984c6be7a94102c014",
-              "Node name for S&R": "DiffusionModelLoaderKJ"
-            },
-            "widgets_values": [
-              "wan22EnhancedNSFWSVICamera_nolightningSVICfFp8H.safetensors",
-              "default",
-              "default",
-              false,
-              "auto",
-              true
-            ],
-            "color": "#223",
-            "bgcolor": "#335"
+            "color": "#1f1f48",
+            "bgcolor": "rgba(24,24,27,.9)"
           },
           {
             "id": 239,
@@ -7946,16 +7829,14 @@
             ],
             "flags": {},
             "order": 3,
-            "mode": 0,
+            "mode": 4,
             "inputs": [],
             "outputs": [
               {
                 "localized_name": "MODEL",
                 "name": "MODEL",
                 "type": "MODEL",
-                "links": [
-                  450
-                ]
+                "links": []
               }
             ],
             "title": "GGUFLoaderKJ HIGH",
@@ -7989,16 +7870,14 @@
             ],
             "flags": {},
             "order": 4,
-            "mode": 0,
+            "mode": 4,
             "inputs": [],
             "outputs": [
               {
                 "localized_name": "MODEL",
                 "name": "MODEL",
                 "type": "MODEL",
-                "links": [
-                  451
-                ]
+                "links": []
               }
             ],
             "title": "GGUFLoaderKJ LOW",
@@ -8032,13 +7911,13 @@
             ],
             "flags": {},
             "order": 6,
-            "mode": 4,
+            "mode": 0,
             "inputs": [
               {
                 "localized_name": "model",
                 "name": "model",
                 "type": "MODEL",
-                "link": 450
+                "link": 452
               }
             ],
             "outputs": [
@@ -8077,40 +7956,161 @@
             "bgcolor": "#335"
           },
           {
-            "id": 206,
-            "type": "VAELoader",
+            "id": 102,
+            "type": "LoraLoaderModelOnly",
             "pos": [
-              -637.0681750140438,
-              -188.83801841650438
+              -109.03588675156642,
+              -487.0626614163395
             ],
             "size": [
-              351.4096845788663,
-              58
+              608.3984728580194,
+              82
             ],
             "flags": {},
-            "order": 5,
+            "order": 7,
             "mode": 0,
-            "inputs": [],
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 453
+              }
+            ],
             "outputs": [
               {
-                "localized_name": "VAE",
-                "name": "VAE",
-                "type": "VAE",
+                "localized_name": "MODEL",
+                "name": "MODEL",
+                "type": "MODEL",
                 "links": [
-                  403
+                  280
                 ]
               }
             ],
+            "title": "Lightx2v Low",
             "properties": {
               "cnr_id": "comfy-core",
-              "ver": "0.6.0",
-              "Node name for S&R": "VAELoader"
+              "ver": "0.3.49",
+              "Node name for S&R": "LoraLoaderModelOnly",
+              "models": [
+                {
+                  "name": "wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
+                  "directory": "loras"
+                }
+              ],
+              "ue_properties": {
+                "widget_ue_connectable": {},
+                "version": "7.1",
+                "input_ue_unconnectable": {}
+              }
             },
             "widgets_values": [
-              "wan_2.1_vae.safetensors"
+              "lightx2v_I2V_14B_480p_cfg_step_distill_rank128_bf16.safetensors",
+              1.5
             ],
-            "color": "#1f1f48",
-            "bgcolor": "rgba(24,24,27,.9)"
+            "color": "#223",
+            "bgcolor": "#335"
+          },
+          {
+            "id": 116,
+            "type": "DiffusionModelLoaderKJ",
+            "pos": [
+              -651.1419794262836,
+              -841.1462307299165
+            ],
+            "size": [
+              482.2741117426717,
+              178
+            ],
+            "flags": {},
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "extra_state_dict",
+                "name": "extra_state_dict",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "MODEL",
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  452
+                ]
+              }
+            ],
+            "title": "Diffusion Model Loader KJ High",
+            "properties": {
+              "cnr_id": "comfyui-kjnodes",
+              "ver": "79f529a84a8c20fe5dcdfa984c6be7a94102c014",
+              "Node name for S&R": "DiffusionModelLoaderKJ"
+            },
+            "widgets_values": [
+              "wan22EnhancedNSFWSVICamera_nolightningSVICfFp8H.safetensors",
+              "default",
+              "default",
+              false,
+              "auto",
+              true
+            ],
+            "color": "#223",
+            "bgcolor": "#335"
+          },
+          {
+            "id": 117,
+            "type": "DiffusionModelLoaderKJ",
+            "pos": [
+              -651.7986638833613,
+              -602.8387057690804
+            ],
+            "size": [
+              462.88596743521623,
+              179.8848783038777
+            ],
+            "flags": {},
+            "order": 1,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "extra_state_dict",
+                "name": "extra_state_dict",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "MODEL",
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  453
+                ]
+              }
+            ],
+            "title": "Diffusion Model Loader KJ Low",
+            "properties": {
+              "cnr_id": "comfyui-kjnodes",
+              "ver": "79f529a84a8c20fe5dcdfa984c6be7a94102c014",
+              "Node name for S&R": "DiffusionModelLoaderKJ"
+            },
+            "widgets_values": [
+              "wan22EnhancedNSFWSVICamera_nolightningSVICfFp8L.safetensors",
+              "default",
+              "default",
+              false,
+              "auto",
+              true
+            ],
+            "color": "#223",
+            "bgcolor": "#335"
           }
         ],
         "groups": [],
@@ -8204,16 +8204,16 @@
             "type": "MODEL"
           },
           {
-            "id": 450,
-            "origin_id": 239,
+            "id": 452,
+            "origin_id": 116,
             "origin_slot": 0,
             "target_id": 101,
             "target_slot": 0,
             "type": "MODEL"
           },
           {
-            "id": 451,
-            "origin_id": 240,
+            "id": 453,
+            "origin_id": 117,
             "origin_slot": 0,
             "target_id": 102,
             "target_slot": 0,
@@ -11117,8 +11117,8 @@
     "ds": {
       "scale": 0.6724391752535134,
       "offset": [
-        1320.5049169895442,
-        1422.689812757338
+        1278.8306086932812,
+        1246.4017957700646
       ]
     }
   },
