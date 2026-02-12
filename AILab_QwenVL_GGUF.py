@@ -540,7 +540,7 @@ class QwenVLGGUFBase:
         # Random seed mode = always generate
         if seed != -1:  # Fixed seed mode
             print(f"[QwenVL GGUF] Fixed seed mode detected (seed={seed}) - passing through, no generation")
-            return ""  # Return empty string to allow pass-through
+            return ("",)  # Return empty tuple to allow pass-through
         
         # Random seed mode - always generate
         print(f"[QwenVL GGUF] Random seed mode detected (seed={seed}) - generating new prompt")
