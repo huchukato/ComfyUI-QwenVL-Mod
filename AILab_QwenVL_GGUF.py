@@ -543,8 +543,26 @@ class QwenVLGGUFBase:
         # bypass_mode=True = pass-through (no generation)
         # bypass_mode=False = always generate (regardless of seed)
         if bypass_mode:  # Bypass mode enabled
-            print(f"[QwenVL GGUF] Bypass mode enabled - passing through, no generation")
-            return ("[BYPASS_MODE]",)  # Return debug message instead of empty string
+            print(f"[QwenVL GGUF] Bypass mode enabled - retrieving last cached prompt")
+            
+            # Try to find the most recent cached prompt for this model
+            most_recent_prompt = None
+            most_recent_timestamp = None
+            
+            for cache_key, cached_data in PROMPT_CACHE.items():
+                if cached_data.get("model") == model_name:
+                    cached_text = cached_data.get("text", "")
+                    if cached_text and cached_text.strip():
+                        # For simplicity, just use the first valid prompt we find
+                        most_recent_prompt = cached_text.strip()
+                        print(f"[QwenVL GGUF] Found cached prompt: {most_recent_prompt[:50]}...")
+                        break
+            
+            if most_recent_prompt:
+                return (most_recent_prompt,)
+            else:
+                print(f"[QwenVL GGUF] No cached prompt found, returning empty")
+                return ("",)
         
         # Always generate when bypass mode is disabled
         print(f"[QwenVL GGUF] Bypass mode disabled - generating new prompt")
