@@ -2,8 +2,6 @@
 
 Professional ComfyUI with QwenVL-Mod enhanced vision-language and WAN 2.2 video generation.
 
-**Clean template** - Add HF_TOKEN and CIVITAI_TOKEN when creating endpoints.
-
 ---
 
 ## 🎯 Who is this for?
