@@ -29,7 +29,7 @@ from AILab_OutputCleaner import OutputCleanConfig, clean_model_output
 # Import cache functions from main module
 import sys
 sys.path.append(str(Path(__file__).parent))
-from AILab_QwenVL import PROMPT_CACHE, get_cache_key, save_prompt_cache
+from AILab_QwenVL import PROMPT_CACHE, get_cache_key, get_alternative_cache_key, save_prompt_cache
 
 NODE_DIR = Path(__file__).parent
 GGUF_CONFIG_PATH = NODE_DIR / "gguf_models.json"
@@ -384,6 +384,18 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
             cached_text = PROMPT_CACHE[cache_key].get("text", "")
             if cached_text:
                 print(f"[QwenVL PromptEnhancer GGUF] Using cached prompt for seed {seed}: {cache_key[:8]}...")
+                return (cached_text.strip(),)
+        
+        # If fixed seed and no exact cache found, try to reuse last random prompt
+        # This helps maintain consistency when switching from random to fixed seed
+        alt_cache_key = get_alternative_cache_key(model_name, preset_system_prompt, prompt_text, None, None, seed)
+        if alt_cache_key and alt_cache_key in PROMPT_CACHE:
+            cached_text = PROMPT_CACHE[alt_cache_key].get("text", "")
+            if cached_text:
+                print(f"[QwenVL PromptEnhancer GGUF] Reusing last random prompt for seed {seed}: {alt_cache_key[:8]}...")
+                # Also cache it under the fixed seed key for future use
+                PROMPT_CACHE[cache_key] = PROMPT_CACHE[alt_cache_key].copy()
+                save_prompt_cache()
                 return (cached_text.strip(),)
         
         style_entry = self.styles.get(preset_system_prompt, {})
