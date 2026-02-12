@@ -1,0 +1,155 @@
+# ComfyUI-QwenVL-Mod RunPod Worker - SLIM VERSION
+# Optimized for smaller image size (~15-20GB)
+# Essential nodes only for QwenVL functionality
+
+FROM nvidia/cuda:12.8.0-cudnn-devel-ubuntu24.04
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV CUDA_HOME=/usr/local/cuda
+ENV PATH=$PATH:$CUDA_HOME/bin
+ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
+
+# Install system dependencies (minimal)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    wget \
+    curl \
+    python3.12 \
+    python3.12-venv \
+    python3.12-dev \
+    python3-pip \
+    libglx-mesa0 \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
+    ffmpeg \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set Python 3.12 as default system-wide
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 && \
+    update-alternatives --set python3 /usr/bin/python3.12
+
+# Create virtual environment for Python packages
+RUN python3.12 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Install PyTorch with CUDA 12.8
+RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu128 && \
+    pip cache purge
+
+# Install ComfyUI 0.13.0
+WORKDIR /ComfyUI
+RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
+    git checkout v0.13.0 && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir GitPython opencv-python && \
+    pip cache purge
+
+# Install llama-cpp-python for GGUF support
+RUN pip install --upgrade --force-reinstall --no-cache-dir \
+    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.24-cu128-Basic-linux-20260208/llama_cpp_python-0.3.24+cu128.basic-cp312-cp312-linux_x86_64.whl && \
+    pip cache purge
+
+# Install ESSENTIAL ComfyUI custom nodes only
+RUN cd /ComfyUI/custom_nodes && \
+    git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
+    git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git && \
+    git clone https://github.com/city96/ComfyUI-GGUF.git && \
+    git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
+    git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git && \
+    git clone https://github.com/kijai/ComfyUI-MMAudio.git
+
+# Install requirements for essential nodes only
+RUN cd /ComfyUI/custom_nodes && \
+    for node_dir in ComfyUI-Manager ComfyUI-QwenVL-Mod ComfyUI-GGUF ComfyUI-Impact-Pack ComfyUI-VideoHelperSuite ComfyUI-MMAudio; do \
+        if [ -f "$node_dir/requirements.txt" ]; then \
+            echo "Installing requirements for $node_dir..." && \
+            pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; \
+        fi; \
+    done && \
+    pip cache purge
+
+# Install minimal essential dependencies
+RUN pip install --no-cache-dir safetensors && \
+    pip cache purge
+
+# Clean up Git files and cache aggressively
+RUN find /ComfyUI/custom_nodes -name ".git" -type d -exec rm -rf {} + 2>/dev/null || true && \
+    rm -rf /tmp/* \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/cache/apt/archives/* \
+    && find /opt/venv -name "*.pyc" -delete \
+    && find /opt/venv -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true \
+    && find /ComfyUI -name "*.pyc" -delete \
+    && find /ComfyUI -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+
+# Create user directory structure
+RUN mkdir -p /ComfyUI/user/default/workflows
+
+# Create models directories
+RUN mkdir -p /ComfyUI/models/vae && \
+    mkdir -p /ComfyUI/models/upscale_models && \
+    mkdir -p /ComfyUI/models/text_encoders
+
+# Set ComfyUI arguments (minimal)
+ENV COMFYUI_ARGS="--disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --reserve-vram 2 --cuda-malloc"
+
+# Create startup script (slim version)
+RUN echo '#!/bin/bash\n\
+set -e\n\
+\n\
+COMFYUI_DIR="/ComfyUI"\n\
+\n\
+# Function to download latest workflows\n\
+update_workflows() {\n\
+    echo "🔄 Updating workflows..."\n\
+    cd /ComfyUI/user/default/workflows\n\
+    \n\
+    workflows=(\n\
+        "SDXL-LoRaStack-Upscale.json"\n\
+        "WAN2.2-I2V-AutoPrompt-1-5.json"\n\
+        "WAN2.2-I2V-AutoPrompt-GGUF-1-5.json"\n\
+        "WAN2.2-T2V-AutoPrompt-1-6.json"\n\
+        "WAN2.2-T2V-AutoPrompt-GGUF-1-5.json"\n\
+        "Wan2.2-I2V-SVI-AutoPrompt-1-4.json"\n\
+        "Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-2.json"\n\
+        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-9.json"\n\
+        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-6.json"\n\
+        "WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF-1-1.json"\n\
+    )\n\
+    \n\
+    for workflow in "${workflows[@]}"; do\n\
+        echo "  📥 Downloading: $workflow"\n\
+        wget -q "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/$workflow" -O "$workflow" || echo "  ⚠️ Failed to download $workflow"\n\
+    done\n\
+    \n\
+    echo "✅ Workflow update completed"\n\
+}\n\
+\n\
+# Start ComfyUI\n\
+echo "🚀 Starting ComfyUI with QwenVL-Mod v2.0.9 (SLIM)"\n\
+echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\n\
+echo "🎛️ Features: Bypass Mode, WAN 2.2 workflows, GGUF support"\n\
+echo ""\n\
+\n\
+# Update workflows on startup\n\
+update_workflows\n\
+\n\
+echo "🎯 Starting ComfyUI server..."\n\
+cd /ComfyUI\n\
+python main.py ${COMFYUI_ARGS}\n\
+' > /usr/local/bin/start-comfyui.sh && chmod +x /usr/local/bin/start-comfyui.sh
+
+# Set working directory
+WORKDIR /ComfyUI
+
+# Expose ComfyUI port
+EXPOSE 8188
+
+# Start ComfyUI when container starts
+CMD ["/usr/local/bin/start-comfyui.sh"]

@@ -166,6 +166,15 @@ RUN find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "*.pack"
     find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "pack-*.idx" -delete + || true && \
     find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "objects" -type d -exec rm -rf {} + || true
 
+# Aggressive cleanup to reduce image size
+RUN rm -rf /tmp/* \
+       && rm -rf /var/lib/apt/lists/* \
+       && rm -rf /var/cache/apt/archives/* \
+       && find /opt/venv -name "*.pyc" -delete \
+       && find /opt/venv -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true \
+       && find /ComfyUI -name "*.pyc" -delete \
+       && find /ComfyUI -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+
 # Set ComfyUI arguments
 ENV COMFYUI_ARGS="--disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune"
 
