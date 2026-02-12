@@ -126,7 +126,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
             next(iter(self.STYLES.values()), ""),
         )
         user_prompt = prompt_text.strip() or "Describe a scene vividly."
-        merged_prompt = f"{base_instruction}\n\n{user_prompt}".strip()
+        merged_prompt = f"{user_prompt}\n\n{base_instruction}".strip()
         if model_name in HF_TEXT_MODELS:
             enhanced = self._invoke_text(
                 model_name,
