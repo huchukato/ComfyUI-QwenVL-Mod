@@ -536,6 +536,8 @@ class QwenVLGGUFBase:
         top_k=None,
         pool_size=None,
     ):
+        print(f"[QwenVL GGUF DEBUG] Starting run with seed={seed} (type: {type(seed)})")
+        
         # NEW APPROACH: Fixed seed mode = pass-through (no generation)
         # Random seed mode = always generate
         if seed != -1:  # Fixed seed mode
@@ -552,21 +554,27 @@ class QwenVLGGUFBase:
         video_hash = get_video_hash(video)
         cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash, int(seed))
         
+        # TEMPORARILY DISABLED CACHE FOR DEBUGGING
         # Check cache first (only for random mode)
-        if cache_key in PROMPT_CACHE:
-            cached_text = PROMPT_CACHE[cache_key].get("text", "")
-            if cached_text:
-                print(f"[QwenVL GGUF] Using cached prompt for seed {seed}: {cache_key[:8]}...")
-                return cached_text.strip()
+        # if cache_key in PROMPT_CACHE:
+        #     cached_text = PROMPT_CACHE[cache_key].get("text", "")
+        #     if cached_text:
+        #         print(f"[QwenVL GGUF] Using cached prompt for seed {seed}: {cache_key[:8]}...")
+        #         return cached_text.strip()
+        
+        print(f"[QwenVL GGUF DEBUG] Cache disabled - proceeding with generation")
         
         if custom_prompt and custom_prompt.strip():
             # Combine user input with template - custom prompt first for priority
             prompt = f"{custom_prompt.strip()}\n\n{prompt_template}"
         else:
             prompt = prompt_template
+            
+        print(f"[QwenVL GGUF DEBUG] Final prompt: {prompt[:100]}...")
 
         images_b64: list[str] = []
         if image is not None:
+            print(f"[QwenVL GGUF DEBUG] Processing image...")
             img = _tensor_to_base64_png(image)
             if img:
                 images_b64.append(img)
@@ -576,7 +584,10 @@ class QwenVLGGUFBase:
                 if img:
                     images_b64.append(img)
 
+        print(f"[QwenVL GGUF DEBUG] Images processed: {len(images_b64)} images/videos")
+
         try:
+            print(f"[QwenVL GGUF DEBUG] Loading model...")
             self._load_model(
                 model_name=model_name,
                 device=device,
@@ -587,8 +598,10 @@ class QwenVLGGUFBase:
                 top_k=top_k,
                 pool_size=pool_size,
             )
+            print(f"[QwenVL GGUF DEBUG] Model loaded successfully")
             if images_b64 and self.chat_handler is None:
                 print("[QwenVL] Warning: images provided but this model entry has no mmproj_file; images will be ignored")
+            print(f"[QwenVL GGUF DEBUG] Starting generation...")
             text = self._invoke(
                 system_prompt=(
                     "You are a helpful vision-language assistant. "
@@ -602,6 +615,9 @@ class QwenVLGGUFBase:
                 repetition_penalty=repetition_penalty,
                 seed=seed,
             )
+            
+            print(f"[QwenVL GGUF DEBUG] Generation completed. Text length: {len(text) if text else 0}")
+            print(f"[QwenVL GGUF DEBUG] Generated text: {text[:100] if text else 'EMPTY'}...")
             
             # Cache the generated text
             PROMPT_CACHE[cache_key] = {
@@ -617,6 +633,7 @@ class QwenVLGGUFBase:
             
             print(f"[QwenVL GGUF] Cached new prompt for seed {seed}: {cache_key[:8]}...")
             
+            print(f"[QwenVL GGUF DEBUG] Returning tuple with text...")
             return (text,)
         finally:
             if not keep_model_loaded:
