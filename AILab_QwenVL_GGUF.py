@@ -614,7 +614,9 @@ class QwenVLGGUFBase:
                 "timestamp": None,  # GGUF doesn't have CUDA events
                 "model": model_name,
                 "preset": preset_prompt,
-                "seed": int(seed)
+                "seed": int(seed),
+                "image_hash": image_hash,
+                "video_hash": video_hash
             }
             save_prompt_cache()  # Save cache to file
             
