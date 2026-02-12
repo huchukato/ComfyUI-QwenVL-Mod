@@ -535,17 +535,19 @@ class QwenVLGGUFBase:
         image_max_tokens=None,
         top_k=None,
         pool_size=None,
+        bypass_mode=False,
     ):
-        print(f"[QwenVL GGUF DEBUG] Starting run with seed={seed} (type: {type(seed)})")
+        print(f"[QwenVL GGUF DEBUG] Starting run with seed={seed}, bypass_mode={bypass_mode}")
         
-        # NEW APPROACH: Fixed seed mode = small numbers (1-1000), Random mode = large random numbers
-        # ComfyUI uses large random numbers for random mode, small fixed numbers for fixed mode
-        if seed <= 1000:  # Fixed seed mode (user chose a small number)
-            print(f"[QwenVL GGUF] Fixed seed mode detected (seed={seed}) - passing through, no generation")
+        # NEW APPROACH: Explicit bypass mode parameter
+        # bypass_mode=True = pass-through (no generation)
+        # bypass_mode=False = always generate (regardless of seed)
+        if bypass_mode:  # Bypass mode enabled
+            print(f"[QwenVL GGUF] Bypass mode enabled - passing through, no generation")
             return ("",)  # Return empty tuple to allow pass-through
         
-        # Random seed mode - always generate
-        print(f"[QwenVL GGUF] Random seed mode detected (seed={seed}) - generating new prompt")
+        # Always generate when bypass mode is disabled
+        print(f"[QwenVL GGUF] Bypass mode disabled - generating new prompt")
         
         prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
         
@@ -659,6 +661,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
                 "max_tokens": ("INT", {"default": 512, "min": 64, "max": 2048}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
+                "bypass_mode": ("BOOLEAN", {"default": False, "tooltip": "When enabled, bypasses generation and returns empty string (acts as pass-through)"}),
             },
             "optional": {
                 "image": ("IMAGE",),
@@ -679,6 +682,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
         max_tokens,
         keep_model_loaded,
         seed,
+        bypass_mode,
         image=None,
         video=None,
     ):
@@ -692,7 +696,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
             max_tokens=max_tokens,
             temperature=0.6,
             top_p=0.9,
-            repetition_penalty=1.2,
+            repetition_penalty=1.05,
             seed=seed,
             keep_model_loaded=keep_model_loaded,
             device="auto",
@@ -702,6 +706,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
             image_max_tokens=None,
             top_k=None,
             pool_size=None,
+            bypass_mode=bypass_mode,
         )
 
 
