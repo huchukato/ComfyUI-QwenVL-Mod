@@ -431,13 +431,13 @@ Questa versione migliorata include prompt specializzati per **WAN 2.2** generazi
 * **llama-cpp-python**: [JamePeng/llama-cpp-python](https://github.com/JamePeng/llama-cpp-python) - Backend GGUF con supporto vision usato da nodi GGUF.  
 * **Integrazione ComfyUI**: [1038lab](https://github.com/1038lab) - Sviluppatore di questo custom node.
 
-## **� Autore**
+## **👥 Autore**
 
 - **huchukato**
   - 🐙 [GitHub](https://github.com/huchukato)
   - 🐦 [X (Twitter)](https://twitter.com/huchukato)
   - 🎨 [Civitai](https://civitai.com/user/huchukato) - Dai un'occhiata ai miei modelli arte AI!
 
-## **�📜 Licenza**
+## **📜 Licenza**
 
 Il codice di questo repository è rilasciato sotto [Licenza GPL-3.0](LICENSE).

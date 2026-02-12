@@ -2,20 +2,23 @@
 # Enhanced with WAN 2.2 workflows, multilingual support, and GGUF backend
 # Optimized for RTX 5090 and professional video generation
 
-FROM ubuntu:24.04
+FROM nvidia/cuda:12.8.0-cudnn-devel-ubuntu24.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
 ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:$CUDA_HOME/bin
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
+ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 
-# Install system dependencies (no CUDA toolkit - using conda)
+# Install system dependencies (CUDA already included in base image)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
+    make \
     wget \
     curl \
+    unzip \
+    pkg-config \
     ca-certificates \
     build-essential \
     python3.12 \
@@ -28,48 +31,56 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxext6 \
     libxrender-dev \
     libgomp1 \
+    ffmpeg \
+    openssh-server \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Miniconda for robust Python environment management
-RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
-    bash /tmp/miniconda.sh -b -p /opt/miniconda3 && \
-    rm /tmp/miniconda.sh && \
-    /opt/miniconda3/bin/conda clean -afy
+# CUDA toolkit and cuDNN already included in nvidia/cuda base image
 
-# Create conda environment for ComfyUI with Python 3.12.12
-RUN /opt/miniconda3/bin/conda create -n comfyui python=3.12.12 -y && \
-    /opt/miniconda3/bin/conda clean -afy
+# Configure SSH for root login
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    mkdir -p /run/sshd && \
+    rm -f /etc/ssh/ssh_host_*
 
-ENV PATH="/opt/miniconda3/envs/comfyui/bin:$PATH"
+# Set Python 3.12 as default system-wide
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 && \
+    update-alternatives --set python3 /usr/bin/python3.12
 
-# Install PyTorch with CUDA 13.0 - optimized for RTX 5090
-RUN pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130
+# Create virtual environment for Python packages
+RUN python3.12 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
-# Install ComfyUI 0.12.13
+# Install PyTorch with CUDA 12.8 (compatible with base image CUDA 12.8.0) - optimized for RTX 5090
+RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu128 && \
+    pip cache purge
+
+# Install ComfyUI 0.13.0 (latest stable)
 WORKDIR /ComfyUI
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
-    git checkout v0.12.13 && \
-    pip install -r requirements.txt
+    git checkout v0.13.0 && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir GitPython opencv-python && \
+    pip cache purge
 
-# Install llama-cpp-python for GGUF support (CUDA 13.0 optimized)
-RUN pip install --upgrade --force-reinstall llama-cpp-python --prefer-binary --extra-index-url=https://download.pytorch.org/whl/cu130
+# Install llama-cpp-python for GGUF support (CUDA 12.8 compatible with base image)
+RUN pip install --upgrade --force-reinstall --no-cache-dir \
+    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.24-cu128-Basic-linux-20260208/llama_cpp_python-0.3.24+cu128.basic-cp312-cp312-linux_x86_64.whl && \
+    pip cache purge
 
-# Install ComfyUI-QwenVL-Mod
-WORKDIR /ComfyUI/custom_nodes
-RUN git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git
-
-# Install QwenVL-Mod dependencies
-RUN cd ComfyUI-QwenVL-Mod && pip install -r requirements.txt
-
-# Install all custom nodes from provisioning.sh
-RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
+# Install ALL ComfyUI custom nodes from VastAI provisioning + RunpodDirect
+RUN cd /ComfyUI/custom_nodes && \
+    git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
     git clone https://github.com/cubiq/ComfyUI_essentials.git && \
+    git clone https://github.com/MadiatorLabs/ComfyUI-RunpodDirect.git && \
+    git clone https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto.git && \
+    git clone https://github.com/huchukato/comfy-tagcomplete.git && \
+    git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git && \
+    git clone https://github.com/city96/ComfyUI-GGUF.git && \
     git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
     git clone https://github.com/MoonGoblinDev/Civicomfy.git && \
-    git clone https://github.com/huchukato/comfy-tagcomplete.git && \
     git clone https://github.com/Koishi-Star/Euler-Smea-Dyn-Sampler.git && \
-    git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git && \
     git clone https://github.com/ltdrdata/was-node-suite-comfyui.git && \
     git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git && \
     git clone https://github.com/rgthree/rgthree-comfy.git && \
@@ -82,28 +93,31 @@ RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
     git clone https://github.com/princepainter/ComfyUI-PainterLongVideo.git && \
     git clone https://github.com/ashtar1984/comfyui-find-perfect-resolution.git && \
     git clone https://github.com/ComfyAssets/ComfyUI_Selectors.git && \
-    git clone https://github.com/city96/ComfyUI-GGUF.git && \
     git clone https://github.com/kijai/ComfyUI-MMAudio.git && \
     git clone https://github.com/GACLove/ComfyUI-VFI.git && \
     git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git && \
     git clone https://github.com/yuvraj108c/ComfyUI-Upscaler-Tensorrt.git && \
-    git clone https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto.git && \
     git clone https://github.com/stduhpf/ComfyUI-WanMoeKSampler.git && \
     git clone https://github.com/melMass/comfy_mtb.git
 
-# Install additional dependencies
-RUN pip install sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab && \
-    cd ComfyUI-Manager && pip install -r requirements.txt && \
-    cd ../ComfyUI_essentials && pip install -r requirements.txt && \
-    cd ../ComfyUI-Impact-Pack && pip install -r requirements.txt && \
-    cd ../ComfyUI-VideoHelperSuite && pip install -r requirements.txt && \
-    cd ../ComfyUI-GGUF && pip install -r requirements.txt && \
-    cd ../ComfyUI-MMAudio && pip install -r requirements.txt && \
-    cd ../ComfyUI-VFI && pip install -r requirements.txt && \
-    cd ../ComfyUI-RIFE-TensorRT-Auto && pip install -r requirements.txt
+# Install requirements for all custom nodes
+RUN cd /ComfyUI/custom_nodes && \
+    for node_dir in */; do \
+        if [ -f "$node_dir/requirements.txt" ]; then \
+            echo "Installing requirements for $node_dir..." && \
+            pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; \
+        fi; \
+    done && \
+    pip cache purge
 
-# Create workflows directory
-RUN mkdir -p /ComfyUI/workflows
+# Install additional essential dependencies
+RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab && \
+    pip cache purge
+
+# Clean up heavy Git files to save space (keep repo structure for updates)
+RUN find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "*.pack" -delete + || true && \
+    find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "pack-*.idx" -delete + || true && \
+    find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "objects" -type d -exec rm -rf {} + || true
 
 # Install FileBrowser for file management
 RUN wget -O /tmp/filebrowser.tar.gz https://github.com/filebrowser/filebrowser/releases/download/v2.28.0/linux-amd64-filebrowser.tar.gz && \
@@ -139,43 +153,18 @@ cd /ComfyUI\n\
 jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password=""\n\
 ' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
 
-# Create user directory structure and download workflows
-RUN mkdir -p /ComfyUI/user/default/workflows && \
-    wget -O /ComfyUI/user/default/workflows/SDXL-LoRaStack-Upscale.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/SDXL-LoRaStack-Upscale.json && \
-    wget -O /ComfyUI/user/default/workflows/WAN2.2-I2V-AutoPrompt-1-4.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-1-4.json && \
-    wget -O /ComfyUI/user/default/workflows/WAN2.2-I2V-AutoPrompt-GGUF-1-4.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-GGUF-1-4.json && \
-    wget -O /ComfyUI/user/default/workflows/WAN2.2-T2V-AutoPrompt-1-5.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-1-5.json && \
-    wget -O /ComfyUI/user/default/workflows/WAN2.2-T2V-AutoPrompt-GGUF-1-4.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-GGUF-1-4.json && \
-    wget -O /ComfyUI/user/default/workflows/Wan2.2-I2V-SVI-AutoPrompt-1-3.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-1-3.json && \
-    wget -O /ComfyUI/user/default/workflows/Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-1.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-1.json && \
-    wget -O /ComfyUI/user/default/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-8.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-8.json && \
-    wget -O /ComfyUI/user/default/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-5.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-5.json && \
-    wget -O /ComfyUI/user/default/workflows/WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF.json \
-    https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF.json
+# Create user directory structure
+RUN mkdir -p /ComfyUI/user/default/workflows
 
 # Create models directories
 RUN mkdir -p /ComfyUI/models/vae && \
     mkdir -p /ComfyUI/models/upscale_models && \
     mkdir -p /ComfyUI/models/text_encoders
 
-# Download essential models
-RUN wget -O /ComfyUI/models/vae/wan_2.1_vae.safetensors \
-    https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors && \
-    wget -O /ComfyUI/models/vae/sdxl_vae.safetensors \
-    https://huggingface.co/huchukato/favs/resolve/main/VAE/sdxl.vae.safetensors && \
-    wget -O /ComfyUI/models/upscale_models/2xLexicaRRDBNet.pth \
-    https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth && \
-    wget -O /ComfyUI/models/text_encoders/nsfw_wan_umt5-xxl_fp8_scaled.safetensors \
-    https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors
+# Clean up heavy Git files to save space (keep repo structure for updates)
+RUN find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "*.pack" -delete + || true && \
+    find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "pack-*.idx" -delete + || true && \
+    find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "objects" -type d -exec rm -rf {} + || true
 
 # Set ComfyUI arguments
 ENV COMFYUI_ARGS="--disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune"
@@ -190,8 +179,8 @@ DB_FILE="/filebrowser/database/filebrowser.db"\n\
 \n\
 # Function to download latest workflows\n\
 update_workflows() {\n\
-    echo "� Updating workflows from latest versions..."\n\
-    cd /ComfyUI/workflows\n\
+    echo "🔄 Updating workflows from latest versions..."\n\
+    cd /ComfyUI/user/default/workflows\n\
     \n\
     # List of latest workflows\n\
     workflows=(\n\
@@ -214,24 +203,69 @@ update_workflows() {\n\
     \n\
     echo "✅ Workflow update completed"\n\
 }\n\
+\ndownload_models() {\n\
+    echo "🔄 Downloading essential models..."\n\
+    cd /ComfyUI\n\
+    \n\
+    # Download VAE models\n\
+    if [ ! -f "/ComfyUI/models/vae/wan_2.1_vae.safetensors" ]; then\n\
+        echo "  📥 Downloading WAN 2.1 VAE..."\n\
+        wget -q "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" -O "/ComfyUI/models/vae/wan_2.1_vae.safetensors" || echo "  ⚠️ Failed to download WAN 2.1 VAE"\n\
+    fi\n\
+    \n\
+    if [ ! -f "/ComfyUI/models/vae/Wan2_1_VAE_fp32.safetensors" ]; then\n\
+        echo "  📥 Downloading WAN2.1 VAE fp32..."\n\
+        wget -q "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors" -O "/ComfyUI/models/vae/Wan2_1_VAE_fp32.safetensors" || echo "  ⚠️ Failed to download WAN2.1 VAE fp32"\n\
+    fi\n\
+    \n\
+    if [ ! -f "/ComfyUI/models/vae/sdxl_vae.safetensors" ]; then\n\
+        echo "  📥 Downloading SDXL VAE..."\n\
+        wget -q "https://huggingface.co/huchukato/favs/resolve/main/VAE/sdxl.vae.safetensors" -O "/ComfyUI/models/vae/sdxl_vae.safetensors" || echo "  ⚠️ Failed to download SDXL VAE"\n\
+    fi\n\
+    \n\
+    # Download upscale models\n\
+    if [ ! -f "/ComfyUI/models/upscale_models/2xLexicaRRDBNet.pth" ]; then\n\
+        echo "  📥 Downloading 2xLexicaRRDBNet upscale model..."\n\
+        wget -q "https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth" -O "/ComfyUI/models/upscale_models/2xLexicaRRDBNet.pth" || echo "  ⚠️ Failed to download upscale model"\n\
+    fi\n\
+    \n\
+    if [ ! -f "/ComfyUI/models/upscale_models/2xLexicaRRDBNet_Sharp.pth" ]; then\n\
+        echo "  📥 Downloading 2xLexicaRRDBNet Sharp upscale model..."\n\
+        wget -q "https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth" -O "/ComfyUI/models/upscale_models/2xLexicaRRDBNet_Sharp.pth" || echo "  ⚠️ Failed to download Sharp upscale model"\n\
+    fi\n\
+    \n\
+    # Download text encoder\n\
+    if [ ! -f "/ComfyUI/models/text_encoders/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" ]; then\n\
+        echo "  📥 Downloading NSFW WAN UMT5-XXL text encoder..."\n\
+        wget -q "https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" -O "/ComfyUI/models/text_encoders/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" || echo "  ⚠️ Failed to download text encoder"\n\
+    fi\n\
+    \n\
+    echo "✅ Model download completed"\n\
+    echo "📋 Available models:"\n\
+    ls -la /ComfyUI/models/vae/\n\
+    ls -la /ComfyUI/models/upscale_models/\n\
+    ls -la /ComfyUI/models/text_encoders/\n\
+}\n\
 \n\
-echo "�🚀 Starting ComfyUI-QwenVL-Mod on RunPod (Full Version)"\n\
+echo "🚀 Starting ComfyUI-QwenVL-Mod on RunPod (Full Version)"\n\
 echo "🎬 WAN 2.2 workflows ready"\n\
 echo "🌐 Multilingual support enabled"\n\
 echo "🎨 Visual style detection ready"\n\
 echo "⚡ GGUF backend optimized"\n\
-echo "🔧 RTX 5090 optimizations active"\n\
 echo ""\n\
 \n\
 # Update workflows to latest versions\n\
 update_workflows\n\
+\n\
+# Download essential models\n\
+download_models\n\
 \n\
 echo "🔧 Services starting:"\n\
 echo "📁 FileBrowser: http://0.0.0.0:8080"\n\
 echo "📓 JupyterLab:  http://0.0.0.0:8888"\n\
 echo "🎨 ComfyUI:    http://0.0.0.0:8188"\n\
 echo "📋 Available workflows:"\n\
-ls -la /ComfyUI/workflows/\n\
+ls -la /ComfyUI/user/default/workflows/\n\
 echo ""\n\
 echo "💡 Models pre-loaded for immediate use"\n\
 echo ""\n\
@@ -250,7 +284,7 @@ echo "✅ JupyterLab started"\n\
 echo "🚀 Starting ComfyUI..."\n\
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\n\
 cd $COMFYUI_DIR\n\
-nohup /opt/venv/bin/python main.py --disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune &> /comfyui.log &\n\
+nohup python main.py --disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune &> /comfyui.log &\n\
 echo "✅ ComfyUI started"\n\
 \n\
 # Tail the ComfyUI log\n\
@@ -265,7 +299,7 @@ EXPOSE 8080 8188 8888
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD curl -f http://localhost:8188/system_stats || exit 1
+    CMD curl -f http://0.0.0.0:8188/system_stats || exit 1
 
 # Start ComfyUI
 CMD ["/ComfyUI/start.sh"]
