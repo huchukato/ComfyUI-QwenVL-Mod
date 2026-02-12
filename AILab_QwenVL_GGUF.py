@@ -529,6 +529,12 @@ class QwenVLGGUFBase:
         seed,
         keep_model_loaded,
         device,
+        ctx=None,
+        n_batch=None,
+        gpu_layers=None,
+        image_max_tokens=None,
+        top_k=None,
+        pool_size=None,
     ):
         # NEW APPROACH: Fixed seed mode = pass-through (no generation)
         # Random seed mode = always generate
