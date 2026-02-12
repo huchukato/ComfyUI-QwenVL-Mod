@@ -544,7 +544,7 @@ class QwenVLGGUFBase:
         # bypass_mode=False = always generate (regardless of seed)
         if bypass_mode:  # Bypass mode enabled
             print(f"[QwenVL GGUF] Bypass mode enabled - passing through, no generation")
-            return ("",)  # Return empty tuple to allow pass-through
+            return ("[BYPASS_MODE]",)  # Return debug message instead of empty string
         
         # Always generate when bypass mode is disabled
         print(f"[QwenVL GGUF] Bypass mode disabled - generating new prompt")
