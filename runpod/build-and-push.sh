@@ -24,11 +24,13 @@ if ! docker info > /dev/null 2>&1; then
     exit 1
 fi
 
-# Check if we're logged into Docker Hub
+# Check if we're logged into Docker Hub (optional check)
 echo "🔐 Checking Docker Hub login..."
-if ! docker info | grep -q "Username"; then
-    echo "⚠️  You're not logged into Docker Hub. Please run 'docker login' first."
-    exit 1
+if ! docker login --get-identity > /dev/null 2>&1; then
+    echo "⚠️  Docker Hub login check failed, but continuing..."
+    echo "💡 If push fails later, run: docker login"
+else
+    echo "✅ Docker Hub login verified"
 fi
 
 # Build the image
