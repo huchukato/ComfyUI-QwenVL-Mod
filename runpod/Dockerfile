@@ -185,15 +185,15 @@ update_workflows() {\n\
     # List of latest workflows\n\
     workflows=(\n\
         "SDXL-LoRaStack-Upscale.json"\n\
-        "WAN2.2-I2V-AutoPrompt-1-4.json"\n\
-        "WAN2.2-I2V-AutoPrompt-GGUF-1-4.json"\n\
-        "WAN2.2-T2V-AutoPrompt-1-5.json"\n\
-        "WAN2.2-T2V-AutoPrompt-GGUF-1-4.json"\n\
-        "Wan2.2-I2V-SVI-AutoPrompt-1-3.json"\n\
-        "Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-1.json"\n\
-        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-8.json"\n\
-        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-5.json"\n\
-        "WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF.json"\n\
+        "WAN2.2-I2V-AutoPrompt-1-5.json"\n\
+        "WAN2.2-I2V-AutoPrompt-GGUF-1-5.json"\n\
+        "WAN2.2-T2V-AutoPrompt-1-6.json"\n\
+        "WAN2.2-T2V-AutoPrompt-GGUF-1-5.json"\n\
+        "Wan2.2-I2V-SVI-AutoPrompt-1-4.json"\n\
+        "Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-2.json"\n\
+        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-9.json"\n\
+        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-6.json"\n\
+        "WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF-1-1.json"\n\
     )\n\
     \n\
     for workflow in "${workflows[@]}"; do\n\
