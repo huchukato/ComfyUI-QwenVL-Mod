@@ -548,8 +548,8 @@ class QwenVLBase:
                 return (cached_text,)
         
         if custom_prompt and custom_prompt.strip():
-            # Combine template with user input like PromptEnhancer does
-            prompt = f"{prompt_template}\n\n{custom_prompt.strip()}"
+            # Combine user input with template - custom prompt first for priority
+            prompt = f"{custom_prompt.strip()}\n\n{prompt_template}"
         else:
             prompt = prompt_template
             
