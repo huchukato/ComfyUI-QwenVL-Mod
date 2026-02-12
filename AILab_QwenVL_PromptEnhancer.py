@@ -301,7 +301,9 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
             "timestamp": None,  # PromptEnhancer doesn't have CUDA events
             "model": model_name,
             "preset": style,
-            "seed": seed
+            "seed": seed,
+            "image_hash": None,  # PromptEnhancer doesn't use images
+            "video_hash": None   # PromptEnhancer doesn't use videos
         }
         save_prompt_cache()  # Save cache to file
         

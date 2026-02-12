@@ -75,12 +75,21 @@ def get_alternative_cache_key(model_name, preset_prompt, custom_prompt, image_ha
         if (cached_data.get("model") == model_name and 
             cached_data.get("preset") == preset_prompt and
             cached_data.get("seed") != seed):  # Different seed
-            # Check if image/video matches (or both are None)
-            cached_image_hash = next((item for item in cached_key.split("_") if item.startswith("img:")), None)
-            cached_video_hash = next((item for item in cached_key.split("_") if item.startswith("vid:")), None)
             
-            if (cached_image_hash == image_hash and cached_video_hash == video_hash):
-                return cached_key
+            # Generate the cache key that would have been created for this cached data
+            # to check if image/video hashes match
+            cached_image_hash = cached_data.get("image_hash")
+            cached_video_hash = cached_data.get("video_hash")
+            
+            # If the cached data doesn't have hash info, try to match by other criteria
+            if cached_image_hash is None and cached_video_hash is None:
+                # Fallback: if both current and cached have no image/video, consider it a match
+                if image_hash is None and video_hash is None:
+                    return cached_key
+            else:
+                # Match if hashes are the same (including None)
+                if cached_image_hash == image_hash and cached_video_hash == video_hash:
+                    return cached_key
     return None
 
 def get_image_hash(image):
@@ -580,7 +589,9 @@ class QwenVLBase:
                 "timestamp": torch.cuda.Event().record() if torch.cuda.is_available() else None,
                 "model": model_name,
                 "preset": preset_prompt,
-                "seed": seed
+                "seed": seed,
+                "image_hash": image_hash,
+                "video_hash": video_hash
             }
             save_prompt_cache()  # Save cache to file
             

@@ -443,7 +443,9 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
             "timestamp": None,  # GGUF PromptEnhancer doesn't have CUDA events
             "model": model_name,
             "preset": preset_system_prompt,
-            "seed": seed
+            "seed": seed,
+            "image_hash": None,  # PromptEnhancer doesn't use images
+            "video_hash": None   # PromptEnhancer doesn't use videos
         }
         save_prompt_cache()  # Save cache to file
         
