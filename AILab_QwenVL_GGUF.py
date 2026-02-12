@@ -554,7 +554,11 @@ class QwenVLGGUFBase:
         
         # If fixed seed and no exact cache found, try to reuse last random prompt
         # This helps maintain consistency when switching from random to fixed seed
-        alt_cache_key = get_alternative_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash, int(seed))
+        print(f"[QwenVL GGUF DEBUG] Looking for alternative cache with model={model_name}, preset={preset_prompt}, seed={seed}")
+        print(f"[QwenVL GGUF DEBUG] Current hashes: image={image_hash}, video={video_hash}")
+        print(f"[QwenVL GGUF DEBUG] Available cache entries: {len(PROMPT_CACHE)}")
+        
+        alt_cache_key = get_alternative_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash, int(seed), "QwenVL GGUF")
         if alt_cache_key and alt_cache_key in PROMPT_CACHE:
             cached_text = PROMPT_CACHE[alt_cache_key].get("text", "")
             if cached_text:
