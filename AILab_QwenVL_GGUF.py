@@ -538,9 +538,9 @@ class QwenVLGGUFBase:
     ):
         print(f"[QwenVL GGUF DEBUG] Starting run with seed={seed} (type: {type(seed)})")
         
-        # NEW APPROACH: Fixed seed mode = pass-through (no generation)
-        # Random seed mode = always generate
-        if seed != -1:  # Fixed seed mode
+        # NEW APPROACH: Fixed seed mode = small numbers (1-1000), Random mode = large random numbers
+        # ComfyUI uses large random numbers for random mode, small fixed numbers for fixed mode
+        if seed <= 1000:  # Fixed seed mode (user chose a small number)
             print(f"[QwenVL GGUF] Fixed seed mode detected (seed={seed}) - passing through, no generation")
             return ("",)  # Return empty tuple to allow pass-through
         
