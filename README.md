@@ -2,7 +2,7 @@
 
 [![ComfyUI](https://img.shields.io/badge/ComfyUI-Custom%20Node-blue?style=for-the-badge&logo=python)](https://github.com/comfyanonymous/ComfyUI)
 [![License](https://img.shields.io/badge/License-GPL--3.0-green?style=for-the-badge)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-2.0.8-orange?style=for-the-badge)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/releases)
+[![Version](https://img.shields.io/badge/Version-2.0.9-orange?style=for-the-badge)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/releases)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)](https://python.org)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red?style=for-the-badge&logo=pytorch)](https://pytorch.org)
 [![CUDA](https://img.shields.io/badge/CUDA-12.8%2B-black?style=for-the-badge&logo=nvidia)](https://developer.nvidia.com/cuda-zone)
@@ -16,6 +16,15 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
+* **2026/02/12**: **v2.0.9** Bypass Mode parameter for prompt persistence. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-209-20260212)]
+> [!NOTE]  
+> 🎛️ **Bypass Mode**: New `bypass_mode` parameter allows maintaining previously generated prompts without regeneration.  
+> 🔄 **Smart Cache**: When bypass mode is enabled, nodes retrieve the most recent cached prompt for the current model.  
+> 🎯 **Perfect Workflow**: Generate prompts once, then enable bypass mode to preserve them while changing inputs.  
+> ⚡ **Zero Resource Usage**: Bypass mode consumes no computational resources - instant response.  
+> 📋 **Universal Feature**: Available across all nodes (HF, GGUF, PromptEnhancer, Advanced variants).  
+> 🎮 **Simple Control**: Just toggle the bypass_mode checkbox to enable/disable prompt persistence.
+
 * **2026/02/06**: **v2.0.8** Bug fixes and stability improvements. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-208-20260206)]
 > [!NOTE]  
 > 🐛 **Bug Fixes**: Fixed JSON syntax error in system prompts and undefined variable issues.  
@@ -98,11 +107,13 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 [![Performance](https://img.shields.io/badge/Performance-Flash%20Attention%20%7C%20SDPA-green?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
 [![WAN2.2](https://img.shields.io/badge/WAN%202.2-Video%20Generation-red?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
 [![Caching](https://img.shields.io/badge/Caching-Smart%20%7C%20Persistent-yellow?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+[![Bypass](https://img.shields.io/badge/Bypass-Prompt%20Persistence-green?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
 
 * **Standard & Advanced Nodes**: Includes a simple QwenVL node for quick use and a QwenVL (Advanced) node with fine-grained control over generation.  
 * **Prompt Enhancers**: Dedicated text-only prompt enhancers for both HF and GGUF backends.  
 * **Preset & Custom Prompts**: Choose from a list of convenient preset prompts or write your own for full control. Custom prompts now combine with preset templates for enhanced flexibility.  
 * **Smart Prompt Caching**: Automatic caching system prevents regeneration of identical prompts, dramatically improving performance for repeated inputs. Cache persists across ComfyUI restarts.  
+* **🎛️ Bypass Mode**: New `bypass_mode` parameter allows maintaining previously generated prompts without regeneration. Generate once, then enable bypass mode to preserve prompts while changing inputs. Zero resource usage in bypass mode.  
 * **Fixed Seed Mode**: Set seed = 1 to ignore image/video changes and maintain consistent prompts regardless of media variations. Perfect for stable workflow outputs.  
 * **WAN 2.2 Integration**: Specialized prompts for WAN 2.2 I2V (image-to-video) and T2V (text-to-video) generation with professional cinematography specifications and cinematic timeline structure. I2V preset prioritized for faster workflow access.  
 * **Professional Cinematography**: All WAN 2.2 presets include comprehensive technical specifications - light sources, shot types, lens specifications, camera movements, and color tone requirements for professional video generation.  
