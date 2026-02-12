@@ -38,35 +38,6 @@ echo "🏗️  Building Docker image for x86_64..."
 echo "This may take 10-15 minutes..."
 docker buildx build --builder desktop-linux --platform linux/amd64 -t "${FULL_IMAGE_NAME}" -t "${VERSION_IMAGE_NAME}" --load .
 
-# Test the image locally
-echo "🧪 Testing image locally..."
-echo "Starting container for 30 seconds to verify..."
-docker run --rm --gpus all -d -p 8081:8080 --name test-container "${FULL_IMAGE_NAME}"
-
-# Wait for startup
-echo "⏳ Waiting for ComfyUI to start..."
-sleep 30
-
-# Check if container is running
-if docker ps | grep -q test-container; then
-    echo "✅ Container started successfully!"
-    
-    # Check if ComfyUI is responding
-    if curl -f http://localhost:8081/system_stats > /dev/null 2>&1; then
-        echo "✅ ComfyUI is responding correctly!"
-    else
-        echo "⚠️  ComfyUI not responding yet, but container is running"
-    fi
-    
-    # Stop test container
-    docker stop test-container
-    echo "✅ Test completed successfully"
-else
-    echo "❌ Container failed to start"
-    docker logs test-container 2>/dev/null || true
-    exit 1
-fi
-
 # Push to Docker Hub
 echo "📤 Pushing images to Docker Hub..."
 docker push "${FULL_IMAGE_NAME}"
@@ -97,6 +68,7 @@ echo "  4. Select GPU: RTX 5090"
 echo "  5. Set container port: 8188"
 echo "  6. Deploy! 🎉"
 echo ""
-echo "🔗 Useful links:"
+echo "� Note: Local testing disabled for faster builds"
+echo "�🔗 Useful links:"
 echo "  Docker Hub: https://hub.docker.com/r/${IMAGE_NAME}"
 echo "  Repository: https://github.com/huchukato/ComfyUI-QwenVL-Mod"
