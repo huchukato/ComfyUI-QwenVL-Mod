@@ -65,6 +65,24 @@ def get_cache_key(model_name, preset_prompt, custom_prompt, image_hash=None, vid
     key_str = json.dumps(key_data, sort_keys=True)
     return hashlib.md5(key_str.encode()).hexdigest()
 
+def get_alternative_cache_key(model_name, preset_prompt, custom_prompt, image_hash=None, video_hash=None, seed=None):
+    """Generate alternative cache key for fixed seed mode to find random prompts"""
+    # Only for fixed seed mode (when user wants consistent prompts)
+    # We consider any seed that the user keeps fixed as "fixed seed mode"
+    
+    # Try to find any cached prompt with same model/preset/custom/image but different seed
+    for cached_key, cached_data in PROMPT_CACHE.items():
+        if (cached_data.get("model") == model_name and 
+            cached_data.get("preset") == preset_prompt and
+            cached_data.get("seed") != seed):  # Different seed
+            # Check if image/video matches (or both are None)
+            cached_image_hash = next((item for item in cached_key.split("_") if item.startswith("img:")), None)
+            cached_video_hash = next((item for item in cached_key.split("_") if item.startswith("vid:")), None)
+            
+            if (cached_image_hash == image_hash and cached_video_hash == video_hash):
+                return cached_key
+    return None
+
 def get_image_hash(image):
     """Generate hash for image tensor"""
     if image is None:
@@ -94,6 +112,9 @@ try:
     from transformers import AutoModelForVision2Seq
 except ImportError:
     from transformers import AutoModelForImageTextToText as AutoModelForVision2Seq
+
+# Export cache functions for other modules
+__all__ = ['PROMPT_CACHE', 'get_cache_key', 'get_alternative_cache_key', 'save_prompt_cache', 'get_image_hash', 'get_video_hash']
 
 import folder_paths
 
@@ -512,6 +533,18 @@ class QwenVLBase:
             cached_text = PROMPT_CACHE[cache_key].get("text", "")
             if cached_text:
                 print(f"[QwenVL] Using cached prompt for seed {seed}: {cache_key[:8]}...")
+                return (cached_text,)
+        
+        # If fixed seed and no exact cache found, try to reuse last random prompt
+        # This helps maintain consistency when switching from random to fixed seed
+        alt_cache_key = get_alternative_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash, seed)
+        if alt_cache_key and alt_cache_key in PROMPT_CACHE:
+            cached_text = PROMPT_CACHE[alt_cache_key].get("text", "")
+            if cached_text:
+                print(f"[QwenVL] Reusing last random prompt for seed {seed}: {alt_cache_key[:8]}...")
+                # Also cache it under the fixed seed key for future use
+                PROMPT_CACHE[cache_key] = PROMPT_CACHE[alt_cache_key].copy()
+                save_prompt_cache()
                 return (cached_text,)
         
         if custom_prompt and custom_prompt.strip():
