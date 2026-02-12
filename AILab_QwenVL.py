@@ -543,6 +543,16 @@ class QwenVLBase:
 
     def run(self, model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device):
         torch.manual_seed(seed)
+        
+        # NEW APPROACH: Fixed seed mode = pass-through (no generation)
+        # Random seed mode = always generate
+        if seed != -1:  # Fixed seed mode
+            print(f"[QwenVL] Fixed seed mode detected (seed={seed}) - passing through, no generation")
+            return ("",)  # Return empty string to allow pass-through
+        
+        # Random seed mode - always generate
+        print(f"[QwenVL] Random seed mode detected (seed={seed}) - generating new prompt")
+        
         prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
         
         # Generate cache key with all inputs including seed
@@ -550,27 +560,11 @@ class QwenVLBase:
         video_hash = get_video_hash(video)
         cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash, seed)
         
-        # Check cache first
+        # Check cache first (only for random mode)
         if cache_key in PROMPT_CACHE:
             cached_text = PROMPT_CACHE[cache_key].get("text", "")
             if cached_text:
                 print(f"[QwenVL] Using cached prompt for seed {seed}: {cache_key[:8]}...")
-                return (cached_text,)
-        
-        # If fixed seed and no exact cache found, try to reuse last random prompt
-        # This helps maintain consistency when switching from random to fixed seed
-        print(f"[QwenVL DEBUG] Looking for alternative cache with model={model_name}, preset={preset_prompt}, seed={seed}")
-        print(f"[QwenVL DEBUG] Current hashes: image={image_hash}, video={video_hash}")
-        print(f"[QwenVL DEBUG] Available cache entries: {len(PROMPT_CACHE)}")
-        
-        alt_cache_key = get_alternative_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash, seed, "QwenVL")
-        if alt_cache_key and alt_cache_key in PROMPT_CACHE:
-            cached_text = PROMPT_CACHE[alt_cache_key].get("text", "")
-            if cached_text:
-                print(f"[QwenVL] Reusing last random prompt for seed {seed}: {alt_cache_key[:8]}...")
-                # Also cache it under the fixed seed key for future use
-                PROMPT_CACHE[cache_key] = PROMPT_CACHE[alt_cache_key].copy()
-                save_prompt_cache()
                 return (cached_text,)
         
         if custom_prompt and custom_prompt.strip():
