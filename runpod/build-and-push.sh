@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# ComfyUI-QwenVL-Mod RunPod Build Script
-# Automates building and pushing Docker image to Docker Hub
+# ComfyUI-QwenVL-Mod Light Build Script
+# Automates building and pushing Docker image (light version) to Docker Hub
 
 set -e
 
 # Configuration
 IMAGE_NAME="huchukato/comfyui-qwenvl-runpod"
-TAG="latest"
+TAG="light"
 FULL_IMAGE_NAME="${IMAGE_NAME}:${TAG}"
 
-echo "🚀 Building ComfyUI-QwenVL-Mod RunPod Docker Image"
-echo "=================================================="
+echo "🚀 Building ComfyUI-QwenVL-Mod Light Docker Image"
+echo "==============================================="
 echo "Image: ${FULL_IMAGE_NAME}"
 echo ""
 
@@ -31,7 +31,7 @@ fi
 # Build the image
 echo "🏗️  Building Docker image..."
 echo "This may take 10-15 minutes..."
-docker build -t "${FULL_IMAGE_NAME}" .
+docker build -f Dockerfile -t "${FULL_IMAGE_NAME}" .
 
 # Test the image locally
 echo "🧪 Testing image locally..."
@@ -69,16 +69,16 @@ docker push "${FULL_IMAGE_NAME}"
 # Create additional tags
 echo "🏷️  Creating additional tags..."
 CURRENT_DATE=$(date +%Y%m%d)
-VERSION_TAG="${IMAGE_NAME}:v${CURRENT_DATE}"
-docker tag "${FULL_IMAGE_NAME}" "${VERSION_TAG}"
-docker push "${VERSION_TAG}"
+LIGHT_TAG="${IMAGE_NAME}:light-${CURRENT_DATE}"
+docker tag "${FULL_IMAGE_NAME}" "${LIGHT_TAG}"
+docker push "${LIGHT_TAG}"
 
 echo ""
 echo "✅ Build and push completed successfully!"
 echo ""
 echo "📋 Image Details:"
 echo "  Primary tag: ${FULL_IMAGE_NAME}"
-echo "  Date tag:    ${VERSION_TAG}"
+echo "  Date tag:    ${LIGHT_TAG}"
 echo ""
 echo "🚀 Ready for RunPod deployment!"
 echo ""

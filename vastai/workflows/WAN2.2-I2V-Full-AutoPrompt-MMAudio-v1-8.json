@@ -2,7 +2,7 @@
   "id": "d40a02f0-8c72-4d49-8df5-3b1302b986f9",
   "revision": 0,
   "last_node_id": 1561,
-  "last_link_id": 5426,
+  "last_link_id": 5429,
   "nodes": [
     {
       "id": 544,
@@ -161,7 +161,7 @@
         "collapsed": true
       },
       "order": 3,
-      "mode": 4,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -195,7 +195,7 @@
         "collapsed": true
       },
       "order": 4,
-      "mode": 4,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -229,7 +229,7 @@
         "collapsed": true
       },
       "order": 5,
-      "mode": 4,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -263,7 +263,7 @@
         "collapsed": true
       },
       "order": 6,
-      "mode": 4,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -297,7 +297,7 @@
         "collapsed": true
       },
       "order": 7,
-      "mode": 4,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -331,7 +331,7 @@
         "collapsed": true
       },
       "order": 8,
-      "mode": 4,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -365,7 +365,7 @@
         "collapsed": true
       },
       "order": 9,
-      "mode": 4,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -637,7 +637,7 @@
         "collapsed": true
       },
       "order": 17,
-      "mode": 4,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -1537,7 +1537,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 144,
+      "order": 145,
       "mode": 0,
       "inputs": [
         {
@@ -1577,7 +1577,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 145,
+      "order": 146,
       "mode": 0,
       "inputs": [
         {
@@ -1618,7 +1618,7 @@
         "collapsed": true
       },
       "order": 41,
-      "mode": 4,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -1685,14 +1685,14 @@
         166
       ],
       "flags": {},
-      "order": 129,
+      "order": 134,
       "mode": 4,
       "inputs": [
         {
           "dir": 3,
           "name": "model",
           "type": "MODEL",
-          "link": 5360
+          "link": 5429
         },
         {
           "dir": 3,
@@ -1755,14 +1755,14 @@
         166
       ],
       "flags": {},
-      "order": 128,
+      "order": 133,
       "mode": 4,
       "inputs": [
         {
           "dir": 3,
           "name": "model",
           "type": "MODEL",
-          "link": 5359
+          "link": 5428
         },
         {
           "dir": 3,
@@ -1828,7 +1828,7 @@
         "collapsed": true
       },
       "order": 42,
-      "mode": 4,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -1860,7 +1860,7 @@
         "collapsed": true
       },
       "order": 43,
-      "mode": 4,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -2006,106 +2006,6 @@
       ]
     },
     {
-      "id": 917,
-      "type": "UNETLoader",
-      "pos": [
-        -1335.8211493577019,
-        -1084.4409274878417
-      ],
-      "size": [
-        407.38374624166386,
-        82
-      ],
-      "flags": {},
-      "order": 48,
-      "mode": 4,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": []
-        }
-      ],
-      "title": "Load Diffusion Model HIGH",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.45",
-        "Node name for S&R": "UNETLoader",
-        "models": [
-          {
-            "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
-            "directory": "diffusion_models"
-          }
-        ],
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {
-            "unet_name": true,
-            "weight_dtype": true
-          }
-        }
-      },
-      "widgets_values": [
-        "wan22EnhancedNSFWSVICamera_nsfwV2FP8H.safetensors",
-        "default"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 918,
-      "type": "UNETLoader",
-      "pos": [
-        -1334.8420125225148,
-        -949.7049849007745
-      ],
-      "size": [
-        368.6467478229074,
-        82
-      ],
-      "flags": {},
-      "order": 49,
-      "mode": 4,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": []
-        }
-      ],
-      "title": "Load Diffusion Model LOW",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.45",
-        "Node name for S&R": "UNETLoader",
-        "models": [
-          {
-            "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
-            "directory": "diffusion_models"
-          }
-        ],
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {
-            "unet_name": true,
-            "weight_dtype": true
-          }
-        }
-      },
-      "widgets_values": [
-        "wan22EnhancedNSFWSVICamera_nsfwV2FP8L.safetensors",
-        "default"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
       "id": 1432,
       "type": "easy cleanGpuUsed",
       "pos": [
@@ -2199,7 +2099,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 50,
+      "order": 48,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -2233,7 +2133,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 51,
+      "order": 49,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -2267,8 +2167,8 @@
       "flags": {
         "collapsed": true
       },
-      "order": 158,
-      "mode": 4,
+      "order": 157,
+      "mode": 0,
       "inputs": [
         {
           "name": "IMAGE",
@@ -2387,7 +2287,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 52,
+      "order": 50,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -2421,7 +2321,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 53,
+      "order": 51,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -2455,7 +2355,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 54,
+      "order": 52,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -2489,7 +2389,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 55,
+      "order": 53,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -2523,7 +2423,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 56,
+      "order": 54,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2557,8 +2457,8 @@
       "flags": {
         "collapsed": true
       },
-      "order": 57,
-      "mode": 4,
+      "order": 55,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -2589,8 +2489,8 @@
       "flags": {
         "collapsed": true
       },
-      "order": 58,
-      "mode": 4,
+      "order": 56,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -2623,7 +2523,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 59,
+      "order": 57,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2732,7 +2632,7 @@
       ],
       "size": [
         537.6962890624998,
-        1107.2878906249998
+        334
       ],
       "flags": {},
       "order": 112,
@@ -2967,7 +2867,7 @@
         60
       ],
       "flags": {},
-      "order": 60,
+      "order": 58,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3088,7 +2988,7 @@
         60
       ],
       "flags": {},
-      "order": 61,
+      "order": 59,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3110,41 +3010,6 @@
       },
       "color": "#2a363b",
       "bgcolor": "#3f5159"
-    },
-    {
-      "id": 1513,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -942.958913414878,
-        707.644143089005
-      ],
-      "size": [
-        340,
-        82
-      ],
-      "flags": {},
-      "order": 62,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "FP8 / GGUF",
-      "properties": {
-        "matchColors": "green",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#232",
-      "bgcolor": "#353"
     },
     {
       "id": 1391,
@@ -3237,7 +3102,7 @@
         141.47533958757617
       ],
       "flags": {},
-      "order": 63,
+      "order": 60,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3498,7 +3363,7 @@
         58
       ],
       "flags": {},
-      "order": 64,
+      "order": 61,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3533,7 +3398,7 @@
         58
       ],
       "flags": {},
-      "order": 65,
+      "order": 62,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3570,7 +3435,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 134,
+      "order": 132,
       "mode": 0,
       "inputs": [
         {
@@ -3608,7 +3473,7 @@
         110
       ],
       "flags": {},
-      "order": 66,
+      "order": 63,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -3683,7 +3548,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 67,
+      "order": 64,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4178,7 +4043,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 160,
+      "order": 159,
       "mode": 4,
       "inputs": [
         {
@@ -4230,7 +4095,7 @@
         334
       ],
       "flags": {},
-      "order": 159,
+      "order": 158,
       "mode": 4,
       "inputs": [
         {
@@ -4394,7 +4259,7 @@
         70
       ],
       "flags": {},
-      "order": 68,
+      "order": 65,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4429,7 +4294,7 @@
         110
       ],
       "flags": {},
-      "order": 69,
+      "order": 66,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4506,7 +4371,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 70,
+      "order": 67,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4540,7 +4405,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 71,
+      "order": 68,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4614,7 +4479,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 72,
+      "order": 69,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4688,7 +4553,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 73,
+      "order": 70,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4722,7 +4587,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 74,
+      "order": 71,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4754,7 +4619,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 75,
+      "order": 72,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4788,7 +4653,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 76,
+      "order": 73,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4820,7 +4685,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 77,
+      "order": 74,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4852,7 +4717,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 78,
+      "order": 75,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4884,7 +4749,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 79,
+      "order": 76,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4916,8 +4781,8 @@
         82
       ],
       "flags": {},
-      "order": 80,
-      "mode": 0,
+      "order": 77,
+      "mode": 4,
       "inputs": [],
       "outputs": [
         {
@@ -5212,7 +5077,7 @@
         106
       ],
       "flags": {},
-      "order": 81,
+      "order": 78,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5381,13 +5246,13 @@
       "flags": {
         "collapsed": true
       },
-      "order": 156,
+      "order": 160,
       "mode": 0,
       "inputs": [
         {
           "name": "IMAGE",
           "type": "IMAGE",
-          "link": 5426
+          "link": 5427
         }
       ],
       "outputs": [
@@ -5421,7 +5286,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 82,
+      "order": 79,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5495,7 +5360,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 83,
+      "order": 80,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5529,7 +5394,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 84,
+      "order": 81,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5561,7 +5426,7 @@
         640
       ],
       "flags": {},
-      "order": 85,
+      "order": 82,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5611,16 +5476,14 @@
         58
       ],
       "flags": {},
-      "order": 86,
-      "mode": 0,
+      "order": 83,
+      "mode": 4,
       "inputs": [],
       "outputs": [
         {
           "name": "MODEL",
           "type": "MODEL",
-          "links": [
-            5359
-          ]
+          "links": []
         }
       ],
       "title": "Unet Loader (GGUF) HIGH",
@@ -5648,16 +5511,14 @@
         58
       ],
       "flags": {},
-      "order": 87,
-      "mode": 0,
+      "order": 84,
+      "mode": 4,
       "inputs": [],
       "outputs": [
         {
           "name": "MODEL",
           "type": "MODEL",
-          "links": [
-            5360
-          ]
+          "links": []
         }
       ],
       "title": "Unet Loader (GGUF) LOW",
@@ -5738,7 +5599,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 130,
+      "order": 128,
       "mode": 0,
       "inputs": [
         {
@@ -5776,7 +5637,7 @@
         58
       ],
       "flags": {},
-      "order": 88,
+      "order": 85,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5814,7 +5675,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 89,
+      "order": 86,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5848,8 +5709,8 @@
       "flags": {
         "collapsed": true
       },
-      "order": 90,
-      "mode": 4,
+      "order": 87,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -5882,7 +5743,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 91,
+      "order": 88,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -5916,7 +5777,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 92,
+      "order": 89,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -5950,7 +5811,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 131,
+      "order": 129,
       "mode": 0,
       "inputs": [
         {
@@ -5988,7 +5849,7 @@
         30
       ],
       "flags": {},
-      "order": 93,
+      "order": 90,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6035,7 +5896,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 132,
+      "order": 130,
       "mode": 0,
       "inputs": [
         {
@@ -6073,7 +5934,7 @@
         30
       ],
       "flags": {},
-      "order": 94,
+      "order": 91,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6122,7 +5983,7 @@
         "collapsed": true
       },
       "order": 143,
-      "mode": 4,
+      "mode": 0,
       "inputs": [
         {
           "name": "upscale_model",
@@ -6154,48 +6015,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 1532,
-      "type": "ImageScaleBy",
-      "pos": [
-        -447.90973196726077,
-        1258.9048494904152
-      ],
-      "size": [
-        270,
-        82
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 155,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 5391
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": []
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.10.0",
-        "Node name for S&R": "ImageScaleBy"
-      },
-      "widgets_values": [
-        "nearest-exact",
-        1
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
       "id": 1558,
       "type": "easy cleanGpuUsed",
       "pos": [
@@ -6210,7 +6029,7 @@
         "collapsed": true
       },
       "order": 126,
-      "mode": 4,
+      "mode": 0,
       "inputs": [
         {
           "name": "anything",
@@ -6246,8 +6065,8 @@
         60
       ],
       "flags": {},
-      "order": 95,
-      "mode": 4,
+      "order": 92,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
@@ -6283,7 +6102,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 96,
+      "order": 93,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6317,8 +6136,8 @@
       "flags": {
         "collapsed": true
       },
-      "order": 133,
-      "mode": 0,
+      "order": 131,
+      "mode": 4,
       "inputs": [
         {
           "name": "anything",
@@ -6354,8 +6173,8 @@
         76
       ],
       "flags": {},
-      "order": 146,
-      "mode": 0,
+      "order": 144,
+      "mode": 4,
       "inputs": [
         {
           "name": "images",
@@ -6372,9 +6191,7 @@
         {
           "name": "IMAGE",
           "type": "IMAGE",
-          "links": [
-            5426
-          ]
+          "links": []
         }
       ],
       "properties": {
@@ -6391,41 +6208,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 1438,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -942.958913414878,
-        1207.6441430890056
-      ],
-      "size": [
-        340,
-        130
-      ],
-      "flags": {},
-      "order": 97,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Upscale and Interpolation",
-      "properties": {
-        "matchColors": "red",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#322",
-      "bgcolor": "#533"
-    },
-    {
       "id": 1560,
       "type": "MarkdownNote",
       "pos": [
@@ -6437,7 +6219,7 @@
         1267.5911829386341
       ],
       "flags": {},
-      "order": 98,
+      "order": 94,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -6461,7 +6243,7 @@
         290
       ],
       "flags": {},
-      "order": 99,
+      "order": 95,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -6485,7 +6267,7 @@
         200
       ],
       "flags": {},
-      "order": 100,
+      "order": 96,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -6509,7 +6291,7 @@
         110
       ],
       "flags": {},
-      "order": 101,
+      "order": 97,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6545,502 +6327,6 @@
       ]
     },
     {
-      "id": 923,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -942.958913414878,
-        1047.644143089006
-      ],
-      "size": [
-        340,
-        120
-      ],
-      "flags": {},
-      "order": 102,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Video Lenght",
-      "properties": {
-        "matchColors": "",
-        "matchTitle": "VIDEO",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 1252,
-      "type": "2643c0a2-4f8c-4b66-9bba-7305a874c2db",
-      "pos": [
-        -480.0653392458903,
-        143.61947688726428
-      ],
-      "size": [
-        578.8365457400107,
-        812.9529410156252
-      ],
-      "flags": {},
-      "order": 135,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "model_h",
-          "name": "model",
-          "type": "MODEL",
-          "link": 5395
-        },
-        {
-          "label": "model_l",
-          "name": "model_1",
-          "type": "MODEL",
-          "link": 5396
-        },
-        {
-          "label": "model_s_h",
-          "name": "model_2",
-          "type": "MODEL",
-          "link": 5408
-        },
-        {
-          "label": "model_s_l",
-          "name": "model_3",
-          "type": "MODEL",
-          "link": 5409
-        },
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 4838
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 4993
-        },
-        {
-          "name": "start_image",
-          "type": "IMAGE",
-          "link": 5353
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 4841
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 4842
-        },
-        {
-          "name": "length",
-          "type": "INT",
-          "widget": {
-            "name": "length"
-          },
-          "link": 4843
-        },
-        {
-          "name": "motion_amplitude",
-          "type": "FLOAT",
-          "widget": {
-            "name": "motion_amplitude"
-          },
-          "link": 4844
-        },
-        {
-          "name": "steps",
-          "type": "INT",
-          "widget": {
-            "name": "steps"
-          },
-          "link": 4980
-        },
-        {
-          "name": "sampler_name",
-          "type": "COMBO",
-          "widget": {
-            "name": "sampler_name"
-          },
-          "link": 5328
-        },
-        {
-          "name": "scheduler",
-          "type": "COMBO",
-          "widget": {
-            "name": "scheduler"
-          },
-          "link": 5329
-        },
-        {
-          "name": "sigma_shift",
-          "type": "FLOAT",
-          "widget": {
-            "name": "sigma_shift"
-          },
-          "link": 5416
-        }
-      ],
-      "outputs": [
-        {
-          "label": "MODEL_S_HIGH",
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            4846
-          ]
-        },
-        {
-          "label": "MODEL_S_LOW",
-          "name": "MODEL_1",
-          "type": "MODEL",
-          "links": [
-            4847
-          ]
-        },
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            4878,
-            5345
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "-1",
-            "width"
-          ],
-          [
-            "-1",
-            "height"
-          ],
-          [
-            "-1",
-            "length"
-          ],
-          [
-            "-1",
-            "motion_amplitude"
-          ],
-          [
-            "-1",
-            "steps"
-          ],
-          [
-            "-1",
-            "sampler_name"
-          ],
-          [
-            "-1",
-            "scheduler"
-          ],
-          [
-            "-1",
-            "sigma_shift"
-          ],
-          [
-            "1287",
-            "string_a"
-          ],
-          [
-            "1286",
-            "custom_prompt"
-          ],
-          [
-            "1257",
-            "text"
-          ],
-          [
-            "1250",
-            "seed"
-          ],
-          [
-            "1250",
-            "🎲 Randomize Each Time"
-          ],
-          [
-            "1250",
-            "🎲 New Fixed Random"
-          ],
-          [
-            "1286",
-            "control_after_generate"
-          ],
-          [
-            "1286",
-            "preset_prompt"
-          ],
-          [
-            "1286",
-            "model_name"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.7.0"
-      },
-      "widgets_values": [
-        5,
-        2,
-        "euler",
-        "simple",
-        5,
-        "euler",
-        "simple",
-        8
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 1262,
-      "type": "322b39f0-a204-4d81-8926-eeb0309f1efc",
-      "pos": [
-        139.34978704477095,
-        181.2693571719011
-      ],
-      "size": [
-        531.5195726782537,
-        771.9293800781251
-      ],
-      "flags": {},
-      "order": 149,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "image_1",
-          "type": "IMAGE",
-          "link": 4878
-        },
-        {
-          "label": "model_h",
-          "name": "model",
-          "type": "MODEL",
-          "link": 4879
-        },
-        {
-          "label": "model_l",
-          "name": "model_1",
-          "type": "MODEL",
-          "link": 4880
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 4881
-        },
-        {
-          "name": "initial_reference_image",
-          "type": "IMAGE",
-          "link": 4882
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 4883
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 4884
-        },
-        {
-          "name": "length",
-          "type": "INT",
-          "widget": {
-            "name": "length"
-          },
-          "link": 4885
-        },
-        {
-          "name": "motion_frames",
-          "type": "INT",
-          "widget": {
-            "name": "motion_frames"
-          },
-          "link": 4886
-        },
-        {
-          "name": "motion_amplitude",
-          "type": "FLOAT",
-          "widget": {
-            "name": "motion_amplitude"
-          },
-          "link": 4887
-        },
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 4888
-        },
-        {
-          "name": "steps",
-          "type": "INT",
-          "widget": {
-            "name": "steps"
-          },
-          "link": 4999
-        },
-        {
-          "name": "sampler_name",
-          "type": "COMBO",
-          "widget": {
-            "name": "sampler_name"
-          },
-          "link": 5330
-        },
-        {
-          "name": "scheduler",
-          "type": "COMBO",
-          "widget": {
-            "name": "scheduler"
-          },
-          "link": 5331
-        },
-        {
-          "name": "sigma_shift",
-          "type": "FLOAT",
-          "widget": {
-            "name": "sigma_shift"
-          },
-          "link": 5417
-        }
-      ],
-      "outputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "links": [
-            5039
-          ]
-        },
-        {
-          "label": "Preview",
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            5346
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "-1",
-            "width"
-          ],
-          [
-            "-1",
-            "height"
-          ],
-          [
-            "-1",
-            "length"
-          ],
-          [
-            "-1",
-            "motion_frames"
-          ],
-          [
-            "-1",
-            "motion_amplitude"
-          ],
-          [
-            "-1",
-            "steps"
-          ],
-          [
-            "-1",
-            "sampler_name"
-          ],
-          [
-            "-1",
-            "scheduler"
-          ],
-          [
-            "-1",
-            "sigma_shift"
-          ],
-          [
-            "1284",
-            "string_a"
-          ],
-          [
-            "1283",
-            "custom_prompt"
-          ],
-          [
-            "1269",
-            "text"
-          ],
-          [
-            "308",
-            "seed"
-          ],
-          [
-            "308",
-            "🎲 Randomize Each Time"
-          ],
-          [
-            "308",
-            "🎲 New Fixed Random"
-          ],
-          [
-            "1283",
-            "control_after_generate"
-          ],
-          [
-            "1283",
-            "preset_prompt"
-          ],
-          [
-            "1283",
-            "model_name"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.7.0"
-      },
-      "widgets_values": [
-        5,
-        2,
-        "euler",
-        "simple",
-        1.15,
-        5,
-        "euler",
-        "simple",
-        8
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 1332,
       "type": "2b0a8197-b645-497d-b1f8-fd1924abb421",
       "pos": [
@@ -7052,7 +6338,7 @@
         770.0814335937498
       ],
       "flags": {},
-      "order": 157,
+      "order": 156,
       "mode": 4,
       "inputs": [
         {
@@ -7558,7 +6844,7 @@
       ],
       "size": [
         340,
-        334
+        817.3333333333334
       ],
       "flags": {},
       "order": 142,
@@ -7617,16 +6903,730 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22_06_07-53-08_00001.mp4",
+            "filename": "wan22_12_04-37-23_00001.mp4",
             "subfolder": "",
             "type": "temp",
             "format": "video/h264-mp4",
             "frame_rate": 16,
-            "workflow": "wan22_06_07-53-08_00001.png",
-            "fullpath": "/workspace/ComfyUI/temp/wan22_06_07-53-08_00001.mp4"
+            "workflow": "wan22_12_04-37-23_00001.png",
+            "fullpath": "/ComfyUI/temp/wan22_12_04-37-23_00001.mp4"
           }
         }
       }
+    },
+    {
+      "id": 1438,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -942.958913414878,
+        1207.6441430890056
+      ],
+      "size": [
+        340,
+        130
+      ],
+      "flags": {},
+      "order": 98,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Upscale and Interpolation",
+      "properties": {
+        "matchColors": "red",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 1532,
+      "type": "ImageScaleBy",
+      "pos": [
+        -437.06804679660644,
+        1264.5137454384305
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 155,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 5391
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5427
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.10.0",
+        "Node name for S&R": "ImageScaleBy"
+      },
+      "widgets_values": [
+        "nearest-exact",
+        1
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 1513,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -942.958913414878,
+        707.644143089005
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 99,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "FP8 / GGUF",
+      "properties": {
+        "matchColors": "green",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 923,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -942.958913414878,
+        1047.644143089006
+      ],
+      "size": [
+        340,
+        120
+      ],
+      "flags": {},
+      "order": 100,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Video Lenght",
+      "properties": {
+        "matchColors": "",
+        "matchTitle": "VIDEO",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1252,
+      "type": "2643c0a2-4f8c-4b66-9bba-7305a874c2db",
+      "pos": [
+        -480.0653392458903,
+        143.61947688726428
+      ],
+      "size": [
+        578.8365457400107,
+        812.9529410156252
+      ],
+      "flags": {},
+      "order": 135,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "model_h",
+          "name": "model",
+          "type": "MODEL",
+          "link": 5395
+        },
+        {
+          "label": "model_l",
+          "name": "model_1",
+          "type": "MODEL",
+          "link": 5396
+        },
+        {
+          "label": "model_s_h",
+          "name": "model_2",
+          "type": "MODEL",
+          "link": 5408
+        },
+        {
+          "label": "model_s_l",
+          "name": "model_3",
+          "type": "MODEL",
+          "link": 5409
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 4838
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 4993
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 5353
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 4841
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 4842
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 4843
+        },
+        {
+          "name": "motion_amplitude",
+          "type": "FLOAT",
+          "widget": {
+            "name": "motion_amplitude"
+          },
+          "link": 4844
+        },
+        {
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": 4980
+        },
+        {
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": 5328
+        },
+        {
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": 5329
+        },
+        {
+          "name": "sigma_shift",
+          "type": "FLOAT",
+          "widget": {
+            "name": "sigma_shift"
+          },
+          "link": 5416
+        }
+      ],
+      "outputs": [
+        {
+          "label": "MODEL_S_HIGH",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            4846
+          ]
+        },
+        {
+          "label": "MODEL_S_LOW",
+          "name": "MODEL_1",
+          "type": "MODEL",
+          "links": [
+            4847
+          ]
+        },
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            4878,
+            5345
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "-1",
+            "width"
+          ],
+          [
+            "-1",
+            "height"
+          ],
+          [
+            "-1",
+            "length"
+          ],
+          [
+            "-1",
+            "motion_amplitude"
+          ],
+          [
+            "-1",
+            "steps"
+          ],
+          [
+            "-1",
+            "sampler_name"
+          ],
+          [
+            "-1",
+            "scheduler"
+          ],
+          [
+            "-1",
+            "sigma_shift"
+          ],
+          [
+            "1287",
+            "string_a"
+          ],
+          [
+            "1286",
+            "custom_prompt"
+          ],
+          [
+            "1257",
+            "text"
+          ],
+          [
+            "1250",
+            "seed"
+          ],
+          [
+            "1250",
+            "🎲 Randomize Each Time"
+          ],
+          [
+            "1250",
+            "🎲 New Fixed Random"
+          ],
+          [
+            "1286",
+            "control_after_generate"
+          ],
+          [
+            "1286",
+            "preset_prompt"
+          ],
+          [
+            "1286",
+            "model_name"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.7.0"
+      },
+      "widgets_values": [
+        5,
+        2,
+        "euler",
+        "simple",
+        5,
+        "euler",
+        "simple",
+        8
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1262,
+      "type": "322b39f0-a204-4d81-8926-eeb0309f1efc",
+      "pos": [
+        139.34978704477095,
+        181.2693571719011
+      ],
+      "size": [
+        531.5195726782537,
+        771.9293800781251
+      ],
+      "flags": {},
+      "order": 149,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_1",
+          "type": "IMAGE",
+          "link": 4878
+        },
+        {
+          "label": "model_h",
+          "name": "model",
+          "type": "MODEL",
+          "link": 4879
+        },
+        {
+          "label": "model_l",
+          "name": "model_1",
+          "type": "MODEL",
+          "link": 4880
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 4881
+        },
+        {
+          "name": "initial_reference_image",
+          "type": "IMAGE",
+          "link": 4882
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 4883
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 4884
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 4885
+        },
+        {
+          "name": "motion_frames",
+          "type": "INT",
+          "widget": {
+            "name": "motion_frames"
+          },
+          "link": 4886
+        },
+        {
+          "name": "motion_amplitude",
+          "type": "FLOAT",
+          "widget": {
+            "name": "motion_amplitude"
+          },
+          "link": 4887
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 4888
+        },
+        {
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": 4999
+        },
+        {
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": 5330
+        },
+        {
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": 5331
+        },
+        {
+          "name": "sigma_shift",
+          "type": "FLOAT",
+          "widget": {
+            "name": "sigma_shift"
+          },
+          "link": 5417
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            5039
+          ]
+        },
+        {
+          "label": "Preview",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5346
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "-1",
+            "width"
+          ],
+          [
+            "-1",
+            "height"
+          ],
+          [
+            "-1",
+            "length"
+          ],
+          [
+            "-1",
+            "motion_frames"
+          ],
+          [
+            "-1",
+            "motion_amplitude"
+          ],
+          [
+            "-1",
+            "steps"
+          ],
+          [
+            "-1",
+            "sampler_name"
+          ],
+          [
+            "-1",
+            "scheduler"
+          ],
+          [
+            "-1",
+            "sigma_shift"
+          ],
+          [
+            "1284",
+            "string_a"
+          ],
+          [
+            "1283",
+            "custom_prompt"
+          ],
+          [
+            "1269",
+            "text"
+          ],
+          [
+            "308",
+            "seed"
+          ],
+          [
+            "308",
+            "🎲 Randomize Each Time"
+          ],
+          [
+            "308",
+            "🎲 New Fixed Random"
+          ],
+          [
+            "1283",
+            "control_after_generate"
+          ],
+          [
+            "1283",
+            "preset_prompt"
+          ],
+          [
+            "1283",
+            "model_name"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.7.0"
+      },
+      "widgets_values": [
+        5,
+        2,
+        "euler",
+        "simple",
+        1.15,
+        5,
+        "euler",
+        "simple",
+        8
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 917,
+      "type": "UNETLoader",
+      "pos": [
+        -1335.8211493577019,
+        -1084.4409274878417
+      ],
+      "size": [
+        407.38374624166386,
+        82
+      ],
+      "flags": {},
+      "order": 101,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            5428
+          ]
+        }
+      ],
+      "title": "Load Diffusion Model HIGH",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ],
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {
+            "unet_name": true,
+            "weight_dtype": true
+          }
+        }
+      },
+      "widgets_values": [
+        "wan22EnhancedNSFWSVICamera_nsfwV2FP8H.safetensors",
+        "default"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 918,
+      "type": "UNETLoader",
+      "pos": [
+        -1334.8420125225148,
+        -949.7049849007745
+      ],
+      "size": [
+        368.6467478229074,
+        82
+      ],
+      "flags": {},
+      "order": 102,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            5429
+          ]
+        }
+      ],
+      "title": "Load Diffusion Model LOW",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ],
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {
+            "unet_name": true,
+            "weight_dtype": true
+          }
+        }
+      },
+      "widgets_values": [
+        "wan22EnhancedNSFWSVICamera_nsfwV2FP8L.safetensors",
+        "default"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
     }
   ],
   "links": [
@@ -8383,22 +8383,6 @@
       "IMAGE"
     ],
     [
-      5359,
-      919,
-      0,
-      1467,
-      0,
-      "MODEL"
-    ],
-    [
-      5360,
-      920,
-      0,
-      1468,
-      0,
-      "MODEL"
-    ],
-    [
       5373,
       1521,
       0,
@@ -8615,12 +8599,28 @@
       "IMAGE"
     ],
     [
-      5426,
-      1533,
+      5427,
+      1532,
       0,
       1421,
       0,
       "IMAGE"
+    ],
+    [
+      5428,
+      917,
+      0,
+      1467,
+      0,
+      "MODEL"
+    ],
+    [
+      5429,
+      918,
+      0,
+      1468,
+      0,
+      "MODEL"
     ]
   ],
   "groups": [
@@ -9868,7 +9868,7 @@
               16,
               false,
               1,
-              "fixed"
+              "randomize"
             ],
             "color": "#28403f",
             "bgcolor": "#374539"
@@ -10548,7 +10548,7 @@
             ],
             "flags": {},
             "order": 2,
-            "mode": 4,
+            "mode": 0,
             "inputs": [
               {
                 "localized_name": "positive",
@@ -10710,7 +10710,7 @@
               "collapsed": true
             },
             "order": 7,
-            "mode": 4,
+            "mode": 0,
             "inputs": [
               {
                 "label": " ",
@@ -10771,7 +10771,7 @@
               "collapsed": true
             },
             "order": 9,
-            "mode": 4,
+            "mode": 0,
             "inputs": [
               {
                 "localized_name": "anything",
@@ -10811,7 +10811,7 @@
             ],
             "flags": {},
             "order": 0,
-            "mode": 4,
+            "mode": 0,
             "inputs": [],
             "outputs": [
               {
@@ -10853,7 +10853,7 @@
             ],
             "flags": {},
             "order": 8,
-            "mode": 4,
+            "mode": 0,
             "inputs": [
               {
                 "label": " ",
@@ -10905,7 +10905,7 @@
               "collapsed": false
             },
             "order": 3,
-            "mode": 4,
+            "mode": 0,
             "inputs": [
               {
                 "localized_name": "samples",
@@ -10958,7 +10958,7 @@
               "collapsed": true
             },
             "order": 6,
-            "mode": 4,
+            "mode": 0,
             "inputs": [
               {
                 "localized_name": "image",
@@ -11012,7 +11012,7 @@
               "collapsed": true
             },
             "order": 1,
-            "mode": 4,
+            "mode": 0,
             "inputs": [
               {
                 "localized_name": "image_1",
@@ -11079,7 +11079,7 @@
               "collapsed": false
             },
             "order": 4,
-            "mode": 4,
+            "mode": 0,
             "inputs": [
               {
                 "localized_name": "clip",
@@ -11132,7 +11132,7 @@
               "collapsed": true
             },
             "order": 5,
-            "mode": 4,
+            "mode": 0,
             "inputs": [
               {
                 "localized_name": "image",
@@ -11182,7 +11182,7 @@
             ],
             "flags": {},
             "order": 10,
-            "mode": 4,
+            "mode": 0,
             "inputs": [
               {
                 "localized_name": "model_high_noise",
@@ -11304,7 +11304,7 @@
             ],
             "flags": {},
             "order": 11,
-            "mode": 4,
+            "mode": 0,
             "inputs": [
               {
                 "localized_name": "image",
@@ -11352,7 +11352,7 @@
               16,
               false,
               1,
-              "fixed"
+              "randomize"
             ],
             "color": "#28403f",
             "bgcolor": "#374539"
@@ -11370,7 +11370,7 @@
             ],
             "flags": {},
             "order": 12,
-            "mode": 4,
+            "mode": 0,
             "inputs": [
               {
                 "localized_name": "string_b",
@@ -14785,7 +14785,7 @@
   },
   "config": {},
   "extra": {
-    "frontendVersion": "1.37.11",
+    "frontendVersion": "1.38.13",
     "workflowRendererVersion": "LG",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
@@ -14794,10 +14794,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.44497396367471637,
+      "scale": 0.5922603456510478,
       "offset": [
-        2956.1235378839824,
-        1245.8912549288564
+        2651.055573076683,
+        1579.6083130585969
       ]
     }
   },
