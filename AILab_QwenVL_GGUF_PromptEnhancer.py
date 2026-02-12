@@ -383,7 +383,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         # bypass_mode=False = always generate (regardless of seed)
         if bypass_mode:  # Bypass mode enabled
             print(f"[QwenVL PromptEnhancer GGUF] Bypass mode enabled - passing through, no generation")
-            return ("",)  # Return empty string to allow pass-through
+            return ("[BYPASS_MODE]",)  # Return debug message instead of empty string
         
         # Always generate when bypass mode is disabled
         print(f"[QwenVL PromptEnhancer GGUF] Bypass mode disabled - generating new prompt")
