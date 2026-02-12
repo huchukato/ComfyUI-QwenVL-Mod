@@ -1,5 +1,47 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.0.9 (2026/02/12)
+
+🎛️ **Bypass Mode Parameter for Prompt Persistence**
+
+This major feature introduces a new `bypass_mode` parameter that allows users to maintain previously generated prompts without regeneration, providing perfect workflow control.
+
+### 🎛️ New Bypass Mode Feature
+- **Smart Cache Retrieval**: When `bypass_mode=True`, nodes automatically retrieve the most recent cached prompt for the current model
+- **Zero Resource Usage**: Bypass mode consumes no computational resources - instant response
+- **Perfect Workflow Control**: Generate prompts once, then enable bypass mode to preserve them while changing inputs
+- **Universal Implementation**: Available across all nodes (HF, GGUF, PromptEnhancer, Advanced variants)
+
+### 🔄 How Bypass Mode Works
+1. **Generate Phase** (`bypass_mode=False`): Generate new prompts and save them to cache
+2. **Bypass Phase** (`bypass_mode=True`): Retrieve and return the most recent cached prompt
+3. **Input Changes**: When bypass mode is enabled, changing images/videos or other inputs has no effect on the output
+4. **Seamless Switching**: Toggle bypass mode on/off to switch between generation and persistence
+
+### 📋 Updated Nodes
+- ✅ **AILab_QwenVL** (HF): Added bypass_mode parameter
+- ✅ **AILab_QwenVL_GGUF**: Added bypass_mode parameter  
+- ✅ **AILab_QwenVL_GGUF_Advanced**: Added bypass_mode parameter
+- ✅ **AILab_QwenVL_PromptEnhancer** (HF): Added bypass_mode parameter
+- ✅ **AILab_QwenVL_GGUF_PromptEnhancer**: Added bypass_mode parameter
+
+### 🎯 Use Cases
+- **Prompt Locking**: Generate the perfect prompt once, then lock it while experimenting with other workflow parameters
+- **Batch Processing**: Generate multiple prompts, then use bypass mode to maintain consistency across batches
+- **Resource Optimization**: Enable bypass mode when you need to preserve prompts but don't want to consume GPU resources
+- **Workflow Debugging**: Test other parts of your workflow without changing the generated prompts
+
+### 🎮 Simple Control
+- **Checkbox Interface**: Simple bypass_mode checkbox in all node interfaces
+- **Default Behavior**: bypass_mode defaults to False (normal generation)
+- **Instant Feedback**: Console logs show when bypass mode is active and which cached prompt is being used
+
+### 🔧 Technical Implementation
+- **Cache-Based**: Uses existing prompt caching system for reliable prompt retrieval
+- **Model-Specific**: Retrieves prompts specific to the current model configuration
+- **Fallback Handling**: If no cached prompt exists, returns empty string gracefully
+- **Performance Optimized**: Minimal overhead when bypass mode is enabled
+
 ## Version 2.0.8 (2026/02/06)
 
 🐛 **Bug Fixes and Stability Improvements**
