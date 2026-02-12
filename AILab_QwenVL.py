@@ -541,17 +541,18 @@ class QwenVLBase:
         text = self.tokenizer.decode(outputs[0, input_len:], skip_special_tokens=True)
         return text.strip()
 
-    def run(self, model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device):
+    def run(self, model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, bypass_mode=False):
         torch.manual_seed(seed)
         
-        # NEW APPROACH: Fixed seed mode = small numbers (1-1000), Random mode = large random numbers
-        # ComfyUI uses large random numbers for random mode, small fixed numbers for fixed mode
-        if seed <= 1000:  # Fixed seed mode (user chose a small number)
-            print(f"[QwenVL] Fixed seed mode detected (seed={seed}) - passing through, no generation")
+        # NEW APPROACH: Explicit bypass mode parameter
+        # bypass_mode=True = pass-through (no generation)
+        # bypass_mode=False = always generate (regardless of seed)
+        if bypass_mode:  # Bypass mode enabled
+            print(f"[QwenVL] Bypass mode enabled - passing through, no generation")
             return ("",)  # Return empty string to allow pass-through
         
-        # Random seed mode - always generate
-        print(f"[QwenVL] Random seed mode detected (seed={seed}) - generating new prompt")
+        # Always generate when bypass mode is disabled
+        print(f"[QwenVL] Bypass mode disabled - generating new prompt")
         
         prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
         
@@ -675,6 +676,7 @@ class AILab_QwenVL_Advanced(QwenVLBase):
                 "frame_count": ("INT", {"default": 16, "min": 1, "max": 64, "tooltip": TOOLTIPS["frame_count"]}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": TOOLTIPS["keep_model_loaded"]}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1, "tooltip": TOOLTIPS["seed"] + "\n\n💡 Cache Info: Prompts are cached automatically. Use the same inputs (model, preset, custom prompt, image/video) to reuse cached prompts and avoid regeneration.\n\n🔒 Fixed Seed Mode: Set seed = 1 to ignore image/video changes and only use text-based caching. Perfect for keeping the same prompt regardless of media input variations."}),
+                "bypass_mode": ("BOOLEAN", {"default": False, "tooltip": "When enabled, bypasses generation and returns empty string (acts as pass-through)"}),
             },
             "optional": {
                 "image": ("IMAGE",),
@@ -687,8 +689,8 @@ class AILab_QwenVL_Advanced(QwenVLBase):
     FUNCTION = "process"
     CATEGORY = "🧪AILab/QwenVL"
 
-    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, custom_prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, frame_count, keep_model_loaded, seed, image=None, video=None):
-        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device)
+    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, custom_prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, frame_count, keep_model_loaded, seed, bypass_mode, image=None, video=None):
+        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, bypass_mode)
 
 NODE_CLASS_MAPPINGS = {
     "AILab_QwenVL": AILab_QwenVL,
