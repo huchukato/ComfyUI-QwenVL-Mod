@@ -744,6 +744,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
                 "pool_size": ("INT", {"default": 4194304, "min": 1048576, "max": 10485760, "step": 524288}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
+                "bypass_mode": ("BOOLEAN", {"default": False, "tooltip": "When enabled, bypasses generation and returns empty string (acts as pass-through)"}),
             },
             "optional": {
                 "image": ("IMAGE",),
@@ -775,6 +776,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
         pool_size,
         keep_model_loaded,
         seed,
+        bypass_mode,
         image=None,
         video=None,
     ):
@@ -798,6 +800,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
             image_max_tokens=image_max_tokens,
             top_k=top_k,
             pool_size=pool_size,
+            bypass_mode=bypass_mode,
         )
 
 
