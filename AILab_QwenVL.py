@@ -70,26 +70,39 @@ def get_alternative_cache_key(model_name, preset_prompt, custom_prompt, image_ha
     # Only for fixed seed mode (when user wants consistent prompts)
     # We consider any seed that the user keeps fixed as "fixed seed mode"
     
+    print(f"[QwenVL DEBUG] Searching through cache for model={model_name}, preset={preset_prompt}")
+    
     # Try to find any cached prompt with same model/preset/custom/image but different seed
     for cached_key, cached_data in PROMPT_CACHE.items():
-        if (cached_data.get("model") == model_name and 
-            cached_data.get("preset") == preset_prompt and
-            cached_data.get("seed") != seed):  # Different seed
+        cached_model = cached_data.get("model")
+        cached_preset = cached_data.get("preset") 
+        cached_seed = cached_data.get("seed")
+        
+        print(f"[QwenVL DEBUG] Checking entry: model={cached_model}, preset={cached_preset}, seed={cached_seed}")
+        
+        if (cached_model == model_name and 
+            cached_preset == preset_prompt and
+            cached_seed != seed):  # Different seed
             
             # Generate the cache key that would have been created for this cached data
             # to check if image/video hashes match
             cached_image_hash = cached_data.get("image_hash")
             cached_video_hash = cached_data.get("video_hash")
             
+            print(f"[QwenVL DEBUG] Found potential match with hashes: image={cached_image_hash}, video={cached_video_hash}")
+            
             # If the cached data doesn't have hash info, try to match by other criteria
             if cached_image_hash is None and cached_video_hash is None:
                 # Fallback: if both current and cached have no image/video, consider it a match
                 if image_hash is None and video_hash is None:
+                    print(f"[QwenVL DEBUG] Match found (no images/videos)!")
                     return cached_key
             else:
                 # Match if hashes are the same (including None)
                 if cached_image_hash == image_hash and cached_video_hash == video_hash:
+                    print(f"[QwenVL DEBUG] Match found (hashes match)!")
                     return cached_key
+    print(f"[QwenVL DEBUG] No alternative cache found")
     return None
 
 def get_image_hash(image):
@@ -546,6 +559,10 @@ class QwenVLBase:
         
         # If fixed seed and no exact cache found, try to reuse last random prompt
         # This helps maintain consistency when switching from random to fixed seed
+        print(f"[QwenVL DEBUG] Looking for alternative cache with model={model_name}, preset={preset_prompt}, seed={seed}")
+        print(f"[QwenVL DEBUG] Current hashes: image={image_hash}, video={video_hash}")
+        print(f"[QwenVL DEBUG] Available cache entries: {len(PROMPT_CACHE)}")
+        
         alt_cache_key = get_alternative_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash, seed)
         if alt_cache_key and alt_cache_key in PROMPT_CACHE:
             cached_text = PROMPT_CACHE[alt_cache_key].get("text", "")
