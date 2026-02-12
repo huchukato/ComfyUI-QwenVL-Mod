@@ -176,6 +176,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
                 "english_output": ("BOOLEAN", {"default": False, "tooltip": "Force final output in English using translation prompt."}),
                 "device": (["auto", "cuda", "cpu", "mps"], {"default": "auto", "tooltip": "Select device; auto prefers GPU when available."}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
+                "bypass_mode": ("BOOLEAN", {"default": False, "tooltip": "When enabled, bypasses generation and returns empty string (acts as pass-through)"}),
             }
         }
 
@@ -375,15 +376,17 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         english_output,
         device,
         seed,
+        bypass_mode,
     ):
-        # NEW APPROACH: Fixed seed mode = small numbers (1-1000), Random mode = large random numbers
-        # ComfyUI uses large random numbers for random mode, small fixed numbers for fixed mode
-        if seed <= 1000:  # Fixed seed mode (user chose a small number)
-            print(f"[QwenVL PromptEnhancer GGUF] Fixed seed mode detected (seed={seed}) - passing through, no generation")
+        # NEW APPROACH: Explicit bypass mode parameter
+        # bypass_mode=True = pass-through (no generation)
+        # bypass_mode=False = always generate (regardless of seed)
+        if bypass_mode:  # Bypass mode enabled
+            print(f"[QwenVL PromptEnhancer GGUF] Bypass mode enabled - passing through, no generation")
             return ("",)  # Return empty string to allow pass-through
         
-        # Random seed mode - always generate
-        print(f"[QwenVL PromptEnhancer GGUF] Random seed mode detected (seed={seed}) - generating new prompt")
+        # Always generate when bypass mode is disabled
+        print(f"[QwenVL PromptEnhancer GGUF] Bypass mode disabled - generating new prompt")
         
         # Generate cache key with all inputs including seed
         cache_key = get_cache_key(model_name, preset_system_prompt, prompt_text, seed=seed)

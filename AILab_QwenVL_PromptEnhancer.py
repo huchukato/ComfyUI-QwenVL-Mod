@@ -101,6 +101,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
                 "repetition_penalty": ("FLOAT", {"default": 1.1, "min": 0.5, "max": 2.0}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
+                "bypass_mode": ("BOOLEAN", {"default": False, "tooltip": "When enabled, bypasses generation and returns empty string (acts as pass-through)"}),
             }
         }
 
@@ -120,7 +121,18 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         repetition_penalty,
         keep_model_loaded,
         seed,
+        bypass_mode,
     ):
+        # NEW APPROACH: Explicit bypass mode parameter
+        # bypass_mode=True = pass-through (no generation)
+        # bypass_mode=False = always generate (regardless of seed)
+        if bypass_mode:  # Bypass mode enabled
+            print(f"[QwenVL PromptEnhancer HF] Bypass mode enabled - passing through, no generation")
+            return ("",)  # Return empty string to allow pass-through
+        
+        # Always generate when bypass mode is disabled
+        print(f"[QwenVL PromptEnhancer HF] Bypass mode disabled - generating new prompt")
+        
         base_instruction = custom_system_prompt.strip() or self.STYLES.get(
             enhancement_style,
             next(iter(self.STYLES.values()), ""),
@@ -249,27 +261,6 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         keep_model_loaded,
         seed,
     ):
-        # NEW APPROACH: Fixed seed mode = small numbers (1-1000), Random mode = large random numbers
-        # ComfyUI uses large random numbers for random mode, small fixed numbers for fixed mode
-        if seed <= 1000:  # Fixed seed mode (user chose a small number)
-            print(f"[QwenVL PromptEnhancer HF] Fixed seed mode detected (seed={seed}) - passing through, no generation")
-            return ("",)  # Return empty string to allow pass-through
-        
-        # Random seed mode - always generate
-        print(f"[QwenVL PromptEnhancer HF] Random seed mode detected (seed={seed}) - generating new prompt")
-        
-        torch.manual_seed(seed)
-        
-        # Generate cache key with all inputs including seed
-        cache_key = get_cache_key(model_name, "style", prompt, seed=seed)
-        
-        # Check cache first (only for random mode)
-        if cache_key in PROMPT_CACHE:
-            cached_text = PROMPT_CACHE[cache_key].get("text", "")
-            if cached_text:
-                print(f"[QwenVL PromptEnhancer HF] Using cached prompt for seed {seed}: {cache_key[:8]}...")
-                return (cached_text.strip(),)
-        
         self._load_text_model(model_name, quantization, device)
 
         if device == "auto":
