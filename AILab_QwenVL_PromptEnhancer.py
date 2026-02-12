@@ -249,28 +249,25 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         keep_model_loaded,
         seed,
     ):
+        # NEW APPROACH: Fixed seed mode = pass-through (no generation)
+        # Random seed mode = always generate
+        if seed != -1:  # Fixed seed mode
+            print(f"[QwenVL PromptEnhancer HF] Fixed seed mode detected (seed={seed}) - passing through, no generation")
+            return ("",)  # Return empty string to allow pass-through
+        
+        # Random seed mode - always generate
+        print(f"[QwenVL PromptEnhancer HF] Random seed mode detected (seed={seed}) - generating new prompt")
+        
         torch.manual_seed(seed)
         
         # Generate cache key with all inputs including seed
-        cache_key = get_cache_key(model_name, style, custom_prompt, seed=seed)
+        cache_key = get_cache_key(model_name, "style", prompt, seed=seed)
         
-        # Check cache first
+        # Check cache first (only for random mode)
         if cache_key in PROMPT_CACHE:
             cached_text = PROMPT_CACHE[cache_key].get("text", "")
             if cached_text:
                 print(f"[QwenVL PromptEnhancer HF] Using cached prompt for seed {seed}: {cache_key[:8]}...")
-                return (cached_text.strip(),)
-        
-        # If fixed seed and no exact cache found, try to reuse last random prompt
-        # This helps maintain consistency when switching from random to fixed seed
-        alt_cache_key = get_alternative_cache_key(model_name, style, custom_prompt, None, None, seed)
-        if alt_cache_key and alt_cache_key in PROMPT_CACHE:
-            cached_text = PROMPT_CACHE[alt_cache_key].get("text", "")
-            if cached_text:
-                print(f"[QwenVL PromptEnhancer HF] Reusing last random prompt for seed {seed}: {alt_cache_key[:8]}...")
-                # Also cache it under the fixed seed key for future use
-                PROMPT_CACHE[cache_key] = PROMPT_CACHE[alt_cache_key].copy()
-                save_prompt_cache()
                 return (cached_text.strip(),)
         
         self._load_text_model(model_name, quantization, device)
