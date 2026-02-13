@@ -73,10 +73,10 @@ RUN pip install --upgrade --force-reinstall --no-cache-dir \
 RUN cd /ComfyUI/custom_nodes && \
     git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
     git clone https://github.com/cubiq/ComfyUI_essentials.git && \
-    git clone https://github.com/MadiatorLabs/ComfyUI-RunpodDirect.git && \
-    git clone https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto.git && \
     git clone https://github.com/huchukato/comfy-tagcomplete.git && \
     git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git && \
+    git clone https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto.git && \
+    git clone https://github.com/MadiatorLabs/ComfyUI-RunpodDirect.git && \
     git clone https://github.com/city96/ComfyUI-GGUF.git && \
     git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
     git clone https://github.com/MoonGoblinDev/Civicomfy.git && \
