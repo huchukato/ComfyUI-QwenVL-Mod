@@ -41,7 +41,8 @@ NODES=(
     "https://github.com/yuvraj108c/ComfyUI-Upscaler-Tensorrt"
     "https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto"
     "https://github.com/stduhpf/ComfyUI-WanMoeKSampler"
-    "https://github.com/melMass/comfy_mtb"  
+    "https://github.com/melMass/comfy_mtb"
+    "https://github.com/Jasonzzt/ComfyUI-CacheDiT"  
 )
 
 WORKFLOWS=(
