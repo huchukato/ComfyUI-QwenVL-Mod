@@ -98,7 +98,8 @@ RUN cd /ComfyUI/custom_nodes && \
     git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git && \
     git clone https://github.com/yuvraj108c/ComfyUI-Upscaler-Tensorrt.git && \
     git clone https://github.com/stduhpf/ComfyUI-WanMoeKSampler.git && \
-    git clone https://github.com/melMass/comfy_mtb.git
+    git clone https://github.com/melMass/comfy_mtb.git && \
+    git clone https://github.com/Jasonzzt/ComfyUI-CacheDiT.git
 
 # Install requirements for all custom nodes
 RUN cd /ComfyUI/custom_nodes && \
