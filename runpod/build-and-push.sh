@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# ComfyUI-QwenVL-Mod v2.0.9 Build Script
-# Automates building and pushing Docker image with Bypass Mode to Docker Hub
+# ComfyUI-QwenVL-Mod v2.1.0 Build Script
+# Automates building and pushing Docker image with Keep Last Prompt to Docker Hub
 
 set -e
 
@@ -10,10 +10,10 @@ IMAGE_NAME="huchukato/comfyui-qwenvl-runpod"
 TAG="latest"
 FULL_IMAGE_NAME="${IMAGE_NAME}:${TAG}"
 
-echo "🚀 Building ComfyUI-QwenVL-Mod v2.0.9 Docker Image"
+echo "🚀 Building ComfyUI-QwenVL-Mod v2.1.0 Docker Image"
 echo "==============================================="
 echo "Image: ${FULL_IMAGE_NAME}"
-echo "Features: Bypass Mode, WAN 2.2 workflows, GGUF support"
+echo "Features: Keep Last Prompt, WAN 2.2 workflows, GGUF support"
 echo ""
 
 # Check if Docker is running
