@@ -44,6 +44,11 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 > 🔄 **Universal Caching**: Fixed Seed Mode and smart caching now available across all nodes (HF, GGUF, PromptEnhancer).  
 > 🎯 **Simplified Logic**: Streamlined caching system that always includes seed for predictable behavior across all seed values.
 
+### 🔥 Version 2.1.0 - Enhanced NSFW Support & Lighting Accuracy
+- **🔥 Stronger NSFW Instructions**: Enhanced system prompts with explicit directives for uncensored content generation
+- **🔦 Fixed Lighting Invention**: Corrected AI tendency to add lights not present in source images
+- **🎯 Improved Accuracy**: Better content fidelity for both NSFW descriptions and lighting analysis (HF, GGUF, PromptEnhancer).
+
 * **2026/02/03**: **v2.0.6** Professional cinematography enhancement for all WAN 2.2 presets. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-206-20260203)]
 > [!NOTE]  
 > 🎬 **Professional Specs**: All WAN 2.2 presets now include comprehensive cinematography specifications.  

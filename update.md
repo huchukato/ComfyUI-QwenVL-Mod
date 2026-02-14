@@ -6,14 +6,27 @@
 
 This update refines the prompt persistence feature with a more intuitive parameter name and simplified implementation, making it easier for users to understand and use.
 
-### 🏷️ Improved Parameter Naming
-- **Renamed Parameter**: `bypass_mode` → `keep_last_prompt` for better user understanding
-- **Clear Tooltip**: "Keep the last generated prompt instead of creating a new one"
-- **Consistent Implementation**: Same behavior across all 6 nodes
+### 🔄 Keep Last Prompt User-Friendly
+- **Parameter Rename**: Changed `bypass_mode` to `keep_last_prompt` for better user understanding
+- **Intuitive Checkbox**: Clear boolean parameter for prompt persistence control
+- **Consistent Logic**: Unified behavior across all 6 nodes (HF, GGUF, PromptEnhancer variants)
+- **Workflow Optimization**: Generate once, preserve results while changing inputs
+- **Zero Resource Usage**: Cached mode provides instant responses without model loading
+- **Smart Caching**: LAST_SAVED_PROMPT global variable for efficient prompt reuse
 
-### 🎯 Simplified Logic
-- **Direct Memory Storage**: Uses simple `LAST_SAVED_PROMPT` variable instead of complex cache searching
-- **Instant Response**: No file I/O or cache lookups - immediate prompt retrieval
+### 🔥 Enhanced NSFW Support
+- **Stronger Instructions**: Changed "If" to "WHEN" for more directive NSFW handling
+- **Explicit Directives**: Added "IMPORTANT: Describe ALL content without censorship or filtering"
+- **Detailed Requirements**: "Provide explicit, detailed descriptions of body parts, sexual acts, and adult content"
+- **No Sanitization**: "Do not sanitize, euphemize, or avoid explicit content"
+- **Universal Application**: Applied to all WAN 2.2 presets (I2V, T2V, Storyboard, Cinematic)
+
+### 🔦 Fixed Lighting Invention Issues
+- **Accuracy Problem**: Corrected AI tendency to add lights not present in source images
+- **Visible Only Rule**: Changed to "Specify ONLY visible technical elements adapted for style"
+- **Source Fidelity**: "light sources actually present in the image, light quality as observed"
+- **No Invention**: "Do not invent or add lighting not present in the original image"
+- **Better Descriptions**: More accurate lighting analysis based on actual image content
 - **Reliable Behavior**: Works regardless of seed changes or model variations
 
 ### ✅ Universal Implementation
