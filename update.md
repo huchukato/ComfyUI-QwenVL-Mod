@@ -1,5 +1,39 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.1.0 (2026/02/14)
+
+🏷️ **User-Friendly Keep Last Prompt Feature**
+
+This update refines the prompt persistence feature with a more intuitive parameter name and simplified implementation, making it easier for users to understand and use.
+
+### 🏷️ Improved Parameter Naming
+- **Renamed Parameter**: `bypass_mode` → `keep_last_prompt` for better user understanding
+- **Clear Tooltip**: "Keep the last generated prompt instead of creating a new one"
+- **Consistent Implementation**: Same behavior across all 6 nodes
+
+### 🎯 Simplified Logic
+- **Direct Memory Storage**: Uses simple `LAST_SAVED_PROMPT` variable instead of complex cache searching
+- **Instant Response**: No file I/O or cache lookups - immediate prompt retrieval
+- **Reliable Behavior**: Works regardless of seed changes or model variations
+
+### ✅ Universal Implementation
+- **All Nodes Updated**: QwenVL, QwenVL Advanced, QwenVL GGUF, QwenVL Advanced GGUF, QwenVL Prompt Enhancer, QwenVL Prompt Enhancer GGUF
+- **Consistent UI**: Same parameter name and tooltip across all nodes
+- **Bug Fixes**: Resolved TypeError issues in Advanced nodes
+
+### 🔄 How Keep Last Prompt Works
+1. **Generate Phase** (`keep_last_prompt=False`): Generate new prompt and save to memory
+2. **Keep Phase** (`keep_last_prompt=True`): Return the last saved prompt from memory
+3. **First Run**: If no previous prompt exists, returns empty string
+4. **Memory Update**: Each generation overwrites the previous saved prompt
+
+### 🐛 Bug Fixes
+- **Fixed TypeError**: Resolved "unexpected keyword argument" errors in Advanced nodes
+- **Parameter Consistency**: All process() functions now use `keep_last_prompt`
+- **Syntax Errors**: Fixed duplicate global declarations
+
+---
+
 ## Version 2.0.9 (2026/02/12)
 
 🎛️ **Bypass Mode Parameter for Prompt Persistence**
