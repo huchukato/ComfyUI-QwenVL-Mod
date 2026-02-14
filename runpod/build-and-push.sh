@@ -34,7 +34,7 @@ fi
 # Build the image
 echo "🏗️  Building Docker image for x86_64..."
 echo "This may take 10-15 minutes..."
-docker buildx build --builder desktop-linux --platform linux/amd64 -t "${FULL_IMAGE_NAME}" --load .
+docker buildx build --builder desktop-linux --platform linux/amd64 -t "${FULL_IMAGE_NAME}" --load --no-cache .
 
 # Push to Docker Hub
 echo "📤 Pushing image to Docker Hub..."
