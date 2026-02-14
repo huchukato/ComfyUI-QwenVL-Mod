@@ -48,7 +48,7 @@
         }
       },
       "widgets_values": [
-        "073116_00001_.png",
+        "045444_00001_.png",
         "image"
       ],
       "color": "#233",
@@ -104,6 +104,7 @@
         "cnr_id": "comfyui-videohelpersuite",
         "ver": "1.7.2",
         "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
         "widget_ue_connectable": {
           "frame_rate": true,
           "loop_count": true,
@@ -132,13 +133,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22__00016.mp4",
-            "subfolder": "2026-02-12",
+            "filename": "wan22__00058.mp4",
+            "subfolder": "2026-02-14",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 16,
-            "workflow": "wan22__00016.png",
-            "fullpath": "/workspace/ComfyUI/output/2026-02-12/wan22__00016.mp4"
+            "workflow": "wan22__00058.png",
+            "fullpath": "/workspace/ComfyUI/output/2026-02-14/wan22__00058.mp4"
           }
         }
       },
@@ -518,6 +519,7 @@
         "cnr_id": "comfyui-easy-use",
         "ver": "de92038f88317699f314be85e5c7af84f1ab9c3a",
         "Node name for S&R": "easy cleanGpuUsed",
+        "aux_id": "yolain/ComfyUI-Easy-Use",
         "widget_ue_connectable": {}
       },
       "widgets_values": [],
@@ -559,6 +561,7 @@
         "cnr_id": "comfyui-easy-use",
         "ver": "de92038f88317699f314be85e5c7af84f1ab9c3a",
         "Node name for S&R": "easy cleanGpuUsed",
+        "aux_id": "yolain/ComfyUI-Easy-Use",
         "widget_ue_connectable": {}
       },
       "widgets_values": [],
@@ -608,6 +611,7 @@
         "cnr_id": "comfyui-frame-interpolation",
         "ver": "1.0.6",
         "Node name for S&R": "RIFE VFI",
+        "aux_id": "Fannovel16/ComfyUI-Frame-Interpolation",
         "widget_ue_connectable": {}
       },
       "widgets_values": [
@@ -664,6 +668,7 @@
         "cnr_id": "comfyui-frame-interpolation",
         "ver": "1.0.6",
         "Node name for S&R": "RIFE VFI",
+        "aux_id": "Fannovel16/ComfyUI-Frame-Interpolation",
         "widget_ue_connectable": {}
       },
       "widgets_values": [
@@ -1188,7 +1193,8 @@
         "max": 200,
         "step": 1,
         "decimals": 0,
-        "snap": true
+        "snap": true,
+        "aux_id": "Smirnov75/ComfyUI-mxToolkit"
       },
       "widgets_values": [
         81,
@@ -1336,6 +1342,7 @@
         "cnr_id": "comfyui-videohelpersuite",
         "ver": "4c7858ddd5126f7293dc3c9f6e0fc4c263cde079",
         "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
         "widget_ue_connectable": {}
       },
       "widgets_values": {
@@ -1607,7 +1614,8 @@
       "properties": {
         "cnr_id": "comfyui-kjnodes",
         "ver": "fb9d5764d21d23a3f52186aeccbb259efac96f9c",
-        "Node name for S&R": "FloatConstant"
+        "Node name for S&R": "FloatConstant",
+        "aux_id": "kijai/ComfyUI-KJNodes"
       },
       "widgets_values": [
         1.15
@@ -1765,6 +1773,7 @@
         "cnr_id": "comfyui-videohelpersuite",
         "ver": "4c7858ddd5126f7293dc3c9f6e0fc4c263cde079",
         "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
         "widget_ue_connectable": {}
       },
       "widgets_values": {
@@ -1869,7 +1878,8 @@
         "max": 20,
         "step": 1,
         "decimals": 0,
-        "snap": true
+        "snap": true,
+        "aux_id": "Smirnov75/ComfyUI-mxToolkit"
       },
       "widgets_values": [
         5,
@@ -2036,6 +2046,7 @@
         "cnr_id": "comfyui-gguf",
         "ver": "b3ec875a68d94b758914fd48d30571d953bb7a54",
         "Node name for S&R": "UnetLoaderGGUF",
+        "aux_id": "city96/ComfyUI-GGUF",
         "widget_ue_connectable": {
           "unet_name": true
         }
@@ -2075,6 +2086,7 @@
         "cnr_id": "comfyui-gguf",
         "ver": "b3ec875a68d94b758914fd48d30571d953bb7a54",
         "Node name for S&R": "UnetLoaderGGUF",
+        "aux_id": "city96/ComfyUI-GGUF",
         "widget_ue_connectable": {
           "unet_name": true
         }
@@ -2347,7 +2359,7 @@
           ],
           [
             "146",
-            "bypass_mode"
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -3037,6 +3049,7 @@
               "cnr_id": "comfyui-easy-use",
               "ver": "de92038f88317699f314be85e5c7af84f1ab9c3a",
               "Node name for S&R": "easy cleanGpuUsed",
+              "aux_id": "yolain/ComfyUI-Easy-Use",
               "widget_ue_connectable": {}
             },
             "widgets_values": [],
@@ -3179,8 +3192,7 @@
               497173477037518,
               "",
               "",
-              "",
-              "<tr><td>Output: </td><td><b>480</b> x <b>704</b> | 3.87MB | 337,920 pixels</td></tr>"
+              ""
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -3467,7 +3479,8 @@
             "properties": {
               "cnr_id": "comfyui-kjnodes",
               "ver": "e8b70f28be7fd71ee72c3848cfa09e1a89e3061b",
-              "Node name for S&R": "ColorMatch"
+              "Node name for S&R": "ColorMatch",
+              "aux_id": "kijai/ComfyUI-KJNodes"
             },
             "widgets_values": [
               "mkl",
@@ -3539,8 +3552,8 @@
               16,
               true,
               1042007702,
-              "randomize",
-              false
+              "fixed",
+              true
             ],
             "color": "#28403f",
             "bgcolor": "#374539"
@@ -3631,10 +3644,11 @@
               "cnr_id": "comfyui-easy-use",
               "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
               "Node name for S&R": "easy showAnything",
+              "aux_id": "yolain/ComfyUI-Easy-Use",
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: A hyper-detailed anime-style intimate moment unfolds inside a sunlit classroom—two characters entwine passionately under natural windowlight, one clad in bridal attire with purple braids and lace stockings while the other embraces her nude form with expressive eyes and flushed skin.)  \n(At 1 seconds: The camera glides slowly forward through shallow depth-of-field, focusing sharply on their wet, glistening bodies amid scattered school desks and chalkboard background, emphasizing saturated hues and exaggerated facial expressions characteristic of high-definition anime romance scenes.)  \n(At 2 seconds: As they move closer together, fluid motion suggests undulating intimacy—the bride’s mouth opens slightly mid-kiss while sweat beads trace along exposed curves beneath soft overhead fluorescent illumination casting warm highlights across flesh-toned textures.)  \n(At 3 seconds: A subtle shift occurs where ambient sunlight bleeds dramatically onto their limbs, enhancing chiaroscuro contrasts against muted beige walls and wooden furniture behind them—an effect mimicking dramatic studio cinematography within this animated universe.)  \n(At 4 seconds: Their embrace deepens without breaking rhythm—a single tear escapes the groom’s eye before being swallowed by shadowy folds around his neck as if caught in slow-mo emotional climax framed tightly like a manga panel bursting with emotion.)  \n(At 5 seconds: Final frame lingers locked-on close-up capturing trembling hands gripping hips amidst dripping fluids pooling softly near floorboards—all rendered in ultra-sharp detail using cel shading techniques typical of modern Japanese adult animations designed for maximum sensual impact.)"
+              "(At 0 seconds: A blue-haired anime girl with piercing blue eyes and tribal tattoos gazes forward while licking a large phallic object held firmly by her hands—her expression intense yet sensual under warm, intimate spotlighting.)  \n(At 1 seconds: Soft ambient glow emanates from a distant lamp against darkened surroundings; she shifts slightly, maintaining eye contact with viewer through direct gaze and subtle lip movement, emphasizing sensuality without breaking immersion.)  \n(At 2 seconds: Her fingers tighten around the shaft mid-stroke as tension builds visually—with detailed skin textures and realistic anatomical rendering—the background remains blurred to isolate emotional intensity within tight framing.)  \n(At 3 seconds: Lighting subtly intensifies across cheeks and chest contours highlighting muscular definition beneath delicate lingerie straps adorned with bow motifs—all rendered in hyper-detailed cel-shaded aesthetic typical of modern anime erotica conventions.)  \n(At 4 seconds: Camera holds steady focusing solely upon facial expressions and hand placement revealing escalating arousal levels via micro-expressions like dilated pupils and flushed complexion enhanced by dramatic chiaroscuro contrasts.)  \n(At 5 seconds: Final frame freezes moment just before climax—a slight head tilt accompanied by parted lips conveys peak desire while glowing highlights accentuate wetness along ridges creating illusionistic realism despite stylized vector lines defining form and shadow boundaries.)"
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -3954,10 +3968,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.7978636954430239,
+      "scale": 0.6593914838372098,
       "offset": [
-        2540.4571048960656,
-        -91.16420988527521
+        3310.2458883002982,
+        14.504244412156144
       ]
     }
   },

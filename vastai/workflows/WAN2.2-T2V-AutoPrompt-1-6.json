@@ -643,7 +643,7 @@
       ],
       "size": [
         495.594700387423,
-        334
+        1061.3920505811345
       ],
       "flags": {},
       "order": 35,
@@ -712,13 +712,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22__00030.mp4",
-            "subfolder": "2026-02-06",
+            "filename": "wan22__00060.mp4",
+            "subfolder": "2026-02-14",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 16,
-            "workflow": "wan22__00030.png",
-            "fullpath": "/workspace/ComfyUI/output/2026-02-06/wan22__00030.mp4"
+            "workflow": "wan22__00060.png",
+            "fullpath": "/workspace/ComfyUI/output/2026-02-14/wan22__00060.mp4"
           }
         }
       },
@@ -1168,7 +1168,7 @@
         230
       ],
       "flags": {},
-      "order": 30,
+      "order": 29,
       "mode": 0,
       "inputs": [
         {
@@ -1232,7 +1232,7 @@
         240
       ],
       "flags": {},
-      "order": 31,
+      "order": 30,
       "mode": 0,
       "inputs": [
         {
@@ -1556,7 +1556,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 28,
+      "order": 31,
       "mode": 0,
       "inputs": [
         {
@@ -1596,7 +1596,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 29,
+      "order": 28,
       "mode": 0,
       "inputs": [
         {
@@ -1802,6 +1802,220 @@
       "bgcolor": "#3f5159"
     },
     {
+      "id": 39,
+      "type": "VAELoader",
+      "pos": [
+        -1829.8354305145851,
+        549.9912449875234
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 0,
+          "links": [
+            396
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "VAELoader",
+        "widget_ue_connectable": {
+          "vae_name": true
+        }
+      },
+      "widgets_values": [
+        "wan_2.1_vae.safetensors"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 166,
+      "type": "ModelPatchTorchSettings",
+      "pos": [
+        -898.8490010335299,
+        -14.697893525508821
+      ],
+      "size": [
+        252.095703125,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 38,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 356
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            397
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "a6b867b63a29ca48ddb15c589e17a9f2d8530d57",
+        "Node name for S&R": "ModelPatchTorchSettings",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {
+            "enable_fp16_accumulation": true
+          }
+        }
+      },
+      "widgets_values": [
+        true
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 37,
+      "type": "UNETLoader",
+      "pos": [
+        -1834.8052108492877,
+        149.69919327388197
+      ],
+      "size": [
+        430,
+        82
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            403
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "UNETLoader",
+        "widget_ue_connectable": {
+          "unet_name": true,
+          "weight_dtype": true
+        }
+      },
+      "widgets_values": [
+        "wan22RemixT2VI2V_t2vHighV20.safetensors",
+        "default"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 56,
+      "type": "UNETLoader",
+      "pos": [
+        -1832.9265151111745,
+        279.11841540828925
+      ],
+      "size": [
+        430,
+        82
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            404
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "UNETLoader",
+        "widget_ue_connectable": {
+          "unet_name": true,
+          "weight_dtype": true
+        }
+      },
+      "widgets_values": [
+        "wan22RemixT2VI2V_t2vLowV20.safetensors",
+        "default"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 38,
+      "type": "CLIPLoader",
+      "pos": [
+        -1829.8354305145851,
+        399.99124498752326
+      ],
+      "size": [
+        309.9723071289061,
+        106
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 0,
+          "links": [
+            395
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "CLIPLoader",
+        "widget_ue_connectable": {
+          "clip_name": true,
+          "type": true,
+          "device": true
+        }
+      },
+      "widgets_values": [
+        "nsfw_wan_umt5-xxl_fp8_scaled.safetensors",
+        "wan",
+        "default"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
       "id": 161,
       "type": "f838c097-47c7-4eda-971d-a4ca071e3b81",
       "pos": [
@@ -1964,7 +2178,7 @@
           ],
           [
             "178",
-            "bypass_mode"
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -1980,220 +2194,6 @@
       ],
       "color": "#323",
       "bgcolor": "#535"
-    },
-    {
-      "id": 38,
-      "type": "CLIPLoader",
-      "pos": [
-        -1829.8354305145851,
-        399.99124498752326
-      ],
-      "size": [
-        309.9723071289061,
-        106
-      ],
-      "flags": {},
-      "order": 19,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "CLIP",
-          "type": "CLIP",
-          "slot_index": 0,
-          "links": [
-            395
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.46",
-        "Node name for S&R": "CLIPLoader",
-        "widget_ue_connectable": {
-          "clip_name": true,
-          "type": true,
-          "device": true
-        }
-      },
-      "widgets_values": [
-        "nsfw_wan_umt5-xxl_fp8_scaled.safetensors",
-        "wan",
-        "default"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 39,
-      "type": "VAELoader",
-      "pos": [
-        -1829.8354305145851,
-        549.9912449875234
-      ],
-      "size": [
-        210,
-        58
-      ],
-      "flags": {},
-      "order": 20,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "VAE",
-          "type": "VAE",
-          "slot_index": 0,
-          "links": [
-            396
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.46",
-        "Node name for S&R": "VAELoader",
-        "widget_ue_connectable": {
-          "vae_name": true
-        }
-      },
-      "widgets_values": [
-        "wan_2.1_vae.safetensors"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 166,
-      "type": "ModelPatchTorchSettings",
-      "pos": [
-        -898.8490010335299,
-        -14.697893525508821
-      ],
-      "size": [
-        252.095703125,
-        34
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 38,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 356
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            397
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-kjnodes",
-        "ver": "a6b867b63a29ca48ddb15c589e17a9f2d8530d57",
-        "Node name for S&R": "ModelPatchTorchSettings",
-        "aux_id": "kijai/ComfyUI-KJNodes",
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {
-            "enable_fp16_accumulation": true
-          }
-        }
-      },
-      "widgets_values": [
-        true
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
-      "id": 37,
-      "type": "UNETLoader",
-      "pos": [
-        -1834.8052108492877,
-        149.69919327388197
-      ],
-      "size": [
-        430,
-        82
-      ],
-      "flags": {},
-      "order": 21,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            403
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.46",
-        "Node name for S&R": "UNETLoader",
-        "widget_ue_connectable": {
-          "unet_name": true,
-          "weight_dtype": true
-        }
-      },
-      "widgets_values": [
-        "wan22RemixT2VI2V_t2vHighV20.safetensors",
-        "default"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 56,
-      "type": "UNETLoader",
-      "pos": [
-        -1832.9265151111745,
-        279.11841540828925
-      ],
-      "size": [
-        430,
-        82
-      ],
-      "flags": {},
-      "order": 22,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            404
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.46",
-        "Node name for S&R": "UNETLoader",
-        "widget_ue_connectable": {
-          "unet_name": true,
-          "weight_dtype": true
-        }
-      },
-      "widgets_values": [
-        "wan22RemixT2VI2V_t2vLowV20.safetensors",
-        "default"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
     }
   ],
   "links": [
@@ -3239,7 +3239,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: A lone figure with flowing light purple hair and aqua eyes stands dramatically in a shadowed canyon at twilight, bathed in golden-hued stage lights casting strong backlighting that silhouettes her form against the rugged cliffs — she wears a sleek sleeveless leather dress cinched by a chastity belt beneath a sheer naked hoodie, her posture poised yet sensual.)  \n(At 1 seconds: Close-up on her face as she opens her mouth slightly, tongue flickering outward, droplets of saliva glistening mid-air before cascading down her chest — soft ambient glow highlights the texture of her skin and the fabric’s matte sheen under low-angle spotlighting.)  \n(At 2 seconds: Camera tilts upward tracking the arc of her long hair swaying gently in the wind while revealing the impossible shirt clinging to her torso, subtly stretched across her curves — deep shadows pool behind her, enhancing the chiaroscuro effect of the canyon walls.)  \n(At 3 seconds: Slow push-in through a shallow depth-of-field blur, focusing sharply on one breast as a subtle nipple tweak causes a ripple of tension visible beneath the thin material — warm amber spotlights caress her silhouette, contrasting with cool blues bleeding from the sky above.)  \n(At 4 seconds: As the final beam of twilight fades, the scene dissolves into high-contrast noir tones — camera pans left past her shoulder to reveal the vast emptiness of the canyon floor, emphasizing isolation and raw eroticism rendered in anime-inspired line work and saturated palettes.)  \n(At 5 seconds: Freeze frame on her parted lips dripping saliva onto her collarbone — background blurs into painterly streaks of violet and indigo, evoking watercolor washes and emotional intensity as if captured by a dreamlike hand-painted still life.)"
+              "(At 0 seconds: A lone anime girl with light purple hair and aqua eyes stands mid-canyon at twilight, her sleeveless leather dress clinging to her form beneath a chastity belt, mouth slightly open as drool drips down—backlighting glows behind her like molten glass, casting deep shadows across the rugged cliffs.)  \n(At 1 seconds: She tilts her head, tongue lolling forward, nipples subtly tweaked under the dim glow of stage lights flickering above—a single spotlight cuts through the haze, illuminating her bare shoulders and the wet sheen of saliva pooling near her chest.)  \n(At 2 seconds: Her long hair sways as if caught by wind, while a hooded silhouette looms unseen in the distance—the camera pans slowly right, revealing the canyon’s depth and the surreal blend of natural decay and theatrical illumination.)  \n(At 3 seconds: The “impossible shirt” clings to her torso as she exhales softly, breath fogging the air around her—her expression shifts from vacant to predatory, eyes locking onto the viewer with unnerving intensity.)  \n(At 4 seconds: A sudden flash of red light stabs the sky as she clenches her fists, saliva dripping faster now—background fades into blurred motion blur, emphasizing her isolation within the grand, silent gorge.)  \n(At 5 seconds: She lowers her gaze, lips parted, trembling slightly as the final beam of light vanishes, leaving only the echo of her breath against the canyon walls—and the faint sound of her own heartbeat in the void.)"
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -3290,7 +3290,7 @@
               1.1,
               true,
               745489836,
-              "randomize",
+              "fixed",
               false
             ],
             "color": "#374445",
@@ -3533,8 +3533,8 @@
     "ds": {
       "scale": 0.7898737247191016,
       "offset": [
-        2660.2262695011236,
-        -0.21895478398064178
+        2649.108986161788,
+        -402.1225946510927
       ]
     }
   },
