@@ -38,10 +38,10 @@ NODES=(
     "https://github.com/city96/ComfyUI-GGUF"
     "https://github.com/kijai/ComfyUI-MMAudio"
     "https://github.com/GACLove/ComfyUI-VFI"
+    "https://github.com/pythongosssss/ComfyUI-Custom-Scripts"
     "https://github.com/yuvraj108c/ComfyUI-Upscaler-Tensorrt"
     "https://github.com/stduhpf/ComfyUI-WanMoeKSampler"
     "https://github.com/melMass/comfy_mtb"
-    "https://github.com/Jasonzzt/ComfyUI-CacheDiT"  
 )
 
 WORKFLOWS=(
