@@ -654,7 +654,7 @@ class AILab_QwenVL(QwenVLBase):
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("RESPONSE",)
     FUNCTION = "process"
-    CATEGORY = "🧪AILab/QwenVL"
+    CATEGORY = "🧪QwenVL-Mod/QwenVL"
 
     def process(self, model_name, quantization, preset_prompt, custom_prompt, attention_mode, max_tokens, keep_model_loaded, seed, keep_last_prompt=False, image=None, video=None):
         return self.run(model_name, quantization, preset_prompt, custom_prompt, image, video, 16, max_tokens, 0.6, 0.9, 1, 1.2, seed, keep_model_loaded, attention_mode, False, "auto", keep_last_prompt)
@@ -700,7 +700,7 @@ class AILab_QwenVL_Advanced(QwenVLBase):
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("RESPONSE",)
     FUNCTION = "process"
-    CATEGORY = "🧪AILab/QwenVL"
+    CATEGORY = "🧪QwenVL-Mod/QwenVL"
 
     def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, custom_prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, frame_count, keep_model_loaded, seed, keep_last_prompt, image=None, video=None):
         return self.run(model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt)
@@ -711,6 +711,6 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "AILab_QwenVL": "QwenVL",
-    "AILab_QwenVL_Advanced": "QwenVL (Advanced)",
+    "AILab_QwenVL": "QwenVL-Mod",
+    "AILab_QwenVL_Advanced": "QwenVL-Mod (Advanced)",
 }
