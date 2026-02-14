@@ -282,11 +282,11 @@
       "id": 62,
       "type": "Fast Groups Bypasser (rgthree)",
       "pos": [
-        -1340,
-        470
+        -1334.0875000000033,
+        468.46601562500024
       ],
       "size": [
-        470,
+        480,
         90
       ],
       "flags": {},
@@ -320,8 +320,8 @@
         -520
       ],
       "size": [
-        471.5345851243359,
-        701.5380610350519
+        487.23106949933583,
+        913.6017329100519
       ],
       "flags": {},
       "order": 2,
@@ -331,7 +331,7 @@
       "title": "README",
       "properties": {},
       "widgets_values": [
-        "# PIMPMYPONY TXT2IMG with WILDCARDS support\n\n## 🖥️ Civitai Model \n\n \n- [🔗 PimpMyPony - Real Anime](https://civitai.com/models/1195827?modelVersionId=2628215)\n- [🔗 PimpMyPony - InCase Style](https://civitai.com/models/1195827?modelVersionId=2611135)\n- [🔗 PimpMyPony - Semi Real Anime](https://civitai.com/models/1195827?modelVersionId=1346446)\n\n---\n\n## ⬆️ UPSCALE MODEL\n\n- [🔗 2xLexicaRRDBNet](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth)\n- [🔗 2xLexicaRRDBNet_Sharp](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth)\n\n---\n\n## 🎛️ AutoTag Node with Wildcards included\n\n```\ncd ComfyUI/custom_nodes\ngit clone https://github.com/huchukato/comfy-tagcomplete.git\n```\n\n✨ New in v2.0.0 - Wildcard Sub-Selection\nThis version introduces a1111-sd-webui-tagcomplete style wildcard sub-selection, making wildcard usage more intuitive and powerful:\n\n🎯 Wildcard Workflow\n- Type __ to see available wildcards\n- Select a wildcard with arrow keys and press Enter → inserts __wildcard_name__\n- Auto-show options → immediately displays all options from that wildcard\n- Select an option with arrow keys and press Enter → replaces wildcard with chosen option\nESC → keeps inserted wildcard and closes options\n🌟 Features\n- Smart parsing: Handles wildcards with complex paths (e.g., __mbe/blwjob/blwjb__)\n- Line-by-line options: Each line in wildcard file becomes a separate option\n- Text overflow handling: Long options are truncated with hover expansion\n- Full compatibility: Works with existing wildcard files and formats\n- Multiple sources: Supports wildcards from repository, ComfyUI/models, DynamicPrompts, and Impact-Pack\n📁 Wildcard Sources (in priority order):\n- Repository wildcards/ folder\n- ComfyUI models/wildcards/\n- ComfyUI custom_nodes/wildcards/\n- DynamicPrompts wildcards/\n- Extra model paths configuration\n- Impact-Pack wildcards\n- Impact-Pack.ini custom paths\n\nThis extension is based on ComfyUI-Custom-Scripts.\n\n\n\n"
+        "# PIMPMYPONY TXT2IMG with WILDCARDS support\n\n## 🖥️ Civitai Model \n\n \n- [🔗 PimpMyPony - Real Anime](https://civitai.com/models/1195827?modelVersionId=2628215)\n- [🔗 PimpMyPony - InCase Style](https://civitai.com/models/1195827?modelVersionId=2611135)\n- [🔗 PimpMyPony - Semi Real Anime](https://civitai.com/models/1195827?modelVersionId=1346446)\n\n---\n\n## ⬆️ UPSCALE MODEL\n\n- [🔗 2xLexicaRRDBNet](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth)\n- [🔗 2xLexicaRRDBNet_Sharp](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth)\n\n---\n\n## 🎛️ AutoTag Node with Wildcards included\n\n```\ncd ComfyUI/custom_nodes\ngit clone https://github.com/huchukato/comfy-tagcomplete.git\n```\n\n✨ New in v2.0.0 - Wildcard Sub-Selection\nThis version introduces a1111-sd-webui-tagcomplete style wildcard sub-selection, making wildcard usage more intuitive and powerful:\n\n🎯 Wildcard Workflow\n- Type __ to see available wildcards\n- Select a wildcard with arrow keys and press Enter → inserts __wildcard_name__\n- Auto-show options → immediately displays all options from that wildcard\n- Select an option with arrow keys and press Enter → replaces wildcard with chosen option\nESC → keeps inserted wildcard and closes options\n🌟 Features\n- Smart parsing: Handles wildcards with complex paths (e.g., __mbe/blwjob/blwjb__)\n- Line-by-line options: Each line in wildcard file becomes a separate option\n- Text overflow handling: Long options are truncated with hover expansion\n- Full compatibility: Works with existing wildcard files and formats\n- Multiple sources: Supports wildcards from repository, ComfyUI/models, DynamicPrompts, and Impact-Pack\n📁 Wildcard Sources (in priority order):\n- Repository wildcards/ folder\n- ComfyUI models/wildcards/\n- ComfyUI custom_nodes/wildcards/\n- DynamicPrompts wildcards/\n- Extra model paths configuration\n- Impact-Pack wildcards\n- Impact-Pack.ini custom paths\n\nThis extension is based on ComfyUI-Custom-Scripts.\n\n## 📁 Manual Wildcard Setup (Optional)\n\nIf you're installing manually or want to use wildcards with Impact Pack, you may need to copy the wildcards folder:\n\n1. **Copy wildcards to Impact Pack:**\n   ```bash\n   cp -r /path/to/comfy-tagcomplete/wildcards /path/to/ComfyUI/custom_nodes/comfyui-impact-pack/wildcards/\n   ```\n\n2. **Restart ComfyUI** to load the new wildcards\n\n"
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
@@ -392,8 +392,8 @@
             "wildcard_text"
           ],
           [
-            "63",
-            "populated_text"
+            "66",
+            "text"
           ],
           [
             "31",
@@ -545,8 +545,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 2,
-          "lastNodeId": 64,
-          "lastLinkId": 103,
+          "lastNodeId": 66,
+          "lastLinkId": 108,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -577,7 +577,7 @@
             "type": "CLIP",
             "linkIds": [
               82,
-              102
+              108
             ],
             "localized_name": "clip",
             "pos": [
@@ -654,7 +654,7 @@
               98
             ],
             "flags": {},
-            "order": 1,
+            "order": 0,
             "mode": 0,
             "inputs": [],
             "outputs": [
@@ -709,7 +709,7 @@
               58
             ],
             "flags": {},
-            "order": 4,
+            "order": 5,
             "mode": 0,
             "inputs": [
               {
@@ -753,7 +753,7 @@
               58
             ],
             "flags": {},
-            "order": 2,
+            "order": 1,
             "mode": 4,
             "inputs": [],
             "outputs": [
@@ -786,7 +786,7 @@
               105.67417907714844
             ],
             "flags": {},
-            "order": 7,
+            "order": 8,
             "mode": 0,
             "inputs": [
               {
@@ -819,59 +819,6 @@
             "bgcolor": "#533"
           },
           {
-            "id": 64,
-            "type": "CLIPTextEncode",
-            "pos": [
-              486.7865226298804,
-              364.26078811937106
-            ],
-            "size": [
-              400,
-              200
-            ],
-            "flags": {
-              "collapsed": true
-            },
-            "order": 8,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "clip",
-                "name": "clip",
-                "type": "CLIP",
-                "link": 102
-              },
-              {
-                "localized_name": "text",
-                "name": "text",
-                "type": "STRING",
-                "widget": {
-                  "name": "text"
-                },
-                "link": 101
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "CONDITIONING",
-                "name": "CONDITIONING",
-                "type": "CONDITIONING",
-                "links": [
-                  103
-                ]
-              }
-            ],
-            "title": "Positive",
-            "properties": {
-              "cnr_id": "comfy-core",
-              "ver": "0.13.0",
-              "Node name for S&R": "CLIPTextEncode"
-            },
-            "widgets_values": [
-              ""
-            ]
-          },
-          {
             "id": 3,
             "type": "KSampler",
             "pos": [
@@ -883,7 +830,7 @@
               262
             ],
             "flags": {},
-            "order": 5,
+            "order": 6,
             "mode": 0,
             "inputs": [
               {
@@ -928,7 +875,7 @@
               "Node name for S&R": "KSampler"
             },
             "widgets_values": [
-              893549515307400,
+              983163752543042,
               "randomize",
               30,
               5,
@@ -949,7 +896,7 @@
               146
             ],
             "flags": {},
-            "order": 3,
+            "order": 2,
             "mode": 0,
             "inputs": [],
             "outputs": [
@@ -1000,7 +947,7 @@
               46
             ],
             "flags": {},
-            "order": 6,
+            "order": 7,
             "mode": 0,
             "inputs": [
               {
@@ -1046,7 +993,7 @@
               435.8198749999999
             ],
             "flags": {},
-            "order": 0,
+            "order": 3,
             "mode": 0,
             "inputs": [],
             "outputs": [
@@ -1055,7 +1002,7 @@
                 "name": "processed text",
                 "type": "STRING",
                 "links": [
-                  101
+                  105
                 ]
               }
             ],
@@ -1069,12 +1016,115 @@
               "score_9, score_8_up, score_7_up, __mbe/prmpt/imgcmp/shots__, __mbe/prmpt/lctns/rndmlctns__, __mbe/prmpt/light/rndmlight__, __mbe/prmpt/char/rndmcharlb__, __mbe/prmpt/clths/rndmclth__, __mbe/prmpt/clths/nudty_brsts__, __mbe/actsolo/brstplng__ ",
               "",
               "populate",
-              557748306091449,
+              300811578217655,
               "randomize",
               "Select Wildcard 🟢 Full Cache"
             ],
             "color": "#2a363b",
             "bgcolor": "#3f5159"
+          },
+          {
+            "id": 66,
+            "type": "easy showAnything",
+            "pos": [
+              -347.49528916869394,
+              -182.2043267936429
+            ],
+            "size": [
+              380.2005395507813,
+              339.48220830078117
+            ],
+            "flags": {},
+            "order": 4,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": " ",
+                "localized_name": "anything",
+                "name": "anything",
+                "shape": 7,
+                "type": "*",
+                "link": 105
+              }
+            ],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "output",
+                "name": "output",
+                "type": "*",
+                "links": [
+                  106,
+                  107
+                ]
+              }
+            ],
+            "title": "Final prompt preview",
+            "properties": {
+              "cnr_id": "comfyui-easy-use",
+              "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
+              "Node name for S&R": "easy showAnything",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "score_9, score_8_up, score_7_up, feet out of frame, bus stop, sunset, dappled sunlight, sidelighting, shadow, 1girl, dark blue hair, absurdly long hair, comb over hair, straight hair, brown eyes, slim body, large breasts, short, babydoll, bra lift, solo, one breast out, breast lift "
+            ],
+            "color": "#232",
+            "bgcolor": "#353",
+            "shape": 2
+          },
+          {
+            "id": 64,
+            "type": "CLIPTextEncode",
+            "pos": [
+              455.3604332234191,
+              364.8037304559595
+            ],
+            "size": [
+              400,
+              200
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 9,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "clip",
+                "name": "clip",
+                "type": "CLIP",
+                "link": 108
+              },
+              {
+                "localized_name": "text",
+                "name": "text",
+                "type": "STRING",
+                "widget": {
+                  "name": "text"
+                },
+                "link": 107
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "CONDITIONING",
+                "name": "CONDITIONING",
+                "type": "CONDITIONING",
+                "links": [
+                  103
+                ]
+              }
+            ],
+            "title": "Positive",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.13.0",
+              "Node name for S&R": "CLIPTextEncode"
+            },
+            "widgets_values": [
+              ""
+            ]
           }
         ],
         "groups": [],
@@ -1086,14 +1136,6 @@
             "target_id": 41,
             "target_slot": 0,
             "type": "CLIP"
-          },
-          {
-            "id": 101,
-            "origin_id": 63,
-            "origin_slot": 0,
-            "target_id": 64,
-            "target_slot": 1,
-            "type": "STRING"
           },
           {
             "id": 41,
@@ -1144,14 +1186,6 @@
             "type": "CLIP"
           },
           {
-            "id": 102,
-            "origin_id": -10,
-            "origin_slot": 0,
-            "target_id": 64,
-            "target_slot": 0,
-            "type": "CLIP"
-          },
-          {
             "id": 90,
             "origin_id": -10,
             "origin_slot": 1,
@@ -1182,6 +1216,30 @@
             "target_id": -20,
             "target_slot": 2,
             "type": "IMAGE"
+          },
+          {
+            "id": 105,
+            "origin_id": 63,
+            "origin_slot": 0,
+            "target_id": 66,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 107,
+            "origin_id": 66,
+            "origin_slot": 0,
+            "target_id": 64,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 108,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 64,
+            "target_slot": 0,
+            "type": "CLIP"
           }
         ],
         "extra": {
@@ -1192,13 +1250,6 @@
   },
   "config": {},
   "extra": {
-    "ds": {
-      "scale": 0.9090909090909091,
-      "offset": [
-        1509.2228999876274,
-        636.5360463653936
-      ]
-    },
     "frontendVersion": "1.38.13",
     "workflowRendererVersion": "LG",
     "VHS_latentpreview": false,
@@ -1211,7 +1262,14 @@
       "ComfyUI-SDXL-EmptyLatentImage": "d886c198664998d1eecab60fff17509d22817977"
     },
     "VHS_MetadataImage": true,
-    "VHS_KeepIntermediate": true
+    "VHS_KeepIntermediate": true,
+    "ds": {
+      "scale": 0.9090909090909091,
+      "offset": [
+        1509.2228999876274,
+        638.3235463653937
+      ]
+    }
   },
   "version": 0.4
 }
