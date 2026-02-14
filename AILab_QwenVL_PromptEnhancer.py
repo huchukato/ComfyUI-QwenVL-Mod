@@ -73,7 +73,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("ENHANCED_OUTPUT",)
     FUNCTION = "process"
-    CATEGORY = "🧪AILab/QwenVL"
+    CATEGORY = "🧪QwenVL-Mod/QwenVL"
 
     def __init__(self):
         super().__init__()
@@ -324,5 +324,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "AILab_QwenVL_PromptEnhancer": "QwenVL Prompt Enhancer",
+    "AILab_QwenVL_PromptEnhancer": "QwenVL-Mod Prompt Enhancer",
 }
