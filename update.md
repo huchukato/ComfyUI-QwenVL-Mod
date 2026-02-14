@@ -27,6 +27,19 @@ This update refines the prompt persistence feature with a more intuitive paramet
 - **Source Fidelity**: "light sources actually present in the image, light quality as observed"
 - **No Invention**: "Do not invent or add lighting not present in the original image"
 - **Better Descriptions**: More accurate lighting analysis based on actual image content
+
+### 🔄 Updated GGUF Models
+- **Replaced noctrex Models**: Removed older noctrex abliterated GGUF variants
+- **Added mradermacher v2/v3**: Latest mradermacher quantizations for better performance
+- **4B Model**: Qwen3-VL-4B-Instruct-c_abliterated-v2-GGUF (7 variants: 2.38GB-4.28GB)
+- **8B Model**: Qwen3-VL-8B-Instruct-c_abliterated-v3-GGUF (7 variants: 4.8GB-8.71GB)
+- **Enhanced File Selection**: More quantization options (Q4_K_S, Q5_K_S) for better VRAM efficiency
+- **Corrected MMProj Files**: Updated to use proper .mmproj-f16.gguf files for each model
+
+### 📦 Enhanced Model Selection (HF)
+- **Added Josiefied Model**: Josiefied-Qwen3-VL-4B-Instruct-abliterated-beta-v1 (HF only)
+- **GGUF Not Available**: Josiefied model exists only in HuggingFace format, not GGUF
+- **Better Alternatives**: mradermacher models provide superior GGUF quantizations
 - **Reliable Behavior**: Works regardless of seed changes or model variations
 
 ### ✅ Universal Implementation
