@@ -1,7 +1,7 @@
 {
   "id": "599b4f0a-1e8f-4105-9e92-96726e9d46e1",
   "revision": 0,
-  "last_node_id": 224,
+  "last_node_id": 225,
   "last_link_id": 438,
   "nodes": [
     {
@@ -48,7 +48,7 @@
         }
       },
       "widgets_values": [
-        "073116_00001_.png",
+        "045444_00001_.png",
         "image"
       ],
       "color": "#233",
@@ -132,13 +132,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22__00019.mp4",
-            "subfolder": "2026-02-12",
+            "filename": "wan22__00056.mp4",
+            "subfolder": "2026-02-14",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 16,
-            "workflow": "wan22__00019.png",
-            "fullpath": "/workspace/ComfyUI/output/2026-02-12/wan22__00019.mp4"
+            "workflow": "wan22__00056.png",
+            "fullpath": "/workspace/ComfyUI/output/2026-02-14/wan22__00056.mp4"
           }
         }
       },
@@ -1421,136 +1421,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 109,
-      "type": "Power Lora Loader (rgthree)",
-      "pos": [
-        -1351.3657304491278,
-        -87.75910787437984
-      ],
-      "size": [
-        400,
-        290
-      ],
-      "flags": {},
-      "order": 32,
-      "mode": 0,
-      "inputs": [
-        {
-          "dir": 3,
-          "name": "model",
-          "type": "MODEL",
-          "link": 437
-        },
-        {
-          "dir": 3,
-          "name": "clip",
-          "type": "CLIP",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "dir": 4,
-          "name": "MODEL",
-          "shape": 3,
-          "type": "MODEL",
-          "links": [
-            360
-          ]
-        },
-        {
-          "dir": 4,
-          "name": "CLIP",
-          "shape": 3,
-          "type": "CLIP",
-          "links": null
-        }
-      ],
-      "title": "HIGH LORA LOADER",
-      "properties": {
-        "cnr_id": "rgthree-comfy",
-        "ver": "944d5353a1b0a668f40844018c3dc956b95a67d7",
-        "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
-        "widget_ue_connectable": {}
-      },
-      "widgets_values": [
-        {},
-        {
-          "type": "PowerLoraLoaderHeaderWidget"
-        },
-        {},
-        ""
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 110,
-      "type": "Power Lora Loader (rgthree)",
-      "pos": [
-        -1350.8132177197901,
-        324.63322709471225
-      ],
-      "size": [
-        400,
-        270
-      ],
-      "flags": {},
-      "order": 33,
-      "mode": 0,
-      "inputs": [
-        {
-          "dir": 3,
-          "name": "model",
-          "type": "MODEL",
-          "link": 438
-        },
-        {
-          "dir": 3,
-          "name": "clip",
-          "type": "CLIP",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "dir": 4,
-          "name": "MODEL",
-          "shape": 3,
-          "type": "MODEL",
-          "links": [
-            361
-          ]
-        },
-        {
-          "dir": 4,
-          "name": "CLIP",
-          "shape": 3,
-          "type": "CLIP",
-          "links": null
-        }
-      ],
-      "title": "LOW LORA LOADER",
-      "properties": {
-        "cnr_id": "rgthree-comfy",
-        "ver": "944d5353a1b0a668f40844018c3dc956b95a67d7",
-        "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
-        "widget_ue_connectable": {}
-      },
-      "widgets_values": [
-        {},
-        {
-          "type": "PowerLoraLoaderHeaderWidget"
-        },
-        {},
-        ""
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 221,
       "type": "RIFE VFI",
       "pos": [
@@ -1663,7 +1533,7 @@
       ],
       "size": [
         479.3177795410156,
-        334
+        1021.6660766601562
       ],
       "flags": {},
       "order": 50,
@@ -1721,13 +1591,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "031808_00001.mp4",
-            "subfolder": "60FPS/2026-01-26",
+            "filename": "030400_00001.mp4",
+            "subfolder": "60FPS/2026-02-14",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 64,
-            "workflow": "031808_00001.png",
-            "fullpath": "/workspace/ComfyUI/output/60FPS/2026-01-26/031808_00001.mp4"
+            "workflow": "030400_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/60FPS/2026-02-14/030400_00001.mp4"
           }
         }
       },
@@ -1944,84 +1814,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 155,
-      "type": "mxSlider",
-      "pos": [
-        -1866.0745374995613,
-        1904.6931508132222
-      ],
-      "size": [
-        540,
-        30
-      ],
-      "flags": {},
-      "order": 18,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "",
-          "type": "INT",
-          "links": [
-            318
-          ]
-        }
-      ],
-      "title": "Steps",
-      "properties": {
-        "cnr_id": "comfyui-mxtoolkit",
-        "ver": "7f7a0e584f12078a1c589645d866ae96bad0cc35",
-        "Node name for S&R": "mxSlider",
-        "value": 5,
-        "min": 0,
-        "max": 20,
-        "step": 1,
-        "decimals": 0,
-        "snap": true
-      },
-      "widgets_values": [
-        5,
-        5,
-        0
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
-      "id": 132,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -1870,
-        2260
-      ],
-      "size": [
-        540,
-        130
-      ],
-      "flags": {},
-      "order": 19,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "properties": {
-        "matchColors": "yellow",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#322",
-      "bgcolor": "#533"
-    },
-    {
       "id": 198,
       "type": "UnetLoaderGGUF",
       "pos": [
@@ -2033,7 +1825,7 @@
         72.50918579101562
       ],
       "flags": {},
-      "order": 20,
+      "order": 18,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -2072,7 +1864,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 21,
+      "order": 19,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -2093,6 +1885,214 @@
       },
       "widgets_values": [
         "wan22RemixI2VGGUFV21_lowQ80.gguf"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 132,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -1870,
+        2260
+      ],
+      "size": [
+        540,
+        130
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "matchColors": "yellow",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 155,
+      "type": "mxSlider",
+      "pos": [
+        -1866.0745374995613,
+        1904.6931508132222
+      ],
+      "size": [
+        540,
+        30
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "INT",
+          "links": [
+            318
+          ]
+        }
+      ],
+      "title": "Steps",
+      "properties": {
+        "cnr_id": "comfyui-mxtoolkit",
+        "ver": "7f7a0e584f12078a1c589645d866ae96bad0cc35",
+        "Node name for S&R": "mxSlider",
+        "value": 5,
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "decimals": 0,
+        "snap": true
+      },
+      "widgets_values": [
+        5,
+        5,
+        0
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 109,
+      "type": "Power Lora Loader (rgthree)",
+      "pos": [
+        -1351.3657304491278,
+        -87.75910787437984
+      ],
+      "size": [
+        400,
+        290
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "model",
+          "type": "MODEL",
+          "link": 437
+        },
+        {
+          "dir": 3,
+          "name": "clip",
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "MODEL",
+          "shape": 3,
+          "type": "MODEL",
+          "links": [
+            360
+          ]
+        },
+        {
+          "dir": 4,
+          "name": "CLIP",
+          "shape": 3,
+          "type": "CLIP",
+          "links": null
+        }
+      ],
+      "title": "HIGH LORA LOADER",
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "944d5353a1b0a668f40844018c3dc956b95a67d7",
+        "Show Strengths": "Single Strength",
+        "aux_id": "rgthree/rgthree-comfy",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        {},
+        {
+          "type": "PowerLoraLoaderHeaderWidget"
+        },
+        {},
+        ""
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 110,
+      "type": "Power Lora Loader (rgthree)",
+      "pos": [
+        -1350.8132177197901,
+        324.63322709471225
+      ],
+      "size": [
+        400,
+        270
+      ],
+      "flags": {},
+      "order": 33,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "model",
+          "type": "MODEL",
+          "link": 438
+        },
+        {
+          "dir": 3,
+          "name": "clip",
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "MODEL",
+          "shape": 3,
+          "type": "MODEL",
+          "links": [
+            361
+          ]
+        },
+        {
+          "dir": 4,
+          "name": "CLIP",
+          "shape": 3,
+          "type": "CLIP",
+          "links": null
+        }
+      ],
+      "title": "LOW LORA LOADER",
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "944d5353a1b0a668f40844018c3dc956b95a67d7",
+        "Show Strengths": "Single Strength",
+        "aux_id": "rgthree/rgthree-comfy",
+        "widget_ue_connectable": {}
+      },
+      "widgets_values": [
+        {},
+        {
+          "type": "PowerLoraLoaderHeaderWidget"
+        },
+        {},
+        ""
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
@@ -2215,7 +2215,7 @@
         }
       },
       "widgets_values": [
-        "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "nsfw_wan_umt5-xxl_fp8_scaled.safetensors",
         "wan",
         "default"
       ],
@@ -2231,7 +2231,7 @@
       ],
       "size": [
         783.8555924235986,
-        640
+        660
       ],
       "flags": {},
       "order": 35,
@@ -2406,7 +2406,7 @@
           ],
           [
             "193",
-            "bypass_mode"
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -2869,9 +2869,9 @@
         "id": "f838c097-47c7-4eda-971d-a4ca071e3b81",
         "version": 1,
         "state": {
-          "lastGroupId": 17,
-          "lastNodeId": 195,
-          "lastLinkId": 449,
+          "lastGroupId": 18,
+          "lastNodeId": 204,
+          "lastLinkId": 458,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -3110,67 +3110,6 @@
             "shape": 2
           },
           {
-            "id": 90,
-            "type": "CLIPTextEncode",
-            "pos": [
-              -900.580520917988,
-              1310.8626730505457
-            ],
-            "size": [
-              440,
-              160
-            ],
-            "flags": {
-              "collapsed": true
-            },
-            "order": 3,
-            "mode": 0,
-            "inputs": [
-              {
-                "label": " ",
-                "localized_name": "clip",
-                "name": "clip",
-                "type": "CLIP",
-                "link": 165
-              },
-              {
-                "localized_name": "text",
-                "name": "text",
-                "type": "STRING",
-                "widget": {
-                  "name": "text"
-                },
-                "link": 446
-              }
-            ],
-            "outputs": [
-              {
-                "label": " ",
-                "localized_name": "CONDITIONING",
-                "name": "CONDITIONING",
-                "type": "CONDITIONING",
-                "links": [
-                  428
-                ]
-              }
-            ],
-            "title": "Positive encode",
-            "properties": {
-              "cnr_id": "comfy-core",
-              "ver": "0.3.26",
-              "Node name for S&R": "CLIPTextEncode",
-              "widget_ue_connectable": {
-                "text": true
-              }
-            },
-            "widgets_values": [
-              ""
-            ],
-            "color": "#222",
-            "bgcolor": "#000",
-            "shape": 1
-          },
-          {
             "id": 168,
             "type": "VAEDecode",
             "pos": [
@@ -3219,163 +3158,6 @@
             },
             "widgets_values": [],
             "shape": 2
-          },
-          {
-            "id": 164,
-            "type": "Seed (rgthree)",
-            "pos": [
-              -709.4209847923765,
-              1395.6701333047197
-            ],
-            "size": [
-              298.90386962890625,
-              180
-            ],
-            "flags": {},
-            "order": 0,
-            "mode": 0,
-            "inputs": [],
-            "outputs": [
-              {
-                "dir": 4,
-                "name": "SEED",
-                "shape": 3,
-                "type": "INT",
-                "links": [
-                  424
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "rgthree-comfy",
-              "ver": "84a146fee39f7b3a8c6631dcac29bc13b077eb49",
-              "randomMax": 1125899906842624,
-              "randomMin": 0,
-              "aux_id": "rgthree/rgthree-comfy",
-              "widget_ue_connectable": {}
-            },
-            "widgets_values": [
-              37974869511859,
-              "",
-              "",
-              ""
-            ],
-            "color": "#232",
-            "bgcolor": "#353",
-            "shape": 1
-          },
-          {
-            "id": 191,
-            "type": "WanMoeKSamplerAdvanced",
-            "pos": [
-              -198.6736284118771,
-              1002.887496252144
-            ],
-            "size": [
-              312.353515625,
-              426
-            ],
-            "flags": {},
-            "order": 7,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "model_high_noise",
-                "name": "model_high_noise",
-                "type": "MODEL",
-                "link": 418
-              },
-              {
-                "localized_name": "model_low_noise",
-                "name": "model_low_noise",
-                "type": "MODEL",
-                "link": 419
-              },
-              {
-                "localized_name": "positive",
-                "name": "positive",
-                "type": "CONDITIONING",
-                "link": 436
-              },
-              {
-                "localized_name": "negative",
-                "name": "negative",
-                "type": "CONDITIONING",
-                "link": 437
-              },
-              {
-                "localized_name": "latent_image",
-                "name": "latent_image",
-                "type": "LATENT",
-                "link": 435
-              },
-              {
-                "localized_name": "noise_seed",
-                "name": "noise_seed",
-                "type": "INT",
-                "widget": {
-                  "name": "noise_seed"
-                },
-                "link": 424
-              },
-              {
-                "localized_name": "steps",
-                "name": "steps",
-                "type": "INT",
-                "widget": {
-                  "name": "steps"
-                },
-                "link": 425
-              },
-              {
-                "localized_name": "sampler_name",
-                "name": "sampler_name",
-                "type": "COMBO",
-                "widget": {
-                  "name": "sampler_name"
-                },
-                "link": 426
-              },
-              {
-                "localized_name": "scheduler",
-                "name": "scheduler",
-                "type": "COMBO",
-                "widget": {
-                  "name": "scheduler"
-                },
-                "link": 427
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "LATENT",
-                "name": "LATENT",
-                "type": "LATENT",
-                "links": [
-                  438
-                ]
-              }
-            ],
-            "properties": {
-              "aux_id": "stduhpf/ComfyUI-WanMoeKSampler",
-              "ver": "ee8fa8ffb356dc5d9f456a0cdb211e60e543cb59",
-              "Node name for S&R": "WanMoeKSamplerAdvanced"
-            },
-            "widgets_values": [
-              0.9,
-              "enable",
-              0,
-              "fixed",
-              20,
-              1,
-              1,
-              "euler",
-              "simple",
-              8,
-              0,
-              10000,
-              "disable"
-            ]
           },
           {
             "id": 192,
@@ -3554,99 +3336,210 @@
             ]
           },
           {
-            "id": 194,
-            "type": "StringConcatenate",
+            "id": 7,
+            "type": "CLIPTextEncode",
             "pos": [
-              -670.0669369271018,
-              686.7338531876637
+              -1131.6492092762048,
+              1188.8764669236803
             ],
             "size": [
-              400,
-              200
+              325.04962402343745,
+              94.53972656250005
             ],
             "flags": {},
-            "order": 10,
+            "order": 1,
             "mode": 0,
             "inputs": [
               {
-                "localized_name": "string_b",
-                "name": "string_b",
-                "type": "STRING",
-                "widget": {
-                  "name": "string_b"
-                },
-                "link": 448
+                "localized_name": "clip",
+                "name": "clip",
+                "type": "CLIP",
+                "link": 75
               }
             ],
             "outputs": [
               {
-                "localized_name": "STRING",
-                "name": "STRING",
-                "type": "STRING",
+                "localized_name": "CONDITIONING",
+                "name": "CONDITIONING",
+                "type": "CONDITIONING",
+                "slot_index": 0,
                 "links": [
-                  449
+                  429
+                ]
+              }
+            ],
+            "title": "Negative",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.46",
+              "Node name for S&R": "CLIPTextEncode",
+              "widget_ue_connectable": {
+                "text": true
+              }
+            },
+            "widgets_values": [
+              "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走, censored, mosaic censoring, bar censor, pixelated, glowing, bloom, blurry, day, out of focus, low detail, bad anatomy, ugly, overexposed, underexposed, distorted face, extra limbs, cartoonish, 3d render artifacts, duplicate people, unnatural lighting, bad composition, missing shadows, low resolution, poorly textured, glitch, noise, grain, static, motionless, still frame, overall grayish, worst quality, low quality, JPEG compression artifacts, subtitles, stylized, artwork, painting, illustration, cluttered background, many people in background, three legs, walking backward, zoom out, zoom in, mouth speaking, moving mouth, talking, speaking, mute speaking, unnatural skin tone, discolored eyelid, red eyelids, red upper eyelids, no red eyeshadow, closed eyes, no wide-open innocent eyes, poorly drawn hands, extra fingers, fused fingers, poorly drawn face, deformed, disfigured, malformed limbs, thighs, fog, mist, voluminous eyelashes, blush,"
+            ],
+            "color": "#322",
+            "bgcolor": "#533",
+            "shape": 2
+          },
+          {
+            "id": 191,
+            "type": "WanMoeKSamplerAdvanced",
+            "pos": [
+              -201.06054247437703,
+              1010.7052306271439
+            ],
+            "size": [
+              312.353515625,
+              426
+            ],
+            "flags": {},
+            "order": 7,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model_high_noise",
+                "name": "model_high_noise",
+                "type": "MODEL",
+                "link": 418
+              },
+              {
+                "localized_name": "model_low_noise",
+                "name": "model_low_noise",
+                "type": "MODEL",
+                "link": 419
+              },
+              {
+                "localized_name": "positive",
+                "name": "positive",
+                "type": "CONDITIONING",
+                "link": 436
+              },
+              {
+                "localized_name": "negative",
+                "name": "negative",
+                "type": "CONDITIONING",
+                "link": 437
+              },
+              {
+                "localized_name": "latent_image",
+                "name": "latent_image",
+                "type": "LATENT",
+                "link": 435
+              },
+              {
+                "localized_name": "noise_seed",
+                "name": "noise_seed",
+                "type": "INT",
+                "widget": {
+                  "name": "noise_seed"
+                },
+                "link": 452
+              },
+              {
+                "localized_name": "steps",
+                "name": "steps",
+                "type": "INT",
+                "widget": {
+                  "name": "steps"
+                },
+                "link": 425
+              },
+              {
+                "localized_name": "sampler_name",
+                "name": "sampler_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "sampler_name"
+                },
+                "link": 426
+              },
+              {
+                "localized_name": "scheduler",
+                "name": "scheduler",
+                "type": "COMBO",
+                "widget": {
+                  "name": "scheduler"
+                },
+                "link": 427
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "LATENT",
+                "name": "LATENT",
+                "type": "LATENT",
+                "links": [
+                  438
                 ]
               }
             ],
             "properties": {
-              "cnr_id": "comfy-core",
-              "ver": "0.12.3",
-              "Node name for S&R": "StringConcatenate"
+              "aux_id": "stduhpf/ComfyUI-WanMoeKSampler",
+              "ver": "ee8fa8ffb356dc5d9f456a0cdb211e60e543cb59",
+              "Node name for S&R": "WanMoeKSamplerAdvanced"
             },
             "widgets_values": [
-              "",
-              "",
-              ""
+              0.9,
+              "enable",
+              36769547016704,
+              "fixed",
+              20,
+              1,
+              1,
+              "euler",
+              "simple",
+              8,
+              0,
+              10000,
+              "disable"
             ]
           },
           {
-            "id": 89,
-            "type": "easy showAnything",
+            "id": 164,
+            "type": "Seed (rgthree)",
             "pos": [
-              -687.1304948753689,
-              973.1851912569182
+              -709.4209847923765,
+              1395.6701333047197
             ],
             "size": [
-              380.2005395507813,
-              339.48220830078117
+              298.90386962890625,
+              180
             ],
             "flags": {},
-            "order": 2,
+            "order": 0,
             "mode": 0,
-            "inputs": [
-              {
-                "label": " ",
-                "localized_name": "anything",
-                "name": "anything",
-                "shape": 7,
-                "type": "*",
-                "link": 449
-              }
-            ],
+            "inputs": [],
             "outputs": [
               {
-                "label": " ",
-                "localized_name": "output",
-                "name": "output",
-                "type": "*",
+                "dir": 4,
+                "name": "SEED",
+                "shape": 3,
+                "type": "INT",
                 "links": [
-                  446
+                  452
                 ]
               }
             ],
-            "title": "Final prompt preview",
             "properties": {
-              "cnr_id": "comfyui-easy-use",
-              "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
-              "Node name for S&R": "easy showAnything",
+              "cnr_id": "rgthree-comfy",
+              "ver": "84a146fee39f7b3a8c6631dcac29bc13b077eb49",
+              "randomMax": 1125899906842624,
+              "randomMin": 0,
+              "aux_id": "rgthree/rgthree-comfy",
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: A sultry anime-style scene opens with a young woman with long brown braids kneeling on a wooden floor, her back arched and bound by white cloth as she looks over her shoulder with wide, expressive eyes. She wears a blue muzzle, and translucent fluid drips down her buttocks under warm, golden sunlight streaming through a window. In the mirror behind her, her reflection—dressed in a white cropped shirt and shorts—stands frozen in shock. The room is minimalist with soft shadows and clean lines, rendered in vibrant anime colors with detailed shading and glossy skin textures.) (At 1 seconds: Slow-motion tilt-up camera movement follows the fluid as it glides across her skin, emphasizing every curve under the dramatic backlighting. Her reflection’s expression shifts from surprise to intrigue as she leans forward slightly. The background remains static, letting the focus stay on the contrast between her restrained body and the sensual motion of the liquid.) (At 2 seconds: A subtle zoom-in tightens the frame around her waist and hips, capturing the interplay of light and shadow across her form. Her reflection’s gaze locks onto hers in the mirror, creating an intimate moment of connection despite the physical separation. The anime style enhances the emotional tension with exaggerated facial expressions and smooth motion lines.) (At 3 seconds: A slow pan right reveals a potted plant near the window casting soft shadows on the wall, adding depth to the otherwise clean composition. Her reflection’s hands now hover near her hips as if reacting to the scene unfolding before her. The lighting remains consistent—golden hour tones with high contrast that accentuate every contour and droplet.) (At 4 seconds: As the camera holds steady, a single drop of fluid falls from her hip toward the floor, suspended in mid-air by the slow-motion effect. Her reflection’s eyes widen further, conveying awe or realization. The scene feels intimate yet theatrical, framed with anime-style composition that emphasizes emotion over realism.) (At 5 seconds: The final shot pulls back slightly to show the full silhouette of her kneeling form against the window’s glow, while the mirror reflects both her and the viewer’s perspective. Her expression softens into a mix of submission and desire. The scene ends on a lingering visual of light, fluid, and emotional tension—all rendered in rich anime detail with cinematic lighting.)"
+              1060363206944516,
+              "",
+              "",
+              ""
             ],
             "color": "#232",
             "bgcolor": "#353",
-            "shape": 2
+            "shape": 1
           },
           {
             "id": 193,
@@ -3697,7 +3590,7 @@
               "Huihui-Qwen3-VL-4B-Instruct-abliterated-Q8_0.gguf",
               "auto",
               "🍿 Wan 2.2 I2V",
-              "",
+              "fellatio, blowjob",
               512,
               0.6,
               0.9,
@@ -3710,60 +3603,167 @@
               0,
               4194304,
               true,
-              3490102817,
-              "randomize",
-              false
+              3660875256,
+              "fixed",
+              true
             ],
             "color": "#474539",
             "bgcolor": "#2c4045"
           },
           {
-            "id": 7,
-            "type": "CLIPTextEncode",
+            "id": 194,
+            "type": "StringConcatenate",
             "pos": [
-              -1131.6492092762048,
-              1188.8764669236803
+              -680.5264844131456,
+              613.3208776201079
             ],
             "size": [
-              325.04962402343745,
-              94.53972656250005
+              400,
+              200
             ],
             "flags": {},
-            "order": 1,
+            "order": 10,
             "mode": 0,
             "inputs": [
               {
-                "localized_name": "clip",
-                "name": "clip",
-                "type": "CLIP",
-                "link": 75
+                "localized_name": "string_b",
+                "name": "string_b",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_b"
+                },
+                "link": 448
               }
             ],
             "outputs": [
               {
-                "localized_name": "CONDITIONING",
-                "name": "CONDITIONING",
-                "type": "CONDITIONING",
-                "slot_index": 0,
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
                 "links": [
-                  429
+                  458
                 ]
               }
             ],
-            "title": "Negative",
             "properties": {
               "cnr_id": "comfy-core",
-              "ver": "0.3.46",
+              "ver": "0.12.3",
+              "Node name for S&R": "StringConcatenate"
+            },
+            "widgets_values": [
+              "",
+              "",
+              ""
+            ]
+          },
+          {
+            "id": 90,
+            "type": "CLIPTextEncode",
+            "pos": [
+              -927.3583269564525,
+              1333.0311147056382
+            ],
+            "size": [
+              440,
+              160
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": " ",
+                "localized_name": "clip",
+                "name": "clip",
+                "type": "CLIP",
+                "link": 165
+              },
+              {
+                "localized_name": "text",
+                "name": "text",
+                "type": "STRING",
+                "widget": {
+                  "name": "text"
+                },
+                "link": 446
+              }
+            ],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "CONDITIONING",
+                "name": "CONDITIONING",
+                "type": "CONDITIONING",
+                "links": [
+                  428
+                ]
+              }
+            ],
+            "title": "Positive encode",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.26",
               "Node name for S&R": "CLIPTextEncode",
               "widget_ue_connectable": {
                 "text": true
               }
             },
             "widgets_values": [
-              "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走, censored, mosaic censoring, bar censor, pixelated, glowing, bloom, blurry, day, out of focus, low detail, bad anatomy, ugly, overexposed, underexposed, distorted face, extra limbs, cartoonish, 3d render artifacts, duplicate people, unnatural lighting, bad composition, missing shadows, low resolution, poorly textured, glitch, noise, grain, static, motionless, still frame, overall grayish, worst quality, low quality, JPEG compression artifacts, subtitles, stylized, artwork, painting, illustration, cluttered background, many people in background, three legs, walking backward, zoom out, zoom in, mouth speaking, moving mouth, talking, speaking, mute speaking, unnatural skin tone, discolored eyelid, red eyelids, red upper eyelids, no red eyeshadow, closed eyes, no wide-open innocent eyes, poorly drawn hands, extra fingers, fused fingers, poorly drawn face, deformed, disfigured, malformed limbs, thighs, fog, mist, voluminous eyelashes, blush,"
+              ""
             ],
-            "color": "#322",
-            "bgcolor": "#533",
+            "color": "#222",
+            "bgcolor": "#000",
+            "shape": 1
+          },
+          {
+            "id": 89,
+            "type": "easy showAnything",
+            "pos": [
+              -668.8835969747374,
+              916.2250468362362
+            ],
+            "size": [
+              380.2005395507813,
+              339.48220830078117
+            ],
+            "flags": {},
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": " ",
+                "localized_name": "anything",
+                "name": "anything",
+                "shape": 7,
+                "type": "*",
+                "link": 458
+              }
+            ],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "output",
+                "name": "output",
+                "type": "*",
+                "links": [
+                  446
+                ]
+              }
+            ],
+            "title": "Final prompt preview",
+            "properties": {
+              "cnr_id": "comfyui-easy-use",
+              "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
+              "Node name for S&R": "easy showAnything",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "(At 0 seconds: A blue-haired anime girl with piercing blue eyes and tribal tattoos on her arms is seated in a dimly lit room, illuminated by a single warm lamp in the background; she holds a phallic object with both hands while licking it, her expression intense and focused.)(At 1 seconds: The scene remains static as the character’s gaze locks onto the viewer, her tongue moving rhythmically against the object, emphasizing stylized anime motion and vibrant skin tones under dramatic chiaroscuro lighting.)(At 2 seconds: Her body subtly shifts with a slight tilt of the head, maintaining eye contact while the camera holds steady, capturing the texture of her skin and the glossy surface of the object in sharp detail.)(At 3 seconds: The ambient glow from the lamp casts soft shadows across her form, enhancing the intimate atmosphere; no movement occurs as the scene remains locked in a cinematic close-up with shallow depth of field.)(At 4 seconds: Her expression intensifies slightly, lips parted and eyes widening momentarily before returning to focus, all rendered in high-contrast anime style with saturated colors and simplified background elements.)(At 5 seconds: The frame freezes on her face as she continues the motion, emphasizing the stylized anatomy and emotional intensity of the moment within a dark, moody environment that isolates her figure.)"
+            ],
+            "color": "#232",
+            "bgcolor": "#353",
             "shape": 2
           }
         ],
@@ -3840,14 +3840,6 @@
             "target_id": 191,
             "target_slot": 1,
             "type": "MODEL"
-          },
-          {
-            "id": 424,
-            "origin_id": 164,
-            "origin_slot": 0,
-            "target_id": 191,
-            "target_slot": 5,
-            "type": "INT"
           },
           {
             "id": 425,
@@ -3994,7 +3986,15 @@
             "type": "STRING"
           },
           {
-            "id": 449,
+            "id": 452,
+            "origin_id": 164,
+            "origin_slot": 0,
+            "target_id": 191,
+            "target_slot": 5,
+            "type": "INT"
+          },
+          {
+            "id": 458,
             "origin_id": 194,
             "origin_slot": 0,
             "target_id": 89,
@@ -4019,10 +4019,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.68093279526637,
+      "scale": 0.625711225290698,
       "offset": [
-        2896.1369458788245,
-        -375.28889650432865
+        3641.735121770272,
+        -479.29197363973907
       ]
     }
   },

@@ -6857,7 +6857,7 @@
           ],
           [
             "1286",
-            "bypass_mode"
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -7088,7 +7088,7 @@
           ],
           [
             "1277",
-            "bypass_mode"
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -7321,7 +7321,7 @@
           ],
           [
             "1277",
-            "bypass_mode"
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -7554,7 +7554,7 @@
           ],
           [
             "1277",
-            "bypass_mode"
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -9485,7 +9485,7 @@
             },
             "widgets_values": [
               "Huihui-Qwen3-VL-4B-Instruct-abliterated-Q8_0.gguf",
-              "anime style, feet out of frame, in a poolside, sunrise, light rays, underlighting, tree shade (2girls, yuri) french kiss, closed eyes, 1girl, purple hair, big hair, rattail hair, blunt ends, brown eyes, slim body, large breasts, off the shoulder dress, clothing aside, 1girl, brown hair, big hair, ponyhawk hair, messy hair, brown eyes, slim body, large breasts, boyshort panties, bare legs",
+              "",
               "🍿 Wan 2.2 T2V",
               "",
               512,
@@ -9495,7 +9495,7 @@
               false,
               "auto",
               359108356,
-              "randomize",
+              "fixed",
               false
             ],
             "color": "#374445",
@@ -10822,7 +10822,7 @@
               4194304,
               false,
               22256964,
-              "randomize",
+              "fixed",
               false
             ],
             "color": "#474539",
@@ -12239,7 +12239,7 @@
               4194304,
               false,
               1844016422,
-              "randomize",
+              "fixed",
               false
             ],
             "color": "#474539",
@@ -13654,7 +13654,7 @@
               4194304,
               false,
               242952595,
-              "randomize",
+              "fixed",
               false
             ],
             "color": "#474539",
@@ -14318,10 +14318,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.41009925150287896,
+      "scale": 0.5458421037503322,
       "offset": [
-        3000.526134749658,
-        1241.8672371465361
+        2858.7397230631636,
+        43.14266428128755
       ]
     }
   },

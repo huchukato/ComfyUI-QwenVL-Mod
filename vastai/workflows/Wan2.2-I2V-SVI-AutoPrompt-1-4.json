@@ -3594,214 +3594,81 @@
       "bgcolor": "#533"
     },
     {
-      "id": 193,
-      "type": "c5a95b71-2875-4c1e-930a-368bc51e3aa7",
+      "id": 285,
+      "type": "2d1bb655-03cd-4861-873a-4cb3bebd6712",
       "pos": [
-        481.6153014391245,
-        -514.2405514698622
+        1814.803744920939,
+        -514.6980173442989
       ],
       "size": [
-        410,
+        400,
         610
       ],
       "flags": {
         "collapsed": false
       },
-      "order": 85,
+      "order": 88,
       "mode": 0,
       "inputs": [
         {
           "name": "noise",
           "type": "NOISE",
-          "link": 523
+          "link": 500
         },
         {
           "name": "sampler",
           "type": "SAMPLER",
-          "link": 375
+          "link": 501
         },
         {
           "label": "sigmas_high",
           "name": "sigmas",
           "type": "SIGMAS",
-          "link": 376
+          "link": 502
         },
         {
           "label": "sigmas_low",
           "name": "sigmas_1",
           "type": "SIGMAS",
-          "link": 377
+          "link": 503
         },
         {
           "name": "clip",
           "type": "CLIP",
-          "link": 378
+          "link": 504
         },
         {
           "label": "model_high",
           "name": "model",
           "type": "MODEL",
-          "link": 485
+          "link": 505
         },
         {
           "label": "model_low",
           "name": "model_1",
           "type": "MODEL",
-          "link": 484
+          "link": 506
         },
         {
           "name": "vae",
           "type": "VAE",
-          "link": 381
+          "link": 507
         },
         {
           "name": "anchor_samples",
           "type": "LATENT",
-          "link": 401
+          "link": 508
         },
         {
           "name": "prev_samples",
           "type": "LATENT",
-          "link": null
-        },
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 461
-        }
-      ],
-      "outputs": [
-        {
-          "label": "samples",
-          "name": "output",
-          "type": "LATENT",
-          "links": [
-            465
-          ]
-        },
-        {
-          "label": "decoded_images",
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            466
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "199",
-            "string_a"
-          ],
-          [
-            "197",
-            "custom_prompt"
-          ],
-          [
-            "190",
-            "text"
-          ],
-          [
-            "197",
-            "control_after_generate"
-          ],
-          [
-            "197",
-            "preset_prompt"
-          ],
-          [
-            "197",
-            "model_name"
-          ],
-          [
-            "197",
-            "bypass_mode"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.5.1"
-      },
-      "widgets_values": [],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 181,
-      "type": "dbe682c8-c9d2-4f3f-a199-35cc09e15d27",
-      "pos": [
-        940,
-        -520
-      ],
-      "size": [
-        400,
-        610.0000000000001
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 86,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "noise",
-          "type": "NOISE",
-          "link": 463
-        },
-        {
-          "name": "sampler",
-          "type": "SAMPLER",
-          "link": 359
-        },
-        {
-          "label": "sigmas_high",
-          "name": "sigmas",
-          "type": "SIGMAS",
-          "link": 371
-        },
-        {
-          "label": "sigmas_low",
-          "name": "sigmas_1",
-          "type": "SIGMAS",
-          "link": 372
-        },
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 362
-        },
-        {
-          "label": "model_high",
-          "name": "model",
-          "type": "MODEL",
-          "link": 480
-        },
-        {
-          "label": "model_low",
-          "name": "model_1",
-          "type": "MODEL",
-          "link": 479
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 365
-        },
-        {
-          "name": "anchor_samples",
-          "type": "LATENT",
-          "link": 366
-        },
-        {
-          "name": "prev_samples",
-          "type": "LATENT",
-          "link": 465
+          "link": 513
         },
         {
           "label": "prev_images",
           "name": "source_images",
           "type": "IMAGE",
-          "link": 466
+          "link": 512
         }
       ],
       "outputs": [
@@ -3809,15 +3676,13 @@
           "label": "samples",
           "name": "output",
           "type": "LATENT",
-          "links": [
-            510
-          ]
+          "links": []
         },
         {
           "name": "extended_images",
           "type": "IMAGE",
           "links": [
-            511
+            514
           ]
         }
       ],
@@ -3849,7 +3714,7 @@
           ],
           [
             "194",
-            "bypass_mode"
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -3982,7 +3847,7 @@
           ],
           [
             "194",
-            "bypass_mode"
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -3993,81 +3858,81 @@
       "bgcolor": "#335"
     },
     {
-      "id": 285,
-      "type": "2d1bb655-03cd-4861-873a-4cb3bebd6712",
+      "id": 181,
+      "type": "dbe682c8-c9d2-4f3f-a199-35cc09e15d27",
       "pos": [
-        1814.803744920939,
-        -514.6980173442989
+        940,
+        -520
       ],
       "size": [
         400,
-        610
+        610.0000000000001
       ],
       "flags": {
         "collapsed": false
       },
-      "order": 88,
+      "order": 86,
       "mode": 0,
       "inputs": [
         {
           "name": "noise",
           "type": "NOISE",
-          "link": 500
+          "link": 463
         },
         {
           "name": "sampler",
           "type": "SAMPLER",
-          "link": 501
+          "link": 359
         },
         {
           "label": "sigmas_high",
           "name": "sigmas",
           "type": "SIGMAS",
-          "link": 502
+          "link": 371
         },
         {
           "label": "sigmas_low",
           "name": "sigmas_1",
           "type": "SIGMAS",
-          "link": 503
+          "link": 372
         },
         {
           "name": "clip",
           "type": "CLIP",
-          "link": 504
+          "link": 362
         },
         {
           "label": "model_high",
           "name": "model",
           "type": "MODEL",
-          "link": 505
+          "link": 480
         },
         {
           "label": "model_low",
           "name": "model_1",
           "type": "MODEL",
-          "link": 506
+          "link": 479
         },
         {
           "name": "vae",
           "type": "VAE",
-          "link": 507
+          "link": 365
         },
         {
           "name": "anchor_samples",
           "type": "LATENT",
-          "link": 508
+          "link": 366
         },
         {
           "name": "prev_samples",
           "type": "LATENT",
-          "link": 513
+          "link": 465
         },
         {
           "label": "prev_images",
           "name": "source_images",
           "type": "IMAGE",
-          "link": 512
+          "link": 466
         }
       ],
       "outputs": [
@@ -4075,13 +3940,15 @@
           "label": "samples",
           "name": "output",
           "type": "LATENT",
-          "links": []
+          "links": [
+            510
+          ]
         },
         {
           "name": "extended_images",
           "type": "IMAGE",
           "links": [
-            514
+            511
           ]
         }
       ],
@@ -4113,7 +3980,140 @@
           ],
           [
             "194",
-            "bypass_mode"
+            "keep_last_prompt"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.5.1"
+      },
+      "widgets_values": [],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 193,
+      "type": "c5a95b71-2875-4c1e-930a-368bc51e3aa7",
+      "pos": [
+        481.6153014391245,
+        -514.2405514698622
+      ],
+      "size": [
+        410,
+        610
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 85,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "noise",
+          "type": "NOISE",
+          "link": 523
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 375
+        },
+        {
+          "label": "sigmas_high",
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 376
+        },
+        {
+          "label": "sigmas_low",
+          "name": "sigmas_1",
+          "type": "SIGMAS",
+          "link": 377
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 378
+        },
+        {
+          "label": "model_high",
+          "name": "model",
+          "type": "MODEL",
+          "link": 485
+        },
+        {
+          "label": "model_low",
+          "name": "model_1",
+          "type": "MODEL",
+          "link": 484
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 381
+        },
+        {
+          "name": "anchor_samples",
+          "type": "LATENT",
+          "link": 401
+        },
+        {
+          "name": "prev_samples",
+          "type": "LATENT",
+          "link": null
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 461
+        }
+      ],
+      "outputs": [
+        {
+          "label": "samples",
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            465
+          ]
+        },
+        {
+          "label": "decoded_images",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            466
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "199",
+            "string_a"
+          ],
+          [
+            "197",
+            "custom_prompt"
+          ],
+          [
+            "190",
+            "text"
+          ],
+          [
+            "197",
+            "control_after_generate"
+          ],
+          [
+            "197",
+            "preset_prompt"
+          ],
+          [
+            "197",
+            "model_name"
+          ],
+          [
+            "197",
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -5818,7 +5818,7 @@
               false,
               "auto",
               "🍿 Wan Extended Storyboard",
-              "the girl is all four. A man is penetrating her from behind",
+              "",
               512,
               0.6,
               0.9,
@@ -5827,7 +5827,7 @@
               5,
               true,
               1470152103,
-              "randomize",
+              "fixed",
               false
             ],
             "color": "#28403f",
@@ -7039,7 +7039,7 @@
               false,
               "auto",
               "🍿 Wan 2.2 I2V",
-              "the girl is all four. A man is penetrating her from behind",
+              "",
               512,
               0.6,
               0.9,
@@ -7048,7 +7048,7 @@
               16,
               false,
               2272037712,
-              "randomize",
+              "fixed",
               false
             ],
             "color": "#28403f",
@@ -9471,7 +9471,7 @@
               false,
               "auto",
               "🍿 Wan Extended Storyboard",
-              "the man pull out his penis and starts strocking it",
+              "",
               512,
               0.6,
               0.9,
@@ -9480,7 +9480,7 @@
               5,
               true,
               1032545063,
-              "randomize",
+              "fixed",
               false
             ],
             "color": "#28403f",
@@ -10750,7 +10750,7 @@
               false,
               "auto",
               "🍿 Wan Extended Storyboard",
-              "the man ejaculates on the girl's back",
+              "",
               512,
               0.6,
               0.9,
@@ -10759,7 +10759,7 @@
               5,
               true,
               418835620,
-              "randomize",
+              "fixed",
               false
             ],
             "color": "#28403f",
@@ -11105,8 +11105,8 @@
     "ds": {
       "scale": 0.7104379113143451,
       "offset": [
-        811.2225615104155,
-        1305.541370495262
+        1443.9474085253798,
+        524.8609040292815
       ]
     }
   },

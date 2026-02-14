@@ -1996,6 +1996,50 @@
       "bgcolor": "#335"
     },
     {
+      "id": 155,
+      "type": "mxSlider",
+      "pos": [
+        -2340,
+        1430
+      ],
+      "size": [
+        440,
+        30
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "INT",
+          "links": [
+            318
+          ]
+        }
+      ],
+      "title": "Steps",
+      "properties": {
+        "cnr_id": "comfyui-mxtoolkit",
+        "ver": "7f7a0e584f12078a1c589645d866ae96bad0cc35",
+        "Node name for S&R": "mxSlider",
+        "value": 8,
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "decimals": 0,
+        "snap": true
+      },
+      "widgets_values": [
+        8,
+        8,
+        0
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
       "id": 161,
       "type": "f838c097-47c7-4eda-971d-a4ca071e3b81",
       "pos": [
@@ -2158,7 +2202,7 @@
           ],
           [
             "173",
-            "bypass_mode"
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -2174,50 +2218,6 @@
       ],
       "color": "#323",
       "bgcolor": "#535"
-    },
-    {
-      "id": 155,
-      "type": "mxSlider",
-      "pos": [
-        -2340,
-        1430
-      ],
-      "size": [
-        440,
-        30
-      ],
-      "flags": {},
-      "order": 23,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "",
-          "type": "INT",
-          "links": [
-            318
-          ]
-        }
-      ],
-      "title": "Steps",
-      "properties": {
-        "cnr_id": "comfyui-mxtoolkit",
-        "ver": "7f7a0e584f12078a1c589645d866ae96bad0cc35",
-        "Node name for S&R": "mxSlider",
-        "value": 8,
-        "min": 0,
-        "max": 20,
-        "step": 1,
-        "decimals": 0,
-        "snap": true
-      },
-      "widgets_values": [
-        8,
-        8,
-        0
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
     }
   ],
   "links": [
@@ -3301,7 +3301,7 @@
             },
             "widgets_values": [
               "Huihui-Qwen3-VL-4B-Instruct-abliterated-Q8_0.gguf",
-              "(SmoothMixRealism) close-up, in a sidewalk, night, sunbeam, sidelighting, window shadow, 1girl, dark purple hair, very short hair, hair extensions, curly hair, green eyes, slim body, large breasts, couture, solo, breast slip, grabbing own breast, breast press, tongue out, saliva drip, saliva on breast",
+              "",
               "🍿 Wan 2.2 T2V",
               "",
               512,
@@ -3311,7 +3311,7 @@
               false,
               "auto",
               2576047033,
-              "randomize",
+              "fixed",
               false
             ],
             "color": "#374445",
@@ -3552,10 +3552,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.8739017186274073,
+      "scale": 0.7222328253119068,
       "offset": [
-        2920.5249271354446,
-        304.19489993734
+        3291.88019614924,
+        324.8459993290952
       ]
     }
   },

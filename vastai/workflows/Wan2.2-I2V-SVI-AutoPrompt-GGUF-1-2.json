@@ -3740,7 +3740,7 @@
           ],
           [
             "199",
-            "bypass_mode"
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -3873,7 +3873,7 @@
           ],
           [
             "195",
-            "bypass_mode"
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -4006,7 +4006,7 @@
           ],
           [
             "195",
-            "bypass_mode"
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -4137,7 +4137,7 @@
           ],
           [
             "195",
-            "bypass_mode"
+            "keep_last_prompt"
           ]
         ],
         "cnr_id": "comfy-core",
@@ -5853,7 +5853,7 @@
               4194304,
               false,
               1,
-              "randomize",
+              "fixed",
               false
             ],
             "color": "#474539",
@@ -7076,7 +7076,7 @@
               4194304,
               false,
               1,
-              "randomize",
+              "fixed",
               false
             ],
             "color": "#474539",
@@ -9510,7 +9510,7 @@
               4194304,
               false,
               1,
-              "randomize",
+              "fixed",
               false
             ],
             "color": "#474539",
@@ -10791,7 +10791,7 @@
               4194304,
               false,
               1,
-              "randomize",
+              "fixed",
               false
             ],
             "color": "#474539",
@@ -11135,10 +11135,10 @@
     "VHS_KeepIntermediate": true,
     "ue_links": [],
     "ds": {
-      "scale": 0.6113083411395576,
+      "scale": 0.6113083411395577,
       "offset": [
-        1761.4137544144614,
-        1451.1461504518013
+        1979.317036253683,
+        1285.6983936594386
       ]
     }
   },
