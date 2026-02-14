@@ -27,6 +27,9 @@ from AILab_QwenVL import (
     TOOLTIPS,
 )
 
+# Simple global variable to store last generated prompt
+LAST_SAVED_PROMPT = None
+
 NODE_DIR = Path(__file__).parent
 SYSTEM_PROMPTS_PATH = NODE_DIR / "AILab_System_Prompts.json"
 
@@ -123,27 +126,16 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         seed,
         bypass_mode,
     ):
-        # NEW APPROACH: Explicit bypass mode parameter
-        # bypass_mode=True = pass-through (no generation)
-        # bypass_mode=False = always generate (regardless of seed)
-        if bypass_mode:  # Bypass mode enabled
-            print(f"[QwenVL PromptEnhancer HF] Bypass mode enabled - retrieving last cached prompt")
-            
-            # Try to find the most recent cached prompt for this model
-            most_recent_prompt = None
-            
-            for cache_key, cached_data in PROMPT_CACHE.items():
-                if cached_data.get("model") == model_name:
-                    cached_text = cached_data.get("text", "")
-                    if cached_text and cached_text.strip():
-                        most_recent_prompt = cached_text.strip()
-                        print(f"[QwenVL PromptEnhancer HF] Found cached prompt: {most_recent_prompt[:50]}...")
-                        break
-            
-            if most_recent_prompt:
-                return (most_recent_prompt,)
+        global LAST_SAVED_PROMPT
+        
+        # Simple bypass mode logic
+        if bypass_mode:
+            print(f"[QwenVL PromptEnhancer HF] Bypass mode enabled - using last saved prompt")
+            if LAST_SAVED_PROMPT:
+                print(f"[QwenVL PromptEnhancer HF] Using last prompt: {LAST_SAVED_PROMPT[:50]}...")
+                return (LAST_SAVED_PROMPT,)
             else:
-                print(f"[QwenVL PromptEnhancer HF] No cached prompt found, returning empty")
+                print(f"[QwenVL PromptEnhancer HF] No previous prompt found, returning empty")
                 return ("",)
         
         # Always generate when bypass mode is disabled
@@ -183,6 +175,11 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
                 keep_model_loaded,
                 seed,
             )
+        
+        # Save the generated prompt for future bypass mode
+        LAST_SAVED_PROMPT = enhanced.strip()
+        print(f"[QwenVL PromptEnhancer HF] Saved prompt for bypass mode: {LAST_SAVED_PROMPT[:50]}...")
+        
         return (enhanced.strip(),)
 
     def _invoke_qwen(

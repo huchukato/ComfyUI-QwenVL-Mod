@@ -31,6 +31,9 @@ from transformers import AutoProcessor, AutoTokenizer, BitsAndBytesConfig
 PROMPT_CACHE = {}
 CACHE_FILE = Path(__file__).parent / "prompt_cache.json"
 
+# Simple global variable to store last generated prompt
+LAST_SAVED_PROMPT = None
+
 def load_prompt_cache():
     """Load prompt cache from file"""
     global PROMPT_CACHE
@@ -544,27 +547,16 @@ class QwenVLBase:
     def run(self, model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, bypass_mode=False):
         torch.manual_seed(seed)
         
-        # NEW APPROACH: Explicit bypass mode parameter
-        # bypass_mode=True = pass-through (no generation)
-        # bypass_mode=False = always generate (regardless of seed)
-        if bypass_mode:  # Bypass mode enabled
-            print(f"[QwenVL] Bypass mode enabled - retrieving last cached prompt")
-            
-            # Try to find the most recent cached prompt for this model
-            most_recent_prompt = None
-            
-            for cache_key, cached_data in PROMPT_CACHE.items():
-                if cached_data.get("model") == model_name:
-                    cached_text = cached_data.get("text", "")
-                    if cached_text and cached_text.strip():
-                        most_recent_prompt = cached_text.strip()
-                        print(f"[QwenVL] Found cached prompt: {most_recent_prompt[:50]}...")
-                        break
-            
-            if most_recent_prompt:
-                return (most_recent_prompt,)
+        global LAST_SAVED_PROMPT
+        
+        # Simple bypass mode logic
+        if bypass_mode:
+            print(f"[QwenVL] Bypass mode enabled - using last saved prompt")
+            if LAST_SAVED_PROMPT:
+                print(f"[QwenVL] Using last prompt: {LAST_SAVED_PROMPT[:50]}...")
+                return (LAST_SAVED_PROMPT,)
             else:
-                print(f"[QwenVL] No cached prompt found, returning empty")
+                print(f"[QwenVL] No previous prompt found, returning empty")
                 return ("",)
         
         # Always generate when bypass mode is disabled
@@ -624,6 +616,11 @@ class QwenVLBase:
             save_prompt_cache()  # Save cache to file
             
             print(f"[QwenVL] Cached new prompt for seed {seed}: {cache_key[:8]}...")
+            
+            # Save the generated prompt for future bypass mode
+            LAST_SAVED_PROMPT = text
+            print(f"[QwenVL] Saved prompt for bypass mode: {text[:50]}...")
+            
             return (text,)
         finally:
             if not keep_model_loaded:
