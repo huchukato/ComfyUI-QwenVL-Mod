@@ -646,7 +646,6 @@ class QwenVLGGUFBase:
             print(f"[QwenVL GGUF DEBUG] Returning tuple with text...")
             
             # Save the generated prompt for future bypass mode
-            global LAST_SAVED_PROMPT
             LAST_SAVED_PROMPT = text
             print(f"[QwenVL GGUF] Saved prompt for bypass mode: {text[:50]}...")
             
