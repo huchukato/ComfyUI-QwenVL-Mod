@@ -31,6 +31,9 @@ import sys
 sys.path.append(str(Path(__file__).parent))
 from AILab_QwenVL import PROMPT_CACHE, get_cache_key, get_alternative_cache_key, save_prompt_cache
 
+# Simple global variable to store last generated prompt
+LAST_SAVED_PROMPT = None
+
 NODE_DIR = Path(__file__).parent
 GGUF_CONFIG_PATH = NODE_DIR / "gguf_models.json"
 PROMPT_CONFIG_PATH = NODE_DIR / "AILab_System_Prompts.json"
@@ -176,7 +179,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
                 "english_output": ("BOOLEAN", {"default": False, "tooltip": "Force final output in English using translation prompt."}),
                 "device": (["auto", "cuda", "cpu", "mps"], {"default": "auto", "tooltip": "Select device; auto prefers GPU when available."}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
-                "bypass_mode": ("BOOLEAN", {"default": False, "tooltip": "When enabled, bypasses generation and returns empty string (acts as pass-through)"}),
+                "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
             }
         }
 
@@ -376,33 +379,22 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         english_output,
         device,
         seed,
-        bypass_mode,
+        keep_last_prompt,
     ):
-        # NEW APPROACH: Explicit bypass mode parameter
-        # bypass_mode=True = pass-through (no generation)
-        # bypass_mode=False = always generate (regardless of seed)
-        if bypass_mode:  # Bypass mode enabled
-            print(f"[QwenVL PromptEnhancer GGUF] Bypass mode enabled - retrieving last cached prompt")
-            
-            # Try to find the most recent cached prompt for this model
-            most_recent_prompt = None
-            
-            for cache_key, cached_data in PROMPT_CACHE.items():
-                if cached_data.get("model") == model_name:
-                    cached_text = cached_data.get("text", "")
-                    if cached_text and cached_text.strip():
-                        most_recent_prompt = cached_text.strip()
-                        print(f"[QwenVL PromptEnhancer GGUF] Found cached prompt: {most_recent_prompt[:50]}...")
-                        break
-            
-            if most_recent_prompt:
-                return (most_recent_prompt,)
+        global LAST_SAVED_PROMPT
+        
+        # Simple keep last prompt logic
+        if keep_last_prompt:  # Keep last prompt enabled
+            print(f"[QwenVL PromptEnhancer GGUF] Keep last prompt enabled - using last saved prompt")
+            if LAST_SAVED_PROMPT:
+                print(f"[QwenVL PromptEnhancer GGUF] Using last prompt: {LAST_SAVED_PROMPT[:50]}...")
+                return (LAST_SAVED_PROMPT,)
             else:
-                print(f"[QwenVL PromptEnhancer GGUF] No cached prompt found, returning empty")
+                print(f"[QwenVL PromptEnhancer GGUF] No previous prompt found, returning empty")
                 return ("",)
         
-        # Always generate when bypass mode is disabled
-        print(f"[QwenVL PromptEnhancer GGUF] Bypass mode disabled - generating new prompt")
+        # Always generate when keep last prompt is disabled
+        print(f"[QwenVL PromptEnhancer GGUF] Keep last prompt disabled - generating new prompt")
         
         # Generate cache key with all inputs including seed
         cache_key = get_cache_key(model_name, preset_system_prompt, prompt_text, seed=seed)
@@ -466,6 +458,10 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         save_prompt_cache()  # Save cache to file
         
         print(f"[QwenVL PromptEnhancer GGUF] Cached new prompt for seed {seed}: {cache_key[:8]}...")
+        
+        # Save the generated prompt for future bypass mode
+        LAST_SAVED_PROMPT = final
+        print(f"[QwenVL PromptEnhancer GGUF] Saved prompt for bypass mode: {final[:50]}...")
         
         return (final,)
 
