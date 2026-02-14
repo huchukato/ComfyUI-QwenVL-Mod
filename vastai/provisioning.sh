@@ -45,7 +45,7 @@ NODES=(
 )
 
 WORKFLOWS=(
-    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/SDXL-LoRaStack-Upscale.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/PMP-LoRaStack-Upscale-Wildcards.json"
     "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-1-5.json"
     "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-GGUF-1-5.json"
     "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-1-6.json"
@@ -202,9 +202,9 @@ function provisioning_get_nodes() {
 }
 
 function provisioning_copy_wildcards() {
-    echo "Copying wildcards from ComfyUI-QwenVL-Mod to Impact-Pack..."
+    echo "Copying wildcards from comfy-tagcomplete to Impact-Pack..."
     
-    local source_dir="${COMFYUI_DIR}/custom_nodes/ComfyUI-QwenVL-Mod/vastai/wildcards/mbe"
+    local source_dir="${COMFYUI_DIR}/custom_nodes/comfy-tagcomplete/wildcards/mbe"
     local target_dir="${COMFYUI_DIR}/custom_nodes/ComfyUI-Impact-Pack/wildcards"
     
     # Create target directory if it doesn't exist
@@ -218,8 +218,8 @@ function provisioning_copy_wildcards() {
     else
         echo "  ⚠ Source directory not found: $source_dir"
         echo "  → Trying alternative path..."
-        # Try alternative path if ComfyUI-QwenVL-Mod is in workspace
-        local alt_source_dir="/workspace/ComfyUI-QwenVL-Mod/vastai/wildcards/mbe"
+        # Try alternative path if comfy-tagcomplete is in workspace
+        local alt_source_dir="/workspace/comfy-tagcomplete/wildcards/mbe"
         if [[ -d "$alt_source_dir" ]]; then
             echo "  → Found at alternative path, copying..."
             cp -r "$alt_source_dir" "$target_dir/"
