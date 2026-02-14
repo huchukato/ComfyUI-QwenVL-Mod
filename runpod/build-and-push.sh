@@ -8,9 +8,7 @@ set -e
 # Configuration
 IMAGE_NAME="huchukato/comfyui-qwenvl-runpod"
 TAG="latest"
-VERSION_TAG="v2.0.9"
 FULL_IMAGE_NAME="${IMAGE_NAME}:${TAG}"
-VERSION_IMAGE_NAME="${IMAGE_NAME}:${VERSION_TAG}"
 
 echo "🚀 Building ComfyUI-QwenVL-Mod v2.0.9 Docker Image"
 echo "==============================================="
@@ -36,27 +34,17 @@ fi
 # Build the image
 echo "🏗️  Building Docker image for x86_64..."
 echo "This may take 10-15 minutes..."
-docker buildx build --builder desktop-linux --platform linux/amd64 -t "${FULL_IMAGE_NAME}" -t "${VERSION_IMAGE_NAME}" --load .
+docker buildx build --builder desktop-linux --platform linux/amd64 -t "${FULL_IMAGE_NAME}" --load .
 
 # Push to Docker Hub
-echo "📤 Pushing images to Docker Hub..."
+echo "📤 Pushing image to Docker Hub..."
 docker push "${FULL_IMAGE_NAME}"
-docker push "${VERSION_IMAGE_NAME}"
-
-# Create additional tags
-echo "🏷️  Creating additional tags..."
-CURRENT_DATE=$(date +%Y%m%d)
-DATE_TAG="${IMAGE_NAME}:latest-${CURRENT_DATE}"
-docker tag "${FULL_IMAGE_NAME}" "${DATE_TAG}"
-docker push "${DATE_TAG}"
 
 echo ""
 echo "✅ Build and push completed successfully!"
 echo ""
 echo "📋 Image Details:"
 echo "  Latest tag:  ${FULL_IMAGE_NAME}"
-echo "  Version tag: ${VERSION_IMAGE_NAME}"
-echo "  Date tag:    ${DATE_TAG}"
 echo ""
 echo "🚀 Ready for RunPod deployment!"
 echo ""
@@ -68,7 +56,7 @@ echo "  4. Select GPU: RTX 5090"
 echo "  5. Set container port: 8188"
 echo "  6. Deploy! 🎉"
 echo ""
-echo "� Note: Local testing disabled for faster builds"
-echo "�🔗 Useful links:"
+echo "💡 Note: Local testing disabled for faster builds"
+echo "🔗 Useful links:"
 echo "  Docker Hub: https://hub.docker.com/r/${IMAGE_NAME}"
 echo "  Repository: https://github.com/huchukato/ComfyUI-QwenVL-Mod"
