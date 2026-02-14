@@ -34,6 +34,9 @@ from AILab_QwenVL import PROMPT_CACHE, get_cache_key, get_alternative_cache_key,
 import folder_paths
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output
 
+# Simple global variable to store last generated prompt
+LAST_SAVED_PROMPT = None
+
 NODE_DIR = Path(__file__).parent
 CONFIG_PATH = NODE_DIR / "hf_models.json"
 SYSTEM_PROMPTS_PATH = NODE_DIR / "AILab_System_Prompts.json"
@@ -539,29 +542,16 @@ class QwenVLGGUFBase:
     ):
         print(f"[QwenVL GGUF DEBUG] Starting run with seed={seed}, bypass_mode={bypass_mode}")
         
-        # NEW APPROACH: Explicit bypass mode parameter
-        # bypass_mode=True = pass-through (no generation)
-        # bypass_mode=False = always generate (regardless of seed)
-        if bypass_mode:  # Bypass mode enabled
-            print(f"[QwenVL GGUF] Bypass mode enabled - retrieving last cached prompt")
-            
-            # Try to find the most recent cached prompt for this model
-            most_recent_prompt = None
-            most_recent_timestamp = None
-            
-            for cache_key, cached_data in PROMPT_CACHE.items():
-                if cached_data.get("model") == model_name:
-                    cached_text = cached_data.get("text", "")
-                    if cached_text and cached_text.strip():
-                        # For simplicity, just use the first valid prompt we find
-                        most_recent_prompt = cached_text.strip()
-                        print(f"[QwenVL GGUF] Found cached prompt: {most_recent_prompt[:50]}...")
-                        break
-            
-            if most_recent_prompt:
-                return (most_recent_prompt,)
+        global LAST_SAVED_PROMPT
+        
+        # Simple bypass mode logic
+        if bypass_mode:
+            print(f"[QwenVL GGUF] Bypass mode enabled - using last saved prompt")
+            if LAST_SAVED_PROMPT:
+                print(f"[QwenVL GGUF] Using last prompt: {LAST_SAVED_PROMPT[:50]}...")
+                return (LAST_SAVED_PROMPT,)
             else:
-                print(f"[QwenVL GGUF] No cached prompt found, returning empty")
+                print(f"[QwenVL GGUF] No previous prompt found, returning empty")
                 return ("",)
         
         # Always generate when bypass mode is disabled
@@ -654,6 +644,12 @@ class QwenVLGGUFBase:
             print(f"[QwenVL GGUF] Cached new prompt for seed {seed}: {cache_key[:8]}...")
             
             print(f"[QwenVL GGUF DEBUG] Returning tuple with text...")
+            
+            # Save the generated prompt for future bypass mode
+            global LAST_SAVED_PROMPT
+            LAST_SAVED_PROMPT = text
+            print(f"[QwenVL GGUF] Saved prompt for bypass mode: {text[:50]}...")
+            
             return (text,)
         finally:
             if not keep_model_loaded:
