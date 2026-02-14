@@ -538,15 +538,15 @@ class QwenVLGGUFBase:
         image_max_tokens=None,
         top_k=None,
         pool_size=None,
-        bypass_mode=False,
+        keep_last_prompt=False,
     ):
-        print(f"[QwenVL GGUF DEBUG] Starting run with seed={seed}, bypass_mode={bypass_mode}")
+        print(f"[QwenVL GGUF DEBUG] Starting run with seed={seed}, keep_last_prompt={keep_last_prompt}")
         
         global LAST_SAVED_PROMPT
         
-        # Simple bypass mode logic
-        if bypass_mode:
-            print(f"[QwenVL GGUF] Bypass mode enabled - using last saved prompt")
+        # Simple keep last prompt logic
+        if keep_last_prompt:
+            print(f"[QwenVL GGUF] Keep last prompt enabled - using last saved prompt")
             if LAST_SAVED_PROMPT:
                 print(f"[QwenVL GGUF] Using last prompt: {LAST_SAVED_PROMPT[:50]}...")
                 return (LAST_SAVED_PROMPT,)
@@ -554,8 +554,8 @@ class QwenVLGGUFBase:
                 print(f"[QwenVL GGUF] No previous prompt found, returning empty")
                 return ("",)
         
-        # Always generate when bypass mode is disabled
-        print(f"[QwenVL GGUF] Bypass mode disabled - generating new prompt")
+        # Always generate when keep last prompt is disabled
+        print(f"[QwenVL GGUF] Keep last prompt disabled - generating new prompt")
         
         prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
         
@@ -674,7 +674,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
                 "max_tokens": ("INT", {"default": 512, "min": 64, "max": 2048}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
-                "bypass_mode": ("BOOLEAN", {"default": False, "tooltip": "When enabled, bypasses generation and returns empty string (acts as pass-through)"}),
+                "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
             },
             "optional": {
                 "image": ("IMAGE",),
@@ -719,7 +719,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
             image_max_tokens=None,
             top_k=None,
             pool_size=None,
-            bypass_mode=bypass_mode,
+            keep_last_prompt=keep_last_prompt,
         )
 
 
@@ -757,7 +757,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
                 "pool_size": ("INT", {"default": 4194304, "min": 1048576, "max": 10485760, "step": 524288}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
-                "bypass_mode": ("BOOLEAN", {"default": False, "tooltip": "When enabled, bypasses generation and returns empty string (acts as pass-through)"}),
+                "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
             },
             "optional": {
                 "image": ("IMAGE",),
@@ -813,7 +813,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
             image_max_tokens=image_max_tokens,
             top_k=top_k,
             pool_size=pool_size,
-            bypass_mode=bypass_mode,
+            keep_last_prompt=keep_last_prompt,
         )
 
 

@@ -104,7 +104,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
                 "repetition_penalty": ("FLOAT", {"default": 1.1, "min": 0.5, "max": 2.0}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
-                "bypass_mode": ("BOOLEAN", {"default": False, "tooltip": "When enabled, bypasses generation and returns empty string (acts as pass-through)"}),
+                "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
             }
         }
 
@@ -124,13 +124,13 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         repetition_penalty,
         keep_model_loaded,
         seed,
-        bypass_mode,
+        keep_last_prompt=False,
     ):
         global LAST_SAVED_PROMPT
         
-        # Simple bypass mode logic
-        if bypass_mode:
-            print(f"[QwenVL PromptEnhancer HF] Bypass mode enabled - using last saved prompt")
+        # Simple keep last prompt logic
+        if keep_last_prompt:
+            print(f"[QwenVL PromptEnhancer HF] Keep last prompt enabled - using last saved prompt")
             if LAST_SAVED_PROMPT:
                 print(f"[QwenVL PromptEnhancer HF] Using last prompt: {LAST_SAVED_PROMPT[:50]}...")
                 return (LAST_SAVED_PROMPT,)
@@ -138,8 +138,8 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
                 print(f"[QwenVL PromptEnhancer HF] No previous prompt found, returning empty")
                 return ("",)
         
-        # Always generate when bypass mode is disabled
-        print(f"[QwenVL PromptEnhancer HF] Bypass mode disabled - generating new prompt")
+        # Always generate when keep last prompt is disabled
+        print(f"[QwenVL PromptEnhancer HF] Keep last prompt disabled - generating new prompt")
         
         base_instruction = custom_system_prompt.strip() or self.STYLES.get(
             enhancement_style,

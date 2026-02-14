@@ -544,14 +544,14 @@ class QwenVLBase:
         text = self.tokenizer.decode(outputs[0, input_len:], skip_special_tokens=True)
         return text.strip()
 
-    def run(self, model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, bypass_mode=False):
+    def run(self, model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt=False):
         torch.manual_seed(seed)
         
         global LAST_SAVED_PROMPT
         
-        # Simple bypass mode logic
-        if bypass_mode:
-            print(f"[QwenVL] Bypass mode enabled - using last saved prompt")
+        # Simple keep last prompt logic
+        if keep_last_prompt:
+            print(f"[QwenVL] Keep last prompt enabled - using last saved prompt")
             if LAST_SAVED_PROMPT:
                 print(f"[QwenVL] Using last prompt: {LAST_SAVED_PROMPT[:50]}...")
                 return (LAST_SAVED_PROMPT,)
@@ -559,8 +559,8 @@ class QwenVLBase:
                 print(f"[QwenVL] No previous prompt found, returning empty")
                 return ("",)
         
-        # Always generate when bypass mode is disabled
-        print(f"[QwenVL] Bypass mode disabled - generating new prompt")
+        # Always generate when keep last prompt is disabled
+        print(f"[QwenVL] Keep last prompt disabled - generating new prompt")
         
         prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
         
@@ -689,7 +689,7 @@ class AILab_QwenVL_Advanced(QwenVLBase):
                 "frame_count": ("INT", {"default": 16, "min": 1, "max": 64, "tooltip": TOOLTIPS["frame_count"]}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": TOOLTIPS["keep_model_loaded"]}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1, "tooltip": TOOLTIPS["seed"] + "\n\n💡 Cache Info: Prompts are cached automatically. Use the same inputs (model, preset, custom prompt, image/video) to reuse cached prompts and avoid regeneration.\n\n🔒 Fixed Seed Mode: Set seed = 1 to ignore image/video changes and only use text-based caching. Perfect for keeping the same prompt regardless of media input variations."}),
-                "bypass_mode": ("BOOLEAN", {"default": False, "tooltip": "When enabled, bypasses generation and returns empty string (acts as pass-through)"}),
+                "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
             },
             "optional": {
                 "image": ("IMAGE",),
