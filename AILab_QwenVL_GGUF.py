@@ -695,7 +695,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
         max_tokens,
         keep_model_loaded,
         seed,
-        bypass_mode,
+        keep_last_prompt,
         image=None,
         video=None,
     ):
