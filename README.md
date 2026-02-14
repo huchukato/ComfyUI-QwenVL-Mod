@@ -2,7 +2,7 @@
 
 [![ComfyUI](https://img.shields.io/badge/ComfyUI-Custom%20Node-blue?style=for-the-badge&logo=python)](https://github.com/comfyanonymous/ComfyUI)
 [![License](https://img.shields.io/badge/License-GPL--3.0-green?style=for-the-badge)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-2.0.9-orange?style=for-the-badge)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/releases)
+[![Version](https://img.shields.io/badge/Version-2.1.0-orange?style=for-the-badge)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/releases)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)](https://python.org)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red?style=for-the-badge&logo=pytorch)](https://pytorch.org)
 [![CUDA](https://img.shields.io/badge/CUDA-12.8%2B-black?style=for-the-badge&logo=nvidia)](https://developer.nvidia.com/cuda-zone)
@@ -16,8 +16,9 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
-* **2026/02/12**: **v2.0.9** Bypass Mode parameter for prompt persistence. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-209-20260212)]
+* **2026/02/14**: **v2.1.0** User-Friendly Keep Last Prompt Feature. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-210-20260214)]
 > [!NOTE]  
+* **2026/02/12**: **v2.0.9** Bypass Mode parameter for prompt persistence. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-209-20260212)]  
 > 🎛️ **Bypass Mode**: New `bypass_mode` parameter allows maintaining previously generated prompts without regeneration.  
 > 🔄 **Smart Cache**: When bypass mode is enabled, nodes retrieve the most recent cached prompt for the current model.  
 > 🎯 **Perfect Workflow**: Generate prompts once, then enable bypass mode to preserve them while changing inputs.  
