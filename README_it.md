@@ -16,7 +16,7 @@ Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguag
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 Notizie & Aggiornamenti**
-* **2026/02/14**: **v2.1.0** Funzione Keep Last Prompt User-Friendly + Supporto NSFW Migliorato. [[Aggiornamenti](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-210-20260214)]
+* **2026/02/14**: **v2.1.0** Funzione Keep Last Prompt User-Friendly + Supporto NSFW Migliorato + Modelli GGUF Aggiornati. [[Aggiornamenti](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-210-20260214)]
 > [!NOTE]  
 > 🔄 **Keep Last Prompt**: Nuovo parametro user-friendly `keep_last_prompt` sostituisce bypass_mode.  
 > 🎛️ **Controllo Semplice**: Checkbox intuitivo per mantenere i prompt generati in precedenza.  
@@ -25,6 +25,8 @@ Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguag
 > 📋 **Universale**: Disponibile in tutti i nodi (HF, GGUF, PromptEnhancer, varianti Advanced).  
 > 🔥 **Supporto NSFW Forte**: Istruzioni esplicite per generazione contenuti non censurati.  
 > 🔦 **Luci Accurate**: Corretta invenzione di luci non presenti nell'immagine originale.  
+> 🔄 **Modelli GGUF Aggiornati**: Sostituiti modelli noctrex con mradermacher v2/v3 per migliori performance.  
+> 📦 **Selezione Modelli**: Aggiunto Josiefied-Qwen3-VL-4B-Instruct-abliterated-beta-v1 (solo HF).  
 * **2026/02/12**: **v2.0.9** Parametro Bypass Mode per persistenza prompt. [[Aggiornamenti](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-209-20260212)]
 > [!NOTE]  
 > 🎛️ **Bypass Mode**: Nuovo parametro `bypass_mode` permette di mantenere i prompt generati in precedenza senza rigenerarli.  

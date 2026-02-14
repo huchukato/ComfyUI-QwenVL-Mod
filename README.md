@@ -47,7 +47,9 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 ### 🔥 Version 2.1.0 - Enhanced NSFW Support & Lighting Accuracy
 - **🔥 Stronger NSFW Instructions**: Enhanced system prompts with explicit directives for uncensored content generation
 - **🔦 Fixed Lighting Invention**: Corrected AI tendency to add lights not present in source images
-- **🎯 Improved Accuracy**: Better content fidelity for both NSFW descriptions and lighting analysis (HF, GGUF, PromptEnhancer).
+- **🎯 Improved Accuracy**: Better content fidelity for both NSFW descriptions and lighting analysis
+- **🔄 Updated GGUF Models**: Replaced noctrex models with mradermacher v2/v3 variants for better performance
+- **📦 Enhanced Model Selection**: Added Josiefied-Qwen3-VL-4B-Instruct-abliterated-beta-v1 (HF only) (HF, GGUF, PromptEnhancer).
 
 * **2026/02/03**: **v2.0.6** Professional cinematography enhancement for all WAN 2.2 presets. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-206-20260203)]
 > [!NOTE]  
