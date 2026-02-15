@@ -15,7 +15,7 @@ This major update introduces a complete story generation system for WAN 2.2, ena
 
 ### 🔄 Custom Nodes
 - **Story Split Node**: Intelligent text splitting with auto-detection of separators (`\n`, `\n\n`, `\n\n\n`)
-- **Smart Cleaning**: Automatically removes example text and ensures 4 prompt outputs
+- **Smart Processing**: Automatically handles inconsistent model output formatting
 - **Show Text Node**: Built-in text display node without external dependencies
 - **Category**: Both nodes in `🔷QwenVL-Mod/Utils` category
 - **Chaining Support**: Full input/output connectivity for workflow integration
@@ -25,7 +25,6 @@ This major update introduces a complete story generation system for WAN 2.2, ena
 - **Separator Instructions**: Clear guidelines for prompt separation
 - **Continuity Rules**: Enhanced narrative continuity between segments
 - **Token Optimization**: Recommended max_tokens=1536 for complete output
-- **Example Removal**: Fixed model copying example text instead of generating content
 
 ### ⚡ Performance Optimizations
 - **Context Settings**: Optimized context_length for 8B models (65,536 tokens)
@@ -40,10 +39,10 @@ This major update introduces a complete story generation system for WAN 2.2, ena
 - **Service Integration**: FileBrowser, JupyterLab, and ComfyUI with Story support
 
 ### 📁 File Structure
-- **Nodes**: `/nodes/story_split_node.py` and `/nodes/show_text_node.py`
-- **Workflows**: `/vastai/workflows/WAN2.2-I2V-AutoPrompt-Story.json`
+- **Nodes**: `/nodes/story_split_node.py` for intelligent prompt splitting
+- **Workflows**: `/vastai/workflows/WAN2.2-I2V-AutoPrompt-Story.json` ready-to-use
 - **Docker**: Updated `/runpod/Dockerfile` with Story workflow
-- **Prompts**: Enhanced `/AILab_System_Prompts.json` with Story format
+- **Prompts**: Enhanced `/AILab_System_Prompts.json` with Story system
 
 ### 🔧 Technical Improvements
 - **Auto-Loading**: Enhanced `__init__.py` to load nodes from subdirectory
