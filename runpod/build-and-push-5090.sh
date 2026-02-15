@@ -6,7 +6,7 @@
 set -e
 
 # Configuration
-IMAGE_NAME="huchukato/comfyui-qwenvl-runpod-5090"
+IMAGE_NAME="huchukato/comfyui-qwenvl-runpod"
 TAG="latest"
 FULL_IMAGE_NAME="${IMAGE_NAME}:${TAG}"
 
