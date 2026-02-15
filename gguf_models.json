@@ -1,16 +1,16 @@
 {
   "base_dir": "LLM/GGUF",
   "Qwen_model": {
-    "Josiefied-Qwen3-8B-abliterated-v1-GGUF": {
+    "Qwen3-4B-abliterated-GGUF": {
       "author": "mradermacher",
-      "repo_name": "Josiefied-Qwen3-8B-abliterated-v1-GGUF",
-      "repo_id": "mradermacher/Josiefied-Qwen3-8B-abliterated-v1-GGUF",
+      "repo_name": "Qwen3-4B-abliterated-GGUF",
+      "repo_id": "mradermacher/Qwen3-4B-abliterated-GGUF",
       "model_files": [
-        "Josiefied-Qwen3-8B-abliterated-v1.Q4_K_M.gguf",
-        "Josiefied-Qwen3-8B-abliterated-v1.Q5_K_M.gguf",
-        "Josiefied-Qwen3-8B-abliterated-v1.Q6_K.gguf",
-        "Josiefied-Qwen3-8B-abliterated-v1.Q8_0.gguf",
-        "Josiefied-Qwen3-8B-abliterated-v1-F16.gguf"
+        "Qwen3-4B-abliterated-Q4_K_M.gguf",
+        "Qwen3-4B-abliterated-Q5_K_M.gguf",
+        "Qwen3-4B-abliterated-Q6_K.gguf",
+        "Qwen3-4B-abliterated-Q8_0.gguf",
+        "Qwen3-4B-abliterated-F16.gguf"
       ],
       "defaults": {
         "context_length": 32768
@@ -29,6 +29,49 @@
       ],
       "defaults": {
         "context_length": 32768
+      }
+    },
+    "Josiefied-Qwen3-8B-abliterated-v1-GGUF": {
+      "author": "mradermacher",
+      "repo_name": "Josiefied-Qwen3-8B-abliterated-v1-GGUF",
+      "repo_id": "mradermacher/Josiefied-Qwen3-8B-abliterated-v1-GGUF",
+      "model_files": [
+        "Josiefied-Qwen3-8B-abliterated-v1.Q4_K_M.gguf",
+        "Josiefied-Qwen3-8B-abliterated-v1.Q5_K_M.gguf",
+        "Josiefied-Qwen3-8B-abliterated-v1.Q6_K.gguf",
+        "Josiefied-Qwen3-8B-abliterated-v1.Q8_0.gguf",
+        "Josiefied-Qwen3-8B-abliterated-v1-F16.gguf"
+      ],
+      "defaults": {
+        "context_length": 32768
+      }
+    },
+    "Qwen3-VL-4B-Instruct-Abliterated-GGUF": {
+      "author": "huihui-ai",
+      "repo_name": "Huihui-Qwen3-VL-4B-Instruct-abliterated-GGUF",
+      "repo_id": "huihui-ai/Huihui-Qwen3-VL-4B-Instruct-abliterated-GGUF",
+      "model_files": [
+        "Huihui-Qwen3-VL-4B-Instruct-abliterated.Q4_K_M.gguf",
+        "Huihui-Qwen3-VL-4B-Instruct-abliterated.Q5_K_M.gguf",
+        "Huihui-Qwen3-VL-4B-Instruct-abliterated.Q6_K.gguf",
+        "Huihui-Qwen3-VL-4B-Instruct-abliterated.Q8_0.gguf"
+      ],
+      "defaults": {
+        "context_length": 32768
+      }
+    },
+    "Qwen3-VL-8B-Instruct-Abliterated-GGUF": {
+      "author": "huihui-ai",
+      "repo_name": "Huihui-Qwen3-VL-8B-Instruct-abliterated-GGUF",
+      "repo_id": "huihui-ai/Huihui-Qwen3-VL-8B-Instruct-abliterated-GGUF",
+      "model_files": [
+        "Huihui-Qwen3-VL-8B-Instruct-abliterated.Q4_K_M.gguf",
+        "Huihui-Qwen3-VL-8B-Instruct-abliterated.Q5_K_M.gguf",
+        "Huihui-Qwen3-VL-8B-Instruct-abliterated.Q6_K.gguf",
+        "Huihui-Qwen3-VL-8B-Instruct-abliterated.Q8_0.gguf"
+      ],
+      "defaults": {
+        "context_length": 65536
       }
     },
     "Josiefied-Qwen3-4B-Instruct-2507-gabliterated-v1-GGUF": {
@@ -89,20 +132,6 @@
       ],
       "defaults": {
         "context_length": 32768
-      }
-    },
-    "Qwen3-VL-8B-Instruct-Abliterated-GGUF": {
-      "author": "huihui-ai",
-      "repo_name": "Huihui-Qwen3-VL-8B-Instruct-abliterated-GGUF",
-      "repo_id": "huihui-ai/Huihui-Qwen3-VL-8B-Instruct-abliterated-GGUF",
-      "model_files": [
-        "Huihui-Qwen3-VL-8B-Instruct-abliterated.Q4_K_M.gguf",
-        "Huihui-Qwen3-VL-8B-Instruct-abliterated.Q5_K_M.gguf",
-        "Huihui-Qwen3-VL-8B-Instruct-abliterated.Q6_K.gguf",
-        "Huihui-Qwen3-VL-8B-Instruct-abliterated.Q8_0.gguf"
-      ],
-      "defaults": {
-        "context_length": 65536
       }
     }
   },
