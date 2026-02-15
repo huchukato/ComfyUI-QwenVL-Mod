@@ -24,7 +24,7 @@ class StorySplitNode:
     RETURN_TYPES = ("STRING", "STRING", "STRING", "STRING", "STRING")
     RETURN_NAMES = ("prompt_1", "prompt_2", "prompt_3", "prompt_4", "debug_info")
     FUNCTION = "split_story"
-    CATEGORY = "Custom/Story"
+    CATEGORY = "ComfyUI-QwenVL/Utils"
     
     def split_story(self, text, auto_split=True, custom_delimiter=""):
         """
