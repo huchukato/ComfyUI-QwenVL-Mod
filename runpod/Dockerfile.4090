@@ -14,6 +14,7 @@ ENV HF_TOKEN=${HF_TOKEN}
 
 # Install system dependencies
 RUN apt-get update && \
+    apt-get install -y --no-install-recommends software-properties-common && \
     add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
