@@ -38,8 +38,6 @@ RUN apt-get update && \
     libgomp1 \
     ffmpeg \
     openssh-server \
-    nodejs \
-    npm \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
