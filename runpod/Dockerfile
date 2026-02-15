@@ -72,7 +72,7 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
 
 # Install llama-cpp-python for GGUF support (CUDA 12.8 compatible with base image)
 RUN pip install --upgrade --force-reinstall --no-cache-dir \
-    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.24-cu128-Basic-linux-20260208/llama_cpp_python-0.3.24+cu128.basic-cp312-cp312-linux_x86_64.whl && \
+    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.25-cu128-Basic-linux-20260215/llama_cpp_python-0.3.25+cu128.basic-cp312-cp312-linux_x86_64.whl && \
     pip cache purge
 
 # Install ALL ComfyUI custom nodes from VastAI provisioning + RunpodDirect
@@ -131,7 +131,7 @@ RUN npm install -g wetty
 
 # Create web terminal startup script
 RUN echo '#!/bin/bash\n\
-wetty --port 8081 --base /terminal --command bash &' > /start-terminal.sh && \
+wetty --port 8081 --command bash &' > /start-terminal.sh && \
     chmod +x /start-terminal.sh
 
 # HuggingFace login for private models (if token provided)
@@ -325,7 +325,7 @@ echo "✅ Web Terminal started on port 8081"\n\
 # Start ComfyUI\n\
 echo "🚀 Starting ComfyUI..."\n\
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\n\
-echo "🖥️ Web Terminal: http://0.0.0.0:8081/terminal"\n\
+echo "🖥️ Web Terminal: http://0.0.0.0:8081"\n\
 cd $COMFYUI_DIR\n\
 nohup python main.py --disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute &> /comfyui.log &\n\
 echo "✅ ComfyUI started"\n\
