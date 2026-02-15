@@ -43,6 +43,11 @@ def load_modules_from_directory(directory):
                 print(f"Error loading module {module_name}: {e}")
 
 load_modules_from_directory(current_dir)
+
+# Also load from nodes subdirectory
+nodes_dir = os.path.join(current_dir, "nodes")
+if os.path.exists(nodes_dir):
+    load_modules_from_directory(nodes_dir)
 NODE_CLASS_MAPPINGS = dict(sorted(NODE_CLASS_MAPPINGS.items(), key=lambda x: NODE_DISPLAY_NAME_MAPPINGS.get(x[0], x[0])))
 NODE_DISPLAY_NAME_MAPPINGS = dict(sorted(NODE_DISPLAY_NAME_MAPPINGS.items(), key=lambda x: x[1]))
 
