@@ -124,6 +124,34 @@
         "gpu_layers": -1,
         "top_k": 0
       }
+    },
+    "Qwen3-VL-4B-Instruct-Abliterated-GGUF": {
+      "author": "huihui-ai",
+      "repo_name": "Huihui-Qwen3-VL-4B-Instruct-abliterated-GGUF",
+      "repo_id": "huihui-ai/Huihui-Qwen3-VL-4B-Instruct-abliterated-GGUF",
+      "model_files": [
+        "Huihui-Qwen3-VL-4B-Instruct-abliterated.Q4_K_M.gguf",
+        "Huihui-Qwen3-VL-4B-Instruct-abliterated.Q5_K_M.gguf",
+        "Huihui-Qwen3-VL-4B-Instruct-abliterated.Q6_K.gguf",
+        "Huihui-Qwen3-VL-4B-Instruct-abliterated.Q8_0.gguf"
+      ],
+      "defaults": {
+        "context_length": 32768
+      }
+    },
+    "Qwen3-VL-8B-Instruct-Abliterated-GGUF": {
+      "author": "huihui-ai",
+      "repo_name": "Huihui-Qwen3-VL-8B-Instruct-abliterated-GGUF",
+      "repo_id": "huihui-ai/Huihui-Qwen3-VL-8B-Instruct-abliterated-GGUF",
+      "model_files": [
+        "Huihui-Qwen3-VL-8B-Instruct-abliterated.Q4_K_M.gguf",
+        "Huihui-Qwen3-VL-8B-Instruct-abliterated.Q5_K_M.gguf",
+        "Huihui-Qwen3-VL-8B-Instruct-abliterated.Q6_K.gguf",
+        "Huihui-Qwen3-VL-8B-Instruct-abliterated.Q8_0.gguf"
+      ],
+      "defaults": {
+        "context_length": 65536
+      }
     }
   },
   "qwenVL_model": {
