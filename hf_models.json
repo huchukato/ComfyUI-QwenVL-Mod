@@ -170,15 +170,15 @@
     }
   },
   "hf_text_models": {
-    "Qwen3-4B-abliterated-TIES": {
-      "repo_id": "nbeerbower/Qwen3-4B-abliterated-TIES",
+    "Josiefied-Qwen3-4B-Instruct-2507-gabliterated-v1": {
+      "repo_id": "Goekdeniz-Guelmez/Josiefied-Qwen3-4B-Instruct-2507-gabliterated-v1",
       "default": true,
       "quantized": true
     },
-    "Qwen3-8B-abliterated-TIES": {
-      "repo_id": "nbeerbower/Qwen3-8B-abliterated-TIES",
+    "Josiefied-Qwen3-8B-abliterated-v1": {
+      "repo_id": "Goekdeniz-Guelmez/Josiefied-Qwen3-8B-abliterated-v1",
       "default": false,
-      "quantized": false
+      "quantized": true
     },
     "Qwen3-4B-Instruct": {
       "repo_id": "Qwen/Qwen3-4B-Instruct",
