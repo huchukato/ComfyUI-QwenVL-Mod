@@ -1,8 +1,8 @@
 {
   "id": "d40a02f0-8c72-4d49-8df5-3b1302b986f9",
   "revision": 0,
-  "last_node_id": 1591,
-  "last_link_id": 5474,
+  "last_node_id": 1595,
+  "last_link_id": 5486,
   "nodes": [
     {
       "id": 544,
@@ -18,7 +18,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 135,
+      "order": 133,
       "mode": 0,
       "inputs": [
         {
@@ -1537,7 +1537,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 145,
+      "order": 149,
       "mode": 0,
       "inputs": [
         {
@@ -1577,7 +1577,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 146,
+      "order": 150,
       "mode": 0,
       "inputs": [
         {
@@ -1685,7 +1685,7 @@
         166
       ],
       "flags": {},
-      "order": 132,
+      "order": 135,
       "mode": 4,
       "inputs": [
         {
@@ -1755,7 +1755,7 @@
         166
       ],
       "flags": {},
-      "order": 130,
+      "order": 134,
       "mode": 4,
       "inputs": [
         {
@@ -2476,7 +2476,8 @@
         false,
         "lanczos",
         "none",
-        "#000000"
+        "#000000",
+        "<tr><td>Output: </td><td><b>480</b> x <b>704</b> | 3.87MB | 337,920 pixels</td></tr>"
       ],
       "color": "#233",
       "bgcolor": "#355"
@@ -2896,7 +2897,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 131,
+      "order": 130,
       "mode": 0,
       "inputs": [
         {
@@ -3763,30 +3764,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 301,
-      "type": "MarkdownNote",
-      "pos": [
-        -1857.1331554934236,
-        -1124.7848181835468
-      ],
-      "size": [
-        460,
-        1130
-      ],
-      "flags": {},
-      "order": 77,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "README",
-      "properties": {},
-      "widgets_values": [
-        "# WAN 2.2 ENHANCED NSFW I2V LONG VIDEO with AUTOPROMPT, MMAUDIO and GGUF support \n\n## 🖥️ Civitai Model \n\n⚙️ **GGUF VERSION**\n\n*Credits to* [taek75799](https://civitai.com/user/taek75799)\n\n- [🔗 NSFW V2 Q6 K High](https://civitai.com/models/2053259?modelVersionId=2524233)\n- [🔗 NSFW V2 Q6 K Low](https://civitai.com/models/2053259?modelVersionId=2524236)\n- [🔗 NSFW V2 Q8 High](https://civitai.com/models/2053259?modelVersionId=2584698)\n- [🔗 NSFW V2 Q8 Low](https://civitai.com/models/2053259?modelVersionId=2584707)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou)\n\n- [🔗 WAN REMIX v2.1 Q6 K High](https://huggingface.co/huchukato/Wan2.2-Remix-I2V-v2.1-GGUF/resolve/main/High/wan22RemixT2VI2V_i2vHighV21-Q6_K.gguf)\n- [🔗 WAN REMIX v2.1 Q6 K Low](https://huggingface.co/huchukato/Wan2.2-Remix-I2V-v2.1-GGUF/resolve/main/Low/wan22RemixT2VI2V_i2vLowV21-Q6_K.gguf)\n- [🔗 WAN REMIX v2.1 Q8 High](https://huggingface.co/huchukato/Wan2.2-Remix-I2V-v2.1-GGUF/resolve/main/High/wan22RemixT2VI2V_i2vHighV21-Q8_0.gguf)\n- [🔗 WAN REMIX v.2.1 Q8 Low](https://huggingface.co/huchukato/Wan2.2-Remix-I2V-v2.1-GGUF/resolve/main/Low/wan22RemixT2VI2V_i2vLowV21-Q8_0.gguf)\n\n---\n\n## Text Encoders\n- **FP8**: [🔗 umt5_xxl_fp8 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors)\n- **FP16**: [🔗 umt5_xxl_fp16 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors)\n- **NSFW FP8**: [🔗 nsfw_wan_umt5-xxl_fp8_scaled](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors)\n- **NSFW BF16**: [🔗 nsfw_wan_umt5-xxl_bf16](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_bf16.safetensors)\n\n⚙️ **GGUF VERSION**\n- **Q6 K**: [🔗 umt5-xxl-encoder-Q6_K](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q6_K.gguf)\n- **Q8**: [🔗 umt5-xxl-encoder-Q8_0](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q8_0.gguf)\n\n## VAE\n- **BF16:**: [🔗 wan_2.1_vae](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors)\n- **FP32:**: [🔗 wan_2.1_fp32_vae](https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors)\n\n## UPSCALE MODEL\n\n- [🔗 2xLexicaRRDBNet](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth)\n- [🔗 2xLexicaRRDBNet_Sharp](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth)\n\n\n---\n\n# 🎬 Motion Settings\n\n## Motion Amplitude\n*Motion intensity multiplier* \n- **1.0** = normal\n- **1.15** = recommended  \n**Range:** 1.0 – 2.0\n\n## Motion Frames\n*Number of trailing frames from `previous_video` used as motion reference* \n\n**Default:** 5\n\n---\n\n# 🎨 Color Strenght\n\nControls color drift correction strength.\n\n- **0.0** → no color issues  \n- **0.01 – 0.05** → slight drift  \n- **0.1 – 0.15** → strong shift  \n- **0.2 – 0.3** → severe drift\n"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
       "id": 1552,
       "type": "SetNode",
       "pos": [
@@ -3838,7 +3815,7 @@
         58
       ],
       "flags": {},
-      "order": 78,
+      "order": 77,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3876,7 +3853,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 79,
+      "order": 78,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3910,7 +3887,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 80,
+      "order": 79,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3944,7 +3921,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 81,
+      "order": 80,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3978,7 +3955,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 82,
+      "order": 81,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4090,7 +4067,7 @@
         30
       ],
       "flags": {},
-      "order": 83,
+      "order": 82,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4136,7 +4113,7 @@
         110
       ],
       "flags": {},
-      "order": 84,
+      "order": 83,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4183,7 +4160,7 @@
         82
       ],
       "flags": {},
-      "order": 85,
+      "order": 84,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -4727,7 +4704,7 @@
         106
       ],
       "flags": {},
-      "order": 86,
+      "order": 85,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4892,7 +4869,7 @@
         196.61221590909076
       ],
       "flags": {},
-      "order": 87,
+      "order": 86,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -4916,7 +4893,7 @@
         58
       ],
       "flags": {},
-      "order": 88,
+      "order": 87,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -4951,7 +4928,7 @@
         58
       ],
       "flags": {},
-      "order": 89,
+      "order": 88,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -4986,7 +4963,7 @@
         30
       ],
       "flags": {},
-      "order": 90,
+      "order": 89,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5033,7 +5010,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 91,
+      "order": 90,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5198,7 +5175,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 92,
+      "order": 91,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5241,7 +5218,7 @@
         82
       ],
       "flags": {},
-      "order": 93,
+      "order": 92,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5668,7 +5645,7 @@
         130
       ],
       "flags": {},
-      "order": 94,
+      "order": 93,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5823,58 +5800,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 917,
-      "type": "UNETLoader",
-      "pos": [
-        -1335.8211493577019,
-        -1084.4409274878417
-      ],
-      "size": [
-        407.38374624166386,
-        82
-      ],
-      "flags": {},
-      "order": 95,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            5429
-          ]
-        }
-      ],
-      "title": "Load Diffusion Model HIGH",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.45",
-        "Node name for S&R": "UNETLoader",
-        "models": [
-          {
-            "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
-            "directory": "diffusion_models"
-          }
-        ],
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {
-            "unet_name": true,
-            "weight_dtype": true
-          }
-        }
-      },
-      "widgets_values": [
-        "wan22EnhancedNSFWSVICamera_nsfwV2FP8H.safetensors",
-        "default"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
       "id": 1521,
       "type": "CLIPLoader",
       "pos": [
@@ -5886,7 +5811,7 @@
         110
       ],
       "flags": {},
-      "order": 96,
+      "order": 94,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5921,7 +5846,7 @@
         120
       ],
       "flags": {},
-      "order": 97,
+      "order": 95,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5945,58 +5870,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 918,
-      "type": "UNETLoader",
-      "pos": [
-        -1334.8420125225148,
-        -949.7049849007745
-      ],
-      "size": [
-        368.6467478229074,
-        82
-      ],
-      "flags": {},
-      "order": 98,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            5430
-          ]
-        }
-      ],
-      "title": "Load Diffusion Model LOW",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.45",
-        "Node name for S&R": "UNETLoader",
-        "models": [
-          {
-            "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
-            "directory": "diffusion_models"
-          }
-        ],
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {
-            "unet_name": true,
-            "weight_dtype": true
-          }
-        }
-      },
-      "widgets_values": [
-        "wan22EnhancedNSFWSVICamera_nsfwV2FP8L.safetensors",
-        "default"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
       "id": 1574,
       "type": "SetNode",
       "pos": [
@@ -6014,9 +5887,9 @@
       "mode": 0,
       "inputs": [
         {
-          "name": "STRING",
-          "type": "STRING",
-          "link": 5464
+          "name": "*",
+          "type": "*",
+          "link": 5480
         }
       ],
       "outputs": [
@@ -6052,9 +5925,9 @@
       "mode": 0,
       "inputs": [
         {
-          "name": "STRING",
-          "type": "STRING",
-          "link": 5465
+          "name": "*",
+          "type": "*",
+          "link": 5482
         }
       ],
       "outputs": [
@@ -6090,9 +5963,9 @@
       "mode": 0,
       "inputs": [
         {
-          "name": "STRING",
-          "type": "STRING",
-          "link": 5466
+          "name": "*",
+          "type": "*",
+          "link": 5484
         }
       ],
       "outputs": [
@@ -6128,9 +6001,9 @@
       "mode": 0,
       "inputs": [
         {
-          "name": "STRING",
-          "type": "STRING",
-          "link": 5467
+          "name": "*",
+          "type": "*",
+          "link": 5486
         }
       ],
       "outputs": [
@@ -6149,170 +6022,6 @@
       ]
     },
     {
-      "id": 1582,
-      "type": "ShowTextNode",
-      "pos": [
-        207.10599182937113,
-        -1418.2776767988837
-      ],
-      "size": [
-        400,
-        200
-      ],
-      "flags": {},
-      "order": 147,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "text",
-          "type": "STRING",
-          "link": 5460
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "shape": 6,
-          "type": "STRING",
-          "links": [
-            5464
-          ]
-        }
-      ],
-      "title": "Prompt 1",
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
-        "ver": "6b150cb617a19181b5bdc440f82fc2e4979ccc80",
-        "Node name for S&R": "ShowTextNode"
-      },
-      "widgets_values": [],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 1583,
-      "type": "ShowTextNode",
-      "pos": [
-        209.34782397103547,
-        -1158.4754049582573
-      ],
-      "size": [
-        400,
-        200
-      ],
-      "flags": {},
-      "order": 148,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "text",
-          "type": "STRING",
-          "link": 5461
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "shape": 6,
-          "type": "STRING",
-          "links": [
-            5465
-          ]
-        }
-      ],
-      "title": "Prompt 2",
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
-        "ver": "6b150cb617a19181b5bdc440f82fc2e4979ccc80",
-        "Node name for S&R": "ShowTextNode"
-      },
-      "widgets_values": [],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 1584,
-      "type": "ShowTextNode",
-      "pos": [
-        210,
-        -910
-      ],
-      "size": [
-        400,
-        200
-      ],
-      "flags": {},
-      "order": 149,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "text",
-          "type": "STRING",
-          "link": 5462
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "shape": 6,
-          "type": "STRING",
-          "links": [
-            5466
-          ]
-        }
-      ],
-      "title": "Prompt 3",
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
-        "ver": "6b150cb617a19181b5bdc440f82fc2e4979ccc80",
-        "Node name for S&R": "ShowTextNode"
-      },
-      "widgets_values": [],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 1585,
-      "type": "ShowTextNode",
-      "pos": [
-        210,
-        -660
-      ],
-      "size": [
-        400,
-        200
-      ],
-      "flags": {},
-      "order": 150,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "text",
-          "type": "STRING",
-          "link": 5463
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "shape": 6,
-          "type": "STRING",
-          "links": [
-            5467
-          ]
-        }
-      ],
-      "title": "Prompt 4",
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
-        "ver": "6b150cb617a19181b5bdc440f82fc2e4979ccc80",
-        "Node name for S&R": "ShowTextNode"
-      },
-      "widgets_values": [],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
       "id": 1580,
       "type": "GetNode",
       "pos": [
@@ -6326,7 +6035,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 99,
+      "order": 96,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6347,87 +6056,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 1581,
-      "type": "14459234-5392-4fbe-a549-696f4d1ab0b8",
-      "pos": [
-        -448.4470203849996,
-        -1408.0894662065343
-      ],
-      "size": [
-        560.1175510652185,
-        402.4891515530435
-      ],
-      "flags": {},
-      "order": 133,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 5455
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            5460
-          ]
-        },
-        {
-          "name": "STRING_1",
-          "type": "STRING",
-          "links": [
-            5461
-          ]
-        },
-        {
-          "name": "STRING_2",
-          "type": "STRING",
-          "links": [
-            5462
-          ]
-        },
-        {
-          "name": "STRING_3",
-          "type": "STRING",
-          "links": [
-            5463
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "1564",
-            "custom_prompt"
-          ],
-          [
-            "1564",
-            "model_name"
-          ],
-          [
-            "1564",
-            "preset_prompt"
-          ],
-          [
-            "1564",
-            "control_after_generate"
-          ],
-          [
-            "1564",
-            "seed"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.13.0"
-      },
-      "widgets_values": [],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 1587,
       "type": "GetNode",
       "pos": [
@@ -6441,7 +6069,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 100,
+      "order": 97,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6473,7 +6101,7 @@
         460
       ],
       "flags": {},
-      "order": 134,
+      "order": 132,
       "mode": 4,
       "inputs": [
         {
@@ -6552,13 +6180,13 @@
       "flags": {
         "collapsed": true
       },
-      "order": 101,
+      "order": 98,
       "mode": 0,
       "inputs": [],
       "outputs": [
         {
-          "name": "STRING",
-          "type": "STRING",
+          "name": "*",
+          "type": "*",
           "links": [
             5471
           ]
@@ -6586,13 +6214,13 @@
       "flags": {
         "collapsed": true
       },
-      "order": 102,
+      "order": 99,
       "mode": 0,
       "inputs": [],
       "outputs": [
         {
-          "name": "STRING",
-          "type": "STRING",
+          "name": "*",
+          "type": "*",
           "links": [
             5472
           ]
@@ -6620,13 +6248,13 @@
       "flags": {
         "collapsed": true
       },
-      "order": 103,
+      "order": 100,
       "mode": 0,
       "inputs": [],
       "outputs": [
         {
-          "name": "STRING",
-          "type": "STRING",
+          "name": "*",
+          "type": "*",
           "links": [
             5473
           ]
@@ -6654,13 +6282,13 @@
       "flags": {
         "collapsed": true
       },
-      "order": 104,
+      "order": 101,
       "mode": 0,
       "inputs": [],
       "outputs": [
         {
-          "name": "STRING",
-          "type": "STRING",
+          "name": "*",
+          "type": "*",
           "links": [
             5474
           ]
@@ -6686,7 +6314,7 @@
         640
       ],
       "flags": {},
-      "order": 105,
+      "order": 102,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6723,237 +6351,6 @@
       ],
       "color": "#233",
       "bgcolor": "#355"
-    },
-    {
-      "id": 1252,
-      "type": "2643c0a2-4f8c-4b66-9bba-7305a874c2db",
-      "pos": [
-        -493.2425226334106,
-        157.87355711797187
-      ],
-      "size": [
-        578.8365457400107,
-        812.9529410156254
-      ],
-      "flags": {},
-      "order": 136,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "model_h",
-          "name": "model",
-          "type": "MODEL",
-          "link": 5395
-        },
-        {
-          "label": "model_l",
-          "name": "model_1",
-          "type": "MODEL",
-          "link": 5396
-        },
-        {
-          "label": "model_s_h",
-          "name": "model_2",
-          "type": "MODEL",
-          "link": 5408
-        },
-        {
-          "label": "model_s_l",
-          "name": "model_3",
-          "type": "MODEL",
-          "link": 5409
-        },
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 4838
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 4993
-        },
-        {
-          "name": "start_image",
-          "type": "IMAGE",
-          "link": 5353
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 4841
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 4842
-        },
-        {
-          "name": "length",
-          "type": "INT",
-          "widget": {
-            "name": "length"
-          },
-          "link": 4843
-        },
-        {
-          "name": "motion_amplitude",
-          "type": "FLOAT",
-          "widget": {
-            "name": "motion_amplitude"
-          },
-          "link": 4844
-        },
-        {
-          "name": "steps",
-          "type": "INT",
-          "widget": {
-            "name": "steps"
-          },
-          "link": 4980
-        },
-        {
-          "name": "sampler_name",
-          "type": "COMBO",
-          "widget": {
-            "name": "sampler_name"
-          },
-          "link": 5328
-        },
-        {
-          "name": "scheduler",
-          "type": "COMBO",
-          "widget": {
-            "name": "scheduler"
-          },
-          "link": 5329
-        },
-        {
-          "name": "sigma_shift",
-          "type": "FLOAT",
-          "widget": {
-            "name": "sigma_shift"
-          },
-          "link": 5416
-        },
-        {
-          "label": "prompt",
-          "name": "anything",
-          "type": "*",
-          "widget": {
-            "name": "anything"
-          },
-          "link": 5471
-        }
-      ],
-      "outputs": [
-        {
-          "label": "MODEL_S_HIGH",
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            4846
-          ]
-        },
-        {
-          "label": "MODEL_S_LOW",
-          "name": "MODEL_1",
-          "type": "MODEL",
-          "links": [
-            4847
-          ]
-        },
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            4878
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "-1",
-            "width"
-          ],
-          [
-            "-1",
-            "height"
-          ],
-          [
-            "-1",
-            "length"
-          ],
-          [
-            "-1",
-            "motion_amplitude"
-          ],
-          [
-            "-1",
-            "steps"
-          ],
-          [
-            "-1",
-            "sampler_name"
-          ],
-          [
-            "-1",
-            "scheduler"
-          ],
-          [
-            "-1",
-            "sigma_shift"
-          ],
-          [
-            "1298",
-            "string_a"
-          ],
-          [
-            "1299",
-            "text"
-          ],
-          [
-            "-1",
-            "anything"
-          ],
-          [
-            "1250",
-            "seed"
-          ],
-          [
-            "1250",
-            "🎲 Randomize Each Time"
-          ],
-          [
-            "1250",
-            "🎲 New Fixed Random"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.7.0"
-      },
-      "widgets_values": [
-        5,
-        2,
-        "euler",
-        "simple",
-        5,
-        "euler",
-        "simple",
-        8,
-        null,
-        null,
-        ""
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
     },
     {
       "id": 1344,
@@ -7625,6 +7022,622 @@
         "euler",
         "simple",
         1.15,
+        5,
+        "euler",
+        "simple",
+        8,
+        null,
+        null,
+        ""
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1592,
+      "type": "easy showAnything",
+      "pos": [
+        215.57104769031514,
+        -1400.4761342710021
+      ],
+      "size": [
+        420,
+        180
+      ],
+      "flags": {},
+      "order": 145,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 5479
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5480
+          ]
+        }
+      ],
+      "title": "Prompt 1",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "Two women with vibrant green eyes and glossy skin lean in for an intimate moment, their lips parted as they simultaneously lick a gleaming pink dildo. The woman on the left wears a delicate turquoise bra with intricate lace detailing, her brown hair styled in soft curls framing her face. Her right wrist glints with a silver handcuff, hinting at playful submission. The woman on the right has her dark hair pulled back into a messy ponytail, revealing smooth shoulders and full breasts under a black sports bra. Their expressions are intense and focused, tongues flickering as they taste the lubricated toy. Sunlight streams through a nearby window, casting warm highlights across their skin and creating soft shadows that enhance the sensual atmosphere. The background is softly blurred, suggesting a private bedroom setting with muted tones to keep attention on the figures. Droplets of moisture glisten on their lips and chin, adding to the tactile realism of the scene."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1593,
+      "type": "easy showAnything",
+      "pos": [
+        214.56475090230697,
+        -1156.0737174228639
+      ],
+      "size": [
+        420,
+        180
+      ],
+      "flags": {},
+      "order": 146,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 5481
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5482
+          ]
+        }
+      ],
+      "title": "Prompt 2",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "The camera slowly zooms in as the women maintain their synchronized licking motion, their eyes locked together with shared intensity. Their tongues glide over the curved surface of the dildo, creating shimmering trails of saliva that drip down its length. The woman in turquoise gently squeezes the base of the toy with her cuffed hand, while the other woman’s fingers grip it firmly from below, pulling it slightly upward. Sweat beads appear on their foreheads and necks, catching the light as they lean closer, almost merging their faces. Their breathing becomes shallow and rhythmic, synchronized with each flick of their tongues. The warm glow of sunlight intensifies, casting golden halos around their hair and highlighting every curve of their bodies."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1594,
+      "type": "easy showAnything",
+      "pos": [
+        218.00761402473407,
+        -920.7739446165126
+      ],
+      "size": [
+        420,
+        180
+      ],
+      "flags": {},
+      "order": 147,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 5483
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5484
+          ]
+        }
+      ],
+      "title": "Prompt 3",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "Their movements become more passionate as the camera pans slightly downward to capture the full sensual tableau. The dildo now glows under the light, its surface reflecting the soft illumination while droplets slide down like liquid jewels. Both women shift their weight subtly, adjusting their positions for greater contact with the toy and each other. Their eyes remain locked in an unbroken gaze, communicating desire without words through every flicker of their eyelashes. The handcuff on the left woman’s wrist catches a glint as she moves, adding a touch of bondage to the scene. A faint blush spreads across their cheeks, deepening the emotional intimacy between them."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1581,
+      "type": "14459234-5392-4fbe-a549-696f4d1ab0b8",
+      "pos": [
+        -448.4470203849996,
+        -1408.0894662065343
+      ],
+      "size": [
+        560.1175510652185,
+        402.4891515530435
+      ],
+      "flags": {},
+      "order": 131,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 5455
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            5479
+          ]
+        },
+        {
+          "name": "STRING_1",
+          "type": "STRING",
+          "links": [
+            5481
+          ]
+        },
+        {
+          "name": "STRING_2",
+          "type": "STRING",
+          "links": [
+            5483
+          ]
+        },
+        {
+          "name": "STRING_3",
+          "type": "STRING",
+          "links": [
+            5485
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "1564",
+            "custom_prompt"
+          ],
+          [
+            "1564",
+            "model_name"
+          ],
+          [
+            "1564",
+            "preset_prompt"
+          ],
+          [
+            "1564",
+            "control_after_generate"
+          ],
+          [
+            "1564",
+            "seed"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.13.0"
+      },
+      "widgets_values": [],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1595,
+      "type": "easy showAnything",
+      "pos": [
+        219.51961325950953,
+        -670.0272607089431
+      ],
+      "size": [
+        420,
+        180
+      ],
+      "flags": {},
+      "order": 148,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 5485
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5486
+          ]
+        }
+      ],
+      "title": "Prompt 4",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "The final frame holds steady as they pause for a moment, still locked in their shared act, eyes wide with pleasure and anticipation. Their lips remain slightly parted, saliva glistening like tiny pearls on the toy’s surface. The warmth of sunlight bathes them completely, turning their skin into living gold under the window’s glow. Their fingers grip the dildo tightly now, almost reverently, as if it were a sacred object between them. A single tear glimmers at the corner of one woman’s eye, mingling with the droplets on her chin — a testament to the depth of emotion in this moment. The background remains softly out of focus, ensuring that every detail of their expressions and movements is crystal clear and emotionally resonant."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 917,
+      "type": "UNETLoader",
+      "pos": [
+        -1335.8211493577019,
+        -1084.4409274878417
+      ],
+      "size": [
+        407.38374624166386,
+        82
+      ],
+      "flags": {},
+      "order": 103,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            5429
+          ]
+        }
+      ],
+      "title": "Load Diffusion Model HIGH",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ],
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {
+            "unet_name": true,
+            "weight_dtype": true
+          }
+        }
+      },
+      "widgets_values": [
+        "wan22EnhancedNSFWSVICamera_nsfwV2FP8H.safetensors",
+        "default"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 918,
+      "type": "UNETLoader",
+      "pos": [
+        -1334.8420125225148,
+        -949.7049849007745
+      ],
+      "size": [
+        368.6467478229074,
+        82
+      ],
+      "flags": {},
+      "order": 104,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            5430
+          ]
+        }
+      ],
+      "title": "Load Diffusion Model LOW",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ],
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {
+            "unet_name": true,
+            "weight_dtype": true
+          }
+        }
+      },
+      "widgets_values": [
+        "wan22EnhancedNSFWSVICamera_nsfwV2FP8L.safetensors",
+        "default"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 301,
+      "type": "MarkdownNote",
+      "pos": [
+        -1857.1331554934236,
+        -1124.7848181835468
+      ],
+      "size": [
+        460,
+        1130
+      ],
+      "flags": {},
+      "order": 105,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "README",
+      "properties": {},
+      "widgets_values": [
+        "# WAN 2.2 NSFW I2V LONG VIDEO STORY with AUTOPROMPT, MMAUDIO and GGUF support \n\n## 🖥️ Civitai Model \n\n⚙️ **GGUF VERSION**\n\n*Credits to* [taek75799](https://civitai.com/user/taek75799)\n\n- [🔗 NSFW V2 Q6 K High](https://civitai.com/models/2053259?modelVersionId=2524233)\n- [🔗 NSFW V2 Q6 K Low](https://civitai.com/models/2053259?modelVersionId=2524236)\n- [🔗 NSFW V2 Q8 High](https://civitai.com/models/2053259?modelVersionId=2584698)\n- [🔗 NSFW V2 Q8 Low](https://civitai.com/models/2053259?modelVersionId=2584707)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou)\n\n- [🔗 WAN REMIX v2.1 Q6 K High](https://huggingface.co/huchukato/Wan2.2-Remix-I2V-v2.1-GGUF/resolve/main/High/wan22RemixT2VI2V_i2vHighV21-Q6_K.gguf)\n- [🔗 WAN REMIX v2.1 Q6 K Low](https://huggingface.co/huchukato/Wan2.2-Remix-I2V-v2.1-GGUF/resolve/main/Low/wan22RemixT2VI2V_i2vLowV21-Q6_K.gguf)\n- [🔗 WAN REMIX v2.1 Q8 High](https://huggingface.co/huchukato/Wan2.2-Remix-I2V-v2.1-GGUF/resolve/main/High/wan22RemixT2VI2V_i2vHighV21-Q8_0.gguf)\n- [🔗 WAN REMIX v.2.1 Q8 Low](https://huggingface.co/huchukato/Wan2.2-Remix-I2V-v2.1-GGUF/resolve/main/Low/wan22RemixT2VI2V_i2vLowV21-Q8_0.gguf)\n\n---\n\n## Text Encoders\n- **FP8**: [🔗 umt5_xxl_fp8 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors)\n- **FP16**: [🔗 umt5_xxl_fp16 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors)\n- **NSFW FP8**: [🔗 nsfw_wan_umt5-xxl_fp8_scaled](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors)\n- **NSFW BF16**: [🔗 nsfw_wan_umt5-xxl_bf16](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_bf16.safetensors)\n\n⚙️ **GGUF VERSION**\n- **Q6 K**: [🔗 umt5-xxl-encoder-Q6_K](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q6_K.gguf)\n- **Q8**: [🔗 umt5-xxl-encoder-Q8_0](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q8_0.gguf)\n\n## VAE\n- **BF16:**: [🔗 wan_2.1_vae](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors)\n- **FP32:**: [🔗 wan_2.1_fp32_vae](https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors)\n\n## UPSCALE MODEL\n\n- [🔗 2xLexicaRRDBNet](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth)\n- [🔗 2xLexicaRRDBNet_Sharp](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth)\n\n\n---\n\n# 🎬 Motion Settings\n\n## Motion Amplitude\n*Motion intensity multiplier* \n- **1.0** = normal\n- **1.15** = recommended  \n**Range:** 1.0 – 2.0\n\n## Motion Frames\n*Number of trailing frames from `previous_video` used as motion reference* \n\n**Default:** 5\n\n---\n\n# 🎨 Color Strenght\n\nControls color drift correction strength.\n\n- **0.0** → no color issues  \n- **0.01 – 0.05** → slight drift  \n- **0.1 – 0.15** → strong shift  \n- **0.2 – 0.3** → severe drift\n"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 1252,
+      "type": "2643c0a2-4f8c-4b66-9bba-7305a874c2db",
+      "pos": [
+        -493.2425226334106,
+        157.87355711797187
+      ],
+      "size": [
+        578.8365457400107,
+        812.9529410156254
+      ],
+      "flags": {},
+      "order": 136,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "model_h",
+          "name": "model",
+          "type": "MODEL",
+          "link": 5395
+        },
+        {
+          "label": "model_l",
+          "name": "model_1",
+          "type": "MODEL",
+          "link": 5396
+        },
+        {
+          "label": "model_s_h",
+          "name": "model_2",
+          "type": "MODEL",
+          "link": 5408
+        },
+        {
+          "label": "model_s_l",
+          "name": "model_3",
+          "type": "MODEL",
+          "link": 5409
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 4838
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 4993
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 5353
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 4841
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 4842
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 4843
+        },
+        {
+          "name": "motion_amplitude",
+          "type": "FLOAT",
+          "widget": {
+            "name": "motion_amplitude"
+          },
+          "link": 4844
+        },
+        {
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": 4980
+        },
+        {
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": 5328
+        },
+        {
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": 5329
+        },
+        {
+          "name": "sigma_shift",
+          "type": "FLOAT",
+          "widget": {
+            "name": "sigma_shift"
+          },
+          "link": 5416
+        },
+        {
+          "label": "prompt",
+          "name": "anything",
+          "type": "*",
+          "widget": {
+            "name": "anything"
+          },
+          "link": 5471
+        }
+      ],
+      "outputs": [
+        {
+          "label": "MODEL_S_HIGH",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            4846
+          ]
+        },
+        {
+          "label": "MODEL_S_LOW",
+          "name": "MODEL_1",
+          "type": "MODEL",
+          "links": [
+            4847
+          ]
+        },
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            4878
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "-1",
+            "width"
+          ],
+          [
+            "-1",
+            "height"
+          ],
+          [
+            "-1",
+            "length"
+          ],
+          [
+            "-1",
+            "motion_amplitude"
+          ],
+          [
+            "-1",
+            "steps"
+          ],
+          [
+            "-1",
+            "sampler_name"
+          ],
+          [
+            "-1",
+            "scheduler"
+          ],
+          [
+            "-1",
+            "sigma_shift"
+          ],
+          [
+            "1298",
+            "string_a"
+          ],
+          [
+            "1299",
+            "text"
+          ],
+          [
+            "-1",
+            "anything"
+          ],
+          [
+            "1250",
+            "seed"
+          ],
+          [
+            "1250",
+            "🎲 Randomize Each Time"
+          ],
+          [
+            "1250",
+            "🎲 New Fixed Random"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.7.0"
+      },
+      "widgets_values": [
+        5,
+        2,
+        "euler",
+        "simple",
         5,
         "euler",
         "simple",
@@ -8559,70 +8572,6 @@
       "IMAGE"
     ],
     [
-      5460,
-      1581,
-      0,
-      1582,
-      0,
-      "STRING"
-    ],
-    [
-      5461,
-      1581,
-      1,
-      1583,
-      0,
-      "STRING"
-    ],
-    [
-      5462,
-      1581,
-      2,
-      1584,
-      0,
-      "STRING"
-    ],
-    [
-      5463,
-      1581,
-      3,
-      1585,
-      0,
-      "STRING"
-    ],
-    [
-      5464,
-      1582,
-      0,
-      1574,
-      0,
-      "STRING"
-    ],
-    [
-      5465,
-      1583,
-      0,
-      1573,
-      0,
-      "STRING"
-    ],
-    [
-      5466,
-      1584,
-      0,
-      1572,
-      0,
-      "STRING"
-    ],
-    [
-      5467,
-      1585,
-      0,
-      1571,
-      0,
-      "STRING"
-    ],
-    [
       5468,
       1587,
       0,
@@ -8660,6 +8609,70 @@
       0,
       1344,
       15,
+      "STRING"
+    ],
+    [
+      5479,
+      1581,
+      0,
+      1592,
+      0,
+      "STRING"
+    ],
+    [
+      5480,
+      1592,
+      0,
+      1574,
+      0,
+      "STRING"
+    ],
+    [
+      5481,
+      1581,
+      1,
+      1593,
+      0,
+      "STRING"
+    ],
+    [
+      5482,
+      1593,
+      0,
+      1573,
+      0,
+      "STRING"
+    ],
+    [
+      5483,
+      1581,
+      2,
+      1594,
+      0,
+      "STRING"
+    ],
+    [
+      5484,
+      1594,
+      0,
+      1572,
+      0,
+      "STRING"
+    ],
+    [
+      5485,
+      1581,
+      3,
+      1595,
+      0,
+      "STRING"
+    ],
+    [
+      5486,
+      1595,
+      0,
+      1571,
+      0,
       "STRING"
     ]
   ],
@@ -9954,7 +9967,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "Two women with glossy skin and vibrant green eyes lean in close, their lips parted as they simultaneously lick a gleaming pink dildo. The woman on the left wears a teal bra with intricate lace detailing and has her brown hair styled in soft curls framing her face. Her right hand grips the base of the toy while her left wrist bears a silver handcuff. The woman on the right sports a black bra, her dark hair pulled into a messy bun, and her tongue flicks out to taste the droplets cascading from the tip. Sunlight streams in from a window behind them, casting warm highlights across their shoulders and chests. Their expressions are intense and focused, eyes locked together as they share this intimate moment. The background is softly blurred with muted tones of beige and cream, emphasizing the figures in the foreground. A subtle shadow falls across the lower part of the frame, grounding the scene. The overall style is hyper-realistic anime with smooth gradients and rich color saturation."
+              "Two women with vibrant green eyes and glossy skin lean in for an intimate moment, their lips parted as they simultaneously lick a gleaming pink dildo. The woman on the left wears a delicate turquoise bra with intricate lace detailing, her brown hair styled in soft curls framing her face. Her right wrist glints with a silver handcuff, hinting at playful submission. The woman on the right has her dark hair pulled back into a messy ponytail, revealing smooth shoulders and full breasts under a black sports bra. Their expressions are intense and focused, tongues flickering as they taste the lubricated toy. Sunlight streams through a nearby window, casting warm highlights across their skin and creating soft shadows that enhance the sensual atmosphere. The background is softly blurred, suggesting a private bedroom setting with muted tones to keep attention on the figures. Droplets of moisture glisten on their lips and chin, adding to the tactile realism of the scene."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -11280,7 +11293,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "The camera slowly pushes in on their faces as they continue to lick the toy, droplets glistening like jewels under the light. Their eyes remain locked, pupils dilated with desire, lips swollen from the shared act. The teal bra catches the sunlight, its delicate embroidery catching glints of gold while the black bra contrasts sharply against her skin tone. Sweat beads form on their brows and necks, reflecting the warm indoor lighting. Their breath hitches slightly as they pull back momentarily before resuming with renewed intensity. A faint sheen covers their skin from the moisture, adding to the sensual atmosphere. The background remains out of focus, allowing only hints of a white curtain and ceiling tiles to be visible. Every movement is fluid, capturing the natural rhythm of their interaction."
+              "The camera slowly zooms in as the women maintain their synchronized licking motion, their eyes locked together with shared intensity. Their tongues glide over the curved surface of the dildo, creating shimmering trails of saliva that drip down its length. The woman in turquoise gently squeezes the base of the toy with her cuffed hand, while the other woman’s fingers grip it firmly from below, pulling it slightly upward. Sweat beads appear on their foreheads and necks, catching the light as they lean closer, almost merging their faces. Their breathing becomes shallow and rhythmic, synchronized with each flick of their tongues. The warm glow of sunlight intensifies, casting golden halos around their hair and highlighting every curve of their bodies."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -12636,7 +12649,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "Their lips press together around the toy for a moment before they pull apart again, each letting out a soft moan that vibrates through their bodies. Droplets fall slowly from their mouths onto the surface below, creating tiny splashes as they hit. The woman in teal shifts her weight slightly, adjusting her grip on the object while keeping her gaze locked with her partner. Her handcuff glints faintly as she moves, adding a subtle element of constraint to the scene. The other woman’s head tilts back ever so slightly, exposing more of her neck and collarbone. Their expressions remain intensely focused, eyes wide with pleasure and anticipation. Shadows deepen under their chins, accentuating the contours of their faces. The background remains softly blurred, maintaining a shallow depth of field that keeps attention centered on them."
+              "Their movements become more passionate as the camera pans slightly downward to capture the full sensual tableau. The dildo now glows under the light, its surface reflecting the soft illumination while droplets slide down like liquid jewels. Both women shift their weight subtly, adjusting their positions for greater contact with the toy and each other. Their eyes remain locked in an unbroken gaze, communicating desire without words through every flicker of their eyelashes. The handcuff on the left woman’s wrist catches a glint as she moves, adding a touch of bondage to the scene. A faint blush spreads across their cheeks, deepening the emotional intimacy between them."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -13992,7 +14005,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "The final frame shows both women pulling back slightly, their lips parted as they gaze at each other with lingering desire. Their eyes still hold that intense focus, pupils dilated from the shared experience. Droplets continue to fall slowly from their mouths, catching the light before disappearing into the unseen surface below. The teal bra and black bra remain prominent, contrasting against their skin tones while emphasizing their physical connection. A faint sheen of sweat covers their bodies, enhancing the realism of the moment. Their breathing is audible in the stillness, each inhale and exhale adding to the sensual tension. The background remains muted, with only a sliver of window light visible behind them. The overall effect is one of intense intimacy, captured with cinematic precision and rich detail."
+              "The final frame holds steady as they pause for a moment, still locked in their shared act, eyes wide with pleasure and anticipation. Their lips remain slightly parted, saliva glistening like tiny pearls on the toy’s surface. The warmth of sunlight bathes them completely, turning their skin into living gold under the window’s glow. Their fingers grip the dildo tightly now, almost reverently, as if it were a sacred object between them. A single tear glimmers at the corner of one woman’s eye, mingling with the droplets on her chin — a testament to the depth of emotion in this moment. The background remains softly out of focus, ensuring that every detail of their expressions and movements is crystal clear and emotionally resonant."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -14445,7 +14458,7 @@
               20,
               50,
               4.5,
-              75268771805058,
+              1125721210754780,
               "randomize",
               "",
               "man, boy, male, man's voice, boy's voice, male's voice, ",
@@ -14755,7 +14768,7 @@
               0,
               4194304,
               true,
-              2568225141,
+              3460591077,
               "randomize",
               false
             ],
@@ -15136,7 +15149,7 @@
               1.2,
               16,
               true,
-              1876846668,
+              3185418380,
               "randomize",
               false
             ],
@@ -15212,10 +15225,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.5745424458972432,
+      "scale": 0.6319966904869676,
       "offset": [
-        1423.8700512619619,
-        1082.6024769310825
+        1183.1971852415297,
+        331.77393314714953
       ]
     }
   },
