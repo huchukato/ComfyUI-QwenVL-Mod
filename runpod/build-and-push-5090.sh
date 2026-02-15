@@ -6,14 +6,15 @@
 set -e
 
 # Configuration
-IMAGE_NAME="huchukato/comfyui-qwenvl-runpod"
+IMAGE_NAME="huchukato/comfyui-qwenvl-runpod-5090"
 TAG="latest"
 FULL_IMAGE_NAME="${IMAGE_NAME}:${TAG}"
 
-echo "🚀 Building ComfyUI-QwenVL-Mod v2.1.0 Docker Image"
-echo "==============================================="
+echo "🚀 Building ComfyUI-QwenVL-Mod v2.2.0 RTX 5090 Docker Image"
+echo "======================================================"
 echo "Image: ${FULL_IMAGE_NAME}"
-echo "Features: Keep Last Prompt, WAN 2.2 workflows, GGUF support"
+echo "Features: WAN 2.2 workflows, GGUF support, CUDA 12.8"
+echo "GPU: RTX 5090 optimized"
 echo ""
 
 # Check if Docker is running
