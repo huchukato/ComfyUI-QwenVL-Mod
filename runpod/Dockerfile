@@ -120,16 +120,7 @@ RUN cd /ComfyUI/custom_nodes && \
     done && \
     pip cache purge
 
-# Install ComfyUI-Easy-Use-Frontend
-RUN cd /ComfyUI/custom_nodes/ComfyUI-Easy-Use && \
-    if [ ! -d "ComfyUI-Easy-Use-Frontend" ]; then \
-        git clone https://github.com/yolain/ComfyUI-Easy-Use-Frontend.git; \
-    fi && \
-    cd ComfyUI-Easy-Use-Frontend && \
-    npm install && \
-    npm run build:dev && \
-    echo "WEB_VERSION: dev" > ../config.yaml && \
-    pip cache purge
+# ComfyUI-Easy-Use-Frontend removed due to compatibility issues
 
 # Install additional essential dependencies
 RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab huggingface_hub && \
@@ -322,7 +313,7 @@ echo "✅ JupyterLab started"\n\
 echo "🚀 Starting ComfyUI..."\n\
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\n\
 cd $COMFYUI_DIR\n\
-nohup python main.py --disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute --fast cublas_ops autotune &> /comfyui.log &\n\
+nohup python main.py --disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute &> /comfyui.log &\n\
 echo "✅ ComfyUI started"\n\
 \n\
 # Tail the ComfyUI log\n\
