@@ -8,6 +8,8 @@ COMFYUI_DIR=${WORKSPACE}/ComfyUI
 APT_PACKAGES=(
     #"package-1"
     #"package-2"
+    "nodejs"
+    "npm"
 )
 
 PIP_PACKAGES=(
@@ -197,7 +199,27 @@ function provisioning_get_nodes() {
                 pip install --root-user-action=ignore --no-cache-dir -r "${requirements}"
             fi
         fi
-        echo "  ✓ Node $dir completed"
+        
+        # Special handling for ComfyUI-Easy-Use-Frontend
+        if [[ "$dir" == "ComfyUI-Easy-Use" ]]; then
+            echo "  → Installing ComfyUI-Easy-Use-Frontend..."
+            cd "${path}"
+            if [[ ! -d "ComfyUI-Easy-Use-Frontend" ]]; then
+                git clone https://github.com/yolain/ComfyUI-Easy-Use-Frontend.git
+            fi
+            cd ComfyUI-Easy-Use-Frontend
+            if [[ ! -d "node_modules" ]]; then
+                echo "    → Installing npm dependencies..."
+                npm install
+            fi
+            echo "    → Building frontend..."
+            npm run build:dev
+            # Create config.yaml with WEB_VERSION: dev
+            if [[ ! -f "${path}/config.yaml" ]]; then
+                echo "WEB_VERSION: dev" > "${path}/config.yaml"
+            fi
+            cd "${COMFYUI_DIR}"
+        fi
     done
     echo "All nodes processed successfully!"
 }
