@@ -9,7 +9,26 @@ if [ -n "$HF_TOKEN" ]; then
     huggingface-cli login --token $HF_TOKEN
 fi
 
-# Packages are installed after nodes so we can fix them...
+# Clone the repository
+echo "📥 Cloning ComfyUI-QwenVL-Mod repository..."
+git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git /workspace/ComfyUI-QwenVL-Mod
+cd /workspace/ComfyUI-QwenVL-Mod
+
+# Install dependencies
+echo "📦 Installing dependencies..."
+pip install -r requirements.txt
+pip install -r gguf_requirements.txt
+
+# Download models
+echo "⬇️ Downloading models..."
+python AILab_QwenVL_GGUF.py --download_models
+
+# Copy workflows
+echo "📋 Copying workflows..."
+mkdir -p /workspace/ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod/workflows
+cp vastai/workflows/*.json /workspace/ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod/workflows/
+
+echo "✅ Setup complete!"
 
 APT_PACKAGES=(
     #"package-1"
