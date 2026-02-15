@@ -60,8 +60,8 @@ RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
 RUN python3.12 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Install PyTorch with CUDA 11.8 (compatible with RTX 4090)
-RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu118 && \
+# Install PyTorch with CUDA 12.4.1 (matching base image)
+RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu124 && \
     pip cache purge
 
 # Install ComfyUI 0.13.0 (latest stable)
