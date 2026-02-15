@@ -219,8 +219,9 @@ update_workflows() {\n\
     \n\
     # List of latest workflows\n\
     workflows=(\n\
-        "SDXL-LoRaStack-Upscale.json"\n\
+        "PMP-LoRaStack-Upscale-Wildcards.json"\n\
         "WAN2.2-I2V-AutoPrompt-Story.json"\n\
+        "WAN2.2-T2V-AutoPrompt-Story.json"\n\
         "Wan2.2-I2V-SVI-AutoPrompt-Story.json"\n\
         "WAN2.2-I2V-AutoPrompt-1-5.json"\n\
         "WAN2.2-I2V-AutoPrompt-GGUF-1-5.json"\n\
