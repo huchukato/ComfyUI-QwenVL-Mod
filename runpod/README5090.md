@@ -46,7 +46,7 @@ This template is perfect for:
 
 ## 📦 Pre-installed Components
 
-### **Custom Nodes (26)**
+### **Custom Nodes (26+)**
 - **ComfyUI-QwenVL-Mod**: Enhanced vision-language with WAN 2.2
 - **ComfyUI-Manager**: Node and model management
 - **ComfyUI-GGUF**: GGUF model support
@@ -111,41 +111,10 @@ This template is perfect for:
 
 ---
 
-## 📋 System Requirements
+##  Links
 
-### **Minimum**
-- **GPU**: RTX 5090 (24GB VRAM) - **REQUIRED**
-- **CUDA**: 12.8 (included)
-- **Memory**: 32GB RAM
-- **Storage**: 50GB available
-
-### **Recommended**
-- **GPU**: RTX 5090 (24GB VRAM)
-- **CUDA**: 12.8 (included)
-- **Memory**: 64GB RAM
-- **Storage**: 100GB available
-
----
-
-## 🔗 Links
-
-- **Repository**: https://github.com/huchukato/ComfyUI-QwenVL-Mod-5090
-- **Docker Hub**: https://hub.docker.com/r/huchukato/comfyui-qwenvl-runpod-5090
-
----
-
-## 🐛 Troubleshooting
-
-### **Common Issues**
-1. **CUDA errors**: Ensure RTX 5090 is selected (not RTX 4090)
-2. **Memory issues**: Check VRAM availability
-3. **Model loading**: Verify internet connectivity for downloads
-
-### **Health Check**
-Container health check monitors ComfyUI:
-```bash
-curl -f http://0.0.0.0:8188/system_stats
-```
+- **Repository**: https://github.com/huchukato/ComfyUI-QwenVL-Mod
+- **Docker Hub**: https://hub.docker.com/r/huchukato/comfyui-qwenvl-runpod
 
 ---
 
