@@ -30,7 +30,6 @@ RUN apt-get update && \
     python3.12 \
     python3.12-venv \
     python3.12-dev \
-    python3.12-pip \
     libglx-mesa0 \
     libglib2.0-0 \
     libsm6 \
@@ -42,8 +41,11 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip for Python 3.12
-RUN python3.12 -m pip install --upgrade pip
+# Install pip for Python 3.12 manually
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    python3.12 get-pip.py && \
+    python3.12 -m pip install --upgrade pip && \
+    rm get-pip.py
 
 # CUDA toolkit and cuDNN already included in nvidia/cuda base image
 
