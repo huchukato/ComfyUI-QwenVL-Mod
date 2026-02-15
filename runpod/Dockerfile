@@ -11,6 +11,10 @@ ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:$CUDA_HOME/bin
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 
+# HuggingFace token (set at runtime)
+ARG HF_TOKEN
+ENV HF_TOKEN=${HF_TOKEN}
+
 # Install system dependencies (CUDA already included in base image)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
@@ -123,8 +127,14 @@ RUN cd /ComfyUI/custom_nodes/ComfyUI-Easy-Use && \
     pip cache purge
 
 # Install additional essential dependencies
-RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab && \
+RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab huggingface_hub && \
     pip cache purge
+
+# HuggingFace login for private models (if token provided)
+RUN if [ -n "$HF_TOKEN" ]; then \
+    echo "🔑 Logging into HuggingFace..." && \
+    huggingface-cli login --token $HF_TOKEN; \
+    fi
 
 # Clean up heavy Git files to save space (keep repo structure for updates)
 RUN find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "*.pack" -delete + || true && \
