@@ -1,24 +1,6 @@
 {
   "base_dir": "LLM/GGUF",
   "Qwen_model": {
-    "Qwen3-4B-abliterated-GGUF": {
-      "author": "Mungert",
-      "repo_name": "Qwen3-4B-abliterated-GGUF",
-      "repo_id": "Mungert/Qwen3-4B-abliterated-GGUF",
-      "alt_repo_ids": [
-        "mradermacher/Qwen3-4B-abliterated-GGUF"
-      ],
-      "model_files": [
-        "Qwen3-4B-abliterated-Q4_K_M.gguf",
-        "Qwen3-4B-abliterated-Q5_K_M.gguf",
-        "Qwen3-4B-abliterated-Q6_K.gguf",
-        "Qwen3-4B-abliterated-Q8_0.gguf",
-        "Qwen3-4B-abliterated-F16.gguf"
-      ],
-      "defaults": {
-        "context_length": 32768
-      }
-    },
     "Josiefied-Qwen3-8B-abliterated-v1-GGUF": {
       "author": "mradermacher",
       "repo_name": "Josiefied-Qwen3-8B-abliterated-v1-GGUF",
