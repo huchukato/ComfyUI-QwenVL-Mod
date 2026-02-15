@@ -126,6 +126,14 @@ RUN cd /ComfyUI/custom_nodes && \
 RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab huggingface_hub && \
     pip cache purge
 
+# Install web terminal (wetty)
+RUN npm install -g wetty
+
+# Create web terminal startup script
+RUN echo '#!/bin/bash\n\
+wetty --port 8081 --base /terminal --command bash &' > /start-terminal.sh && \
+    chmod +x /start-terminal.sh
+
 # HuggingFace login for private models (if token provided)
 RUN if [ -n "$HF_TOKEN" ]; then \
     echo "🔑 Logging into HuggingFace..." && \
@@ -309,9 +317,15 @@ echo "🔧 Starting JupyterLab..."\n\
 nohup /usr/local/bin/start-jupyter.sh &> /jupyter.log &\n\
 echo "✅ JupyterLab started"\n\
 \n\
+# Start Web Terminal\n\
+echo "🖥️ Starting Web Terminal..."\n\
+nohup /start-terminal.sh &> /terminal.log &\n\
+echo "✅ Web Terminal started on port 8081"\n\
+\n\
 # Start ComfyUI\n\
 echo "🚀 Starting ComfyUI..."\n\
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\n\
+echo "🖥️ Web Terminal: http://0.0.0.0:8081/terminal"\n\
 cd $COMFYUI_DIR\n\
 nohup python main.py --disable-auto-launch --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload --supports-fp8-compute &> /comfyui.log &\n\
 echo "✅ ComfyUI started"\n\
@@ -324,7 +338,7 @@ tail -f /comfyui.log\n\
 WORKDIR /ComfyUI
 
 # Expose ports
-EXPOSE 8080 8188 8888
+EXPOSE 8080 8188 8888 8081
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
