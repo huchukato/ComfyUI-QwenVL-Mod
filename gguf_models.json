@@ -91,10 +91,6 @@
       "repo_name": "Josiefied-Qwen3-8B-abliterated-v1-GGUF",
       "repo_id": "mradermacher/Josiefied-Qwen3-8B-abliterated-v1-GGUF",
       "model_files": [
-        "Josiefied-Qwen3-8B-abliterated-v1.Q2_K.gguf",
-        "Josiefied-Qwen3-8B-abliterated-v1.Q3_K_S.gguf",
-        "Josiefied-Qwen3-8B-abliterated-v1.Q3_K_M.gguf",
-        "Josiefied-Qwen3-8B-abliterated-v1.Q3_K_L.gguf",
         "Josiefied-Qwen3-8B-abliterated-v1.IQ4_XS.gguf",
         "Josiefied-Qwen3-8B-abliterated-v1.Q4_K_S.gguf",
         "Josiefied-Qwen3-8B-abliterated-v1.Q4_K_M.gguf",
@@ -103,6 +99,24 @@
         "Josiefied-Qwen3-8B-abliterated-v1.Q6_K.gguf",
         "Josiefied-Qwen3-8B-abliterated-v1.Q8_0.gguf",
         "Josiefied-Qwen3-8B-abliterated-v1.f16.gguf"
+      ],
+      "defaults": {
+        "context_length": 32768
+      }
+    },
+    "Josiefied-Qwen3-4B-abliterated-v1-GGUF": {
+      "author": "mradermacher",
+      "repo_name": "Josiefied-Qwen3-4B-abliterated-v1-GGUF",
+      "repo_id": "mradermacher/Josiefied-Qwen3-4B-abliterated-v1-GGUF",
+      "model_files": [
+        "Josiefied-Qwen3-4B-abliterated-v1.IQ4_XS.gguf",
+        "Josiefied-Qwen3-4B-abliterated-v1.Q4_K_S.gguf",
+        "Josiefied-Qwen3-4B-abliterated-v1.Q4_K_M.gguf",
+        "Josiefied-Qwen3-4B-abliterated-v1.Q5_K_S.gguf",
+        "Josiefied-Qwen3-4B-abliterated-v1.Q5_K_M.gguf",
+        "Josiefied-Qwen3-4B-abliterated-v1.Q6_K.gguf",
+        "Josiefied-Qwen3-4B-abliterated-v1.Q8_0.gguf",
+        "Josiefied-Qwen3-4B-abliterated-v1.f16.gguf"
       ],
       "defaults": {
         "context_length": 32768
