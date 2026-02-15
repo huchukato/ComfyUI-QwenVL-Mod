@@ -10,6 +10,16 @@
         "4bit": 2.0
       }
     },
+    "Josiefied-Qwen3-VL-4B-Instruct-abliterated-beta-v1": {
+      "repo_id": "Goekdeniz-Guelmez/Josiefied-Qwen3-VL-4B-Instruct-abliterated-beta-v1",
+      "default": false,
+      "quantized": false,
+      "vram_requirement": {
+        "full": 6.0,
+        "8bit": 3.5,
+        "4bit": 2.0
+      }
+    },
     "Qwen3-VL-8B-Instruct-Abliterated": {
       "repo_id": "huihui-ai/Huihui-Qwen3-VL-8B-Instruct-abliterated",
       "default": false,
@@ -156,16 +166,6 @@
         "full": 15.0,
         "8bit": 8.5,
         "4bit": 5.0
-      }
-    },
-    "Josiefied-Qwen3-VL-4B-Instruct-abliterated-beta-v1": {
-      "repo_id": "Goekdeniz-Guelmez/Josiefied-Qwen3-VL-4B-Instruct-abliterated-beta-v1",
-      "default": false,
-      "quantized": false,
-      "vram_requirement": {
-        "full": 6.0,
-        "8bit": 3.5,
-        "4bit": 2.0
       }
     }
   },
