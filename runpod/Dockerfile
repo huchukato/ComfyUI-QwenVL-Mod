@@ -202,6 +202,7 @@ update_workflows() {\n\
         "WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-9.json"\n\
         "WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-6.json"\n\
         "WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF-1-1.json"\n\
+        "WAN2.2-I2V-AutoPrompt-Story.json"\n\
     )\n\
     \n\
     for workflow in "${workflows[@]}"; do\n\
