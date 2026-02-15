@@ -140,7 +140,7 @@
         "Qwen3-VL-4B-Instruct-c_abliterated-v2-F16.gguf"
       ],
       "defaults": {
-        "context_length": 65536,
+        "context_length": 262144,
         "image_max_tokens": 4096,
         "n_batch": 512,
         "gpu_layers": -1,
@@ -161,7 +161,7 @@
         "Qwen3-VL-8B-Instruct-c_abliterated-v3-F16.gguf"
       ],
       "defaults": {
-        "context_length": 65536,
+        "context_length": 262144,
         "image_max_tokens": 4096,
         "n_batch": 512,
         "gpu_layers": -1,
@@ -182,7 +182,7 @@
         "Qwen3VL-4B-Instruct-F16.gguf"
       ],
       "defaults": {
-        "context_length": 65536,
+        "context_length": 262144,
         "image_max_tokens": 4096,
         "n_batch": 512,
         "gpu_layers": -1,
