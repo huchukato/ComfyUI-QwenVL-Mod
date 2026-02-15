@@ -1,5 +1,5 @@
 # Use CUDA 11.8 base image for RTX 4090 compatibility
-FROM nvidia/cuda:11.8-devel-ubuntu22.04
+FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
