@@ -10,17 +10,7 @@
         "4bit": 2.0
       }  
     },
-    "Josiefied-Qwen3-VL-4B-Instruct-abliterated-beta-v1": {
-      "repo_id": "Goekdeniz-Guelmez/Josiefied-Qwen3-VL-4B-Instruct-abliterated-beta-v1",
-      "default": false,
-      "quantized": true,
-      "vram_requirement": {
-        "full": 6.0,
-        "8bit": 3.5,
-        "4bit": 2.0
-      }
-    },
-    "Qwen3-VL-8B-Instruct-Abliterated": {
+        "Qwen3-VL-8B-Instruct-Abliterated": {
       "repo_id": "huihui-ai/Huihui-Qwen3-VL-8B-Instruct-abliterated",
       "default": false,
       "quantized": true,
