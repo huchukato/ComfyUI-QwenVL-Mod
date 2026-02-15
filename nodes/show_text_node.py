@@ -5,15 +5,15 @@ Alternative to ComfyUI-Custom-Scripts show_text
 
 class ShowTextNode:
     """
-    Display text in ComfyUI interface
-    Simple alternative to show_text from ComfyUI-Custom-Scripts
+    Display text in ComfyUI interface and pass it through
+    For use with SetNode and other text processing
     """
     
     @classmethod
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "text": ("STRING", {"multiline": True, "default": "", "tooltip": "Text to display"}),
+                "text": ("STRING", {"multiline": True, "default": "", "tooltip": "Text input to display and pass through"}),
             },
             "optional": {
                 "title": ("STRING", {"multiline": False, "default": "Text Output", "tooltip": "Title for the display"}),
@@ -29,20 +29,14 @@ class ShowTextNode:
     
     def show_text(self, text, title="Text Output", show_length=True):
         """
-        Display text with optional title and character count
+        Display text and pass it through for SetNode chaining
         """
         if not text:
             text = ""
         
-        # Prepare display text
-        display_text = text
+        # Display logic handled by ComfyUI UI
+        # Just return the text for chaining
         
-        if show_length:
-            char_count = len(text)
-            line_count = len(text.split('\n'))
-            display_text = f"{text}\n\n---\nCharacters: {char_count} | Lines: {line_count}"
-        
-        # Return the text for potential chaining
         return (text,)
 
 # Node mapping for ComfyUI
