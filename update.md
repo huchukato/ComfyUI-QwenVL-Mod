@@ -33,14 +33,16 @@ This major update introduces a complete story generation system for WAN 2.2, ena
 
 ### 🐳 Docker Integration
 - **Container Ready**: Complete Story system integrated in Docker containers
-- **Auto-Download**: WAN2.2-I2V-AutoPrompt-Story.json workflow included
+- **Auto-Download**: WAN2.2-I2V-AutoPrompt-Story.json and WAN2.2-T2V-AutoPrompt-Story.json workflows included
 - **Cloud Deployment**: Ready for RunPod/VastAI deployment
 - **Service Integration**: FileBrowser, JupyterLab, and ComfyUI with Story support
 
 ### 📁 File Structure
 - **Nodes**: `/nodes/story_split_node.py` for intelligent prompt splitting
-- **Workflows**: `/vastai/workflows/WAN2.2-I2V-AutoPrompt-Story.json` ready-to-use
-- **Docker**: Updated `/runpod/Dockerfile` with Story workflow
+- **Workflows**: 
+  - `/vastai/workflows/WAN2.2-I2V-AutoPrompt-Story.json` ready-to-use I2V workflow
+  - `/vastai/workflows/WAN2.2-T2V-AutoPrompt-Story.json` ready-to-use T2V workflow
+- **Docker**: Updated `/runpod/Dockerfile` with Story workflows
 - **Prompts**: Enhanced `/AILab_System_Prompts.json` with Story system
 
 ### 🔧 Technical Improvements

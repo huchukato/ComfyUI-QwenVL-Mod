@@ -23,7 +23,7 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 > 🎯 **Enhanced Prompts**: Optimized WAN 2.2 NSFW Story prompts with better formatting  
 > ⚡ **Performance**: Optimized context settings for 8B models (65,536 tokens)  
 > 🐳 **Docker Ready**: Complete Story system integrated in Docker containers  
-> 🎨 **Workflow**: Ready-to-use WAN 2.2 Story workflow included  
+> 🎨 **Workflows**: Ready-to-use WAN 2.2 Story and T2V workflows included  
 
 * **2026/02/14**: **v2.1.0** User-Friendly Keep Last Prompt Feature. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-210-20260214)]
 > [!NOTE]  
