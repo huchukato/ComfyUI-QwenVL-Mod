@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ComfyUI-QwenVL-Mod v2.2.0 RTX 4090 Build Script
-# Automates building and pushing Docker image with CUDA 11.8 for RTX 4090
+# Automates building and pushing Docker image with CUDA 12.4 for RTX 4090
 
 set -e
 
@@ -13,7 +13,7 @@ FULL_IMAGE_NAME="${IMAGE_NAME}:${TAG}"
 echo "🚀 Building ComfyUI-QwenVL-Mod v2.2.0 RTX 4090 Docker Image"
 echo "======================================================"
 echo "Image: ${FULL_IMAGE_NAME}"
-echo "Features: WAN 2.2 workflows, GGUF support, CUDA 11.8 optimized"
+echo "Features: WAN 2.2 workflows, GGUF support, CUDA 12.4 optimized"
 echo "GPU: RTX 4090 compatible"
 echo ""
 
@@ -33,7 +33,7 @@ else
 fi
 
 # Build the image
-echo "🏗️  Building Docker image for x86_64 (CUDA 11.8)..."
+echo "🏗️  Building Docker image for x86_64 (CUDA 12.4)..."
 echo "This may take 10-15 minutes..."
 docker buildx build --builder desktop-linux --platform linux/amd64 -f Dockerfile.4090 -t "${FULL_IMAGE_NAME}" --load --no-cache .
 
@@ -47,7 +47,7 @@ echo ""
 echo "📋 Image Details:"
 echo "  Latest tag:  ${FULL_IMAGE_NAME}"
 echo "  Dockerfile:   Dockerfile.4090"
-echo "  CUDA Version: 11.8"
+echo "  CUDA Version: 12.4"
 echo "  GPU Target:   RTX 4090"
 echo ""
 echo "🚀 Ready for RunPod deployment!"
@@ -72,7 +72,7 @@ echo "  Docker Hub: https://hub.docker.com/r/${IMAGE_NAME}"
 echo "  Repository: https://github.com/huchukato/ComfyUI-QwenVL-Mod"
 echo ""
 echo "🎯 Differences from RTX 5090 version:"
-echo "  • CUDA 11.8 (vs 12.8)"
+echo "  • CUDA 12.4 (vs 12.8)"
 echo "  • llama-cpp-python from source (vs pre-built wheel)"
 echo "  • Optimized for RTX 4090 compatibility"
 echo "  • Same features and workflows"

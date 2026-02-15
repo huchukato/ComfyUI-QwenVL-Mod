@@ -13,7 +13,8 @@ ARG HF_TOKEN
 ENV HF_TOKEN=${HF_TOKEN}
 
 # Install system dependencies (CUDA already included in base image)
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && \ 
+    apt-get install -y --no-install-recommends \
     git \
     make \
     wget \
@@ -22,22 +23,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
     ca-certificates \
     build-essential \
-    python3.12 \
-    python3.12-venv \
-    python3.12-dev \
-    python3-pip \
-    libglx-mesa0 \
-    libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libxrender-dev \
-    libgomp1 \
+    python3.11 \
+    python3.11-venv \
+    python3.11-dev \
     ffmpeg \
     openssh-server \
-    nodejs \
-    npm \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Install pip for Python 3.11 and upgrade it
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    python3.11 get-pip.py && \
+    python3.11 -m pip install --upgrade pip && \
+    rm get-pip.py
 
 # CUDA toolkit and cuDNN already included in nvidia/cuda base image
 
@@ -47,12 +45,12 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
     mkdir -p /run/sshd && \
     rm -f /etc/ssh/ssh_host_*
 
-# Set Python 3.12 as default system-wide
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 && \
-    update-alternatives --set python3 /usr/bin/python3.12
+# Set Python 3.11 as default system-wide
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1 && \
+    update-alternatives --set python3 /usr/bin/python3.11
 
 # Create virtual environment for Python packages
-RUN python3.12 -m venv /opt/venv
+RUN python3.11 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Install PyTorch with CUDA 12.4.1 (compatible with RTX 4090)
