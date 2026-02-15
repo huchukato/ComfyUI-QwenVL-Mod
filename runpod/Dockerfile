@@ -301,6 +301,7 @@ download_models\n\
 echo "🔧 Services starting:"\n\
 echo "📁 FileBrowser: http://0.0.0.0:8080"\n\
 echo "📓 JupyterLab:  http://0.0.0.0:8888"\n\
+echo "🖥️ WebTerminal: http://0.0.0.0:8081"\n\
 echo "🎨 ComfyUI:    http://0.0.0.0:8188"\n\
 echo "📋 Available workflows:"\n\
 ls -la /ComfyUI/user/default/workflows/\n\
