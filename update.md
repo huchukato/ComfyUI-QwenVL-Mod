@@ -1,5 +1,56 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.2.0 (2026/02/15)
+
+🎬 **WAN 2.2 Story Generation System**
+
+This major update introduces a complete story generation system for WAN 2.2, enabling the creation of continuous 20-second videos with 4 distinct segments, along with custom utility nodes and enhanced performance optimizations.
+
+### 🎬 Story Generation System
+- **4-Segment Videos**: Complete system for generating 20-second continuous videos (4 × 5-second segments)
+- **Narrative Continuity**: Intelligent prompt splitting ensures story coherence across segments
+- **Auto-Split Technology**: Custom node automatically detects and splits prompt separators
+- **Workflow Integration**: Ready-to-use WAN 2.2 Story workflow included
+- **NSFW Optimized**: Enhanced prompts specifically designed for story generation
+
+### 🔄 Custom Nodes
+- **Story Split Node**: Intelligent text splitting with auto-detection of separators (`\n`, `\n\n`, `\n\n\n`)
+- **Smart Cleaning**: Automatically removes example text and ensures 4 prompt outputs
+- **Show Text Node**: Built-in text display node without external dependencies
+- **Category**: Both nodes in `🔷QwenVL-Mod/Utils` category
+- **Chaining Support**: Full input/output connectivity for workflow integration
+
+### 🎯 Enhanced Prompts
+- **WAN 2.2 NSFW Story**: Optimized prompt format for 4-segment generation
+- **Separator Instructions**: Clear guidelines for prompt separation
+- **Continuity Rules**: Enhanced narrative continuity between segments
+- **Token Optimization**: Recommended max_tokens=1536 for complete output
+- **Example Removal**: Fixed model copying example text instead of generating content
+
+### ⚡ Performance Optimizations
+- **Context Settings**: Optimized context_length for 8B models (65,536 tokens)
+- **Model-Specific**: 4B models maintain 32,768 context for stability
+- **Memory Management**: Improved VRAM usage and stability
+- **Crash Prevention**: Safe defaults prevent ComfyUI crashes with large contexts
+
+### 🐳 Docker Integration
+- **Container Ready**: Complete Story system integrated in Docker containers
+- **Auto-Download**: WAN2.2-I2V-AutoPrompt-Story.json workflow included
+- **Cloud Deployment**: Ready for RunPod/VastAI deployment
+- **Service Integration**: FileBrowser, JupyterLab, and ComfyUI with Story support
+
+### 📁 File Structure
+- **Nodes**: `/nodes/story_split_node.py` and `/nodes/show_text_node.py`
+- **Workflows**: `/vastai/workflows/WAN2.2-I2V-AutoPrompt-Story.json`
+- **Docker**: Updated `/runpod/Dockerfile` with Story workflow
+- **Prompts**: Enhanced `/AILab_System_Prompts.json` with Story format
+
+### 🔧 Technical Improvements
+- **Auto-Loading**: Enhanced `__init__.py` to load nodes from subdirectory
+- **Error Handling**: Robust separator detection and fallback mechanisms
+- **Debug Output**: Detailed debugging information for troubleshooting
+- **Flexible Input**: Support for custom delimiters and auto-detection modes
+
 ## Version 2.1.0 (2026/02/14)
 
 🏷️ **User-Friendly Keep Last Prompt Feature**
