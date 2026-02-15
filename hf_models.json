@@ -30,6 +30,16 @@
         "4bit": 4.5
       }
     },
+    "Qwen3-VL-32B-Heretic-v2": {
+      "repo_id": "rpDungeon/Qwen3-VL-32B-Heretic-v2",
+      "default": false,
+      "quantized": false,
+      "vram_requirement": {
+        "full": 48.0,
+        "8bit": 28.0,
+        "4bit": 16.0
+      }
+    },
     "Qwen3-VL-4B-Instruct": {
       "repo_id": "Qwen/Qwen3-VL-4B-Instruct",
       "default": false,
