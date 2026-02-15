@@ -3,6 +3,12 @@
 source /venv/main/bin/activate
 COMFYUI_DIR=${WORKSPACE}/ComfyUI
 
+# HuggingFace login for private models
+if [ -n "$HF_TOKEN" ]; then
+    echo "🔑 Logging into HuggingFace..."
+    huggingface-cli login --token $HF_TOKEN
+fi
+
 # Packages are installed after nodes so we can fix them...
 
 APT_PACKAGES=(
