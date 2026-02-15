@@ -16,8 +16,7 @@ This major update introduces a complete story generation system for WAN 2.2, ena
 ### 🔄 Custom Nodes
 - **Story Split Node**: Intelligent text splitting with auto-detection of separators (`\n`, `\n\n`, `\n\n\n`)
 - **Smart Processing**: Automatically handles inconsistent model output formatting
-- **Show Text Node**: Built-in text display node without external dependencies
-- **Category**: Both nodes in `🔷QwenVL-Mod/Utils` category
+- **Category**: Located in `🔷QwenVL-Mod/Utils` category
 - **Chaining Support**: Full input/output connectivity for workflow integration
 
 ### 🎯 Enhanced Prompts
