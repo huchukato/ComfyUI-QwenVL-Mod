@@ -33,6 +33,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgomp1 \
     ffmpeg \
     openssh-server \
+    nodejs \
+    npm \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -107,6 +109,17 @@ RUN cd /ComfyUI/custom_nodes && \
             pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; \
         fi; \
     done && \
+    pip cache purge
+
+# Install ComfyUI-Easy-Use-Frontend
+RUN cd /ComfyUI/custom_nodes/ComfyUI-Easy-Use && \
+    if [ ! -d "ComfyUI-Easy-Use-Frontend" ]; then \
+        git clone https://github.com/yolain/ComfyUI-Easy-Use-Frontend.git; \
+    fi && \
+    cd ComfyUI-Easy-Use-Frontend && \
+    npm install && \
+    npm run build:dev && \
+    echo "WEB_VERSION: dev" > ../config.yaml && \
     pip cache purge
 
 # Install additional essential dependencies
