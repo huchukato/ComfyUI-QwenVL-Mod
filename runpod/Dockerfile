@@ -126,8 +126,13 @@ RUN cd /ComfyUI/custom_nodes && \
 RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab huggingface_hub && \
     pip cache purge
 
-# Install web terminal (wetty)
-RUN npm install -g wetty
+# Install web terminal (wetty) with fallback
+RUN npm install -g wetty || \
+    (npm cache clean --force && \
+     npm install -g n && \
+     n latest && \
+     npm install -g wetty) || \
+    echo "⚠️ wetty installation failed, will install manually"
 
 # Create web terminal startup script
 RUN echo '#!/bin/bash\n\
