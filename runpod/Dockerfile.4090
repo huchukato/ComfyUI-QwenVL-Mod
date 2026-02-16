@@ -128,8 +128,12 @@ RUN cd /ComfyUI/custom_nodes && \
 # ComfyUI-Easy-Use-Frontend removed due to compatibility issues
 
 # Install additional essential dependencies
-RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab jupyter_server_terminals huggingface_hub && \
+RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab jupyter_server_terminals terminado huggingface_hub && \
     pip cache purge
+
+# Configure JupyterLab for terminal support
+RUN jupyter server extension enable jupyter_server_terminals && \
+    jupyter labextension install jupyterlab-terminal
 
 # JupyterLab Terminal enabled with jupyter_server_terminals
 # Terminal will be available in JupyterLab Launcher
@@ -176,7 +180,7 @@ echo "🌐 Access at: http://0.0.0.0:8888"\n\
 echo "🔑 No token required"\n\
 echo ""\n\
 cd /ComfyUI\n\
-jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password=""\n\
+jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password="" --ServerApp.terminado_manage_command=True\n\
 ' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
 
 # Create user directory structure
