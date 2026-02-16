@@ -123,7 +123,11 @@ RUN cd /ComfyUI/custom_nodes && \
 # ComfyUI-Easy-Use-Frontend removed due to compatibility issues
 
 # Install additional essential dependencies
-RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab jupyter_server_terminals terminado huggingface_hub && \
+RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab jupyter-server huggingface_hub && \
+    pip cache purge
+
+# Install JupyterLab Terminal with correct prefix
+RUN pip install --prefix=/usr --no-cache-dir jupyter_server_terminals terminado && \
     pip cache purge
 
 # Configure JupyterLab for terminal support
