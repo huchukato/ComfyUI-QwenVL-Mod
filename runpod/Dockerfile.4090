@@ -131,10 +131,6 @@ RUN cd /ComfyUI/custom_nodes && \
 RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab jupyter_server_terminals terminado huggingface_hub && \
     pip cache purge
 
-# Configure JupyterLab for terminal support
-RUN jupyter server extension enable jupyter_server_terminals && \
-    jupyter labextension install jupyterlab-terminal
-
 # JupyterLab Terminal enabled with jupyter_server_terminals
 # Terminal will be available in JupyterLab Launcher
 
