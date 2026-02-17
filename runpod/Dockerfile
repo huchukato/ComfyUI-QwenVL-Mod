@@ -123,12 +123,16 @@ RUN cd /ComfyUI/custom_nodes && \
 # ComfyUI-Easy-Use-Frontend removed due to compatibility issues
 
 # Install additional essential dependencies
-RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab jupyter-server huggingface_hub && \
+RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors huggingface_hub && \
     pip cache purge
 
-# Install JupyterLab Terminal with correct prefix
-RUN pip install --prefix=/usr --no-cache-dir jupyter_server_terminals terminado && \
-    pip cache purge
+# Install JupyterLab with conda (official solution for terminal issues)
+RUN wget -O /miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    bash /miniconda.sh -b -p /opt/conda && \
+    rm /miniconda.sh && \
+    /opt/conda/bin/conda init bash && \
+    /opt/conda/bin/conda create -n jupyterlab -c conda-forge jupyterlab jupyter-server-terminals -y && \
+    /opt/conda/bin/conda clean -afy
 
 # Configure JupyterLab for terminal support (complete configuration)
 RUN mkdir -p ~/.jupyter && \
@@ -181,6 +185,8 @@ echo "🌐 Access at: http://0.0.0.0:8888"\n\
 echo "🔑 No token required"\n\
 echo ""\n\
 cd /ComfyUI\n\
+source /opt/conda/etc/profile.d/conda.sh && \n\
+conda activate jupyterlab && \n\
 jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password="" --ServerApp.terminado_manage_command=True\n\
 ' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
 
