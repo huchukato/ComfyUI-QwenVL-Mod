@@ -105,11 +105,6 @@ RUN cd /ComfyUI/custom_nodes && \
     git clone https://github.com/stduhpf/ComfyUI-WanMoeKSampler.git && \
     git clone https://github.com/melMass/comfy_mtb.git
 
-# Copy the custom node and workflows
-RUN cp -r /workspace/ComfyUI-QwenVL-Mod /workspace/ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod && \
-    mkdir -p /workspace/ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod/workflows && \
-    cp /workspace/ComfyUI-QwenVL-Mod/vastai/workflows/*.json /workspace/ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod/workflows/ || true
-
 # Install requirements for all custom nodes
 RUN cd /ComfyUI/custom_nodes && \
     for node_dir in */; do \
