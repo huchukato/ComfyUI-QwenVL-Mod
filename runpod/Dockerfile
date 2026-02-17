@@ -130,8 +130,10 @@ RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headl
 RUN pip install --prefix=/usr --no-cache-dir jupyter_server_terminals terminado && \
     pip cache purge
 
-# Configure JupyterLab for terminal support
-RUN mkdir -p ~/.jupyter/lab && \
+# Configure JupyterLab for terminal support (complete configuration)
+RUN mkdir -p ~/.jupyter && \
+    echo "c.ServerApp.terminals_enabled = True" > ~/.jupyter/jupyter_server_config.py && \
+    mkdir -p ~/.jupyter/lab && \
     echo '{"terminalsAvailable": true}' > ~/.jupyter/lab/page_config.json
 
 # JupyterLab Terminal enabled with jupyter_server_terminals
