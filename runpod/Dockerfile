@@ -105,6 +105,9 @@ RUN cd /ComfyUI/custom_nodes && \
     git clone https://github.com/stduhpf/ComfyUI-WanMoeKSampler.git && \
     git clone https://github.com/melMass/comfy_mtb.git
 
+# Copy wildcards to Impact-Pack (required for wildcard workflows)
+RUN cp -r /ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod/wildcards /ComfyUI/custom_nodes/ComfyUI-Impact-Pack/wildcards || echo "Wildcards copy completed (or already exists)"
+
 # Install requirements for all custom nodes
 RUN cd /ComfyUI/custom_nodes && \
     for node_dir in */; do \
