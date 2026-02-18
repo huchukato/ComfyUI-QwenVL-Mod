@@ -36,6 +36,7 @@ RUN apt-get update && \
     libgomp1 \
     ffmpeg \
     openssh-server \
+    openssh-client \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
