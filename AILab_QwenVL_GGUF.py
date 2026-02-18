@@ -317,12 +317,51 @@ class QwenVLGGUFBase:
         self.current_signature = None
 
     def clear(self):
-        self.llm = None
-        self.chat_handler = None
+        print(f"[QwenVL GGUF DEBUG] Starting VRAM cleanup...")
+        
+        # Force cleanup of chat handler first
+        if self.chat_handler is not None:
+            try:
+                # Try to explicitly close the chat handler if it has a close method
+                if hasattr(self.chat_handler, 'close'):
+                    self.chat_handler.close()
+                elif hasattr(self.chat_handler, '__del__'):
+                    self.chat_handler.__del__()
+            except Exception as e:
+                print(f"[QwenVL GGUF DEBUG] Error closing chat_handler: {e}")
+            finally:
+                self.chat_handler = None
+        
+        # Force cleanup of LLM model
+        if self.llm is not None:
+            try:
+                # Try to explicitly close the LLM if it has a close method
+                if hasattr(self.llm, 'close'):
+                    self.llm.close()
+                elif hasattr(self.llm, '__del__'):
+                    self.llm.__del__()
+                # Force garbage collection of the model
+                del self.llm
+            except Exception as e:
+                print(f"[QwenVL GGUF DEBUG] Error closing LLM: {e}")
+            finally:
+                self.llm = None
+        
+        # Clear signature
         self.current_signature = None
+        
+        # Aggressive garbage collection
         gc.collect()
+        
+        # Force CUDA cache cleanup multiple times
         if torch.cuda.is_available():
+            print(f"[QwenVL GGUF DEBUG] Clearing CUDA cache...")
             torch.cuda.empty_cache()
+            torch.cuda.synchronize()
+            # Additional cleanup
+            torch.cuda.empty_cache()
+        
+        print(f"[QwenVL GGUF DEBUG] VRAM cleanup completed")
 
     def _load_backend(self):
         try:
