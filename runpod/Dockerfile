@@ -6,6 +6,7 @@ FROM nvidia/cuda:12.8.0-cudnn-devel-ubuntu24.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
+ENV IMAGEIO_FFMPEG_EXE=/usr/bin/ffmpeg
 ENV PYTHONUNBUFFERED=1
 ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:$CUDA_HOME/bin
@@ -121,10 +122,10 @@ RUN cd /ComfyUI/custom_nodes && \
 # ComfyUI-Easy-Use-Frontend removed due to compatibility issues
 
 # Install additional essential dependencies
-RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab==4.0.0 jupyter-server-terminals==0.5.3 terminado huggingface_hub && \
+RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyter huggingface_hub && \
     pip cache purge
 
-# Configure JupyterLab for terminal support (complete configuration)
+# Configure Jupyter for terminal support (RunPod method)
 RUN mkdir -p ~/.jupyter && \
     echo "c.ServerApp.terminals_enabled = True" > ~/.jupyter/jupyter_server_config.py && \
     mkdir -p ~/.jupyter/lab && \
