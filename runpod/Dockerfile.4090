@@ -199,8 +199,8 @@ RUN rm -rf /tmp/* \
        && find /ComfyUI -name "*.pyc" -delete \
        && find /ComfyUI -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 
-# Set ComfyUI arguments
-ENV COMFYUI_ARGS="--listen 0.0.0.0 --port 8188 --enable-cors-header"
+# Set ComfyUI arguments (optimized for RTX 4090)
+ENV COMFYUI_ARGS="--listen 0.0.0.0 --port 8188 --enable-cors-header --highvram --use-pytorch-cross-attention --cuda-malloc --dont-upcast-attention"
 
 # Create startup script (RunPod style with dynamic workflow updates)
 RUN echo '#!/bin/bash\n\
@@ -321,7 +321,7 @@ echo "🚀 Starting ComfyUI..."\n\
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\n\
 echo "� JupyterLab Terminal: Open http://0.0.0.0:8888 → New → Terminal"\n\
 cd $COMFYUI_DIR\n\
-nohup python main.py --listen 0.0.0.0 --port 8188 --enable-cors-header &> /comfyui.log &\n\
+nohup python main.py --listen 0.0.0.0 --port 8188 --enable-cors-header --highvram --use-pytorch-cross-attention --cuda-malloc --dont-upcast-attention &> /comfyui.log &\n\
 echo "✅ ComfyUI started"\n\
 \n\
 # Tail the ComfyUI log\n\
