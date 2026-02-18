@@ -1,5 +1,48 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.2.1 (2026/02/18)
+
+🔧 **Critical GGUF VRAM Fix + Docker Optimization**
+
+This critical update resolves a major VRAM leak issue in GGUF nodes that was causing crashes after multiple executions, plus significant Docker improvements for better stability and functionality.
+
+### 🔧 GGUF VRAM Fix (Critical)
+- **VRAM Leak Resolved**: Fixed critical issue where GGUF models kept VRAM allocated after runs
+- **Issue #104**: Addressed GitHub issue where GGUF models failed after 2 runs
+- **Aggressive Cleanup**: Implemented comprehensive VRAM cleanup for all GGUF nodes
+- **Enhanced Clear Method**: Added explicit model deletion and multiple CUDA cache clearing
+- **Debug Logging**: Added detailed cleanup logging for troubleshooting
+- **Exception Handling**: Robust error handling during cleanup operations
+
+### 🚀 Performance Improvements
+- **Stable GGUF Operation**: Nodes now work reliably without VRAM accumulation
+- **No More Crashes**: GGUF Advanced and PromptEnhancer nodes stable after multiple runs
+- **Memory Management**: Proper garbage collection and CUDA synchronization
+- **Resource Efficiency**: Better VRAM utilization and cleanup
+
+### 🐳 Docker Enhancements
+- **RunPod Methods**: Adopted proven RunPod installation methods for services
+- **Jupyter Terminal**: Switched to simple `pip install jupyter` (RunPod approach)
+- **FileBrowser**: Using official get.sh script for latest version
+- **ComfyUI Latest**: Always uses latest stable version automatically
+- **SSH Complete**: Both server and client SSH for full networking
+- **FFmpeg ENV**: Added IMAGEIO_FFMPEG_EXE environment variable
+- **Build Warnings**: Removed problematic HF_TOKEN variables
+
+### 📋 Files Modified
+- `AILab_QwenVL_GGUF.py`: Enhanced VRAM cleanup
+- `AILab_QwenVL_GGUF_PromptEnhancer.py`: Enhanced VRAM cleanup
+- `runpod/Dockerfile`: RunPod methods + optimizations
+- `runpod/Dockerfile.4090`: RunPod methods + optimizations
+
+### 🎯 Impact
+- **Reliability**: GGUF nodes now production-ready
+- **Stability**: No more VRAM-related crashes
+- **Docker**: Better container experience
+- **Performance**: Consistent operation across multiple runs
+
+---
+
 ## Version 2.2.0 (2026/02/15)
 
 🎬 **WAN 2.2 Story Generation System**
