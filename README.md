@@ -16,6 +16,15 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
+* **2026/02/18**: **v2.2.1** 🔧 Critical GGUF VRAM Fix + Docker Optimized. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-221-20260218)]
+> 🔧 **GGUF VRAM Fix**: Resolved critical VRAM leak issue causing crashes after 2 executions.  
+> 🧹 **Aggressive Cleanup**: Implemented complete VRAM cleanup for all GGUF nodes (AILab_QwenVL_GGUF and PromptEnhancer).  
+> 🚀 **Stable Performance**: GGUF nodes now work reliably without VRAM accumulation.  
+> 🐳 **Docker Enhanced**: Updated Dockerfiles with RunPod-tested methods for Jupyter and FileBrowser.  
+> 🔄 **ComfyUI Latest**: Always latest stable version without manual updates.  
+> 📡 **Complete SSH**: Server + client SSH for full networking functionality.  
+> 🎯 **Jupyter Terminal**: Adopted RunPod method for working terminal.  
+
 * **2026/02/15**: **v2.2.0** 🎬 WAN 2.2 Story Generation System. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-220-20260215)]
 > 🎬 **Story Generation**: Complete 4-segment video story generation with WAN 2.2  
 > 🔄 **Auto-Split Node**: Intelligent prompt splitting for continuous 20-second videos  
