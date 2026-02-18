@@ -145,12 +145,8 @@ RUN find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "*.pack"
     find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "pack-*.idx" -delete + || true && \
     find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "objects" -type d -exec rm -rf {} + || true
 
-# Install FileBrowser for file management
-RUN wget -O /tmp/filebrowser.tar.gz https://github.com/filebrowser/filebrowser/releases/download/v2.28.0/linux-amd64-filebrowser.tar.gz && \
-    tar -xzf /tmp/filebrowser.tar.gz -C /tmp && \
-    mv /tmp/filebrowser /usr/local/bin/ && \
-    chmod +x /usr/local/bin/filebrowser && \
-    rm /tmp/filebrowser.tar.gz
+# Install FileBrowser (RunPod method)
+RUN curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash
 
 # Create FileBrowser database and directories
 RUN mkdir -p /filebrowser && \
