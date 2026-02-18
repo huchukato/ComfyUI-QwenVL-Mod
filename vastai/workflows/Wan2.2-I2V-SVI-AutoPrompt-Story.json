@@ -37,9 +37,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "comfyui-easy-use",
+        "aux_id": "yolain/ComfyUI-Easy-Use",
         "ver": "5ec3b5ef861fe45c4e9966d17c4546e943417723",
-        "Node name for S&R": "easy cleanGpuUsed"
+        "Node name for S&R": "easy cleanGpuUsed",
+        "cnr_id": "comfyui-easy-use"
       },
       "widgets_values": []
     },
@@ -82,9 +83,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "comfyui-frame-interpolation",
+        "aux_id": "Fannovel16/ComfyUI-Frame-Interpolation",
         "ver": "a969c01dbccd9e5510641be04eb51fe93f6bfc3d",
-        "Node name for S&R": "RIFE VFI"
+        "Node name for S&R": "RIFE VFI",
+        "cnr_id": "comfyui-frame-interpolation"
       },
       "widgets_values": [
         "rife49.pth",
@@ -1182,9 +1184,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "ComfyUI-Upscaler-Tensorrt",
+        "aux_id": "yuvraj108c/ComfyUI-Upscaler-Tensorrt",
         "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
-        "Node name for S&R": "LoadUpscalerTensorrtModel"
+        "Node name for S&R": "LoadUpscalerTensorrtModel",
+        "cnr_id": "ComfyUI-Upscaler-Tensorrt"
       },
       "widgets_values": [
         "4x-UltraSharp",
@@ -1236,7 +1239,7 @@
       ],
       "size": [
         437.4871316556314,
-        955.2540096809184
+        334
       ],
       "flags": {},
       "order": 66,
@@ -1274,9 +1277,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
         "ver": "8550981384301e9bc5bfea83e5c2c75258102593",
-        "Node name for S&R": "VHS_VideoCombine"
+        "Node name for S&R": "VHS_VideoCombine",
+        "cnr_id": "comfyui-videohelpersuite"
       },
       "widgets_values": {
         "frame_rate": 16,
@@ -1385,9 +1389,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
         "ver": "993082e4f2473bf4acaf06f51e33877a7eb38960",
-        "Node name for S&R": "VHS_VideoCombine"
+        "Node name for S&R": "VHS_VideoCombine",
+        "cnr_id": "comfyui-videohelpersuite"
       },
       "widgets_values": {
         "frame_rate": 32,
@@ -1626,9 +1631,10 @@
       ],
       "title": "HIGH",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "8ff50e4521881eca1fe26aec9615fc9362474931",
-        "Show Strengths": "Single Strength"
+        "Show Strengths": "Single Strength",
+        "cnr_id": "rgthree-comfy"
       },
       "widgets_values": [
         {},
@@ -1689,9 +1695,10 @@
       ],
       "title": "LOW",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "8ff50e4521881eca1fe26aec9615fc9362474931",
-        "Show Strengths": "Single Strength"
+        "Show Strengths": "Single Strength",
+        "cnr_id": "rgthree-comfy"
       },
       "widgets_values": [
         {},
@@ -1752,9 +1759,10 @@
       ],
       "title": "HIGH",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "8ff50e4521881eca1fe26aec9615fc9362474931",
-        "Show Strengths": "Single Strength"
+        "Show Strengths": "Single Strength",
+        "cnr_id": "rgthree-comfy"
       },
       "widgets_values": [
         {},
@@ -1815,9 +1823,10 @@
       ],
       "title": "LOW",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "8ff50e4521881eca1fe26aec9615fc9362474931",
-        "Show Strengths": "Single Strength"
+        "Show Strengths": "Single Strength",
+        "cnr_id": "rgthree-comfy"
       },
       "widgets_values": [
         {},
@@ -1878,9 +1887,10 @@
       ],
       "title": "HIGH",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "8ff50e4521881eca1fe26aec9615fc9362474931",
-        "Show Strengths": "Single Strength"
+        "Show Strengths": "Single Strength",
+        "cnr_id": "rgthree-comfy"
       },
       "widgets_values": [
         {},
@@ -1941,9 +1951,10 @@
       ],
       "title": "LOW",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "8ff50e4521881eca1fe26aec9615fc9362474931",
-        "Show Strengths": "Single Strength"
+        "Show Strengths": "Single Strength",
+        "cnr_id": "rgthree-comfy"
       },
       "widgets_values": [
         {},
@@ -2004,9 +2015,10 @@
       ],
       "title": "HIGH",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "8ff50e4521881eca1fe26aec9615fc9362474931",
-        "Show Strengths": "Single Strength"
+        "Show Strengths": "Single Strength",
+        "cnr_id": "rgthree-comfy"
       },
       "widgets_values": [
         {},
@@ -2067,9 +2079,10 @@
       ],
       "title": "LOW",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "8ff50e4521881eca1fe26aec9615fc9362474931",
-        "Show Strengths": "Single Strength"
+        "Show Strengths": "Single Strength",
+        "cnr_id": "rgthree-comfy"
       },
       "widgets_values": [
         {},
@@ -2375,10 +2388,10 @@
       ],
       "title": "Prompt 1",
       "properties": {
-        "cnr_id": "comfyui-easy-use",
+        "aux_id": "yolain/ComfyUI-Easy-Use",
         "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
         "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
+        "cnr_id": "comfyui-easy-use"
       },
       "widgets_values": [
         "A woman with vibrant teal hair styled in a thick braid, adorned with geometric tattoos on her chest and arms, leans forward with eyes closed in submission. Her left hand rests gently against the man’s thigh while her right arm is restrained by silver handcuffs dangling from a chain. The man, whose torso is visible with tribal markings on his shoulder and forearm, holds her head tenderly with one hand as he penetrates her mouth. Soft sunlight filters through sheer curtains behind them, casting warm highlights across their skin and creating gentle shadows in the room’s corners. A wooden countertop sits blurred in the background with a small bottle resting beside it. Her piercing glints subtly under the light, adding to the sensual atmosphere of the intimate moment captured."
@@ -2627,9 +2640,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "ComfyUI-Upscaler-Tensorrt",
+        "aux_id": "yuvraj108c/ComfyUI-Upscaler-Tensorrt",
         "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
-        "Node name for S&R": "UpscalerTensorrt"
+        "Node name for S&R": "UpscalerTensorrt",
+        "cnr_id": "ComfyUI-Upscaler-Tensorrt"
       },
       "widgets_values": [
         "2x",
@@ -2687,7 +2701,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 90,
+      "order": 89,
       "mode": 0,
       "inputs": [
         {
@@ -2727,7 +2741,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 91,
+      "order": 90,
       "mode": 0,
       "inputs": [
         {
@@ -2767,7 +2781,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 93,
+      "order": 92,
       "mode": 0,
       "inputs": [
         {
@@ -2817,10 +2831,10 @@
       ],
       "title": "Unet Loader (GGUF) LOW",
       "properties": {
-        "cnr_id": "ComfyUI-GGUF",
+        "aux_id": "city96/ComfyUI-GGUF",
         "ver": "01f8845bf30d89fff293c7bd50187bc59d9d53ea",
         "Node name for S&R": "UnetLoaderGGUF",
-        "aux_id": "city96/ComfyUI-GGUF"
+        "cnr_id": "ComfyUI-GGUF"
       },
       "widgets_values": [
         "wan22EnhancedNSFWSVICamera_nsfwV2Q8Low.gguf"
@@ -2852,10 +2866,10 @@
       ],
       "title": "Unet Loader (GGUF) HIGH",
       "properties": {
-        "cnr_id": "ComfyUI-GGUF",
+        "aux_id": "city96/ComfyUI-GGUF",
         "ver": "01f8845bf30d89fff293c7bd50187bc59d9d53ea",
         "Node name for S&R": "UnetLoaderGGUF",
-        "aux_id": "city96/ComfyUI-GGUF"
+        "cnr_id": "ComfyUI-GGUF"
       },
       "widgets_values": [
         "wan22EnhancedNSFWSVICamera_nsfwV2Q8High.gguf"
@@ -3059,7 +3073,7 @@
         60
       ],
       "flags": {},
-      "order": 74,
+      "order": 78,
       "mode": 0,
       "inputs": [
         {
@@ -3246,83 +3260,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 317,
-      "type": "cb082c4d-bdfb-40b8-85c0-6ec7f755c28a",
-      "pos": [
-        -1417.8893511523438,
-        -366.6401193320312
-      ],
-      "size": [
-        560,
-        460
-      ],
-      "flags": {},
-      "order": 73,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 529
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": []
-        },
-        {
-          "name": "STRING_1",
-          "type": "STRING",
-          "links": []
-        },
-        {
-          "name": "STRING_2",
-          "type": "STRING",
-          "links": []
-        },
-        {
-          "name": "STRING_3",
-          "type": "STRING",
-          "links": []
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "1582",
-            "custom_prompt"
-          ],
-          [
-            "1582",
-            "model_name"
-          ],
-          [
-            "1582",
-            "quantization"
-          ],
-          [
-            "1582",
-            "preset_prompt"
-          ],
-          [
-            "1582",
-            "control_after_generate"
-          ],
-          [
-            "1582",
-            "seed"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.13.0"
-      },
-      "widgets_values": [],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
       "id": 322,
       "type": "easy showAnything",
       "pos": [
@@ -3355,10 +3292,10 @@
       ],
       "title": "Prompt 4",
       "properties": {
-        "cnr_id": "comfyui-easy-use",
+        "aux_id": "yolain/ComfyUI-Easy-Use",
         "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
         "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
+        "cnr_id": "comfyui-easy-use"
       },
       "widgets_values": [
         "The final frame captures the woman leaning back just enough to look directly into his eyes as he withdraws slowly from her mouth. Her expression shifts from intense concentration to quiet contentment, a soft smile playing at her lips despite the restraint on her arm. The handcuffs catch the light as they swing gently with her motion, adding a subtle metallic echo to the scene. Sunlight bathes their skin in golden tones, creating a warm glow that contrasts with the darker elements of the room behind them. Her hair cascades over one shoulder like liquid teal silk, catching every ray of light filtering through the window. The image ends on this tender moment — intimate, sensual, and deeply connected."
@@ -3399,10 +3336,10 @@
       ],
       "title": "Prompt 3",
       "properties": {
-        "cnr_id": "comfyui-easy-use",
+        "aux_id": "yolain/ComfyUI-Easy-Use",
         "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
         "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
+        "cnr_id": "comfyui-easy-use"
       },
       "widgets_values": [
         "The camera slowly zooms out to reveal more of the room’s decor — dark wood cabinetry lining one wall and a glimpse of an ornate mirror reflecting part of their forms. The woman's eyes flutter open briefly, meeting his gaze before closing again in surrender. Her breath hitches softly as she continues to take him deeper into her mouth, her movements becoming more fluid and controlled. The man’s grip on her head tightens slightly for a moment before loosening, allowing her to adjust her angle without breaking rhythm. Shadows stretch across the floorboards beneath them, elongating with each passing second."
@@ -3443,10 +3380,10 @@
       ],
       "title": "Prompt 2",
       "properties": {
-        "cnr_id": "comfyui-easy-use",
+        "aux_id": "yolain/ComfyUI-Easy-Use",
         "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
         "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
+        "cnr_id": "comfyui-easy-use"
       },
       "widgets_values": [
         "The woman's head tilts slightly upward as she adjusts her position, her lips parting around him with increasing intensity. The man’s hand strokes her scalp rhythmically while his other arm remains steady against her back for support. Her chest rises and falls gently with each breath, emphasizing the emotional connection between them despite the restraint on her wrist. Sunlight continues to stream through the window, illuminating dust motes dancing in the air around their figures. The texture of her skin glistens faintly under the natural light, highlighting every curve and contour. Her tattooed shoulder glints with a metallic sheen as it shifts slightly during movement."
@@ -3511,9 +3448,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "comfyui-easy-use",
+        "aux_id": "yolain/ComfyUI-Easy-Use",
         "ver": "5ec3b5ef861fe45c4e9966d17c4546e943417723",
-        "Node name for S&R": "easy cleanGpuUsed"
+        "Node name for S&R": "easy cleanGpuUsed",
+        "cnr_id": "comfyui-easy-use"
       },
       "widgets_values": []
     },
@@ -3557,10 +3495,10 @@
       ],
       "title": "60FPS",
       "properties": {
-        "cnr_id": "comfyui-frame-interpolation",
+        "aux_id": "Fannovel16/ComfyUI-Frame-Interpolation",
         "ver": "1.0.7",
         "Node name for S&R": "RIFE VFI",
-        "aux_id": "Fannovel16/ComfyUI-Frame-Interpolation"
+        "cnr_id": "comfyui-frame-interpolation"
       },
       "widgets_values": [
         "rife49.pth",
@@ -3618,9 +3556,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
         "ver": "993082e4f2473bf4acaf06f51e33877a7eb38960",
-        "Node name for S&R": "VHS_VideoCombine"
+        "Node name for S&R": "VHS_VideoCombine",
+        "cnr_id": "comfyui-videohelpersuite"
       },
       "widgets_values": {
         "frame_rate": 64,
@@ -3695,15 +3634,15 @@
       "bgcolor": "#593930"
     },
     {
-      "id": 338,
-      "type": "UNETLoader",
+      "id": 248,
+      "type": "Fast Groups Bypasser (rgthree)",
       "pos": [
-        -19.95320703125001,
-        -1269.1507539062516
+        -810,
+        510
       ],
       "size": [
-        407.38374624166386,
-        82
+        459.867844579431,
+        142.32934969898486
       ],
       "flags": {},
       "order": 52,
@@ -3711,53 +3650,77 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            549
-          ]
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
         }
       ],
-      "title": "Load Diffusion Model HIGH",
       "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.45",
-        "Node name for S&R": "UNETLoader",
-        "models": [
-          {
-            "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
-            "directory": "diffusion_models"
-          }
-        ],
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {
-            "unet_name": true,
-            "weight_dtype": true
-          }
-        }
+        "matchColors": "red",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "alphanumeric",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
       },
-      "widgets_values": [
-        "Wan2.2_Remix_NSFW_i2v_14b_high_lighting_fp8_e4m3fn_v2.1.safetensors",
-        "default"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
+      "color": "#322",
+      "bgcolor": "#533"
     },
     {
-      "id": 339,
-      "type": "UNETLoader",
+      "id": 137,
+      "type": "SetNode",
       "pos": [
-        -19.95320703125001,
-        -1139.1507539062516
+        89.82265625000038,
+        -839.2996093749997
       ],
       "size": [
-        368.6467478229074,
-        82
+        210,
+        60
       ],
-      "flags": {},
+      "flags": {
+        "collapsed": true
+      },
+      "order": 91,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "link": 444
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Set_model_high",
+      "properties": {
+        "previousName": "model_high"
+      },
+      "widgets_values": [
+        "model_high"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 344,
+      "type": "GetNode",
+      "pos": [
+        -252.49609375,
+        -891.4218749999999
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
       "order": 53,
       "mode": 0,
       "inputs": [],
@@ -3765,38 +3728,169 @@
         {
           "name": "MODEL",
           "type": "MODEL",
-          "slot_index": 0,
           "links": [
-            550
+            552
           ]
         }
       ],
-      "title": "Load Diffusion Model LOW",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.45",
-        "Node name for S&R": "UNETLoader",
-        "models": [
-          {
-            "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
-            "directory": "diffusion_models"
-          }
-        ],
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {
-            "unet_name": true,
-            "weight_dtype": true
-          }
+      "title": "Get_model_h_base",
+      "properties": {},
+      "widgets_values": [
+        "model_h_base"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 345,
+      "type": "GetNode",
+      "pos": [
+        -269.34843749999976,
+        -844.3500000000003
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 54,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            551
+          ]
         }
+      ],
+      "title": "Get_model_low_base",
+      "properties": {},
+      "widgets_values": [
+        "model_low_base"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 347,
+      "type": "FindPerfectResolution",
+      "pos": [
+        110,
+        -490
+      ],
+      "size": [
+        309.68278515625,
+        332
+      ],
+      "flags": {},
+      "order": 77,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 553
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            554
+          ]
+        },
+        {
+          "name": "mask_output",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "resolution_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "aux_id": "ashtar1984/comfyui-find-perfect-resolution",
+        "ver": "b8ee6c1872e796329bffbcbf53a5207aaf964bdb",
+        "Node name for S&R": "FindPerfectResolution"
       },
       "widgets_values": [
-        "Wan2.2_Remix_NSFW_i2v_14b_low_lighting_fp8_e4m3fn_v2.1.safetensors",
-        "default"
+        480,
+        832,
+        16,
+        false,
+        "lanczos",
+        "none",
+        "#000000"
       ],
-      "color": "#232",
-      "bgcolor": "#353"
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 135,
+      "type": "VAEEncode",
+      "pos": [
+        622.6408404023489,
+        -388.2220803614805
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 93,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 554
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 402
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            323
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.5.1",
+        "Node name for S&R": "VAEEncode"
+      },
+      "widgets_values": [],
+      "color": "#322",
+      "bgcolor": "#533"
     },
     {
       "id": 321,
@@ -3880,6 +3974,164 @@
       "bgcolor": "#3f5159"
     },
     {
+      "id": 235,
+      "type": "2f110ae4-3df5-4e0f-9225-d35629e6f51f",
+      "pos": [
+        -273.2613281249985,
+        -926.8878906250006
+      ],
+      "size": [
+        680,
+        374
+      ],
+      "flags": {},
+      "order": 74,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "model_h",
+          "name": "model",
+          "type": "MODEL",
+          "link": 552
+        },
+        {
+          "label": "model_l",
+          "name": "model_1",
+          "type": "MODEL",
+          "link": 551
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            440
+          ]
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            441
+          ]
+        },
+        {
+          "label": "MODEL HIGH",
+          "name": "MODEL_1",
+          "type": "MODEL",
+          "links": [
+            444
+          ]
+        },
+        {
+          "label": "MODEL LOW",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            560
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "141",
+            "lora_name"
+          ],
+          [
+            "142",
+            "lora_name"
+          ],
+          [
+            "101",
+            "lora_name"
+          ],
+          [
+            "101",
+            "strength_model"
+          ],
+          [
+            "102",
+            "lora_name"
+          ],
+          [
+            "102",
+            "strength_model"
+          ],
+          [
+            "84",
+            "clip_name"
+          ],
+          [
+            "206",
+            "vae_name"
+          ],
+          [
+            "241",
+            "shift"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.11.1"
+      },
+      "widgets_values": [],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 339,
+      "type": "UNETLoader",
+      "pos": [
+        -19.95320703125001,
+        -1139.1507539062516
+      ],
+      "size": [
+        368.6467478229074,
+        82
+      ],
+      "flags": {},
+      "order": 55,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            550
+          ]
+        }
+      ],
+      "title": "Load Diffusion Model LOW",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ],
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {
+            "unet_name": true,
+            "weight_dtype": true
+          }
+        }
+      },
+      "widgets_values": [
+        "wan22EnhancedNSFWSVICamera_nolightningSVICfFp8L.safetensors",
+        "default"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
       "id": 97,
       "type": "LoadImage",
       "pos": [
@@ -3891,7 +4143,7 @@
         601.5196953124998
       ],
       "flags": {},
-      "order": 54,
+      "order": 56,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3922,8 +4174,140 @@
         }
       },
       "widgets_values": [
-        "154251_00001_.png",
+        "200933_00001_.png",
         "image"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 193,
+      "type": "c5a95b71-2875-4c1e-930a-368bc51e3aa7",
+      "pos": [
+        489.1384736066766,
+        -496.85235456722774
+      ],
+      "size": [
+        412.5814121093749,
+        625.673044921875
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 102,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 375
+        },
+        {
+          "label": "sigmas_high",
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 376
+        },
+        {
+          "label": "sigmas_low",
+          "name": "sigmas_1",
+          "type": "SIGMAS",
+          "link": 377
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 378
+        },
+        {
+          "label": "model_high",
+          "name": "model",
+          "type": "MODEL",
+          "link": 485
+        },
+        {
+          "label": "model_low",
+          "name": "model_1",
+          "type": "MODEL",
+          "link": 484
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 381
+        },
+        {
+          "name": "anchor_samples",
+          "type": "LATENT",
+          "link": 401
+        },
+        {
+          "name": "prev_samples",
+          "type": "LATENT",
+          "link": null
+        },
+        {
+          "label": "prompt",
+          "name": "string_b",
+          "type": "STRING",
+          "widget": {
+            "name": "string_b"
+          },
+          "link": 535
+        }
+      ],
+      "outputs": [
+        {
+          "label": "samples",
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            465
+          ]
+        },
+        {
+          "label": "decoded_images",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            466
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "199",
+            "string_a"
+          ],
+          [
+            "190",
+            "text"
+          ],
+          [
+            "-1",
+            "string_b"
+          ],
+          [
+            "204",
+            "seed"
+          ],
+          [
+            "204",
+            "🎲 Randomize Each Time"
+          ],
+          [
+            "204",
+            "🎲 New Fixed Random"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.5.1"
+      },
+      "widgets_values": [
+        null,
+        null,
+        ""
       ],
       "color": "#223",
       "bgcolor": "#335"
@@ -4201,38 +4585,122 @@
       "bgcolor": "#335"
     },
     {
-      "id": 248,
-      "type": "Fast Groups Bypasser (rgthree)",
+      "id": 338,
+      "type": "UNETLoader",
       "pos": [
-        -810,
-        510
+        -19.95320703125001,
+        -1269.1507539062516
       ],
       "size": [
-        459.867844579431,
-        142.32934969898486
+        407.38374624166386,
+        82
       ],
       "flags": {},
-      "order": 55,
+      "order": 57,
       "mode": 0,
       "inputs": [],
       "outputs": [
         {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            549
+          ]
+        }
+      ],
+      "title": "Load Diffusion Model HIGH",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ],
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {
+            "unet_name": true,
+            "weight_dtype": true
+          }
+        }
+      },
+      "widgets_values": [
+        "wan22EnhancedNSFWSVICamera_nolightningSVICfFp8H.safetensors",
+        "default"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 239,
+      "type": "d2262c38-c2c4-4e42-b649-4ada24dfbf08",
+      "pos": [
+        102.70515351562489,
+        -77.49207421875008
+      ],
+      "size": [
+        319.0485429687501,
+        169.8912226562502
+      ],
+      "flags": {},
+      "order": 72,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 555
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SAMPLER",
+          "type": "SAMPLER",
+          "links": [
+            448
+          ]
+        },
+        {
+          "name": "high_sigmas",
+          "type": "SIGMAS",
+          "links": [
+            449
+          ]
+        },
+        {
+          "name": "low_sigmas",
+          "type": "SIGMAS",
+          "links": [
+            450
+          ]
         }
       ],
       "properties": {
-        "matchColors": "red",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "alphanumeric",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
+        "proxyWidgets": [
+          [
+            "127",
+            "sampler_name"
+          ],
+          [
+            "243",
+            "scheduler"
+          ],
+          [
+            "243",
+            "steps"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.11.1"
       },
-      "color": "#322",
-      "bgcolor": "#533"
+      "widgets_values": [],
+      "color": "#223",
+      "bgcolor": "#335"
     },
     {
       "id": 181,
@@ -4372,533 +4840,81 @@
       "bgcolor": "#335"
     },
     {
-      "id": 239,
-      "type": "d2262c38-c2c4-4e42-b649-4ada24dfbf08",
+      "id": 317,
+      "type": "cb082c4d-bdfb-40b8-85c0-6ec7f755c28a",
       "pos": [
-        102.70515351562489,
-        -77.49207421875008
+        -1417.8893511523438,
+        -366.6401193320312
       ],
       "size": [
-        319.0485429687501,
-        169.8912226562502
+        560,
+        460
       ],
       "flags": {},
-      "order": 72,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 555
-        }
-      ],
-      "outputs": [
-        {
-          "name": "SAMPLER",
-          "type": "SAMPLER",
-          "links": [
-            448
-          ]
-        },
-        {
-          "name": "high_sigmas",
-          "type": "SIGMAS",
-          "links": [
-            449
-          ]
-        },
-        {
-          "name": "low_sigmas",
-          "type": "SIGMAS",
-          "links": [
-            450
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "127",
-            "sampler_name"
-          ],
-          [
-            "243",
-            "scheduler"
-          ],
-          [
-            "243",
-            "steps"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.11.1"
-      },
-      "widgets_values": [],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 137,
-      "type": "SetNode",
-      "pos": [
-        89.82265625000038,
-        -839.2996093749997
-      ],
-      "size": [
-        210,
-        60
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 92,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "link": 444
-        }
-      ],
-      "outputs": [
-        {
-          "name": "*",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Set_model_high",
-      "properties": {
-        "previousName": "model_high"
-      },
-      "widgets_values": [
-        "model_high"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 344,
-      "type": "GetNode",
-      "pos": [
-        -252.49609375,
-        -891.4218749999999
-      ],
-      "size": [
-        210,
-        60
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 56,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            552
-          ]
-        }
-      ],
-      "title": "Get_model_h_base",
-      "properties": {},
-      "widgets_values": [
-        "model_h_base"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 345,
-      "type": "GetNode",
-      "pos": [
-        -269.34843749999976,
-        -844.3500000000003
-      ],
-      "size": [
-        210,
-        58
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 57,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            551
-          ]
-        }
-      ],
-      "title": "Get_model_low_base",
-      "properties": {},
-      "widgets_values": [
-        "model_low_base"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 347,
-      "type": "FindPerfectResolution",
-      "pos": [
-        110,
-        -490
-      ],
-      "size": [
-        309.68278515625,
-        332
-      ],
-      "flags": {},
-      "order": 77,
-      "mode": 0,
+      "order": 73,
+      "mode": 4,
       "inputs": [
         {
           "name": "image",
           "type": "IMAGE",
-          "link": 553
-        },
-        {
-          "name": "mask",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
+          "link": 529
         }
       ],
       "outputs": [
         {
-          "name": "width",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            554
-          ]
-        },
-        {
-          "name": "mask_output",
-          "type": "MASK",
-          "links": null
-        },
-        {
-          "name": "resolution_info",
+          "name": "STRING",
           "type": "STRING",
-          "links": null
-        }
-      ],
-      "properties": {
-        "aux_id": "ashtar1984/comfyui-find-perfect-resolution",
-        "ver": "b8ee6c1872e796329bffbcbf53a5207aaf964bdb",
-        "Node name for S&R": "FindPerfectResolution"
-      },
-      "widgets_values": [
-        480,
-        832,
-        16,
-        false,
-        "lanczos",
-        "none",
-        "#000000"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 135,
-      "type": "VAEEncode",
-      "pos": [
-        622.6408404023489,
-        -388.2220803614805
-      ],
-      "size": [
-        140,
-        46
-      ],
-      "flags": {},
-      "order": 89,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "pixels",
-          "type": "IMAGE",
-          "link": 554
+          "links": []
         },
         {
-          "name": "vae",
-          "type": "VAE",
-          "link": 402
-        }
-      ],
-      "outputs": [
-        {
-          "name": "LATENT",
-          "type": "LATENT",
-          "links": [
-            323
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.5.1",
-        "Node name for S&R": "VAEEncode"
-      },
-      "widgets_values": [],
-      "color": "#322",
-      "bgcolor": "#533"
-    },
-    {
-      "id": 193,
-      "type": "c5a95b71-2875-4c1e-930a-368bc51e3aa7",
-      "pos": [
-        489.1384736066766,
-        -496.85235456722774
-      ],
-      "size": [
-        412.5814121093749,
-        625.673044921875
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 102,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "sampler",
-          "type": "SAMPLER",
-          "link": 375
-        },
-        {
-          "label": "sigmas_high",
-          "name": "sigmas",
-          "type": "SIGMAS",
-          "link": 376
-        },
-        {
-          "label": "sigmas_low",
-          "name": "sigmas_1",
-          "type": "SIGMAS",
-          "link": 377
-        },
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 378
-        },
-        {
-          "label": "model_high",
-          "name": "model",
-          "type": "MODEL",
-          "link": 485
-        },
-        {
-          "label": "model_low",
-          "name": "model_1",
-          "type": "MODEL",
-          "link": 484
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 381
-        },
-        {
-          "name": "anchor_samples",
-          "type": "LATENT",
-          "link": 401
-        },
-        {
-          "name": "prev_samples",
-          "type": "LATENT",
-          "link": null
-        },
-        {
-          "label": "prompt",
-          "name": "string_b",
+          "name": "STRING_1",
           "type": "STRING",
-          "widget": {
-            "name": "string_b"
-          },
-          "link": 535
-        }
-      ],
-      "outputs": [
-        {
-          "label": "samples",
-          "name": "output",
-          "type": "LATENT",
-          "links": [
-            465
-          ]
+          "links": []
         },
         {
-          "label": "decoded_images",
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            466
-          ]
+          "name": "STRING_2",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "STRING_3",
+          "type": "STRING",
+          "links": []
         }
       ],
       "properties": {
         "proxyWidgets": [
           [
-            "199",
-            "string_a"
+            "1582",
+            "custom_prompt"
           ],
           [
-            "190",
-            "text"
+            "1582",
+            "model_name"
           ],
           [
-            "-1",
-            "string_b"
+            "1582",
+            "quantization"
           ],
           [
-            "204",
+            "1582",
+            "preset_prompt"
+          ],
+          [
+            "1582",
+            "control_after_generate"
+          ],
+          [
+            "1582",
             "seed"
-          ],
-          [
-            "204",
-            "🎲 Randomize Each Time"
-          ],
-          [
-            "204",
-            "🎲 New Fixed Random"
           ]
         ],
         "cnr_id": "comfy-core",
-        "ver": "0.5.1"
-      },
-      "widgets_values": [
-        null,
-        null,
-        ""
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 235,
-      "type": "2f110ae4-3df5-4e0f-9225-d35629e6f51f",
-      "pos": [
-        -273.2613281249985,
-        -926.8878906250006
-      ],
-      "size": [
-        680,
-        374
-      ],
-      "flags": {},
-      "order": 78,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "model_h",
-          "name": "model",
-          "type": "MODEL",
-          "link": 552
-        },
-        {
-          "label": "model_l",
-          "name": "model_1",
-          "type": "MODEL",
-          "link": 551
-        }
-      ],
-      "outputs": [
-        {
-          "name": "CLIP",
-          "type": "CLIP",
-          "links": [
-            440
-          ]
-        },
-        {
-          "name": "VAE",
-          "type": "VAE",
-          "links": [
-            441
-          ]
-        },
-        {
-          "label": "MODEL HIGH",
-          "name": "MODEL_1",
-          "type": "MODEL",
-          "links": [
-            444
-          ]
-        },
-        {
-          "label": "MODEL LOW",
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            560
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "141",
-            "lora_name"
-          ],
-          [
-            "142",
-            "lora_name"
-          ],
-          [
-            "101",
-            "lora_name"
-          ],
-          [
-            "101",
-            "strength_model"
-          ],
-          [
-            "102",
-            "lora_name"
-          ],
-          [
-            "102",
-            "strength_model"
-          ],
-          [
-            "84",
-            "clip_name"
-          ],
-          [
-            "206",
-            "vae_name"
-          ],
-          [
-            "241",
-            "shift"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.11.1"
+        "ver": "0.13.0"
       },
       "widgets_values": [],
-      "color": "#233",
-      "bgcolor": "#355"
+      "color": "#323",
+      "bgcolor": "#535"
     }
   ],
   "links": [
@@ -5797,7 +5813,7 @@
         "state": {
           "lastGroupId": 0,
           "lastNodeId": 199,
-          "lastLinkId": 437,
+          "lastLinkId": 438,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -6099,9 +6115,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "79f529a84a8c20fe5dcdfa984c6be7a94102c014",
-              "Node name for S&R": "ImageBatchExtendWithOverlap"
+              "Node name for S&R": "ImageBatchExtendWithOverlap",
+              "cnr_id": "comfyui-kjnodes"
             },
             "widgets_values": [
               5,
@@ -6171,47 +6188,6 @@
             "shape": 1
           },
           {
-            "id": 193,
-            "type": "easy cleanGpuUsed",
-            "pos": [
-              5845.391284974199,
-              -236.11957290003522
-            ],
-            "size": [
-              161.3404296875,
-              26
-            ],
-            "flags": {
-              "collapsed": true
-            },
-            "order": 7,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "anything",
-                "name": "anything",
-                "type": "*",
-                "link": 433
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "output",
-                "name": "output",
-                "type": "*",
-                "links": [
-                  406
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfyui-easy-use",
-              "ver": "7c470c67d6df44498e52c902173c1ac77cd5bdfd",
-              "Node name for S&R": "easy cleanGpuUsed"
-            },
-            "widgets_values": []
-          },
-          {
             "id": 162,
             "type": "VAEDecode",
             "pos": [
@@ -6230,7 +6206,7 @@
                 "localized_name": "samples",
                 "name": "samples",
                 "type": "LATENT",
-                "link": 406
+                "link": 438
               },
               {
                 "localized_name": "vae",
@@ -6274,7 +6250,7 @@
               200
             ],
             "flags": {},
-            "order": 8,
+            "order": 7,
             "mode": 0,
             "inputs": [
               {
@@ -6350,10 +6326,10 @@
             ],
             "title": "Final prompt preview",
             "properties": {
-              "cnr_id": "comfyui-easy-use",
+              "aux_id": "yolain/ComfyUI-Easy-Use",
               "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
               "Node name for S&R": "easy showAnything",
-              "aux_id": "yolain/ComfyUI-Easy-Use",
+              "cnr_id": "comfyui-easy-use",
               "widget_ue_connectable": {}
             },
             "widgets_values": [
@@ -6433,9 +6409,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "79f529a84a8c20fe5dcdfa984c6be7a94102c014",
-              "Node name for S&R": "WanImageToVideoSVIPro"
+              "Node name for S&R": "WanImageToVideoSVIPro",
+              "cnr_id": "comfyui-kjnodes"
             },
             "widgets_values": [
               81,
@@ -6454,7 +6431,7 @@
               494
             ],
             "flags": {},
-            "order": 9,
+            "order": 8,
             "mode": 0,
             "inputs": [
               {
@@ -6527,7 +6504,7 @@
             },
             "widgets_values": [
               true,
-              323466417132010,
+              606061709570668,
               "randomize",
               1
             ]
@@ -6544,7 +6521,7 @@
               494
             ],
             "flags": {},
-            "order": 10,
+            "order": 9,
             "mode": 0,
             "inputs": [
               {
@@ -6599,8 +6576,8 @@
                 "name": "output",
                 "type": "LATENT",
                 "links": [
-                  433,
-                  434
+                  434,
+                  438
                 ]
               },
               {
@@ -6618,7 +6595,7 @@
             },
             "widgets_values": [
               false,
-              808347444190455,
+              59916764156897,
               "randomize",
               1
             ]
@@ -6652,15 +6629,15 @@
             ],
             "title": "Seed",
             "properties": {
-              "cnr_id": "rgthree-comfy",
+              "aux_id": "aining2022/ComfyUI_Swwan",
               "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
               "randomMax": 1125899906842624,
               "randomMin": 0,
-              "aux_id": "aining2022/ComfyUI_Swwan",
+              "cnr_id": "rgthree-comfy",
               "Node name for S&R": "Seed (rgthree)"
             },
             "widgets_values": [
-              996186397424999,
+              780731927067947,
               "",
               "",
               ""
@@ -6758,14 +6735,6 @@
             "target_id": 188,
             "target_slot": 1,
             "type": "STRING"
-          },
-          {
-            "id": 406,
-            "origin_id": 193,
-            "origin_slot": 0,
-            "target_id": 162,
-            "target_slot": 0,
-            "type": "LATENT"
           },
           {
             "id": 408,
@@ -6888,14 +6857,6 @@
             "type": "SIGMAS"
           },
           {
-            "id": 433,
-            "origin_id": 198,
-            "origin_slot": 0,
-            "target_id": 193,
-            "target_slot": 0,
-            "type": "LATENT"
-          },
-          {
             "id": 434,
             "origin_id": 198,
             "origin_slot": 0,
@@ -6918,6 +6879,14 @@
             "target_id": 198,
             "target_slot": 6,
             "type": "INT"
+          },
+          {
+            "id": 438,
+            "origin_id": 198,
+            "origin_slot": 0,
+            "target_id": 162,
+            "target_slot": 0,
+            "type": "LATENT"
           }
         ],
         "extra": {
@@ -6929,8 +6898,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 0,
-          "lastNodeId": 204,
-          "lastLinkId": 437,
+          "lastNodeId": 205,
+          "lastLinkId": 438,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -7246,7 +7215,7 @@
                 "localized_name": "samples",
                 "name": "samples",
                 "type": "LATENT",
-                "link": 411
+                "link": 438
               },
               {
                 "localized_name": "vae",
@@ -7275,47 +7244,6 @@
                 "version": "7.1",
                 "input_ue_unconnectable": {}
               }
-            },
-            "widgets_values": []
-          },
-          {
-            "id": 198,
-            "type": "easy cleanGpuUsed",
-            "pos": [
-              5856.100673039626,
-              -237.0730033115759
-            ],
-            "size": [
-              161.3404296875,
-              26
-            ],
-            "flags": {
-              "collapsed": true
-            },
-            "order": 6,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "anything",
-                "name": "anything",
-                "type": "*",
-                "link": 433
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "output",
-                "name": "output",
-                "type": "*",
-                "links": [
-                  411
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfyui-easy-use",
-              "ver": "7c470c67d6df44498e52c902173c1ac77cd5bdfd",
-              "Node name for S&R": "easy cleanGpuUsed"
             },
             "widgets_values": []
           },
@@ -7356,10 +7284,10 @@
             ],
             "title": "Final prompt preview",
             "properties": {
-              "cnr_id": "comfyui-easy-use",
+              "aux_id": "yolain/ComfyUI-Easy-Use",
               "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
               "Node name for S&R": "easy showAnything",
-              "aux_id": "yolain/ComfyUI-Easy-Use",
+              "cnr_id": "comfyui-easy-use",
               "widget_ue_connectable": {}
             },
             "widgets_values": [
@@ -7381,7 +7309,7 @@
               200
             ],
             "flags": {},
-            "order": 7,
+            "order": 6,
             "mode": 0,
             "inputs": [
               {
@@ -7488,9 +7416,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "79f529a84a8c20fe5dcdfa984c6be7a94102c014",
-              "Node name for S&R": "WanImageToVideoSVIPro"
+              "Node name for S&R": "WanImageToVideoSVIPro",
+              "cnr_id": "comfyui-kjnodes"
             },
             "widgets_values": [
               81,
@@ -7509,7 +7438,7 @@
               494
             ],
             "flags": {},
-            "order": 8,
+            "order": 7,
             "mode": 0,
             "inputs": [
               {
@@ -7582,7 +7511,7 @@
             },
             "widgets_values": [
               true,
-              442076551584737,
+              1053619808783375,
               "randomize",
               1
             ]
@@ -7599,7 +7528,7 @@
               494
             ],
             "flags": {},
-            "order": 9,
+            "order": 8,
             "mode": 0,
             "inputs": [
               {
@@ -7654,8 +7583,8 @@
                 "name": "output",
                 "type": "LATENT",
                 "links": [
-                  433,
-                  434
+                  434,
+                  438
                 ]
               },
               {
@@ -7673,7 +7602,7 @@
             },
             "widgets_values": [
               false,
-              981173190066401,
+              925860854743587,
               "randomize",
               1
             ]
@@ -7707,15 +7636,15 @@
             ],
             "title": "Seed",
             "properties": {
-              "cnr_id": "rgthree-comfy",
+              "aux_id": "aining2022/ComfyUI_Swwan",
               "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
               "randomMax": 1125899906842624,
               "randomMin": 0,
-              "aux_id": "aining2022/ComfyUI_Swwan",
+              "cnr_id": "rgthree-comfy",
               "Node name for S&R": "Seed (rgthree)"
             },
             "widgets_values": [
-              1005178082374255,
+              381474042188526,
               "",
               "",
               ""
@@ -7797,14 +7726,6 @@
             "target_id": 160,
             "target_slot": 0,
             "type": "CONDITIONING"
-          },
-          {
-            "id": 411,
-            "origin_id": 198,
-            "origin_slot": 0,
-            "target_id": 162,
-            "target_slot": 0,
-            "type": "LATENT"
           },
           {
             "id": 413,
@@ -7919,14 +7840,6 @@
             "type": "SAMPLER"
           },
           {
-            "id": 433,
-            "origin_id": 203,
-            "origin_slot": 0,
-            "target_id": 198,
-            "target_slot": 0,
-            "type": "LATENT"
-          },
-          {
             "id": 434,
             "origin_id": 203,
             "origin_slot": 0,
@@ -7949,6 +7862,14 @@
             "target_id": 203,
             "target_slot": 6,
             "type": "INT"
+          },
+          {
+            "id": 438,
+            "origin_id": 203,
+            "origin_slot": 0,
+            "target_id": 162,
+            "target_slot": 0,
+            "type": "LATENT"
           }
         ],
         "extra": {
@@ -8071,57 +7992,6 @@
         "widgets": [],
         "nodes": [
           {
-            "id": 84,
-            "type": "CLIPLoader",
-            "pos": [
-              -637.0681750140438,
-              -348.8380184165045
-            ],
-            "size": [
-              346.391845703125,
-              106
-            ],
-            "flags": {},
-            "order": 0,
-            "mode": 0,
-            "inputs": [],
-            "outputs": [
-              {
-                "localized_name": "CLIP",
-                "name": "CLIP",
-                "type": "CLIP",
-                "slot_index": 0,
-                "links": [
-                  283
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfy-core",
-              "ver": "0.3.45",
-              "Node name for S&R": "CLIPLoader",
-              "models": [
-                {
-                  "name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
-                  "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
-                  "directory": "text_encoders"
-                }
-              ],
-              "ue_properties": {
-                "widget_ue_connectable": {},
-                "version": "7.1",
-                "input_ue_unconnectable": {}
-              }
-            },
-            "widgets_values": [
-              "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
-              "wan",
-              "default"
-            ],
-            "color": "#1f1f48",
-            "bgcolor": "rgba(24,24,27,.9)"
-          },
-          {
             "id": 206,
             "type": "VAELoader",
             "pos": [
@@ -8133,7 +8003,7 @@
               58
             ],
             "flags": {},
-            "order": 1,
+            "order": 0,
             "mode": 0,
             "inputs": [],
             "outputs": [
@@ -8156,63 +8026,6 @@
             ],
             "color": "#1f1f48",
             "bgcolor": "rgba(24,24,27,.9)"
-          },
-          {
-            "id": 101,
-            "type": "LoraLoaderModelOnly",
-            "pos": [
-              -122.99372282728895,
-              -838.502348646229
-            ],
-            "size": [
-              655.3124441601999,
-              82
-            ],
-            "flags": {},
-            "order": 2,
-            "mode": 4,
-            "inputs": [
-              {
-                "localized_name": "model",
-                "name": "model",
-                "type": "MODEL",
-                "link": 453
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "MODEL",
-                "name": "MODEL",
-                "type": "MODEL",
-                "links": [
-                  278
-                ]
-              }
-            ],
-            "title": "Lightx2v High",
-            "properties": {
-              "cnr_id": "comfy-core",
-              "ver": "0.3.49",
-              "Node name for S&R": "LoraLoaderModelOnly",
-              "models": [
-                {
-                  "name": "wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors",
-                  "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors",
-                  "directory": "loras"
-                }
-              ],
-              "ue_properties": {
-                "widget_ue_connectable": {},
-                "version": "7.1",
-                "input_ue_unconnectable": {}
-              }
-            },
-            "widgets_values": [
-              "Wan_2_2_I2V_A14B_HIGH_lightx2v_4step_lora_v1030_rank_64_bf16.safetensors",
-              1
-            ],
-            "color": "#223",
-            "bgcolor": "#335"
           },
           {
             "id": 241,
@@ -8310,63 +8123,6 @@
             "bgcolor": "#335"
           },
           {
-            "id": 102,
-            "type": "LoraLoaderModelOnly",
-            "pos": [
-              -109.03588675156642,
-              -487.0626614163395
-            ],
-            "size": [
-              608.3984728580194,
-              82
-            ],
-            "flags": {},
-            "order": 3,
-            "mode": 4,
-            "inputs": [
-              {
-                "localized_name": "model",
-                "name": "model",
-                "type": "MODEL",
-                "link": 451
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "MODEL",
-                "name": "MODEL",
-                "type": "MODEL",
-                "links": [
-                  280
-                ]
-              }
-            ],
-            "title": "Lightx2v Low",
-            "properties": {
-              "cnr_id": "comfy-core",
-              "ver": "0.3.49",
-              "Node name for S&R": "LoraLoaderModelOnly",
-              "models": [
-                {
-                  "name": "wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
-                  "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
-                  "directory": "loras"
-                }
-              ],
-              "ue_properties": {
-                "widget_ue_connectable": {},
-                "version": "7.1",
-                "input_ue_unconnectable": {}
-              }
-            },
-            "widgets_values": [
-              "wan2.2_i2v_A14b_low_noise_lora_rank64_lightx2v_4step_1022.safetensors",
-              1
-            ],
-            "color": "#223",
-            "bgcolor": "#335"
-          },
-          {
             "id": 142,
             "type": "LoraLoaderModelOnly",
             "pos": [
@@ -8406,6 +8162,171 @@
             },
             "widgets_values": [
               "SVI_v2_PRO_Wan2.2-I2V-A14B_LOW_lora_rank_128_fp16.safetensors",
+              1
+            ],
+            "color": "#223",
+            "bgcolor": "#335"
+          },
+          {
+            "id": 84,
+            "type": "CLIPLoader",
+            "pos": [
+              -637.0681750140438,
+              -348.8380184165045
+            ],
+            "size": [
+              346.391845703125,
+              106
+            ],
+            "flags": {},
+            "order": 1,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "localized_name": "CLIP",
+                "name": "CLIP",
+                "type": "CLIP",
+                "slot_index": 0,
+                "links": [
+                  283
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.45",
+              "Node name for S&R": "CLIPLoader",
+              "models": [
+                {
+                  "name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+                  "directory": "text_encoders"
+                }
+              ],
+              "ue_properties": {
+                "widget_ue_connectable": {},
+                "version": "7.1",
+                "input_ue_unconnectable": {}
+              }
+            },
+            "widgets_values": [
+              "nsfw_wan_umt5-xxl_fp8_scaled.safetensors",
+              "wan",
+              "default"
+            ],
+            "color": "#1f1f48",
+            "bgcolor": "rgba(24,24,27,.9)"
+          },
+          {
+            "id": 101,
+            "type": "LoraLoaderModelOnly",
+            "pos": [
+              -122.99372282728895,
+              -838.502348646229
+            ],
+            "size": [
+              655.3124441601999,
+              82
+            ],
+            "flags": {},
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 453
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "MODEL",
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  278
+                ]
+              }
+            ],
+            "title": "Lightx2v High",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.49",
+              "Node name for S&R": "LoraLoaderModelOnly",
+              "models": [
+                {
+                  "name": "wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors",
+                  "directory": "loras"
+                }
+              ],
+              "ue_properties": {
+                "widget_ue_connectable": {},
+                "version": "7.1",
+                "input_ue_unconnectable": {}
+              }
+            },
+            "widgets_values": [
+              "Wan_2_2_I2V_A14B_HIGH_lightx2v_4step_lora_v1030_rank_64_bf16.safetensors",
+              1
+            ],
+            "color": "#223",
+            "bgcolor": "#335"
+          },
+          {
+            "id": 102,
+            "type": "LoraLoaderModelOnly",
+            "pos": [
+              -109.03588675156642,
+              -487.0626614163395
+            ],
+            "size": [
+              608.3984728580194,
+              82
+            ],
+            "flags": {},
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 451
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "MODEL",
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  280
+                ]
+              }
+            ],
+            "title": "Lightx2v Low",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.49",
+              "Node name for S&R": "LoraLoaderModelOnly",
+              "models": [
+                {
+                  "name": "wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors",
+                  "directory": "loras"
+                }
+              ],
+              "ue_properties": {
+                "widget_ue_connectable": {},
+                "version": "7.1",
+                "input_ue_unconnectable": {}
+              }
+            },
+            "widgets_values": [
+              "wan2.2_i2v_A14b_low_noise_lora_rank64_lightx2v_4step_1022.safetensors",
               1
             ],
             "color": "#223",
@@ -8722,7 +8643,7 @@
             },
             "widgets_values": [
               "simple",
-              8,
+              6,
               1
             ]
           }
@@ -8780,7 +8701,7 @@
         "state": {
           "lastGroupId": 0,
           "lastNodeId": 200,
-          "lastLinkId": 435,
+          "lastLinkId": 436,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -9081,9 +9002,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "79f529a84a8c20fe5dcdfa984c6be7a94102c014",
-              "Node name for S&R": "ImageBatchExtendWithOverlap"
+              "Node name for S&R": "ImageBatchExtendWithOverlap",
+              "cnr_id": "comfyui-kjnodes"
             },
             "widgets_values": [
               5,
@@ -9171,7 +9093,7 @@
                 "localized_name": "samples",
                 "name": "samples",
                 "type": "LATENT",
-                "link": 406
+                "link": 436
               },
               {
                 "localized_name": "vae",
@@ -9200,47 +9122,6 @@
                 "version": "7.1",
                 "input_ue_unconnectable": {}
               }
-            },
-            "widgets_values": []
-          },
-          {
-            "id": 193,
-            "type": "easy cleanGpuUsed",
-            "pos": [
-              5811.81756402789,
-              -282.6343447733416
-            ],
-            "size": [
-              161.3404296875,
-              26
-            ],
-            "flags": {
-              "collapsed": true
-            },
-            "order": 7,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "anything",
-                "name": "anything",
-                "type": "*",
-                "link": 432
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "output",
-                "name": "output",
-                "type": "*",
-                "links": [
-                  406
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfyui-easy-use",
-              "ver": "7c470c67d6df44498e52c902173c1ac77cd5bdfd",
-              "Node name for S&R": "easy cleanGpuUsed"
             },
             "widgets_values": []
           },
@@ -9283,10 +9164,10 @@
             ],
             "title": "Final prompt preview",
             "properties": {
-              "cnr_id": "comfyui-easy-use",
+              "aux_id": "yolain/ComfyUI-Easy-Use",
               "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
               "Node name for S&R": "easy showAnything",
-              "aux_id": "yolain/ComfyUI-Easy-Use",
+              "cnr_id": "comfyui-easy-use",
               "widget_ue_connectable": {}
             },
             "widgets_values": [
@@ -9308,7 +9189,7 @@
               200
             ],
             "flags": {},
-            "order": 8,
+            "order": 7,
             "mode": 0,
             "inputs": [
               {
@@ -9415,9 +9296,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "79f529a84a8c20fe5dcdfa984c6be7a94102c014",
-              "Node name for S&R": "WanImageToVideoSVIPro"
+              "Node name for S&R": "WanImageToVideoSVIPro",
+              "cnr_id": "comfyui-kjnodes"
             },
             "widgets_values": [
               81,
@@ -9436,7 +9318,7 @@
               494
             ],
             "flags": {},
-            "order": 9,
+            "order": 8,
             "mode": 0,
             "inputs": [
               {
@@ -9509,7 +9391,7 @@
             },
             "widgets_values": [
               true,
-              388175567729878,
+              304461005930572,
               "randomize",
               1
             ]
@@ -9526,7 +9408,7 @@
               494
             ],
             "flags": {},
-            "order": 10,
+            "order": 9,
             "mode": 0,
             "inputs": [
               {
@@ -9581,8 +9463,8 @@
                 "name": "output",
                 "type": "LATENT",
                 "links": [
-                  432,
-                  433
+                  433,
+                  436
                 ]
               },
               {
@@ -9600,7 +9482,7 @@
             },
             "widgets_values": [
               false,
-              263806969995092,
+              268134811474842,
               "randomize",
               1
             ]
@@ -9634,15 +9516,15 @@
             ],
             "title": "Seed",
             "properties": {
-              "cnr_id": "rgthree-comfy",
+              "aux_id": "aining2022/ComfyUI_Swwan",
               "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
               "randomMax": 1125899906842624,
               "randomMin": 0,
-              "aux_id": "aining2022/ComfyUI_Swwan",
+              "cnr_id": "rgthree-comfy",
               "Node name for S&R": "Seed (rgthree)"
             },
             "widgets_values": [
-              618678891770387,
+              274527415836815,
               "",
               "",
               ""
@@ -9740,14 +9622,6 @@
             "target_id": 188,
             "target_slot": 1,
             "type": "STRING"
-          },
-          {
-            "id": 406,
-            "origin_id": 193,
-            "origin_slot": 0,
-            "target_id": 162,
-            "target_slot": 0,
-            "type": "LATENT"
           },
           {
             "id": 412,
@@ -9862,14 +9736,6 @@
             "type": "MODEL"
           },
           {
-            "id": 432,
-            "origin_id": 199,
-            "origin_slot": 0,
-            "target_id": 193,
-            "target_slot": 0,
-            "type": "LATENT"
-          },
-          {
             "id": 433,
             "origin_id": 199,
             "origin_slot": 0,
@@ -9892,6 +9758,14 @@
             "target_id": 199,
             "target_slot": 6,
             "type": "INT"
+          },
+          {
+            "id": 436,
+            "origin_id": 199,
+            "origin_slot": 0,
+            "target_id": 162,
+            "target_slot": 0,
+            "type": "LATENT"
           }
         ],
         "extra": {
@@ -9904,7 +9778,7 @@
         "state": {
           "lastGroupId": 0,
           "lastNodeId": 199,
-          "lastLinkId": 435,
+          "lastLinkId": 436,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -10205,9 +10079,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "79f529a84a8c20fe5dcdfa984c6be7a94102c014",
-              "Node name for S&R": "ImageBatchExtendWithOverlap"
+              "Node name for S&R": "ImageBatchExtendWithOverlap",
+              "cnr_id": "comfyui-kjnodes"
             },
             "widgets_values": [
               5,
@@ -10295,7 +10170,7 @@
                 "localized_name": "samples",
                 "name": "samples",
                 "type": "LATENT",
-                "link": 406
+                "link": 436
               },
               {
                 "localized_name": "vae",
@@ -10324,47 +10199,6 @@
                 "version": "7.1",
                 "input_ue_unconnectable": {}
               }
-            },
-            "widgets_values": []
-          },
-          {
-            "id": 193,
-            "type": "easy cleanGpuUsed",
-            "pos": [
-              5827.129177042214,
-              -303.65055602704257
-            ],
-            "size": [
-              161.3404296875,
-              26
-            ],
-            "flags": {
-              "collapsed": true
-            },
-            "order": 7,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "anything",
-                "name": "anything",
-                "type": "*",
-                "link": 431
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "output",
-                "name": "output",
-                "type": "*",
-                "links": [
-                  406
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfyui-easy-use",
-              "ver": "7c470c67d6df44498e52c902173c1ac77cd5bdfd",
-              "Node name for S&R": "easy cleanGpuUsed"
             },
             "widgets_values": []
           },
@@ -10407,10 +10241,10 @@
             ],
             "title": "Final prompt preview",
             "properties": {
-              "cnr_id": "comfyui-easy-use",
+              "aux_id": "yolain/ComfyUI-Easy-Use",
               "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
               "Node name for S&R": "easy showAnything",
-              "aux_id": "yolain/ComfyUI-Easy-Use",
+              "cnr_id": "comfyui-easy-use",
               "widget_ue_connectable": {}
             },
             "widgets_values": [
@@ -10432,7 +10266,7 @@
               200
             ],
             "flags": {},
-            "order": 8,
+            "order": 7,
             "mode": 0,
             "inputs": [
               {
@@ -10539,9 +10373,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "79f529a84a8c20fe5dcdfa984c6be7a94102c014",
-              "Node name for S&R": "WanImageToVideoSVIPro"
+              "Node name for S&R": "WanImageToVideoSVIPro",
+              "cnr_id": "comfyui-kjnodes"
             },
             "widgets_values": [
               81,
@@ -10560,7 +10395,7 @@
               494
             ],
             "flags": {},
-            "order": 10,
+            "order": 9,
             "mode": 0,
             "inputs": [
               {
@@ -10615,8 +10450,8 @@
                 "name": "output",
                 "type": "LATENT",
                 "links": [
-                  431,
-                  432
+                  432,
+                  436
                 ]
               },
               {
@@ -10634,7 +10469,7 @@
             },
             "widgets_values": [
               false,
-              511367505009053,
+              1039803808942026,
               "randomize",
               1
             ]
@@ -10651,7 +10486,7 @@
               494
             ],
             "flags": {},
-            "order": 9,
+            "order": 8,
             "mode": 0,
             "inputs": [
               {
@@ -10724,7 +10559,7 @@
             },
             "widgets_values": [
               true,
-              115520677369083,
+              412849494241116,
               "randomize",
               1
             ]
@@ -10758,15 +10593,15 @@
             ],
             "title": "Seed",
             "properties": {
-              "cnr_id": "rgthree-comfy",
+              "aux_id": "aining2022/ComfyUI_Swwan",
               "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
               "randomMax": 1125899906842624,
               "randomMin": 0,
-              "aux_id": "aining2022/ComfyUI_Swwan",
+              "cnr_id": "rgthree-comfy",
               "Node name for S&R": "Seed (rgthree)"
             },
             "widgets_values": [
-              695296809995384,
+              179289435199002,
               "",
               "",
               ""
@@ -10864,14 +10699,6 @@
             "target_id": 188,
             "target_slot": 1,
             "type": "STRING"
-          },
-          {
-            "id": 406,
-            "origin_id": 193,
-            "origin_slot": 0,
-            "target_id": 162,
-            "target_slot": 0,
-            "type": "LATENT"
           },
           {
             "id": 412,
@@ -10986,14 +10813,6 @@
             "type": "MODEL"
           },
           {
-            "id": 431,
-            "origin_id": 198,
-            "origin_slot": 0,
-            "target_id": 193,
-            "target_slot": 0,
-            "type": "LATENT"
-          },
-          {
             "id": 432,
             "origin_id": 198,
             "origin_slot": 0,
@@ -11016,6 +10835,14 @@
             "target_id": 198,
             "target_slot": 6,
             "type": "INT"
+          },
+          {
+            "id": 436,
+            "origin_id": 198,
+            "origin_slot": 0,
+            "target_id": 162,
+            "target_slot": 0,
+            "type": "LATENT"
           }
         ],
         "extra": {
@@ -11255,7 +11082,7 @@
               "auto",
               true,
               "auto",
-              "📖 Wan 2.2 NSFW Story",
+              "📖 Wan 2.2 NSFW I2V Story",
               "",
               1536,
               0.6,
@@ -11264,7 +11091,7 @@
               1.2,
               16,
               true,
-              4171363793,
+              1800218194,
               "randomize",
               false
             ],
@@ -11434,75 +11261,6 @@
         "widgets": [],
         "nodes": [
           {
-            "id": 1564,
-            "type": "AILab_QwenVL_GGUF_Advanced",
-            "pos": [
-              -256.8563836115754,
-              -1269.3978345441585
-            ],
-            "size": [
-              340,
-              540
-            ],
-            "flags": {},
-            "order": 0,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "image",
-                "name": "image",
-                "shape": 7,
-                "type": "IMAGE",
-                "link": 5454
-              },
-              {
-                "localized_name": "video",
-                "name": "video",
-                "shape": 7,
-                "type": "IMAGE",
-                "link": null
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "RESPONSE",
-                "name": "RESPONSE",
-                "type": "STRING",
-                "links": [
-                  5433
-                ]
-              }
-            ],
-            "properties": {
-              "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
-              "ver": "e9bac12aad2806a96440302fcaac8c8d9f423482",
-              "Node name for S&R": "AILab_QwenVL_GGUF_Advanced"
-            },
-            "widgets_values": [
-              "Qwen3-VL-8B-Instruct-c_abliterated-v3.Q8_0.gguf",
-              "auto",
-              "📖 Wan 2.2 NSFW I2V Story",
-              "",
-              1536,
-              0.6,
-              0.9,
-              1.2,
-              16,
-              65536,
-              512,
-              -1,
-              4096,
-              0,
-              4194304,
-              true,
-              868432321,
-              "randomize",
-              false
-            ],
-            "color": "#474539",
-            "bgcolor": "#2c4045"
-          },
-          {
             "id": 1566,
             "type": "StorySplitNode",
             "pos": [
@@ -11577,6 +11335,75 @@
               true,
               ""
             ]
+          },
+          {
+            "id": 1564,
+            "type": "AILab_QwenVL_GGUF_Advanced",
+            "pos": [
+              -256.8563836115754,
+              -1269.3978345441585
+            ],
+            "size": [
+              340,
+              540
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image",
+                "name": "image",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 5454
+              },
+              {
+                "localized_name": "video",
+                "name": "video",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "RESPONSE",
+                "name": "RESPONSE",
+                "type": "STRING",
+                "links": [
+                  5433
+                ]
+              }
+            ],
+            "properties": {
+              "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+              "ver": "e9bac12aad2806a96440302fcaac8c8d9f423482",
+              "Node name for S&R": "AILab_QwenVL_GGUF_Advanced"
+            },
+            "widgets_values": [
+              "Qwen3-VL-8B-Instruct-c_abliterated-v3.Q8_0.gguf",
+              "auto",
+              "📖 Wan 2.2 NSFW I2V Story",
+              "",
+              1536,
+              0.6,
+              0.9,
+              1.2,
+              16,
+              65536,
+              512,
+              -1,
+              4096,
+              0,
+              4194304,
+              false,
+              143955077,
+              "randomize",
+              false
+            ],
+            "color": "#474539",
+            "bgcolor": "#2c4045"
           }
         ],
         "groups": [],
@@ -11638,7 +11465,7 @@
   },
   "config": {},
   "extra": {
-    "frontendVersion": "1.38.13",
+    "frontendVersion": "1.38.14",
     "workflowRendererVersion": "LG",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
@@ -11646,10 +11473,10 @@
     "VHS_KeepIntermediate": true,
     "ue_links": [],
     "ds": {
-      "scale": 0.6830134553650717,
+      "scale": 0.6209213230591564,
       "offset": [
-        1589.3415540341816,
-        1659.7881641386127
+        1567.619029592771,
+        770.2059413768977
       ]
     }
   },
