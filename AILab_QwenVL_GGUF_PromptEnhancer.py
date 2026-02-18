@@ -184,8 +184,38 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         }
 
     def clear(self):
-        self.llm = None
+        print(f"[QwenVL PromptEnhancer DEBUG] Starting VRAM cleanup...")
+        
+        # Force cleanup of LLM model
+        if self.llm is not None:
+            try:
+                # Try to explicitly close the LLM if it has a close method
+                if hasattr(self.llm, 'close'):
+                    self.llm.close()
+                elif hasattr(self.llm, '__del__'):
+                    self.llm.__del__()
+                # Force garbage collection of the model
+                del self.llm
+            except Exception as e:
+                print(f"[QwenVL PromptEnhancer DEBUG] Error closing LLM: {e}")
+            finally:
+                self.llm = None
+        
+        # Clear signature
         self.current_signature = None
+        
+        # Aggressive garbage collection
+        gc.collect()
+        
+        # Force CUDA cache cleanup multiple times
+        if torch.cuda.is_available():
+            print(f"[QwenVL PromptEnhancer DEBUG] Clearing CUDA cache...")
+            torch.cuda.empty_cache()
+            torch.cuda.synchronize()
+            # Additional cleanup
+            torch.cuda.empty_cache()
+        
+        print(f"[QwenVL PromptEnhancer DEBUG] VRAM cleanup completed")
 
     def _resolve_model_path(self, model_name):
         models = self.gguf_models.get("models") or {}
