@@ -12,10 +12,6 @@ ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:$CUDA_HOME/bin
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 
-# HuggingFace token (set at runtime)
-ARG HF_TOKEN
-ENV HF_TOKEN=${HF_TOKEN}
-
 # Install system dependencies (CUDA already included in base image)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
