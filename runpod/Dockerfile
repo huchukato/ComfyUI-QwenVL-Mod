@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgomp1 \
     ffmpeg \
     openssh-server \
+    openssh-client \
     nodejs \
     npm \
     && apt-get clean \
