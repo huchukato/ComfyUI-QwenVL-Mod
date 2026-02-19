@@ -180,7 +180,7 @@ echo "🔧 Activating conda environment..."\n\
 source /opt/conda/bin/activate comfyui\n\
 echo "✅ Conda environment activated"\n\
 echo "🔧 Starting JupyterLab..."\n\
-jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password="" --ServerApp.terminado_manage_command=True --debug\n\
+jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password="" --debug\n\
 ' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
 
 # Create user directory structure
