@@ -311,7 +311,15 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         signature = (resolved, context_length, device)
         if self.llm is not None and self.current_signature == signature:
             return
+        
+        # Force aggressive cleanup before loading new model (especially for same model conflicts)
+        print(f"[QwenVL PromptEnhancer DEBUG] Forcing cleanup before model loading...")
         self.clear()
+        
+        # Additional wait for CUDA cleanup
+        if torch.cuda.is_available():
+            torch.cuda.synchronize()
+            time.sleep(0.1)  # Brief pause for cleanup to complete
         resolved.parent.mkdir(parents=True, exist_ok=True)
         if not resolved.exists():
             raise FileNotFoundError(f"[QwenVL] GGUF model not found: {resolved}")
