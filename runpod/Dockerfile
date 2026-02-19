@@ -120,14 +120,8 @@ RUN /opt/conda/bin/conda run -n comfyui bash -c 'cd /ComfyUI/custom_nodes && for
 # ComfyUI-Easy-Use-Frontend removed due to compatibility issues
 
 # Install additional essential dependencies in conda environment
-RUN /opt/conda/bin/conda run -n comfyui conda install -c conda-forge jupyter -y && \
-    /opt/conda/bin/conda run -n comfyui pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors terminado huggingface_hub && \
+RUN /opt/conda/bin/conda run -n comfyui pip install --no-cache-dir jupyter sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors terminado huggingface_hub && \
     /opt/conda/bin/conda run -n comfyui pip cache purge
-
-# Configure Jupyter for terminal support (no authentication)
-RUN mkdir -p ~/.jupyter && \
-    echo "c.ServerApp.token = ''" > ~/.jupyter/jupyter_server_config.py && \
-    echo "c.ServerApp.password = ''" >> ~/.jupyter/jupyter_server_config.py
 
 # HuggingFace login for private models (if token provided)
 RUN if [ -n "$HF_TOKEN" ]; then \
@@ -160,9 +154,9 @@ cd /filebrowser\n\
 filebrowser --config /filebrowser/.config.json\n\
 ' > /usr/local/bin/start-filebrowser.sh && chmod +x /usr/local/bin/start-filebrowser.sh
 
-# Create Jupyter Server startup script
+# Create Jupyter Notebook startup script
 RUN echo '#!/bin/bash\n\
-echo "📓 Starting Jupyter Server on port 8888"\n\
+echo "📓 Starting Jupyter Notebook on port 8888"\n\
 echo "🌐 Access at: http://0.0.0.0:8888"\n\
 echo "🔑 No token required"\n\
 echo ""\n\
@@ -170,8 +164,8 @@ cd /ComfyUI\n\
 echo "🔧 Activating conda environment..."\n\
 source /opt/conda/bin/activate comfyui\n\
 echo "✅ Conda environment activated"\n\
-echo "🔧 Starting Jupyter Server..."\n\
-jupyter server --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password="" --log-level=DEBUG\n\
+echo "🔧 Starting Jupyter Notebook..."\n\
+jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token="" --NotebookApp.password="" --log-level=DEBUG\n\
 ' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
 
 # Create user directory structure
@@ -295,7 +289,7 @@ download_models\n\
 \n\
 echo "🔧 Services starting:"\n\
 echo "📁 FileBrowser: http://0.0.0.0:8080"\n\
-echo "📓 Jupyter Server:  http://0.0.0.0:8888 (Terminal included)"\n\
+echo "📓 Jupyter Notebook:  http://0.0.0.0:8888 (Terminal included)"\n\
 echo "🎨 ComfyUI:    http://0.0.0.0:8188"\n\
 echo "📋 Available workflows:"\n\
 ls -la /ComfyUI/user/default/workflows/\n\
@@ -308,31 +302,31 @@ echo "🔧 Starting FileBrowser..."\n\
 nohup /usr/local/bin/start-filebrowser.sh &> /filebrowser.log &\n\
 echo "✅ FileBrowser started"\n\
 \n\
-# Start Jupyter Server\n\
-echo "🔧 Starting Jupyter Server..."\
+# Start Jupyter Notebook\n\
+echo "🔧 Starting Jupyter Notebook..."\
 nohup /usr/local/bin/start-jupyter.sh &> /jupyter.log &\
 sleep 5\
-echo "🔍 Checking Jupyter Server status..."\
-if pgrep -f "jupyter server" > /dev/null; then\
-    echo "✅ Jupyter Server started successfully"\
-    echo "📊 Jupyter Server logs:"\
+echo "🔍 Checking Jupyter Notebook status..."\
+if pgrep -f "jupyter notebook" > /dev/null; then\
+    echo "✅ Jupyter Notebook started successfully"\
+    echo "📊 Jupyter Notebook logs:"\
     tail -10 /jupyter.log\
 else\
-    echo "❌ Jupyter Server failed to start"\
+    echo "❌ Jupyter Notebook failed to start"\
     echo "📊 Full error logs:"\
     cat /jupyter.log\
     echo "🔍 Checking what went wrong..."\
     echo "🐍 Python version in conda env:"\
     /opt/conda/bin/conda run -n comfyui python --version\
-    echo "📦 Jupyter Server version in conda env:"\
-    /opt/conda/bin/conda run -n comfyui jupyter server --version\
+    echo "📦 Jupyter Notebook version in conda env:"\
+    /opt/conda/bin/conda run -n comfyui jupyter notebook --version\
 fi\
 \n\
 \n\
 # Start ComfyUI\n\
 echo "🚀 Starting ComfyUI..."\
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\
-echo "📓 Jupyter Server Terminal: Open http://0.0.0.0:8888 → New → Terminal"\
+echo "📓 Jupyter Notebook Terminal: Open http://0.0.0.0:8888 → New → Terminal"\
 cd $COMFYUI_DIR\
 source /opt/conda/bin/activate comfyui\
 nohup python main.py --listen 0.0.0.0 --port 8188 --enable-cors-header --highvram --dont-upcast-attention --use-sage-attention --async-offload --reserve-vram 2 &> /comfyui.log &\
