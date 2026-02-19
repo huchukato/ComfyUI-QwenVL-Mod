@@ -197,13 +197,13 @@ RUN find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "*.pack"
 RUN rm -rf /tmp/* \
        && rm -rf /var/lib/apt/lists/* \
        && rm -rf /var/cache/apt/archives/* \
-       && find /opt/venv -name "*.pyc" -delete \
-       && find /opt/venv -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true \
+       && find /opt/conda -name "*.pyc" -delete \
+       && find /opt/conda -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true \
        && find /ComfyUI -name "*.pyc" -delete \
        && find /ComfyUI -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 
-# Set ComfyUI arguments (with stable optimizations - no SageAttention)
-ENV COMFYUI_ARGS="--listen 0.0.0.0 --port 8188 --enable-cors-header --highvram --dont-upcast-attention --async-offload --reserve-vram 4 --cuda-malloc"
+# Set ComfyUI arguments (optimized for WAN2.2 with SageAttention)
+ENV COMFYUI_ARGS="--listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload"
 
 # Create startup script (RunPod style with dynamic workflow updates)
 RUN echo '#!/bin/bash\n\

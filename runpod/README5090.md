@@ -2,7 +2,7 @@
 
 Professional ComfyUI environment optimized for RunPod with QwenVL-Mod enhanced vision-language capabilities and WAN 2.2 video generation workflows.
 
-**Template**: `OneClick-ComfyUI-WAN2.2-Qwen3VL-RTX5090` - **RTX 5090 Required**
+**Template**: `OneClick-ComfyUI-WAN2.2-Qwen3VL-CUDA12.8` - **RTX 5090 Required**
 
 ---
 
@@ -38,11 +38,13 @@ This template is perfect for:
 
 ### **⚡ Performance Optimizations**
 - **RTX 5090 Optimized**: CUDA 12.8 with advanced optimizations
+- **Miniconda Environment**: Python 3.12.12 isolated environment
 - **FP16 Accumulation**: Faster mixed precision computation
-- **Sage Attention**: Optimized attention mechanisms
+- **Sage Attention**: Optimized attention mechanisms for WAN2.2
 - **Async Offload**: Efficient memory management
 - **FP8 Support**: Latest hardware acceleration
 - **TensorRT Support**: Advanced upscaling and interpolation
+- **JupyterLab Terminal**: Direct bash access in conda environment
 
 ## 📦 Pre-installed Components
 
@@ -83,7 +85,7 @@ This template is perfect for:
 
 ### **RunPod Deployment**
 1. [Create RunPod Account](https://runpod.io?ref_id=188688) (Use referral ID: 188688)
-2. Create new RunPod endpoint using template: `OneClick-ComfyUI-WAN2.2-Qwen3VL-RTX5090`
+2. Create new RunPod endpoint using template: `OneClick-ComfyUI-WAN2.2-Qwen3VL-CUDA12.8`
 3. Select GPU: **RTX 5090** (required)
 4. Optional: Add HF_TOKEN and CIVITAI_TOKEN for restricted model access
 5. Deploy and access via provided URLs:
@@ -101,13 +103,25 @@ This template is perfect for:
 ### **RTX 5090 CUDA 12.8 Optimizations**
 ```bash
 --fast fp16_accumulation     # Faster FP16 operations
---use-sage-attention         # Optimized attention
+--use-sage-attention         # Optimized attention for WAN2.2
 --reserve-vram 2            # Smart VRAM management
 --cuda-malloc               # CUDA memory optimization
 --async-offload             # Async model offloading
---supports-fp8-compute      # FP8 acceleration
---fast cublas_ops autotune  # BLAS optimization
+--supports-fp8-compute      # FP8 acceleration for RTX 5090
 ```
+
+### **Environment Setup**
+- **Python 3.12.12**: Latest stable version in conda environment
+- **Miniconda**: Professional package management
+- **JupyterLab**: Terminal access without authentication
+- **Conda Environment**: All packages installed in isolated `comfyui` environment
+
+### **Why These Settings?**
+- **SageAttention + FP16**: Proven optimal for WAN2.2 video generation
+- **Reserve VRAM 2GB**: Perfect balance for RTX 5090 + WAN2.2
+- **FP8 Support**: Leverages RTX 5090's hardware capabilities
+- **Conda Isolation**: Prevents dependency conflicts
+- **CUDA 12.8**: Latest optimizations for next-gen GPUs
 
 ---
 
