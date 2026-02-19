@@ -168,11 +168,8 @@ echo "🌐 Access at: http://0.0.0.0:8888"\n\
 echo "🔑 No token required"\n\
 echo ""\n\
 cd /ComfyUI\n\
-echo "🔧 Activating conda environment..."\n\
-source /opt/conda/bin/activate comfyui\n\
-echo "✅ Conda environment activated"\n\
-echo "🔧 Starting Jupyter Notebook..."\n\
-jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token="" --NotebookApp.password="" --log-level=DEBUG\n\
+echo "🔧 Starting Jupyter Notebook with conda environment..."\n\
+/opt/conda/bin/conda run -n comfyui jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token="" --NotebookApp.password="" --log-level=DEBUG\n\
 ' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
 
 # Create user directory structure
@@ -334,8 +331,7 @@ echo "🚀 Starting ComfyUI..."\n\
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\n\
 echo "📓 Jupyter Notebook Terminal: Open http://0.0.0.0:8888 → New → Terminal"\n\
 cd $COMFYUI_DIR\n\
-source /opt/conda/bin/activate comfyui\n\
-nohup python main.py --listen 0.0.0.0 --port 8188 --enable-cors-header --highvram --dont-upcast-attention --use-sage-attention --async-offload --reserve-vram 2 &> /comfyui.log &\n\
+/opt/conda/bin/conda run -n comfyui nohup python main.py --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload &> /comfyui.log &\n\
 echo "✅ ComfyUI started"\n\
 \n\
 # Tail the ComfyUI log\n\
