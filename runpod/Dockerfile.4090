@@ -133,8 +133,7 @@ RUN /opt/conda/bin/conda run -n comfyui conda install -c conda-forge jupyter -y 
 
 # Configure Jupyter for terminal support (no authentication)
 RUN mkdir -p ~/.jupyter && \
-    echo "c.ServerApp.terminals_enabled = True" > ~/.jupyter/jupyter_server_config.py && \
-    echo "c.ServerApp.token = ''" >> ~/.jupyter/jupyter_server_config.py && \
+    echo "c.ServerApp.token = ''" > ~/.jupyter/jupyter_server_config.py && \
     echo "c.ServerApp.password = ''" >> ~/.jupyter/jupyter_server_config.py
 
 # HuggingFace login for private models (if token provided)
