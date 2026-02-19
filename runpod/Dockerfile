@@ -169,8 +169,11 @@ echo "🌐 Access at: http://0.0.0.0:8888"\n\
 echo "🔑 No token required"\n\
 echo ""\n\
 cd /ComfyUI\n\
+echo "🔧 Activating conda environment..."\n\
 source /opt/conda/bin/activate comfyui\n\
-jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password="" --ServerApp.terminado_manage_command=True\n\
+echo "✅ Conda environment activated"\n\
+echo "🔧 Starting JupyterLab..."\n\
+jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password="" --ServerApp.terminado_manage_command=True --debug\n\
 ' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
 
 # Create user directory structure
@@ -308,9 +311,19 @@ nohup /usr/local/bin/start-filebrowser.sh &> /filebrowser.log &\n\
 echo "✅ FileBrowser started"\n\
 \n\
 # Start JupyterLab\n\
-echo "🔧 Starting JupyterLab..."\n\
-nohup /usr/local/bin/start-jupyter.sh &> /jupyter.log &\n\
-echo "✅ JupyterLab started"\n\
+echo "🔧 Starting JupyterLab..."\
+nohup /usr/local/bin/start-jupyter.sh &> /jupyter.log &\
+sleep 3\
+echo "🔍 Checking JupyterLab status..."\
+if pgrep -f "jupyter lab" > /dev/null; then\
+    echo "✅ JupyterLab started successfully"\
+    echo "📊 JupyterLab logs:"\
+    tail -10 /jupyter.log\
+else\
+    echo "❌ JupyterLab failed to start"\
+    echo "📊 Error logs:"\
+    cat /jupyter.log\
+fi\n\
 \n\
 # Start ComfyUI\n\
 echo "🚀 Starting ComfyUI..."\

@@ -170,14 +170,17 @@ filebrowser --config /filebrowser/.config.json\n\
 ' > /usr/local/bin/start-filebrowser.sh && chmod +x /usr/local/bin/start-filebrowser.sh
 
 # Create JupyterLab startup script
-RUN echo '#!/bin/bash\\n\
-echo "📓 Starting JupyterLab on port 8888"\\n\
-echo "🌐 Access at: http://0.0.0.0:8888"\\n\
-echo "🔑 No token required"\\n\
-echo ""\\n\
-cd /ComfyUI\\n\
-source /opt/conda/bin/activate comfyui\\n\
-jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password="" --ServerApp.terminado_manage_command=True\\n\
+RUN echo '#!/bin/bash\n\
+echo "📓 Starting JupyterLab on port 8888"\n\
+echo "🌐 Access at: http://0.0.0.0:8888"\n\
+echo "🔑 No token required"\n\
+echo ""\n\
+cd /ComfyUI\n\
+echo "🔧 Activating conda environment..."\n\
+source /opt/conda/bin/activate comfyui\n\
+echo "✅ Conda environment activated"\n\
+echo "🔧 Starting JupyterLab..."\n\
+jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password="" --ServerApp.terminado_manage_command=True --debug\n\
 ' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
 
 # Create user directory structure
@@ -317,7 +320,17 @@ echo "✅ FileBrowser started"\n\
 # Start JupyterLab\n\
 echo "🔧 Starting JupyterLab..."\n\
 nohup /usr/local/bin/start-jupyter.sh &> /jupyter.log &\n\
-echo "✅ JupyterLab started"\n\
+sleep 3\n\
+echo "🔍 Checking JupyterLab status..."\n\
+if pgrep -f "jupyter lab" > /dev/null; then\n\
+    echo "✅ JupyterLab started successfully"\n\
+    echo "📊 JupyterLab logs:"\n\
+    tail -10 /jupyter.log\n\
+else\n\
+    echo "❌ JupyterLab failed to start"\n\
+    echo "📊 Error logs:"\n\
+    cat /jupyter.log\n\
+fi\n\
 \n\
 # Start ComfyUI\n\
 echo "🚀 Starting ComfyUI..."\n\
