@@ -61,7 +61,6 @@ RUN pip install --no-cache-dir torch torchvision --index-url https://download.py
 # Install ComfyUI latest stable version
 WORKDIR /ComfyUI
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
-    git checkout latest && \
     pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir GitPython opencv-python && \
     pip cache purge
