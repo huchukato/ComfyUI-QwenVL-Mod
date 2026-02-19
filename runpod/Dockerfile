@@ -50,9 +50,18 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 && \
     update-alternatives --set python3 /usr/bin/python3.12
 
-# Create virtual environment for Python packages
-RUN python3.12 -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
+# Install Miniconda and create conda environment with Python 3.12.12
+RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && \
+    bash miniconda.sh -b -p /opt/conda && \
+    rm miniconda.sh && \
+    /opt/conda/bin/conda clean -afy
+
+# Add conda to PATH
+ENV PATH="/opt/conda/bin:$PATH"
+
+# Create conda environment with Python 3.12.12
+RUN conda create -n comfyui python=3.12.12 -y && \
+    conda activate comfyui
 
 # Install PyTorch with CUDA 12.8 (compatible with base image CUDA 12.8.0) - optimized for RTX 5090
 RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu128 && \
@@ -115,13 +124,16 @@ RUN cd /ComfyUI/custom_nodes && \
 
 # ComfyUI-Easy-Use-Frontend removed due to compatibility issues
 
-# Install additional essential dependencies
-RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab jupyter_server_terminals terminado huggingface_hub && \
+# Install additional essential dependencies in conda environment
+RUN source /opt/conda/bin/activate comfyui && \
+    pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab jupyter_server_terminals terminado huggingface_hub && \
     pip cache purge
 
-# Configure JupyterLab for terminal support
+# Configure JupyterLab for terminal support (no authentication)
 RUN mkdir -p ~/.jupyter && \
     echo "c.ServerApp.terminals_enabled = True" > ~/.jupyter/jupyter_server_config.py && \
+    echo "c.ServerApp.token = ''" >> ~/.jupyter/jupyter_server_config.py && \
+    echo "c.ServerApp.password = ''" >> ~/.jupyter/jupyter_server_config.py && \
     mkdir -p ~/.jupyter/lab && \
     echo '{"terminalsAvailable": true}' > ~/.jupyter/lab/page_config.json
 
@@ -163,6 +175,7 @@ echo "🌐 Access at: http://0.0.0.0:8888"\n\
 echo "🔑 No token required"\n\
 echo ""\n\
 cd /ComfyUI\n\
+source /opt/conda/bin/activate comfyui\n\
 jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token="" --ServerApp.password="" --ServerApp.terminado_manage_command=True\n\
 ' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
 
@@ -306,11 +319,12 @@ nohup /usr/local/bin/start-jupyter.sh &> /jupyter.log &\n\
 echo "✅ JupyterLab started"\n\
 \n\
 # Start ComfyUI\n\
-echo "🚀 Starting ComfyUI..."\n\
-echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\n\
-echo "� JupyterLab Terminal: Open http://0.0.0.0:8888 → New → Terminal"\n\
-cd $COMFYUI_DIR\n\
-nohup python main.py --listen 0.0.0.0 --port 8188 --enable-cors-header --highvram --dont-upcast-attention --use-sage-attention --async-offload --reserve-vram 2 &> /comfyui.log &\n\
+echo "🚀 Starting ComfyUI..."\
+echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\
+echo "📓 JupyterLab Terminal: Open http://0.0.0.0:8888 → New → Terminal"\
+cd $COMFYUI_DIR\
+source /opt/conda/bin/activate comfyui\
+nohup python main.py --listen 0.0.0.0 --port 8188 --enable-cors-header --highvram --dont-upcast-attention --use-sage-attention --async-offload --reserve-vram 2 &> /comfyui.log &\
 echo "✅ ComfyUI started"\n\
 \n\
 # Tail the ComfyUI log\n\
