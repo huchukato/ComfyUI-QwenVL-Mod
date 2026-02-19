@@ -117,17 +117,14 @@ RUN cd /ComfyUI/custom_nodes && \
 # ComfyUI-Easy-Use-Frontend removed due to compatibility issues
 
 # Install additional essential dependencies
-RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyter huggingface_hub && \
+RUN pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab jupyter_server_terminals terminado huggingface_hub && \
     pip cache purge
 
-# Configure Jupyter for terminal support (RunPod method)
+# Configure JupyterLab for terminal support
 RUN mkdir -p ~/.jupyter && \
     echo "c.ServerApp.terminals_enabled = True" > ~/.jupyter/jupyter_server_config.py && \
     mkdir -p ~/.jupyter/lab && \
     echo '{"terminalsAvailable": true}' > ~/.jupyter/lab/page_config.json
-
-# JupyterLab Terminal enabled with jupyter_server_terminals
-# Terminal will be available in JupyterLab Launcher
 
 # HuggingFace login for private models (if token provided)
 RUN if [ -n "$HF_TOKEN" ]; then \
