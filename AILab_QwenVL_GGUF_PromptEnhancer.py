@@ -178,6 +178,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
                 "repetition_penalty": ("FLOAT", {"default": 1.1, "min": 0.5, "max": 2.0}),
                 "english_output": ("BOOLEAN", {"default": False, "tooltip": "Force final output in English using translation prompt."}),
                 "device": (["auto", "cuda", "cpu", "mps"], {"default": "auto", "tooltip": "Select device; auto prefers GPU when available."}),
+                "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": "Keep model loaded in memory for faster repeated inference (uses more VRAM)."}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
             }
@@ -416,6 +417,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         repetition_penalty,
         english_output,
         device,
+        keep_model_loaded,
         seed,
         keep_last_prompt,
     ):
@@ -497,11 +499,16 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         
         print(f"[QwenVL PromptEnhancer GGUF] Cached new prompt for seed {seed}: {cache_key[:8]}...")
         
-        # Save the generated prompt for future bypass mode
-        LAST_SAVED_PROMPT = final
-        print(f"[QwenVL PromptEnhancer GGUF] Saved prompt for bypass mode: {final[:50]}...")
-        
-        return (final,)
+        try:
+            # Save the generated prompt for future bypass mode
+            LAST_SAVED_PROMPT = final
+            print(f"[QwenVL PromptEnhancer GGUF] Saved prompt for bypass mode: {final[:50]}...")
+            
+            return (final,)
+        finally:
+            if not keep_model_loaded:
+                print(f"[QwenVL PromptEnhancer GGUF] keep_model_loaded=False - cleaning up model...")
+                self.clear()
 
     @staticmethod
     def _is_english(text):
