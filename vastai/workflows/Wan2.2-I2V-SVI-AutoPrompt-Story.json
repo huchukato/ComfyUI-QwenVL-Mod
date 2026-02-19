@@ -1239,7 +1239,7 @@
       ],
       "size": [
         437.4871316556314,
-        334
+        955.2540096809184
       ],
       "flags": {},
       "order": 66,
@@ -1297,13 +1297,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "Wan22_SVI_Pro_00002.mp4",
+            "filename": "Wan22_SVI_Pro_00001.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 16,
-            "workflow": "Wan22_SVI_Pro_00002.png",
-            "fullpath": "/workspace/ComfyUI/output/Wan22_SVI_Pro_00002.mp4"
+            "workflow": "Wan22_SVI_Pro_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/Wan22_SVI_Pro_00001.mp4"
           }
         }
       }
@@ -11473,10 +11473,10 @@
     "VHS_KeepIntermediate": true,
     "ue_links": [],
     "ds": {
-      "scale": 0.6209213230591564,
+      "scale": 0.7513148009015779,
       "offset": [
-        1567.619029592771,
-        770.2059413768977
+        1243.5350461739613,
+        1267.5549887219586
       ]
     }
   },
