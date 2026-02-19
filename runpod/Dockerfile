@@ -60,24 +60,25 @@ RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.s
 ENV PATH="/opt/conda/bin:$PATH"
 
 # Create conda environment with Python 3.12.12
-RUN conda create -n comfyui python=3.12.12 -y && \
-    conda activate comfyui
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
+    conda create -n comfyui python=3.12.12 -y
 
 # Install PyTorch with CUDA 12.8 (compatible with base image CUDA 12.8.0) - optimized for RTX 5090
-RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu128 && \
-    pip cache purge
+RUN /opt/conda/bin/conda run -n comfyui pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu128 && \
+    /opt/conda/bin/conda run -n comfyui pip cache purge
 
 # Install ComfyUI latest stable version
 WORKDIR /ComfyUI
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
-    pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir GitPython opencv-python && \
-    pip cache purge
+    /opt/conda/bin/conda run -n comfyui pip install --no-cache-dir -r requirements.txt && \
+    /opt/conda/bin/conda run -n comfyui pip install --no-cache-dir GitPython opencv-python && \
+    /opt/conda/bin/conda run -n comfyui pip cache purge
 
 # Install llama-cpp-python for GGUF support (CUDA 12.8 compatible with base image)
-RUN pip install --upgrade --force-reinstall --no-cache-dir \
+RUN /opt/conda/bin/conda run -n comfyui pip install --upgrade --force-reinstall --no-cache-dir \
     https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.25-cu128-Basic-linux-20260215/llama_cpp_python-0.3.25+cu128.basic-cp312-cp312-linux_x86_64.whl && \
-    pip cache purge
+    /opt/conda/bin/conda run -n comfyui pip cache purge
 
 # Install ALL ComfyUI custom nodes from VastAI provisioning + RunpodDirect
 RUN cd /ComfyUI/custom_nodes && \
@@ -113,21 +114,14 @@ RUN cd /ComfyUI/custom_nodes && \
 RUN cp -r /ComfyUI/custom_nodes/comfy-tagcomplete/wildcards/mbe /ComfyUI/custom_nodes/ComfyUI-Impact-Pack/wildcards || echo "Wildcards copy completed (or already exists)"
 
 # Install requirements for all custom nodes
-RUN cd /ComfyUI/custom_nodes && \
-    for node_dir in */; do \
-        if [ -f "$node_dir/requirements.txt" ]; then \
-            echo "Installing requirements for $node_dir..." && \
-            pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; \
-        fi; \
-    done && \
-    pip cache purge
+RUN /opt/conda/bin/conda run -n comfyui bash -c 'cd /ComfyUI/custom_nodes && for node_dir in */; do if [ -f "$node_dir/requirements.txt" ]; then echo "Installing requirements for $node_dir..." && pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; fi; done' && \
+    /opt/conda/bin/conda run -n comfyui pip cache purge
 
 # ComfyUI-Easy-Use-Frontend removed due to compatibility issues
 
 # Install additional essential dependencies in conda environment
-RUN source /opt/conda/bin/activate comfyui && \
-    pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab jupyter_server_terminals terminado huggingface_hub && \
-    pip cache purge
+RUN /opt/conda/bin/conda run -n comfyui pip install --no-cache-dir sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors jupyterlab jupyter_server_terminals terminado huggingface_hub && \
+    /opt/conda/bin/conda run -n comfyui pip cache purge
 
 # Configure JupyterLab for terminal support (no authentication)
 RUN mkdir -p ~/.jupyter && \
@@ -201,8 +195,8 @@ RUN rm -rf /tmp/* \
        && find /ComfyUI -name "*.pyc" -delete \
        && find /ComfyUI -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 
-# Set ComfyUI arguments (with valid experimental features + SageAttention)
-ENV COMFYUI_ARGS="--listen 0.0.0.0 --port 8188 --enable-cors-header --highvram --dont-upcast-attention --use-sage-attention --async-offload --reserve-vram 2"
+# Set ComfyUI arguments (with stable optimizations - no SageAttention)
+ENV COMFYUI_ARGS="--listen 0.0.0.0 --port 8188 --enable-cors-header --highvram --dont-upcast-attention --async-offload --reserve-vram 4 --cuda-malloc"
 
 # Create startup script (RunPod style with dynamic workflow updates)
 RUN echo '#!/bin/bash\n\
