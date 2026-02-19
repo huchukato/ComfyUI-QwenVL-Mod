@@ -63,7 +63,7 @@
       ],
       "size": [
         477.292724609375,
-        1018.6959960937501
+        334
       ],
       "flags": {},
       "order": 44,
@@ -1533,7 +1533,7 @@
       ],
       "size": [
         479.3177795410156,
-        1021.6660766601562
+        334
       ],
       "flags": {},
       "order": 50,
@@ -2870,8 +2870,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 18,
-          "lastNodeId": 204,
-          "lastLinkId": 458,
+          "lastNodeId": 206,
+          "lastLinkId": 462,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -3080,7 +3080,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 4,
+            "order": 6,
             "mode": 0,
             "inputs": [
               {
@@ -3123,7 +3123,7 @@
             "flags": {
               "collapsed": false
             },
-            "order": 5,
+            "order": 7,
             "mode": 0,
             "inputs": [
               {
@@ -3171,7 +3171,7 @@
               234
             ],
             "flags": {},
-            "order": 8,
+            "order": 10,
             "mode": 0,
             "inputs": [
               {
@@ -3298,7 +3298,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 6,
+            "order": 8,
             "mode": 0,
             "inputs": [
               {
@@ -3347,7 +3347,7 @@
               94.53972656250005
             ],
             "flags": {},
-            "order": 1,
+            "order": 3,
             "mode": 0,
             "inputs": [
               {
@@ -3396,7 +3396,7 @@
               426
             ],
             "flags": {},
-            "order": 7,
+            "order": 9,
             "mode": 0,
             "inputs": [
               {
@@ -3542,121 +3542,6 @@
             "shape": 1
           },
           {
-            "id": 193,
-            "type": "AILab_QwenVL_GGUF_Advanced",
-            "pos": [
-              -1145.3854248092698,
-              571.4691432875194
-            ],
-            "size": [
-              337.8333607162738,
-              540
-            ],
-            "flags": {},
-            "order": 9,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "image",
-                "name": "image",
-                "shape": 7,
-                "type": "IMAGE",
-                "link": 440
-              },
-              {
-                "localized_name": "video",
-                "name": "video",
-                "shape": 7,
-                "type": "IMAGE",
-                "link": null
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "RESPONSE",
-                "name": "RESPONSE",
-                "type": "STRING",
-                "links": [
-                  448
-                ]
-              }
-            ],
-            "properties": {
-              "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
-              "ver": "d91cca0ea3757a7936e3e780c7d0650b66214be0",
-              "Node name for S&R": "AILab_QwenVL_GGUF_Advanced"
-            },
-            "widgets_values": [
-              "Huihui-Qwen3-VL-4B-Instruct-abliterated-Q8_0.gguf",
-              "auto",
-              "🍿 Wan 2.2 I2V",
-              "fellatio, blowjob",
-              512,
-              0.6,
-              0.9,
-              1.2,
-              16,
-              32768,
-              512,
-              -1,
-              4096,
-              0,
-              4194304,
-              true,
-              3660875256,
-              "fixed",
-              true
-            ],
-            "color": "#474539",
-            "bgcolor": "#2c4045"
-          },
-          {
-            "id": 194,
-            "type": "StringConcatenate",
-            "pos": [
-              -680.5264844131456,
-              613.3208776201079
-            ],
-            "size": [
-              400,
-              200
-            ],
-            "flags": {},
-            "order": 10,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "string_b",
-                "name": "string_b",
-                "type": "STRING",
-                "widget": {
-                  "name": "string_b"
-                },
-                "link": 448
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "STRING",
-                "name": "STRING",
-                "type": "STRING",
-                "links": [
-                  458
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfy-core",
-              "ver": "0.12.3",
-              "Node name for S&R": "StringConcatenate"
-            },
-            "widgets_values": [
-              "",
-              "",
-              ""
-            ]
-          },
-          {
             "id": 90,
             "type": "CLIPTextEncode",
             "pos": [
@@ -3670,7 +3555,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 3,
+            "order": 5,
             "mode": 0,
             "inputs": [
               {
@@ -3729,7 +3614,7 @@
               339.48220830078117
             ],
             "flags": {},
-            "order": 2,
+            "order": 4,
             "mode": 0,
             "inputs": [
               {
@@ -3738,7 +3623,7 @@
                 "name": "anything",
                 "shape": 7,
                 "type": "*",
-                "link": 458
+                "link": 462
               }
             ],
             "outputs": [
@@ -3761,6 +3646,181 @@
             },
             "widgets_values": [
               "(At 0 seconds: A blue-haired anime girl with piercing blue eyes and tribal tattoos on her arms is seated in a dimly lit room, illuminated by a single warm lamp in the background; she holds a phallic object with both hands while licking it, her expression intense and focused.)(At 1 seconds: The scene remains static as the character’s gaze locks onto the viewer, her tongue moving rhythmically against the object, emphasizing stylized anime motion and vibrant skin tones under dramatic chiaroscuro lighting.)(At 2 seconds: Her body subtly shifts with a slight tilt of the head, maintaining eye contact while the camera holds steady, capturing the texture of her skin and the glossy surface of the object in sharp detail.)(At 3 seconds: The ambient glow from the lamp casts soft shadows across her form, enhancing the intimate atmosphere; no movement occurs as the scene remains locked in a cinematic close-up with shallow depth of field.)(At 4 seconds: Her expression intensifies slightly, lips parted and eyes widening momentarily before returning to focus, all rendered in high-contrast anime style with saturated colors and simplified background elements.)(At 5 seconds: The frame freezes on her face as she continues the motion, emphasizing the stylized anatomy and emotional intensity of the moment within a dark, moody environment that isolates her figure.)"
+            ],
+            "color": "#232",
+            "bgcolor": "#353",
+            "shape": 2
+          },
+          {
+            "id": 193,
+            "type": "AILab_QwenVL_GGUF_Advanced",
+            "pos": [
+              -1145.3854248092698,
+              571.4691432875194
+            ],
+            "size": [
+              337.8333607162738,
+              540
+            ],
+            "flags": {},
+            "order": 11,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image",
+                "name": "image",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 440
+              },
+              {
+                "localized_name": "video",
+                "name": "video",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "RESPONSE",
+                "name": "RESPONSE",
+                "type": "STRING",
+                "links": [
+                  461
+                ]
+              }
+            ],
+            "properties": {
+              "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+              "ver": "d91cca0ea3757a7936e3e780c7d0650b66214be0",
+              "Node name for S&R": "AILab_QwenVL_GGUF_Advanced"
+            },
+            "widgets_values": [
+              "Qwen3-VL-8B-Instruct-c_abliterated-v3.Q8_0.gguf",
+              "auto",
+              "🍿 Wan 2.2 NSFW I2V",
+              "fellatio, blowjob",
+              512,
+              0.6,
+              0.9,
+              1.2,
+              16,
+              32768,
+              512,
+              -1,
+              4096,
+              0,
+              4194304,
+              true,
+              3660875256,
+              "randomize",
+              false
+            ],
+            "color": "#474539",
+            "bgcolor": "#2c4045"
+          },
+          {
+            "id": 205,
+            "type": "Text Concatenate",
+            "pos": [
+              -571.394289761466,
+              845.4152694205948
+            ],
+            "size": [
+              270,
+              142
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 1,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "text_a",
+                "name": "text_a",
+                "shape": 7,
+                "type": "STRING",
+                "link": 460
+              },
+              {
+                "localized_name": "text_b",
+                "name": "text_b",
+                "shape": 7,
+                "type": "STRING",
+                "link": 461
+              },
+              {
+                "localized_name": "text_c",
+                "name": "text_c",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              },
+              {
+                "localized_name": "text_d",
+                "name": "text_d",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  462
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "was-ns",
+              "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
+              "Node name for S&R": "Text Concatenate"
+            },
+            "widgets_values": [
+              "",
+              "false"
+            ]
+          },
+          {
+            "id": 206,
+            "type": "PrimitiveStringMultiline",
+            "pos": [
+              -609.6025017083703,
+              583.087451353939
+            ],
+            "size": [
+              336.4285647435929,
+              137.58089636900377
+            ],
+            "flags": {},
+            "order": 2,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  460
+                ]
+              }
+            ],
+            "title": "LoRaS Triggers",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.33",
+              "Node name for S&R": "PrimitiveStringMultiline",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              ""
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -3978,14 +4038,6 @@
             "type": "STRING"
           },
           {
-            "id": 448,
-            "origin_id": 193,
-            "origin_slot": 0,
-            "target_id": 194,
-            "target_slot": 0,
-            "type": "STRING"
-          },
-          {
             "id": 452,
             "origin_id": 164,
             "origin_slot": 0,
@@ -3994,8 +4046,24 @@
             "type": "INT"
           },
           {
-            "id": 458,
-            "origin_id": 194,
+            "id": 460,
+            "origin_id": 206,
+            "origin_slot": 0,
+            "target_id": 205,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 461,
+            "origin_id": 193,
+            "origin_slot": 0,
+            "target_id": 205,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 462,
+            "origin_id": 205,
             "origin_slot": 0,
             "target_id": 89,
             "target_slot": 0,
@@ -4010,7 +4078,7 @@
   },
   "config": {},
   "extra": {
-    "frontendVersion": "1.38.13",
+    "frontendVersion": "1.38.14",
     "workflowRendererVersion": "LG",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
@@ -4021,8 +4089,8 @@
     "ds": {
       "scale": 0.625711225290698,
       "offset": [
-        3641.735121770272,
-        -479.29197363973907
+        3190.005422309179,
+        286.94857490924295
       ]
     }
   },
