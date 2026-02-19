@@ -1,4 +1,4 @@
-# ComfyUI-QwenVL-Mod RunPod Worker - RTX 4090
+# ComfyUI-QwenVL-Mod RunPod Worker - CUDA 12.4
 
 Professional ComfyUI environment optimized for RunPod with QwenVL-Mod enhanced vision-language capabilities and WAN 2.2 video generation workflows.
 
@@ -15,7 +15,6 @@ This template is perfect for:
 - **Digital Artists** requiring visual style detection and enhancement
 - **ML Engineers** deploying production-ready video workflows
 - **Researchers** experimenting with vision-language models
-- **Professionals** needing NSFW-capable content generation
 
 ---
 
@@ -34,7 +33,7 @@ This template is perfect for:
 - **Smart Prompt Caching**: Performance optimization with Fixed Seed Mode
 - **GGUF Backend**: Efficient local model inference
 - **NSFW Support**: Comprehensive content generation
-- **WebTerminal**: Direct bash access on port 8081
+- **JupyterLab Terminal**: Direct bash access in conda environment
 
 ### **⚡ Performance Optimizations**
 - **RTX 4090 Optimized**: CUDA 12.4 for maximum compatibility
@@ -42,9 +41,9 @@ This template is perfect for:
 - **FP16 Accumulation**: Faster mixed precision computation
 - **Sage Attention**: Optimized attention mechanisms for WAN2.2
 - **Async Offload**: Efficient memory management
-- **Source Build**: llama-cpp-python compiled for CUDA 12.4
 - **TensorRT Support**: Advanced upscaling and interpolation
-- **JupyterLab Terminal**: Direct bash access in conda environment
+
+---
 
 ## 📦 Pre-installed Components
 
@@ -83,24 +82,20 @@ This template is perfect for:
 
 ## 🔧 Usage
 
-### **RunPod Deployment**
-1. [Create RunPod Account](https://runpod.io?ref_id=188688) (Use referral ID: 188688)
-2. Create new RunPod endpoint using template: `OneClick-ComfyUI-WAN2.2-Qwen3VL-CUDA12.4`
-3. Select GPU: **RTX 4090** (required)
-4. Optional: Add HF_TOKEN and CIVITAI_TOKEN for restricted model access
-5. Deploy and access via provided URLs:
-   - **ComfyUI**: main endpoint URL (port 8188)
-   - **FileBrowser**: endpoint URL:8080 (no authentication required)
-   - **JupyterLab**: endpoint URL:8888 (no token required)
-   - **WebTerminal**: endpoint URL:8081 (direct bash access)
+1. Create RunPod endpoint with template: `OneClick-ComfyUI-WAN2.2-Qwen3VL-CUDA12.4`
+2. Select GPU: **RTX 4090**
+3. Access URLs:
+   - **ComfyUI**: main endpoint (port 8188)
+   - **FileBrowser**: endpoint:8080
+   - **JupyterLab**: endpoint:8888 (no token)
 
-> **🔑 Authentication**: Add your own tokens in environment variables when creating endpoints for access to premium/restricted models.
+> **� Authentication**: Add HF_TOKEN and CIVITAI_TOKEN for restricted model access.
 
 ---
 
-## 🎯 Optimizations
+## ⚡ Optimizations
 
-### **RTX 4090 CUDA 12.4 Optimizations**
+### **RTX 4090 CUDA 12.4 Settings**
 ```bash
 --fast fp16_accumulation     # Faster FP16 operations
 --use-sage-attention         # Optimized attention for WAN2.2
@@ -110,10 +105,9 @@ This template is perfect for:
 ```
 
 ### **Environment Setup**
-- **Python 3.12.12**: Latest stable version in conda environment
-- **Miniconda**: Professional package management
+- **Python 3.12.12**: Miniconda isolated environment
 - **JupyterLab**: Terminal access without authentication
-- **Conda Environment**: All packages installed in isolated `comfyui` environment
+- **Conda Environment**: All packages in `comfyui` environment
 
 ### **Why These Settings?**
 - **SageAttention + FP16**: Proven optimal for WAN2.2 video generation
@@ -123,7 +117,7 @@ This template is perfect for:
 
 ---
 
-##  Links
+## 🔗 Links
 
 - **Repository**: https://github.com/huchukato/ComfyUI-QwenVL-Mod
 - **Docker Hub**: https://hub.docker.com/r/huchukato/comfyui-qwenvl-runpod-4090
