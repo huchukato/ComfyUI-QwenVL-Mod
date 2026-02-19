@@ -429,8 +429,9 @@ class QwenVLGGUFBase:
             str(model_path),
             str(mmproj_path) if has_mmproj else "",
             n_ctx,
-            n_batch_val,
             n_gpu_layers,
+            n_batch_val,
+            device_kind,
             img_max,
             top_k_val,
             pool_size_val,
@@ -438,7 +439,14 @@ class QwenVLGGUFBase:
         if self.llm is not None and self.current_signature == signature:
             return
 
+        # Force aggressive cleanup before loading new model (especially for same model conflicts)
+        print(f"[QwenVL GGUF DEBUG] Forcing cleanup before model loading...")
         self.clear()
+        
+        # Additional wait for CUDA cleanup
+        if torch.cuda.is_available():
+            torch.cuda.synchronize()
+            time.sleep(0.1)  # Brief pause for cleanup to complete
 
         from llama_cpp import Llama
 
