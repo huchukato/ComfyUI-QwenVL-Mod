@@ -16,6 +16,14 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
+* **2026/02/19**: **v2.2.2** 🚀 Critical T2V/I2V Fixes + ComfyUI Optimizations. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-222-20260219)]
+> 🚀 **Batch Processing**: Fixed critical T2V → GGUF issue with batch images from video generation.  
+> 🔄 **Same Model Reuse**: Resolved conflict when using same model between T2V and I2V nodes.  
+> 🧠 **SageAttention**: Added SageAttention support for 30-35% performance boost on RTX 5090.  
+> ⚙️ **ComfyUI Args**: Optimized startup arguments with validated experimental features.  
+> 🔧 **keep_model_loaded**: Added missing parameter to PromptEnhancer for consistent memory management.  
+> 🐳 **Final Docker Build**: Optimized build with all fixes and maximum performance.  
+
 * **2026/02/18**: **v2.2.1** 🔧 Critical GGUF VRAM Fix + Docker Optimized. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-221-20260218)]
 > 🔧 **GGUF VRAM Fix**: Resolved critical VRAM leak issue causing crashes after 2 executions.  
 > 🧹 **Aggressive Cleanup**: Implemented complete VRAM cleanup for all GGUF nodes (AILab_QwenVL_GGUF and PromptEnhancer).  
