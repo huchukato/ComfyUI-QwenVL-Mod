@@ -624,9 +624,33 @@ class QwenVLGGUFBase:
         images_b64: list[str] = []
         if image is not None:
             print(f"[QwenVL GGUF DEBUG] Processing image...")
-            img = _tensor_to_base64_png(image)
-            if img:
-                images_b64.append(img)
+            print(f"[QwenVL GGUF DEBUG] Image shape before processing: {image.shape}")
+            
+            # Handle batch images from T2V
+            if len(image.shape) == 4:  # [batch, height, width, channels]
+                print(f"[QwenVL GGUF DEBUG] Detected batch image with shape: {image.shape}")
+                # Take first frame from batch or process all frames
+                if image.shape[0] > 1:
+                    print(f"[QwenVL GGUF DEBUG] Processing {image.shape[0]} frames from batch")
+                    for i in range(image.shape[0]):
+                        frame_img = image[i]  # Take each frame from batch
+                        print(f"[QwenVL GGUF DEBUG] Processing batch frame {i} with shape: {frame_img.shape}")
+                        img = _tensor_to_base64_png(frame_img)
+                        if img:
+                            images_b64.append(img)
+                else:
+                    # Single frame in batch format
+                    frame_img = image[0]
+                    print(f"[QwenVL GGUF DEBUG] Single frame in batch, shape: {frame_img.shape}")
+                    img = _tensor_to_base64_png(frame_img)
+                    if img:
+                        images_b64.append(img)
+            else:
+                # Regular single image [height, width, channels]
+                print(f"[QwenVL GGUF DEBUG] Regular single image, shape: {image.shape}")
+                img = _tensor_to_base64_png(image)
+                if img:
+                    images_b64.append(img)
         if video is not None:
             for frame in _sample_video_frames(video, int(frame_count)):
                 img = _tensor_to_base64_png(frame)
