@@ -634,6 +634,19 @@ class QwenVLGGUFBase:
                     images_b64.append(img)
 
         print(f"[QwenVL GGUF DEBUG] Images processed: {len(images_b64)} images/videos")
+        
+        # Debug video/image info
+        if video is not None:
+            print(f"[QwenVL GGUF DEBUG] Video shape: {video.shape}")
+            print(f"[QwenVL GGUF DEBUG] Frame count requested: {frame_count}")
+        if image is not None:
+            print(f"[QwenVL GGUF DEBUG] Image shape: {image.shape}")
+        
+        # Debug VRAM before model loading
+        if torch.cuda.is_available():
+            allocated = torch.cuda.memory_allocated()
+            total = torch.cuda.get_device_properties(0).total_memory
+            print(f"[QwenVL GGUF DEBUG] VRAM before loading: {allocated/1024**3:.2f}GB / {total/1024**3:.2f}GB")
 
         try:
             print(f"[QwenVL GGUF DEBUG] Loading model...")
