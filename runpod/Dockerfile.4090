@@ -227,145 +227,148 @@ RUN rm -rf /tmp/* \
 ENV COMFYUI_ARGS="--listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload"
 
 # Create startup script (RunPod style with dynamic workflow updates)
-RUN echo '#!/bin/bash\n\
-set -e  # Exit the script if any statement returns a non-true return value\n\
-\n\
-COMFYUI_DIR="/ComfyUI"\n\
-FILEBROWSER_CONFIG="/filebrowser/.config.json"\n\
-DB_FILE="/filebrowser/database/filebrowser.db"\n\
-\n\
-# Function to download latest workflows\n\
-update_workflows() {\n\
-    echo "🔄 Updating workflows from latest versions..."\n\
-    cd /ComfyUI/user/default/workflows\n\
-    \n\
-    # List of latest workflows\n\
-    workflows=(\n\
-        "PMP-LoRaStack-Upscale-Wildcards.json"\n\
-        "WAN2.2-I2V-AutoPrompt-Story.json"\n\
-        "WAN2.2-T2V-AutoPrompt-Story.json"\n\
-        "Wan2.2-I2V-SVI-AutoPrompt-Story.json"\n\
-        "WAN2.2-I2V-AutoPrompt-1-5.json"\n\
-        "WAN2.2-I2V-AutoPrompt-GGUF-1-5.json"\n\
-        "WAN2.2-T2V-AutoPrompt-1-6.json"\n\
-        "WAN2.2-T2V-AutoPrompt-GGUF-1-5.json"\n\
-        "Wan2.2-I2V-SVI-AutoPrompt-1-4.json"\n\
-        "Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-2.json"\n\
-        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-9.json"\n\
-        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-6.json"\n\
-        "WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF-1-1.json"\n\
-    )\n\
-    \n\
-    for workflow in "${workflows[@]}"; do\n\
-        echo "  📥 Downloading: $workflow"\n\
-        wget -q "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/$workflow" -O "$workflow" || echo "  ⚠️ Failed to download $workflow"\n\
-    done\n\
-    \n\
-    echo "✅ Workflow update completed"\n\
-}\n\
-\ndownload_models() {\n\
-    echo "🔄 Downloading essential models..."\n\
-    cd /ComfyUI\n\
-    \n\
-    # Download VAE models\n\
-    if [ ! -f "/ComfyUI/models/vae/wan_2.1_vae.safetensors" ]; then\n\
-        echo "  📥 Downloading WAN 2.1 VAE..."\n\
-        wget -q "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" -O "/ComfyUI/models/vae/wan_2.1_vae.safetensors" || echo "  ⚠️ Failed to download WAN 2.1 VAE"\n\
-    fi\n\
-    \n\
-    if [ ! -f "/ComfyUI/models/vae/Wan2_1_VAE_fp32.safetensors" ]; then\n\
-        echo "  📥 Downloading WAN2.1 VAE fp32..."\n\
-        wget -q "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors" -O "/ComfyUI/models/vae/Wan2_1_VAE_fp32.safetensors" || echo "  ⚠️ Failed to download WAN2.1 VAE fp32"\n\
-    fi\n\
-    \n\
-    if [ ! -f "/ComfyUI/models/vae/sdxl_vae.safetensors" ]; then\n\
-        echo "  📥 Downloading SDXL VAE..."\n\
-        wget -q "https://huggingface.co/huchukato/favs/resolve/main/VAE/sdxl.vae.safetensors" -O "/ComfyUI/models/vae/sdxl_vae.safetensors" || echo "  ⚠️ Failed to download SDXL VAE"\n\
-    fi\n\
-    \n\
-    # Download upscale models\n\
-    if [ ! -f "/ComfyUI/models/upscale_models/2xLexicaRRDBNet.pth" ]; then\n\
-        echo "  📥 Downloading 2xLexicaRRDBNet upscale model..."\n\
-        wget -q "https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth" -O "/ComfyUI/models/upscale_models/2xLexicaRRDBNet.pth" || echo "  ⚠️ Failed to download upscale model"\n\
-    fi\n\
-    \n\
-    if [ ! -f "/ComfyUI/models/upscale_models/2xLexicaRRDBNet_Sharp.pth" ]; then\n\
-        echo "  📥 Downloading 2xLexicaRRDBNet Sharp upscale model..."\n\
-        wget -q "https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth" -O "/ComfyUI/models/upscale_models/2xLexicaRRDBNet_Sharp.pth" || echo "  ⚠️ Failed to download Sharp upscale model"\n\
-    fi\n\
-    \n\
-    # Download text encoder\n\
-    if [ ! -f "/ComfyUI/models/text_encoders/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" ]; then\n\
-        echo "  📥 Downloading NSFW WAN UMT5-XXL text encoder..."\n\
-        wget -q "https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" -O "/ComfyUI/models/text_encoders/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" || echo "  ⚠️ Failed to download text encoder"\n\
-    fi\n\
-    \n\
-    echo "✅ Model download completed"\n\
-    echo "📋 Available models:"\n\
-    ls -la /ComfyUI/models/vae/\n\
-    ls -la /ComfyUI/models/upscale_models/\n\
-    ls -la /ComfyUI/models/text_encoders/\n\
-}\n\
-\n\
-echo "🚀 Starting ComfyUI-QwenVL-Mod on RunPod (RTX 4090 Version)"\n\
-echo "🎬 WAN 2.2 workflows ready"\n\
-echo "🌐 Multilingual support enabled"\n\
-echo "🎨 Visual style detection ready"\n\
-echo "⚡ GGUF backend optimized"\n\
-echo ""\n\
-\n\
-# Update workflows to latest versions\n\
-update_workflows\n\
-\n\
-# Download essential models\n\
-download_models\n\
-\n\
-echo "🔧 Services starting:"\n\
-echo "📁 FileBrowser: http://0.0.0.0:8080"\n\
-echo "📓 Jupyter Notebook:  http://0.0.0.0:8888 (Terminal included)"\n\
-echo "🎨 ComfyUI:    http://0.0.0.0:8188"\n\
-echo "📋 Available workflows:"\n\
-ls -la /ComfyUI/user/default/workflows/\n\
-echo ""\n\
-echo "💡 Models pre-loaded for immediate use"\n\
-echo ""\n\
-\n\
-# Start FileBrowser\n\
-echo "🔧 Starting FileBrowser..."\n\
-nohup /usr/local/bin/start-filebrowser.sh &> /filebrowser.log &\n\
-echo "✅ FileBrowser started"\n\
-\n\
-# Start Jupyter Lab\n\
-echo "🔧 Starting Jupyter Lab..." \n\
-nohup /usr/local/bin/start-jupyter.sh &> /jupyter.log &\n\
-sleep 5\n\
-echo "🔍 Checking Jupyter Lab status..." \n\
-if pgrep -f "jupyter lab" > /dev/null; then \n\
-    echo "✅ Jupyter Lab started successfully" \n\
-    echo "📊 Jupyter Lab logs:" \n\
-    tail -10 /jupyter.log \n\
-else \n\
-    echo "❌ Jupyter Lab failed to start" \n\
-    echo "📊 Full error logs:" \n\
-    cat /jupyter.log \n\
-    echo "🔍 Checking what went wrong..." \n\
-    echo "🐍 Python version in conda env:" \n\
-    /opt/conda/bin/conda run -n comfyui python --version \n\
-    echo "📦 Jupyter Lab version in conda env:" \n\
-    /opt/conda/bin/conda run -n comfyui jupyter lab --version \n\
-fi \n\
-\n\
-# Start ComfyUI\n\
-echo "🚀 Starting ComfyUI..."\n\
-echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\n\
-echo "📓 Jupyter Lab Terminal: Open http://0.0.0.0:8888 → New → Terminal"\n\
-cd $COMFYUI_DIR\n\
-/opt/conda/bin/conda run -n comfyui nohup python main.py --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload &> /comfyui.log &\n\
-echo "✅ ComfyUI started"\n\
-\n\
-# Tail the ComfyUI log\n\
-tail -f /comfyui.log\n\
-' > /ComfyUI/start.sh && chmod +x /ComfyUI/start.sh
+RUN cat > /ComfyUI/start.sh << 'EOF'
+#!/bin/bash
+set -e  # Exit the script if any statement returns a non-true return value
+
+COMFYUI_DIR="/ComfyUI"
+FILEBROWSER_CONFIG="/filebrowser/.config.json"
+DB_FILE="/filebrowser/database/filebrowser.db"
+
+# Function to download latest workflows
+update_workflows() {
+    echo "🔄 Updating workflows from latest versions..."
+    cd /ComfyUI/user/default/workflows
+    
+    # List of latest workflows
+    workflows=(
+        "PMP-LoRaStack-Upscale-Wildcards.json"
+        "WAN2.2-I2V-AutoPrompt-Story.json"
+        "WAN2.2-T2V-AutoPrompt-Story.json"
+        "Wan2.2-I2V-SVI-AutoPrompt-Story.json"
+        "WAN2.2-I2V-AutoPrompt-1-5.json"
+        "WAN2.2-I2V-AutoPrompt-GGUF-1-5.json"
+        "WAN2.2-T2V-AutoPrompt-1-6.json"
+        "WAN2.2-T2V-AutoPrompt-GGUF-1-5.json"
+        "Wan2.2-I2V-SVI-AutoPrompt-1-4.json"
+        "Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-2.json"
+        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-9.json"
+        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-6.json"
+        "WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF-1-1.json"
+    )
+    
+    for workflow in "${workflows[@]}"; do
+        echo "  📥 Downloading: $workflow"
+        wget -q "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/$workflow" -O "$workflow" || echo "  ⚠️ Failed to download $workflow"
+    done
+    
+    echo "✅ Workflow update completed"
+}
+
+download_models() {
+    echo "🔄 Downloading essential models..."
+    cd /ComfyUI
+    
+    # Download VAE models
+    if [ ! -f "/ComfyUI/models/vae/wan_2.1_vae.safetensors" ]; then
+        echo "  📥 Downloading WAN 2.1 VAE..."
+        wget -q "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" -O "/ComfyUI/models/vae/wan_2.1_vae.safetensors" || echo "  ⚠️ Failed to download WAN 2.1 VAE"
+    fi
+    
+    if [ ! -f "/ComfyUI/models/vae/Wan2_1_VAE_fp32.safetensors" ]; then
+        echo "  📥 Downloading WAN2.1 VAE fp32..."
+        wget -q "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors" -O "/ComfyUI/models/vae/Wan2_1_VAE_fp32.safetensors" || echo "  ⚠️ Failed to download WAN2.1 VAE fp32"
+    fi
+    
+    if [ ! -f "/ComfyUI/models/vae/sdxl_vae.safetensors" ]; then
+        echo "  📥 Downloading SDXL VAE..."
+        wget -q "https://huggingface.co/huchukato/favs/resolve/main/VAE/sdxl.vae.safetensors" -O "/ComfyUI/models/vae/sdxl_vae.safetensors" || echo "  ⚠️ Failed to download SDXL VAE"
+    fi
+    
+    # Download upscale models
+    if [ ! -f "/ComfyUI/models/upscale_models/2xLexicaRRDBNet.pth" ]; then
+        echo "  📥 Downloading 2xLexicaRRDBNet upscale model..."
+        wget -q "https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth" -O "/ComfyUI/models/upscale_models/2xLexicaRRDBNet.pth" || echo "  ⚠️ Failed to download upscale model"
+    fi
+    
+    if [ ! -f "/ComfyUI/models/upscale_models/2xLexicaRRDBNet_Sharp.pth" ]; then
+        echo "  📥 Downloading 2xLexicaRRDBNet Sharp upscale model..."
+        wget -q "https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth" -O "/ComfyUI/models/upscale_models/2xLexicaRRDBNet_Sharp.pth" || echo "  ⚠️ Failed to download Sharp upscale model"
+    fi
+    
+    # Download text encoder
+    if [ ! -f "/ComfyUI/models/text_encoders/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" ]; then
+        echo "  📥 Downloading NSFW WAN UMT5-XXL text encoder..."
+        wget -q "https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" -O "/ComfyUI/models/text_encoders/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" || echo "  ⚠️ Failed to download text encoder"
+    fi
+    
+    echo "✅ Model download completed"
+    echo "📋 Available models:"
+    ls -la /ComfyUI/models/vae/
+    ls -la /ComfyUI/models/upscale_models/
+    ls -la /ComfyUI/models/text_encoders/
+}
+
+echo "🚀 Starting ComfyUI-QwenVL-Mod on RunPod (RTX 4090 Version)"
+echo "🎬 WAN 2.2 workflows ready"
+echo "🌐 Multilingual support enabled"
+echo "🎨 Visual style detection ready"
+echo "⚡ GGUF backend optimized"
+echo ""
+
+# Update workflows to latest versions
+update_workflows
+
+# Download essential models
+download_models
+
+echo "🔧 Services starting:"
+echo "📁 FileBrowser: http://0.0.0.0:8080"
+echo "📓 Jupyter Lab:  http://0.0.0.0:8888 (Terminal included)"
+echo "🎨 ComfyUI:    http://0.0.0.0:8188"
+echo "📋 Available workflows:"
+ls -la /ComfyUI/user/default/workflows/
+echo ""
+echo "💡 Models pre-loaded for immediate use"
+echo ""
+
+# Start FileBrowser
+echo "🔧 Starting FileBrowser..."
+nohup /usr/local/bin/start-filebrowser.sh &> /filebrowser.log &
+echo "✅ FileBrowser started"
+
+# Start Jupyter Lab
+echo "🔧 Starting Jupyter Lab..."
+nohup /usr/local/bin/start-jupyter.sh &> /jupyter.log &
+sleep 5
+echo "🔍 Checking Jupyter Lab status..."
+if pgrep -f "jupyter lab" > /dev/null; then
+    echo "✅ Jupyter Lab started successfully"
+    echo "📊 Jupyter Lab logs:"
+    tail -10 /jupyter.log
+else
+    echo "❌ Jupyter Lab failed to start"
+    echo "📊 Full error logs:"
+    cat /jupyter.log
+    echo "🔍 Checking what went wrong..."
+    echo "🐍 Python version in conda env:"
+    /opt/conda/bin/conda run -n comfyui python --version
+    echo "📦 Jupyter Lab version in conda env:"
+    /opt/conda/bin/conda run -n comfyui jupyter lab --version
+fi
+
+# Start ComfyUI
+echo "🚀 Starting ComfyUI..."
+echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"
+echo "📓 Jupyter Lab Terminal: Open http://0.0.0.0:8888 → New → Terminal"
+cd $COMFYUI_DIR
+/opt/conda/bin/conda run -n comfyui nohup python main.py --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload &> /comfyui.log &
+echo "✅ ComfyUI started"
+
+# Tail the ComfyUI log
+tail -f /comfyui.log
+EOF
+RUN chmod +x /ComfyUI/start.sh
 
 # Set working directory
 WORKDIR /ComfyUI
