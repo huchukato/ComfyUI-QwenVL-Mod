@@ -154,15 +154,42 @@ cd /filebrowser\n\
 filebrowser --config /filebrowser/.config.json\n\
 ' > /usr/local/bin/start-filebrowser.sh && chmod +x /usr/local/bin/start-filebrowser.sh
 
-# Create Jupyter Notebook startup script
+# Create Jupyter Lab startup script
 RUN echo '#!/bin/bash\n\
-echo "📓 Starting Jupyter Notebook on port 8888"\n\
+echo "📓 Starting Jupyter Lab on port 8888"\n\
 echo "🌐 Access at: http://0.0.0.0:8888"\n\
 echo "🔑 No token required"\n\
 echo ""\n\
 cd /ComfyUI\n\
-echo "🔧 Starting Jupyter Notebook with conda environment..."\n\
-/opt/conda/bin/conda run -n comfyui jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token="" --NotebookApp.password="" --log-level=DEBUG\n\
+echo "🔧 Starting Jupyter Lab with terminal support..."\n\
+/opt/conda/bin/conda run -n comfyui nohup jupyter lab \\\n\
+    --allow-root \\\n\
+    --no-browser \\\n\
+    --port=8888 \\\n\
+    --ip=0.0.0.0 \\\n\
+    --FileContentsManager.delete_to_trash=False \\\n\
+    --FileContentsManager.preferred_dir=/ComfyUI \\\n\
+    --ServerApp.root_dir=/ComfyUI \\\n\
+    --ServerApp.terminado_settings=\'{\"shell_command\":[\"/bin/bash\"]}\' \\\n\
+    --IdentityProvider.token=\"\" \\\n\
+    --ServerApp.allow_origin=* &> /jupyter.log &\n\
+echo "✅ Jupyter Lab started"\n\
+echo "🔍 Checking Jupyter Lab status..."\n\
+sleep 5\n\
+if pgrep -f "jupyter lab" > /dev/null; then\n\
+    echo "✅ Jupyter Lab started successfully"\n\
+    echo "📊 Jupyter Lab logs:"\n\
+    tail -10 /jupyter.log\n\
+else\n\
+    echo "❌ Jupyter Lab failed to start"\n\
+    echo "📊 Full error logs:"\n\
+    cat /jupyter.log\n\
+    echo "🔍 Checking what went wrong..."\n\
+    echo "🐍 Python version in conda env:"\n\
+    /opt/conda/bin/conda run -n comfyui python --version\n\
+    echo "📦 Jupyter Lab version in conda env:"\n\
+    /opt/conda/bin/conda run -n comfyui jupyter lab --version\n\
+fi\n\
 ' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
 
 # Create user directory structure
@@ -299,31 +326,31 @@ echo "🔧 Starting FileBrowser..."\n\
 nohup /usr/local/bin/start-filebrowser.sh &> /filebrowser.log &\n\
 echo "✅ FileBrowser started"\n\
 \n\
-# Start Jupyter Notebook\n\
-echo "🔧 Starting Jupyter Notebook..."\
+# Start Jupyter Lab\n\
+echo "🔧 Starting Jupyter Lab..."\
 nohup /usr/local/bin/start-jupyter.sh &> /jupyter.log &\
 sleep 5\
-echo "🔍 Checking Jupyter Notebook status..."\
-if pgrep -f "jupyter notebook" > /dev/null; then\
-    echo "✅ Jupyter Notebook started successfully"\
-    echo "📊 Jupyter Notebook logs:"\
+echo "🔍 Checking Jupyter Lab status..."\
+if pgrep -f "jupyter lab" > /dev/null; then\
+    echo "✅ Jupyter Lab started successfully"\
+    echo "📊 Jupyter Lab logs:"\
     tail -10 /jupyter.log\
 else\
-    echo "❌ Jupyter Notebook failed to start"\
+    echo "❌ Jupyter Lab failed to start"\
     echo "📊 Full error logs:"\
     cat /jupyter.log\
     echo "🔍 Checking what went wrong..."\
     echo "🐍 Python version in conda env:"\
     /opt/conda/bin/conda run -n comfyui python --version\
-    echo "📦 Jupyter Notebook version in conda env:"\
-    /opt/conda/bin/conda run -n comfyui jupyter notebook --version\
+    echo "📦 Jupyter Lab version in conda env:"\
+    /opt/conda/bin/conda run -n comfyui jupyter lab --version\
 fi\
 \n\
 \n\
 # Start ComfyUI\n\
 echo "🚀 Starting ComfyUI..."\
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"\
-echo "📓 Jupyter Notebook Terminal: Open http://0.0.0.0:8888 → New → Terminal"\
+echo "📓 Jupyter Lab Terminal: Open http://0.0.0.0:8888 → New → Terminal"\
 cd $COMFYUI_DIR\
 /opt/conda/bin/conda run -n comfyui nohup python main.py --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload &> /comfyui.log &\
 echo "✅ ComfyUI started"\n\
