@@ -162,42 +162,44 @@ filebrowser --config /filebrowser/.config.json\n\
 ' > /usr/local/bin/start-filebrowser.sh && chmod +x /usr/local/bin/start-filebrowser.sh
 
 # Create Jupyter Lab startup script
-RUN echo '#!/bin/bash\n\
-echo "📓 Starting Jupyter Lab on port 8888"\n\
-echo "🌐 Access at: http://0.0.0.0:8888"\n\
-echo "🔑 No token required"\n\
-echo ""\n\
-cd /ComfyUI\n\
-echo "🔧 Starting Jupyter Lab with terminal support..."\n\
-/opt/conda/bin/conda run -n comfyui nohup jupyter lab \\\n\
-    --allow-root \\\n\
-    --no-browser \\\n\
-    --port=8888 \\\n\
-    --ip=0.0.0.0 \\\n\
-    --FileContentsManager.delete_to_trash=False \\\n\
-    --FileContentsManager.preferred_dir=/ComfyUI \\\n\
-    --ServerApp.root_dir=/ComfyUI \\\n\
-    --ServerApp.terminado_settings=\'{\"shell_command\":[\"/bin/bash\"]}\' \\\n\
-    --IdentityProvider.token=\"\" \\\n\
-    --ServerApp.allow_origin=* &> /jupyter.log &\n\
-echo "✅ Jupyter Lab started"\n\
-echo "🔍 Checking Jupyter Lab status..."\n\
-sleep 5\n\
-if pgrep -f "jupyter lab" > /dev/null; then\n\
-    echo "✅ Jupyter Lab started successfully"\n\
-    echo "📊 Jupyter Lab logs:"\n\
-    tail -10 /jupyter.log\n\
-else\n\
-    echo "❌ Jupyter Lab failed to start"\n\
-    echo "📊 Full error logs:"\n\
-    cat /jupyter.log\n\
-    echo "🔍 Checking what went wrong..."\n\
-    echo "🐍 Python version in conda env:"\n\
-    /opt/conda/bin/conda run -n comfyui python --version\n\
-    echo "📦 Jupyter Lab version in conda env:"\n\
-    /opt/conda/bin/conda run -n comfyui jupyter lab --version\n\
-fi\n\
-' > /usr/local/bin/start-jupyter.sh && chmod +x /usr/local/bin/start-jupyter.sh
+RUN cat > /usr/local/bin/start-jupyter.sh << 'EOF'
+#!/bin/bash
+echo "📓 Starting Jupyter Lab on port 8888"
+echo "🌐 Access at: http://0.0.0.0:8888"
+echo "🔑 No token required"
+echo ""
+cd /ComfyUI
+echo "🔧 Starting Jupyter Lab with terminal support..."
+/opt/conda/bin/conda run -n comfyui nohup jupyter lab \
+    --allow-root \
+    --no-browser \
+    --port=8888 \
+    --ip=0.0.0.0 \
+    --FileContentsManager.delete_to_trash=False \
+    --FileContentsManager.preferred_dir=/ComfyUI \
+    --ServerApp.root_dir=/ComfyUI \
+    --ServerApp.terminado_settings='{"shell_command":["/bin/bash"]}' \
+    --IdentityProvider.token="" \
+    --ServerApp.allow_origin=* &> /jupyter.log &
+echo "✅ Jupyter Lab started"
+echo "🔍 Checking Jupyter Lab status..."
+sleep 5
+if pgrep -f "jupyter lab" > /dev/null; then
+    echo "✅ Jupyter Lab started successfully"
+    echo "📊 Jupyter Lab logs:"
+    tail -10 /jupyter.log
+else
+    echo "❌ Jupyter Lab failed to start"
+    echo "📊 Full error logs:"
+    cat /jupyter.log
+    echo "🔍 Checking what went wrong..."
+    echo "🐍 Python version in conda env:"
+    /opt/conda/bin/conda run -n comfyui python --version
+    echo "📦 Jupyter Lab version in conda env:"
+    /opt/conda/bin/conda run -n comfyui jupyter lab --version
+fi
+EOF
+RUN chmod +x /usr/local/bin/start-jupyter.sh
 
 # Create user directory structure
 RUN mkdir -p /ComfyUI/user/default/workflows
