@@ -99,7 +99,7 @@ RUN bash -c 'cd /ComfyUI/custom_nodes && for node_dir in */; do if [ -f "$node_d
 # ComfyUI-Easy-Use-Frontend removed due to compatibility issues
 
 # Install additional essential dependencies
-RUN pip install --no-cache-dir jupyter jupyter_server_terminals terminado sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors huggingface_hub
+RUN pip install --no-cache-dir jupyter
 
 # Clean up heavy Git files to save space (keep repo structure for updates)
 RUN find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "*.pack" -delete + || true && \
