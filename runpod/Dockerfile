@@ -70,6 +70,7 @@ RUN cd /ComfyUI/custom_nodes && \
     git clone https://github.com/huchukato/comfy-tagcomplete.git && \
     git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git && \
     git clone https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto.git && \
+    git clone https://github.com/huchukato/ComfyUI-HuggingFace.git && \
     git clone https://github.com/MadiatorLabs/ComfyUI-RunpodDirect.git && \
     git clone https://github.com/city96/ComfyUI-GGUF.git && \
     git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
@@ -100,7 +101,7 @@ RUN cp -r /ComfyUI/custom_nodes/comfy-tagcomplete/wildcards/mbe /ComfyUI/custom_
 RUN bash -c 'cd /ComfyUI/custom_nodes && for node_dir in */; do if [ -f "$node_dir/requirements.txt" ]; then echo "Installing requirements for $node_dir..." && pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; fi; done'
 
 # Install additional essential dependencies
-RUN pip install --no-cache-dir jupyter sageattention
+RUN pip install --no-cache-dir jupyter sageattention huggingface_hub requests aiohttp
 
 # Clean up heavy Git files to save space (keep repo structure for updates)
 RUN find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "*.pack" -delete + || true && \
