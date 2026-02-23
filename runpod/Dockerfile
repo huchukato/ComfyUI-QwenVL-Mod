@@ -124,12 +124,6 @@ RUN /opt/conda/bin/conda run -n comfyui bash -c 'cd /ComfyUI/custom_nodes && for
 RUN /opt/conda/bin/conda run -n comfyui pip install --no-cache-dir jupyter jupyter_server_terminals terminado sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors huggingface_hub && \
     /opt/conda/bin/conda run -n comfyui pip cache purge
 
-# HuggingFace login for private models (if token provided)
-RUN if [ -n "$HF_TOKEN" ]; then \
-    echo "🔑 Logging into HuggingFace..." && \
-    huggingface-cli login --token $HF_TOKEN; \
-    fi
-
 # Clean up heavy Git files to save space (keep repo structure for updates)
 RUN find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "*.pack" -delete + || true && \
     find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "pack-*.idx" -delete + || true && \
