@@ -161,18 +161,35 @@ ENV PATH=/usr/local/cuda/bin:${PATH}
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 
 # Install Jupyter with Python kernel
-RUN pip install jupyter jupyter_server_terminals terminado
+RUN pip install jupyter
 
 # Configure SSH for root login
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-    mkdir -p /var/run/sshd
+    mkdir -p /run/sshd && \
+    rm -f /etc/ssh/ssh_host_*
 
 # Create workspace directory
 WORKDIR /workspace
 RUN mkdir -p /workspace/runpod-slim
 
-# Expose ports
-EXPOSE 22 8080 8888 8188
+# Copy ComfyUI and custom nodes from builder
+COPY --from=builder /tmp/build/ComfyUI /workspace/runpod-slim/ComfyUI
+
+# Copy wildcards to Impact-Pack (required for wildcard workflows)
+RUN cp -r /workspace/runpod-slim/ComfyUI/custom_nodes/comfy-tagcomplete/wildcards/mbe /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/wildcards || echo "Wildcards copy completed (or already exists)"
+
+# Create user directory structure
+RUN mkdir -p /workspace/runpod-slim/ComfyUI/user/default/workflows
+
+# Create models directories
+RUN mkdir -p /workspace/runpod-slim/ComfyUI/models/vae && \
+    mkdir -p /workspace/runpod-slim/ComfyUI/models/upscale_models && \
+    mkdir -p /workspace/runpod-slim/ComfyUI/models/text_encoders
+
+# Clean up heavy Git files to save space (keep repo structure for updates)
+RUN find /workspace/runpod-slim/ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "*.pack" -delete + || true && \
+    find /workspace/runpod-slim/ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "pack-*.idx" -delete + || true && \
+    find /workspace/runpod-slim/ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "objects" -type d -exec rm -rf {} + || true
 
 # Create startup script
 RUN cat > /start.sh << 'EOF'
@@ -356,12 +373,18 @@ EOF
 
 RUN chmod +x /start.sh
 
-# Set Python 3.12 as default
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 && \
-    update-alternatives --install /usr/bin/python python /usr/bin/python3.12 1 && \
-    update-alternatives --install /usr/bin/pip pip /usr/local/bin/pip 1 && \
-    update-alternatives --set python3 /usr/bin/python3.12 && \
-    update-alternatives --set python /usr/bin/python3.12
+# Set working directory
+WORKDIR /workspace/runpod-slim
 
-# Start services
-CMD ["/start.sh"]
+# Set Python aliases
+RUN update-alternatives --install /usr/bin/pip pip /usr/local/bin/pip 1 && \
+    update-alternatives --install /usr/bin/python python /usr/local/bin/python3.12 1
+
+# Expose ports
+EXPOSE 8188 22 8888 8080
+
+# Set working directory
+WORKDIR /ComfyUI
+
+# Set entry point
+ENTRYPOINT ["/start.sh"]
