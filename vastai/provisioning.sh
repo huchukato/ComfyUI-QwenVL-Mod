@@ -9,7 +9,7 @@ APT_PACKAGES=(
 )
 
 PIP_PACKAGES=(
-    # All packages are pre-installed in Docker image
+    "--upgrade --force-reinstall --no-cache-dir https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.27-cu130-Basic-linux-20260222/llama_cpp_python-0.3.27+cu130.basic-cp312-cp312-linux_x86_64.whl"
 )
 
 NODES=(
