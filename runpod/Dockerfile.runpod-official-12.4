@@ -93,6 +93,9 @@ RUN for node_dir in */; do \
 RUN python3.12 -m pip install --upgrade --force-reinstall --no-cache-dir \
     https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.27-cu124-Basic-linux-20260222/llama_cpp_python-0.3.27+cu124.basic-cp312-cp312-linux_x86_64.whl
 
+# Install SageAttention for --use-sage-attention support
+RUN python3.12 -m pip install --no-cache-dir sageattention
+
 # ============================================================================
 FROM ubuntu:22.04
 
