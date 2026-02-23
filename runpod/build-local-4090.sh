@@ -6,8 +6,8 @@
 set -e
 
 # Configuration
-IMAGE_NAME="comfyui-qwenvl-local"
-TAG="4090"
+IMAGE_NAME="huchukato/comfyui-qwenvl-runpod"
+TAG="4090-local"
 FULL_IMAGE_NAME="${IMAGE_NAME}:${TAG}"
 
 echo "🏗️  Building ComfyUI-QwenVL-Mod v2.2.0 RTX 4090 Docker Image Locally"
