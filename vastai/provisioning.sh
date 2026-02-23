@@ -42,6 +42,22 @@ NODES=(
     "https://github.com/melMass/comfy_mtb"
 )
 
+WORKFLOWS=(
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/PMP-LoRaStack-Upscale-Wildcards.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-Story.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-Story.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-Story.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-GGUF.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-GGUF.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-GGUF.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-I2V-Full-AutoPrompt-MMAudio-GGUF.json"
+)
+
 CHECKPOINT_MODELS=(
 )
 
@@ -90,7 +106,7 @@ function provisioning_start() {
     echo "� Installing PIP packages..."
     provisioning_get_pip_packages
     
-    echo "📁 Copying workflows locally..."
+    echo "📁 Downloading workflows..."
     # Verify ComfyUI directory exists
     if [ ! -d "$COMFYUI_DIR" ]; then
         echo "⚠️ ComfyUI directory not found: $COMFYUI_DIR"
@@ -101,33 +117,11 @@ function provisioning_start() {
     # Create workflows directory
     mkdir -p "${COMFYUI_DIR}/user/default/workflows"
     
-    # Copy workflows locally instead of downloading from GitHub
-    WORKFLOW_FILES=(
-        "PMP-LoRaStack-Upscale-Wildcards.json"
-        "WAN2.2-I2V-AutoPrompt-Story.json"
-        "WAN2.2-T2V-AutoPrompt-Story.json"
-        "Wan2.2-I2V-SVI-AutoPrompt-Story.json"
-        "WAN2.2-I2V-AutoPrompt.json"
-        "WAN2.2-I2V-AutoPrompt-GGUF.json"
-        "WAN2.2-T2V-AutoPrompt.json"
-        "WAN2.2-T2V-AutoPrompt-GGUF.json"
-        "Wan2.2-I2V-SVI-AutoPrompt.json"
-        "Wan2.2-I2V-SVI-AutoPrompt-GGUF.json"
-        "WAN2.2-I2V-Full-AutoPrompt-MMAudio.json"
-        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF.json"
-        "WAN2.2-T2V-I2V-Full-AutoPrompt-MMAudio-GGUF.json"
-    )
-    
-    for workflow_file in "${WORKFLOW_FILES[@]}"; do
-        if [ -f "/workspace/vastai/workflows/$workflow_file" ]; then
-            cp "/workspace/vastai/workflows/$workflow_file" "${COMFYUI_DIR}/user/default/workflows/"
-            echo "✅ Copied: $workflow_file"
-        else
-            echo "⚠️  Not found: $workflow_file"
-        fi
-    done
+    provisioning_get_files \
+        "${COMFYUI_DIR}/user/default/workflows" \
+        "${WORKFLOWS[@]}"
         
-    echo "✅ Workflows copied to: ${COMFYUI_DIR}/user/default/workflows"
+    echo "✅ Workflows downloaded to: ${COMFYUI_DIR}/user/default/workflows"
         
     echo "🎯 Downloading checkpoint models..."
     provisioning_get_files \
