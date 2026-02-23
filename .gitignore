@@ -1,6 +1,86 @@
-.DS_Store
+.DS_S# ComfyUI-QwenVL-Mod Git Ignore File
 
-# Private build scripts (maintainer only)
-runpod/build-and-push-4090.sh
-runpod/build-and-push-5090.sh
-runpod/build-and-push-runpod-official.sh
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# ComfyUI specific
+models/
+input/
+output/
+temp/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.mp4
+*.avi
+*.mov
+*.webm
+
+# Docker
+.dockerignore
+Dockerfile*
+docker-compose*.yml
+
+# Node modules
+node_modules/
+npm-debug.log*
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Personal build scripts (only for local use - don't commit)
+build-local-*.sh
+Dockerfile.*-12.4
+build-and-push-*12.4.sh
+start-*12.4.shal.sh
+
+# CUDA 12.4 specific files (only for personal use)
+Dockerfile.runpod-official-12.4
+build-and-push-runpod-official-12.4.sh
+start-runpod-official-12.4.shal.sh
