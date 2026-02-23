@@ -263,26 +263,6 @@ function provisioning_copy_wildcards() {
     fi
 }
 
-function provisioning_download() {
-    if [[ -z $1 || -z $2 ]]; then return 1; fi
-    
-    local url="$1"
-    local dir="$2"
-    local filename=$(basename "$url")
-    local filepath="$dir/$filename"
-    
-    echo "  → Downloading $filename..."
-    
-    # Use wget with retry and timeout
-    if wget -q --show-progress --progress=bar:force:noscroll -t 3 -T 30 -O "$filepath" "$url"; then
-        echo "  ✓ Successfully downloaded $filename"
-        return 0
-    else
-        echo "  ❌ Failed to download $filename from $url"
-        return 1
-    fi
-}
-
 function provisioning_get_files() {
     if [[ -z $2 ]]; then return 1; fi
     
