@@ -218,7 +218,7 @@ RUN rm -rf /tmp/* \
        && find /ComfyUI -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 
 # Set ComfyUI arguments (optimized for WAN2.2 with SageAttention)
-ENV COMFYUI_ARGS="--listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload"
+ENV COMFYUI_ARGS="--listen 0.0.0.0 --port 8188 --disable-auto-launch --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload"
 
 # Create startup script (RunPod style with dynamic workflow updates)
 RUN cat > /ComfyUI/start.sh << 'EOF'
@@ -240,15 +240,15 @@ update_workflows() {
         "WAN2.2-I2V-AutoPrompt-Story.json"
         "WAN2.2-T2V-AutoPrompt-Story.json"
         "Wan2.2-I2V-SVI-AutoPrompt-Story.json"
-        "WAN2.2-I2V-AutoPrompt-1-5.json"
-        "WAN2.2-I2V-AutoPrompt-GGUF-1-5.json"
-        "WAN2.2-T2V-AutoPrompt-1-6.json"
-        "WAN2.2-T2V-AutoPrompt-GGUF-1-5.json"
-        "Wan2.2-I2V-SVI-AutoPrompt-1-4.json"
-        "Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-2.json"
-        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-9.json"
-        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-6.json"
-        "WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF-1-1.json"
+        "WAN2.2-I2V-AutoPrompt.json"
+        "WAN2.2-I2V-AutoPrompt-GGUF.json"
+        "WAN2.2-T2V-AutoPrompt.json"
+        "WAN2.2-T2V-AutoPrompt-GGUF.json"
+        "Wan2.2-I2V-SVI-AutoPrompt.json"
+        "Wan2.2-I2V-SVI-AutoPrompt-GGUF.json"
+        "WAN2.2-I2V-Full-AutoPrompt-MMAudio.json"
+        "WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF.json"
+        "WAN2.2-T2V-I2V-Full-AutoPrompt-MMAudio-GGUF.json"
     )
     
     for workflow in "${workflows[@]}"; do
@@ -354,10 +354,10 @@ fi
 
 # Start ComfyUI
 echo "🚀 Starting ComfyUI..."
-echo "🌐 ComfyUI will be available at: http://0.0.0.0:8188"
+echo "🌐 ComfyUI will be available at: http://0.0.0.0:$(echo $COMFYUI_ARGS | grep -oP '(?<=--port\s)\d+' || echo '8188')"
 echo "📓 Jupyter Lab Terminal: Open http://0.0.0.0:8888 → New → Terminal"
 cd $COMFYUI_DIR
-/opt/conda/bin/conda run -n comfyui nohup python main.py --listen 0.0.0.0 --port 8188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --reserve-vram 2 --cuda-malloc --async-offload &> /comfyui.log &
+/opt/conda/bin/conda run -n comfyui nohup python main.py $COMFYUI_ARGS &> /comfyui.log &
 echo "✅ ComfyUI started"
 
 # Tail the ComfyUI log
