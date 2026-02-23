@@ -49,6 +49,10 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
 # Install PyTorch with CUDA 12.8 (compatible with base image CUDA 12.8.0) - optimized for RTX 5090
 RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu128
 
+# Remove uv to force ComfyUI-Manager to use pip (uv doesn't respect --system-site-packages properly)
+RUN pip uninstall -y uv 2>/dev/null || true && \
+    rm -f /usr/local/bin/uv /usr/local/bin/uvx
+
 # Install ComfyUI latest stable version
 WORKDIR /ComfyUI
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
