@@ -176,8 +176,11 @@ COPY start-runpod-official-12.4.sh /start.sh
 RUN chmod +x /start.sh
 
 # Set Python 3.12 as default
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.12 1 && \
-    update-alternatives --install /usr/bin/pip pip /usr/local/bin/pip 1
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 && \
+    update-alternatives --install /usr/bin/python python /usr/bin/python3.12 1 && \
+    update-alternatives --install /usr/bin/pip pip /usr/local/bin/pip 1 && \
+    update-alternatives --set python3 /usr/bin/python3.12 && \
+    update-alternatives --set python /usr/bin/python3.12
 
 # Start services
 CMD ["/start.sh"]
