@@ -272,11 +272,7 @@ download_models() {
         wget -q "https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" -O "/ComfyUI/models/text_encoders/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" || echo "  ⚠️ Failed to download text encoder"
     fi
     
-    if [ ! -f "/ComfyUI/models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" ]; then
-        echo "  📥 Downloading UMT5-XXL FP8 text encoder..."
-        wget -q "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" -O "/ComfyUI/models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" || echo "  ⚠️ Failed to download UMT5-XXL text encoder"
-    fi
-    
+        
     echo "✅ Model download completed"
     echo "📋 Available models:"
     ls -la /ComfyUI/models/vae/
