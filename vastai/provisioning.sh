@@ -108,9 +108,21 @@ function provisioning_start() {
     provisioning_get_pip_packages
     
     echo "📁 Downloading workflows..."
+    # Verify ComfyUI directory exists
+    if [ ! -d "$COMFYUI_DIR" ]; then
+        echo "⚠️ ComfyUI directory not found: $COMFYUI_DIR"
+        echo "🔍 Creating ComfyUI directory..."
+        mkdir -p "$COMFYUI_DIR"
+    fi
+    
+    # Create workflows directory
+    mkdir -p "${COMFYUI_DIR}/user/default/workflows"
+    
     provisioning_get_files \
         "${COMFYUI_DIR}/user/default/workflows" \
         "${WORKFLOWS[@]}"
+        
+    echo "✅ Workflows downloaded to: ${COMFYUI_DIR}/user/default/workflows"
         
     echo "🎯 Downloading checkpoint models..."
     provisioning_get_files \
