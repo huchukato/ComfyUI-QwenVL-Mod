@@ -282,6 +282,21 @@ function provisioning_print_end() {
     printf "\nProvisioning complete:  Application will start now\n\n"
 }
 
+# Download from $1 URL to $2 file path
+function provisioning_download() {
+    if [[ -n $HF_TOKEN && $1 =~ ^https://([a-zA-Z0-9_-]+\\.)?huggingface\\.co(/|$|\\?) ]]; then
+        auth_token="$HF_TOKEN"
+    elif 
+        [[ -n $CIVITAI_TOKEN && $1 =~ ^https://([a-zA-Z0-9_-]+\\.)?civitai\\.com(/|$|\\?) ]]; then
+        auth_token="$CIVITAI_TOKEN"
+    fi
+    if [[ -n $auth_token ]];then
+        wget --header="Authorization: Bearer $auth_token" --content-disposition -e dotbytes="${3:-4M}" -P "$2" "$1"
+    else
+        wget --content-disposition -e dotbytes="${3:-4M}" -P "$2" "$1"
+    fi
+}
+
 # Allow user to disable provisioning if they started with a script they didn't want
 if [[ ! -f /.noprovisioning ]]; then
     provisioning_start
