@@ -3,12 +3,15 @@
 # Optimized for RTX 5090 and professional video generation
 # Native Python for better performance
 
-FROM python:3.12-slim
+FROM nvidia/cuda:12.8.0-cudnn-devel-ubuntu24.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 ENV IMAGEIO_FFMPEG_EXE=/usr/bin/ffmpeg
 ENV PYTHONUNBUFFERED=1
+ENV CUDA_HOME=/usr/local/cuda
+ENV PATH=$PATH:$CUDA_HOME/bin
+ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 ENV PYTHONPATH=/ComfyUI:$PYTHONPATH
 
 # Install system dependencies
