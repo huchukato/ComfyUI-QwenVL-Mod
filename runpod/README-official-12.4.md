@@ -1,20 +1,20 @@
-# ComfyUI - QwenVL-Mod Custom Pod - RTX 5090
+# ComfyUI - QwenVL-Mod Enhanced Template - CUDA 12.4
 
-Custom ComfyUI environment with conda-based setup, optimized for RTX 5090 with QwenVL-Mod enhanced vision-language capabilities and WAN 2.2 video generation.
+Professional ComfyUI environment with QwenVL-Mod enhanced vision-language capabilities and WAN 2.2 video generation.
 
-**Template**: `Custom-ComfyUI-WAN2.2-Qwen3VL-RTX5090` - **Conda Environment**
+**Template**: `ComfyUI-WAN2.2-Qwen3VL-CUDA12.4` - **GPU Optimized**
 
-*Custom-built pod with dedicated conda environment*
+*Based on the official ComfyUI RunPod Template*
 
 ---
 
 ## 🎯 Who is this for?
 
-- **AI Video Creators** wanting professional WAN 2.2 video generation
-- **Content Creators** needing multilingual prompt processing
-- **Digital Artists** requiring visual style detection and enhancement
+- **RunPod Users** wanting enhanced template stability
+- **AI Video Creators** needing reliable WAN 2.2 video generation
+- **Content Creators** requiring multilingual prompt processing
+- **Digital Artists** wanting visual style detection
 - **ML Engineers** deploying production-ready video workflows
-- **Researchers** experimenting with vision-language models
 
 ---
 
@@ -30,25 +30,30 @@ Custom ComfyUI environment with conda-based setup, optimized for RTX 5090 with Q
 - **Visual Style Detection**: 12+ artistic styles (anime, 3D, pixel art, etc.)
 - **GGUF Backend**: Efficient local model inference
 - **NSFW Support**: Comprehensive content generation
-- **JupyterLab Terminal**: Direct bash access in conda environment
+- **JupyterLab Terminal**: Direct bash access
 
-### **⚡ Custom Pod Optimizations**
-- **RTX 5090 Optimized**: CUDA 12.8 for maximum performance
-- **Dedicated Conda Environment**: Python 3.12.12 isolated setup
-- **FP16 Accumulation**: Faster mixed precision computation
-- **Sage Attention**: Optimized attention mechanisms for WAN2.2
+### **⚡ RunPod Optimizations**
+- **Enhanced Template Base**: Built on proven foundation
+- **CUDA 12.4 Support**: Stable CUDA toolkit compatibility
+- **Multi-stage Build**: Optimized Docker layer caching
+- **RunPod Integration**: Native service compatibility
+- **SSH Access**: Secure remote management
+- **Port Forwarding**: Easy service access (ComfyUI: 8188, Jupyter: 8888, FileBrowser: 8080)
+
+### **🔧 Performance Features**
+- **Sage Attention**: Optimized attention mechanisms
 - **Async Offload**: Efficient memory management
 - **FP8 Support**: Latest hardware acceleration
-- **TensorRT Support**: Advanced upscaling and interpolation
+- **TensorRT Support**: Advanced upscaling
 
 ---
 
 ## 📦 Pre-installed Components
 
-### **Custom Conda Environment**
-- **Dedicated Conda Setup**: Isolated Python 3.12.12 environment
-- **CUDA 12.8 Toolkit**: Optimized for RTX 5090
-- **Custom Dependencies**: Tailored package versions
+### **Enhanced Base**
+- **Optimized Python 3.12**: Clean Python environment
+- **CUDA 12.4 Toolkit**: Stable GPU computing platform
+- **Essential System Packages**: Minimal, secure base
 
 ### **Custom Nodes (26+)**
 - **ComfyUI-QwenVL-Mod**: Enhanced vision-language with WAN 2.2
@@ -65,7 +70,7 @@ Custom ComfyUI environment with conda-based setup, optimized for RTX 5090 with Q
 
 ### **Workflows Included (13)**
 - **WAN 2.2 T2V**: Text-to-video with automatic prompt optimization
-- **WAN 2.2 I2V**: Image-to-video with style detection and enhancement
+- **WAN 2.2 I2V**: Image-to-video with intelligent style detection
 - **WAN 2.2 T2V GGUF**: Efficient text-to-video with GGUF models
 - **WAN 2.2 I2V GGUF**: Optimized image-to-video with GGUF
 - **WAN 2.2 SVI**: Storyboard-to-video with narrative enhancement
@@ -81,23 +86,23 @@ Custom ComfyUI environment with conda-based setup, optimized for RTX 5090 with Q
 ## 🛠️ Technical Specifications
 
 ### **System Requirements**
-- **GPU**: RTX 5090 (optimized for this card)
-- **CUDA**: 12.8 compatible
-- **Memory**: 32GB+ VRAM recommended
+- **GPU**: Any RunPod GPU (A100, H100, RTX series)
+- **CUDA**: 12.4 compatible
+- **Memory**: 24GB+ VRAM recommended
 - **Storage**: 100GB+ SSD for models and workflows
 
-### **Custom Pod Benefits**
-- **Dedicated Environment**: Isolated conda setup prevents conflicts
-- **Optimized Dependencies**: Custom-tailored package versions
-- **Enhanced Performance**: RTX 5090 specific optimizations
-- **Full Control**: Complete environment management
+### **Enhanced Template Benefits**
+- **Stability**: Based on tested foundation
+- **Compatibility**: Works with all RunPod features
+- **Support**: Community documentation
+- **Updates**: Regular improvements
 
 ---
 
 ## 🚀 Quick Start
 
-1. **Deploy Template**: Select "Custom-ComfyUI-WAN2.2-Qwen3VL-RTX5090"
-2. **Wait for Setup**: Automatic conda environment initialization (~5-10 minutes)
+1. **Deploy Template**: Select "ComfyUI-WAN2.2-Qwen3VL-CUDA12.4"
+2. **Wait for Setup**: Automatic initialization (~5-10 minutes)
 3. **Access Services**:
    - **ComfyUI**: `http://your-pod-ip:8188`
    - **JupyterLab**: `http://your-pod-ip:8888`
@@ -112,24 +117,25 @@ Custom ComfyUI environment with conda-based setup, optimized for RTX 5090 with Q
 
 - `COMFYUI_ARGS`: ComfyUI startup parameters
 - `LIGHTNING_THEME`: JupyterLab theme (light/dark)
-- `CONDA_ENV`: Conda environment name (comfyui)
+- `WORKSPACE_DIR`: Working directory path
+- `MODEL_DIR`: Models storage location
 
 ---
 
 ## 📚 Documentation
 
+- **RunPod Docs**: [docs.runpod.io](https://docs.runpod.io)
 - **ComfyUI-QwenVL-Mod**: Repository documentation
 - **WAN 2.2 Paper**: Technical specifications
-- **Conda Docs**: Environment management
 
 ---
 
 ## 🆘 Support
 
+- **RunPod Community**: Official Discord and forums
 - **Template Issues**: GitHub repository issues
 - **ComfyUI Help**: ComfyUI community resources
-- **Conda Support**: Environment troubleshooting
 
 ---
 
-**Custom-Built Pod** - Dedicated conda environment with RTX 5090 optimizations for maximum performance.
+**Enhanced RunPod Template** - Combining reliability with QwenVL-Mod's advanced AI capabilities on CUDA 12.4.
