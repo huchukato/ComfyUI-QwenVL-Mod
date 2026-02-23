@@ -100,10 +100,10 @@ function provisioning_start() {
     echo "🔧 Installing custom nodes..."
     provisioning_get_nodes
     
-    echo "� Copying wildcards to Impact-Pack..."
+    echo "🎴 Copying wildcards to Impact-Pack..."
     provisioning_copy_wildcards
     
-    echo "� Installing PIP packages..."
+    echo "📦 Installing PIP packages..."
     provisioning_get_pip_packages
     
     echo "📁 Downloading workflows..."
