@@ -245,11 +245,7 @@ download_models() {
         wget -q "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" -O "/ComfyUI/models/vae/wan_2.1_vae.safetensors" || echo "  ⚠️ Failed to download WAN 2.1 VAE"
     fi
     
-    if [ ! -f "/ComfyUI/models/vae/Wan2_1_VAE_fp32.safetensors" ]; then
-        echo "  📥 Downloading WAN2.1 VAE fp32..."
-        wget -q "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors" -O "/ComfyUI/models/vae/Wan2_1_VAE_fp32.safetensors" || echo "  ⚠️ Failed to download WAN2.1 VAE fp32"
-    fi
-    
+        
     if [ ! -f "/ComfyUI/models/vae/sdxl_vae.safetensors" ]; then
         echo "  📥 Downloading SDXL VAE..."
         wget -q "https://huggingface.co/huchukato/favs/resolve/main/VAE/sdxl.vae.safetensors" -O "/ComfyUI/models/vae/sdxl_vae.safetensors" || echo "  ⚠️ Failed to download SDXL VAE"
