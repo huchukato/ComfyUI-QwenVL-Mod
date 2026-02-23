@@ -207,6 +207,7 @@ DB_FILE="/workspace/runpod-slim/filebrowser/database/filebrowser.db"
 
 update_workflows() {
     echo "Updating workflows..."
+    mkdir -p $COMFYUI_DIR/user/default/workflows
     cd $COMFYUI_DIR/user/default/workflows
     
     workflows=(
@@ -228,7 +229,7 @@ update_workflows() {
     for workflow in "${workflows[@]}"; do
         if [ ! -f "$workflow" ]; then
             echo "Downloading $workflow..."
-            wget -q "https://raw.githubusercontent.com/huchukato/ComfyUI-QwenVL-Mod/main/runpod/workflows/$workflow" || echo "Failed to download $workflow"
+            wget -q "https://raw.githubusercontent.com/huchukato/ComfyUI-QwenVL-Mod/main/vastai/workflows/$workflow" || echo "Failed to download $workflow"
         else
             echo "$workflow already exists"
         fi
@@ -263,7 +264,20 @@ start_filebrowser() {
 FBEOF
     fi
     
-    filebrowser -c "$FILEBROWSER_CONFIG" &> /filebrowser.log &
+    # Start FileBrowser with proper error handling
+    nohup filebrowser -c "$FILEBROWSER_CONFIG" &> /filebrowser.log &
+    sleep 5
+    
+    # Check if FileBrowser started successfully
+    if pgrep -f "filebrowser" > /dev/null; then
+        echo "✅ FileBrowser started successfully"
+        echo "📊 FileBrowser logs:"
+        tail -5 /filebrowser.log
+    else
+        echo "❌ FileBrowser failed to start"
+        echo "📊 Full error logs:"
+        cat /filebrowser.log
+    fi
 }
 
 start_comfyui() {
@@ -273,8 +287,58 @@ start_comfyui() {
     python main.py $COMFYUI_ARGS &> /comfyui.log &
 }
 
+download_models() {
+    echo "🔄 Downloading essential models..."
+    cd $COMFYUI_DIR
+    
+    # Download VAE models
+    if [ ! -f "$COMFYUI_DIR/models/vae/wan_2.1_vae.safetensors" ]; then
+        echo "  📥 Downloading WAN 2.1 VAE..."
+        wget -q "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" -O "$COMFYUI_DIR/models/vae/wan_2.1_vae.safetensors" || echo "  ⚠️ Failed to download WAN 2.1 VAE"
+    fi
+    
+    if [ ! -f "$COMFYUI_DIR/models/vae/Wan2_1_VAE_fp32.safetensors" ]; then
+        echo "  📥 Downloading WAN2.1 VAE fp32..."
+        wget -q "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors" -O "$COMFYUI_DIR/models/vae/Wan2_1_VAE_fp32.safetensors" || echo "  ⚠️ Failed to download WAN2.1 VAE fp32"
+    fi
+    
+    if [ ! -f "$COMFYUI_DIR/models/vae/sdxl_vae.safetensors" ]; then
+        echo "  📥 Downloading SDXL VAE..."
+        wget -q "https://huggingface.co/huchukato/favs/resolve/main/VAE/sdxl.vae.safetensors" -O "$COMFYUI_DIR/models/vae/sdxl_vae.safetensors" || echo "  ⚠️ Failed to download SDXL VAE"
+    fi
+    
+    # Download upscale models
+    if [ ! -f "$COMFYUI_DIR/models/upscale_models/2xLexicaRRDBNet.pth" ]; then
+        echo "  📥 Downloading 2xLexicaRRDBNet upscale model..."
+        wget -q "https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth" -O "$COMFYUI_DIR/models/upscale_models/2xLexicaRRDBNet.pth" || echo "  ⚠️ Failed to download upscale model"
+    fi
+    
+    if [ ! -f "$COMFYUI_DIR/models/upscale_models/2xLexicaRRDBNet_Sharp.pth" ]; then
+        echo "  📥 Downloading 2xLexicaRRDBNet Sharp upscale model..."
+        wget -q "https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth" -O "$COMFYUI_DIR/models/upscale_models/2xLexicaRRDBNet_Sharp.pth" || echo "  ⚠️ Failed to download Sharp upscale model"
+    fi
+    
+    # Download text encoder
+    if [ ! -f "$COMFYUI_DIR/models/text_encoders/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" ]; then
+        echo "  📥 Downloading NSFW WAN UMT5-XXL text encoder..."
+        wget -q "https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" -O "$COMFYUI_DIR/models/text_encoders/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" || echo "  ⚠️ Failed to download text encoder"
+    fi
+    
+    if [ ! -f "$COMFYUI_DIR/models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" ]; then
+        echo "  📥 Downloading UMT5-XXL FP8 text encoder..."
+        wget -q "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" -O "$COMFYUI_DIR/models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" || echo "  ⚠️ Failed to download UMT5-XXL text encoder"
+    fi
+    
+    echo "✅ Model download completed"
+    echo "📋 Available models:"
+    ls -la $COMFYUI_DIR/models/vae/
+    ls -la $COMFYUI_DIR/models/upscale_models/
+    ls -la $COMFYUI_DIR/models/text_encoders/
+}
+
 echo "Starting RunPod QwenVL Mod Environment..."
 update_workflows
+download_models
 start_jupyter
 start_filebrowser
 start_comfyui
