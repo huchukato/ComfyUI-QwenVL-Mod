@@ -1,7 +1,6 @@
-# ComfyUI-QwenVL-Mod RunPod Worker (No Conda)
+# ComfyUI-QwenVL-Mod RunPod Worker
 # Enhanced with WAN 2.2 workflows, multilingual support, and GGUF backend
 # Optimized for RTX 5090 and professional video generation
-# Native Python for better performance
 
 FROM nvidia/cuda:12.8.0-cudnn-devel-ubuntu24.04
 
@@ -12,9 +11,8 @@ ENV PYTHONUNBUFFERED=1
 ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:$CUDA_HOME/bin
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
-ENV PYTHONPATH=/ComfyUI:$PYTHONPATH
 
-# Install system dependencies
+# Install system dependencies (CUDA already included in base image)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     make \
@@ -24,15 +22,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
     ca-certificates \
     build-essential \
-    ffmpeg \
+    python3.12 \
+    python3.12-venv \
+    python3.12-dev \
+    python3-pip \
+    libglx-mesa0 \
+    libglib2.0-0 \
     libsm6 \
     libxext6 \
     libxrender-dev \
-    libglib2.0-0 \
-    libgtk-3-0 \
-    libavcodec-dev \
-    libavformat-dev \
-    libswscale-dev \
+    libgomp1 \
+    ffmpeg \
+    openssh-server \
+    openssh-client \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # CUDA toolkit and cuDNN already included in nvidia/cuda base image
@@ -43,7 +46,7 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
     mkdir -p /run/sshd && \
     rm -f /etc/ssh/ssh_host_*
 
-# Install PyTorch with CUDA support (will use system CUDA)
+# Install PyTorch with CUDA 12.8 (compatible with base image CUDA 12.8.0) - optimized for RTX 5090
 RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu128
 
 # Install ComfyUI latest stable version
@@ -52,7 +55,7 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
     pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir GitPython opencv-python
 
-# Install llama-cpp-python for GGUF support (CUDA 12.8 compatible)
+# Install llama-cpp-python for GGUF support (CUDA 12.8 compatible with base image)
 RUN pip install --upgrade --force-reinstall --no-cache-dir \
     https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.27-cu128-Basic-linux-20260222/llama_cpp_python-0.3.27+cu128.basic-cp312-cp312-linux_x86_64.whl
 
@@ -319,10 +322,10 @@ else
     echo "📊 Full error logs:"
     cat /jupyter.log
     echo "🔍 Checking what went wrong..."
-    echo "🐍 Python version:"
-    python --version
-    echo "📦 Jupyter Lab version:"
-    jupyter lab --version
+    echo "🐍 Python version in conda env:"
+    /opt/conda/bin/conda run -n comfyui python --version
+    echo "📦 Jupyter Lab version in conda env:"
+    /opt/conda/bin/conda run -n comfyui jupyter lab --version
 fi
 
 
@@ -331,7 +334,7 @@ echo "🚀 Starting ComfyUI..."
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:$(echo $COMFYUI_ARGS | grep -oP '(?<=--port\s)\d+' || echo '8188')"
 echo "📓 Jupyter Lab Terminal: Open http://0.0.0.0:8888 → New → Terminal"
 cd $COMFYUI_DIR
-nohup python main.py $COMFYUI_ARGS &> /comfyui.log &
+/opt/conda/bin/conda run -n comfyui nohup python main.py $COMFYUI_ARGS &> /comfyui.log &
 echo "✅ ComfyUI started"
 
 # Tail the ComfyUI log
