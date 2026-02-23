@@ -25,7 +25,6 @@ RUN apt-get update && \
     && dpkg -i cuda-keyring_1.1-1_all.deb \
     && apt-get update && \
     apt-get install -y --no-install-recommends cuda-minimal-build-12-8 \
-    && apt-get install -y --no-install-recommends libcudnn8-cuda-12 libcudnn8-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && rm cuda-keyring_1.1-1_all.deb
@@ -142,7 +141,6 @@ RUN apt-get update && \
     && dpkg -i cuda-keyring_1.1-1_all.deb \
     && apt-get update && \
     apt-get install -y --no-install-recommends cuda-minimal-build-12-8 \
-    && apt-get install -y --no-install-recommends libcudnn8-cuda-12 libcudnn8-dev \
     && apt-get install -y --no-install-recommends ffmpeg \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
