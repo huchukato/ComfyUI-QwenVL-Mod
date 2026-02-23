@@ -1,18 +1,17 @@
-# ComfyUI-QwenVL-Mod RunPod Worker
+# ComfyUI-QwenVL-Mod RunPod Worker (No Conda)
 # Enhanced with WAN 2.2 workflows, multilingual support, and GGUF backend
 # Optimized for RTX 5090 and professional video generation
+# Native Python for better performance
 
-FROM nvidia/cuda:12.8.0-cudnn-devel-ubuntu24.04
+FROM python:3.12-slim
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 ENV IMAGEIO_FFMPEG_EXE=/usr/bin/ffmpeg
 ENV PYTHONUNBUFFERED=1
-ENV CUDA_HOME=/usr/local/cuda
-ENV PATH=$PATH:$CUDA_HOME/bin
-ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
+ENV PYTHONPATH=/ComfyUI:$PYTHONPATH
 
-# Install system dependencies (CUDA already included in base image)
+# Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     make \
@@ -22,20 +21,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
     ca-certificates \
     build-essential \
-    python3.12 \
-    python3.12-venv \
-    python3.12-dev \
-    python3-pip \
-    libglx-mesa0 \
-    libglib2.0-0 \
+    ffmpeg \
     libsm6 \
     libxext6 \
     libxrender-dev \
-    libgomp1 \
-    ffmpeg \
-    openssh-server \
-    openssh-client \
-    && apt-get clean \
+    libglib2.0-0 \
+    libgtk-3-0 \
+    libavcodec-dev \
+    libavformat-dev \
+    libswscale-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # CUDA toolkit and cuDNN already included in nvidia/cuda base image
@@ -46,39 +40,18 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
     mkdir -p /run/sshd && \
     rm -f /etc/ssh/ssh_host_*
 
-# Set Python 3.12 as default system-wide
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 && \
-    update-alternatives --set python3 /usr/bin/python3.12
-
-# Install Miniconda and create conda environment with Python 3.12.12
-RUN wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && \
-    bash miniconda.sh -b -p /opt/conda && \
-    rm miniconda.sh && \
-    /opt/conda/bin/conda clean -afy
-
-# Add conda to PATH
-ENV PATH="/opt/conda/bin:$PATH"
-
-# Create conda environment with Python 3.12.12
-RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
-    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
-    conda create -n comfyui python=3.12.12 -y
-
-# Install PyTorch with CUDA 12.8 (compatible with base image CUDA 12.8.0) - optimized for RTX 5090
-RUN /opt/conda/bin/conda run -n comfyui pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu128 && \
-    /opt/conda/bin/conda run -n comfyui pip cache purge
+# Install PyTorch with CUDA support (will use system CUDA)
+RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu128
 
 # Install ComfyUI latest stable version
 WORKDIR /ComfyUI
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
-    /opt/conda/bin/conda run -n comfyui pip install --no-cache-dir -r requirements.txt && \
-    /opt/conda/bin/conda run -n comfyui pip install --no-cache-dir GitPython opencv-python && \
-    /opt/conda/bin/conda run -n comfyui pip cache purge
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir GitPython opencv-python
 
-# Install llama-cpp-python for GGUF support (CUDA 12.8 compatible with base image)
-RUN /opt/conda/bin/conda run -n comfyui pip install --upgrade --force-reinstall --no-cache-dir \
-    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.27-cu128-Basic-linux-20260222/llama_cpp_python-0.3.27+cu128.basic-cp312-cp312-linux_x86_64.whl && \
-    /opt/conda/bin/conda run -n comfyui pip cache purge
+# Install llama-cpp-python for GGUF support (CUDA 12.8 compatible)
+RUN pip install --upgrade --force-reinstall --no-cache-dir \
+    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.27-cu128-Basic-linux-20260222/llama_cpp_python-0.3.27+cu128.basic-cp312-cp312-linux_x86_64.whl
 
 # Install ALL ComfyUI custom nodes from VastAI provisioning + RunpodDirect
 RUN cd /ComfyUI/custom_nodes && \
@@ -115,14 +88,12 @@ RUN cd /ComfyUI/custom_nodes && \
 RUN cp -r /ComfyUI/custom_nodes/comfy-tagcomplete/wildcards/mbe /ComfyUI/custom_nodes/ComfyUI-Impact-Pack/wildcards || echo "Wildcards copy completed (or already exists)"
 
 # Install requirements for all custom nodes
-RUN /opt/conda/bin/conda run -n comfyui bash -c 'cd /ComfyUI/custom_nodes && for node_dir in */; do if [ -f "$node_dir/requirements.txt" ]; then echo "Installing requirements for $node_dir..." && pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; fi; done' && \
-    /opt/conda/bin/conda run -n comfyui pip cache purge
+RUN bash -c 'cd /ComfyUI/custom_nodes && for node_dir in */; do if [ -f "$node_dir/requirements.txt" ]; then echo "Installing requirements for $node_dir..." && pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; fi; done'
 
 # ComfyUI-Easy-Use-Frontend removed due to compatibility issues
 
-# Install additional essential dependencies in conda environment
-RUN /opt/conda/bin/conda run -n comfyui pip install --no-cache-dir jupyter jupyter_server_terminals terminado sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors huggingface_hub && \
-    /opt/conda/bin/conda run -n comfyui pip cache purge
+# Install additional essential dependencies
+RUN pip install --no-cache-dir jupyter jupyter_server_terminals terminado sageattention torchsde triton opencv-python-headless scikit-image spandrel safetensors huggingface_hub
 
 # Clean up heavy Git files to save space (keep repo structure for updates)
 RUN find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "*.pack" -delete + || true && \
@@ -345,10 +316,10 @@ else
     echo "📊 Full error logs:"
     cat /jupyter.log
     echo "🔍 Checking what went wrong..."
-    echo "🐍 Python version in conda env:"
-    /opt/conda/bin/conda run -n comfyui python --version
-    echo "📦 Jupyter Lab version in conda env:"
-    /opt/conda/bin/conda run -n comfyui jupyter lab --version
+    echo "🐍 Python version:"
+    python --version
+    echo "📦 Jupyter Lab version:"
+    jupyter lab --version
 fi
 
 
@@ -357,7 +328,7 @@ echo "🚀 Starting ComfyUI..."
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:$(echo $COMFYUI_ARGS | grep -oP '(?<=--port\s)\d+' || echo '8188')"
 echo "📓 Jupyter Lab Terminal: Open http://0.0.0.0:8888 → New → Terminal"
 cd $COMFYUI_DIR
-/opt/conda/bin/conda run -n comfyui nohup python main.py $COMFYUI_ARGS &> /comfyui.log &
+nohup python main.py $COMFYUI_ARGS &> /comfyui.log &
 echo "✅ ComfyUI started"
 
 # Tail the ComfyUI log
