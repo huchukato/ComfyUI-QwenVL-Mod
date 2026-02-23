@@ -141,7 +141,7 @@ echo "🔑 No token required"
 echo ""
 cd /ComfyUI
 echo "🔧 Starting Jupyter Lab with terminal support..."
-/opt/conda/bin/conda run -n comfyui nohup jupyter lab \
+/opt/comfyui-env/bin/nohup jupyter lab \
     --allow-root \
     --no-browser \
     --port=8888 \
@@ -164,10 +164,10 @@ else
     echo "📊 Full error logs:"
     cat /jupyter.log
     echo "🔍 Checking what went wrong..."
-    echo "🐍 Python version in conda env:"
-    /opt/conda/bin/conda run -n comfyui python --version
-    echo "📦 Jupyter Lab version in conda env:"
-    /opt/conda/bin/conda run -n comfyui jupyter lab --version
+    echo "🐍 Python version in virtual env:"
+    /opt/comfyui-env/bin/python --version
+    echo "📦 Jupyter Lab version in virtual env:"
+    /opt/comfyui-env/bin/jupyter lab --version
 fi
 EOF
 RUN chmod +x /usr/local/bin/start-jupyter.sh
@@ -189,8 +189,6 @@ RUN find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "*.pack"
 RUN rm -rf /tmp/* \
        && rm -rf /var/lib/apt/lists/* \
        && rm -rf /var/cache/apt/archives/* \
-       && find /opt/conda -name "*.pyc" -delete \
-       && find /opt/conda -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true \
        && find /ComfyUI -name "*.pyc" -delete \
        && find /ComfyUI -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 
@@ -328,10 +326,10 @@ else
     echo "📊 Full error logs:"
     cat /jupyter.log
     echo "🔍 Checking what went wrong..."
-    echo "🐍 Python version in conda env:"
-    /opt/conda/bin/conda run -n comfyui python --version
-    echo "📦 Jupyter Lab version in conda env:"
-    /opt/conda/bin/conda run -n comfyui jupyter lab --version
+    echo "🐍 Python version in virtual env:"
+    /opt/comfyui-env/bin/python --version
+    echo "📦 Jupyter Lab version in virtual env:"
+    /opt/comfyui-env/bin/jupyter lab --version
 fi
 
 
@@ -340,7 +338,7 @@ echo "🚀 Starting ComfyUI..."
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:$(echo $COMFYUI_ARGS | grep -oP '(?<=--port\s)\d+' || echo '8188')"
 echo "📓 Jupyter Lab Terminal: Open http://0.0.0.0:8888 → New → Terminal"
 cd $COMFYUI_DIR
-/opt/conda/bin/conda run -n comfyui nohup python main.py $COMFYUI_ARGS &> /comfyui.log &
+/opt/comfyui-env/bin/nohup python main.py $COMFYUI_ARGS &> /comfyui.log &
 echo "✅ ComfyUI started"
 
 # Tail the ComfyUI log
