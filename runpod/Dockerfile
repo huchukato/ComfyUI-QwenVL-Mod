@@ -146,7 +146,7 @@ echo "🔑 No token required"
 echo ""
 cd /ComfyUI
 echo "🔧 Starting Jupyter Lab with terminal support..."
-/opt/comfyui-env/bin/nohup jupyter lab \
+nohup /opt/comfyui-env/bin/jupyter lab \
     --allow-root \
     --no-browser \
     --port=8888 \
@@ -336,7 +336,7 @@ echo "🚀 Starting ComfyUI..."
 echo "🌐 ComfyUI will be available at: http://0.0.0.0:$(echo $COMFYUI_ARGS | grep -oP '(?<=--port\s)\d+' || echo '8188')"
 echo "📓 Jupyter Lab Terminal: Open http://0.0.0.0:8888 → New → Terminal"
 cd $COMFYUI_DIR
-/opt/comfyui-env/bin/nohup python main.py $COMFYUI_ARGS &> /comfyui.log &
+nohup /opt/comfyui-env/bin/python main.py $COMFYUI_ARGS &> /comfyui.log &
 echo "✅ ComfyUI started"
 
 # Tail the ComfyUI log
