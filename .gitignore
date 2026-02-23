@@ -74,11 +74,10 @@ npm-debug.log*
 # Jupyter
 .ipynb_checkpoints/
 
-# Personal build scripts (only for local use - don't commit)
-build-local-*.sh
-Dockerfile.*-12.4
-build-and-push-*12.4.sh
-start-*12.4.shal.sh
+# CUDA 12.4 specific files (only for personal use)
+Dockerfile.runpod-official-12.4
+build-and-push-runpod-official-12.4.sh
+start-runpod-official-12.4.shal.sh
 
 # CUDA 12.4 specific files (only for personal use)
 Dockerfile.runpod-official-12.4
