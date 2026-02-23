@@ -11,6 +11,8 @@
 [![Stars](https://img.shields.io/github/stars/huchukato/ComfyUI-QwenVL-Mod?style=for-the-badge&logo=github)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
 [![Issues](https://img.shields.io/github/issues/huchukato/ComfyUI-QwenVL-Mod?style=for-the-badge&logo=github)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/issues)
 
+[![LightningAI](https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/app-2/studio-badge.svg)](https://lightning.ai/huchukato/environments/comfyui-v0-14-2-wan2-2-qwen3-vl-autoprompt)
+
 Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguaggio (LVLM) Qwen-VL di Alibaba Cloud, inclusi i più recenti Qwen3-VL e Qwen2.5-VL, oltre a backend GGUF e supporto solo testo Qwen3. Questo nodo avanzato abilita funzionalità multimodali AI senza soluzione di continuità nei tuoi workflow ComfyUI, permettendo efficiente generazione di testo, comprensione di immagini e analisi video.
 
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
