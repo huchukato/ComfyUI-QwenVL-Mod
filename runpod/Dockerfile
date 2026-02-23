@@ -46,8 +46,12 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
     mkdir -p /run/sshd && \
     rm -f /etc/ssh/ssh_host_*
 
+# Create virtual environment to avoid externally-managed-environment error
+RUN python3 -m venv /opt/comfyui-env && \
+    /opt/comfyui-env/bin/pip install --upgrade pip
+
 # Install PyTorch with CUDA 12.8 (compatible with base image CUDA 12.8.0) - optimized for RTX 5090
-RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu128
+RUN /opt/comfyui-env/bin/pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu128
 
 # Remove uv to force ComfyUI-Manager to use pip (uv doesn't respect --system-site-packages properly)
 RUN pip uninstall -y uv 2>/dev/null || true && \
@@ -56,11 +60,11 @@ RUN pip uninstall -y uv 2>/dev/null || true && \
 # Install ComfyUI latest stable version
 WORKDIR /ComfyUI
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
-    pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir GitPython opencv-python
+    /opt/comfyui-env/bin/pip install --no-cache-dir -r requirements.txt && \
+    /opt/comfyui-env/bin/pip install --no-cache-dir GitPython opencv-python
 
 # Install llama-cpp-python for GGUF support (CUDA 12.8 compatible with base image)
-RUN pip install --upgrade --force-reinstall --no-cache-dir \
+RUN /opt/comfyui-env/bin/pip install --upgrade --force-reinstall --no-cache-dir \
     https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.27-cu128-Basic-linux-20260222/llama_cpp_python-0.3.27+cu128.basic-cp312-cp312-linux_x86_64.whl
 
 # Install ALL ComfyUI custom nodes from VastAI provisioning + RunpodDirect
@@ -98,22 +102,17 @@ RUN cd /ComfyUI/custom_nodes && \
 RUN cp -r /ComfyUI/custom_nodes/comfy-tagcomplete/wildcards/mbe /ComfyUI/custom_nodes/ComfyUI-Impact-Pack/wildcards || echo "Wildcards copy completed (or already exists)"
 
 # Install requirements for all custom nodes
-RUN bash -c 'cd /ComfyUI/custom_nodes && for node_dir in */; do if [ -f "$node_dir/requirements.txt" ]; then echo "Installing requirements for $node_dir..." && pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; fi; done'
+RUN bash -c 'cd /ComfyUI/custom_nodes && for node_dir in */; do if [ -f "$node_dir/requirements.txt" ]; then echo "Installing requirements for $node_dir..." && /opt/comfyui-env/bin/pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; fi; done'
 
 # Install additional essential dependencies
-RUN pip install --no-cache-dir jupyter sageattention huggingface_hub requests aiohttp
+RUN /opt/comfyui-env/bin/pip install --no-cache-dir jupyter sageattention huggingface_hub requests aiohttp
 
 # Clean up heavy Git files to save space (keep repo structure for updates)
 RUN find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "*.pack" -delete + || true && \
     find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "pack-*.idx" -delete + || true && \
     find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "objects" -type d -exec rm -rf {} + || true
 
-# Install additional essential dependencies
-RUN pip install --no-cache-dir jupyter sageattention
-
 # Create FileBrowser (RunPod method)
-
-# Install FileBrowser (RunPod method)
 RUN curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash
 
 # Create FileBrowser database and directories
