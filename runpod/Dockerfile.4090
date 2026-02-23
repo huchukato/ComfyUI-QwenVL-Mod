@@ -155,7 +155,7 @@ echo "🔑 No token required"
 echo ""
 cd /ComfyUI
 echo "🔧 Starting Jupyter Lab with terminal support..."
-/opt/comfyui-env/bin/nohup jupyter lab \
+nohup /opt/comfyui-env/bin/jupyter lab \
     --allow-root \
     --no-browser \
     --port=8888 \
