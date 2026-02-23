@@ -100,15 +100,18 @@ RUN cp -r /ComfyUI/custom_nodes/comfy-tagcomplete/wildcards/mbe /ComfyUI/custom_
 # Install requirements for all custom nodes
 RUN bash -c 'cd /ComfyUI/custom_nodes && for node_dir in */; do if [ -f "$node_dir/requirements.txt" ]; then echo "Installing requirements for $node_dir..." && pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; fi; done'
 
-# ComfyUI-Easy-Use-Frontend removed due to compatibility issues
-
-# Install additional essential dependencies
-RUN pip install --no-cache-dir jupyter sageattention
+# Install additional essential dependencies for ComfyUI-HuggingFace
+RUN pip install --no-cache-dir huggingface_hub requests aiohttp
 
 # Clean up heavy Git files to save space (keep repo structure for updates)
 RUN find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "*.pack" -delete + || true && \
     find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "pack-*.idx" -delete + || true && \
     find /ComfyUI/custom_nodes -name ".git" -type d -exec find {} -name "objects" -type d -exec rm -rf {} + || true
+
+# Install additional essential dependencies
+RUN pip install --no-cache-dir jupyter sageattention
+
+# Create FileBrowser (RunPod method)
 
 # Install FileBrowser (RunPod method)
 RUN curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash
