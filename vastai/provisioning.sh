@@ -6,12 +6,10 @@ COMFYUI_DIR=${WORKSPACE}/ComfyUI
 APT_PACKAGES=(
     #"package-1"
     #"package-2"
-    "nodejs"
-    "npm"
 )
 
 PIP_PACKAGES=(
-    "--upgrade --force-reinstall https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.25-cu130-Basic-linux-20260215/llama_cpp_python-0.3.25+cu130.basic-cp312-cp312-linux_x86_64.whl"
+    # All packages are pre-installed in Docker image
 )
 
 NODES=(
@@ -49,15 +47,15 @@ WORKFLOWS=(
     "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-Story.json"
     "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-Story.json"
     "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-Story.json"
-    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-1-5.json"
-    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-GGUF-1-5.json"
-    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-1-6.json"
-    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-GGUF-1-5.json"
-    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-1-4.json"
-    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-GGUF-1-2.json"
-    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-v1-9.json"
-    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF-v1-6.json"
-    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-Full-AutoPrompt-MMAudio-GGUF-1-1.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-AutoPrompt-GGUF.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-AutoPrompt-GGUF.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/Wan2.2-I2V-SVI-AutoPrompt-GGUF.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-I2V-Full-AutoPrompt-MMAudio-GGUF.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/WAN2.2-T2V-I2V-Full-AutoPrompt-MMAudio-GGUF.json"
 )
 
 
@@ -278,53 +276,6 @@ function provisioning_print_header() {
 
 function provisioning_print_end() {
     printf "\nProvisioning complete:  Application will start now\n\n"
-}
-
-function provisioning_has_valid_hf_token() {
-    [[ -n "$HF_TOKEN" ]] || return 1
-    url="https://huggingface.co/api/whoami-v2"
-
-    response=$(curl -o /dev/null -s -w "%{http_code}" -X GET "$url" \
-        -H "Authorization: Bearer $HF_TOKEN" \
-        -H "Content-Type: application/json")
-
-    # Check if the token is valid
-    if [ "$response" -eq 200 ]; then
-        return 0
-    else
-        return 1
-    fi
-}
-
-function provisioning_has_valid_civitai_token() {
-    [[ -n "$CIVITAI_TOKEN" ]] || return 1
-    url="https://civitai.com/api/v1/models?hidden=1&limit=1"
-
-    response=$(curl -o /dev/null -s -w "%{http_code}" -X GET "$url" \
-        -H "Authorization: Bearer $CIVITAI_TOKEN" \
-        -H "Content-Type: application/json")
-
-    # Check if the token is valid
-    if [ "$response" -eq 200 ]; then
-        return 0
-    else
-        return 1
-    fi
-}
-
-# Download from $1 URL to $2 file path
-function provisioning_download() {
-    if [[ -n $HF_TOKEN && $1 =~ ^https://([a-zA-Z0-9_-]+\.)?huggingface\.co(/|$|\?) ]]; then
-        auth_token="$HF_TOKEN"
-    elif 
-        [[ -n $CIVITAI_TOKEN && $1 =~ ^https://([a-zA-Z0-9_-]+\.)?civitai\.com(/|$|\?) ]]; then
-        auth_token="$CIVITAI_TOKEN"
-    fi
-    if [[ -n $auth_token ]];then
-        wget --header="Authorization: Bearer $auth_token" -qnc --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$2" "$1"
-    else
-        wget -qnc --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$2" "$1"
-    fi
 }
 
 # Allow user to disable provisioning if they started with a script they didn't want
