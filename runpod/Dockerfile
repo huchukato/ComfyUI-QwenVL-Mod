@@ -47,7 +47,7 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
     rm -f /etc/ssh/ssh_host_*
 
 # Create virtual environment to avoid externally-managed-environment error
-RUN python3 -m venv /opt/comfyui-env && \
+RUN python3.12 -m venv /opt/comfyui-env && \
     /opt/comfyui-env/bin/pip install --upgrade pip
 
 # Install PyTorch with CUDA 12.8 (compatible with base image CUDA 12.8.0) - optimized for RTX 5090

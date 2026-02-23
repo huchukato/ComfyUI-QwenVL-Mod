@@ -56,7 +56,7 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
     rm -f /etc/ssh/ssh_host_*
 
 # Create virtual environment to avoid externally-managed-environment error
-RUN python3 -m venv /opt/comfyui-env && \
+RUN python3.12 -m venv /opt/comfyui-env && \
     /opt/comfyui-env/bin/pip install --upgrade pip
 
 # Install PyTorch with CUDA 12.4.1 (matching base image)
