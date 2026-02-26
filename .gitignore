@@ -3,6 +3,7 @@
 # Python
 __pycache__/
 *.py[cod]
+*.pyc
 *$py.class
 *.so
 .Python
@@ -73,6 +74,9 @@ npm-debug.log*
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Prompt cache files
+prompt_cache.json
 
 # Personal build scripts and backups (don't commit to shared repo)
 build-and-push-4090.sh
