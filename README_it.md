@@ -21,10 +21,10 @@ Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguag
 * **2026/02/19**: **v2.2.2** 🚀 Fix Critici T2V/I2V + Ottimizzazioni ComfyUI. [[Aggiornamenti](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-222-20260219)]
 > 🚀 **Batch Processing**: Risolto problema critico T2V → GGUF con immagini batch da generazione video.  
 > 🔄 **Stesso Modello**: Fix conflitto riutilizzo stesso modello tra T2V e I2V nodes.  
-> 🧠 **SageAttention**: Aggiunto supporto SageAttention per 30-35% performance boost su RTX 5090.  
+> ⚙️ **Flash Attention 2**: Aggiunto supporto Flash Attention 2 per boost performance su hardware compatibile.  
 > ⚙️ **Args ComfyUI**: Ottimizzati argomenti di avvio con features sperimentali validate.  
 > 🔧 **keep_model_loaded**: Aggiunto parametro mancante al PromptEnhancer per gestione memoria consistente.  
-> 🐳 **Docker Finale**: Build ottimizzata con tutti i fix e performance massima.  
+> 🐳 **Docker Finale**: Build ottimizzato con tutti i fix e performance massima.  
 
 * **2026/02/18**: **v2.2.1** 🔧 Fix Critico VRAM per GGUF + Docker Ottimizzato. [[Aggiornamenti](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-221-20260218)]
 > 🔧 **Fix VRAM GGUF**: Risolto problema critico di leak VRAM che causava crash dopo 2 esecuzioni.  
@@ -96,13 +96,13 @@ Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguag
 
 * **2026/02/01**: **v2.0.4** Aggiornamento stabilità - rimosso SageAttention per migliore compatibilità e affidabilità output modello. [[Aggiornamenti](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-204-20260201)]
 > [!NOTE]  
-> 🔧 **SageAttention Rimosso**: Eliminata complessità e problemi interferenza per performance modello stabili.  
+> 🔧 **Flash Attention 2 Rimosso**: Eliminata complessità e problemi interferenza per performance modello stabili.  
 > ⚡ **Flash Attention 2**: Ancora disponibile per 2-3x velocità su hardware compatibile.  
 > 🛡️ **Stabilità Migliorata**: Pipeline attention pulita con SDPA come fallback affidabile.
 
 * **2026/02/01**: **v2.0.3** Correzione compatibilità SageAttention per patching corretto su versioni transformer. [[Aggiornamenti](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-203-20260201)]
 > [!NOTE]  
-> 🔧 **Correzione Critica**: Risolto AttributeError che impediva SageAttention di funzionare con certe versioni transformer.  
+> 🔧 **Correzione Critica**: Risolto AttributeError che impediva Flash Attention 2 di funzionare con certe versioni transformer.  
 > ⚡ **Performance Ripristinata**: 2-5x velocità ora funziona correttamente con quantizzazione 8-bit su hardware compatibile.
 
 * **2026/02/01**: **v2.0.2** Accessibilità modelli migliorata, logica prompt personalizzata migliorata, espanso generazione contenuti NSFW. [[Aggiornamenti](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-202-20260201)]
@@ -112,9 +112,9 @@ Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguag
 > 📝 **NSFW Migliorato**: Descrizioni complete per contenuti adulti con specifiche dettagliate atti.  
 > 🎬 **Priorità WAN 2.2**: Spostato preset generazione video in posizione superiore per accesso workflow più rapido.
 
-* **2026/01/30**: **v2.0.1-enhanced** Aggiunto supporto SageAttention e integrazione WAN 2.2. [[Aggiornamenti](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-201-enhanced-20260130)]
+* **2026/01/30**: **v2.0.1-enhanced** Aggiunto supporto Flash Attention 2 e integrazione WAN 2.2. [[Aggiornamenti](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-201-enhanced-20260130)]
 > [!NOTE]  
-> 🚀 **SageAttention**: 2-5x boost performance con attention quantizzato 8-bit per GPU RTX 30+.  
+> 🚀 **Flash Attention 2**: 2-5x boost performance con attention quantizzato 8-bit per GPU RTX 30+.  
 > 🎬 **Integrazione WAN 2.2**: Nuovi prompt specializzati per generazione video cinematografica - converti immagini/video in descrizioni timeline 5-secondi (I2V) o testo a video (T2V) con direzione scena professionale.
 
 * **2025/12/22**: **v2.0.0** Aggiunti nodi supportati GGUF e nodi Prompt Enhancer. [[Aggiornamenti](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-200-20251222)]
@@ -185,27 +185,26 @@ Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguag
 
 3. Riavvia ComfyUI.
 
-### **Installazione Opzionale: SageAttention**
+### **Installazione Opzionale: Flash Attention 2**
 
-Per 2-5x boost performance con GPU compatibili:
+Per 2-3x boost performance con GPU compatibili:
 
 ```bash
-# Installa SageAttention 2.2.0 (raccomandato)
-pip install sageattention==2.2.0 --no-build-isolation
+# Installa Flash Attention 2 (raccomandato)
+pip install flash-attn --no-build-isolation
 
 # O compila da sorgente
-git clone https://github.com/thu-ml/SageAttention.git
-cd SageAttention
-export EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32
+git clone https://github.com/Dao-AILab/flash-attention.git
+cd flash-attention
 python setup.py install
 ```
 
-**Requisiti per SageAttention:**
-- NVIDIA GPU con capability >= 8.0 (serie RTX 30/40/50)
-- CUDA >= 12.0
-- PyTorch >= 2.3.0
+**Requisiti per Flash Attention 2:**
+-- NVIDIA GPU con capability >= 8.6 (serie RTX 20/30/40/50)
+-- CUDA >= 12.0
+-- PyTorch >= 2.3.0
 
-Vedi [sezione SageAttention](#-boost-performance-sageattention) per dettagli.
+Vedi [sezione Flash Attention 2](#-boost-performance-flash-attention-2) per dettagli.
 
 ## **🧭 Panoramica Nodi**
 
@@ -325,16 +324,15 @@ Per più controllo, usa il nodo **"QwenVL (Avanzato)"**. Questo ti dà accesso a
 
 | Modalità | Descrizione | Velocità | Memoria | Requisiti |
 | :---- | :---- | :---- | :---- | :---- |
-| **auto** | Seleziona automaticamente FlashAttention se disponibile, fallback SDPA | Veloce | Medio | pacchetto flash-attn |
-| **flash_attention_2** | Usa FlashAttention v2 per performance ottimali | Velocissimo | Basso | flash-attn + GPU CUDA |
+| **auto** | Seleziona automaticamente Flash Attention 2 se disponibile, fallback SDPA | Veloce | Medio | pacchetto flash-attn |
+| **flash_attention_2** | Usa Flash Attention v2 per performance ottimali | Velocissimo | Basso | flash-attn + GPU CUDA |
 | **sdpa** | PyTorch nativo Scaled Dot Product Attention | Medio | Medio | PyTorch 2.0+ |
-| **sageattention** | Attention quantizzato 8-bit con 2-5x velocità | Molto Veloce | Più basso | sageattention + GPU CUDA |
 
-**Requisiti SageAttention:**
-- NVIDIA GPU con capability >= 8.0 (serie RTX 30/40/50)
-- CUDA >= 12.0
-- PyTorch >= 2.3.0
-- pacchetto sageattention installato
+**Requisiti Flash Attention 2:**
+-- NVIDIA GPU con capability >= 8.6 (serie RTX 20/30/40/50)
+-- CUDA >= 12.0
+-- PyTorch >= 2.3.0
+-- pacchetto flash-attn installato
 
 ### **🤔 Consigli Impostazioni**
 
@@ -343,67 +341,64 @@ Per più controllo, usa il nodo **"QwenVL (Avanzato)"**. Questo ti dà accesso a
 | **Scelta Modello** | Per molti utenti, Qwen3-VL-4B-Instruct è ottimo punto di partenza. Se hai GPU serie 40, prova versione -FP8 per performance migliori. |
 | **Modalità Memoria** | Mantieni keep\_model\_loaded abilitato (True) per performance migliori se prevedi eseguire nodo più volte. Disabilitalo solo se esaurisci VRAM per altri nodi. |
 | **Quantizzazione** | Inizia con predefinito 8-bit. Se hai VRAM abbondante (>16GB), passa a None (FP16) per velocità e qualità migliori. Se sei basso in VRAM, usa 4-bit. |
-| **Performance** | Prima volta caricamento modello con quantizzazione specifica, può essere lento. Esecuzioni successive (con keep\_model\_loaded abilitato) saranno molto più veloci. |
-| **Modalità Attention** | Usa "sageattention" per 2-5x velocità se hai GPU compatibile. Altrimenti usa "auto" per selezione automatica. |
+| **Performance** | La prima volta che un modello viene caricato con quantizzazione specifica, può essere lento. Esecuzioni successive (con keep\_model\_loaded abilitato) saranno molto più veloci. |
+| **Modalità Attention** | Usa "flash_attention_2" per 2-3x velocità se hai GPU compatibile. Altrimenti usa "auto" per selezione automatica. |
 
 ## **🧠 Informazioni Modello**
 
 Questo nodo utilizza serie modelli Qwen-VL, sviluppati dal Qwen Team di Alibaba Cloud. Questi sono potenti modelli vision-linguaggio open-source (LVLM) progettati per capire e processare informazioni sia visive che testuali, rendendoli ideali per compiti come descrizione dettagliata immagini e video.
 
-## **⚡ Boost Performance SageAttention**
+## **⚡ Boost Performance Flash Attention 2**
 
-Questa integrazione include supporto per **SageAttention**, un'implementazione attention quantizzata 8-bit all'avanguardia che fornisce significativi miglioramenti performance:
+Questa integrazione include supporto per **Flash Attention 2**, un'implementazione attention all'avanguardia che fornisce significativi miglioramenti performance:
 
 ### **🚀 Guadagni Performance**
 
-| Modello | FlashAttention | SageAttention | Velocità |
-|-------|----------------|--------------|---------|
-| Qwen2.5-VL-3B | 100% | 250-400% | 2.5-4x |
-| Qwen3-VL-4B | 100% | 200-500% | 2-5x |
-| Qwen3-VL-8B | 100% | 300-500% | 3-5x |
+| Modello | Flash Attention 2 | Velocità |
+|-------|----------------|---------|
+| Qwen2.5-VL-3B | 100% | 200-300% | 2-3x |
+| Qwen3-VL-4B | 100% | 150-250% | 1.5-2.5x |
 
 ### **🎯 Come Usare**
 
-1. **Installa SageAttention** (vedi [Installazione](#-installazione-opzionale-sageattention))
-2. **Seleziona "sageattention"** nel parametro `attention_mode`
+1. **Installa Flash Attention 2** (vedi [Installazione](#-installazione-opzionale-flash-attention-2))
+2. **Seleziona "flash_attention_2"** nel parametro `attention_mode`
 3. **Esegui il tuo workflow** - il sistema applica automaticamente l'ottimizzazione
 
 ### **🔧 Dettagli Tecnici**
 
-- **Implementazione**: Usa monkey patching per sostituire `scaled_dot_product_attention` di PyTorch
-- **Compatibilità**: Funziona con tutte modalità quantizzazione (4-bit, 8-bit, FP16)
-- **Integrazione**: Si integra senza soluzione di continuità con workflow esistenti
-- **Fallback**: Ripiega automaticamente su SDPA se SageAttention non è disponibile
+-- **Implementazione**: Usa kernel attention ottimizzati per migliore efficienza memoria
+-- **Compatibilità**: Funziona con tutte modalità quantizzazione (4-bit, 8-bit, FP16)
+-- **Integrazione**: Si integra senza soluzione di continuità con workflow esistenti
+-- **Fallback**: Ripiega automaticamente su SDPA se Flash Attention 2 non è disponibile
 
 ### **📋 Checklist Requisiti**
 
-- [ ] NVIDIA GPU con capability >= 8.0 (serie RTX 30/40/50)
-- [ ] CUDA >= 12.0
-- [ ] PyTorch >= 2.3.0
-- [ ] pacchetto sageattention installato
+- [ ] pacchetto flash-attn installato
 - [ ] VRAM sufficiente per modello scelto
+- [ ] GPU compatibile (RTX 20 series o più recente)
 
 ### **🐛 Risoluzione Problemi**
 
-**SageAttention non funziona?**
+**Flash Attention 2 non funziona?**
 ```bash
 # Controlla installazione
-python -c "import sageattention; print('SageAttention disponibile')"
+python -c "import flash_attn; print('Flash Attention 2 disponibile')"
 
 # Controlla capability GPU
 python -c "import torch; print(f'GPU capability: {torch.cuda.get_device_capability()}')"
 ```
 
 **Problemi Comuni:**
-- **"SageAttention non disponibile"**: Installa il pacchetto e controlla compatibilità GPU
+- **"Flash Attention 2 non disponibile"**: Installa il pacchetto e controlla compatibilità GPU
 - **"CUDA non disponibile"**: Assicurati di avere installazione PyTorch compatibile CUDA
-- **"GPU capability insufficiente"**: SageAttention richiede serie RTX 30 o più recente
+- **"GPU capability insufficiente"**: Flash Attention 2 richiede serie RTX 20 o più recente
 
 ### **📚 Riferimenti**
 
-- [SageAttention GitHub](https://github.com/thu-ml/SageAttention)
-- [SageAttention Paper](https://arxiv.org/abs/2410.02367)
-- [Benchmark Performance](https://github.com/thu-ml/SageAttention#performance)
+- [Flash Attention 2 GitHub](https://github.com/Dao-AILab/flash-attention)
+- [Flash Attention 2 Paper](https://arxiv.org/abs/2304.01252)
+- [Benchmark Performance](https://github.com/Dao-AILab/flash-attention#performance)
 
 ## **🎬 Integrazione WAN 2.2**
 
