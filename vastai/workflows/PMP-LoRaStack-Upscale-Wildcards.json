@@ -40,10 +40,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "ComfyUI-Upscaler-Tensorrt",
+        "aux_id": "yuvraj108c/ComfyUI-Upscaler-Tensorrt",
         "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
         "Node name for S&R": "UpscalerTensorrt",
-        "aux_id": "yuvraj108c/ComfyUI-Upscaler-Tensorrt"
+        "cnr_id": "ComfyUI-Upscaler-Tensorrt"
       },
       "widgets_values": [
         "2x",
@@ -76,10 +76,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "ComfyUI-Upscaler-Tensorrt",
+        "aux_id": "yuvraj108c/ComfyUI-Upscaler-Tensorrt",
         "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
         "Node name for S&R": "LoadUpscalerTensorrtModel",
-        "aux_id": "yuvraj108c/ComfyUI-Upscaler-Tensorrt"
+        "cnr_id": "ComfyUI-Upscaler-Tensorrt"
       },
       "widgets_values": [
         "4x-UltraSharp",
@@ -119,10 +119,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "comfyui-kjnodes",
+        "aux_id": "kijai/ComfyUI-KJNodes",
         "ver": "a6b867b63a29ca48ddb15c589e17a9f2d8530d57",
         "Node name for S&R": "ModelPatchTorchSettings",
-        "aux_id": "kijai/ComfyUI-KJNodes",
+        "cnr_id": "comfyui-kjnodes",
         "ue_properties": {
           "version": "7.0.1",
           "widget_ue_connectable": {
@@ -167,10 +167,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "comfyui-kjnodes",
+        "aux_id": "kijai/ComfyUI-KJNodes",
         "ver": "47ca2b2c26358615974162059061e9dc78be6715",
         "Node name for S&R": "PathchSageAttentionKJ",
-        "aux_id": "kijai/ComfyUI-KJNodes"
+        "cnr_id": "comfyui-kjnodes"
       },
       "widgets_values": [
         "auto",
@@ -226,10 +226,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "1.0.2512112053",
         "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
+        "cnr_id": "rgthree-comfy",
         "Node name for S&R": "Power Lora Loader (rgthree)"
       },
       "widgets_values": [
@@ -277,106 +277,6 @@
       ],
       "color": "#233",
       "bgcolor": "#355"
-    },
-    {
-      "id": 65,
-      "type": "a4600bd6-aa63-44f0-9811-40520958a8aa",
-      "pos": [
-        -100,
-        -180
-      ],
-      "size": [
-        970,
-        740
-      ],
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 104
-        },
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 105
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            106
-          ]
-        },
-        {
-          "name": "CLIP",
-          "type": "CLIP",
-          "links": [
-            107
-          ]
-        },
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            108,
-            110
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "63",
-            "wildcard_text"
-          ],
-          [
-            "66",
-            "text"
-          ],
-          [
-            "31",
-            "text"
-          ],
-          [
-            "4",
-            "ckpt_name"
-          ],
-          [
-            "3",
-            "steps"
-          ],
-          [
-            "3",
-            "cfg"
-          ],
-          [
-            "3",
-            "sampler_name"
-          ],
-          [
-            "3",
-            "scheduler"
-          ],
-          [
-            "54",
-            "dimensions"
-          ],
-          [
-            "54",
-            "invert"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.13.0"
-      },
-      "widgets_values": [],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
     },
     {
       "id": 67,
@@ -455,6 +355,7 @@
         "ver": "0.14.1",
         "Node name for S&R": "ImageUpscaleWithModel"
       },
+      "widgets_values": [],
       "color": "#323",
       "bgcolor": "#535"
     },
@@ -557,6 +458,106 @@
       },
       "color": "#322",
       "bgcolor": "#533"
+    },
+    {
+      "id": 65,
+      "type": "a4600bd6-aa63-44f0-9811-40520958a8aa",
+      "pos": [
+        -100,
+        -180
+      ],
+      "size": [
+        970,
+        740
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 104
+        },
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 105
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            106
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            107
+          ]
+        },
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            108,
+            110
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "63",
+            "wildcard_text"
+          ],
+          [
+            "66",
+            "text"
+          ],
+          [
+            "31",
+            "text"
+          ],
+          [
+            "4",
+            "ckpt_name"
+          ],
+          [
+            "3",
+            "steps"
+          ],
+          [
+            "3",
+            "cfg"
+          ],
+          [
+            "3",
+            "sampler_name"
+          ],
+          [
+            "3",
+            "scheduler"
+          ],
+          [
+            "54",
+            "dimensions"
+          ],
+          [
+            "54",
+            "invert"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.13.0"
+      },
+      "widgets_values": [],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
     }
   ],
   "links": [
@@ -704,9 +705,9 @@
         "id": "a4600bd6-aa63-44f0-9811-40520958a8aa",
         "version": 1,
         "state": {
-          "lastGroupId": 2,
-          "lastNodeId": 66,
-          "lastLinkId": 108,
+          "lastGroupId": 3,
+          "lastNodeId": 69,
+          "lastLinkId": 111,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -852,7 +853,7 @@
               "Node name for S&R": "CheckpointLoaderSimple"
             },
             "widgets_values": [
-              "pimpmypony_pmpSemiRealAnime.safetensors"
+              "pimpmypony_pmpIncaseStyle.safetensors"
             ],
             "color": "#232",
             "bgcolor": "#353"
@@ -1035,11 +1036,11 @@
               "Node name for S&R": "KSampler"
             },
             "widgets_values": [
-              676855429375043,
+              139151658944379,
               "randomize",
               30,
               5,
-              "euler_ancestral",
+              "dpmpp_2m_sde",
               "karras",
               1
             ]
@@ -1082,10 +1083,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "1.2.2",
               "Node name for S&R": "EmptyLatentImagePresets",
-              "aux_id": "kijai/ComfyUI-KJNodes"
+              "cnr_id": "comfyui-kjnodes"
             },
             "widgets_values": [
               "1216 x 832 (1.46:1)",
@@ -1167,16 +1168,16 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-impact-pack",
+              "aux_id": "ltdrdata/ComfyUI-Impact-Pack",
               "ver": "6a517ebe06fea2b74fc41b3bd089c0d7173eeced",
               "Node name for S&R": "ImpactWildcardProcessor",
-              "aux_id": "ltdrdata/ComfyUI-Impact-Pack"
+              "cnr_id": "comfyui-impact-pack"
             },
             "widgets_values": [
               "score_9, score_8_up, score_7_up, __mbe/prmpt/imgcmp/shots__, __mbe/prmpt/lctns/rndmlctns__, __mbe/prmpt/light/rndmlight__, __mbe/prmpt/char/rndmcharlb__, __mbe/prmpt/clths/rndmclth__, __mbe/prmpt/clths/nudty_brsts__, __mbe/actsolo/brstplng__ ",
               "",
               "populate",
-              628040817487109,
+              293018419958529,
               "randomize",
               "Select Wildcard 🟢 Full Cache"
             ],
@@ -1221,13 +1222,14 @@
             ],
             "title": "Final prompt preview",
             "properties": {
-              "cnr_id": "comfyui-easy-use",
+              "aux_id": "yolain/ComfyUI-Easy-Use",
               "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
               "Node name for S&R": "easy showAnything",
+              "cnr_id": "comfyui-easy-use",
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "score_9, score_8_up, score_7_up, profile, wheat field, morning, bloom, underlighting, colored shadow, 1girl, blue hair, medium hair, rattail hair, wavy hair, grey eyes, athletic body, large breasts, short, boyshort panties, areola slip, solo, breastless clothes, breast lift "
+              "score_9, score_8_up, score_7_up, portrait, cliff, dawn, sunbeam, underlighting, window shadow, 1girl, dark purple hair, bald, fauxhawk, blunt ends, blue eyes, average body, large breasts, tall, g-string, clothes lift, solo, breasts out, arm under breast, breast lift, nipple stimulation, nipple pull, tongue out, saliva drip, saliva on breasts "
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -1410,7 +1412,7 @@
   },
   "config": {},
   "extra": {
-    "frontendVersion": "1.38.14",
+    "frontendVersion": "1.39.19",
     "workflowRendererVersion": "LG",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,

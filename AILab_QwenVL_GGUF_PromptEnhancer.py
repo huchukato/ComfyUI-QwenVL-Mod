@@ -181,6 +181,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
                 "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": "Keep model loaded in memory for faster repeated inference (uses more VRAM)."}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
+                "unload_after_run": ("BOOLEAN", {"default": False, "tooltip": "Unload GGUF model from memory after each run to free VRAM/RAM."}),
             }
         }
 
@@ -420,6 +421,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         keep_model_loaded,
         seed,
         keep_last_prompt,
+        unload_after_run,
     ):
         global LAST_SAVED_PROMPT
         
@@ -506,7 +508,12 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
             
             return (final,)
         finally:
-            if not keep_model_loaded:
+            if unload_after_run:
+                self.clear()
+                import gc
+                gc.collect()
+                print("[QwenVL PromptEnhancer GGUF] Model unloaded after run.")
+            elif not keep_model_loaded:
                 print(f"[QwenVL PromptEnhancer GGUF] keep_model_loaded=False - cleaning up model...")
                 self.clear()
 

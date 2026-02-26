@@ -297,18 +297,18 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         result = decoded[len(prefix) :].strip()
         
         # Cache the generated text
-        PROMPT_CACHE[cache_key] = {
-            "text": result,
-            "timestamp": None,  # PromptEnhancer doesn't have CUDA events
-            "model": model_name,
-            "preset": style,
-            "seed": seed,
-            "image_hash": None,  # PromptEnhancer doesn't use images
-            "video_hash": None   # PromptEnhancer doesn't use videos
-        }
-        save_prompt_cache()  # Save cache to file
+        # PROMPT_CACHE[cache_key] = {
+        #     "text": result,
+        #     "timestamp": None,  # PromptEnhancer doesn't have CUDA events
+        #     "model": model_name,
+        #     "preset": style,
+        #     "seed": seed,
+        #     "image_hash": None,  # PromptEnhancer doesn't use images
+        #     "video_hash": None   # PromptEnhancer doesn't use videos
+        # }
+        # save_prompt_cache()  # Save cache to file
         
-        print(f"[QwenVL PromptEnhancer HF] Cached new prompt for seed {seed}: {cache_key[:8]}...")
+        # print(f"[QwenVL PromptEnhancer HF] Cached new prompt for seed {seed}: {cache_key[:8]}...")
 
         if not keep_model_loaded:
             self.text_model = None
