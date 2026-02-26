@@ -476,6 +476,7 @@ This enhanced version includes specialized prompts for **WAN 2.2** video generat
 * **Qwen Team**: [Alibaba Cloud](https://github.com/QwenLM) - For development and open-source powerful Qwen-VL models.  
 * **ComfyUI**: [comfyanonymous](https://github.com/comfyanonymous/ComfyUI) - For incredible and extensible ComfyUI platform.  
 * **llama-cpp-python**: [JamePeng/llama-cpp-python](https://github.com/JamePeng/llama-cpp-python) - GGUF backend with vision support used by GGUF nodes.  
+* **GenorTG**: [GenorTG/ComfyUI-Genor-QwenVL-Mod](https://github.com/GenorTG/ComfyUI-Genor-QwenVL-Mod) - For innovative memory management improvements including `unload_after_run` parameter and prompt cache optimizations that prevent OOM errors in multi-node workflows.  
 * **ComfyUI Integration**: [1038lab](https://github.com/1038lab) - Developer of this custom node.
 
 ## **👥 Author**

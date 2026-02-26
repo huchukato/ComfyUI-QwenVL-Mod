@@ -578,6 +578,7 @@ class QwenVLGGUFBase:
         repetition_penalty,
         seed,
         keep_model_loaded,
+        unload_after_run,
         device,
         ctx=None,
         n_batch=None,
@@ -735,7 +736,12 @@ class QwenVLGGUFBase:
             
             return (text,)
         finally:
-            if not keep_model_loaded:
+            if unload_after_run:
+                self.clear()
+                import gc
+                gc.collect()
+                print("[QwenVL GGUF] Model unloaded after run.")
+            elif not keep_model_loaded:
                 self.clear()
 
 
@@ -759,6 +765,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
+                "unload_after_run": ("BOOLEAN", {"default": False, "tooltip": "Unload GGUF model from memory after each run to free VRAM/RAM."}),
             },
             "optional": {
                 "image": ("IMAGE",),
@@ -780,6 +787,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
         keep_model_loaded,
         seed,
         keep_last_prompt,
+        unload_after_run,
         image=None,
         video=None,
     ):
@@ -796,6 +804,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
             repetition_penalty=1.05,
             seed=seed,
             keep_model_loaded=keep_model_loaded,
+            unload_after_run=unload_after_run,
             device="auto",
             ctx=None,
             n_batch=None,
@@ -842,6 +851,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
+                "unload_after_run": ("BOOLEAN", {"default": False, "tooltip": "Unload GGUF model from memory after each run to free VRAM/RAM."}),
             },
             "optional": {
                 "image": ("IMAGE",),
@@ -874,6 +884,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
         keep_model_loaded,
         seed,
         keep_last_prompt,
+        unload_after_run,
         image=None,
         video=None,
     ):
@@ -890,6 +901,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
             repetition_penalty=repetition_penalty,
             seed=seed,
             keep_model_loaded=keep_model_loaded,
+            unload_after_run=unload_after_run,
             device=device,
             ctx=ctx,
             n_batch=n_batch,
