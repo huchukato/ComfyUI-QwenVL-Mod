@@ -37,7 +37,7 @@ NODES=(
     "https://github.com/city96/ComfyUI-GGUF"
     "https://github.com/kijai/ComfyUI-MMAudio"
     "https://github.com/GACLove/ComfyUI-VFI"
-    "https://github.com/stduhpf/ComfyUI-WanMoeKSampler"
+    # "https://github.com/stduhpf/ComfyUI-WanMoeKSampler"
     "https://github.com/melMass/comfy_mtb"
 )
 
