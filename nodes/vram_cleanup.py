@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-ComfyUI WAN Models Cleanup Node
-Specialized cleanup for WAN 2.2 models to prevent memory issues in story workflows
+ComfyUI VRAM Cleanup Node
+Generic VRAM cleanup for preventing memory issues in workflows
 """
 
 import gc
@@ -9,10 +9,10 @@ import torch
 import folder_paths
 from comfy import model_management
 
-class WANCleanup:
+class VRAMCleanup:
     """
-    Specialized cleanup node for WAN 2.2 models
-    Prevents memory accumulation in multi-segment video workflows
+    Generic VRAM cleanup node for preventing memory issues in workflows
+    Prevents memory accumulation and crashes in multi-model workflows
     """
     
     def __init__(self):
@@ -34,16 +34,16 @@ class WANCleanup:
     
     RETURN_TYPES = ("*",)  # Pass through the input
     RETURN_NAMES = ("output",)
-    FUNCTION = "cleanup_wan_memory"
+    FUNCTION = "cleanup_vram_memory"
     CATEGORY = "🔷 QwenVL-Mod/Utils"
     OUTPUT_NODE = True
     
-    def cleanup_wan_memory(self, input, cleanup_mode):
+    def cleanup_vram_memory(self, input, cleanup_mode):
         """
-        Cleanup WAN models and memory to prevent crashes in story workflows
+        Generic VRAM cleanup for preventing memory issues in workflows
         """
         try:
-            print(f"🧹 WAN Cleanup: Starting {cleanup_mode} cleanup...")
+            print(f"🧹 VRAM Cleanup: Starting {cleanup_mode} cleanup...")
             
             # Get current memory state
             if torch.cuda.is_available():
@@ -67,10 +67,10 @@ class WANCleanup:
                 print(f"📉 Final VRAM: {final_memory / 1024**3:.2f} GB")
                 print(f"💾 Freed: {freed_memory / 1024**3:.2f} GB")
             
-            print("✅ WAN Cleanup completed successfully!")
+            print("✅ VRAM Cleanup completed successfully!")
             
         except Exception as e:
-            print(f"❌ WAN Cleanup failed: {str(e)}")
+            print(f"❌ VRAM Cleanup failed: {str(e)}")
             raise e
         
         return (input,)  # Pass through the input
@@ -158,11 +158,11 @@ class WANCleanup:
 
 # Register the node
 NODE_CLASS_MAPPINGS = {
-    "WANCleanup": WANCleanup
+    "VRAMCleanup": VRAMCleanup
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "WANCleanup": "WAN Cleanup Node"
+    "VRAMCleanup": "VRAM Cleanup Node"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
