@@ -29,12 +29,6 @@ class WANCleanup:
                     "After WAN Use",
                     "Full Memory Reset"
                 ], {"default": "Gentle Cleanup"}),
-                "force_gc": ("BOOLEAN", {"default": True}),
-                "clear_cuda_cache": ("BOOLEAN", {"default": True}),
-                "synchronize_cuda": ("BOOLEAN", {"default": True}),
-            },
-            "optional": {
-                "delay_seconds": ("INT", {"default": 0, "min": 0, "max": 10}),
             }
         }
     
@@ -44,16 +38,11 @@ class WANCleanup:
     CATEGORY = "🔷 QwenVL-Mod/Utils"
     OUTPUT_NODE = True
     
-    def cleanup_wan_memory(self, input, cleanup_mode, force_gc, clear_cuda_cache, synchronize_cuda, delay_seconds=0):
+    def cleanup_wan_memory(self, input, cleanup_mode):
         """
         Cleanup WAN models and memory to prevent crashes in story workflows
         """
         try:
-            # Add delay if specified (useful for timing-sensitive workflows)
-            if delay_seconds > 0:
-                import time
-                time.sleep(delay_seconds)
-            
             print(f"🧹 WAN Cleanup: Starting {cleanup_mode} cleanup...")
             
             # Get current memory state
@@ -70,21 +59,6 @@ class WANCleanup:
                 self._after_wan_use()
             elif cleanup_mode == "Full Memory Reset":
                 self._full_memory_reset()
-            
-            # Force garbage collection
-            if force_gc:
-                gc.collect()
-                print("🗑️ Garbage collection completed")
-            
-            # Clear CUDA cache
-            if clear_cuda_cache and torch.cuda.is_available():
-                torch.cuda.empty_cache()
-                print("🧠 CUDA cache cleared")
-            
-            # Synchronize CUDA operations
-            if synchronize_cuda and torch.cuda.is_available():
-                torch.cuda.synchronize()
-                print("⚡ CUDA synchronized")
             
             # Report final memory state
             if torch.cuda.is_available():
