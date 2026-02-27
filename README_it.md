@@ -17,6 +17,45 @@ Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguag
 
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
+## **🧠 VRAM Cleanup Node**
+
+Il **VRAM Cleanup** è un nodo generico per la gestione della memoria VRAM nei workflow ComfyUI, progettato per prevenire crash e ottimizzare le prestazioni su sistemi con VRAM limitata.
+
+### 🎯 **Caratteristiche Principali**
+
+#### **Modalità di Cleanup**
+- **Cache Only**: Pulizia leggera della cache CUDA senza scaricare modelli
+- **Text Encoder**: Cleanup mirato per i text encoder
+- **Full Cleanup**: Scaricamento completo dei modelli e pulizia cache aggressiva
+- **T2V + QwenVL Fix**: Modalità speciale per conflitti tra modelli T2V e QwenVL
+
+#### **Quando Usarlo**
+- **Tra segmenti I2V**: Usa "Full Cleanup" tra ogni I2V per liberare VRAM
+- **Con QwenVL**: Usa "Text Encoder" dopo QwenVL per pulire i text encoder
+- **Prevenzione OOM**: Usa "Full Cleanup" quando la VRAM è quasi piena
+- **Debug**: Usa "Cache Only" per diagnosticare problemi di memoria
+
+#### **Compatibilità**
+- ✅ **CUDA 12.8 (RunPod)**: Compatibilità nativa
+- ✅ **CUDA 13 (VastAI)**: Ottimizzato con memory pressure multipla
+- ✅ **Tutti i nodi QwenVL**: Cleanup automatico nel `finally` block
+
+### 🔧 **Implementazione Tecnica**
+
+Il nodo utilizza metodi avanzati di gestione memoria:
+- `model_management.unload_all_models()` per scaricamento forzato
+- `torch.cuda.empty_cache()` per pulizia cache CUDA
+- `gc.collect()` per garbage collection Python
+- Memory pressure con tensori temporanei per forzare release VRAM
+- Sincronizzazione CUDA per operazioni sicure
+
+### 📋 **Posizione nel Workflow**
+```
+T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) → I2V-2 → VRAM Cleanup (Full Cleanup) → I2V-3
+```
+
+---
+
 ## **📰 Notizie & Aggiornamenti**
 * **2026/02/27**: **v2.2.3** 🔧 **Fix Compatibilità CUDA 13 + Rimozione Ridondanze**. [[Aggiornamenti](update.md#version-223-20260227)]
 > 🔧 **Rimozione unload_after_run**: Eliminata checkbox ridondante da tutti i nodi QwenVL per prevenire conflitti su CUDA 13.  
