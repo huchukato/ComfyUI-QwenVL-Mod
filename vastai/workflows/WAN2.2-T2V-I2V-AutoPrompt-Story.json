@@ -3251,7 +3251,8 @@
       "properties": {
         "cnr_id": "comfyui-easy-use",
         "ver": "7c470c67d6df44498e52c902173c1ac77cd5bdfd",
-        "Node name for S&R": "easy cleanGpuUsed"
+        "Node name for S&R": "easy cleanGpuUsed",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": []
     },
@@ -3364,7 +3365,8 @@
       "properties": {
         "cnr_id": "ComfyUI-Upscaler-Tensorrt",
         "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
-        "Node name for S&R": "LoadUpscalerTensorrtModel"
+        "Node name for S&R": "LoadUpscalerTensorrtModel",
+        "aux_id": "yuvraj108c/ComfyUI-Upscaler-Tensorrt"
       },
       "widgets_values": [
         "4x-UltraSharp",
@@ -3409,7 +3411,8 @@
       "properties": {
         "cnr_id": "ComfyUI-Upscaler-Tensorrt",
         "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
-        "Node name for S&R": "UpscalerTensorrt"
+        "Node name for S&R": "UpscalerTensorrt",
+        "aux_id": "yuvraj108c/ComfyUI-Upscaler-Tensorrt"
       },
       "widgets_values": [
         "2x",
@@ -3745,13 +3748,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22_19_02-59-20_00002.mp4",
+            "filename": "wan22_27_02-04-04_00002.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 16,
-            "workflow": "wan22_19_02-59-20_00002.png",
-            "fullpath": "/workspace/ComfyUI/output/wan22_19_02-59-20_00002.mp4"
+            "workflow": "wan22_27_02-04-04_00002.png",
+            "fullpath": "/ComfyUI/output/wan22_27_02-04-04_00002.mp4"
           }
         }
       }
@@ -3791,7 +3794,8 @@
       "properties": {
         "cnr_id": "comfyui-easy-use",
         "ver": "7c470c67d6df44498e52c902173c1ac77cd5bdfd",
-        "Node name for S&R": "easy cleanGpuUsed"
+        "Node name for S&R": "easy cleanGpuUsed",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": []
     },
@@ -4513,30 +4517,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 301,
-      "type": "MarkdownNote",
-      "pos": [
-        -1880,
-        -1120
-      ],
-      "size": [
-        480,
-        1410
-      ],
-      "flags": {},
-      "order": 89,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "README",
-      "properties": {},
-      "widgets_values": [
-        "# WAN 2.2 NSFW T2V LONG VIDEO STORY with AUTOPROMPT, MMAUDIO and GGUF support \n\n## 🖥️ Civitai Model \n\n**T2V MODELS**\n⚙️ **GGUF VERSION**\n\n*Credits to* [DigitalPastel](https://civitai.com/user/DigitalPastel) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 Smooth Mix T2V V2 Q6 K High](https://civitai.com/models/2083588?modelVersionId=2357890)\n- [🔗 Smooth Mix T2V V2 Q6 K Low](https://civitai.com/models/2083588?modelVersionId=2357892)\n- [🔗 Smooth Mix T2V V2 Q8 High](https://civitai.com/models/2083588?modelVersionId=2358087)\n- [🔗 Smooth Mix T2V V2 Q8 Low](https://civitai.com/models/2083588?modelVersionId=2358187)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 WAN REMIX T2V v2.0 Q6 K High](https://civitai.com/models/2094656?modelVersionId=2372121)\n- [🔗 WAN REMIX T2V v2.0 Q6 K Low](https://civitai.com/models/2094656?modelVersionId=2372034)\n- [🔗 WAN REMIX T2V v2.0 Q8 High](https://civitai.com/models/2094656?modelVersionId=2372201)\n- [🔗 WAN REMIX T2V v2.0 Q8 Low](https://civitai.com/models/2094656?modelVersionId=2372149)\n\n⚙️ **FP8 VERSION**\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou)\n\n- [🔗 WAN REMIX T2V v2.0 High](https://civitai.com/models/2003153?modelVersionId=2424167)\n- [🔗 WAN REMIX T2V v2.0 Low](https://civitai.com/models/2003153?modelVersionId=2424912)\n\n**I2V MODELS**\n\n⚙️ **GGUF VERSION**\n\n*Credits to* [taek75799](https://civitai.com/user/taek75799)\n\n- [🔗 NSFW V2 Q6 K High](https://civitai.com/models/2053259?modelVersionId=2524233)\n- [🔗 NSFW V2 Q6 K Low](https://civitai.com/models/2053259?modelVersionId=2524236)\n- [🔗 NSFW V2 Q8 High](https://civitai.com/models/2053259?modelVersionId=2584698)\n- [🔗 NSFW V2 Q8 Low](https://civitai.com/models/2053259?modelVersionId=2584707)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 WAN REMIX v2.1 Q6 K High](https://civitai.com/models/2347977?modelVersionId=2641160)\n- [🔗 WAN REMIX v2.1 Q6 K Low](https://civitai.com/models/2347977?modelVersionId=2641158)\n- [🔗 WAN REMIX v2.1 Q8 High](https://civitai.com/models/2347977?modelVersionId=2641236)\n- [🔗 WAN REMIX v.2.1 Q8 Low](https://civitai.com/models/2347977?modelVersionId=2641234)\n\n---\n\n## Text Encoders\n- **FP8**: [🔗 umt5_xxl_fp8 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors)\n- **FP16**: [🔗 umt5_xxl_fp16 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors)\n- **NSFW FP8**: [🔗 nsfw_wan_umt5-xxl_fp8_scaled](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors)\n- **NSFW BF16**: [🔗 nsfw_wan_umt5-xxl_bf16](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_bf16.safetensors)\n\n⚙️ **GGUF VERSION**\n- **Q6 K**: [🔗 umt5-xxl-encoder-Q6_K](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q6_K.gguf)\n- **Q8**: [🔗 umt5-xxl-encoder-Q8_0](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q8_0.gguf)\n\n## VAE\n- **BF16:**: [🔗 wan_2.1_vae](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors)\n- **FP32:**: [🔗 wan_2.1_fp32_vae](https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors)\n\n## UPSCALE MODEL\n\n- [🔗 2xLexicaRRDBNet](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth)\n- [🔗 2xLexicaRRDBNet_Sharp](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth)\n\n\n---\n\n# 🎬 Motion Settings\n\n## Motion Amplitude\n*Motion intensity multiplier* \n- **1.0** = normal\n- **1.15** = recommended  \n**Range:** 1.0 – 2.0\n\n## Motion Frames\n*Number of trailing frames from `previous_video` used as motion reference* \n\n**Default:** 5\n\n---\n\n# 🎨 Color Strenght\n\nControls color drift correction strength.\n\n- **0.0** → no color issues  \n- **0.01 – 0.05** → slight drift  \n- **0.1 – 0.15** → strong shift  \n- **0.2 – 0.3** → severe drift\n"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
       "id": 1546,
       "type": "ColorMatch",
       "pos": [
@@ -4577,7 +4557,8 @@
       "properties": {
         "cnr_id": "comfyui-kjnodes",
         "ver": "e8b70f28be7fd71ee72c3848cfa09e1a89e3061b",
-        "Node name for S&R": "ColorMatch"
+        "Node name for S&R": "ColorMatch",
+        "aux_id": "kijai/ComfyUI-KJNodes"
       },
       "widgets_values": [
         "mkl",
@@ -4596,7 +4577,7 @@
       ],
       "size": [
         340,
-        828
+        334
       ],
       "flags": {},
       "order": 134,
@@ -5135,7 +5116,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 90,
+      "order": 89,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5195,7 +5176,8 @@
       "properties": {
         "cnr_id": "comfyui-frame-interpolation",
         "ver": "a969c01dbccd9e5510641be04eb51fe93f6bfc3d",
-        "Node name for S&R": "RIFE VFI"
+        "Node name for S&R": "RIFE VFI",
+        "aux_id": "Fannovel16/ComfyUI-Frame-Interpolation"
       },
       "widgets_values": [
         "rife49.pth",
@@ -5248,7 +5230,8 @@
       "properties": {
         "cnr_id": "comfyui-frame-interpolation",
         "ver": "a969c01dbccd9e5510641be04eb51fe93f6bfc3d",
-        "Node name for S&R": "RIFE VFI"
+        "Node name for S&R": "RIFE VFI",
+        "aux_id": "Fannovel16/ComfyUI-Frame-Interpolation"
       },
       "widgets_values": [
         "rife49.pth",
@@ -5443,7 +5426,7 @@
         60
       ],
       "flags": {},
-      "order": 91,
+      "order": 90,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5568,7 +5551,7 @@
         130
       ],
       "flags": {},
-      "order": 92,
+      "order": 91,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5847,7 +5830,7 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "As night deepens further into surreal gloom, faint whispers of wind stir fallen leaves and broken planks near her feet while glowing embers flicker within hollowed-out sections of twisted metal above. Her hair flows gently in invisible currents as if responding to ambient energies coursing through the wasteland's veins beneath cracked stone surfaces. The sheer negligee reveals delicate lace trimmings catching soft neon hues that shift subtly with each passing moment, suggesting movement even without visible wind or motion blur transitions. Shadows stretch longer across barren ground creating a sense of isolation amplified by minimalistic background elements fading into absolute darkness."
+        "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long teal hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -5929,7 +5912,7 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "The girl remains still but poised as faint wisps of energy ripple from her fingertips towards unseen forces beyond the frame, suggesting latent power beneath her serene expression. Her negligee catches subtle neon reflections that dance across its sheer fabric under intermittent glows emanating from below ground level. The cracked earth around her feet pulses with low-frequency vibrations visible only through animated motion blur effects enhancing depth perception in this wide-shot composition. Twisted metal structures loom like skeletal remains against the starless sky, their silhouettes elongated by dramatic side-lighting creating stark chiaroscuro patterns on surrounding debris fields."
+        "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long teal hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -6011,51 +5994,7 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "A lone girl with sandy blonde hair styled in a shouten pegasus mix mori drill cut stands tall against the desolate wasteland under moonless skies, her brown eyes glowing faintly as she gazes into darkness. She wears a sheer negligee exposing full breasts and nipples, one arm draped gently over her chest while holding an unseen object near her waist. Cinematic lighting casts deep shadows across cracked earth and broken ruins illuminated by distant crackling neon underlights casting eerie glows. Floating debris drifts lazily around twisted metal structures fading into black voids behind her silhouette. Ultra-detailed anime motion blur surrounds edges for dynamic atmosphere, emphasizing the contrast between soft skin highlights and gloomy horizon tones."
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 1593,
-      "type": "easy showAnything",
-      "pos": [
-        260,
-        -300
-      ],
-      "size": [
-        420,
-        240
-      ],
-      "flags": {},
-      "order": 128,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "shape": 7,
-          "type": "*",
-          "link": 5481
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": [
-            5494
-          ]
-        }
-      ],
-      "title": "Prompt 1",
-      "properties": {
-        "cnr_id": "comfyui-easy-use",
-        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
-        "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
-      },
-      "widgets_values": [
-        "Anime style, very wide shot of a desolate wasteland at night, illuminated by the crackling glow of distant underlighting casting eerie shadows across cracked earth and broken ruins; lone girl with sandy blonde short hair styled in a shouten pegasus mix mori drill cut, brown eyes glowing faintly beneath moonless skies, stands tall and slender in a sheer negligee exposing full breasts and nipples, one arm draped gently over her chest as she gazes forward into the darkness; cinematic lighting emphasizes her silhouette against the gloomy horizon with deep contrast and soft neon highlights on her skin, minimalist background with floating debris and twisted metal structures fading into black voids, ultra-detailed anime motion blur around edges for dynamic atmosphere."
+        "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long teal hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -6072,7 +6011,7 @@
         82
       ],
       "flags": {},
-      "order": 93,
+      "order": 92,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6124,7 +6063,7 @@
         82
       ],
       "flags": {},
-      "order": 94,
+      "order": 93,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6176,7 +6115,7 @@
         82
       ],
       "flags": {},
-      "order": 95,
+      "order": 94,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6861,7 +6800,7 @@
         30
       ],
       "flags": {},
-      "order": 96,
+      "order": 95,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -7079,65 +7018,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 1594,
-      "type": "ad95ad96-c709-46d7-914a-111313fa2e1b",
-      "pos": [
-        -450,
-        -310.37686987206644
-      ],
-      "size": [
-        610,
-        560
-      ],
-      "flags": {},
-      "order": 97,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "label": "prompt_1",
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            5481
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "1585",
-            "model_name"
-          ],
-          [
-            "1585",
-            "prompt_text"
-          ],
-          [
-            "1585",
-            "preset_system_prompt"
-          ],
-          [
-            "1585",
-            "control_after_generate"
-          ],
-          [
-            "1585",
-            "seed"
-          ],
-          [
-            "1585",
-            "keep_last_prompt"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.13.0"
-      },
-      "widgets_values": [],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 1602,
       "type": "640341fd-e818-44a8-81b9-8efd95560e69",
       "pos": [
@@ -7225,6 +7105,133 @@
       "widgets_values": [
         null,
         ""
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 1594,
+      "type": "ad95ad96-c709-46d7-914a-111313fa2e1b",
+      "pos": [
+        -450,
+        -310.37686987206644
+      ],
+      "size": [
+        610,
+        560
+      ],
+      "flags": {},
+      "order": 96,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "prompt_1",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            5481
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "1585",
+            "model_name"
+          ],
+          [
+            "1585",
+            "prompt_text"
+          ],
+          [
+            "1585",
+            "preset_system_prompt"
+          ],
+          [
+            "1585",
+            "control_after_generate"
+          ],
+          [
+            "1585",
+            "seed"
+          ],
+          [
+            "1585",
+            "keep_last_prompt"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.13.0"
+      },
+      "widgets_values": [],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1593,
+      "type": "easy showAnything",
+      "pos": [
+        260,
+        -300
+      ],
+      "size": [
+        420,
+        240
+      ],
+      "flags": {},
+      "order": 128,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 5481
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5494
+          ]
+        }
+      ],
+      "title": "Prompt 1",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long dark green curly hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 301,
+      "type": "MarkdownNote",
+      "pos": [
+        -1880,
+        -1120
+      ],
+      "size": [
+        480,
+        1410
+      ],
+      "flags": {},
+      "order": 97,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "README",
+      "properties": {},
+      "widgets_values": [
+        "# WAN 2.2 NSFW T2V LONG VIDEO STORY with AUTOPROMPT, MMAUDIO and GGUF support \n\n## 🖥️ Civitai Model \n\n**T2V MODELS**\n⚙️ **GGUF VERSION**\n\n*Credits to* [DigitalPastel](https://civitai.com/user/DigitalPastel) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 Smooth Mix T2V V2 Q6 K High](https://civitai.com/models/2083588?modelVersionId=2357890)\n- [🔗 Smooth Mix T2V V2 Q6 K Low](https://civitai.com/models/2083588?modelVersionId=2357892)\n- [🔗 Smooth Mix T2V V2 Q8 High](https://civitai.com/models/2083588?modelVersionId=2358087)\n- [🔗 Smooth Mix T2V V2 Q8 Low](https://civitai.com/models/2083588?modelVersionId=2358187)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 WAN REMIX T2V v2.0 Q6 K High](https://civitai.com/models/2094656?modelVersionId=2372121)\n- [🔗 WAN REMIX T2V v2.0 Q6 K Low](https://civitai.com/models/2094656?modelVersionId=2372034)\n- [🔗 WAN REMIX T2V v2.0 Q8 High](https://civitai.com/models/2094656?modelVersionId=2372201)\n- [🔗 WAN REMIX T2V v2.0 Q8 Low](https://civitai.com/models/2094656?modelVersionId=2372149)\n\n⚙️ **FP8 VERSION**\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou)\n\n- [🔗 WAN REMIX T2V v2.0 High](https://civitai.com/models/2003153?modelVersionId=2424167)\n- [🔗 WAN REMIX T2V v2.0 Low](https://civitai.com/models/2003153?modelVersionId=2424912)\n\n*Credits to* [DigitalPastel](https://civitai.com/user/DigitalPastel)\n\n- [🔗 Smooth Mix T2V V2 FP8](https://civitai.com/models/1995784?modelVersionId=2323420)\n- [🔗 Smooth Mix T2V V2 FP8](https://civitai.com/models/1995784?modelVersionId=2324440)\n\n**I2V MODELS**\n\n⚙️ **GGUF VERSION**\n\n*Credits to* [taek75799](https://civitai.com/user/taek75799)\n\n- [🔗 NSFW V2 Q6 K High](https://civitai.com/models/2053259?modelVersionId=2524233)\n- [🔗 NSFW V2 Q6 K Low](https://civitai.com/models/2053259?modelVersionId=2524236)\n- [🔗 NSFW V2 Q8 High](https://civitai.com/models/2053259?modelVersionId=2584698)\n- [🔗 NSFW V2 Q8 Low](https://civitai.com/models/2053259?modelVersionId=2584707)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 WAN REMIX v2.1 Q6 K High](https://civitai.com/models/2347977?modelVersionId=2641160)\n- [🔗 WAN REMIX v2.1 Q6 K Low](https://civitai.com/models/2347977?modelVersionId=2641158)\n- [🔗 WAN REMIX v2.1 Q8 High](https://civitai.com/models/2347977?modelVersionId=2641236)\n- [🔗 WAN REMIX v.2.1 Q8 Low](https://civitai.com/models/2347977?modelVersionId=2641234)\n\n---\n\n## Text Encoders\n- **FP8**: [🔗 umt5_xxl_fp8 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors)\n- **FP16**: [🔗 umt5_xxl_fp16 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors)\n- **NSFW FP8**: [🔗 nsfw_wan_umt5-xxl_fp8_scaled](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors)\n- **NSFW BF16**: [🔗 nsfw_wan_umt5-xxl_bf16](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_bf16.safetensors)\n\n⚙️ **GGUF VERSION**\n- **Q6 K**: [🔗 umt5-xxl-encoder-Q6_K](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q6_K.gguf)\n- **Q8**: [🔗 umt5-xxl-encoder-Q8_0](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q8_0.gguf)\n\n## VAE\n- **BF16:**: [🔗 wan_2.1_vae](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors)\n- **FP32:**: [🔗 wan_2.1_fp32_vae](https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors)\n\n## UPSCALE MODEL\n\n- [🔗 2xLexicaRRDBNet](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth)\n- [🔗 2xLexicaRRDBNet_Sharp](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth)\n\n\n---\n\n# 🎬 Motion Settings\n\n## Motion Amplitude\n*Motion intensity multiplier* \n- **1.0** = normal\n- **1.15** = recommended  \n**Range:** 1.0 – 2.0\n\n## Motion Frames\n*Number of trailing frames from `previous_video` used as motion reference* \n\n**Default:** 5\n\n---\n\n# 🎨 Color Strenght\n\nControls color drift correction strength.\n\n- **0.0** → no color issues  \n- **0.01 – 0.05** → slight drift  \n- **0.1 – 0.15** → strong shift  \n- **0.2 – 0.3** → severe drift\n"
       ],
       "color": "#233",
       "bgcolor": "#355"
@@ -8469,9 +8476,9 @@
         "id": "2643c0a2-4f8c-4b66-9bba-7305a874c2db",
         "version": 1,
         "state": {
-          "lastGroupId": 10,
-          "lastNodeId": 1311,
-          "lastLinkId": 4954,
+          "lastGroupId": 28,
+          "lastNodeId": 1617,
+          "lastLinkId": 5511,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -9071,7 +9078,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "Anime style, very wide shot of a desolate wasteland at night, illuminated by the crackling glow of distant underlighting casting eerie shadows across cracked earth and broken ruins; lone girl with sandy blonde short hair styled in a shouten pegasus mix mori drill cut, brown eyes glowing faintly beneath moonless skies, stands tall and slender in a sheer negligee exposing full breasts and nipples, one arm draped gently over her chest as she gazes forward into the darkness; cinematic lighting emphasizes her silhouette against the gloomy horizon with deep contrast and soft neon highlights on her skin, minimalist background with floating debris and twisted metal structures fading into black voids, ultra-detailed anime motion blur around edges for dynamic atmosphere."
+              "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long dark green curly hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -9189,7 +9196,8 @@
             "properties": {
               "cnr_id": "was-ns",
               "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
-              "Node name for S&R": "Text Concatenate"
+              "Node name for S&R": "Text Concatenate",
+              "aux_id": "ltdrdata/was-node-suite-comfyui"
             },
             "widgets_values": [
               "",
@@ -9288,6 +9296,7 @@
               "cnr_id": "comfy-mtb",
               "ver": "d87e52ea2c112fd95f257dcd6a54a5db77a34fc3",
               "Node name for S&R": "Pick From Batch (mtb)",
+              "aux_id": "melMass/comfy_mtb",
               "widget_ue_connectable": {}
             },
             "widgets_values": [
@@ -9333,7 +9342,8 @@
             "properties": {
               "cnr_id": "comfyui-easy-use",
               "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
-              "Node name for S&R": "easy cleanGpuUsed"
+              "Node name for S&R": "easy cleanGpuUsed",
+              "aux_id": "yolain/ComfyUI-Easy-Use"
             },
             "widgets_values": []
           }
@@ -9549,9 +9559,9 @@
         "id": "322b39f0-a204-4d81-8926-eeb0309f1efc",
         "version": 1,
         "state": {
-          "lastGroupId": 8,
-          "lastNodeId": 1289,
-          "lastLinkId": 4962,
+          "lastGroupId": 28,
+          "lastNodeId": 1617,
+          "lastLinkId": 5511,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -9949,8 +9959,8 @@
             "properties": {
               "cnr_id": "comfyui-kjnodes",
               "ver": "2f7300dc546ec2d36fa8b0feebe493d41026524c",
-              "Node name for S&R": "ImageBatchMulti",
               "aux_id": "kijai/ComfyUI-KJNodes",
+              "Node name for S&R": "ImageBatchMulti",
               "ue_properties": {
                 "version": "7.0.1",
                 "widget_ue_connectable": {
@@ -10448,7 +10458,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "A lone girl with sandy blonde hair styled in a shouten pegasus mix mori drill cut stands tall against the desolate wasteland under moonless skies, her brown eyes glowing faintly as she gazes into darkness. She wears a sheer negligee exposing full breasts and nipples, one arm draped gently over her chest while holding an unseen object near her waist. Cinematic lighting casts deep shadows across cracked earth and broken ruins illuminated by distant crackling neon underlights casting eerie glows. Floating debris drifts lazily around twisted metal structures fading into black voids behind her silhouette. Ultra-detailed anime motion blur surrounds edges for dynamic atmosphere, emphasizing the contrast between soft skin highlights and gloomy horizon tones."
+              "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long teal hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -10574,7 +10584,8 @@
             "properties": {
               "cnr_id": "was-ns",
               "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
-              "Node name for S&R": "Text Concatenate"
+              "Node name for S&R": "Text Concatenate",
+              "aux_id": "ltdrdata/was-node-suite-comfyui"
             },
             "widgets_values": [
               "",
@@ -10897,9 +10908,9 @@
         "id": "2b0a8197-b645-497d-b1f8-fd1924abb421",
         "version": 1,
         "state": {
-          "lastGroupId": 8,
-          "lastNodeId": 1287,
-          "lastLinkId": 4961,
+          "lastGroupId": 28,
+          "lastNodeId": 1617,
+          "lastLinkId": 5511,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -11254,8 +11265,8 @@
             "properties": {
               "cnr_id": "comfyui-kjnodes",
               "ver": "2f7300dc546ec2d36fa8b0feebe493d41026524c",
-              "Node name for S&R": "ImageBatchMulti",
               "aux_id": "kijai/ComfyUI-KJNodes",
+              "Node name for S&R": "ImageBatchMulti",
               "ue_properties": {
                 "version": "7.0.1",
                 "widget_ue_connectable": {
@@ -11856,7 +11867,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "The girl remains still but poised as faint wisps of energy ripple from her fingertips towards unseen forces beyond the frame, suggesting latent power beneath her serene expression. Her negligee catches subtle neon reflections that dance across its sheer fabric under intermittent glows emanating from below ground level. The cracked earth around her feet pulses with low-frequency vibrations visible only through animated motion blur effects enhancing depth perception in this wide-shot composition. Twisted metal structures loom like skeletal remains against the starless sky, their silhouettes elongated by dramatic side-lighting creating stark chiaroscuro patterns on surrounding debris fields."
+              "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long teal hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -11921,7 +11932,8 @@
             "properties": {
               "cnr_id": "was-ns",
               "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
-              "Node name for S&R": "Text Concatenate"
+              "Node name for S&R": "Text Concatenate",
+              "aux_id": "ltdrdata/was-node-suite-comfyui"
             },
             "widgets_values": [
               "",
@@ -12244,9 +12256,9 @@
         "id": "0d6adb7c-3efa-4495-b1c9-b738d651f94a",
         "version": 1,
         "state": {
-          "lastGroupId": 8,
-          "lastNodeId": 1287,
-          "lastLinkId": 4966,
+          "lastGroupId": 28,
+          "lastNodeId": 1617,
+          "lastLinkId": 5511,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -12601,8 +12613,8 @@
             "properties": {
               "cnr_id": "comfyui-kjnodes",
               "ver": "2f7300dc546ec2d36fa8b0feebe493d41026524c",
-              "Node name for S&R": "ImageBatchMulti",
               "aux_id": "kijai/ComfyUI-KJNodes",
+              "Node name for S&R": "ImageBatchMulti",
               "ue_properties": {
                 "version": "7.0.1",
                 "widget_ue_connectable": {
@@ -13204,7 +13216,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "As night deepens further into surreal gloom, faint whispers of wind stir fallen leaves and broken planks near her feet while glowing embers flicker within hollowed-out sections of twisted metal above. Her hair flows gently in invisible currents as if responding to ambient energies coursing through the wasteland's veins beneath cracked stone surfaces. The sheer negligee reveals delicate lace trimmings catching soft neon hues that shift subtly with each passing moment, suggesting movement even without visible wind or motion blur transitions. Shadows stretch longer across barren ground creating a sense of isolation amplified by minimalistic background elements fading into absolute darkness."
+              "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long teal hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -13269,7 +13281,8 @@
             "properties": {
               "cnr_id": "was-ns",
               "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
-              "Node name for S&R": "Text Concatenate"
+              "Node name for S&R": "Text Concatenate",
+              "aux_id": "ltdrdata/was-node-suite-comfyui"
             },
             "widgets_values": [
               "",
@@ -13592,9 +13605,9 @@
         "id": "975e3c19-bc32-4db8-b06f-63d1a4aede97",
         "version": 1,
         "state": {
-          "lastGroupId": 11,
-          "lastNodeId": 1365,
-          "lastLinkId": 5101,
+          "lastGroupId": 28,
+          "lastNodeId": 1617,
+          "lastLinkId": 5511,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -13706,7 +13719,7 @@
               20,
               50,
               4.5,
-              318640542196070,
+              972570536612468,
               "randomize",
               "",
               "man, boy, male, man's voice, boy's voice, male's voice, ",
@@ -13852,9 +13865,9 @@
         "id": "ad95ad96-c709-46d7-914a-111313fa2e1b",
         "version": 1,
         "state": {
-          "lastGroupId": 22,
-          "lastNodeId": 1585,
-          "lastLinkId": 5463,
+          "lastGroupId": 28,
+          "lastNodeId": 1617,
+          "lastLinkId": 5511,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -13907,7 +13920,7 @@
             ],
             "size": [
               340,
-              430
+              454
             ],
             "flags": {},
             "order": 0,
@@ -13930,7 +13943,7 @@
             },
             "widgets_values": [
               "Qwen3-VL-8B-Instruct-c_abliterated-v3.Q8_0.gguf",
-              "anime style. very wide shot, wasteland, night, crack of light, underlighting, darkness, 1girl, sandy blonde hair, short hair, shouten pegasus mix mori hair, drill hair, brown eyes, slim body, large breasts, tall, negligee, Exposed nipples, solo, breasts out, arm under breast ",
+              "anime style. airport, dusk, light rays, backlighting, dark, 1girl, dark green hair, very long hair, pageboy hair, curly hair, amber eyes, average body, large breasts, short, corset, downblouse, solo, one breast out, mouth open, tongue out, saliva drip, saliva on breasts, breasts squeezed together ",
               "📖 Wan 2.2 NSFW T2V Story",
               "",
               512,
@@ -13940,9 +13953,10 @@
               false,
               "auto",
               false,
-              640969639,
+              4108575206,
               "randomize",
-              false
+              false,
+              true
             ],
             "color": "#374445",
             "bgcolor": "#474539"
@@ -13967,9 +13981,9 @@
         "id": "640341fd-e818-44a8-81b9-8efd95560e69",
         "version": 1,
         "state": {
-          "lastGroupId": 23,
-          "lastNodeId": 1601,
-          "lastLinkId": 5491,
+          "lastGroupId": 28,
+          "lastNodeId": 1617,
+          "lastLinkId": 5511,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -14145,7 +14159,7 @@
             ],
             "size": [
               340,
-              540
+              564
             ],
             "flags": {},
             "order": 0,
@@ -14207,9 +14221,10 @@
               0,
               4194304,
               false,
-              1627011305,
+              3053027266,
               "randomize",
-              false
+              false,
+              true
             ],
             "color": "#474539",
             "bgcolor": "#2c4045"
@@ -14274,7 +14289,7 @@
   },
   "config": {},
   "extra": {
-    "frontendVersion": "1.38.14",
+    "frontendVersion": "1.39.19",
     "workflowRendererVersion": "LG",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
@@ -14283,10 +14298,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.5753077346489517,
+      "scale": 1.6414201088812246,
       "offset": [
-        2175.9590901816423,
-        98.02618487720902
+        2312.363033248299,
+        1153.7918536490033
       ]
     }
   },

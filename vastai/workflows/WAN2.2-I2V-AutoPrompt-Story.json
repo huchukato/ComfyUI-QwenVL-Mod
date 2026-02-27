@@ -5358,83 +5358,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 1586,
-      "type": "57fad078-7391-4a49-9367-61061c0345fc",
-      "pos": [
-        -450,
-        -930
-      ],
-      "size": [
-        560,
-        460
-      ],
-      "flags": {},
-      "order": 129,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 5468
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": []
-        },
-        {
-          "name": "STRING_1",
-          "type": "STRING",
-          "links": []
-        },
-        {
-          "name": "STRING_2",
-          "type": "STRING",
-          "links": []
-        },
-        {
-          "name": "STRING_3",
-          "type": "STRING",
-          "links": []
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "1582",
-            "custom_prompt"
-          ],
-          [
-            "1582",
-            "model_name"
-          ],
-          [
-            "1582",
-            "quantization"
-          ],
-          [
-            "1582",
-            "preset_prompt"
-          ],
-          [
-            "1582",
-            "control_after_generate"
-          ],
-          [
-            "1582",
-            "seed"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.13.0"
-      },
-      "widgets_values": [],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
       "id": 1588,
       "type": "GetNode",
       "pos": [
@@ -7075,87 +6998,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 1581,
-      "type": "14459234-5392-4fbe-a549-696f4d1ab0b8",
-      "pos": [
-        -448.4470203849996,
-        -1408.0894662065343
-      ],
-      "size": [
-        560.1175510652185,
-        402.4891515530435
-      ],
-      "flags": {},
-      "order": 128,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 5455
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            5479
-          ]
-        },
-        {
-          "name": "STRING_1",
-          "type": "STRING",
-          "links": [
-            5481
-          ]
-        },
-        {
-          "name": "STRING_2",
-          "type": "STRING",
-          "links": [
-            5483
-          ]
-        },
-        {
-          "name": "STRING_3",
-          "type": "STRING",
-          "links": [
-            5485
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "1564",
-            "custom_prompt"
-          ],
-          [
-            "1564",
-            "model_name"
-          ],
-          [
-            "1564",
-            "preset_prompt"
-          ],
-          [
-            "1564",
-            "control_after_generate"
-          ],
-          [
-            "1564",
-            "seed"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.13.0"
-      },
-      "widgets_values": [],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 1597,
       "type": "AutoLoadRifeTensorrtModel",
       "pos": [
@@ -7549,6 +7391,164 @@
       },
       "color": "#322",
       "bgcolor": "#533"
+    },
+    {
+      "id": 1581,
+      "type": "14459234-5392-4fbe-a549-696f4d1ab0b8",
+      "pos": [
+        -448.4470203849996,
+        -1408.0894662065343
+      ],
+      "size": [
+        560.1175510652185,
+        402.4891515530435
+      ],
+      "flags": {},
+      "order": 128,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 5455
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            5479
+          ]
+        },
+        {
+          "name": "STRING_1",
+          "type": "STRING",
+          "links": [
+            5481
+          ]
+        },
+        {
+          "name": "STRING_2",
+          "type": "STRING",
+          "links": [
+            5483
+          ]
+        },
+        {
+          "name": "STRING_3",
+          "type": "STRING",
+          "links": [
+            5485
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "1564",
+            "custom_prompt"
+          ],
+          [
+            "1564",
+            "model_name"
+          ],
+          [
+            "1564",
+            "preset_prompt"
+          ],
+          [
+            "1564",
+            "control_after_generate"
+          ],
+          [
+            "1564",
+            "seed"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.13.0"
+      },
+      "widgets_values": [],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1586,
+      "type": "57fad078-7391-4a49-9367-61061c0345fc",
+      "pos": [
+        -450,
+        -930
+      ],
+      "size": [
+        560,
+        460
+      ],
+      "flags": {},
+      "order": 129,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 5468
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "STRING_1",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "STRING_2",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "STRING_3",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "1582",
+            "custom_prompt"
+          ],
+          [
+            "1582",
+            "model_name"
+          ],
+          [
+            "1582",
+            "quantization"
+          ],
+          [
+            "1582",
+            "preset_prompt"
+          ],
+          [
+            "1582",
+            "control_after_generate"
+          ],
+          [
+            "1582",
+            "seed"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.13.0"
+      },
+      "widgets_values": [],
+      "color": "#323",
+      "bgcolor": "#535"
     }
   ],
   "links": [
@@ -8822,9 +8822,9 @@
         "id": "2643c0a2-4f8c-4b66-9bba-7305a874c2db",
         "version": 1,
         "state": {
-          "lastGroupId": 10,
-          "lastNodeId": 1302,
-          "lastLinkId": 4965,
+          "lastGroupId": 22,
+          "lastNodeId": 1599,
+          "lastLinkId": 5497,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -10257,9 +10257,9 @@
         "id": "322b39f0-a204-4d81-8926-eeb0309f1efc",
         "version": 1,
         "state": {
-          "lastGroupId": 8,
-          "lastNodeId": 1289,
-          "lastLinkId": 4957,
+          "lastGroupId": 22,
+          "lastNodeId": 1599,
+          "lastLinkId": 5497,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -11655,9 +11655,9 @@
         "id": "2b0a8197-b645-497d-b1f8-fd1924abb421",
         "version": 1,
         "state": {
-          "lastGroupId": 8,
-          "lastNodeId": 1285,
-          "lastLinkId": 4952,
+          "lastGroupId": 22,
+          "lastNodeId": 1599,
+          "lastLinkId": 5497,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -13053,9 +13053,9 @@
         "id": "0d6adb7c-3efa-4495-b1c9-b738d651f94a",
         "version": 1,
         "state": {
-          "lastGroupId": 8,
-          "lastNodeId": 1285,
-          "lastLinkId": 4953,
+          "lastGroupId": 22,
+          "lastNodeId": 1599,
+          "lastLinkId": 5497,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -14473,9 +14473,9 @@
         "id": "975e3c19-bc32-4db8-b06f-63d1a4aede97",
         "version": 1,
         "state": {
-          "lastGroupId": 11,
-          "lastNodeId": 1365,
-          "lastLinkId": 5101,
+          "lastGroupId": 22,
+          "lastNodeId": 1599,
+          "lastLinkId": 5497,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -14734,8 +14734,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 22,
-          "lastNodeId": 1581,
-          "lastLinkId": 5459,
+          "lastNodeId": 1599,
+          "lastLinkId": 5497,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -14920,7 +14920,7 @@
             ],
             "size": [
               340,
-              540
+              564
             ],
             "flags": {},
             "order": 0,
@@ -14975,7 +14975,8 @@
               false,
               3150398750,
               "randomize",
-              false
+              false,
+              true
             ],
             "color": "#474539",
             "bgcolor": "#2c4045"
@@ -15041,8 +15042,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 22,
-          "lastNodeId": 1582,
-          "lastLinkId": 5461,
+          "lastNodeId": 1599,
+          "lastLinkId": 5497,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -15227,7 +15228,7 @@
             ],
             "size": [
               340,
-              492
+              516
             ],
             "flags": {},
             "order": 1,
@@ -15280,7 +15281,8 @@
               true,
               1037716684,
               "randomize",
-              false
+              false,
+              true
             ],
             "color": "#28403f",
             "bgcolor": "#374539"
@@ -15345,7 +15347,7 @@
   },
   "config": {},
   "extra": {
-    "frontendVersion": "1.38.14",
+    "frontendVersion": "1.39.19",
     "workflowRendererVersion": "LG",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
@@ -15356,8 +15358,8 @@
     "ds": {
       "scale": 0.8423080542995304,
       "offset": [
-        1813.7915797584883,
-        -370.4597456910052
+        1964.0715522743235,
+        1707.4849235019492
       ]
     }
   },
