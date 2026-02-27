@@ -220,7 +220,7 @@ update_workflows() {
     workflows=(
         "PMP-LoRaStack-Upscale-Wildcards.json"
         "WAN2.2-I2V-AutoPrompt-Story.json"
-        "WAN2.2-T2V-AutoPrompt-Story.json"
+        "WAN2.2-T2V-I2V-AutoPrompt-Story.json"
         "Wan2.2-I2V-SVI-AutoPrompt-Story.json"
         "WAN2.2-I2V-AutoPrompt.json"
         "WAN2.2-I2V-AutoPrompt-GGUF.json"

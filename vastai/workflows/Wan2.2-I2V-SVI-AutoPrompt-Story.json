@@ -1,8 +1,8 @@
 {
   "id": "e33520f2-1c77-4eee-a07d-891a338edf5d",
   "revision": 0,
-  "last_node_id": 364,
-  "last_link_id": 621,
+  "last_node_id": 1582,
+  "last_link_id": 5461,
   "nodes": [
     {
       "id": 242,
@@ -2736,87 +2736,6 @@
       "bgcolor": "#533"
     },
     {
-      "id": 321,
-      "type": "975e31e3-c7fd-4af7-81dc-ff0b2b2a60e3",
-      "pos": [
-        -1420,
-        -920
-      ],
-      "size": [
-        560.1175510652185,
-        402.4891515530435
-      ],
-      "flags": {},
-      "order": 75,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 533
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            530
-          ]
-        },
-        {
-          "name": "STRING_1",
-          "type": "STRING",
-          "links": [
-            531
-          ]
-        },
-        {
-          "name": "STRING_2",
-          "type": "STRING",
-          "links": [
-            532
-          ]
-        },
-        {
-          "name": "STRING_3",
-          "type": "STRING",
-          "links": [
-            534
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "1564",
-            "custom_prompt"
-          ],
-          [
-            "1564",
-            "model_name"
-          ],
-          [
-            "1564",
-            "preset_prompt"
-          ],
-          [
-            "1564",
-            "control_after_generate"
-          ],
-          [
-            "1564",
-            "seed"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.13.0"
-      },
-      "widgets_values": [],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 339,
       "type": "UNETLoader",
       "pos": [
@@ -2921,83 +2840,6 @@
       "bgcolor": "#353"
     },
     {
-      "id": 317,
-      "type": "cb082c4d-bdfb-40b8-85c0-6ec7f755c28a",
-      "pos": [
-        -1417.8893511523438,
-        -366.6401193320312
-      ],
-      "size": [
-        560,
-        460
-      ],
-      "flags": {},
-      "order": 77,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 529
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": []
-        },
-        {
-          "name": "STRING_1",
-          "type": "STRING",
-          "links": []
-        },
-        {
-          "name": "STRING_2",
-          "type": "STRING",
-          "links": []
-        },
-        {
-          "name": "STRING_3",
-          "type": "STRING",
-          "links": []
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "1582",
-            "custom_prompt"
-          ],
-          [
-            "1582",
-            "model_name"
-          ],
-          [
-            "1582",
-            "quantization"
-          ],
-          [
-            "1582",
-            "preset_prompt"
-          ],
-          [
-            "1582",
-            "control_after_generate"
-          ],
-          [
-            "1582",
-            "seed"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.13.0"
-      },
-      "widgets_values": [],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
       "id": 347,
       "type": "FindPerfectResolution",
       "pos": [
@@ -3065,8 +2907,7 @@
         false,
         "lanczos",
         "none",
-        "#000000",
-        "<tr><td>Output: </td><td><b>528</b> x <b>768</b> | 4.64MB | 405,504 pixels</td></tr>"
+        "#000000"
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
@@ -4892,7 +4733,7 @@
       ],
       "size": [
         437.4871316556314,
-        955.2540096809184
+        334
       ],
       "flags": {},
       "order": 71,
@@ -5066,6 +4907,164 @@
       "widgets_values": [],
       "color": "#233",
       "bgcolor": "#355"
+    },
+    {
+      "id": 321,
+      "type": "975e31e3-c7fd-4af7-81dc-ff0b2b2a60e3",
+      "pos": [
+        -1420,
+        -920
+      ],
+      "size": [
+        560.1175510652185,
+        402.4891515530435
+      ],
+      "flags": {},
+      "order": 75,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 533
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            530
+          ]
+        },
+        {
+          "name": "STRING_1",
+          "type": "STRING",
+          "links": [
+            531
+          ]
+        },
+        {
+          "name": "STRING_2",
+          "type": "STRING",
+          "links": [
+            532
+          ]
+        },
+        {
+          "name": "STRING_3",
+          "type": "STRING",
+          "links": [
+            534
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "1564",
+            "custom_prompt"
+          ],
+          [
+            "1564",
+            "model_name"
+          ],
+          [
+            "1564",
+            "preset_prompt"
+          ],
+          [
+            "1564",
+            "control_after_generate"
+          ],
+          [
+            "1564",
+            "seed"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.13.0"
+      },
+      "widgets_values": [],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 317,
+      "type": "cb082c4d-bdfb-40b8-85c0-6ec7f755c28a",
+      "pos": [
+        -1417.8893511523438,
+        -366.6401193320312
+      ],
+      "size": [
+        560,
+        460
+      ],
+      "flags": {},
+      "order": 77,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 529
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "STRING_1",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "STRING_2",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "STRING_3",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "1582",
+            "custom_prompt"
+          ],
+          [
+            "1582",
+            "model_name"
+          ],
+          [
+            "1582",
+            "quantization"
+          ],
+          [
+            "1582",
+            "preset_prompt"
+          ],
+          [
+            "1582",
+            "control_after_generate"
+          ],
+          [
+            "1582",
+            "seed"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.13.0"
+      },
+      "widgets_values": [],
+      "color": "#323",
+      "bgcolor": "#535"
     }
   ],
   "links": [
@@ -6002,9 +6001,9 @@
         "id": "2f110ae4-3df5-4e0f-9225-d35629e6f51f",
         "version": 1,
         "state": {
-          "lastGroupId": 2,
-          "lastNodeId": 241,
-          "lastLinkId": 459,
+          "lastGroupId": 22,
+          "lastNodeId": 1582,
+          "lastLinkId": 5461,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -6546,9 +6545,9 @@
         "id": "d2262c38-c2c4-4e42-b649-4ada24dfbf08",
         "version": 1,
         "state": {
-          "lastGroupId": 2,
-          "lastNodeId": 248,
-          "lastLinkId": 460,
+          "lastGroupId": 22,
+          "lastNodeId": 1582,
+          "lastLinkId": 5461,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -6995,7 +6994,7 @@
             ],
             "size": [
               340,
-              492
+              516
             ],
             "flags": {},
             "order": 1,
@@ -7048,7 +7047,8 @@
               true,
               2283421818,
               "randomize",
-              false
+              false,
+              true
             ],
             "color": "#28403f",
             "bgcolor": "#374539"
@@ -7114,8 +7114,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 22,
-          "lastNodeId": 1581,
-          "lastLinkId": 5459,
+          "lastNodeId": 1582,
+          "lastLinkId": 5461,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -7300,7 +7300,7 @@
             ],
             "size": [
               340,
-              540
+              564
             ],
             "flags": {},
             "order": 0,
@@ -7355,7 +7355,8 @@
               false,
               3118336959,
               "randomize",
-              false
+              false,
+              true
             ],
             "color": "#474539",
             "bgcolor": "#2c4045"
@@ -7420,9 +7421,9 @@
         "id": "e7e3746d-0e39-402a-9b77-d77e601c3f0c",
         "version": 1,
         "state": {
-          "lastGroupId": 0,
-          "lastNodeId": 195,
-          "lastLinkId": 401,
+          "lastGroupId": 22,
+          "lastNodeId": 1582,
+          "lastLinkId": 5461,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -8574,9 +8575,9 @@
         "id": "b277338a-448f-4a02-b514-12c42afcd18c",
         "version": 1,
         "state": {
-          "lastGroupId": 0,
-          "lastNodeId": 189,
-          "lastLinkId": 392,
+          "lastGroupId": 22,
+          "lastNodeId": 1582,
+          "lastLinkId": 5461,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -9807,9 +9808,9 @@
         "id": "dd7ab485-9634-4b04-9ab4-a9e2cabfdfcc",
         "version": 1,
         "state": {
-          "lastGroupId": 0,
-          "lastNodeId": 189,
-          "lastLinkId": 392,
+          "lastGroupId": 22,
+          "lastNodeId": 1582,
+          "lastLinkId": 5461,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -11040,9 +11041,9 @@
         "id": "2d8a3b0c-2288-4c6f-9715-d873b866ac09",
         "version": 1,
         "state": {
-          "lastGroupId": 0,
-          "lastNodeId": 189,
-          "lastLinkId": 392,
+          "lastGroupId": 22,
+          "lastNodeId": 1582,
+          "lastLinkId": 5461,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -12273,7 +12274,7 @@
   },
   "config": {},
   "extra": {
-    "frontendVersion": "1.38.14",
+    "frontendVersion": "1.39.19",
     "workflowRendererVersion": "LG",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
@@ -12281,10 +12282,10 @@
     "VHS_KeepIntermediate": true,
     "ue_links": [],
     "ds": {
-      "scale": 0.6630956357852861,
+      "scale": 0.882580291230216,
       "offset": [
-        1354.0422347766043,
-        1025.5220451393593
+        2199.8746856017797,
+        1198.4735813386696
       ]
     }
   },
