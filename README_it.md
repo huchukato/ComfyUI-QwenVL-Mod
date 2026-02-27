@@ -18,11 +18,12 @@ Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguag
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 Notizie & Aggiornamenti**
-* **2026/02/27**: **v2.2.3** 🧠 Gestione Memoria Avanzata + Crediti GenorTG. [[Aggiornamenti](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-223-20260227)]
-> 🧠 **unload_after_run**: Nuovo parametro per scaricamento aggressivo memoria dopo ogni esecuzione.  
-> 🎯 **Prevenzione OOM**: Evita errori out-of-memory in sistemi con VRAM limitata.  
-> 🏆 **Crediti GenorTG**: Aggiunto credito per innovazioni gestione memoria.  
-> 📚 **Documentazione**: Aggiornati tutti i README con nuova funzionalità.  
+* **2026/02/27**: **v2.2.3** 🔧 **Fix Compatibilità CUDA 13 + Rimozione Ridondanze**. [[Aggiornamenti](update.md#version-223-20260227)]
+> 🔧 **Rimozione unload_after_run**: Eliminata checkbox ridondante da tutti i nodi QwenVL per prevenire conflitti su CUDA 13.  
+> 🐛 **Fix Crash VastAI**: Risolti crash causati da operazioni di unload multiple.  
+> 🎯 **Interfaccia Semplificata**: Interfaccia più pulita senza parametri ridondanti.  
+> 🧠 **VRAM Cleanup Node**: Mantenuto per cleanup manuale quando necessario.  
+> 🏆 **Crediti Community**: Ringraziamenti per feedback che ha identificato il problema di ridondanza.  
 
 * **2026/02/19**: **v2.2.2** 🚀 Fix Critici T2V/I2V + Ottimizzazioni ComfyUI. [[Aggiornamenti](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-222-20260219)]
 > 🚀 **Batch Processing**: Risolto problema critico T2V → GGUF con immagini batch da generazione video.  

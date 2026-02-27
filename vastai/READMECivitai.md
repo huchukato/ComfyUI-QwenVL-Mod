@@ -32,13 +32,11 @@ A powerful **enhanced vision-language node** for ComfyUI that combines Qwen3-VL 
 - **Auto-Prompt Enhancement**: Automatically enhance user prompts for optimal generation
 - **Professional Cinematography**: Built-in specifications for lighting, camera angles, shot types
 - **Timeline Structure**: Precise 5-second timeline with frame-by-frame descriptions
-- **Memory Management**: Advanced `unload_after_run` parameter for aggressive memory cleanup on VRAM-limited systems
 - **Keep Last Prompt**: Generate once, preserve results while changing inputs
 
 ---
 
 ## 🎯 What's New in v2.2.3
-- **Memory Management**: Added `unload_after_run` parameter for aggressive VRAM cleanup
 - **Documentation**: Updated all README files with new memory features
 - **Credits**: Added GenorTG credits for memory management innovations
 
