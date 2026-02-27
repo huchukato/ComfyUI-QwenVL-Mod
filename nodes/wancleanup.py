@@ -102,41 +102,29 @@ class WANCleanup:
         return (input,)  # Pass through the input
     
     def _cleanup_wan_models_only(self):
-        """Gentle cleanup targeting only WAN models"""
+        """Very gentle cleanup - just basic garbage collection"""
         try:
-            # Try to clear WAN-specific model references
-            if hasattr(folder_paths, 'get_filename_list'):
-                # Clear WAN model caches if they exist
-                wan_models = ['wan2.1', 'wan2.2', 'wan']
-                for model_type in wan_models:
-                    if model_type in folder_paths.get_filename_list('diffusion_models'):
-                        print(f"🧹 Clearing {model_type} model references")
-            
-            # Use ComfyUI's model management for safe cleanup
-            model_management.unload_all_models()
-            print("🎯 WAN models only cleanup completed")
+            # Only do safe cleanup - don't touch model_management directly
+            if torch.cuda.is_available():
+                # Just clear CUDA cache safely
+                torch.cuda.empty_cache()
+                print("🎯 Safe WAN cleanup (CUDA cache only) completed")
             
         except Exception as e:
-            print(f"⚠️ WAN models cleanup warning: {e}")
+            print(f"⚠️ WAN cleanup warning: {e}")
     
     def _aggressive_wan_cleanup(self):
-        """More aggressive WAN model cleanup"""
+        """More aggressive but still safe cleanup"""
         try:
-            # Unload all models first
-            model_management.unload_all_models()
-            
-            # Additional WAN-specific cleanup
+            # Skip model_management.unload_all_models() - too aggressive
+            # Just do more thorough CUDA cleanup
             if torch.cuda.is_available():
-                # Clear any remaining WAN-related tensors
-                for obj in gc.get_objects():
-                    if hasattr(obj, 'data_ptr') and hasattr(obj, 'device'):
-                        if str(obj.device).startswith('cuda'):
-                            try:
-                                del obj
-                            except:
-                                pass
-            
-            print("🔥 Aggressive WAN cleanup completed")
+                # Multiple cache clear attempts
+                for _ in range(3):
+                    torch.cuda.empty_cache()
+                    torch.cuda.synchronize()
+                
+                print("🔥 Thorough CUDA cleanup completed")
             
         except Exception as e:
             print(f"⚠️ Aggressive WAN cleanup warning: {e}")
@@ -157,21 +145,22 @@ class WANCleanup:
             print(f"⚠️ WAN and cache cleanup warning: {e}")
     
     def _full_memory_cleanup(self):
-        """Complete memory cleanup (use with caution)"""
+        """Safe but thorough memory cleanup"""
         try:
-            # Unload all models
-            model_management.unload_all_models()
-            
-            # Clear all possible caches
+            # Skip unload_all_models() - too dangerous
+            # Just do comprehensive CUDA cleanup
             if torch.cuda.is_available():
-                torch.cuda.empty_cache()
+                # Clear cache multiple times
+                for _ in range(5):
+                    torch.cuda.empty_cache()
+                
+                # Force synchronization
                 torch.cuda.synchronize()
-            
-            # Force multiple garbage collection passes
-            for _ in range(3):
+                
+                # Final garbage collection
                 gc.collect()
-            
-            print("💥 Full memory cleanup completed")
+                
+                print("💥 Safe thorough cleanup completed")
             
         except Exception as e:
             print(f"⚠️ Full cleanup warning: {e}")
