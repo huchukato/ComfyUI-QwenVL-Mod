@@ -22,6 +22,7 @@ class WANCleanup:
     def INPUT_TYPES(cls):
         return {
             "required": {
+                "input": ("*",),  # Any input to allow connection
                 "cleanup_mode": ([
                     "wan_models_only", 
                     "aggressive_wan", 
@@ -37,12 +38,13 @@ class WANCleanup:
             }
         }
     
-    RETURN_TYPES = ()
+    RETURN_TYPES = ("*",)  # Pass through the input
+    RETURN_NAMES = ("output",)
     FUNCTION = "cleanup_wan_memory"
     CATEGORY = "🔷 QwenVL-Mod/Utils"
     OUTPUT_NODE = True
     
-    def cleanup_wan_memory(self, cleanup_mode, force_gc, clear_cuda_cache, synchronize_cuda, delay_seconds=0):
+    def cleanup_wan_memory(self, input, cleanup_mode, force_gc, clear_cuda_cache, synchronize_cuda, delay_seconds=0):
         """
         Cleanup WAN models and memory to prevent crashes in story workflows
         """
@@ -97,7 +99,7 @@ class WANCleanup:
             print(f"❌ WAN Cleanup failed: {str(e)}")
             raise e
         
-        return ()
+        return (input,)  # Pass through the input
     
     def _cleanup_wan_models_only(self):
         """Gentle cleanup targeting only WAN models"""
