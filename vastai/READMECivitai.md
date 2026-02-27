@@ -1,6 +1,6 @@
 # ComfyUI-QwenVL-Mod - Enhanced Vision-Language with WAN 2.2
 
-**Version 2.2.2** (2026/02/19) - 🚀 Critical T2V/I2V Fixes + ComfyUI Optimizations
+**Version 2.2.3** (2026/02/27) - 🧠 Advanced Memory Management + Documentation Updates
 
 ---
 
@@ -36,6 +36,11 @@ A powerful **enhanced vision-language node** for ComfyUI that combines Qwen3-VL 
 - **Keep Last Prompt**: Generate once, preserve results while changing inputs
 
 ---
+
+## 🎯 What's New in v2.2.3
+- **Memory Management**: Added `unload_after_run` parameter for aggressive VRAM cleanup
+- **Documentation**: Updated all README files with new memory features
+- **Credits**: Added GenorTG credits for memory management innovations
 
 ## 🎯 What's New in v2.2.2
 

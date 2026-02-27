@@ -1,5 +1,29 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.2.3 (2026/02/27)
+
+🧠 **Advanced Memory Management + Documentation Updates**
+
+This update adds comprehensive memory management features and updates all documentation to reflect the new capabilities.
+
+### 🧠 Memory Management Features
+|- **unload_after_run Parameter**: Added aggressive memory cleanup parameter to all QwenVL nodes
+|- **OOM Prevention**: Prevents out-of-memory errors on VRAM-limited systems  
+|- **GenorTG Integration**: Successfully integrated memory management innovations from GenorTG fork
+|- **Universal Coverage**: Parameter available across all node types (HF, GGUF, PromptEnhancer)
+
+### 📚 Documentation Updates
+|- **README.md**: Updated with unload_after_run documentation and GenorTG credits
+|- **README_it.md**: Complete Italian translation of new features
+|- **READMECivitai.md**: Added memory management section for Civitai users
+|- **Version Bump**: Updated all version numbers to v2.2.3
+
+### 🏆 Credits & Attribution
+|- **GenorTG**: Added proper credits for memory management innovations
+|- **Community**: Comprehensive documentation for better user understanding
+
+---
+
 ## Version 2.2.2 (2026/02/19)
 
 🚀 **Critical T2V/I2V Fixes + ComfyUI Optimizations**
