@@ -1,8 +1,8 @@
 {
   "id": "d40a02f0-8c72-4d49-8df5-3b1302b986f9",
   "revision": 0,
-  "last_node_id": 1617,
-  "last_link_id": 5511,
+  "last_node_id": 1621,
+  "last_link_id": 5517,
   "nodes": [
     {
       "id": 738,
@@ -2323,7 +2323,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 127,
+      "order": 125,
       "mode": 0,
       "inputs": [
         {
@@ -2968,7 +2968,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 125,
+      "order": 124,
       "mode": 0,
       "inputs": [
         {
@@ -3116,7 +3116,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 123,
+      "order": 127,
       "mode": 0,
       "inputs": [
         {
@@ -3156,7 +3156,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 124,
+      "order": 123,
       "mode": 0,
       "inputs": [
         {
@@ -3423,54 +3423,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 1529,
-      "type": "MarkdownNote",
-      "pos": [
-        -1870,
-        710
-      ],
-      "size": [
-        460,
-        420
-      ],
-      "flags": {},
-      "order": 64,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "QWEN3-VL GGUF",
-      "properties": {},
-      "widgets_values": [
-        "## 🔖 To use the Qwen3-VL GGUF Quantized models you have to install *llama-cpp-python*\n\n\n**🛑 STOP COMFYUI**\n\n**📂 Activate the ComfyUI Virtual Enviroment**\n\nIn your ComfyUI root installation folder type:\non Windows:\n\nCommand Prompt:\n```\n\\venv\\Scripts\\activate.bat\n```\nor Power Shell:\n```\n\\venv\\Scripts\\Activate.ps1\n```\non Linux:\n```\n. /venv/bin/activate\n```\n**⬇️ Install llama-cpp-python**\n```\npip install --upgrade --force-reinstall --no-cache-dir \"llama-cpp-python @ git+https://github.com/JamePeng/llama-cpp-python.git\"\n```\n**🔄 Restart ComfyUI and enjoy**\n\n"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
-      "id": 1466,
-      "type": "MarkdownNote",
-      "pos": [
-        -1870,
-        360
-      ],
-      "size": [
-        460,
-        294.09891860027403
-      ],
-      "flags": {},
-      "order": 65,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "AUTOPROMPT | MMAUDIO",
-      "properties": {},
-      "widgets_values": [
-        "## 🔖 AUTOPROMPT\n\nInstall this modified node that allows you to use an uncensored QwenVL model\n\n```\ngit clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod\n```\n\n----\n\n## 🔈 MMAUDIO \n\nAll of these files should be downloaded to `ComfyUI\\models\\mmaudio`\n\n[🔗MMAudio Model](https://huggingface.co/phazei/NSFW_MMaudio/resolve/main/mmaudio_large_44k_nsfw_gold_8.5k_final_fp16.safetensors)\n\n[🔗MMAudio VAE](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/5984623e6b436818c6ff287ef6eec93e3e05aa3f/mmaudio_vae_44k_fp16.safetensors)\n\n[🔗MMAudio Synchformer](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/main/mmaudio_synchformer_fp16.safetensors)\n\n[🔗MMAudio CLIP](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/main/apple_DFN5B-CLIP-ViT-H-14-384_fp16.safetensors)"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 1582,
       "type": "AutoLoadRifeTensorrtModel",
       "pos": [
@@ -3484,7 +3436,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 66,
+      "order": 64,
       "mode": 4,
       "inputs": [
         {
@@ -3657,7 +3609,7 @@
         106
       ],
       "flags": {},
-      "order": 67,
+      "order": 65,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3689,7 +3641,7 @@
       ],
       "size": [
         537.6962890624998,
-        1124.5444335937495
+        334
       ],
       "flags": {},
       "order": 99,
@@ -3811,7 +3763,7 @@
         106
       ],
       "flags": {},
-      "order": 68,
+      "order": 66,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3835,30 +3787,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 1575,
-      "type": "MarkdownNote",
-      "pos": [
-        -1865.9623778463224,
-        1185.50686586227
-      ],
-      "size": [
-        450.75994318181824,
-        196.61221590909076
-      ],
-      "flags": {},
-      "order": 69,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "🎨 Visual Style Detection",
-      "properties": {},
-      "widgets_values": [
-        "**Enhanced Style Detection: Comprehensive support for artistic styles:**\n\n- Anime style\n\n- 3D cartoon\n\n- Pixel art\n\n- Puppet animation\n\n- 3D game style\n\n- Claymation\n\n- Watercolor\n\n- Black and white animation\n\n- Oil painting style\n\n- Felt style\n\n- Tilt-shift photography\n\n- Time-lapse photography\n\n"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 1570,
       "type": "UnetLoaderGGUF",
       "pos": [
@@ -3870,7 +3798,7 @@
         58
       ],
       "flags": {},
-      "order": 70,
+      "order": 67,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -3905,7 +3833,7 @@
         60
       ],
       "flags": {},
-      "order": 71,
+      "order": 68,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -3940,7 +3868,7 @@
         60
       ],
       "flags": {},
-      "order": 72,
+      "order": 69,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -3975,7 +3903,7 @@
         58
       ],
       "flags": {},
-      "order": 73,
+      "order": 70,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -3999,58 +3927,6 @@
       "bgcolor": "#353"
     },
     {
-      "id": 918,
-      "type": "UNETLoader",
-      "pos": [
-        -1370,
-        -940
-      ],
-      "size": [
-        410,
-        82
-      ],
-      "flags": {},
-      "order": 74,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            5471
-          ]
-        }
-      ],
-      "title": "Load Diffusion Model LOW",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.45",
-        "Node name for S&R": "UNETLoader",
-        "models": [
-          {
-            "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
-            "directory": "diffusion_models"
-          }
-        ],
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {
-            "unet_name": true,
-            "weight_dtype": true
-          }
-        }
-      },
-      "widgets_values": [
-        "wan22RemixT2VI2V_t2vLowV20.safetensors",
-        "default"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
       "id": 1596,
       "type": "GetNode",
       "pos": [
@@ -4064,7 +3940,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 75,
+      "order": 71,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4096,7 +3972,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 76,
+      "order": 72,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4130,7 +4006,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 77,
+      "order": 73,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4164,7 +4040,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 78,
+      "order": 74,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4196,7 +4072,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 79,
+      "order": 75,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4228,7 +4104,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 80,
+      "order": 76,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4262,7 +4138,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 81,
+      "order": 77,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4296,7 +4172,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 82,
+      "order": 78,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4330,7 +4206,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 83,
+      "order": 79,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4364,7 +4240,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 84,
+      "order": 80,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4396,7 +4272,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 85,
+      "order": 81,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4430,7 +4306,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 86,
+      "order": 82,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4464,7 +4340,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 87,
+      "order": 83,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4496,7 +4372,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 88,
+      "order": 84,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5116,7 +4992,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 89,
+      "order": 85,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5426,7 +5302,7 @@
         60
       ],
       "flags": {},
-      "order": 90,
+      "order": 86,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5551,7 +5427,7 @@
         130
       ],
       "flags": {},
-      "order": 91,
+      "order": 87,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -5830,7 +5706,7 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long teal hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
+        "As cum continues to drip down into a pool beneath them, cinematic motion captures fluidity of movement—the purple-haired girl’s hips shifting rhythmically while holding her grip firm and steady; the handcuffed companion leaning slightly forward with one hand resting near his testicles. Every frame pulses with explicit energy: visible sweat beads on foreheads, glossy sheen across exposed skin, vibrant color gradients in tattoos from black ink to bright yellows around cat ears and tramp stamp designs. Bold outlines emphasize every curve of their bodies under dramatic lighting that enhances textures like wet leather skirts or glistening cum droplets."
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -5912,7 +5788,7 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long teal hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
+        "The camera glides closer to reveal detailed anime motion: vibrant colors saturate every surface from dripping cum on leather skirts, intricate tattoos glowing under soft shadows, to bold outlines defining each muscle ripple. The man’s wide-open mouth drips with saliva as he emits deep oral thrusts while the purple-haired girl maintains intense focus, her expression fierce and determined despite being tied at the wrists by chain links connecting both girls’ hands. Warm golden lighting casts dynamic highlights on their skin tones contrasting against dark furniture silhouettes in background."
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -5994,7 +5870,7 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long teal hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
+        "A cinematic anime shot captures a dimly lit hotel room where two girls kneel on the floor, bathed in warm golden light. The girl with purple hair and cat ears leans forward, her athletic frame exposed as she vigorously sucks on a large veiny penis held by her companion. Her nipples are prominently visible beneath glistening sweat and cum that drips from her chest. Behind them, the dark brown quad-tailed long-haired girl in handcuffs gazes smugly with aqua eyes, backboob showing under her high-low skirt as she caresses testicles during ejaculation. Cum cascades down her torso onto her tramp stamp beneath the skirt while navel piercing and cat tattoo are visible against smooth skin."
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -6011,7 +5887,7 @@
         82
       ],
       "flags": {},
-      "order": 92,
+      "order": 88,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6063,7 +5939,7 @@
         82
       ],
       "flags": {},
-      "order": 93,
+      "order": 89,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6098,58 +5974,6 @@
       },
       "widgets_values": [
         "wan22EnhancedNSFWSVICamera_nsfwV2FP8L.safetensors",
-        "default"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 917,
-      "type": "UNETLoader",
-      "pos": [
-        -1370,
-        -1070
-      ],
-      "size": [
-        410,
-        82
-      ],
-      "flags": {},
-      "order": 94,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            5470
-          ]
-        }
-      ],
-      "title": "Load Diffusion Model HIGH",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.45",
-        "Node name for S&R": "UNETLoader",
-        "models": [
-          {
-            "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
-            "directory": "diffusion_models"
-          }
-        ],
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {
-            "unet_name": true,
-            "weight_dtype": true
-          }
-        }
-      },
-      "widgets_values": [
-        "wan22RemixT2VI2V_t2vHighV20.safetensors",
         "default"
       ],
       "color": "#232",
@@ -6800,7 +6624,7 @@
         30
       ],
       "flags": {},
-      "order": 95,
+      "order": 90,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6832,6 +6656,313 @@
       ],
       "color": "#233",
       "bgcolor": "#355"
+    },
+    {
+      "id": 1593,
+      "type": "easy showAnything",
+      "pos": [
+        260,
+        -300
+      ],
+      "size": [
+        420,
+        240
+      ],
+      "flags": {},
+      "order": 128,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 5481
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5494
+          ]
+        }
+      ],
+      "title": "Prompt 1",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "SmoothMixAnime. A cinematic cowboy shot inside a dimly lit hotel room, POV close-up from behind two girls kneeling on the floor, one with purple hair and athletic build exposing her breast and nipples while sucking vigorously on a large veiny penis held by the other girl—dark brown quad-tailed long-haired girl in handcuffs with aqua eyes, backboob visible, both wearing high-low skirts; she caresses testicles as he ejaculates cum onto her chest, dripping down, smug expression on his face, wide open mouth drooling, deep oral insertion, navel piercing and cat tattoo visible, tramp stamp beneath skirt, warm golden lighting casting soft shadows, highly detailed anime-style motion with vibrant colors and bold outlines, uncensored and explicit."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1529,
+      "type": "MarkdownNote",
+      "pos": [
+        -1880,
+        980
+      ],
+      "size": [
+        460,
+        420
+      ],
+      "flags": {},
+      "order": 91,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "QWEN3-VL GGUF",
+      "properties": {},
+      "widgets_values": [
+        "## 🔖 To use the Qwen3-VL GGUF Quantized models you have to install *llama-cpp-python*\n\n\n**🛑 STOP COMFYUI**\n\n**📂 Activate the ComfyUI Virtual Enviroment**\n\nIn your ComfyUI root installation folder type:\non Windows:\n\nCommand Prompt:\n```\n\\venv\\Scripts\\activate.bat\n```\nor Power Shell:\n```\n\\venv\\Scripts\\Activate.ps1\n```\non Linux:\n```\n. /venv/bin/activate\n```\n**⬇️ Install llama-cpp-python**\n```\npip install --upgrade --force-reinstall --no-cache-dir \"llama-cpp-python @ git+https://github.com/JamePeng/llama-cpp-python.git\"\n```\n**🔄 Restart ComfyUI and enjoy**\n\n"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 1575,
+      "type": "MarkdownNote",
+      "pos": [
+        -1880,
+        1460
+      ],
+      "size": [
+        450.75994318181824,
+        196.61221590909076
+      ],
+      "flags": {},
+      "order": 92,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🎨 Visual Style Detection",
+      "properties": {},
+      "widgets_values": [
+        "**Enhanced Style Detection: Comprehensive support for artistic styles:**\n\n- Anime style\n\n- 3D cartoon\n\n- Pixel art\n\n- Puppet animation\n\n- 3D game style\n\n- Claymation\n\n- Watercolor\n\n- Black and white animation\n\n- Oil painting style\n\n- Felt style\n\n- Tilt-shift photography\n\n- Time-lapse photography\n\n"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1466,
+      "type": "MarkdownNote",
+      "pos": [
+        -1880,
+        630
+      ],
+      "size": [
+        460,
+        294.09891860027403
+      ],
+      "flags": {},
+      "order": 93,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "AUTOPROMPT | MMAUDIO",
+      "properties": {},
+      "widgets_values": [
+        "## 🔖 AUTOPROMPT\n\nInstall this modified node that allows you to use an uncensored QwenVL model\n\n```\ngit clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod\n```\n\n----\n\n## 🔈 MMAUDIO \n\nAll of these files should be downloaded to `ComfyUI\\models\\mmaudio`\n\n[🔗MMAudio Model](https://huggingface.co/phazei/NSFW_MMaudio/resolve/main/mmaudio_large_44k_nsfw_gold_8.5k_final_fp16.safetensors)\n\n[🔗MMAudio VAE](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/5984623e6b436818c6ff287ef6eec93e3e05aa3f/mmaudio_vae_44k_fp16.safetensors)\n\n[🔗MMAudio Synchformer](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/main/mmaudio_synchformer_fp16.safetensors)\n\n[🔗MMAudio CLIP](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/main/apple_DFN5B-CLIP-ViT-H-14-384_fp16.safetensors)"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 301,
+      "type": "MarkdownNote",
+      "pos": [
+        -1880,
+        -1120
+      ],
+      "size": [
+        460,
+        1680
+      ],
+      "flags": {},
+      "order": 94,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "README",
+      "properties": {},
+      "widgets_values": [
+        "# WAN 2.2 NSFW T2V to I2V LONG VIDEO STORY with AUTOPROMPT, MMAUDIO and GGUF support \n\n## 🖥️ Civitai Model \n\n**T2V MODELS**\n\n⚙️ **GGUF VERSION**\n\n*Credits to* [DigitalPastel](https://civitai.com/user/DigitalPastel) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 Smooth Mix T2V V2 Q6 K High](https://civitai.com/models/2083588?modelVersionId=2357890)\n- [🔗 Smooth Mix T2V V2 Q6 K Low](https://civitai.com/models/2083588?modelVersionId=2357892)\n- [🔗 Smooth Mix T2V V2 Q8 High](https://civitai.com/models/2083588?modelVersionId=2358087)\n- [🔗 Smooth Mix T2V V2 Q8 Low](https://civitai.com/models/2083588?modelVersionId=2358187)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 WAN REMIX T2V v2.0 Q6 K High](https://civitai.com/models/2094656?modelVersionId=2372121)\n- [🔗 WAN REMIX T2V v2.0 Q6 K Low](https://civitai.com/models/2094656?modelVersionId=2372034)\n- [🔗 WAN REMIX T2V v2.0 Q8 High](https://civitai.com/models/2094656?modelVersionId=2372201)\n- [🔗 WAN REMIX T2V v2.0 Q8 Low](https://civitai.com/models/2094656?modelVersionId=2372149)\n\n⚙️ **FP8 VERSION**\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou)\n\n- [🔗 WAN REMIX T2V v2.0 High](https://civitai.com/models/2003153?modelVersionId=2424167)\n- [🔗 WAN REMIX T2V v2.0 Low](https://civitai.com/models/2003153?modelVersionId=2424912)\n\n*Credits to* [DigitalPastel](https://civitai.com/user/DigitalPastel)\n\n- [🔗 Smooth Mix T2V V2 FP8 High](https://civitai.com/models/1995784?modelVersionId=2323420)\n- [🔗 Smooth Mix T2V V2 FP8 Low](https://civitai.com/models/1995784?modelVersionId=2324440)\n\n**I2V MODELS**\n\n⚙️ **GGUF VERSION**\n\n*Credits to* [taek75799](https://civitai.com/user/taek75799)\n\n- [🔗 NSFW V2 Q6 K High](https://civitai.com/models/2053259?modelVersionId=2524233)\n- [🔗 NSFW V2 Q6 K Low](https://civitai.com/models/2053259?modelVersionId=2524236)\n- [🔗 NSFW V2 Q8 High](https://civitai.com/models/2053259?modelVersionId=2584698)\n- [🔗 NSFW V2 Q8 Low](https://civitai.com/models/2053259?modelVersionId=2584707)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 WAN REMIX v2.1 Q6 K High](https://civitai.com/models/2347977?modelVersionId=2641160)\n- [🔗 WAN REMIX v2.1 Q6 K Low](https://civitai.com/models/2347977?modelVersionId=2641158)\n- [🔗 WAN REMIX v2.1 Q8 High](https://civitai.com/models/2347977?modelVersionId=2641236)\n- [🔗 WAN REMIX v.2.1 Q8 Low](https://civitai.com/models/2347977?modelVersionId=2641234)\n\n⚙️ **FP8 VERSION**\n\n*Credits to* [taek75799](https://civitai.com/user/taek75799)\n \n- [🔗 NSFW V2 FP8 High](https://civitai.com/models/2053259?modelVersionId=2477552)\n- [🔗 NSFW V2 FP8 Low](https://civitai.com/models/2053259?modelVersionId=2477555)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou)\n\n- [🔗 WAN REMIX v2.1 FP8 High](https://civitai.com/models/2003153?modelVersionId=2567309)\n- [🔗 WAN REMIX v2.1 FP8 Low](https://civitai.com/models/2003153?modelVersionId=2567410)\n\n---\n\n## Text Encoders\n- **FP8**: [🔗 umt5_xxl_fp8 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors)\n- **FP16**: [🔗 umt5_xxl_fp16 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors)\n- **NSFW FP8**: [🔗 nsfw_wan_umt5-xxl_fp8_scaled](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors)\n- **NSFW BF16**: [🔗 nsfw_wan_umt5-xxl_bf16](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_bf16.safetensors)\n\n⚙️ **GGUF VERSION**\n- **Q6 K**: [🔗 umt5-xxl-encoder-Q6_K](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q6_K.gguf)\n- **Q8**: [🔗 umt5-xxl-encoder-Q8_0](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q8_0.gguf)\n\n## VAE\n- **BF16:**: [🔗 wan_2.1_vae](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors)\n- **FP32:**: [🔗 wan_2.1_fp32_vae](https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors)\n\n## UPSCALE MODEL\n\n- [🔗 2xLexicaRRDBNet](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth)\n- [🔗 2xLexicaRRDBNet_Sharp](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth)\n\n\n---\n\n# 🎬 Motion Settings\n\n## Motion Amplitude\n*Motion intensity multiplier* \n- **1.0** = normal\n- **1.15** = recommended  \n**Range:** 1.0 – 2.0\n\n## Motion Frames\n*Number of trailing frames from `previous_video` used as motion reference* \n\n**Default:** 5\n\n---\n\n# 🎨 Color Strenght\n\nControls color drift correction strength.\n\n- **0.0** → no color issues  \n- **0.01 – 0.05** → slight drift  \n- **0.1 – 0.15** → strong shift  \n- **0.2 – 0.3** → severe drift\n"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 917,
+      "type": "UNETLoader",
+      "pos": [
+        -1370,
+        -1070
+      ],
+      "size": [
+        410,
+        82
+      ],
+      "flags": {},
+      "order": 95,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            5470
+          ]
+        }
+      ],
+      "title": "Load Diffusion Model HIGH",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ],
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {
+            "unet_name": true,
+            "weight_dtype": true
+          }
+        }
+      },
+      "widgets_values": [
+        "smoothMixWan2214BI2V_t2vHighV20.safetensors",
+        "default"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 918,
+      "type": "UNETLoader",
+      "pos": [
+        -1370,
+        -940
+      ],
+      "size": [
+        410,
+        82
+      ],
+      "flags": {},
+      "order": 96,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            5471
+          ]
+        }
+      ],
+      "title": "Load Diffusion Model LOW",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ],
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {
+            "unet_name": true,
+            "weight_dtype": true
+          }
+        }
+      },
+      "widgets_values": [
+        "smoothMixWan2214BI2V_t2vLowV20.safetensors",
+        "default"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1594,
+      "type": "ad95ad96-c709-46d7-914a-111313fa2e1b",
+      "pos": [
+        -450,
+        -310.37686987206644
+      ],
+      "size": [
+        610,
+        560
+      ],
+      "flags": {},
+      "order": 97,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "prompt_1",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            5481
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "1585",
+            "model_name"
+          ],
+          [
+            "1618",
+            "value"
+          ],
+          [
+            "1585",
+            "prompt_text"
+          ],
+          [
+            "1585",
+            "preset_system_prompt"
+          ],
+          [
+            "1585",
+            "control_after_generate"
+          ],
+          [
+            "1585",
+            "seed"
+          ],
+          [
+            "1585",
+            "keep_last_prompt"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.13.0"
+      },
+      "widgets_values": [],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
     },
     {
       "id": 1252,
@@ -7021,12 +7152,12 @@
       "id": 1602,
       "type": "640341fd-e818-44a8-81b9-8efd95560e69",
       "pos": [
-        -436.6036370001131,
-        671.5873827892245
+        -435.70202849522127,
+        368.6856517869684
       ],
       "size": [
-        572.0281763519081,
-        248
+        600,
+        520
       ],
       "flags": {},
       "order": 151,
@@ -7075,12 +7206,16 @@
       "properties": {
         "proxyWidgets": [
           [
-            "1600",
-            "model_name"
+            "1620",
+            "value"
           ],
           [
             "-1",
             "custom_prompt"
+          ],
+          [
+            "1600",
+            "model_name"
           ],
           [
             "1600",
@@ -7105,133 +7240,6 @@
       "widgets_values": [
         null,
         ""
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
-      "id": 1594,
-      "type": "ad95ad96-c709-46d7-914a-111313fa2e1b",
-      "pos": [
-        -450,
-        -310.37686987206644
-      ],
-      "size": [
-        610,
-        560
-      ],
-      "flags": {},
-      "order": 96,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "label": "prompt_1",
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            5481
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "1585",
-            "model_name"
-          ],
-          [
-            "1585",
-            "prompt_text"
-          ],
-          [
-            "1585",
-            "preset_system_prompt"
-          ],
-          [
-            "1585",
-            "control_after_generate"
-          ],
-          [
-            "1585",
-            "seed"
-          ],
-          [
-            "1585",
-            "keep_last_prompt"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.13.0"
-      },
-      "widgets_values": [],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 1593,
-      "type": "easy showAnything",
-      "pos": [
-        260,
-        -300
-      ],
-      "size": [
-        420,
-        240
-      ],
-      "flags": {},
-      "order": 128,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "shape": 7,
-          "type": "*",
-          "link": 5481
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": [
-            5494
-          ]
-        }
-      ],
-      "title": "Prompt 1",
-      "properties": {
-        "cnr_id": "comfyui-easy-use",
-        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
-        "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
-      },
-      "widgets_values": [
-        "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long dark green curly hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 301,
-      "type": "MarkdownNote",
-      "pos": [
-        -1880,
-        -1120
-      ],
-      "size": [
-        480,
-        1410
-      ],
-      "flags": {},
-      "order": 97,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "README",
-      "properties": {},
-      "widgets_values": [
-        "# WAN 2.2 NSFW T2V LONG VIDEO STORY with AUTOPROMPT, MMAUDIO and GGUF support \n\n## 🖥️ Civitai Model \n\n**T2V MODELS**\n⚙️ **GGUF VERSION**\n\n*Credits to* [DigitalPastel](https://civitai.com/user/DigitalPastel) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 Smooth Mix T2V V2 Q6 K High](https://civitai.com/models/2083588?modelVersionId=2357890)\n- [🔗 Smooth Mix T2V V2 Q6 K Low](https://civitai.com/models/2083588?modelVersionId=2357892)\n- [🔗 Smooth Mix T2V V2 Q8 High](https://civitai.com/models/2083588?modelVersionId=2358087)\n- [🔗 Smooth Mix T2V V2 Q8 Low](https://civitai.com/models/2083588?modelVersionId=2358187)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 WAN REMIX T2V v2.0 Q6 K High](https://civitai.com/models/2094656?modelVersionId=2372121)\n- [🔗 WAN REMIX T2V v2.0 Q6 K Low](https://civitai.com/models/2094656?modelVersionId=2372034)\n- [🔗 WAN REMIX T2V v2.0 Q8 High](https://civitai.com/models/2094656?modelVersionId=2372201)\n- [🔗 WAN REMIX T2V v2.0 Q8 Low](https://civitai.com/models/2094656?modelVersionId=2372149)\n\n⚙️ **FP8 VERSION**\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou)\n\n- [🔗 WAN REMIX T2V v2.0 High](https://civitai.com/models/2003153?modelVersionId=2424167)\n- [🔗 WAN REMIX T2V v2.0 Low](https://civitai.com/models/2003153?modelVersionId=2424912)\n\n*Credits to* [DigitalPastel](https://civitai.com/user/DigitalPastel)\n\n- [🔗 Smooth Mix T2V V2 FP8](https://civitai.com/models/1995784?modelVersionId=2323420)\n- [🔗 Smooth Mix T2V V2 FP8](https://civitai.com/models/1995784?modelVersionId=2324440)\n\n**I2V MODELS**\n\n⚙️ **GGUF VERSION**\n\n*Credits to* [taek75799](https://civitai.com/user/taek75799)\n\n- [🔗 NSFW V2 Q6 K High](https://civitai.com/models/2053259?modelVersionId=2524233)\n- [🔗 NSFW V2 Q6 K Low](https://civitai.com/models/2053259?modelVersionId=2524236)\n- [🔗 NSFW V2 Q8 High](https://civitai.com/models/2053259?modelVersionId=2584698)\n- [🔗 NSFW V2 Q8 Low](https://civitai.com/models/2053259?modelVersionId=2584707)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou) and [BigDannyPt](https://civitai.com/user/Santodan)\n\n- [🔗 WAN REMIX v2.1 Q6 K High](https://civitai.com/models/2347977?modelVersionId=2641160)\n- [🔗 WAN REMIX v2.1 Q6 K Low](https://civitai.com/models/2347977?modelVersionId=2641158)\n- [🔗 WAN REMIX v2.1 Q8 High](https://civitai.com/models/2347977?modelVersionId=2641236)\n- [🔗 WAN REMIX v.2.1 Q8 Low](https://civitai.com/models/2347977?modelVersionId=2641234)\n\n---\n\n## Text Encoders\n- **FP8**: [🔗 umt5_xxl_fp8 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors)\n- **FP16**: [🔗 umt5_xxl_fp16 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors)\n- **NSFW FP8**: [🔗 nsfw_wan_umt5-xxl_fp8_scaled](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors)\n- **NSFW BF16**: [🔗 nsfw_wan_umt5-xxl_bf16](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_bf16.safetensors)\n\n⚙️ **GGUF VERSION**\n- **Q6 K**: [🔗 umt5-xxl-encoder-Q6_K](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q6_K.gguf)\n- **Q8**: [🔗 umt5-xxl-encoder-Q8_0](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q8_0.gguf)\n\n## VAE\n- **BF16:**: [🔗 wan_2.1_vae](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors)\n- **FP32:**: [🔗 wan_2.1_fp32_vae](https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors)\n\n## UPSCALE MODEL\n\n- [🔗 2xLexicaRRDBNet](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth)\n- [🔗 2xLexicaRRDBNet_Sharp](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth)\n\n\n---\n\n# 🎬 Motion Settings\n\n## Motion Amplitude\n*Motion intensity multiplier* \n- **1.0** = normal\n- **1.15** = recommended  \n**Range:** 1.0 – 2.0\n\n## Motion Frames\n*Number of trailing frames from `previous_video` used as motion reference* \n\n**Default:** 5\n\n---\n\n# 🎨 Color Strenght\n\nControls color drift correction strength.\n\n- **0.0** → no color issues  \n- **0.01 – 0.05** → slight drift  \n- **0.1 – 0.15** → strong shift  \n- **0.2 – 0.3** → severe drift\n"
       ],
       "color": "#233",
       "bgcolor": "#355"
@@ -8477,8 +8485,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 28,
-          "lastNodeId": 1617,
-          "lastLinkId": 5511,
+          "lastNodeId": 1621,
+          "lastLinkId": 5517,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -9078,7 +9086,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long dark green curly hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
+              "SmoothMixAnime. A cinematic cowboy shot inside a dimly lit hotel room, POV close-up from behind two girls kneeling on the floor, one with purple hair and athletic build exposing her breast and nipples while sucking vigorously on a large veiny penis held by the other girl—dark brown quad-tailed long-haired girl in handcuffs with aqua eyes, backboob visible, both wearing high-low skirts; she caresses testicles as he ejaculates cum onto her chest, dripping down, smug expression on his face, wide open mouth drooling, deep oral insertion, navel piercing and cat tattoo visible, tramp stamp beneath skirt, warm golden lighting casting soft shadows, highly detailed anime-style motion with vibrant colors and bold outlines, uncensored and explicit."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -9560,8 +9568,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 28,
-          "lastNodeId": 1617,
-          "lastLinkId": 5511,
+          "lastNodeId": 1621,
+          "lastLinkId": 5517,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -10458,7 +10466,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long teal hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
+              "A cinematic anime shot captures a dimly lit hotel room where two girls kneel on the floor, bathed in warm golden light. The girl with purple hair and cat ears leans forward, her athletic frame exposed as she vigorously sucks on a large veiny penis held by her companion. Her nipples are prominently visible beneath glistening sweat and cum that drips from her chest. Behind them, the dark brown quad-tailed long-haired girl in handcuffs gazes smugly with aqua eyes, backboob showing under her high-low skirt as she caresses testicles during ejaculation. Cum cascades down her torso onto her tramp stamp beneath the skirt while navel piercing and cat tattoo are visible against smooth skin."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -10909,8 +10917,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 28,
-          "lastNodeId": 1617,
-          "lastLinkId": 5511,
+          "lastNodeId": 1621,
+          "lastLinkId": 5517,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -11867,7 +11875,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long teal hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
+              "The camera glides closer to reveal detailed anime motion: vibrant colors saturate every surface from dripping cum on leather skirts, intricate tattoos glowing under soft shadows, to bold outlines defining each muscle ripple. The man’s wide-open mouth drips with saliva as he emits deep oral thrusts while the purple-haired girl maintains intense focus, her expression fierce and determined despite being tied at the wrists by chain links connecting both girls’ hands. Warm golden lighting casts dynamic highlights on their skin tones contrasting against dark furniture silhouettes in background."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -12257,8 +12265,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 28,
-          "lastNodeId": 1617,
-          "lastLinkId": 5511,
+          "lastNodeId": 1621,
+          "lastLinkId": 5517,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -13216,7 +13224,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "Anime style, cinematic dusk at a bustling airport terminal with dramatic backlighting casting golden rays through large windows into the dark interior; one girl stands center frame, her long teal hair cascading in soft waves beneath a pageboy cut, amber eyes gleaming with mischief as she tilts head back, mouth open wide with tongue playfully sticking out, droplets of saliva glistening mid-air and landing on her chest; she wears a tight corset over a downblouse, one breast slightly exposed while the other is pressed inward by the fabric, creating subtle tension in the garment; her average body posture exudes confidence despite being solo; warm light contrasts sharply with shadowed surroundings, emphasizing texture of hair and skin under stylized anime shading; motion blur on falling saliva adds dynamic energy to still composition."
+              "As cum continues to drip down into a pool beneath them, cinematic motion captures fluidity of movement—the purple-haired girl’s hips shifting rhythmically while holding her grip firm and steady; the handcuffed companion leaning slightly forward with one hand resting near his testicles. Every frame pulses with explicit energy: visible sweat beads on foreheads, glossy sheen across exposed skin, vibrant color gradients in tattoos from black ink to bright yellows around cat ears and tramp stamp designs. Bold outlines emphasize every curve of their bodies under dramatic lighting that enhances textures like wet leather skirts or glistening cum droplets."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -13606,8 +13614,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 28,
-          "lastNodeId": 1617,
-          "lastLinkId": 5511,
+          "lastNodeId": 1621,
+          "lastLinkId": 5517,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -13719,7 +13727,7 @@
               20,
               50,
               4.5,
-              972570536612468,
+              1090091329329408,
               "randomize",
               "",
               "man, boy, male, man's voice, boy's voice, male's voice, ",
@@ -13866,8 +13874,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 28,
-          "lastNodeId": 1617,
-          "lastLinkId": 5511,
+          "lastNodeId": 1621,
+          "lastLinkId": 5517,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -13898,7 +13906,7 @@
             "name": "STRING",
             "type": "STRING",
             "linkIds": [
-              5463
+              5514
             ],
             "localized_name": "STRING",
             "label": "prompt_1",
@@ -13911,6 +13919,46 @@
         ],
         "widgets": [],
         "nodes": [
+          {
+            "id": 1618,
+            "type": "PrimitiveStringMultiline",
+            "pos": [
+              -194.78062652338153,
+              -1637.0042045183225
+            ],
+            "size": [
+              336.4285647435929,
+              137.58089636900377
+            ],
+            "flags": {},
+            "order": 1,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  5512
+                ]
+              }
+            ],
+            "title": "LoRaS Triggers",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.33",
+              "Node name for S&R": "PrimitiveStringMultiline",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "SmoothMixAnime. "
+            ],
+            "color": "#232",
+            "bgcolor": "#353",
+            "shape": 2
+          },
           {
             "id": 1585,
             "type": "AILab_QwenVL_GGUF_PromptEnhancer",
@@ -13932,7 +13980,7 @@
                 "name": "ENHANCED_OUTPUT",
                 "type": "STRING",
                 "links": [
-                  5463
+                  5513
                 ]
               }
             ],
@@ -13943,7 +13991,7 @@
             },
             "widgets_values": [
               "Qwen3-VL-8B-Instruct-c_abliterated-v3.Q8_0.gguf",
-              "anime style. airport, dusk, light rays, backlighting, dark, 1girl, dark green hair, very long hair, pageboy hair, curly hair, amber eyes, average body, large breasts, short, corset, downblouse, solo, one breast out, mouth open, tongue out, saliva drip, saliva on breasts, breasts squeezed together ",
+              "cowboy shot, hotel room, (2girls) pov, close up, looking at viewer, one breast out, nipples, penis, kneeling, uncensored, wide open mouth, drooling, sucking penis, handjob, oral sex, deep oral insertion, caressing testicles, ejaculation, cum on breasts, cumdrip, smug BREAK 1futa, futanari, futa with female, 1girl, purple hair, medium hair, butch cut hair, blunt ends, blue eyes, athletic body, large breasts, average height, large penis, veiny penis, navel piercing, cat tattoo, tramp stamp, high-low skirt, Exposed nipples BREAK 1girl, dark brown hair, very long hair, quad tails hair, wavy hair, aqua eyes, average body, large breasts, short, handcuffs, backboob",
               "📖 Wan 2.2 NSFW T2V Story",
               "",
               512,
@@ -13953,20 +14001,102 @@
               false,
               "auto",
               false,
-              4108575206,
+              2178041083,
               "randomize",
               false,
               true
             ],
             "color": "#374445",
             "bgcolor": "#474539"
+          },
+          {
+            "id": 1619,
+            "type": "Text Concatenate",
+            "pos": [
+              -119.41140673927325,
+              -1429.4302824901808
+            ],
+            "size": [
+              270,
+              142
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "text_a",
+                "name": "text_a",
+                "shape": 7,
+                "type": "STRING",
+                "link": 5512
+              },
+              {
+                "localized_name": "text_b",
+                "name": "text_b",
+                "shape": 7,
+                "type": "STRING",
+                "link": 5513
+              },
+              {
+                "localized_name": "text_c",
+                "name": "text_c",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              },
+              {
+                "localized_name": "text_d",
+                "name": "text_d",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  5514
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "was-ns",
+              "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
+              "Node name for S&R": "Text Concatenate"
+            },
+            "widgets_values": [
+              "",
+              "false"
+            ]
           }
         ],
         "groups": [],
         "links": [
           {
-            "id": 5463,
+            "id": 5512,
+            "origin_id": 1618,
+            "origin_slot": 0,
+            "target_id": 1619,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 5513,
             "origin_id": 1585,
+            "origin_slot": 0,
+            "target_id": 1619,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 5514,
+            "origin_id": 1619,
             "origin_slot": 0,
             "target_id": -20,
             "target_slot": 0,
@@ -13982,8 +14112,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 28,
-          "lastNodeId": 1617,
-          "lastLinkId": 5511,
+          "lastNodeId": 1621,
+          "lastLinkId": 5517,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -14088,7 +14218,7 @@
               216
             ],
             "flags": {},
-            "order": 1,
+            "order": 3,
             "mode": 0,
             "inputs": [
               {
@@ -14098,7 +14228,7 @@
                 "widget": {
                   "name": "text"
                 },
-                "link": 5486
+                "link": 5517
               }
             ],
             "outputs": [
@@ -14154,15 +14284,15 @@
             "id": 1600,
             "type": "AILab_QwenVL_GGUF_Advanced",
             "pos": [
-              -1146.9682528890344,
-              -1918.6863658119748
+              -1193.5110015935782,
+              -1901.0999733897602
             ],
             "size": [
               340,
               564
             ],
             "flags": {},
-            "order": 0,
+            "order": 2,
             "mode": 0,
             "inputs": [
               {
@@ -14195,7 +14325,7 @@
                 "name": "RESPONSE",
                 "type": "STRING",
                 "links": [
-                  5486
+                  5516
                 ]
               }
             ],
@@ -14221,25 +14351,123 @@
               0,
               4194304,
               false,
-              3053027266,
+              93403889,
               "randomize",
               false,
               true
             ],
             "color": "#474539",
             "bgcolor": "#2c4045"
+          },
+          {
+            "id": 1621,
+            "type": "Text Concatenate",
+            "pos": [
+              -1138.7529662601444,
+              -1997.3868446507338
+            ],
+            "size": [
+              270,
+              142
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 1,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "text_a",
+                "name": "text_a",
+                "shape": 7,
+                "type": "STRING",
+                "link": 5515
+              },
+              {
+                "localized_name": "text_b",
+                "name": "text_b",
+                "shape": 7,
+                "type": "STRING",
+                "link": 5516
+              },
+              {
+                "localized_name": "text_c",
+                "name": "text_c",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              },
+              {
+                "localized_name": "text_d",
+                "name": "text_d",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  5517
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "was-ns",
+              "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
+              "Node name for S&R": "Text Concatenate"
+            },
+            "widgets_values": [
+              "",
+              "false"
+            ]
+          },
+          {
+            "id": 1620,
+            "type": "PrimitiveStringMultiline",
+            "pos": [
+              -1183.6644000000501,
+              -2205.383717560171
+            ],
+            "size": [
+              336.4285647435929,
+              137.58089636900377
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  5515
+                ]
+              }
+            ],
+            "title": "LoRaS Triggers",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.33",
+              "Node name for S&R": "PrimitiveStringMultiline",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              ""
+            ],
+            "color": "#232",
+            "bgcolor": "#353",
+            "shape": 2
           }
         ],
         "groups": [],
         "links": [
-          {
-            "id": 5486,
-            "origin_id": 1600,
-            "origin_slot": 0,
-            "target_id": 1601,
-            "target_slot": 0,
-            "type": "STRING"
-          },
           {
             "id": 5487,
             "origin_id": -10,
@@ -14279,6 +14507,30 @@
             "target_id": 1600,
             "target_slot": 2,
             "type": "STRING"
+          },
+          {
+            "id": 5515,
+            "origin_id": 1620,
+            "origin_slot": 0,
+            "target_id": 1621,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 5516,
+            "origin_id": 1600,
+            "origin_slot": 0,
+            "target_id": 1621,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 5517,
+            "origin_id": 1621,
+            "origin_slot": 0,
+            "target_id": 1601,
+            "target_slot": 0,
+            "type": "STRING"
           }
         ],
         "extra": {
@@ -14298,10 +14550,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 1.6414201088812246,
+      "scale": 0.5753077346489522,
       "offset": [
-        2312.363033248299,
-        1153.7918536490033
+        2672.424367733526,
+        1648.2887999497361
       ]
     }
   },
