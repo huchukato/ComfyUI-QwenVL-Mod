@@ -165,7 +165,7 @@ Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguag
 * **Attention Ottimizzato**: Pipeline attention pulita con supporto Flash Attention 2 e fallback stabile SDPA. Nessun patching complesso che potrebbe interferire con output modello.  
 * **Hardware-Aware**: Rileva automaticamente capacità GPU e previene errori con modelli incompatibili (es. FP8).  
 * **Generazione Riproducibile**: Usa parametro seed per output consistenti, con Modalità Seed Fisso per stabilità ultima.  
-* **Gestione Memoria**: Opzione "Keep Model Loaded" per mantenere modello in VRAM per elaborazione più rapida.  
+* **Gestione Memoria**: Opzione "Keep Model Loaded" per mantenere modello in VRAM per elaborazione più rapida. **Nuovo parametro `unload_after_run`** per scaricare aggressivamente la memoria dopo ogni esecuzione, prevenendo errori OOM in sistemi con VRAM limitata.  
 * **Supporto Immagine & Video**: Accetta sia immagini singole che sequenze frame video come input.  
 * **Gestione Errori Robusta**: Fornisce messaggi errore chiari per problemi hardware o memoria.  
 * **Output Console Pulito**: Log console minimi e informativi durante operazione.
@@ -474,6 +474,7 @@ Questa versione migliorata include prompt specializzati per **WAN 2.2** generazi
 * **Qwen Team**: [Alibaba Cloud](https://github.com/QwenLM) - Per sviluppo e open-source potenti modelli Qwen-VL.  
 * **ComfyUI**: [comfyanonymous](https://github.com/comfyanonymous/ComfyUI) - Per incredibile e estensibile piattaforma ComfyUI.  
 * **llama-cpp-python**: [JamePeng/llama-cpp-python](https://github.com/JamePeng/llama-cpp-python) - Backend GGUF con supporto vision usato da nodi GGUF.  
+* **GenorTG**: [GenorTG/ComfyUI-Genor-QwenVL-Mod](https://github.com/GenorTG/ComfyUI-Genor-QwenVL-Mod) - Per innovativi miglioramenti di gestione memoria incluso il parametro `unload_after_run` e ottimizzazioni cache prompt che prevengono errori OOM in workflow multi-nodo.  
 * **Integrazione ComfyUI**: [1038lab](https://github.com/1038lab) - Sviluppatore di questo custom node.
 
 ## **👥 Autore**
