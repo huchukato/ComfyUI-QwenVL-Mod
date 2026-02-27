@@ -25,6 +25,7 @@ class WANCleanup:
                 "input": ("*",),  # Any input to allow connection
                 "cleanup_mode": ([
                     "wan_models_only", 
+                    "wan_text_encoder_only",
                     "aggressive_wan", 
                     "wan_and_cache", 
                     "full_cleanup"
@@ -64,6 +65,8 @@ class WANCleanup:
             # Mode-specific cleanup
             if cleanup_mode == "wan_models_only":
                 self._cleanup_wan_models_only()
+            elif cleanup_mode == "wan_text_encoder_only":
+                self._cleanup_wan_text_encoder_only()
             elif cleanup_mode == "aggressive_wan":
                 self._aggressive_wan_cleanup()
             elif cleanup_mode == "wan_and_cache":
@@ -100,6 +103,36 @@ class WANCleanup:
             raise e
         
         return (input,)  # Pass through the input
+    
+    def _cleanup_wan_text_encoder_only(self):
+        """Specific cleanup for WAN text encoder - the main memory hog"""
+        try:
+            if torch.cuda.is_available():
+                # Force multiple cache clears to target text encoder
+                print("🎯 Targeting WAN text encoder cleanup...")
+                
+                # Multiple aggressive cache clears
+                for i in range(5):
+                    torch.cuda.empty_cache()
+                    if i % 2 == 0:  # Synchronize every other iteration
+                        torch.cuda.synchronize()
+                    print(f"  Cache clear {i+1}/5")
+                
+                # Additional memory pressure to force text encoder cleanup
+                try:
+                    # Create temporary tensor to pressure memory, then delete
+                    temp_tensor = torch.randn(1000, 1000, device='cuda')
+                    del temp_tensor
+                    torch.cuda.empty_cache()
+                    torch.cuda.synchronize()
+                    print("  Memory pressure applied")
+                except:
+                    pass
+                
+                print("🎯 WAN text encoder cleanup completed")
+            
+        except Exception as e:
+            print(f"⚠️ WAN text encoder cleanup warning: {e}")
     
     def _cleanup_wan_models_only(self):
         """Very gentle cleanup - just basic garbage collection"""
