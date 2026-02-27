@@ -42,6 +42,12 @@ This major update resolves critical workflow issues with T2V/I2V batch processin
 |- **Signature Mismatch**: Resolved different signature patterns between nodes
 |- **Aggressive Cleanup**: Forced complete VRAM cleanup before model reload
 
+### 🐳 Docker System Optimizations
+|- **ComfyUI Arguments**: Optimized startup arguments for better performance
+|- **Flash Attention 2**: Enabled for 2-3x speedup on compatible hardware
+|- **Experimental Features**: Added validated arguments (`--async-offload`, `--reserve-vram 2`)
+|- **Version Compatibility**: Resolved version-specific argument differences
+
 ### **keep_model_loaded Enhancement**
 ### 🔧 keep_model_loaded Enhancement
 |- **Missing Parameter**: Added `keep_model_loaded` to PromptEnhancer node
@@ -56,10 +62,13 @@ This major update resolves critical workflow issues with T2V/I2V batch processin
 |- **Production Ready**: Stable and optimized for deployment
 
 ### 📋 Files Modified
+**Node Files:**
 |- `AILab_QwenVL_GGUF.py`: Batch processing + enhanced cleanup
 |- `AILab_QwenVL_GGUF_PromptEnhancer.py`: keep_model_loaded + cleanup
-|- `runpod/Dockerfile`: Flash Attention 2 + optimized arguments
-|- `runpod/Dockerfile.4090`: Flash Attention 2 + optimized arguments
+
+**Docker System Files:**
+|- `runpod/Dockerfile`: Flash Attention 2 + optimized ComfyUI arguments
+|- `runpod/Dockerfile.4090`: Flash Attention 2 + optimized ComfyUI arguments
 
 ### 🎯 Impact
 |- **T2V/I2V Workflows**: Now fully functional with batch processing
