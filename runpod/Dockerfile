@@ -92,7 +92,6 @@ RUN cd /ComfyUI/custom_nodes && \
     git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git && \
     git clone https://github.com/Smirnov75/ComfyUI-mxToolkit.git && \
     git clone https://github.com/princepainter/ComfyUI-PainterI2V.git && \
-    git clone https://github.com/princepainter/ComfyUI-PainterI2Vadvanced.git && \
     git clone https://github.com/princepainter/ComfyUI-PainterLongVideo.git && \
     git clone https://github.com/ashtar1984/comfyui-find-perfect-resolution.git && \
     git clone https://github.com/ComfyAssets/ComfyUI_Selectors.git && \
