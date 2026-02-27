@@ -84,7 +84,16 @@ class WANCleanup:
             print("🎯 After T2V Use: Cleaning T2V residues for QwenVL...")
             
             if torch.cuda.is_available():
-                # Gentle but thorough cleanup targeting T2V residues
+                # Try the real Easy Use method but with protection
+                try:
+                    print("  Attempting model unload...")
+                    model_management.unload_all_models()
+                    print("  Models unloaded successfully")
+                except Exception as unload_error:
+                    print(f"  Model unload failed: {unload_error}")
+                    print("  Continuing with cache cleanup only...")
+                
+                # Multiple cache clears
                 for i in range(3):
                     torch.cuda.empty_cache()
                     if i == 1:  # Synchronize in middle
@@ -101,8 +110,9 @@ class WANCleanup:
                 except:
                     pass
                 
-                # Final synchronization
+                # Final synchronization and garbage collection
                 torch.cuda.synchronize()
+                gc.collect()
                 print("🎯 After T2V Use cleanup completed")
             
         except Exception as e:
