@@ -24,12 +24,11 @@ class WANCleanup:
             "required": {
                 "input": ("*",),  # Any input to allow connection
                 "cleanup_mode": ([
-                    "Gentle Cleanup",
-                    "After T2V Use",
-                    "Before WAN Load", 
-                    "After WAN Use",
-                    "Full Memory Reset"
-                ], {"default": "Gentle Cleanup"}),
+                    "Cache Only",
+                    "Text Encoder",
+                    "Full Cleanup",
+                    "T2V + QwenVL Fix"
+                ], {"default": "Cache Only"}),
             }
         }
     
@@ -52,16 +51,14 @@ class WANCleanup:
                 print(f"📊 Initial VRAM: {initial_memory / 1024**3:.2f} GB")
             
             # Mode-specific cleanup
-            if cleanup_mode == "Gentle Cleanup":
-                self._gentle_cleanup()
-            elif cleanup_mode == "After T2V Use":
-                self._after_t2v_use()
-            elif cleanup_mode == "Before WAN Load":
-                self._before_wan_load()
-            elif cleanup_mode == "After WAN Use":
-                self._after_wan_use()
-            elif cleanup_mode == "Full Memory Reset":
-                self._full_memory_reset()
+            if cleanup_mode == "Cache Only":
+                self._cache_only()
+            elif cleanup_mode == "Text Encoder":
+                self._text_encoder()
+            elif cleanup_mode == "Full Cleanup":
+                self._full_cleanup()
+            elif cleanup_mode == "T2V + QwenVL Fix":
+                self._t2v_qwen_fix()
             
             # Report final memory state
             if torch.cuda.is_available():
@@ -78,127 +75,86 @@ class WANCleanup:
         
         return (input,)  # Pass through the input
     
-    def _after_t2v_use(self):
-        """Targeted cleanup after T2V use - prepares for QwenVL prompt generation"""
+    def _cache_only(self):
+        """Simple cache cleanup only"""
         try:
-            print("🎯 After T2V Use: Cleaning T2V residues for QwenVL...")
-            
             if torch.cuda.is_available():
-                # Try the real Easy Use method but with protection
+                torch.cuda.empty_cache()
+                print("  Cache cleared")
+            
+        except Exception as e:
+            print(f"⚠️ Cache cleanup warning: {e}")
+    
+    def _text_encoder(self):
+        """Targeted cleanup for WAN text encoder"""
+        try:
+            if torch.cuda.is_available():
+                for i in range(3):
+                    torch.cuda.empty_cache()
+                    if i == 1:
+                        torch.cuda.synchronize()
+                    print(f"  Text encoder clear {i+1}/3")
+                
+                print("  Text encoder cleanup completed")
+            
+        except Exception as e:
+            print(f"⚠️ Text encoder cleanup warning: {e}")
+    
+    def _full_cleanup(self):
+        """Complete cleanup - unload all models"""
+        try:
+            if torch.cuda.is_available():
                 try:
-                    print("  Attempting model unload...")
+                    print("  Attempting full model unload...")
+                    model_management.unload_all_models()
+                    print("  All models unloaded successfully")
+                except Exception as unload_error:
+                    print(f"  Model unload failed: {unload_error}")
+                    print("  Continuing with cache cleanup only...")
+                
+                for _ in range(5):
+                    torch.cuda.empty_cache()
+                
+                torch.cuda.synchronize()
+                gc.collect()
+                print("  Full cleanup completed")
+            
+        except Exception as e:
+            print(f"⚠️ Full cleanup warning: {e}")
+    
+    def _t2v_qwen_fix(self):
+        """Special fix for T2V + QwenVL conflict - uses Easy Use method"""
+        try:
+            if torch.cuda.is_available():
+                try:
+                    print("  Attempting model unload (Easy Use method)...")
                     model_management.unload_all_models()
                     print("  Models unloaded successfully")
                 except Exception as unload_error:
                     print(f"  Model unload failed: {unload_error}")
                     print("  Continuing with cache cleanup only...")
                 
-                # Multiple cache clears
                 for i in range(3):
                     torch.cuda.empty_cache()
-                    if i == 1:  # Synchronize in middle
+                    if i == 1:
                         torch.cuda.synchronize()
                     print(f"  T2V residue clear {i+1}/3")
                 
-                # Light memory pressure to force T2V cleanup
                 try:
                     temp_tensor = torch.randn(1500, 1500, device='cuda')
-                    del temp_tensor
-                    torch.cuda.empty_cache()
-                    torch.cuda.synchronize()
-                    print("  T2V memory pressure applied")
-                except:
-                    pass
-                
-                # Final synchronization and garbage collection
-                torch.cuda.synchronize()
-                gc.collect()
-                print("🎯 After T2V Use cleanup completed")
-            
-        except Exception as e:
-            print(f"⚠️ After T2V Use cleanup warning: {e}")
-    
-    def _before_wan_load(self):
-        """Aggressive cleanup before loading WAN model - includes delay and full options"""
-        try:
-            print("🚀 Before WAN Load: Preparing memory for WAN model...")
-            
-            # Add delay for QwenVL to fully unload
-            import time
-            time.sleep(2)
-            print("  ⏱️ Delay for QwenVL unload completed")
-            
-            if torch.cuda.is_available():
-                # Multiple aggressive cache clears
-                for i in range(5):
-                    torch.cuda.empty_cache()
-                    if i % 2 == 0:
-                        torch.cuda.synchronize()
-                    print(f"  Cache clear {i+1}/5")
-                
-                # Memory pressure to force cleanup
-                try:
-                    temp_tensor = torch.randn(2000, 2000, device='cuda')
                     del temp_tensor
                     torch.cuda.empty_cache()
                     torch.cuda.synchronize()
                     print("  Memory pressure applied")
                 except:
                     pass
-            
-            # Force garbage collection
-            gc.collect()
-            print("🚀 Before WAN Load cleanup completed")
-            
-        except Exception as e:
-            print(f"⚠️ Before WAN Load cleanup warning: {e}")
-    
-    def _after_wan_use(self):
-        """Targeted cleanup after WAN use - focuses on text encoder"""
-        try:
-            print("🎯 After WAN Use: Cleaning WAN text encoder...")
-            
-            if torch.cuda.is_available():
-                # Multiple cache clears targeting text encoder
-                for i in range(3):
-                    torch.cuda.empty_cache()
-                    if i == 1:  # Synchronize in middle
-                        torch.cuda.synchronize()
-                    print(f"  Cache clear {i+1}/3")
                 
-                print("🎯 After WAN Use cleanup completed")
-            
-        except Exception as e:
-            print(f"⚠️ After WAN Use cleanup warning: {e}")
-    
-    def _gentle_cleanup(self):
-        """Very gentle cleanup - safe option"""
-        try:
-            if torch.cuda.is_available():
-                torch.cuda.empty_cache()
-                print("🧹 Gentle cleanup completed")
-            
-        except Exception as e:
-            print(f"⚠️ Gentle cleanup warning: {e}")
-    
-    def _full_memory_reset(self):
-        """Comprehensive memory reset between segments"""
-        try:
-            if torch.cuda.is_available():
-                # Multiple cache clears
-                for _ in range(7):
-                    torch.cuda.empty_cache()
-                
-                # Synchronization
                 torch.cuda.synchronize()
-                
-                # Garbage collection
                 gc.collect()
-                
-                print("💥 Full memory reset completed")
+                print("  T2V + QwenVL fix completed")
             
         except Exception as e:
-            print(f"⚠️ Full memory reset warning: {e}")
+            print(f"⚠️ T2V + QwenVL fix warning: {e}")
 
 # Register the node
 NODE_CLASS_MAPPINGS = {
