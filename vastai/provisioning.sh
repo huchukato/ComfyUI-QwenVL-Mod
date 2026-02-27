@@ -31,7 +31,6 @@ NODES=(
     "https://github.com/Fannovel16/ComfyUI-Frame-Interpolation"
     "https://github.com/Smirnov75/ComfyUI-mxToolkit"
     "https://github.com/princepainter/ComfyUI-PainterI2V"
-    "https://github.com/princepainter/ComfyUI-PainterI2Vadvanced"
     "https://github.com/princepainter/ComfyUI-PainterLongVideo"
     "https://github.com/ashtar1984/comfyui-find-perfect-resolution"
     "https://github.com/ComfyAssets/ComfyUI_Selectors"
