@@ -28,7 +28,7 @@ This update adds comprehensive memory management features and updates all docume
 
 🚀 **Critical T2V/I2V Fixes + ComfyUI Optimizations**
 
-This major update resolves critical workflow issues with T2V/I2V batch processing, same model reuse conflicts, and adds significant performance optimizations including SageAttention support and refined ComfyUI startup arguments.
+This major update resolves critical workflow issues with T2V/I2V batch processing, same model reuse conflicts, and adds significant performance optimizations including Flash Attention 2 support and refined ComfyUI startup arguments.
 
 ### 🚀 T2V/I2V Workflow Fixes (Critical)
 |- **Batch Processing**: Fixed critical T2V → GGUF issue with batch images `[batch, height, width, channels]`
@@ -36,24 +36,19 @@ This major update resolves critical workflow issues with T2V/I2V batch processin
 |- **Video Support**: Enhanced video frame processing with proper shape handling
 |- **Debug Enhanced**: Comprehensive logging for batch processing troubleshooting
 
-### 🔄 Same Model Reuse Fix
+### **Same Model Reuse Fix**
 |- **Conflict Resolution**: Fixed crash when using same model between T2V and I2V nodes
 |- **Memory Management**: Enhanced cleanup with CUDA synchronization and timing
 |- **Signature Mismatch**: Resolved different signature patterns between nodes
 |- **Aggressive Cleanup**: Forced complete VRAM cleanup before model reload
 
-### 🧠 SageAttention Integration
-|- **Performance Boost**: Added SageAttention support for 30-35% speed increase on RTX 5090
-|- **User-Proven**: Based on user's successful VastAI configuration
-|- **Flag Integration**: Added `--use-sage-attention` to ComfyUI startup arguments
-|- **Alternative Ready**: KJNodes method available if flag causes issues
-
-### ⚙️ ComfyUI Arguments Optimization
+### **Memory Management Features Optimization**
 |- **Valid Args**: Filtered to only use recognized ComfyUI arguments
 |- **Experimental Features**: Added validated experimental arguments (`--async-offload`, `--reserve-vram 2`)
 |- **Version Compatibility**: Resolved version-specific argument differences
 |- **Performance Balance**: Optimal mix of stability and speed
 
+### **keep_model_loaded Enhancement**
 ### 🔧 keep_model_loaded Enhancement
 |- **Missing Parameter**: Added `keep_model_loaded` to PromptEnhancer node
 |- **Consistent Behavior**: Both GGUF and PromptEnhancer now have identical memory management
