@@ -4,8 +4,8 @@ source /venv/main/bin/activate
 COMFYUI_DIR=${WORKSPACE}/ComfyUI
 
 APT_PACKAGES=(
-    #"package-1"
-    #"package-2"
+    "nodejs"
+    "npm"
 )
 
 PIP_PACKAGES=(
