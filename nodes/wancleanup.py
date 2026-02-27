@@ -25,6 +25,7 @@ class WANCleanup:
                 "input": ("*",),  # Any input to allow connection
                 "cleanup_mode": ([
                     "Gentle Cleanup",
+                    "After T2V Use",
                     "Before WAN Load", 
                     "After WAN Use",
                     "Full Memory Reset"
@@ -53,6 +54,8 @@ class WANCleanup:
             # Mode-specific cleanup
             if cleanup_mode == "Gentle Cleanup":
                 self._gentle_cleanup()
+            elif cleanup_mode == "After T2V Use":
+                self._after_t2v_use()
             elif cleanup_mode == "Before WAN Load":
                 self._before_wan_load()
             elif cleanup_mode == "After WAN Use":
@@ -74,6 +77,36 @@ class WANCleanup:
             raise e
         
         return (input,)  # Pass through the input
+    
+    def _after_t2v_use(self):
+        """Targeted cleanup after T2V use - prepares for QwenVL prompt generation"""
+        try:
+            print("🎯 After T2V Use: Cleaning T2V residues for QwenVL...")
+            
+            if torch.cuda.is_available():
+                # Gentle but thorough cleanup targeting T2V residues
+                for i in range(3):
+                    torch.cuda.empty_cache()
+                    if i == 1:  # Synchronize in middle
+                        torch.cuda.synchronize()
+                    print(f"  T2V residue clear {i+1}/3")
+                
+                # Light memory pressure to force T2V cleanup
+                try:
+                    temp_tensor = torch.randn(1500, 1500, device='cuda')
+                    del temp_tensor
+                    torch.cuda.empty_cache()
+                    torch.cuda.synchronize()
+                    print("  T2V memory pressure applied")
+                except:
+                    pass
+                
+                # Final synchronization
+                torch.cuda.synchronize()
+                print("🎯 After T2V Use cleanup completed")
+            
+        except Exception as e:
+            print(f"⚠️ After T2V Use cleanup warning: {e}")
     
     def _before_wan_load(self):
         """Aggressive cleanup before loading WAN model - includes delay and full options"""
