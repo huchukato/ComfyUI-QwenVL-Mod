@@ -28,7 +28,7 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 > 🧠 **VRAM Cleanup Node**: Maintained for manual cleanup when needed.  
 > 🏆 **Community Credits**: Thanks to user feedback that identified redundancy issue.
 
-* **2026/02/19**: **v2.2.2** 🚀 Critical T2V/I2V Fixes + ComfyUI Optimizations. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-222-20260219)]
+* **2026/02/27**: **v2.2.3** 🚀 Critical T2V/I2V Fixes + ComfyUI Optimizations. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-223-20260227)]
 > 🚀 **Batch Processing**: Fixed critical T2V → GGUF issue with batch images from video generation.  
 > 🔄 **Same Model Reuse**: Resolved conflict when using same model between T2V and I2V nodes.  
 > ⚙️ **Flash Attention 2**: Added Flash Attention 2 support for performance boost on compatible hardware.  
