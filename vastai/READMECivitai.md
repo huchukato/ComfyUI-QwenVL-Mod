@@ -212,22 +212,6 @@ Automatically detects and enhances:
 
 ---
 
-## 📥 Download & Support
-
-### **Get Started**
-1. **Download**: ComfyUI-QwenVL-Mod (latest version)
-2. **Install**: Follow standard installation
-3. **Load**: Included workflows
-4. **Create**: Your first AI-enhanced video!
-
-### **Community & Support**
-- **GitHub**: [Repository](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
-- **Issues**: Report bugs and request features
-- **Discord**: Community support (coming soon)
-- **Documentation**: Complete guides and tutorials
-
----
-
 ## 🌟 What Makes This Special?
 
 - **First**: Complete AI story system with vision enhancement
