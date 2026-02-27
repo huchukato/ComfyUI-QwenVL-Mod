@@ -93,6 +93,12 @@ A powerful **enhanced vision-language node** for ComfyUI that combines Qwen3-VL 
 - **VastAI**: Optimized instances ready
 - **Local**: Docker support included
 
+### **Quick Install**
+1. **Download**: ComfyUI-QwenVL-Mod (latest version)
+2. **Extract** to `ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod`
+3. **Restart** ComfyUI
+4. **Load** included workflows
+
 ---
 
 ## 🎮 Usage Examples

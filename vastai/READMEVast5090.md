@@ -73,7 +73,7 @@ Set your preferred configuration via environment variables:
 > - **WAN 2.2 I2V-SVI**: Advanced image-to-video with SVI processing
 > - **WAN 2.2 T2V/I2V GGUF**: GGUF-optimized versions
 > - **WAN 2.2 MMAudio**: Audio-enhanced video generation
-> - **Extended Storyboard**: Seamless storyboard sequences
+> - **Wan Extended Storyboard**: Seamless storyboard sequences
 > - **Multilingual Support**: Process prompts from any language
 > - **Visual Style Detection**: Automatic detection of artistic styles
 
