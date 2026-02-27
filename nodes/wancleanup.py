@@ -24,12 +24,11 @@ class WANCleanup:
             "required": {
                 "input": ("*",),  # Any input to allow connection
                 "cleanup_mode": ([
-                    "wan_models_only", 
-                    "wan_text_encoder_only",
-                    "aggressive_wan", 
-                    "wan_and_cache", 
-                    "full_cleanup"
-                ], {"default": "wan_models_only"}),
+                    "Gentle Cleanup",
+                    "Before WAN Load", 
+                    "After WAN Use",
+                    "Full Memory Reset"
+                ], {"default": "Gentle Cleanup"}),
                 "force_gc": ("BOOLEAN", {"default": True}),
                 "clear_cuda_cache": ("BOOLEAN", {"default": True}),
                 "synchronize_cuda": ("BOOLEAN", {"default": True}),
@@ -63,16 +62,14 @@ class WANCleanup:
                 print(f"📊 Initial VRAM: {initial_memory / 1024**3:.2f} GB")
             
             # Mode-specific cleanup
-            if cleanup_mode == "wan_models_only":
-                self._cleanup_wan_models_only()
-            elif cleanup_mode == "wan_text_encoder_only":
-                self._cleanup_wan_text_encoder_only()
-            elif cleanup_mode == "aggressive_wan":
-                self._aggressive_wan_cleanup()
-            elif cleanup_mode == "wan_and_cache":
-                self._cleanup_wan_and_cache()
-            elif cleanup_mode == "full_cleanup":
-                self._full_memory_cleanup()
+            if cleanup_mode == "Gentle Cleanup":
+                self._gentle_cleanup()
+            elif cleanup_mode == "Before WAN Load":
+                self._before_wan_load()
+            elif cleanup_mode == "After WAN Use":
+                self._after_wan_use()
+            elif cleanup_mode == "Full Memory Reset":
+                self._full_memory_reset()
             
             # Force garbage collection
             if force_gc:
@@ -104,99 +101,87 @@ class WANCleanup:
         
         return (input,)  # Pass through the input
     
-    def _cleanup_wan_text_encoder_only(self):
-        """Specific cleanup for WAN text encoder - the main memory hog"""
+    def _before_wan_load(self):
+        """Aggressive cleanup before loading WAN model - includes delay and full options"""
         try:
+            print("🚀 Before WAN Load: Preparing memory for WAN model...")
+            
+            # Add delay for QwenVL to fully unload
+            import time
+            time.sleep(2)
+            print("  ⏱️ Delay for QwenVL unload completed")
+            
             if torch.cuda.is_available():
-                # Force multiple cache clears to target text encoder
-                print("🎯 Targeting WAN text encoder cleanup...")
-                
                 # Multiple aggressive cache clears
                 for i in range(5):
                     torch.cuda.empty_cache()
-                    if i % 2 == 0:  # Synchronize every other iteration
+                    if i % 2 == 0:
                         torch.cuda.synchronize()
                     print(f"  Cache clear {i+1}/5")
                 
-                # Additional memory pressure to force text encoder cleanup
+                # Memory pressure to force cleanup
                 try:
-                    # Create temporary tensor to pressure memory, then delete
-                    temp_tensor = torch.randn(1000, 1000, device='cuda')
+                    temp_tensor = torch.randn(2000, 2000, device='cuda')
                     del temp_tensor
                     torch.cuda.empty_cache()
                     torch.cuda.synchronize()
                     print("  Memory pressure applied")
                 except:
                     pass
-                
-                print("🎯 WAN text encoder cleanup completed")
+            
+            # Force garbage collection
+            gc.collect()
+            print("🚀 Before WAN Load cleanup completed")
             
         except Exception as e:
-            print(f"⚠️ WAN text encoder cleanup warning: {e}")
+            print(f"⚠️ Before WAN Load cleanup warning: {e}")
     
-    def _cleanup_wan_models_only(self):
-        """Very gentle cleanup - just basic garbage collection"""
+    def _after_wan_use(self):
+        """Targeted cleanup after WAN use - focuses on text encoder"""
         try:
-            # Only do safe cleanup - don't touch model_management directly
+            print("🎯 After WAN Use: Cleaning WAN text encoder...")
+            
             if torch.cuda.is_available():
-                # Just clear CUDA cache safely
+                # Multiple cache clears targeting text encoder
+                for i in range(3):
+                    torch.cuda.empty_cache()
+                    if i == 1:  # Synchronize in middle
+                        torch.cuda.synchronize()
+                    print(f"  Cache clear {i+1}/3")
+                
+                print("🎯 After WAN Use cleanup completed")
+            
+        except Exception as e:
+            print(f"⚠️ After WAN Use cleanup warning: {e}")
+    
+    def _gentle_cleanup(self):
+        """Very gentle cleanup - safe option"""
+        try:
+            if torch.cuda.is_available():
                 torch.cuda.empty_cache()
-                print("🎯 Safe WAN cleanup (CUDA cache only) completed")
+                print("🧹 Gentle cleanup completed")
             
         except Exception as e:
-            print(f"⚠️ WAN cleanup warning: {e}")
+            print(f"⚠️ Gentle cleanup warning: {e}")
     
-    def _aggressive_wan_cleanup(self):
-        """More aggressive but still safe cleanup"""
+    def _full_memory_reset(self):
+        """Comprehensive memory reset between segments"""
         try:
-            # Skip model_management.unload_all_models() - too aggressive
-            # Just do more thorough CUDA cleanup
             if torch.cuda.is_available():
-                # Multiple cache clear attempts
-                for _ in range(3):
-                    torch.cuda.empty_cache()
-                    torch.cuda.synchronize()
-                
-                print("🔥 Thorough CUDA cleanup completed")
-            
-        except Exception as e:
-            print(f"⚠️ Aggressive WAN cleanup warning: {e}")
-    
-    def _cleanup_wan_and_cache(self):
-        """Cleanup WAN models plus system caches"""
-        try:
-            # WAN models cleanup
-            self._cleanup_wan_models_only()
-            
-            # Additional cache cleanup
-            if hasattr(model_management, 'interrupt_processing'):
-                model_management.interrupt_processing(False)
-            
-            print("🧼 WAN and cache cleanup completed")
-            
-        except Exception as e:
-            print(f"⚠️ WAN and cache cleanup warning: {e}")
-    
-    def _full_memory_cleanup(self):
-        """Safe but thorough memory cleanup"""
-        try:
-            # Skip unload_all_models() - too dangerous
-            # Just do comprehensive CUDA cleanup
-            if torch.cuda.is_available():
-                # Clear cache multiple times
-                for _ in range(5):
+                # Multiple cache clears
+                for _ in range(7):
                     torch.cuda.empty_cache()
                 
-                # Force synchronization
+                # Synchronization
                 torch.cuda.synchronize()
                 
-                # Final garbage collection
+                # Garbage collection
                 gc.collect()
                 
-                print("💥 Safe thorough cleanup completed")
+                print("💥 Full memory reset completed")
             
         except Exception as e:
-            print(f"⚠️ Full cleanup warning: {e}")
+            print(f"⚠️ Full memory reset warning: {e}")
 
 # Register the node
 NODE_CLASS_MAPPINGS = {
