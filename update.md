@@ -2,27 +2,36 @@
 
 ## Version 2.2.3 (2026/02/27)
 
-🧠 **Advanced Memory Management + Documentation Updates**
+🔧 **CUDA 13 Compatibility Fix + Redundancy Removal**
 
-This update adds comprehensive memory management features and updates all documentation to reflect the new capabilities.
+This update removes redundant memory management features and improves CUDA 13 compatibility.
 
-### 🧠 Memory Management Features
-|- **unload_after_run Parameter**: Added aggressive memory cleanup parameter to all QwenVL nodes
-|- **OOM Prevention**: Prevents out-of-memory errors on VRAM-limited systems  
-|- **GenorTG Integration**: Successfully integrated memory management innovations from GenorTG fork
-|- **Universal Coverage**: Parameter available across all node types (HF, GGUF, PromptEnhancer)
+### 🔧 **Memory Management Cleanup**
+|- **Removed unload_after_run**: Eliminated redundant checkbox from all QwenVL nodes
+|- **Conflict Prevention**: Prevents multiple unload operations that cause CUDA 13 crashes
+|- **Simplified Interface**: Cleaner node interface without redundant parameters
+|- **VRAM Cleanup Node**: Maintained for manual cleanup when needed
 
-### 📚 Documentation Updates
-|- **README.md**: Updated with unload_after_run documentation and GenorTG credits
-|- **README_it.md**: Complete Italian translation of new features
-|- **READMECivitai.md**: Added memory management section for Civitai users
-|- **Version Bump**: Updated all version numbers to v2.2.3
+### 🐛 **Bug Fixes**
+|- **VastAI CUDA 13**: Fixed crashes caused by conflicting unload operations
+|- **WanMoeKSampler**: Manual boundary setting prevents automatic switching crashes
+|- **Memory Conflicts**: Eliminated double cleanup between QwenVL and VRAM Cleanup nodes
+
+### 📚 **Documentation Updates**
+|- **All READMEs**: Updated to reflect unload_after_run removal
+|- **Installation Guides**: Simplified instructions without redundant parameters
+|- **Troubleshooting**: Added CUDA 13 specific guidance
 
 ### 🏆 Credits & Attribution
-|- **GenorTG**: Added proper credits for memory management innovations
-|- **Community**: Comprehensive documentation for better user understanding
+|- **Community Feedback**: Thanks to user testing that identified redundancy issue
+|- **CUDA 13 Testing**: Comprehensive testing on VastAI infrastructure
+|- **Memory Management**: Streamlined approach for better stability
 
 ---
+
+## Version 2.2.2 (2026/02/19)
+
+🚀 **Critical T2V/I2V Fixes + ComfyUI Optimizations**
 
 ## Version 2.2.2 (2026/02/19)
 
