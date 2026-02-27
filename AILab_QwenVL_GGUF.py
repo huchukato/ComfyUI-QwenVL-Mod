@@ -765,8 +765,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
-                "unload_after_run": ("BOOLEAN", {"default": False, "tooltip": "Unload GGUF model from memory after each run to free VRAM/RAM."}),
-            },
+                            },
             "optional": {
                 "image": ("IMAGE",),
                 "video": ("IMAGE",),
@@ -851,8 +850,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
-                "unload_after_run": ("BOOLEAN", {"default": False, "tooltip": "Unload GGUF model from memory after each run to free VRAM/RAM."}),
-            },
+                            },
             "optional": {
                 "image": ("IMAGE",),
                 "video": ("IMAGE",),
@@ -884,7 +882,6 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
         keep_model_loaded,
         seed,
         keep_last_prompt,
-        unload_after_run,
         image=None,
         video=None,
     ):
@@ -901,7 +898,6 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
             repetition_penalty=repetition_penalty,
             seed=seed,
             keep_model_loaded=keep_model_loaded,
-            unload_after_run=unload_after_run,
             device=device,
             ctx=ctx,
             n_batch=n_batch,
@@ -909,7 +905,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
             image_max_tokens=image_max_tokens,
             top_k=top_k,
             pool_size=pool_size,
-            keep_last_prompt=keep_last_prompt,
+            keep_last_prompt=keep_last_prompt
         )
 
 
