@@ -88,12 +88,6 @@ A powerful **enhanced vision-language node** for ComfyUI that combines Qwen3-VL 
 - **System**: Windows/Linux/Mac
 - **Python**: 3.10+ (or use provided Docker environment)
 
-### **Quick Install**
-1. Download ComfyUI-QwenVL-Mod v2.2.0
-2. Extract to `ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod`
-3. Restart ComfyUI
-4. Load included workflows
-
 ### **Docker/Cloud Ready**
 - **RunPod**: Pre-configured templates available
 - **VastAI**: Optimized instances ready
