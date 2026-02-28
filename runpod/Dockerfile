@@ -99,7 +99,7 @@ RUN cd /ComfyUI/custom_nodes && \
     git clone https://github.com/stduhpf/ComfyUI-WanMoeKSampler.git && \
     git clone https://github.com/melMass/comfy_mtb.git
 
-# Copy wildcards to Impact-Pack (required for wildcard workflows)
+# Copy wildcards to Easy-Use (required for wildcard workflows)
 RUN cp -r /ComfyUI/custom_nodes/comfy-tagcomplete/wildcards/mbe /ComfyUI/custom_nodes/ComfyUI-Easy-Use/wildcards || echo "Wildcards copy completed (or already exists)"
 
 # Install requirements for all custom nodes
