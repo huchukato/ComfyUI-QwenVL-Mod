@@ -20,7 +20,6 @@ NODES=(
     "https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto"
     "https://github.com/huchukato/ComfyUI-Upscaler-TensorRT-Auto"
     "https://github.com/huchukato/ComfyUI-HuggingFace"
-    "https://github.com/huchukato/ComfyUI-Resources-Monitor"
     "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
     "https://github.com/MoonGoblinDev/Civicomfy"
     "https://github.com/Koishi-Star/Euler-Smea-Dyn-Sampler"
