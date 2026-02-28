@@ -98,7 +98,8 @@ RUN cd /ComfyUI/custom_nodes && \
     git clone https://github.com/kijai/ComfyUI-MMAudio.git && \
     git clone https://github.com/GACLove/ComfyUI-VFI.git && \
     git clone https://github.com/stduhpf/ComfyUI-WanMoeKSampler.git && \
-    git clone https://github.com/melMass/comfy_mtb.git
+    git clone https://github.com/melMass/comfy_mtb.git && \
+    git clone https://github.com/huchukato/ComfyUI-Resources-Monitor.git
 
 # Copy wildcards to Impact-Pack (required for wildcard workflows)
 RUN cp -r /ComfyUI/custom_nodes/comfy-tagcomplete/wildcards/mbe /ComfyUI/custom_nodes/ComfyUI-Impact-Pack/wildcards || echo "Wildcards copy completed (or already exists)"
