@@ -4,8 +4,6 @@ Custom ComfyUI environment with conda-based setup, optimized for RTX 4090 with Q
 
 **Template**: `Custom-ComfyUI-WAN2.2-Qwen3VL-RTX4090` - **Conda Environment**
 
-*Custom-built pod with dedicated conda environment*
-
 ---
 
 ## 🎯 Who is this for?
