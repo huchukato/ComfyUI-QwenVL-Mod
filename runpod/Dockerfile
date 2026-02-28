@@ -22,9 +22,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
     ca-certificates \
     build-essential \
-    python3.12 \
-    python3.12-venv \
-    python3.12-dev \
+    python3.12.12 \
+    python3.12.12-venv \
+    python3.12.12-dev \
     python3-pip \
     libglx-mesa0 \
     libglib2.0-0 \
