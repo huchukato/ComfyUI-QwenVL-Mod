@@ -1282,10 +1282,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "comfyui-easy-use",
+        "aux_id": "yolain/ComfyUI-Easy-Use",
         "ver": "5dfcbcf51d8a6efed947bc7bdd6797827fecab55",
         "Node name for S&R": "easy cleanGpuUsed",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
+        "cnr_id": "comfyui-easy-use"
       },
       "widgets_values": []
     },
@@ -1491,10 +1491,10 @@
       ],
       "title": "Lightx2v Lora Low",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "1.0.2512112053",
         "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy"
+        "cnr_id": "rgthree-comfy"
       },
       "widgets_values": [
         {},
@@ -1561,10 +1561,10 @@
       ],
       "title": "Lightx2v Lora High",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "1.0.2512112053",
         "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy"
+        "cnr_id": "rgthree-comfy"
       },
       "widgets_values": [
         {},
@@ -1808,10 +1808,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "comfyui-easy-use",
+        "aux_id": "yolain/ComfyUI-Easy-Use",
         "ver": "5dfcbcf51d8a6efed947bc7bdd6797827fecab55",
         "Node name for S&R": "easy cleanGpuUsed",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
+        "cnr_id": "comfyui-easy-use"
       },
       "widgets_values": []
     },
@@ -1830,7 +1830,7 @@
         "collapsed": true
       },
       "order": 41,
-      "mode": 0,
+      "mode": 4,
       "inputs": [],
       "outputs": [
         {
@@ -2074,7 +2074,7 @@
       ],
       "size": [
         537.6962890624998,
-        1101.0127840909088
+        334
       ],
       "flags": {},
       "order": 113,
@@ -2113,10 +2113,10 @@
       ],
       "title": "16FPS",
       "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
         "ver": "993082e4f2473bf4acaf06f51e33877a7eb38960",
         "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+        "cnr_id": "comfyui-videohelpersuite"
       },
       "widgets_values": {
         "frame_rate": 16,
@@ -2249,10 +2249,10 @@
       ],
       "title": "motion_frames",
       "properties": {
-        "cnr_id": "comfyui-kjnodes",
+        "aux_id": "kijai/ComfyUI-KJNodes",
         "ver": "1.1.9",
         "Node name for S&R": "INTConstant",
-        "aux_id": "kijai/ComfyUI-KJNodes",
+        "cnr_id": "comfyui-kjnodes",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
@@ -2535,10 +2535,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "comfyui-gguf",
+        "aux_id": "city96/ComfyUI-GGUF",
         "ver": "1.1.10",
         "Node name for S&R": "CLIPLoaderGGUF",
-        "aux_id": "city96/ComfyUI-GGUF"
+        "cnr_id": "comfyui-gguf"
       },
       "widgets_values": [
         "umt5-xxl-encoder-Q8_0.gguf",
@@ -2633,10 +2633,10 @@
       ],
       "title": "MMAudio",
       "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
         "ver": "6e7f63867584bb1fb4944d36172e7f98436da9a1",
         "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+        "cnr_id": "comfyui-videohelpersuite"
       },
       "widgets_values": {
         "frame_rate": 24,
@@ -3588,7 +3588,7 @@
       ],
       "title": "Lenght",
       "properties": {
-        "cnr_id": "comfyui-mxtoolkit",
+        "aux_id": "Smirnov75/ComfyUI-mxToolkit",
         "ver": "7f7a0e584f12078a1c589645d866ae96bad0cc35",
         "Node name for S&R": "mxSlider",
         "value": 81,
@@ -3597,7 +3597,7 @@
         "step": 1,
         "decimals": 0,
         "snap": true,
-        "aux_id": "Smirnov75/ComfyUI-mxToolkit"
+        "cnr_id": "comfyui-mxtoolkit"
       },
       "widgets_values": [
         81,
@@ -3680,10 +3680,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "ComfyUI-Upscaler-Tensorrt",
+        "aux_id": "yuvraj108c/ComfyUI-Upscaler-Tensorrt",
         "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
         "Node name for S&R": "LoadUpscalerTensorrtModel",
-        "aux_id": "yuvraj108c/ComfyUI-Upscaler-Tensorrt"
+        "cnr_id": "ComfyUI-Upscaler-Tensorrt"
       },
       "widgets_values": [
         "4x-UltraSharp",
@@ -3783,10 +3783,10 @@
       ],
       "title": "MMAUDIO 50FPS",
       "properties": {
-        "cnr_id": "comfyui-frame-interpolation",
+        "aux_id": "Fannovel16/ComfyUI-Frame-Interpolation",
         "ver": "1.0.7",
         "Node name for S&R": "RIFE VFI",
-        "aux_id": "Fannovel16/ComfyUI-Frame-Interpolation"
+        "cnr_id": "comfyui-frame-interpolation"
       },
       "widgets_values": [
         "rife49.pth",
@@ -3794,6 +3794,9 @@
         2,
         true,
         true,
+        1,
+        "float32",
+        false,
         1
       ]
     },
@@ -3845,10 +3848,10 @@
       ],
       "title": "MMAudio",
       "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
         "ver": "6e7f63867584bb1fb4944d36172e7f98436da9a1",
         "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+        "cnr_id": "comfyui-videohelpersuite"
       },
       "widgets_values": {
         "frame_rate": 48,
@@ -3962,10 +3965,10 @@
       ],
       "title": "4LORA HIGH",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
         "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
+        "cnr_id": "rgthree-comfy",
         "Node name for S&R": "Power Lora Loader (rgthree)"
       },
       "widgets_values": [
@@ -4027,10 +4030,10 @@
       ],
       "title": "4LORA LOW",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
         "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
+        "cnr_id": "rgthree-comfy",
         "Node name for S&R": "Power Lora Loader (rgthree)"
       },
       "widgets_values": [
@@ -4092,10 +4095,10 @@
       ],
       "title": "Unet Loader (GGUF) HIGH",
       "properties": {
-        "cnr_id": "ComfyUI-GGUF",
+        "aux_id": "city96/ComfyUI-GGUF",
         "ver": "01f8845bf30d89fff293c7bd50187bc59d9d53ea",
         "Node name for S&R": "UnetLoaderGGUF",
-        "aux_id": "city96/ComfyUI-GGUF"
+        "cnr_id": "ComfyUI-GGUF"
       },
       "widgets_values": [
         "wan22EnhancedNSFWSVICamera_nsfwV2Q8High.gguf"
@@ -4127,10 +4130,10 @@
       ],
       "title": "Unet Loader (GGUF) LOW",
       "properties": {
-        "cnr_id": "ComfyUI-GGUF",
+        "aux_id": "city96/ComfyUI-GGUF",
         "ver": "01f8845bf30d89fff293c7bd50187bc59d9d53ea",
         "Node name for S&R": "UnetLoaderGGUF",
-        "aux_id": "city96/ComfyUI-GGUF"
+        "cnr_id": "ComfyUI-GGUF"
       },
       "widgets_values": [
         "wan22EnhancedNSFWSVICamera_nsfwV2Q8Low.gguf"
@@ -4211,10 +4214,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "comfyui-kjnodes",
+        "aux_id": "kijai/ComfyUI-KJNodes",
         "ver": "e8b70f28be7fd71ee72c3848cfa09e1a89e3061b",
         "Node name for S&R": "ColorMatch",
-        "aux_id": "kijai/ComfyUI-KJNodes"
+        "cnr_id": "comfyui-kjnodes"
       },
       "widgets_values": [
         "mkl",
@@ -4272,10 +4275,10 @@
       ],
       "title": "Final Video",
       "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
         "ver": "993082e4f2473bf4acaf06f51e33877a7eb38960",
         "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+        "cnr_id": "comfyui-videohelpersuite"
       },
       "widgets_values": {
         "frame_rate": 16,
@@ -4332,10 +4335,10 @@
       ],
       "title": "motion amplitude",
       "properties": {
-        "cnr_id": "comfyui-kjnodes",
+        "aux_id": "kijai/ComfyUI-KJNodes",
         "ver": "1.1.9",
         "Node name for S&R": "FloatConstant",
-        "aux_id": "kijai/ComfyUI-KJNodes",
+        "cnr_id": "comfyui-kjnodes",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
@@ -4433,10 +4436,10 @@
       ],
       "title": "1LORA HIGH",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
         "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
+        "cnr_id": "rgthree-comfy",
         "Node name for S&R": "Power Lora Loader (rgthree)"
       },
       "widgets_values": [
@@ -4498,10 +4501,10 @@
       ],
       "title": "1LORA LOW",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
         "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
+        "cnr_id": "rgthree-comfy",
         "Node name for S&R": "Power Lora Loader (rgthree)"
       },
       "widgets_values": [
@@ -4563,10 +4566,10 @@
       ],
       "title": "2LORA HIGH",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
         "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
+        "cnr_id": "rgthree-comfy",
         "Node name for S&R": "Power Lora Loader (rgthree)"
       },
       "widgets_values": [
@@ -4628,10 +4631,10 @@
       ],
       "title": "2LORA LOW",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
         "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
+        "cnr_id": "rgthree-comfy",
         "Node name for S&R": "Power Lora Loader (rgthree)"
       },
       "widgets_values": [
@@ -4693,10 +4696,10 @@
       ],
       "title": "3LORA HIGH",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
         "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
+        "cnr_id": "rgthree-comfy",
         "Node name for S&R": "Power Lora Loader (rgthree)"
       },
       "widgets_values": [
@@ -4758,10 +4761,10 @@
       ],
       "title": "3LORA LOW",
       "properties": {
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
         "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
+        "cnr_id": "rgthree-comfy",
         "Node name for S&R": "Power Lora Loader (rgthree)"
       },
       "widgets_values": [
@@ -4803,16 +4806,16 @@
       ],
       "outputs": [
         {
-          "name": "IMAGE",
+          "name": "upscaled_images",
           "type": "IMAGE",
           "links": []
         }
       ],
       "properties": {
-        "cnr_id": "ComfyUI-Upscaler-Tensorrt",
+        "aux_id": "yuvraj108c/ComfyUI-Upscaler-Tensorrt",
         "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
         "Node name for S&R": "UpscalerTensorrt",
-        "aux_id": "yuvraj108c/ComfyUI-Upscaler-Tensorrt"
+        "cnr_id": "ComfyUI-Upscaler-Tensorrt"
       },
       "widgets_values": [
         "2x",
@@ -5297,10 +5300,10 @@
       ],
       "title": "Prompt 1",
       "properties": {
-        "cnr_id": "comfyui-easy-use",
+        "aux_id": "yolain/ComfyUI-Easy-Use",
         "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
         "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
+        "cnr_id": "comfyui-easy-use"
       },
       "widgets_values": [
         "A woman with long, flowing lavender hair stands in a dimly lit room, her gaze fixed directly on the viewer. She wears an alluring black lace bra that accentuates her curves under warm light from a wall-mounted fixture. Her hands gently cradle her chest as she slowly turns slightly to reveal more of her form against dark wooden paneling. Behind her, a window shows a starry night sky with silhouettes of trees swaying in the breeze. The scene exudes intimacy and quiet sensuality through soft shadows cast by ambient lighting."
@@ -5341,10 +5344,10 @@
       ],
       "title": "Prompt 2",
       "properties": {
-        "cnr_id": "comfyui-easy-use",
+        "aux_id": "yolain/ComfyUI-Easy-Use",
         "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
         "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
+        "cnr_id": "comfyui-easy-use"
       },
       "widgets_values": [
         "She begins to sway gently from side to side as if lost in thought or anticipation, allowing her bra straps to shift subtly across her shoulders. Her expression remains calm yet inviting, eyes half-lidded with allure while one hand lifts slightly towards her collarbone. The camera glides slowly around her torso capturing the play of light and shadow on smooth skin illuminated by a single lamp above. Outside, leaves rustle faintly against glass panes as she continues to move languidly within this private sanctuary."
@@ -5385,10 +5388,10 @@
       ],
       "title": "Prompt 3",
       "properties": {
-        "cnr_id": "comfyui-easy-use",
+        "aux_id": "yolain/ComfyUI-Easy-Use",
         "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
         "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
+        "cnr_id": "comfyui-easy-use"
       },
       "widgets_values": [
         "Her movements become more fluid now—she leans forward slightly then back again in slow motion like water rippling across stone. Her fingers trace delicate patterns along the lace trim of her bra while maintaining steady eye contact with whoever observes from afar. The background remains unchanged save for slight shifts caused by movement, keeping focus entirely on her poised elegance and graceful motions inside this secluded space."
@@ -5429,10 +5432,10 @@
       ],
       "title": "Prompt 4",
       "properties": {
-        "cnr_id": "comfyui-easy-use",
+        "aux_id": "yolain/ComfyUI-Easy-Use",
         "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
         "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
+        "cnr_id": "comfyui-easy-use"
       },
       "widgets_values": [
         "She lifts both hands slowly to frame her face in a gesture that feels almost reverent as though preparing herself for something significant about to unfold. Her posture becomes more upright yet relaxed; the room's warmth wraps around her like an embrace made of silk curtains and candlelight. The gentle sway continues, now synchronized with breathing patterns implied rather than seen directly—an intimate dance between stillness and motion that captivates without demanding attention beyond what is already present."
@@ -5907,7 +5910,7 @@
       ],
       "title": "Steps",
       "properties": {
-        "cnr_id": "comfyui-mxtoolkit",
+        "aux_id": "Smirnov75/ComfyUI-mxToolkit",
         "ver": "7f7a0e584f12078a1c589645d866ae96bad0cc35",
         "Node name for S&R": "mxSlider",
         "value": 5,
@@ -5916,7 +5919,7 @@
         "step": 1,
         "decimals": 0,
         "snap": true,
-        "aux_id": "Smirnov75/ComfyUI-mxToolkit"
+        "cnr_id": "comfyui-mxtoolkit"
       },
       "widgets_values": [
         5,
@@ -6035,7 +6038,7 @@
         "collapsed": true
       },
       "order": 131,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "frames",
@@ -6085,7 +6088,7 @@
         "collapsed": true
       },
       "order": 100,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "custom_config",
@@ -6163,172 +6166,6 @@
       ],
       "color": "#233",
       "bgcolor": "#355"
-    },
-    {
-      "id": 1581,
-      "type": "14459234-5392-4fbe-a549-696f4d1ab0b8",
-      "pos": [
-        -448.4470203849996,
-        -1408.0894662065343
-      ],
-      "size": [
-        560.1175510652185,
-        402.4891515530435
-      ],
-      "flags": {},
-      "order": 125,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 5455
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            5479
-          ]
-        },
-        {
-          "name": "STRING_1",
-          "type": "STRING",
-          "links": [
-            5481
-          ]
-        },
-        {
-          "name": "STRING_2",
-          "type": "STRING",
-          "links": [
-            5483
-          ]
-        },
-        {
-          "name": "STRING_3",
-          "type": "STRING",
-          "links": [
-            5485
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "1564",
-            "custom_prompt"
-          ],
-          [
-            "1564",
-            "model_name"
-          ],
-          [
-            "1564",
-            "preset_prompt"
-          ],
-          [
-            "1564",
-            "control_after_generate"
-          ],
-          [
-            "1564",
-            "seed"
-          ],
-          [
-            "1564",
-            "unload_after_run"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.13.0"
-      },
-      "widgets_values": [],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 1586,
-      "type": "57fad078-7391-4a49-9367-61061c0345fc",
-      "pos": [
-        -450,
-        -930
-      ],
-      "size": [
-        560,
-        460
-      ],
-      "flags": {},
-      "order": 126,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 5468
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": []
-        },
-        {
-          "name": "STRING_1",
-          "type": "STRING",
-          "links": []
-        },
-        {
-          "name": "STRING_2",
-          "type": "STRING",
-          "links": []
-        },
-        {
-          "name": "STRING_3",
-          "type": "STRING",
-          "links": []
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "1582",
-            "custom_prompt"
-          ],
-          [
-            "1582",
-            "model_name"
-          ],
-          [
-            "1582",
-            "quantization"
-          ],
-          [
-            "1582",
-            "preset_prompt"
-          ],
-          [
-            "1582",
-            "control_after_generate"
-          ],
-          [
-            "1582",
-            "seed"
-          ],
-          [
-            "1582",
-            "unload_after_run"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.13.0"
-      },
-      "widgets_values": [],
-      "color": "#323",
-      "bgcolor": "#535"
     },
     {
       "id": 1530,
@@ -6459,10 +6296,10 @@
       ],
       "title": "30FPS",
       "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
         "ver": "1.7.2",
         "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
+        "cnr_id": "comfyui-videohelpersuite",
         "ue_properties": {
           "version": "7.0.1",
           "widget_ue_connectable": {}
@@ -6510,7 +6347,7 @@
       ],
       "flags": {},
       "order": 147,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "images",
@@ -6545,10 +6382,10 @@
       ],
       "title": "60FPS",
       "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
         "ver": "1.7.2",
         "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
+        "cnr_id": "comfyui-videohelpersuite",
         "ue_properties": {
           "version": "7.0.1",
           "widget_ue_connectable": {}
@@ -6582,41 +6419,6 @@
       },
       "color": "#2a363b",
       "bgcolor": "#3f5159"
-    },
-    {
-      "id": 1438,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -1315.5151634148792,
-        1205.3324243390045
-      ],
-      "size": [
-        340,
-        130
-      ],
-      "flags": {},
-      "order": 103,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Upscale and Interpolation",
-      "properties": {
-        "matchColors": "red",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#322",
-      "bgcolor": "#533"
     },
     {
       "id": 1252,
@@ -7493,6 +7295,199 @@
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1581,
+      "type": "14459234-5392-4fbe-a549-696f4d1ab0b8",
+      "pos": [
+        -448.4470203849996,
+        -1408.0894662065343
+      ],
+      "size": [
+        560.1175510652185,
+        402.4891515530435
+      ],
+      "flags": {},
+      "order": 125,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 5455
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            5479
+          ]
+        },
+        {
+          "name": "STRING_1",
+          "type": "STRING",
+          "links": [
+            5481
+          ]
+        },
+        {
+          "name": "STRING_2",
+          "type": "STRING",
+          "links": [
+            5483
+          ]
+        },
+        {
+          "name": "STRING_3",
+          "type": "STRING",
+          "links": [
+            5485
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "1564",
+            "custom_prompt"
+          ],
+          [
+            "1564",
+            "model_name"
+          ],
+          [
+            "1564",
+            "preset_prompt"
+          ],
+          [
+            "1564",
+            "control_after_generate"
+          ],
+          [
+            "1564",
+            "seed"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.13.0"
+      },
+      "widgets_values": [],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1586,
+      "type": "57fad078-7391-4a49-9367-61061c0345fc",
+      "pos": [
+        -450,
+        -930
+      ],
+      "size": [
+        560,
+        460
+      ],
+      "flags": {},
+      "order": 126,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 5468
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "STRING_1",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "STRING_2",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "STRING_3",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "1582",
+            "custom_prompt"
+          ],
+          [
+            "1582",
+            "model_name"
+          ],
+          [
+            "1582",
+            "quantization"
+          ],
+          [
+            "1582",
+            "preset_prompt"
+          ],
+          [
+            "1582",
+            "control_after_generate"
+          ],
+          [
+            "1582",
+            "seed"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.13.0"
+      },
+      "widgets_values": [],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 1438,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -1315.5151634148792,
+        1205.3324243390045
+      ],
+      "size": [
+        340,
+        130
+      ],
+      "flags": {},
+      "order": 103,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Upscale and Interpolation",
+      "properties": {
+        "matchColors": "red",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
     }
   ],
   "links": [
@@ -9174,10 +9169,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "47ca2b2c26358615974162059061e9dc78be6715",
               "Node name for S&R": "PathchSageAttentionKJ",
-              "aux_id": "kijai/ComfyUI-KJNodes"
+              "cnr_id": "comfyui-kjnodes"
             },
             "widgets_values": [
               "auto",
@@ -9219,10 +9214,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "a6b867b63a29ca48ddb15c589e17a9f2d8530d57",
               "Node name for S&R": "ModelPatchTorchSettings",
-              "aux_id": "kijai/ComfyUI-KJNodes",
+              "cnr_id": "comfyui-kjnodes",
               "ue_properties": {
                 "version": "7.0.1",
                 "widget_ue_connectable": {
@@ -9269,10 +9264,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "47ca2b2c26358615974162059061e9dc78be6715",
               "Node name for S&R": "PathchSageAttentionKJ",
-              "aux_id": "kijai/ComfyUI-KJNodes"
+              "cnr_id": "comfyui-kjnodes"
             },
             "widgets_values": [
               "auto",
@@ -9314,10 +9309,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "a6b867b63a29ca48ddb15c589e17a9f2d8530d57",
               "Node name for S&R": "ModelPatchTorchSettings",
-              "aux_id": "kijai/ComfyUI-KJNodes",
+              "cnr_id": "comfyui-kjnodes",
               "ue_properties": {
                 "version": "7.0.1",
                 "widget_ue_connectable": {
@@ -9357,11 +9352,11 @@
             ],
             "title": "1-Seed high",
             "properties": {
-              "cnr_id": "rgthree-comfy",
+              "aux_id": "aining2022/ComfyUI_Swwan",
               "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
               "randomMax": 1125899906842624,
               "randomMin": 0,
-              "aux_id": "aining2022/ComfyUI_Swwan",
+              "cnr_id": "rgthree-comfy",
               "Node name for S&R": "Seed (rgthree)"
             },
             "widgets_values": [
@@ -9592,10 +9587,10 @@
             ],
             "title": "Final prompt preview",
             "properties": {
-              "cnr_id": "comfyui-easy-use",
+              "aux_id": "yolain/ComfyUI-Easy-Use",
               "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
               "Node name for S&R": "easy showAnything",
-              "aux_id": "yolain/ComfyUI-Easy-Use",
+              "cnr_id": "comfyui-easy-use",
               "widget_ue_connectable": {}
             },
             "widgets_values": [
@@ -9702,9 +9697,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "was-ns",
+              "aux_id": "ltdrdata/was-node-suite-comfyui",
               "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
-              "Node name for S&R": "Text Concatenate"
+              "Node name for S&R": "Text Concatenate",
+              "cnr_id": "was-ns"
             },
             "widgets_values": [
               "",
@@ -10687,10 +10683,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-videohelpersuite",
+              "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
               "ver": "8e4d79471bf1952154768e8435a9300077b534fa",
               "Node name for S&R": "VHS_SelectImages",
-              "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
+              "cnr_id": "comfyui-videohelpersuite",
               "ue_properties": {
                 "version": "7.0.1",
                 "widget_ue_connectable": {
@@ -10755,10 +10751,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "2f7300dc546ec2d36fa8b0feebe493d41026524c",
               "Node name for S&R": "ImageBatchMulti",
-              "aux_id": "kijai/ComfyUI-KJNodes",
+              "cnr_id": "comfyui-kjnodes",
               "ue_properties": {
                 "version": "7.0.1",
                 "widget_ue_connectable": {
@@ -11035,9 +11031,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "was-ns",
+              "aux_id": "ltdrdata/was-node-suite-comfyui",
               "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
-              "Node name for S&R": "Text Concatenate"
+              "Node name for S&R": "Text Concatenate",
+              "cnr_id": "was-ns"
             },
             "widgets_values": [
               "",
@@ -11081,10 +11078,10 @@
             ],
             "title": "Final prompt preview",
             "properties": {
-              "cnr_id": "comfyui-easy-use",
+              "aux_id": "yolain/ComfyUI-Easy-Use",
               "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
               "Node name for S&R": "easy showAnything",
-              "aux_id": "yolain/ComfyUI-Easy-Use",
+              "cnr_id": "comfyui-easy-use",
               "widget_ue_connectable": {}
             },
             "widgets_values": [
@@ -11122,11 +11119,11 @@
             ],
             "title": "2-Seed high",
             "properties": {
-              "cnr_id": "rgthree-comfy",
+              "aux_id": "aining2022/ComfyUI_Swwan",
               "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
               "randomMax": 1125899906842624,
               "randomMin": 0,
-              "aux_id": "aining2022/ComfyUI_Swwan",
+              "cnr_id": "rgthree-comfy",
               "Node name for S&R": "Seed (rgthree)"
             },
             "widgets_values": [
@@ -11940,10 +11937,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "2f7300dc546ec2d36fa8b0feebe493d41026524c",
               "Node name for S&R": "ImageBatchMulti",
-              "aux_id": "kijai/ComfyUI-KJNodes",
+              "cnr_id": "comfyui-kjnodes",
               "ue_properties": {
                 "version": "7.0.1",
                 "widget_ue_connectable": {
@@ -12044,10 +12041,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-videohelpersuite",
+              "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
               "ver": "8e4d79471bf1952154768e8435a9300077b534fa",
               "Node name for S&R": "VHS_SelectImages",
-              "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
+              "cnr_id": "comfyui-videohelpersuite",
               "ue_properties": {
                 "version": "7.0.1",
                 "widget_ue_connectable": {
@@ -12312,10 +12309,10 @@
             ],
             "title": "Final prompt preview",
             "properties": {
-              "cnr_id": "comfyui-easy-use",
+              "aux_id": "yolain/ComfyUI-Easy-Use",
               "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
               "Node name for S&R": "easy showAnything",
-              "aux_id": "yolain/ComfyUI-Easy-Use",
+              "cnr_id": "comfyui-easy-use",
               "widget_ue_connectable": {}
             },
             "widgets_values": [
@@ -12483,9 +12480,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "was-ns",
+              "aux_id": "ltdrdata/was-node-suite-comfyui",
               "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
-              "Node name for S&R": "Text Concatenate"
+              "Node name for S&R": "Text Concatenate",
+              "cnr_id": "was-ns"
             },
             "widgets_values": [
               "",
@@ -12520,11 +12518,11 @@
             ],
             "title": "2-Seed high",
             "properties": {
-              "cnr_id": "rgthree-comfy",
+              "aux_id": "aining2022/ComfyUI_Swwan",
               "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
               "randomMax": 1125899906842624,
               "randomMin": 0,
-              "aux_id": "aining2022/ComfyUI_Swwan",
+              "cnr_id": "rgthree-comfy",
               "Node name for S&R": "Seed (rgthree)"
             },
             "widgets_values": [
@@ -13351,10 +13349,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ver": "2f7300dc546ec2d36fa8b0feebe493d41026524c",
               "Node name for S&R": "ImageBatchMulti",
-              "aux_id": "kijai/ComfyUI-KJNodes",
+              "cnr_id": "comfyui-kjnodes",
               "ue_properties": {
                 "version": "7.0.1",
                 "widget_ue_connectable": {
@@ -13404,10 +13402,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-videohelpersuite",
+              "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
               "ver": "8e4d79471bf1952154768e8435a9300077b534fa",
               "Node name for S&R": "VHS_SelectImages",
-              "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
+              "cnr_id": "comfyui-videohelpersuite",
               "ue_properties": {
                 "version": "7.0.1",
                 "widget_ue_connectable": {
@@ -13785,10 +13783,10 @@
             ],
             "title": "Final prompt preview",
             "properties": {
-              "cnr_id": "comfyui-easy-use",
+              "aux_id": "yolain/ComfyUI-Easy-Use",
               "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
               "Node name for S&R": "easy showAnything",
-              "aux_id": "yolain/ComfyUI-Easy-Use",
+              "cnr_id": "comfyui-easy-use",
               "widget_ue_connectable": {}
             },
             "widgets_values": [
@@ -13895,9 +13893,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "was-ns",
+              "aux_id": "ltdrdata/was-node-suite-comfyui",
               "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
-              "Node name for S&R": "Text Concatenate"
+              "Node name for S&R": "Text Concatenate",
+              "cnr_id": "was-ns"
             },
             "widgets_values": [
               "",
@@ -13932,11 +13931,11 @@
             ],
             "title": "2-Seed high",
             "properties": {
-              "cnr_id": "rgthree-comfy",
+              "aux_id": "aining2022/ComfyUI_Swwan",
               "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
               "randomMax": 1125899906842624,
               "randomMin": 0,
-              "aux_id": "aining2022/ComfyUI_Swwan",
+              "cnr_id": "rgthree-comfy",
               "Node name for S&R": "Seed (rgthree)"
             },
             "widgets_values": [
@@ -14506,10 +14505,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-mmaudio",
+              "aux_id": "kijai/ComfyUI-MMAudio",
               "ver": "841b307095f3cdc448d940a5787bc36706e49f1d",
               "Node name for S&R": "MMAudioSampler",
-              "aux_id": "kijai/ComfyUI-MMAudio"
+              "cnr_id": "comfyui-mmaudio"
             },
             "widgets_values": [
               20,
@@ -14554,10 +14553,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-mmaudio",
+              "aux_id": "kijai/ComfyUI-MMAudio",
               "ver": "841b307095f3cdc448d940a5787bc36706e49f1d",
               "Node name for S&R": "MMAudioModelLoader",
-              "aux_id": "kijai/ComfyUI-MMAudio"
+              "cnr_id": "comfyui-mmaudio"
             },
             "widgets_values": [
               "mmaudio_large_44k_nsfw_gold_8.5k_final_fp16.safetensors",
@@ -14602,10 +14601,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-mmaudio",
+              "aux_id": "kijai/ComfyUI-MMAudio",
               "ver": "841b307095f3cdc448d940a5787bc36706e49f1d",
               "Node name for S&R": "MMAudioFeatureUtilsLoader",
-              "aux_id": "kijai/ComfyUI-MMAudio"
+              "cnr_id": "comfyui-mmaudio"
             },
             "widgets_values": [
               "mmaudio_vae_44k_fp16.safetensors",
@@ -14903,8 +14902,7 @@
               false,
               2308460460,
               "randomize",
-              false,
-              true
+              false
             ],
             "color": "#474539",
             "bgcolor": "#2c4045"
@@ -15209,8 +15207,7 @@
               true,
               1104676978,
               "randomize",
-              false,
-              true
+              false
             ],
             "color": "#28403f",
             "bgcolor": "#374539"
@@ -15284,10 +15281,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.5753077346489517,
+      "scale": 0.6328385081138469,
       "offset": [
-        1993.8915457850137,
-        403.7780478016916
+        2875.1008176411074,
+        1006.4252084727602
       ]
     }
   },
