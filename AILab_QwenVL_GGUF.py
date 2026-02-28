@@ -578,7 +578,6 @@ class QwenVLGGUFBase:
         repetition_penalty,
         seed,
         keep_model_loaded,
-        unload_after_run,
         device,
         ctx=None,
         n_batch=None,
@@ -736,12 +735,7 @@ class QwenVLGGUFBase:
             
             return (text,)
         finally:
-            if unload_after_run:
-                self.clear()
-                import gc
-                gc.collect()
-                print("[QwenVL GGUF] Model unloaded after run.")
-            elif not keep_model_loaded:
+            if not keep_model_loaded:
                 self.clear()
 
 
