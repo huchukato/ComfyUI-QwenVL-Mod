@@ -98,7 +98,7 @@ function provisioning_start() {
     echo "🔧 Installing custom nodes..."
     provisioning_get_nodes
     
-    echo "🎴 Copying wildcards to Impact-Pack..."
+    echo "🎴 Copying wildcards to Easy-Use..."
     provisioning_copy_wildcards
     
     echo "📦 Installing PIP packages..."
@@ -226,7 +226,7 @@ function provisioning_get_nodes() {
 }
 
 function provisioning_copy_wildcards() {
-    echo "Copying wildcards from comfy-tagcomplete to Impact-Pack..."
+    echo "Copying wildcards from comfy-tagcomplete to Easy-Use..."
     
     local source_dir="${COMFYUI_DIR}/custom_nodes/comfy-tagcomplete/wildcards/mbe"
     local target_dir="${COMFYUI_DIR}/custom_nodes/ComfyUI-Easy-Use/wildcards"
