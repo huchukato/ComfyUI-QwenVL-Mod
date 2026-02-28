@@ -436,6 +436,30 @@
       "bgcolor": "#533"
     },
     {
+      "id": 66,
+      "type": "MarkdownNote",
+      "pos": [
+        -1340,
+        -520
+      ],
+      "size": [
+        486.92212063569946,
+        935.309829500961
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "README",
+      "properties": {},
+      "widgets_values": [
+        "# PIMPMYPONY TXT2IMG with WILDCARDS support\n\n## 🖥️ Civitai Model \n\n \n- [🔗 PimpMyPony - Real Anime](https://civitai.com/models/1195827?modelVersionId=2628215)\n- [🔗 PimpMyPony - InCase Style](https://civitai.com/models/1195827?modelVersionId=2611135)\n- [🔗 PimpMyPony - Semi Real Anime](https://civitai.com/models/1195827?modelVersionId=1346446)\n\n---\n\n## ⬆️ UPSCALE MODEL\n\n- [🔗 2xLexicaRRDBNet](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth)\n- [🔗 2xLexicaRRDBNet_Sharp](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth)\n\n---\n\n## 🎛️ AutoTag Node with Wildcards included\nInstall it from ComfyUI Manager or clone the repo\n```\ncd ComfyUI/custom_nodes\ngit clone https://github.com/huchukato/comfy-tagcomplete.git\n```\n\n✨ New in v2.0.0 - Wildcard Sub-Selection\nThis version introduces a1111-sd-webui-tagcomplete style wildcard sub-selection, making wildcard usage more intuitive and powerful:\n\n🎯 Wildcard Workflow\n- Type __ to see available wildcards\n- Select a wildcard with arrow keys and press Enter → inserts __wildcard_name__\n- Auto-show options → immediately displays all options from that wildcard\n- Select an option with arrow keys and press Enter → replaces wildcard with chosen option\nESC → keeps inserted wildcard and closes options\n\n🌟 Features\n- Smart parsing: Handles wildcards with complex paths (e.g., __mbe/blwjob/blwjb__)\n- Line-by-line options: Each line in wildcard file becomes a separate option\n- Text overflow handling: Long options are truncated with hover expansion\n- Full compatibility: Works with existing wildcard files and formats\n- Multiple sources: Supports wildcards from repository, ComfyUI/models, DynamicPrompts, and Impact-Pack\n\n📁 Wildcard Sources (in priority order):\n- Repository wildcards/ folder\n- ComfyUI models/wildcards/\n- ComfyUI custom_nodes/wildcards/\n- DynamicPrompts wildcards/\n- Extra model paths configuration\n- Impact-Pack wildcards\n- Impact-Pack.ini custom paths\n\nThis extension is based on ComfyUI-Custom-Scripts.\n\n## 📁 Manual Wildcard Setup (Optional)\n\nIf you're installing manually or want to use wildcards with Easy-Use, you may need to copy the wildcards folder:\n\n1. **Copy wildcards to Impact Pack:**\n   ```bash\n   cp -r /path/to/comfy-tagcomplete/wildcards /path/to/ComfyUI/custom_nodes/ComfyUI-Easy-Use/wildcards/\n   ```\n\n2. **Restart ComfyUI** to load the new wildcards\n\n"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
       "id": 65,
       "type": "a4600bd6-aa63-44f0-9811-40520958a8aa",
       "pos": [
@@ -532,30 +556,6 @@
         "ver": "0.13.0"
       },
       "widgets_values": [],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 66,
-      "type": "MarkdownNote",
-      "pos": [
-        -1340,
-        -520
-      ],
-      "size": [
-        486.92212063569946,
-        935.309829500961
-      ],
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "README",
-      "properties": {},
-      "widgets_values": [
-        "# PIMPMYPONY TXT2IMG with WILDCARDS support\n\n## 🖥️ Civitai Model \n\n \n- [🔗 PimpMyPony - Real Anime](https://civitai.com/models/1195827?modelVersionId=2628215)\n- [🔗 PimpMyPony - InCase Style](https://civitai.com/models/1195827?modelVersionId=2611135)\n- [🔗 PimpMyPony - Semi Real Anime](https://civitai.com/models/1195827?modelVersionId=1346446)\n\n---\n\n## ⬆️ UPSCALE MODEL\n\n- [🔗 2xLexicaRRDBNet](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth)\n- [🔗 2xLexicaRRDBNet_Sharp](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth)\n\n---\n\n## 🎛️ AutoTag Node with Wildcards included\nInstall it from ComfyUI Manager or clone the repo\n```\ncd ComfyUI/custom_nodes\ngit clone https://github.com/huchukato/comfy-tagcomplete.git\n```\n\n✨ New in v2.0.0 - Wildcard Sub-Selection\nThis version introduces a1111-sd-webui-tagcomplete style wildcard sub-selection, making wildcard usage more intuitive and powerful:\n\n🎯 Wildcard Workflow\n- Type __ to see available wildcards\n- Select a wildcard with arrow keys and press Enter → inserts __wildcard_name__\n- Auto-show options → immediately displays all options from that wildcard\n- Select an option with arrow keys and press Enter → replaces wildcard with chosen option\nESC → keeps inserted wildcard and closes options\n\n🌟 Features\n- Smart parsing: Handles wildcards with complex paths (e.g., __mbe/blwjob/blwjb__)\n- Line-by-line options: Each line in wildcard file becomes a separate option\n- Text overflow handling: Long options are truncated with hover expansion\n- Full compatibility: Works with existing wildcard files and formats\n- Multiple sources: Supports wildcards from repository, ComfyUI/models, DynamicPrompts, and Impact-Pack\n\n📁 Wildcard Sources (in priority order):\n- Repository wildcards/ folder\n- ComfyUI models/wildcards/\n- ComfyUI custom_nodes/wildcards/\n- DynamicPrompts wildcards/\n- Extra model paths configuration\n- Impact-Pack wildcards\n- Impact-Pack.ini custom paths\n\nThis extension is based on ComfyUI-Custom-Scripts.\n\n## 📁 Manual Wildcard Setup (Optional)\n\nIf you're installing manually or want to use wildcards with Easy-Use, you may need to copy the wildcards folder:\n\n1. **Copy wildcards to Impact Pack:**\n   ```bash\n   cp -r /path/to/comfy-tagcomplete/wildcards /path/to/ComfyUI/custom_nodes/ComfyUI-Easy-Use/wildcards/\n   ```\n\n2. **Restart ComfyUI** to load the new wildcards\n\n"
-      ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
     }
@@ -974,7 +974,7 @@
               "Node name for S&R": "CLIPTextEncode"
             },
             "widgets_values": [
-              "score_6, score_5, score_4, score_3, worst quality, low quality, ugly, malformed, bad anatomy, grayscale, watermark, artist name, "
+              "score_6, score_5, score_4, score_3, worst quality, low quality, ugly, malformed, bad anatomy, grayscale, watermark, artist name,"
             ],
             "color": "#322",
             "bgcolor": "#533"
@@ -1036,7 +1036,7 @@
               "Node name for S&R": "KSampler"
             },
             "widgets_values": [
-              23883934938269,
+              10449570038376,
               "randomize",
               30,
               5,
@@ -1240,7 +1240,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "score_9, score_8_up, score_7_up, portrait, forest, morning, dim lighting, sidelighting, window shadow, 1girl, light brown hair, medium hair, fade hair, messy hair, hazel eyes, average body, large breasts, short, chemise, breastless clothes, solo, breast slip, arm under breasts "
+              "score_9, score_8_up, score_7_up, profile, amusement park, twilight, bloom, sidelighting, darkness, (2girls, 1boy) ffm threesome, from side, looking at viewer, naughty face, penis, oral, tonguejob, fellatio, precum string BREAK 1girl, white hair, short hair, rattail hair, straight hair, aqua eyes, petite body, large breasts, average height, , topless BREAK 1girl, maroon hair, absurdly long hair, low-braided long hair, pointy hair, grey eyes, average body, large breasts, tall, lace dress, sideboob"
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -1277,8 +1277,8 @@
               "Node name for S&R": "WildcardProcessor"
             },
             "widgets_values": [
-              "score_9, score_8_up, score_7_up, __mbe/prmpt/imgcmp/shots__, __mbe/prmpt/lctns/rndmlctns__, __mbe/prmpt/light/rndmlight__, __mbe/prmpt/char/rndmcharlb__, __mbe/prmpt/clths/rndmclth__, __mbe/prmpt/clths/nudty_brsts__, __mbe/actsolo/brstplng__ ",
-              0,
+              "score_9, score_8_up, score_7_up, __mbe/prmpt/imgcmp/shots__, __mbe/prmpt/lctns/rndmlctns__, __mbe/prmpt/light/rndmlight__, (2girls, 1boy) __mbe/actffm/coop_fellatio__ BREAK __mbe/prmpt/char/rndmcharlb__, __mbe/prmpt/clths/rndmclth__, __mbe/prmpt/clths/nudty_brsts__ BREAK __mbe/prmpt/char/rndmcharlb__, __mbe/prmpt/clths/rndmclth__, __mbe/prmpt/clths/nudty_brsts__",
+              370820736079697,
               "randomize"
             ],
             "color": "#232",
@@ -1422,10 +1422,10 @@
     "VHS_MetadataImage": true,
     "VHS_KeepIntermediate": true,
     "ds": {
-      "scale": 1.2100000000000006,
+      "scale": 0.6830134553650705,
       "offset": [
-        1734.2748568295729,
-        515.7329039431015
+        2024.6328794887577,
+        746.1319962221679
       ]
     }
   },
