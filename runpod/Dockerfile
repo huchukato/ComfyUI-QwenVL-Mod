@@ -81,7 +81,6 @@ RUN cd /ComfyUI/custom_nodes && \
     git clone https://github.com/huchukato/ComfyUI-HuggingFace.git && \
     git clone https://github.com/MadiatorLabs/ComfyUI-RunpodDirect.git && \
     git clone https://github.com/city96/ComfyUI-GGUF.git && \
-    git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git && \
     git clone https://github.com/MoonGoblinDev/Civicomfy.git && \
     git clone https://github.com/Koishi-Star/Euler-Smea-Dyn-Sampler.git && \
     git clone https://github.com/ltdrdata/was-node-suite-comfyui.git && \
@@ -98,11 +97,10 @@ RUN cd /ComfyUI/custom_nodes && \
     git clone https://github.com/kijai/ComfyUI-MMAudio.git && \
     git clone https://github.com/GACLove/ComfyUI-VFI.git && \
     git clone https://github.com/stduhpf/ComfyUI-WanMoeKSampler.git && \
-    git clone https://github.com/melMass/comfy_mtb.git && \
-    git clone https://github.com/huchukato/ComfyUI-Resources-Monitor.git
+    git clone https://github.com/melMass/comfy_mtb.git
 
 # Copy wildcards to Impact-Pack (required for wildcard workflows)
-RUN cp -r /ComfyUI/custom_nodes/comfy-tagcomplete/wildcards/mbe /ComfyUI/custom_nodes/ComfyUI-Impact-Pack/wildcards || echo "Wildcards copy completed (or already exists)"
+RUN cp -r /ComfyUI/custom_nodes/comfy-tagcomplete/wildcards/mbe /ComfyUI/custom_nodes/ComfyUI-Easy-Use/wildcards || echo "Wildcards copy completed (or already exists)"
 
 # Install requirements for all custom nodes
 RUN bash -c 'cd /ComfyUI/custom_nodes && for node_dir in */; do if [ -f "$node_dir/requirements.txt" ]; then echo "Installing requirements for $node_dir..." && /opt/comfyui-env/bin/pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; fi; done' && \
