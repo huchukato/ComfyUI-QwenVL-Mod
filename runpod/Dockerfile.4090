@@ -104,7 +104,7 @@ RUN cd /ComfyUI/custom_nodes && \
     git clone https://github.com/princepainter/ComfyUI-PainterI2V.git && \
     git clone https://github.com/princepainter/ComfyUI-PainterLongVideo.git && \
     git clone https://github.com/ashtar1984/comfyui-find-perfect-resolution.git && \
-    git clone https://github.com/ComfyAssets/ComfyUI_Selectors.git && \
+    git clone https://github.com/huchukato/ComfyUI-Selectors.git && \
     git clone https://github.com/kijai/ComfyUI-MMAudio.git && \
     git clone https://github.com/GACLove/ComfyUI-VFI.git && \
     git clone https://github.com/stduhpf/ComfyUI-WanMoeKSampler.git && \
