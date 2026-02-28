@@ -1,8 +1,8 @@
 {
   "id": "1b578592-cf47-47b6-b25b-2dc036abe2b9",
   "revision": 0,
-  "last_node_id": 69,
-  "last_link_id": 111,
+  "last_node_id": 73,
+  "last_link_id": 113,
   "nodes": [
     {
       "id": 60,
@@ -32,7 +32,7 @@
       ],
       "outputs": [
         {
-          "name": "IMAGE",
+          "name": "upscaled_images",
           "type": "IMAGE",
           "links": [
             99
@@ -119,10 +119,10 @@
         }
       ],
       "properties": {
-        "aux_id": "kijai/ComfyUI-KJNodes",
+        "cnr_id": "comfyui-kjnodes",
         "ver": "a6b867b63a29ca48ddb15c589e17a9f2d8530d57",
         "Node name for S&R": "ModelPatchTorchSettings",
-        "cnr_id": "comfyui-kjnodes",
+        "aux_id": "kijai/ComfyUI-KJNodes",
         "ue_properties": {
           "version": "7.0.1",
           "widget_ue_connectable": {
@@ -167,10 +167,10 @@
         }
       ],
       "properties": {
-        "aux_id": "kijai/ComfyUI-KJNodes",
+        "cnr_id": "comfyui-kjnodes",
         "ver": "47ca2b2c26358615974162059061e9dc78be6715",
         "Node name for S&R": "PathchSageAttentionKJ",
-        "cnr_id": "comfyui-kjnodes"
+        "aux_id": "kijai/ComfyUI-KJNodes"
       },
       "widgets_values": [
         "auto",
@@ -226,10 +226,10 @@
         }
       ],
       "properties": {
-        "aux_id": "rgthree/rgthree-comfy",
+        "cnr_id": "rgthree-comfy",
         "ver": "1.0.2512112053",
         "Show Strengths": "Single Strength",
-        "cnr_id": "rgthree-comfy",
+        "aux_id": "rgthree/rgthree-comfy",
         "Node name for S&R": "Power Lora Loader (rgthree)"
       },
       "widgets_values": [
@@ -706,8 +706,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 3,
-          "lastNodeId": 69,
-          "lastLinkId": 111,
+          "lastNodeId": 73,
+          "lastLinkId": 113,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -870,7 +870,7 @@
               58
             ],
             "flags": {},
-            "order": 4,
+            "order": 6,
             "mode": 0,
             "inputs": [
               {
@@ -947,7 +947,7 @@
               105.67417907714844
             ],
             "flags": {},
-            "order": 8,
+            "order": 9,
             "mode": 0,
             "inputs": [
               {
@@ -991,7 +991,7 @@
               262
             ],
             "flags": {},
-            "order": 6,
+            "order": 7,
             "mode": 0,
             "inputs": [
               {
@@ -1036,7 +1036,7 @@
               "Node name for S&R": "KSampler"
             },
             "widgets_values": [
-              139151658944379,
+              23883934938269,
               "randomize",
               30,
               5,
@@ -1083,10 +1083,10 @@
               }
             ],
             "properties": {
-              "aux_id": "kijai/ComfyUI-KJNodes",
+              "cnr_id": "comfyui-kjnodes",
               "ver": "1.2.2",
               "Node name for S&R": "EmptyLatentImagePresets",
-              "cnr_id": "comfyui-kjnodes"
+              "aux_id": "kijai/ComfyUI-KJNodes"
             },
             "widgets_values": [
               "1216 x 832 (1.46:1)",
@@ -1108,7 +1108,7 @@
               46
             ],
             "flags": {},
-            "order": 7,
+            "order": 8,
             "mode": 0,
             "inputs": [
               {
@@ -1143,99 +1143,6 @@
             "widgets_values": []
           },
           {
-            "id": 63,
-            "type": "ImpactWildcardProcessor",
-            "pos": [
-              271.68964372363155,
-              -179.50470406812974
-            ],
-            "size": [
-              412.3013515624998,
-              435.8198749999999
-            ],
-            "flags": {},
-            "order": 3,
-            "mode": 0,
-            "inputs": [],
-            "outputs": [
-              {
-                "localized_name": "processed text",
-                "name": "processed text",
-                "type": "STRING",
-                "links": [
-                  105
-                ]
-              }
-            ],
-            "properties": {
-              "aux_id": "ltdrdata/ComfyUI-Impact-Pack",
-              "ver": "6a517ebe06fea2b74fc41b3bd089c0d7173eeced",
-              "Node name for S&R": "ImpactWildcardProcessor",
-              "cnr_id": "comfyui-impact-pack"
-            },
-            "widgets_values": [
-              "score_9, score_8_up, score_7_up, __mbe/prmpt/imgcmp/shots__, __mbe/prmpt/lctns/rndmlctns__, __mbe/prmpt/light/rndmlight__, __mbe/prmpt/char/rndmcharlb__, __mbe/prmpt/clths/rndmclth__, __mbe/prmpt/clths/nudty_brsts__, __mbe/actsolo/brstplng__ ",
-              "",
-              "populate",
-              293018419958529,
-              "randomize",
-              "Select Wildcard 🟢 Full Cache"
-            ],
-            "color": "#2a363b",
-            "bgcolor": "#3f5159"
-          },
-          {
-            "id": 66,
-            "type": "easy showAnything",
-            "pos": [
-              -347.49528916869394,
-              -182.2043267936429
-            ],
-            "size": [
-              380.2005395507813,
-              339.48220830078117
-            ],
-            "flags": {},
-            "order": 5,
-            "mode": 0,
-            "inputs": [
-              {
-                "label": " ",
-                "localized_name": "anything",
-                "name": "anything",
-                "shape": 7,
-                "type": "*",
-                "link": 105
-              }
-            ],
-            "outputs": [
-              {
-                "label": " ",
-                "localized_name": "output",
-                "name": "output",
-                "type": "*",
-                "links": [
-                  106,
-                  107
-                ]
-              }
-            ],
-            "title": "Final prompt preview",
-            "properties": {
-              "aux_id": "yolain/ComfyUI-Easy-Use",
-              "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
-              "Node name for S&R": "easy showAnything",
-              "cnr_id": "comfyui-easy-use",
-              "widget_ue_connectable": {}
-            },
-            "widgets_values": [
-              "score_9, score_8_up, score_7_up, portrait, cliff, dawn, sunbeam, underlighting, window shadow, 1girl, dark purple hair, bald, fauxhawk, blunt ends, blue eyes, average body, large breasts, tall, g-string, clothes lift, solo, breasts out, arm under breast, breast lift, nipple stimulation, nipple pull, tongue out, saliva drip, saliva on breasts "
-            ],
-            "color": "#232",
-            "bgcolor": "#353",
-            "shape": 2
-          },
-          {
             "id": 64,
             "type": "CLIPTextEncode",
             "pos": [
@@ -1249,7 +1156,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 9,
+            "order": 10,
             "mode": 0,
             "inputs": [
               {
@@ -1287,6 +1194,135 @@
             "widgets_values": [
               ""
             ]
+          },
+          {
+            "id": 63,
+            "type": "ImpactWildcardProcessor",
+            "pos": [
+              1197.535323411131,
+              -369.3125829743797
+            ],
+            "size": [
+              412.3013515624998,
+              435.8198749999999
+            ],
+            "flags": {},
+            "order": 3,
+            "mode": 4,
+            "inputs": [],
+            "outputs": [
+              {
+                "localized_name": "processed text",
+                "name": "processed text",
+                "type": "STRING",
+                "links": []
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfyui-impact-pack",
+              "ver": "6a517ebe06fea2b74fc41b3bd089c0d7173eeced",
+              "Node name for S&R": "ImpactWildcardProcessor",
+              "aux_id": "ltdrdata/ComfyUI-Impact-Pack"
+            },
+            "widgets_values": [
+              "score_9, score_8_up, score_7_up, __mbe/prmpt/imgcmp/shots__, __mbe/prmpt/lctns/rndmlctns__, __mbe/prmpt/light/rndmlight__, __mbe/prmpt/char/rndmcharlb__, __mbe/prmpt/clths/rndmclth__, __mbe/prmpt/clths/nudty_brsts__, __mbe/actsolo/brstplng__ ",
+              "",
+              "populate",
+              1093090126054255,
+              "randomize",
+              "Select Wildcard 🟢 Full Cache"
+            ],
+            "color": "#2a363b",
+            "bgcolor": "#3f5159"
+          },
+          {
+            "id": 66,
+            "type": "easy showAnything",
+            "pos": [
+              -207.1423790124439,
+              -191.86967444989412
+            ],
+            "size": [
+              380.2005395507813,
+              339.48220830078117
+            ],
+            "flags": {},
+            "order": 4,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": " ",
+                "localized_name": "anything",
+                "name": "anything",
+                "shape": 7,
+                "type": "*",
+                "link": 113
+              }
+            ],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "output",
+                "name": "output",
+                "type": "*",
+                "links": [
+                  106,
+                  107
+                ]
+              }
+            ],
+            "title": "Final prompt preview",
+            "properties": {
+              "cnr_id": "comfyui-easy-use",
+              "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
+              "Node name for S&R": "easy showAnything",
+              "aux_id": "yolain/ComfyUI-Easy-Use",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "score_9, score_8_up, score_7_up, portrait, forest, morning, dim lighting, sidelighting, window shadow, 1girl, light brown hair, medium hair, fade hair, messy hair, hazel eyes, average body, large breasts, short, chemise, breastless clothes, solo, breast slip, arm under breasts "
+            ],
+            "color": "#232",
+            "bgcolor": "#353",
+            "shape": 2
+          },
+          {
+            "id": 72,
+            "type": "WildcardProcessor",
+            "pos": [
+              230.0356999333363,
+              -215.48455311278255
+            ],
+            "size": [
+              410.81676136363626,
+              350.2627840909091
+            ],
+            "flags": {},
+            "order": 5,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "localized_name": "processed_text",
+                "name": "processed_text",
+                "type": "STRING",
+                "links": [
+                  113
+                ]
+              }
+            ],
+            "properties": {
+              "aux_id": "huchukato/comfy-tagcomplete",
+              "ver": "43677b093ae8c18ac35768c575d1edb2f5483119",
+              "Node name for S&R": "WildcardProcessor"
+            },
+            "widgets_values": [
+              "score_9, score_8_up, score_7_up, __mbe/prmpt/imgcmp/shots__, __mbe/prmpt/lctns/rndmlctns__, __mbe/prmpt/light/rndmlight__, __mbe/prmpt/char/rndmcharlb__, __mbe/prmpt/clths/rndmclth__, __mbe/prmpt/clths/nudty_brsts__, __mbe/actsolo/brstplng__ ",
+              0,
+              "randomize"
+            ],
+            "color": "#232",
+            "bgcolor": "#353"
           }
         ],
         "groups": [],
@@ -1380,14 +1416,6 @@
             "type": "IMAGE"
           },
           {
-            "id": 105,
-            "origin_id": 63,
-            "origin_slot": 0,
-            "target_id": 66,
-            "target_slot": 0,
-            "type": "STRING"
-          },
-          {
             "id": 107,
             "origin_id": 66,
             "origin_slot": 0,
@@ -1402,6 +1430,14 @@
             "target_id": 64,
             "target_slot": 0,
             "type": "CLIP"
+          },
+          {
+            "id": 113,
+            "origin_id": 72,
+            "origin_slot": 0,
+            "target_id": 66,
+            "target_slot": 0,
+            "type": "STRING"
           }
         ],
         "extra": {
@@ -1426,10 +1462,10 @@
     "VHS_MetadataImage": true,
     "VHS_KeepIntermediate": true,
     "ds": {
-      "scale": 0.751314800901578,
+      "scale": 0.9090909090909091,
       "offset": [
-        1633.042872614497,
-        739.8955829874812
+        967.3657382973685,
+        523.1555473250896
       ]
     }
   },

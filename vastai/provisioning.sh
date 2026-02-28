@@ -20,7 +20,6 @@ NODES=(
     "https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto"
     "https://github.com/huchukato/ComfyUI-Upscaler-TensorRT-Auto"
     "https://github.com/huchukato/ComfyUI-HuggingFace"
-    "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
     "https://github.com/MoonGoblinDev/Civicomfy"
     "https://github.com/Koishi-Star/Euler-Smea-Dyn-Sampler"
     "https://github.com/ltdrdata/was-node-suite-comfyui"
@@ -230,7 +229,7 @@ function provisioning_copy_wildcards() {
     echo "Copying wildcards from comfy-tagcomplete to Impact-Pack..."
     
     local source_dir="${COMFYUI_DIR}/custom_nodes/comfy-tagcomplete/wildcards/mbe"
-    local target_dir="${COMFYUI_DIR}/custom_nodes/ComfyUI-Impact-Pack/wildcards"
+    local target_dir="${COMFYUI_DIR}/custom_nodes/ComfyUI-Easy-Use/wildcards"
     
     # Create target directory if it doesn't exist
     mkdir -p "$target_dir"
