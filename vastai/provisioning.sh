@@ -32,7 +32,7 @@ NODES=(
     "https://github.com/princepainter/ComfyUI-PainterI2V"
     "https://github.com/princepainter/ComfyUI-PainterLongVideo"
     "https://github.com/ashtar1984/comfyui-find-perfect-resolution"
-    "https://github.com/ComfyAssets/ComfyUI_Selectors"
+    "https://github.com/huchukato/ComfyUI-Selectors"
     "https://github.com/city96/ComfyUI-GGUF"
     "https://github.com/kijai/ComfyUI-MMAudio"
     "https://github.com/GACLove/ComfyUI-VFI"
