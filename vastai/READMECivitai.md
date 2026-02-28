@@ -37,8 +37,12 @@ A powerful **enhanced vision-language node** for ComfyUI that combines Qwen3-VL 
 ---
 
 ## 🎯 What's New in v2.2.3
+- **CUDA 13 Compatibility**: Fixed crashes caused by conflicting unload operations
+- **Parameter Cleanup**: Removed redundant unload_after_run from all nodes
+- **Bug Fixes**: Resolved "missing required positional argument" errors
+- **Memory Management**: Streamlined VRAM cleanup with VRAM Cleanup node
 - **Documentation**: Updated all README files with new memory features
-- **Credits**: Added GenorTG credits for memory management innovations
+- **Credits**: Added community credits for feedback and testing
 
 ## 🎯 What's New in v2.2.2
 

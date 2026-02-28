@@ -420,7 +420,6 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         keep_model_loaded,
         seed,
         keep_last_prompt,
-        unload_after_run,
     ):
         global LAST_SAVED_PROMPT
         
@@ -507,14 +506,9 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
             
             return (final,)
         finally:
-            if unload_after_run:
+            if not keep_model_loaded:
                 self.clear()
-                import gc
-                gc.collect()
-                print("[QwenVL PromptEnhancer GGUF] Model unloaded after run.")
-            elif not keep_model_loaded:
                 print(f"[QwenVL PromptEnhancer GGUF] keep_model_loaded=False - cleaning up model...")
-                self.clear()
 
     @staticmethod
     def _is_english(text):

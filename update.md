@@ -8,6 +8,7 @@ This update removes redundant memory management features and improves CUDA 13 co
 
 ### 🔧 **Memory Management Cleanup**
 |- **Removed unload_after_run**: Eliminated redundant checkbox from all QwenVL nodes
+|- **Fixed Parameter Errors**: Resolved missing argument errors in GGUF and PromptEnhancer nodes
 |- **Conflict Prevention**: Prevents multiple unload operations that cause CUDA 13 crashes
 |- **Simplified Interface**: Cleaner node interface without redundant parameters
 |- **VRAM Cleanup Node**: Maintained for manual cleanup when needed
@@ -16,6 +17,8 @@ This update removes redundant memory management features and improves CUDA 13 co
 |- **VastAI CUDA 13**: Fixed crashes caused by conflicting unload operations
 |- **WanMoeKSampler**: Manual boundary setting prevents automatic switching crashes
 |- **Memory Conflicts**: Eliminated double cleanup between QwenVL and VRAM Cleanup nodes
+|- **Parameter Errors**: Fixed "missing 1 required positional argument: unload_after_run" errors
+|- **Function Signatures**: Corrected all run() and load_model() function signatures
 
 ### 📚 **Documentation Updates**
 |- **All READMEs**: Updated to reflect unload_after_run removal

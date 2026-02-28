@@ -23,10 +23,10 @@ The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-
 ## **📰 News & Updates**
 * **2026/02/27**: **v2.2.3** 🔧 **CUDA 13 Compatibility Fix + Redundancy Removal**. [[Update](update.md#version-223-20260227)]
 > 🔧 **Removed unload_after_run**: Eliminated redundant checkbox from all QwenVL nodes to prevent CUDA 13 conflicts.  
-> 🐛 **VastAI Crash Fix**: Resolved crashes caused by conflicting unload operations.  
+> 🐛 **Fixed Parameter Errors**: Resolved "missing 1 required positional argument: unload_after_run" errors in all nodes.  
 > 🎯 **Simplified Interface**: Cleaner node interface without redundant parameters.  
 > 🧠 **VRAM Cleanup Node**: Maintained for manual cleanup when needed.  
-> 🏆 **Community Credits**: Thanks to user feedback that identified redundancy issue.
+> 🏆 **Community Credits**: Thanks to user feedback that identified redundancy and parameter issues.
 
 * **2026/02/27**: **v2.2.3** 🚀 Critical T2V/I2V Fixes + ComfyUI Optimizations. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-223-20260227)]
 > 🚀 **Batch Processing**: Fixed critical T2V → GGUF issue with batch images from video generation.  

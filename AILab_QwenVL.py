@@ -441,7 +441,6 @@ class QwenVLBase:
         use_compile,
         device_choice,
         keep_model_loaded,
-        unload_after_run,
     ):
         quant = enforce_memory(model_name, Quantization.from_value(quant_value), self.device_info)
         attn_impl = resolve_attention_mode(attention_mode)
@@ -545,7 +544,7 @@ class QwenVLBase:
         text = self.tokenizer.decode(outputs[0, input_len:], skip_special_tokens=True)
         return text.strip()
 
-    def run(self, model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt=False, unload_after_run=False):
+    def run(self, model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt=False):
         torch.manual_seed(seed)
         
         global LAST_SAVED_PROMPT
@@ -590,7 +589,6 @@ class QwenVLBase:
             use_torch_compile,
             device,
             keep_model_loaded,
-            unload_after_run,
         )
         try:
             text = self.generate(
@@ -625,12 +623,7 @@ class QwenVLBase:
             
             return (text,)
         finally:
-            if unload_after_run:
-                self.clear()
-                import gc
-                gc.collect()
-                print("[QwenVL] Model unloaded after run.")
-            elif not keep_model_loaded:
+            if not keep_model_loaded:
                 self.clear()
 
 class AILab_QwenVL(QwenVLBase):
