@@ -82,3 +82,10 @@ prompt_cache.json
 build-and-push-4090.sh
 build-and-push-5090.sh
 vastai/
+
+# API consulting tools (keep local for client work)
+API_GUIDE.md
+debug_api.py
+api_client_examples/
+consulting/
+client_work/
