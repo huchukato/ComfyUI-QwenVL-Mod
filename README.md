@@ -15,8 +15,45 @@
 
 [![buy-me-coffees](https://i.imgur.com/3MDbAtw.png)](https://buymeacoffee.com/huchukato)
 
+## 🚀 **API Support & Troubleshooting**
 
-The ComfyUI-QwenVL custom node integrates the powerful Qwen-VL series of vision-language models (LVLMs) from Alibaba Cloud, including the latest Qwen3-VL and Qwen2.5-VL, plus GGUF backends and text-only Qwen3 support. This advanced node enables seamless multimodal AI capabilities within your ComfyUI workflows, allowing for efficient text generation, image understanding, and video analysis.
+Having issues with ComfyUI API? We've got you covered!
+
+### 📋 **Quick API Help**
+- 📖 **[API Guide](./API_GUIDE.md)** - Complete API documentation
+- 🛠️ **[Debug Script](./debug_api.py)** - Automated API diagnostics
+- 🎯 **Example Workflows** - Ready-to-use API templates
+
+### 🔧 **Common API Issues**
+| Issue | Solution |
+|-------|----------|
+| "node not found" | Check QwenVL-Mod installation |
+| "model not found" | Verify model files in `/models/` |
+| "invalid input" | Check parameter formats |
+| "queue full" | Wait for current jobs |
+
+### 🧪 **Quick Debug**
+```bash
+# Run API diagnostics
+python debug_api.py --url http://localhost:18188
+
+# Check available nodes
+curl http://localhost:18188/object_info
+
+# Test simple workflow
+curl -X POST http://localhost:18188/prompt -d @test_workflow.json
+```
+
+### 📞 **Need More Help?**
+Ask user for:
+1. **Error message** (exact text)
+2. **Workflow JSON** (sanitized)
+3. **Debug output** (from debug_api.py)
+4. **ComfyUI logs** (API section)
+
+---
+
+The ComfyUI-QwenVL custom node integrates powerful Qwen-VL series of vision-language models (LVLMs) from Alibaba Cloud, including latest Qwen3-VL and Qwen2.5-VL, plus GGUF backends and text-only Qwen3 support. This advanced node enables seamless multimodal AI capabilities within your ComfyUI workflows, allowing for efficient text generation, image understanding, and video analysis.
 
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
