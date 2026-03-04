@@ -1,8 +1,8 @@
 {
   "id": "d40a02f0-8c72-4d49-8df5-3b1302b986f9",
   "revision": 0,
-  "last_node_id": 1652,
-  "last_link_id": 5636,
+  "last_node_id": 1674,
+  "last_link_id": 5659,
   "nodes": [
     {
       "id": 738,
@@ -596,7 +596,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 131,
+      "order": 148,
       "mode": 4,
       "inputs": [
         {
@@ -645,7 +645,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 100,
+      "order": 115,
       "mode": 4,
       "inputs": [
         {
@@ -701,46 +701,6 @@
       "properties": {},
       "widgets_values": [
         "upscale"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 1061,
-      "type": "SetNode",
-      "pos": [
-        3000,
-        210
-      ],
-      "size": [
-        210,
-        60
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 157,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "link": 5073
-        }
-      ],
-      "outputs": [
-        {
-          "name": "*",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Set_finalvideo",
-      "properties": {
-        "previousName": "finalvideo"
-      },
-      "widgets_values": [
-        "finalvideo"
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
@@ -887,7 +847,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 141,
+      "order": 158,
       "mode": 4,
       "inputs": [
         {
@@ -961,7 +921,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 104,
+      "order": 119,
       "mode": 0,
       "inputs": [
         {
@@ -999,7 +959,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 103,
+      "order": 118,
       "mode": 0,
       "inputs": [
         {
@@ -1082,7 +1042,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 105,
+      "order": 120,
       "mode": 0,
       "inputs": [
         {
@@ -1120,7 +1080,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 106,
+      "order": 121,
       "mode": 0,
       "inputs": [
         {
@@ -1150,8 +1110,8 @@
       "id": 1513,
       "type": "Fast Groups Bypasser (rgthree)",
       "pos": [
-        -931.8728168445652,
-        399.16416380384896
+        -1313.4355452720795,
+        360.46052033446495
       ],
       "size": [
         340,
@@ -1289,7 +1249,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 118,
+      "order": 132,
       "mode": 0,
       "inputs": [
         {
@@ -1329,7 +1289,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 117,
+      "order": 131,
       "mode": 0,
       "inputs": [
         {
@@ -1412,7 +1372,7 @@
         334
       ],
       "flags": {},
-      "order": 148,
+      "order": 165,
       "mode": 4,
       "inputs": [
         {
@@ -1696,7 +1656,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 136,
+      "order": 151,
       "mode": 0,
       "inputs": [
         {
@@ -1768,7 +1728,7 @@
         443.2323554687496
       ],
       "flags": {},
-      "order": 140,
+      "order": 157,
       "mode": 4,
       "inputs": [
         {
@@ -1821,7 +1781,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 107,
+      "order": 122,
       "mode": 0,
       "inputs": [
         {
@@ -2203,7 +2163,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 144,
+      "order": 161,
       "mode": 0,
       "inputs": [
         {
@@ -2230,74 +2190,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 1545,
-      "type": "GetNode",
-      "pos": [
-        -1277.6471248169835,
-        441.1895084089731
-      ],
-      "size": [
-        210,
-        34
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 46,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            5412
-          ]
-        }
-      ],
-      "title": "Get_finalvideo",
-      "properties": {},
-      "widgets_values": [
-        "finalvideo"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 1569,
-      "type": "GetNode",
-      "pos": [
-        -1293.7158972873322,
-        629.7758543337211
-      ],
-      "size": [
-        210,
-        58
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 47,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            5441
-          ]
-        }
-      ],
-      "title": "Get_refimage",
-      "properties": {},
-      "widgets_values": [
-        "refimage"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 723,
       "type": "SetNode",
       "pos": [
@@ -2311,7 +2203,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 128,
+      "order": 139,
       "mode": 0,
       "inputs": [
         {
@@ -2351,7 +2243,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 129,
+      "order": 140,
       "mode": 0,
       "inputs": [
         {
@@ -2391,7 +2283,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 48,
+      "order": 46,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2425,7 +2317,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 49,
+      "order": 47,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2457,7 +2349,7 @@
         110
       ],
       "flags": {},
-      "order": 50,
+      "order": 48,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2492,7 +2384,7 @@
         110
       ],
       "flags": {},
-      "order": 51,
+      "order": 49,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -2527,7 +2419,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 52,
+      "order": 50,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2559,7 +2451,7 @@
         110
       ],
       "flags": {},
-      "order": 53,
+      "order": 51,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2608,7 +2500,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 54,
+      "order": 52,
       "mode": 4,
       "inputs": [
         {
@@ -2652,7 +2544,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 149,
+      "order": 166,
       "mode": 4,
       "inputs": [
         {
@@ -2698,7 +2590,7 @@
         334
       ],
       "flags": {},
-      "order": 152,
+      "order": 169,
       "mode": 4,
       "inputs": [
         {
@@ -2769,76 +2661,6 @@
       "bgcolor": "#355"
     },
     {
-      "id": 1437,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -928.9139034296873,
-        1081.5200207148473
-      ],
-      "size": [
-        340,
-        106
-      ],
-      "flags": {},
-      "order": 55,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "MMAUDIO",
-      "properties": {
-        "matchColors": "yellow",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
-      "id": 1439,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -930,
-        560
-      ],
-      "size": [
-        340,
-        106
-      ],
-      "flags": {},
-      "order": 56,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Previews",
-      "properties": {
-        "matchColors": "",
-        "matchTitle": "QWEN",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
       "id": 1596,
       "type": "GetNode",
       "pos": [
@@ -2852,7 +2674,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 57,
+      "order": 53,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2884,7 +2706,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 58,
+      "order": 54,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2918,7 +2740,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 59,
+      "order": 55,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2952,7 +2774,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 60,
+      "order": 56,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2984,7 +2806,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 61,
+      "order": 57,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3016,7 +2838,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 62,
+      "order": 58,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3050,7 +2872,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 63,
+      "order": 59,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3084,7 +2906,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 64,
+      "order": 60,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3118,7 +2940,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 65,
+      "order": 61,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3152,7 +2974,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 66,
+      "order": 62,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3184,7 +3006,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 67,
+      "order": 63,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3218,7 +3040,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 68,
+      "order": 64,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3252,7 +3074,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 69,
+      "order": 65,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3284,7 +3106,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 70,
+      "order": 66,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3305,123 +3127,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 1546,
-      "type": "ColorMatch",
-      "pos": [
-        -1292.8809207994009,
-        575.759598455633
-      ],
-      "size": [
-        281.26670703125,
-        127.21141796875008
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 114,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image_ref",
-          "type": "IMAGE",
-          "link": 5441
-        },
-        {
-          "name": "image_target",
-          "type": "IMAGE",
-          "link": 5412
-        }
-      ],
-      "outputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "links": [
-            5410,
-            5413
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-kjnodes",
-        "ver": "e8b70f28be7fd71ee72c3848cfa09e1a89e3061b",
-        "Node name for S&R": "ColorMatch",
-        "aux_id": "kijai/ComfyUI-KJNodes"
-      },
-      "widgets_values": [
-        "mkl",
-        0.4,
-        true
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 175,
-      "type": "Power Lora Loader (rgthree)",
-      "pos": [
-        780,
-        -110
-      ],
-      "size": [
-        560,
-        160
-      ],
-      "flags": {},
-      "order": 115,
-      "mode": 0,
-      "inputs": [
-        {
-          "dir": 3,
-          "name": "model",
-          "shape": 7,
-          "type": "MODEL",
-          "link": 3625
-        },
-        {
-          "dir": 3,
-          "name": "clip",
-          "shape": 7,
-          "type": "CLIP",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "dir": 4,
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            5445
-          ]
-        },
-        {
-          "dir": 4,
-          "name": "CLIP",
-          "type": "CLIP",
-          "links": null
-        }
-      ],
-      "title": "1LORA LOW",
-      "properties": {
-        "cnr_id": "rgthree-comfy",
-        "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
-        "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
-        "Node name for S&R": "Power Lora Loader (rgthree)"
-      },
-      "widgets_values": [
-        {},
-        {
-          "type": "PowerLoraLoaderHeaderWidget"
-        },
-        {},
-        ""
-      ],
-      "color": "#322",
-      "bgcolor": "#533"
-    },
-    {
       "id": 179,
       "type": "Power Lora Loader (rgthree)",
       "pos": [
@@ -3433,7 +3138,7 @@
         142
       ],
       "flags": {},
-      "order": 108,
+      "order": 123,
       "mode": 0,
       "inputs": [
         {
@@ -3498,7 +3203,7 @@
         160
       ],
       "flags": {},
-      "order": 109,
+      "order": 124,
       "mode": 0,
       "inputs": [
         {
@@ -3563,7 +3268,7 @@
         142
       ],
       "flags": {},
-      "order": 112,
+      "order": 127,
       "mode": 0,
       "inputs": [
         {
@@ -3628,7 +3333,7 @@
         142
       ],
       "flags": {},
-      "order": 113,
+      "order": 128,
       "mode": 0,
       "inputs": [
         {
@@ -3695,7 +3400,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 71,
+      "order": 67,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3718,14 +3423,14 @@
       "type": "Reroute",
       "pos": [
         410,
-        -220
+        -490
       ],
       "size": [
         75,
         26
       ],
       "flags": {},
-      "order": 139,
+      "order": 154,
       "mode": 0,
       "inputs": [
         {
@@ -3757,7 +3462,7 @@
       "type": "SetNode",
       "pos": [
         380,
-        -170
+        -440
       ],
       "size": [
         210,
@@ -3766,7 +3471,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 147,
+      "order": 164,
       "mode": 0,
       "inputs": [
         {
@@ -3791,85 +3496,18 @@
       ]
     },
     {
-      "id": 174,
-      "type": "Power Lora Loader (rgthree)",
-      "pos": [
-        790,
-        -320
-      ],
-      "size": [
-        560,
-        142
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 116,
-      "mode": 0,
-      "inputs": [
-        {
-          "dir": 3,
-          "name": "model",
-          "shape": 7,
-          "type": "MODEL",
-          "link": 3624
-        },
-        {
-          "dir": 3,
-          "name": "clip",
-          "shape": 7,
-          "type": "CLIP",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "dir": 4,
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            5444
-          ]
-        },
-        {
-          "dir": 4,
-          "name": "CLIP",
-          "type": "CLIP",
-          "links": null
-        }
-      ],
-      "title": "1LORA HIGH",
-      "properties": {
-        "cnr_id": "rgthree-comfy",
-        "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
-        "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy",
-        "Node name for S&R": "Power Lora Loader (rgthree)"
-      },
-      "widgets_values": [
-        {},
-        {
-          "type": "PowerLoraLoaderHeaderWidget"
-        },
-        {},
-        ""
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
       "id": 1612,
       "type": "Reroute",
       "pos": [
         -240,
-        710
+        440
       ],
       "size": [
         75,
         26
       ],
       "flags": {},
-      "order": 145,
+      "order": 162,
       "mode": 0,
       "inputs": [
         {
@@ -3893,93 +3531,11 @@
       }
     },
     {
-      "id": 1588,
-      "type": "SetNode",
-      "pos": [
-        360,
-        770
-      ],
-      "size": [
-        210,
-        34
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 160,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "*",
-          "type": "*",
-          "link": 5477
-        }
-      ],
-      "outputs": [
-        {
-          "name": "*",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Set_prompt_4",
-      "properties": {
-        "previousName": ""
-      },
-      "widgets_values": [
-        "prompt_4"
-      ]
-    },
-    {
-      "id": 1591,
-      "type": "easy showAnything",
-      "pos": [
-        230,
-        650
-      ],
-      "size": [
-        459.8748812020626,
-        250.25880961376356
-      ],
-      "flags": {},
-      "order": 156,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "shape": 7,
-          "type": "*",
-          "link": 5490
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": [
-            5477
-          ]
-        }
-      ],
-      "title": "Prompt 4",
-      "properties": {
-        "cnr_id": "comfyui-easy-use",
-        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
-        "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
-      },
-      "widgets_values": [
-        "(At 0 seconds: Boy leans back slightly as both girls alternate oral stimulation — one’s tongue flicks the tip while the other grips base with lips, saliva glistening in warm ambient light; camera drifts subtly right to capture side profile of all three. Flickering carnival lights reflect off wet skin and glossy hair.)  \n(At 1 seconds: Maroon-haired girl shifts position, her long braided hair swinging as she rises on tiptoes — lace dress strains over exposed thigh and sideboob; white-haired girl maintains oral contact with eyes half-lidded. Twilight fades deeper into indigo sky behind them, park lights now bright halos against darkening trees.)  \n(At 2 seconds: Quick cut to boy’s face mid-oral release — tongue flicks precum droplet onto white-haired girl’s chin; she catches it with lips before licking off. Both girls smile smugly at viewer as camera pans slightly left, revealing roller coaster tracks glinting under dusk. Shadows stretch long and dramatic across foreground.)  \n(At 3 seconds: Final shot — all three freeze mid-action, mouths still around shafts, eyes locked on lens; maroon-haired girl raises hand to brush hair from face while white-haired girl tilts head back with grin. Twilight dissolves into near-darkness as park lights flicker out one by one, leaving only ambient glow and silhouettes of amusement rides behind them.)  \n(At 4 seconds: Fade-out transition — scene darkens completely; final frame holds silhouette of three figures against fading carnival lights before cutting to black.)  \n(At 5 seconds: Black screen with soft fade-in text “END SCENE” in glowing neon font, lingering for one second then dissolving into static.)"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
       "id": 1587,
       "type": "SetNode",
       "pos": [
         400,
-        410
+        140
       ],
       "size": [
         210,
@@ -3988,7 +3544,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 159,
+      "order": 177,
       "mode": 0,
       "inputs": [
         {
@@ -4013,55 +3569,11 @@
       ]
     },
     {
-      "id": 1590,
-      "type": "easy showAnything",
-      "pos": [
-        240,
-        330
-      ],
-      "size": [
-        440,
-        250
-      ],
-      "flags": {},
-      "order": 155,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "shape": 7,
-          "type": "*",
-          "link": 5489
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": [
-            5476
-          ]
-        }
-      ],
-      "title": "Prompt 3",
-      "properties": {
-        "cnr_id": "comfyui-easy-use",
-        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
-        "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
-      },
-      "widgets_values": [
-        "(At 0 seconds: Slow-motion tonguejob begins — the white-haired girl’s tongue wraps around the boy’s erect shaft while the maroon-haired girl watches with smirk, her lace dress slightly lifted by motion; soft focus on foreground, background rides blurred under twilight glow. Sidelighting casts sharp shadows across their bodies, accentuating curves and skin texture.)  \n(At 1 seconds: Boy leans back slightly as both girls alternate oral stimulation — one’s tongue flicks the tip while the other grips base with lips, saliva glistening in warm ambient light; camera drifts subtly right to capture side profile of all three. Flickering carnival lights reflect off wet skin and glossy hair.)  \n(At 2 seconds: Maroon-haired girl shifts position, her long braided hair swinging as she rises on tiptoes — lace dress strains over exposed thigh and sideboob; white-haired girl maintains oral contact with eyes half-lidded. Twilight fades deeper into indigo sky behind them, park lights now bright halos against darkening trees.)  \n(At 3 seconds: Quick cut to boy’s face mid-oral release — tongue flicks precum droplet onto white-haired girl’s chin; she catches it with lips before licking off. Both girls smile smugly at viewer as camera pans slightly left, revealing roller coaster tracks glinting under dusk. Shadows stretch long and dramatic across foreground.)  \n(At 4 seconds: Final shot — all three freeze mid-action, mouths still around shafts, eyes locked on lens; maroon-haired girl raises hand to brush hair from face while white-haired girl tilts head back with grin. Twilight dissolves into near-darkness as park lights flicker out one by one, leaving only ambient glow and silhouettes of amusement rides behind them.)  \n(At 5 seconds: Fade-out transition — scene darkens completely; final frame holds silhouette of three figures against fading carnival lights before cutting to black.)"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
       "id": 1586,
       "type": "SetNode",
       "pos": [
         410,
-        190
+        -80
       ],
       "size": [
         210,
@@ -4070,7 +3582,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 158,
+      "order": 176,
       "mode": 0,
       "inputs": [
         {
@@ -4095,94 +3607,6 @@
       ]
     },
     {
-      "id": 1589,
-      "type": "easy showAnything",
-      "pos": [
-        250,
-        10
-      ],
-      "size": [
-        430,
-        250
-      ],
-      "flags": {},
-      "order": 154,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "shape": 7,
-          "type": "*",
-          "link": 5488
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": [
-            5475
-          ]
-        }
-      ],
-      "title": "Prompt 2",
-      "properties": {
-        "cnr_id": "comfyui-easy-use",
-        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
-        "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
-      },
-      "widgets_values": [
-        "(At 0 seconds: A twilight amusement park bathed in golden sidelighting, shadows creeping over roller coasters and glowing rides; from a side angle, three figures — two girls and one boy — are framed looking directly at viewer with naughty grins. One girl has white hair in a rattail cut and aqua eyes, topless with petite frame and large breasts; the other wears a lace maroon dress, her absurdly long braided hair cascading down as she leans forward slightly to expose sideboob, grey eyes locked on camera. The boy stands between them, penis visible, precum string glistening in low light.)  \n(At 1 seconds: Slow-motion tonguejob begins — the white-haired girl’s tongue wraps around the boy’s erect shaft while the maroon-haired girl watches with smirk, her lace dress slightly lifted by motion; soft focus on foreground, background rides blurred under twilight glow. Sidelighting casts sharp shadows across their bodies, accentuating curves and skin texture.)  \n(At 2 seconds: Boy leans back slightly as both girls alternate oral stimulation — one’s tongue flicks the tip while the other grips base with lips, saliva glistening in warm ambient light; camera drifts subtly right to capture side profile of all three. Flickering carnival lights reflect off wet skin and glossy hair.)  \n(At 3 seconds: Maroon-haired girl shifts position, her long braided hair swinging as she rises on tiptoes — lace dress strains over exposed thigh and sideboob; white-haired girl maintains oral contact with eyes half-lidded. Twilight fades deeper into indigo sky behind them, park lights now bright halos against darkening trees.)  \n(At 4 seconds: Quick cut to boy’s face mid-oral release — tongue flicks precum droplet onto white-haired girl’s chin; she catches it with lips before licking off. Both girls smile smugly at viewer as camera pans slightly left, revealing roller coaster tracks glinting under dusk. Shadows stretch long and dramatic across foreground.)  \n(At 5 seconds: Final shot — all three freeze mid-action, mouths still around shafts, eyes locked on lens; maroon-haired girl raises hand to brush hair from face while white-haired girl tilts head back with grin. Twilight dissolves into near-darkness as park lights flicker out one by one, leaving only ambient glow and silhouettes of amusement rides behind them.)"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 1593,
-      "type": "easy showAnything",
-      "pos": [
-        260,
-        -300
-      ],
-      "size": [
-        420,
-        240
-      ],
-      "flags": {},
-      "order": 130,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "shape": 7,
-          "type": "*",
-          "link": 5481
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": [
-            5494
-          ]
-        }
-      ],
-      "title": "Prompt 1",
-      "properties": {
-        "cnr_id": "comfyui-easy-use",
-        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
-        "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
-      },
-      "widgets_values": [
-        "(At 0 seconds: A twilight amusement park bathed in golden sidelighting, shadows creeping over roller coasters and glowing rides; from a side angle, three figures — two girls and one boy — are framed looking directly at viewer with naughty grins. One girl has white hair in a rattail cut and aqua eyes, topless with petite frame and large breasts; the other wears a lace maroon dress, her absurdly long braided hair cascading down as she leans forward slightly to expose sideboob, grey eyes locked on camera. The boy stands between them, penis visible, precum string glistening in low light.)  \n(At 1 seconds: Slow-motion tonguejob begins — the white-haired girl’s tongue wraps around the boy’s erect shaft while the maroon-haired girl watches with smirk, her lace dress slightly lifted by motion; soft focus on foreground, background rides blurred under twilight glow. Sidelighting casts sharp shadows across their bodies, accentuating curves and skin texture.)  \n(At 2 seconds: Boy leans back slightly as both girls alternate oral stimulation — one’s tongue flicks the tip while the other grips base with lips, saliva glistening in warm ambient light; camera drifts subtly right to capture side profile of all three. Flickering carnival lights reflect off wet skin and glossy hair.)  \n(At 3 seconds: Maroon-haired girl shifts position, her long braided hair swinging as she rises on tiptoes — lace dress strains over exposed thigh and sideboob; white-haired girl maintains oral contact with eyes half-lidded. Twilight fades deeper into indigo sky behind them, park lights now bright halos against darkening trees.)  \n(At 4 seconds: Quick cut to boy’s face mid-oral release — tongue flicks precum droplet onto white-haired girl’s chin; she catches it with lips before licking off. Both girls smile smugly at viewer as camera pans slightly left, revealing roller coaster tracks glinting under dusk. Shadows stretch long and dramatic across foreground.)  \n(At 5 seconds: Final shot — all three freeze mid-action, mouths still around shafts, eyes locked on lens; maroon-haired girl raises hand to brush hair from face while white-haired girl tilts head back with grin. Twilight dissolves into near-darkness as park lights flicker out one by one, leaving only ambient glow and silhouettes of amusement rides behind them.)"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
       "id": 1529,
       "type": "MarkdownNote",
       "pos": [
@@ -4194,7 +3618,7 @@
         420
       ],
       "flags": {},
-      "order": 72,
+      "order": 68,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -4205,30 +3629,6 @@
       ],
       "color": "#233",
       "bgcolor": "#355"
-    },
-    {
-      "id": 1575,
-      "type": "MarkdownNote",
-      "pos": [
-        -1880,
-        1460
-      ],
-      "size": [
-        450.75994318181824,
-        196.61221590909076
-      ],
-      "flags": {},
-      "order": 73,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "🎨 Visual Style Detection",
-      "properties": {},
-      "widgets_values": [
-        "**Enhanced Style Detection: Comprehensive support for artistic styles:**\n\n- Anime style\n\n- 3D cartoon\n\n- Pixel art\n\n- Puppet animation\n\n- 3D game style\n\n- Claymation\n\n- Watercolor\n\n- Black and white animation\n\n- Oil painting style\n\n- Felt style\n\n- Tilt-shift photography\n\n- Time-lapse photography\n\n"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
     },
     {
       "id": 1466,
@@ -4242,7 +3642,7 @@
         294.09891860027403
       ],
       "flags": {},
-      "order": 74,
+      "order": 69,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -4266,7 +3666,7 @@
         1680
       ],
       "flags": {},
-      "order": 75,
+      "order": 70,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -4277,81 +3677,6 @@
       ],
       "color": "#233",
       "bgcolor": "#355"
-    },
-    {
-      "id": 1544,
-      "type": "SetNode",
-      "pos": [
-        -1279.5385718435175,
-        502.422640773804
-      ],
-      "size": [
-        210,
-        34
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 133,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "link": 5410
-        }
-      ],
-      "outputs": [
-        {
-          "name": "*",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Set_colormatch",
-      "properties": {
-        "previousName": ""
-      },
-      "widgets_values": [
-        "colormatch"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 923,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -930,
-        700
-      ],
-      "size": [
-        340,
-        120
-      ],
-      "flags": {},
-      "order": 76,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Video Lenght",
-      "properties": {
-        "matchColors": "",
-        "matchTitle": "VIDEO",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
     },
     {
       "id": 647,
@@ -4367,7 +3692,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 120,
+      "order": 133,
       "mode": 0,
       "inputs": [
         {
@@ -4407,7 +3732,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 119,
+      "order": 143,
       "mode": 0,
       "inputs": [
         {
@@ -4434,51 +3759,6 @@
       "bgcolor": "#29699c"
     },
     {
-      "id": 1283,
-      "type": "mxSlider",
-      "pos": [
-        -890,
-        -140
-      ],
-      "size": [
-        300,
-        30
-      ],
-      "flags": {},
-      "order": 77,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "",
-          "type": "INT",
-          "links": [
-            4979
-          ]
-        }
-      ],
-      "title": "Steps",
-      "properties": {
-        "cnr_id": "comfyui-mxtoolkit",
-        "ver": "7f7a0e584f12078a1c589645d866ae96bad0cc35",
-        "Node name for S&R": "mxSlider",
-        "value": 6,
-        "min": 0,
-        "max": 20,
-        "step": 1,
-        "decimals": 0,
-        "snap": true,
-        "aux_id": "Smirnov75/ComfyUI-mxToolkit"
-      },
-      "widgets_values": [
-        6,
-        6,
-        0
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
       "id": 1282,
       "type": "mxSlider",
       "pos": [
@@ -4490,7 +3770,7 @@
         30
       ],
       "flags": {},
-      "order": 78,
+      "order": 71,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4533,10 +3813,10 @@
       ],
       "size": [
         537.6962890624998,
-        334
+        1245.3402343749997
       ],
       "flags": {},
-      "order": 101,
+      "order": 116,
       "mode": 0,
       "inputs": [
         {
@@ -4592,13 +3872,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22_28_07-14-49_00002.mp4",
+            "filename": "wan22_04_03-26-05_00002.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 16,
-            "workflow": "wan22_28_07-14-49_00002.png",
-            "fullpath": "/ComfyUI/output/wan22_28_07-14-49_00002.mp4"
+            "workflow": "wan22_04_03-26-05_00002.png",
+            "fullpath": "/ComfyUI/output/wan22_04_03-26-05_00002.mp4"
           }
         }
       }
@@ -4615,7 +3895,7 @@
         142
       ],
       "flags": {},
-      "order": 110,
+      "order": 125,
       "mode": 0,
       "inputs": [
         {
@@ -4680,7 +3960,7 @@
         150
       ],
       "flags": {},
-      "order": 111,
+      "order": 126,
       "mode": 0,
       "inputs": [
         {
@@ -4747,7 +4027,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 79,
+      "order": 72,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4781,7 +4061,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 80,
+      "order": 73,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4815,7 +4095,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 81,
+      "order": 74,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4849,7 +4129,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 82,
+      "order": 75,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4883,7 +4163,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 83,
+      "order": 76,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4915,7 +4195,7 @@
         82
       ],
       "flags": {},
-      "order": 84,
+      "order": 77,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4941,85 +4221,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 1547,
-      "type": "VHS_VideoCombine",
-      "pos": [
-        -1338.4761378588717,
-        408.0025102012687
-      ],
-      "size": [
-        340,
-        334
-      ],
-      "flags": {},
-      "order": 134,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 5413
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": null
-        },
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "Filenames",
-          "type": "VHS_FILENAMES",
-          "links": []
-        }
-      ],
-      "title": "Final Video",
-      "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "993082e4f2473bf4acaf06f51e33877a7eb38960",
-        "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
-      },
-      "widgets_values": {
-        "frame_rate": 16,
-        "loop_count": 0,
-        "filename_prefix": "wan22_%date:dd_hh-mm-ss%",
-        "format": "video/h264-mp4",
-        "pix_fmt": "yuv420p",
-        "crf": 19,
-        "save_metadata": true,
-        "trim_to_audio": false,
-        "pingpong": false,
-        "save_output": true,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "wan22_28_07-14-49_00001.mp4",
-            "subfolder": "",
-            "type": "output",
-            "format": "video/h264-mp4",
-            "frame_rate": 16,
-            "workflow": "wan22_28_07-14-49_00001.png",
-            "fullpath": "/ComfyUI/output/wan22_28_07-14-49_00001.mp4"
-          }
-        }
-      }
-    },
-    {
       "id": 1531,
       "type": "ImageUpscaleWithModel",
       "pos": [
@@ -5033,7 +4234,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 123,
+      "order": 136,
       "mode": 4,
       "inputs": [
         {
@@ -5079,7 +4280,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 132,
+      "order": 149,
       "mode": 4,
       "inputs": [
         {
@@ -5128,7 +4329,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 85,
+      "order": 78,
       "mode": 4,
       "inputs": [
         {
@@ -5172,7 +4373,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 102,
+      "order": 117,
       "mode": 4,
       "inputs": [
         {
@@ -5211,7 +4412,7 @@
         334
       ],
       "flags": {},
-      "order": 142,
+      "order": 159,
       "mode": 4,
       "inputs": [
         {
@@ -5299,7 +4500,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 137,
+      "order": 152,
       "mode": 4,
       "inputs": [
         {
@@ -5348,7 +4549,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 86,
+      "order": 79,
       "mode": 4,
       "inputs": [
         {
@@ -5392,7 +4593,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 87,
+      "order": 80,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -5426,7 +4627,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 122,
+      "order": 135,
       "mode": 4,
       "inputs": [
         {
@@ -5465,7 +4666,7 @@
         334
       ],
       "flags": {},
-      "order": 146,
+      "order": 163,
       "mode": 4,
       "inputs": [
         {
@@ -5551,7 +4752,7 @@
         60
       ],
       "flags": {},
-      "order": 88,
+      "order": 81,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -5588,7 +4789,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 138,
+      "order": 153,
       "mode": 4,
       "inputs": [
         {
@@ -5628,7 +4829,7 @@
         76
       ],
       "flags": {},
-      "order": 121,
+      "order": 134,
       "mode": 0,
       "inputs": [
         {
@@ -5666,229 +4867,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 1438,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -930.2288441741292,
-        890.4493409379908
-      ],
-      "size": [
-        340,
-        130
-      ],
-      "flags": {},
-      "order": 89,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Upscale and Interpolation",
-      "properties": {
-        "matchColors": "red",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "alphanumeric",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#322",
-      "bgcolor": "#533"
-    },
-    {
-      "id": 1252,
-      "type": "2643c0a2-4f8c-4b66-9bba-7305a874c2db",
-      "pos": [
-        796.3424639215896,
-        166.34229716892713
-      ],
-      "size": [
-        579.2439364039712,
-        758.4915990885632
-      ],
-      "flags": {},
-      "order": 135,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "model_h",
-          "name": "model",
-          "type": "MODEL",
-          "link": 5444
-        },
-        {
-          "label": "model_l",
-          "name": "model_1",
-          "type": "MODEL",
-          "link": 5445
-        },
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 4838
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 4993
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 4841
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 4842
-        },
-        {
-          "name": "length",
-          "type": "INT",
-          "widget": {
-            "name": "length"
-          },
-          "link": 4843
-        },
-        {
-          "name": "steps",
-          "type": "INT",
-          "widget": {
-            "name": "steps"
-          },
-          "link": 4980
-        },
-        {
-          "name": "sampler_name",
-          "type": "COMBO",
-          "widget": {
-            "name": "sampler_name"
-          },
-          "link": 5328
-        },
-        {
-          "name": "scheduler",
-          "type": "COMBO",
-          "widget": {
-            "name": "scheduler"
-          },
-          "link": 5329
-        },
-        {
-          "name": "sigma_shift",
-          "type": "FLOAT",
-          "widget": {
-            "name": "sigma_shift"
-          },
-          "link": 5416
-        },
-        {
-          "label": "prompt",
-          "name": "string_b",
-          "type": "STRING",
-          "link": 5504
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            5501
-          ]
-        },
-        {
-          "label": "Reference",
-          "name": "IMAGE_1",
-          "type": "IMAGE",
-          "links": [
-            5437,
-            5496
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "-1",
-            "steps"
-          ],
-          [
-            "-1",
-            "sampler_name"
-          ],
-          [
-            "-1",
-            "scheduler"
-          ],
-          [
-            "-1",
-            "sigma_shift"
-          ],
-          [
-            "-1",
-            "width"
-          ],
-          [
-            "-1",
-            "height"
-          ],
-          [
-            "-1",
-            "length"
-          ],
-          [
-            "1309",
-            "value"
-          ],
-          [
-            "1257",
-            "text"
-          ],
-          [
-            "1250",
-            "seed"
-          ],
-          [
-            "1250",
-            "🎲 Randomize Each Time"
-          ],
-          [
-            "1250",
-            "🎲 New Fixed Random"
-          ],
-          [
-            "1636",
-            "cleanup_mode"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.7.0"
-      },
-      "widgets_values": [
-        5,
-        "euler",
-        "simple",
-        8,
-        "simple",
-        2,
-        5
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 1570,
       "type": "UnetLoaderGGUF",
       "pos": [
@@ -5900,7 +4878,7 @@
         58
       ],
       "flags": {},
-      "order": 90,
+      "order": 82,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -5935,7 +4913,7 @@
         60
       ],
       "flags": {},
-      "order": 91,
+      "order": 83,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -5970,7 +4948,7 @@
         60
       ],
       "flags": {},
-      "order": 92,
+      "order": 84,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -6005,7 +4983,7 @@
         58
       ],
       "flags": {},
-      "order": 93,
+      "order": 85,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -6042,7 +5020,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 124,
+      "order": 141,
       "mode": 0,
       "inputs": [
         {
@@ -6082,7 +5060,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 125,
+      "order": 142,
       "mode": 0,
       "inputs": [
         {
@@ -6122,7 +5100,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 126,
+      "order": 137,
       "mode": 0,
       "inputs": [
         {
@@ -6162,7 +5140,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 127,
+      "order": 138,
       "mode": 0,
       "inputs": [
         {
@@ -6189,110 +5167,6 @@
       "bgcolor": "#335"
     },
     {
-      "id": 917,
-      "type": "UNETLoader",
-      "pos": [
-        -1370,
-        -1120
-      ],
-      "size": [
-        410,
-        82
-      ],
-      "flags": {},
-      "order": 94,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            5633
-          ]
-        }
-      ],
-      "title": "T2V High",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.45",
-        "Node name for S&R": "UNETLoader",
-        "models": [
-          {
-            "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
-            "directory": "diffusion_models"
-          }
-        ],
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {
-            "unet_name": true,
-            "weight_dtype": true
-          }
-        }
-      },
-      "widgets_values": [
-        "wan22RemixT2VI2V_t2vHighV20.safetensors",
-        "default"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 918,
-      "type": "UNETLoader",
-      "pos": [
-        -1370,
-        -990
-      ],
-      "size": [
-        410,
-        82
-      ],
-      "flags": {},
-      "order": 95,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            5634
-          ]
-        }
-      ],
-      "title": "T2V Low",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.45",
-        "Node name for S&R": "UNETLoader",
-        "models": [
-          {
-            "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
-            "directory": "diffusion_models"
-          }
-        ],
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {
-            "unet_name": true,
-            "weight_dtype": true
-          }
-        }
-      },
-      "widgets_values": [
-        "wan22RemixT2VI2V_t2vLowV20.safetensors",
-        "default"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
       "id": 1572,
       "type": "UNETLoader",
       "pos": [
@@ -6304,7 +5178,7 @@
         82
       ],
       "flags": {},
-      "order": 96,
+      "order": 86,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6356,7 +5230,7 @@
         82
       ],
       "flags": {},
-      "order": 97,
+      "order": 87,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6408,7 +5282,7 @@
         280
       ],
       "flags": {},
-      "order": 98,
+      "order": 88,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -6456,219 +5330,1059 @@
       "bgcolor": "#355"
     },
     {
-      "id": 1262,
-      "type": "322b39f0-a204-4d81-8926-eeb0309f1efc",
+      "id": 1439,
+      "type": "Fast Groups Bypasser (rgthree)",
       "pos": [
-        1420,
-        160
+        -1310,
+        520
       ],
       "size": [
-        531.5195726782537,
-        771.9293800781252
+        335.8322292454874,
+        58
       ],
       "flags": {},
-      "order": 143,
+      "order": 89,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Qwen3",
+      "properties": {
+        "matchColors": "",
+        "matchTitle": "QWEN",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 1569,
+      "type": "GetNode",
+      "pos": [
+        -875.5927503929765,
+        554.6983485906713
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 90,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5441
+          ]
+        }
+      ],
+      "title": "Get_refimage",
+      "properties": {},
+      "widgets_values": [
+        "refimage"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1544,
+      "type": "SetNode",
+      "pos": [
+        -873.4913232722679,
+        619.15070328494
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 155,
       "mode": 0,
       "inputs": [
         {
-          "name": "image_1",
+          "name": "IMAGE",
           "type": "IMAGE",
-          "link": 5501
-        },
-        {
-          "label": "model_h",
-          "name": "model",
-          "type": "MODEL",
-          "link": 4879
-        },
-        {
-          "label": "model_l",
-          "name": "model_1",
-          "type": "MODEL",
-          "link": 4880
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 4881
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 4883
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 4884
-        },
-        {
-          "name": "length",
-          "type": "INT",
-          "widget": {
-            "name": "length"
-          },
-          "link": 4885
-        },
-        {
-          "name": "motion_frames",
-          "type": "INT",
-          "widget": {
-            "name": "motion_frames"
-          },
-          "link": 4886
-        },
-        {
-          "name": "motion_amplitude",
-          "type": "FLOAT",
-          "widget": {
-            "name": "motion_amplitude"
-          },
-          "link": 4887
-        },
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 4888
-        },
-        {
-          "name": "steps",
-          "type": "INT",
-          "widget": {
-            "name": "steps"
-          },
-          "link": 4999
-        },
-        {
-          "name": "sampler_name",
-          "type": "COMBO",
-          "widget": {
-            "name": "sampler_name"
-          },
-          "link": 5330
-        },
-        {
-          "name": "scheduler",
-          "type": "COMBO",
-          "widget": {
-            "name": "scheduler"
-          },
-          "link": 5331
-        },
-        {
-          "name": "sigma_shift",
-          "type": "FLOAT",
-          "widget": {
-            "name": "sigma_shift"
-          },
-          "link": 5417
-        },
-        {
-          "name": "initial_reference_image",
-          "type": "IMAGE",
-          "link": 5438
-        },
-        {
-          "label": "prompt",
-          "name": "string_b",
-          "type": "STRING",
-          "link": 5483
+          "link": 5410
         }
       ],
       "outputs": [
         {
-          "name": "images",
-          "type": "IMAGE",
-          "links": [
-            5609
-          ]
+          "name": "*",
+          "type": "*",
+          "links": null
         }
       ],
+      "title": "Set_colormatch",
       "properties": {
-        "proxyWidgets": [
-          [
-            "-1",
-            "width"
-          ],
-          [
-            "-1",
-            "height"
-          ],
-          [
-            "-1",
-            "length"
-          ],
-          [
-            "-1",
-            "motion_frames"
-          ],
-          [
-            "-1",
-            "motion_amplitude"
-          ],
-          [
-            "-1",
-            "steps"
-          ],
-          [
-            "-1",
-            "sampler_name"
-          ],
-          [
-            "-1",
-            "scheduler"
-          ],
-          [
-            "-1",
-            "sigma_shift"
-          ],
-          [
-            "1289",
-            "value"
-          ],
-          [
-            "1269",
-            "text"
-          ],
-          [
-            "308",
-            "seed"
-          ],
-          [
-            "308",
-            "🎲 Randomize Each Time"
-          ],
-          [
-            "308",
-            "🎲 New Fixed Random"
-          ],
-          [
-            "1637",
-            "cleanup_mode"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.7.0"
+        "previousName": ""
       },
       "widgets_values": [
-        5,
-        2,
-        "euler",
-        "simple",
-        1.15,
-        5,
-        "euler",
-        "simple",
-        8
+        "colormatch"
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
+    },
+    {
+      "id": 923,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -1310,
+        630
+      ],
+      "size": [
+        340,
+        130
+      ],
+      "flags": {},
+      "order": 91,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Video Lenght",
+      "properties": {
+        "matchColors": "",
+        "matchTitle": "VIDEO",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1438,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -1310,
+        800
+      ],
+      "size": [
+        340,
+        130
+      ],
+      "flags": {},
+      "order": 92,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Upscale and Interpolation",
+      "properties": {
+        "matchColors": "red",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "alphanumeric",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 1437,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -1310,
+        990
+      ],
+      "size": [
+        340,
+        106
+      ],
+      "flags": {},
+      "order": 93,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "MMAUDIO",
+      "properties": {
+        "matchColors": "yellow",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 917,
+      "type": "UNETLoader",
+      "pos": [
+        -1370,
+        -1120
+      ],
+      "size": [
+        410,
+        82
+      ],
+      "flags": {},
+      "order": 94,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            5633
+          ]
+        }
+      ],
+      "title": "T2V High",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ],
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {
+            "unet_name": true,
+            "weight_dtype": true
+          }
+        }
+      },
+      "widgets_values": [
+        "smoothMixWan2214BI2V_t2vHighV20.safetensors",
+        "default"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 918,
+      "type": "UNETLoader",
+      "pos": [
+        -1370,
+        -990
+      ],
+      "size": [
+        410,
+        82
+      ],
+      "flags": {},
+      "order": 95,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            5634
+          ]
+        }
+      ],
+      "title": "T2V Low",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors",
+            "directory": "diffusion_models"
+          }
+        ],
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {
+            "unet_name": true,
+            "weight_dtype": true
+          }
+        }
+      },
+      "widgets_values": [
+        "smoothMixWan2214BI2V_t2vLowV20.safetensors",
+        "default"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1283,
+      "type": "mxSlider",
+      "pos": [
+        -890,
+        -140
+      ],
+      "size": [
+        300,
+        30
+      ],
+      "flags": {},
+      "order": 96,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "INT",
+          "links": [
+            4979
+          ]
+        }
+      ],
+      "title": "Steps",
+      "properties": {
+        "cnr_id": "comfyui-mxtoolkit",
+        "ver": "7f7a0e584f12078a1c589645d866ae96bad0cc35",
+        "Node name for S&R": "mxSlider",
+        "value": 5,
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "decimals": 0,
+        "snap": true,
+        "aux_id": "Smirnov75/ComfyUI-mxToolkit"
+      },
+      "widgets_values": [
+        5,
+        5,
+        0
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 1575,
+      "type": "MarkdownNote",
+      "pos": [
+        -1880,
+        1460
+      ],
+      "size": [
+        460,
+        200
+      ],
+      "flags": {},
+      "order": 97,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🎨 Visual Style Detection",
+      "properties": {},
+      "widgets_values": [
+        "**Enhanced Style Detection: Comprehensive support for artistic styles:**\n\n- Anime style\n\n- 3D cartoon\n\n- Pixel art\n\n- Puppet animation\n\n- 3D game style\n\n- Claymation\n\n- Watercolor\n\n- Black and white animation\n\n- Oil painting style\n\n- Felt style\n\n- Tilt-shift photography\n\n- Time-lapse photography\n\n"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1654,
+      "type": "GetNode",
+      "pos": [
+        3278.3967404143405,
+        563.5593070593533
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 98,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            5644
+          ]
+        }
+      ],
+      "title": "Get_HEIGHT",
+      "properties": {},
+      "widgets_values": [
+        "HEIGHT"
+      ],
+      "color": "#1b4669",
+      "bgcolor": "#29699c"
+    },
+    {
+      "id": 1655,
+      "type": "GetNode",
+      "pos": [
+        3278.3967404143405,
+        513.559307059353
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 99,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            5643
+          ]
+        }
+      ],
+      "title": "Get_WIDTH",
+      "properties": {},
+      "widgets_values": [
+        "WIDTH"
+      ],
+      "color": "#1b4669",
+      "bgcolor": "#29699c"
+    },
+    {
+      "id": 1656,
+      "type": "GetNode",
+      "pos": [
+        3258.3967404143395,
+        243.55930705935003
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 100,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            5648
+          ]
+        }
+      ],
+      "title": "Get_CLIP",
+      "properties": {},
+      "widgets_values": [
+        "CLIP"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 1657,
+      "type": "GetNode",
+      "pos": [
+        3258.3967404143395,
+        303.5593070593511
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 101,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            5642
+          ]
+        }
+      ],
+      "title": "Get_VAE",
+      "properties": {},
+      "widgets_values": [
+        "VAE"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 1658,
+      "type": "GetNode",
+      "pos": [
+        3258.3967404143395,
+        353.559307059351
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 102,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            5646
+          ]
+        }
+      ],
+      "title": "Get_MOTION FRAME",
+      "properties": {},
+      "widgets_values": [
+        "MOTION FRAME"
+      ],
+      "color": "#1b4669",
+      "bgcolor": "#29699c"
+    },
+    {
+      "id": 1659,
+      "type": "GetNode",
+      "pos": [
+        3568.3967404143395,
+        463.559307059352
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 103,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            5645
+          ]
+        }
+      ],
+      "title": "Get_LENGHT",
+      "properties": {},
+      "widgets_values": [
+        "LENGHT"
+      ],
+      "color": "#1b4669",
+      "bgcolor": "#29699c"
+    },
+    {
+      "id": 1661,
+      "type": "GetNode",
+      "pos": [
+        3518.3967404143395,
+        283.559307059351
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 104,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "COMBO",
+          "type": "COMBO",
+          "links": [
+            5650
+          ]
+        }
+      ],
+      "title": "Get_sam",
+      "properties": {},
+      "widgets_values": [
+        "sam"
+      ]
+    },
+    {
+      "id": 1662,
+      "type": "GetNode",
+      "pos": [
+        3428.3967404143386,
+        413.5593070593512
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 105,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "COMBO",
+          "type": "COMBO",
+          "links": [
+            5651
+          ]
+        }
+      ],
+      "title": "Get_scheduler",
+      "properties": {},
+      "widgets_values": [
+        "scheduler"
+      ]
+    },
+    {
+      "id": 1663,
+      "type": "GetNode",
+      "pos": [
+        3418.3967404143386,
+        273.5593070593509
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 106,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            5652
+          ]
+        }
+      ],
+      "title": "Get_sigmashift",
+      "properties": {},
+      "widgets_values": [
+        "sigmashift"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1664,
+      "type": "GetNode",
+      "pos": [
+        3408.3967404143386,
+        -326.44069294065025
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 107,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            5638
+          ]
+        }
+      ],
+      "title": "Get_modelI2VHIGH",
+      "properties": {},
+      "widgets_values": [
+        "modelI2VHIGH"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 1665,
+      "type": "GetNode",
+      "pos": [
+        3438.3967404143386,
+        -66.44069294064977
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 108,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            5639
+          ]
+        }
+      ],
+      "title": "Get_modelI2VLOW",
+      "properties": {},
+      "widgets_values": [
+        "modelI2VLOW"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 1666,
+      "type": "GetNode",
+      "pos": [
+        3248.3967404143395,
+        403.5593070593512
+      ],
+      "size": [
+        212.8833984375,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 109,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            5647
+          ]
+        }
+      ],
+      "title": "Get_MOTION AMPTITUDE",
+      "properties": {},
+      "widgets_values": [
+        "MOTION AMPTITUDE"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1667,
+      "type": "GetNode",
+      "pos": [
+        3528.3967404143395,
+        373.559307059351
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 110,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            5649
+          ]
+        }
+      ],
+      "title": "Get_steps",
+      "properties": {},
+      "widgets_values": [
+        "steps"
+      ],
+      "color": "#1b4669",
+      "bgcolor": "#29699c"
+    },
+    {
+      "id": 1669,
+      "type": "GetNode",
+      "pos": [
+        3308.3967404143405,
+        453.5593070593519
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 111,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5653
+          ]
+        }
+      ],
+      "title": "Get_refimage",
+      "properties": {},
+      "widgets_values": [
+        "refimage"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1670,
+      "type": "Power Lora Loader (rgthree)",
+      "pos": [
+        3240,
+        -340
+      ],
+      "size": [
+        520,
+        130
+      ],
+      "flags": {},
+      "order": 144,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "model",
+          "type": "MODEL",
+          "link": 5638
+        },
+        {
+          "dir": 3,
+          "name": "clip",
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "MODEL",
+          "shape": 3,
+          "type": "MODEL",
+          "links": [
+            5640
+          ]
+        },
+        {
+          "dir": 4,
+          "name": "CLIP",
+          "shape": 3,
+          "type": "CLIP",
+          "links": null
+        }
+      ],
+      "title": "5LORA HIGH",
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "8ff50e4521881eca1fe26aec9615fc9362474931",
+        "Show Strengths": "Single Strength"
+      },
+      "widgets_values": [
+        {},
+        {
+          "type": "PowerLoraLoaderHeaderWidget"
+        },
+        {},
+        ""
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 1671,
+      "type": "Power Lora Loader (rgthree)",
+      "pos": [
+        3230.114143721341,
+        -99.67381975459492
+      ],
+      "size": [
+        540,
+        120
+      ],
+      "flags": {},
+      "order": 145,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "model",
+          "type": "MODEL",
+          "link": 5639
+        },
+        {
+          "dir": 3,
+          "name": "clip",
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "MODEL",
+          "shape": 3,
+          "type": "MODEL",
+          "links": [
+            5641
+          ]
+        },
+        {
+          "dir": 4,
+          "name": "CLIP",
+          "shape": 3,
+          "type": "CLIP",
+          "links": null
+        }
+      ],
+      "title": "5LORA LOW",
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "8ff50e4521881eca1fe26aec9615fc9362474931",
+        "Show Strengths": "Single Strength"
+      },
+      "widgets_values": [
+        {},
+        {
+          "type": "PowerLoraLoaderHeaderWidget"
+        },
+        {},
+        ""
+      ],
+      "color": "#332922",
+      "bgcolor": "#593930"
+    },
+    {
+      "id": 1588,
+      "type": "SetNode",
+      "pos": [
+        360,
+        500
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 178,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "link": 5477
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Set_prompt_4",
+      "properties": {
+        "previousName": ""
+      },
+      "widgets_values": [
+        "prompt_4"
+      ]
+    },
+    {
+      "id": 1668,
+      "type": "GetNode",
+      "pos": [
+        3368.3967404143395,
+        203.55930705935
+      ],
+      "size": [
+        210,
+        50
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 112,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": [
+            5654
+          ]
+        }
+      ],
+      "title": "Get_prompt_5",
+      "properties": {},
+      "widgets_values": [
+        "prompt_5"
+      ]
     },
     {
       "id": 1650,
@@ -6682,7 +6396,7 @@
         771.9293800781252
       ],
       "flags": {},
-      "order": 150,
+      "order": 167,
       "mode": 0,
       "inputs": [
         {
@@ -6886,18 +6600,855 @@
       "bgcolor": "#3f5159"
     },
     {
+      "id": 1262,
+      "type": "322b39f0-a204-4d81-8926-eeb0309f1efc",
+      "pos": [
+        1420,
+        160
+      ],
+      "size": [
+        531.5195726782537,
+        771.9293800781252
+      ],
+      "flags": {},
+      "order": 160,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_1",
+          "type": "IMAGE",
+          "link": 5501
+        },
+        {
+          "label": "model_h",
+          "name": "model",
+          "type": "MODEL",
+          "link": 4879
+        },
+        {
+          "label": "model_l",
+          "name": "model_1",
+          "type": "MODEL",
+          "link": 4880
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 4881
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 4883
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 4884
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 4885
+        },
+        {
+          "name": "motion_frames",
+          "type": "INT",
+          "widget": {
+            "name": "motion_frames"
+          },
+          "link": 4886
+        },
+        {
+          "name": "motion_amplitude",
+          "type": "FLOAT",
+          "widget": {
+            "name": "motion_amplitude"
+          },
+          "link": 4887
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 4888
+        },
+        {
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": 4999
+        },
+        {
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": 5330
+        },
+        {
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": 5331
+        },
+        {
+          "name": "sigma_shift",
+          "type": "FLOAT",
+          "widget": {
+            "name": "sigma_shift"
+          },
+          "link": 5417
+        },
+        {
+          "name": "initial_reference_image",
+          "type": "IMAGE",
+          "link": 5438
+        },
+        {
+          "label": "prompt",
+          "name": "string_b",
+          "type": "STRING",
+          "link": 5483
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            5609
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "-1",
+            "width"
+          ],
+          [
+            "-1",
+            "height"
+          ],
+          [
+            "-1",
+            "length"
+          ],
+          [
+            "-1",
+            "motion_frames"
+          ],
+          [
+            "-1",
+            "motion_amplitude"
+          ],
+          [
+            "-1",
+            "steps"
+          ],
+          [
+            "-1",
+            "sampler_name"
+          ],
+          [
+            "-1",
+            "scheduler"
+          ],
+          [
+            "-1",
+            "sigma_shift"
+          ],
+          [
+            "1289",
+            "value"
+          ],
+          [
+            "1269",
+            "text"
+          ],
+          [
+            "308",
+            "seed"
+          ],
+          [
+            "308",
+            "🎲 Randomize Each Time"
+          ],
+          [
+            "308",
+            "🎲 New Fixed Random"
+          ],
+          [
+            "1637",
+            "cleanup_mode"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.7.0"
+      },
+      "widgets_values": [
+        5,
+        2,
+        "euler",
+        "simple",
+        1.15,
+        5,
+        "euler",
+        "simple",
+        8
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1674,
+      "type": "SetNode",
+      "pos": [
+        450,
+        810
+      ],
+      "size": [
+        210,
+        50
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 179,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "link": 5657
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Set_prompt_5",
+      "properties": {
+        "previousName": "prompt_5"
+      },
+      "widgets_values": [
+        "prompt_5"
+      ]
+    },
+    {
+      "id": 1593,
+      "type": "easy showAnything",
+      "pos": [
+        250,
+        -580
+      ],
+      "size": [
+        450,
+        240
+      ],
+      "flags": {},
+      "order": 146,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 5481
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5494
+          ]
+        }
+      ],
+      "title": "Prompt 1",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "SmootMixAnime. erect penis. A blue-haired woman in a revealing lace outfit extends her tongue with sensual intensity, drawing out a long, glistening strand of saliva from the tip of an artificial penis held by another figure; her wide green eyes glow upward with focused pleasure as moisture beads on her skin under warm stone archway lighting, while behind her, a second woman with short purple hair in delicate white lingerie stands poised, curves accentuated by soft lantern shadows flickering across moss-covered medieval brick walls — the scene pulses with intimate tension beneath an unseen breeze that stirs strands of blue hair and textured stone surfaces rendered in vivid anime style with cinematic depth and vibrant color saturation."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1589,
+      "type": "easy showAnything",
+      "pos": [
+        250,
+        -280
+      ],
+      "size": [
+        450,
+        250
+      ],
+      "flags": {},
+      "order": 171,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 5488
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5475
+          ]
+        }
+      ],
+      "title": "Prompt 2",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "A blue-haired woman in a delicate white lace outfit gazes forward with intense green eyes, her tongue extended to draw out glistening saliva from the tip of an artificial penis held by another figure; beads of moisture shimmer across her skin under warm stone archway lighting as strands of her vibrant hair sway slightly beneath an unseen breeze that also stirs textured moss-covered medieval brick walls behind her — a second woman with short purple hair in white lingerie stands poised, curves accentuated by flickering lantern shadows casting soft depth on the ancient architecture; cinematic anime style renders every detail with vivid color saturation and dynamic motion blur as if caught mid-breath of sensual tension."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1590,
+      "type": "easy showAnything",
+      "pos": [
+        250,
+        30
+      ],
+      "size": [
+        450,
+        250
+      ],
+      "flags": {},
+      "order": 172,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 5489
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5476
+          ]
+        }
+      ],
+      "title": "Prompt 3",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "The scene intensifies under golden-hour stone archway illumination where moisture continues to bead along her skin like liquid jewels while her tongue remains taut, pulling a long droplet downward toward an unseen target — the blue-haired woman’s expression shifts subtly from focused pleasure into something more primal and hungry as she leans forward slightly, hair cascading over one shoulder; behind her, the purple-haired companion adjusts position ever so gently, fingertips brushing against draped fabric in delicate white lingerie that catches light unevenly across curves emphasized by shadow play; every surface — stone wall textures, mossy crevices, even individual strands of blue and purple hair — pulses with life under this surreal yet intimate atmosphere."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1591,
+      "type": "easy showAnything",
+      "pos": [
+        250,
+        340
+      ],
+      "size": [
+        450,
+        250
+      ],
+      "flags": {},
+      "order": 173,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 5490
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5477
+          ]
+        }
+      ],
+      "title": "Prompt 4",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "The camera drifts closer to the woman’s face as her gaze locks onto something beyond frame, eyes glowing brighter in their green hue while saliva continues its slow descent like a living thread connecting flesh to fantasy; warmth radiates from every contour beneath warm ambient lighting that highlights translucent lace edges and glistening moisture clinging tightly to skin — behind them, lantern shadows dance across mossy brickwork as if breathing with the unseen wind stirring strands of hair into hypnotic motion; cinematic depth pulls focus sharply on her face while background elements dissolve slightly like dream fragments but remain vividly rendered in anime’s signature vibrant palette."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1673,
+      "type": "easy showAnything",
+      "pos": [
+        250,
+        640
+      ],
+      "size": [
+        450,
+        250
+      ],
+      "flags": {},
+      "order": 174,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 5659
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5657
+          ]
+        }
+      ],
+      "title": "Prompt 5",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "The final moment captures suspended breath: blue-haired woman holds still, eyes half-lidded yet intensely aware as saliva drips slowly toward the ground — no movement except for subtle shifts caused by wind or anticipation; purple-hair companion stands motionless beside her now fully illuminated under lantern glow that casts soft halos around shoulders and hips accentuated against medieval stone textures rendered in crisp anime detail with bold outlines defining every curve and crevice; warmth of scene lingers as if time itself has paused — glistening skin, flickering shadows on brick walls, vibrant colors saturated to maximum intensity all frozen within this 5-second cinematic frame."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1602,
+      "type": "640341fd-e818-44a8-81b9-8efd95560e69",
+      "pos": [
+        -430,
+        360
+      ],
+      "size": [
+        600,
+        520
+      ],
+      "flags": {},
+      "order": 168,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 5497
+        },
+        {
+          "name": "custom_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "custom_prompt"
+          },
+          "link": 5498
+        }
+      ],
+      "outputs": [
+        {
+          "label": "prompt_2",
+          "name": "prompt_1",
+          "type": "STRING",
+          "links": [
+            5488
+          ]
+        },
+        {
+          "label": "prompt_3",
+          "name": "prompt_2",
+          "type": "STRING",
+          "links": [
+            5489
+          ]
+        },
+        {
+          "label": "prompt_4",
+          "name": "prompt_3",
+          "type": "STRING",
+          "links": [
+            5490
+          ]
+        },
+        {
+          "label": "prompt_5",
+          "name": "prompt_4",
+          "type": "STRING",
+          "links": [
+            5659
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "1600",
+            "model_name"
+          ],
+          [
+            "1645",
+            "value"
+          ],
+          [
+            "-1",
+            "custom_prompt"
+          ],
+          [
+            "1600",
+            "preset_prompt"
+          ],
+          [
+            "1600",
+            "control_after_generate"
+          ],
+          [
+            "1600",
+            "seed"
+          ],
+          [
+            "1600",
+            "keep_last_prompt"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.13.0"
+      },
+      "widgets_values": [
+        null,
+        null,
+        ""
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 174,
+      "type": "Power Lora Loader (rgthree)",
+      "pos": [
+        790,
+        -320
+      ],
+      "size": [
+        560,
+        142
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 130,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "model",
+          "shape": 7,
+          "type": "MODEL",
+          "link": 3624
+        },
+        {
+          "dir": 3,
+          "name": "clip",
+          "shape": 7,
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            5444
+          ]
+        },
+        {
+          "dir": 4,
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": null
+        }
+      ],
+      "title": "1LORA HIGH",
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
+        "Show Strengths": "Single Strength",
+        "aux_id": "rgthree/rgthree-comfy",
+        "Node name for S&R": "Power Lora Loader (rgthree)"
+      },
+      "widgets_values": [
+        {},
+        {
+          "type": "PowerLoraLoaderHeaderWidget"
+        },
+        {
+          "on": true,
+          "lora": "SmoothFutanaris_and_Males_High.safetensors",
+          "strength": 0.7,
+          "strengthTwo": null
+        },
+        {},
+        ""
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 175,
+      "type": "Power Lora Loader (rgthree)",
+      "pos": [
+        780,
+        -110
+      ],
+      "size": [
+        560,
+        160
+      ],
+      "flags": {},
+      "order": 129,
+      "mode": 0,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "model",
+          "shape": 7,
+          "type": "MODEL",
+          "link": 3625
+        },
+        {
+          "dir": 3,
+          "name": "clip",
+          "shape": 7,
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            5445
+          ]
+        },
+        {
+          "dir": 4,
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": null
+        }
+      ],
+      "title": "1LORA LOW",
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
+        "Show Strengths": "Single Strength",
+        "aux_id": "rgthree/rgthree-comfy",
+        "Node name for S&R": "Power Lora Loader (rgthree)"
+      },
+      "widgets_values": [
+        {},
+        {
+          "type": "PowerLoraLoaderHeaderWidget"
+        },
+        {
+          "on": true,
+          "lora": "SmoothFutanaris_and_Males_Low.safetensors",
+          "strength": 0.7,
+          "strengthTwo": null
+        },
+        {},
+        ""
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 1594,
+      "type": "ad95ad96-c709-46d7-914a-111313fa2e1b",
+      "pos": [
+        -450,
+        -580
+      ],
+      "size": [
+        610,
+        560
+      ],
+      "flags": {},
+      "order": 113,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "prompt_1",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            5481
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "1585",
+            "model_name"
+          ],
+          [
+            "1618",
+            "value"
+          ],
+          [
+            "1585",
+            "prompt_text"
+          ],
+          [
+            "1585",
+            "preset_system_prompt"
+          ],
+          [
+            "1585",
+            "control_after_generate"
+          ],
+          [
+            "1585",
+            "seed"
+          ],
+          [
+            "1585",
+            "keep_last_prompt"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.13.0"
+      },
+      "widgets_values": [],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1546,
+      "type": "ColorMatch",
+      "pos": [
+        -863.1201245374281,
+        490.3674534914173
+      ],
+      "size": [
+        281.26670703125,
+        127.21141796875008
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 147,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_ref",
+          "type": "IMAGE",
+          "link": 5441
+        },
+        {
+          "name": "image_target",
+          "type": "IMAGE",
+          "link": 5412
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            5410,
+            5413
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "e8b70f28be7fd71ee72c3848cfa09e1a89e3061b",
+        "Node name for S&R": "ColorMatch",
+        "aux_id": "kijai/ComfyUI-KJNodes"
+      },
+      "widgets_values": [
+        "hm-mvgd-hm",
+        0.4,
+        true
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
       "id": 1344,
       "type": "0d6adb7c-3efa-4495-b1c9-b738d651f94a",
       "pos": [
-        2646.9173771641636,
-        171.51141917318347
+        2646.5338206971414,
+        170.23095572011954
       ],
       "size": [
         539.0085273657536,
         767.2634570312503
       ],
       "flags": {},
-      "order": 153,
+      "order": 170,
       "mode": 0,
       "inputs": [
         {
@@ -7016,7 +7567,7 @@
           "name": "images",
           "type": "IMAGE",
           "links": [
-            5073
+            5656
           ]
         }
       ],
@@ -7101,164 +7652,561 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 1594,
-      "type": "ad95ad96-c709-46d7-914a-111313fa2e1b",
+      "id": 1660,
+      "type": "SetNode",
       "pos": [
-        -450,
-        -310.37686987206644
+        3596.6367882597397,
+        209.68741231923383
       ],
       "size": [
-        610,
-        560
+        210,
+        50
       ],
-      "flags": {},
-      "order": 99,
+      "flags": {
+        "collapsed": true
+      },
+      "order": 180,
       "mode": 0,
-      "inputs": [],
-      "outputs": [
+      "inputs": [
         {
-          "label": "prompt_1",
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            5481
-          ]
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "link": 5637
         }
       ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Set_finalvideo",
       "properties": {
-        "proxyWidgets": [
-          [
-            "1585",
-            "model_name"
-          ],
-          [
-            "1618",
-            "value"
-          ],
-          [
-            "1585",
-            "prompt_text"
-          ],
-          [
-            "1585",
-            "preset_system_prompt"
-          ],
-          [
-            "1585",
-            "control_after_generate"
-          ],
-          [
-            "1585",
-            "seed"
-          ],
-          [
-            "1585",
-            "keep_last_prompt"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.13.0"
+        "previousName": "finalvideo"
       },
-      "widgets_values": [],
+      "widgets_values": [
+        "finalvideo"
+      ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
     },
     {
-      "id": 1602,
-      "type": "640341fd-e818-44a8-81b9-8efd95560e69",
+      "id": 1672,
+      "type": "73b52f1f-6371-4e7e-9c50-bcbf4e64e74d",
       "pos": [
-        -432.6262289823219,
-        363.00934186912457
+        3237.8396895621886,
+        170.29665072471968
       ],
       "size": [
-        600,
-        520
+        539.0085273657536,
+        767.2634570312503
       ],
       "flags": {},
-      "order": 151,
+      "order": 175,
       "mode": 0,
       "inputs": [
         {
-          "name": "image",
+          "name": "image_1",
           "type": "IMAGE",
-          "link": 5497
+          "link": 5656
         },
         {
-          "name": "custom_prompt",
-          "type": "STRING",
+          "label": "model_h",
+          "name": "model",
+          "type": "MODEL",
+          "link": 5640
+        },
+        {
+          "label": "model_l",
+          "name": "model_1",
+          "type": "MODEL",
+          "link": 5641
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 5642
+        },
+        {
+          "name": "width",
+          "type": "INT",
           "widget": {
-            "name": "custom_prompt"
+            "name": "width"
           },
-          "link": 5498
+          "link": 5643
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 5644
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 5645
+        },
+        {
+          "name": "motion_frames",
+          "type": "INT",
+          "widget": {
+            "name": "motion_frames"
+          },
+          "link": 5646
+        },
+        {
+          "name": "motion_amplitude",
+          "type": "FLOAT",
+          "widget": {
+            "name": "motion_amplitude"
+          },
+          "link": 5647
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 5648
+        },
+        {
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": 5649
+        },
+        {
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": 5650
+        },
+        {
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": 5651
+        },
+        {
+          "name": "sigma_shift",
+          "type": "FLOAT",
+          "widget": {
+            "name": "sigma_shift"
+          },
+          "link": 5652
+        },
+        {
+          "name": "initial_reference_image",
+          "type": "IMAGE",
+          "link": 5653
+        },
+        {
+          "label": "prompt",
+          "name": "string_b",
+          "type": "STRING",
+          "link": 5654
         }
       ],
       "outputs": [
         {
-          "label": "prompt_2",
-          "name": "prompt_1",
-          "type": "STRING",
+          "name": "images",
+          "type": "IMAGE",
           "links": [
-            5488
+            5637
+          ]
+        }
+      ],
+      "title": "25s",
+      "properties": {
+        "proxyWidgets": [
+          [
+            "-1",
+            "width"
+          ],
+          [
+            "-1",
+            "height"
+          ],
+          [
+            "-1",
+            "length"
+          ],
+          [
+            "-1",
+            "motion_frames"
+          ],
+          [
+            "-1",
+            "motion_amplitude"
+          ],
+          [
+            "-1",
+            "steps"
+          ],
+          [
+            "-1",
+            "sampler_name"
+          ],
+          [
+            "-1",
+            "scheduler"
+          ],
+          [
+            "-1",
+            "sigma_shift"
+          ],
+          [
+            "1287",
+            "value"
+          ],
+          [
+            "1269",
+            "text"
+          ],
+          [
+            "308",
+            "seed"
+          ],
+          [
+            "308",
+            "🎲 Randomize Each Time"
+          ],
+          [
+            "308",
+            "🎲 New Fixed Random"
+          ],
+          [
+            "1639",
+            "cleanup_mode"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.7.0"
+      },
+      "widgets_values": [
+        5,
+        2,
+        "euler",
+        "simple",
+        1.15,
+        5,
+        "euler",
+        "simple",
+        8
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1545,
+      "type": "GetNode",
+      "pos": [
+        -870.1340294026809,
+        420.804671279191
+      ],
+      "size": [
+        210,
+        50
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 114,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5412
+          ]
+        }
+      ],
+      "title": "Get_finalvideo",
+      "properties": {},
+      "widgets_values": [
+        "finalvideo"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1547,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        -923.9664895672338,
+        370.60265210452843
+      ],
+      "size": [
+        340,
+        902.6666666666667
+      ],
+      "flags": {},
+      "order": 156,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5413
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": []
+        }
+      ],
+      "title": "Final Video",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "993082e4f2473bf4acaf06f51e33877a7eb38960",
+        "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+      },
+      "widgets_values": {
+        "frame_rate": 16,
+        "loop_count": 0,
+        "filename_prefix": "wan22_%date:dd_hh-mm-ss%",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "wan22_04_03-26-05_00001.mp4",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/h264-mp4",
+            "frame_rate": 16,
+            "workflow": "wan22_04_03-26-05_00001.png",
+            "fullpath": "/ComfyUI/output/wan22_04_03-26-05_00001.mp4"
+          }
+        }
+      }
+    },
+    {
+      "id": 1252,
+      "type": "2643c0a2-4f8c-4b66-9bba-7305a874c2db",
+      "pos": [
+        796.3424639215896,
+        166.34229716892713
+      ],
+      "size": [
+        579.2439364039712,
+        758.4915990885632
+      ],
+      "flags": {},
+      "order": 150,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "model_h",
+          "name": "model",
+          "type": "MODEL",
+          "link": 5444
+        },
+        {
+          "label": "model_l",
+          "name": "model_1",
+          "type": "MODEL",
+          "link": 5445
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 4838
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 4993
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 4841
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 4842
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 4843
+        },
+        {
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": 4980
+        },
+        {
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": 5328
+        },
+        {
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": 5329
+        },
+        {
+          "name": "sigma_shift",
+          "type": "FLOAT",
+          "widget": {
+            "name": "sigma_shift"
+          },
+          "link": 5416
+        },
+        {
+          "label": "prompt",
+          "name": "string_b",
+          "type": "STRING",
+          "link": 5504
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5501
           ]
         },
         {
-          "label": "prompt_3",
-          "name": "prompt_2",
-          "type": "STRING",
+          "label": "Reference",
+          "name": "IMAGE_1",
+          "type": "IMAGE",
           "links": [
-            5489
-          ]
-        },
-        {
-          "label": "prompt_4",
-          "name": "prompt_3",
-          "type": "STRING",
-          "links": [
-            5490
+            5437,
+            5496
           ]
         }
       ],
       "properties": {
         "proxyWidgets": [
           [
-            "1600",
-            "model_name"
-          ],
-          [
-            "1645",
-            "value"
+            "-1",
+            "steps"
           ],
           [
             "-1",
-            "custom_prompt"
+            "sampler_name"
           ],
           [
-            "1600",
-            "preset_prompt"
+            "-1",
+            "scheduler"
           ],
           [
-            "1600",
-            "control_after_generate"
+            "-1",
+            "sigma_shift"
           ],
           [
-            "1600",
+            "-1",
+            "width"
+          ],
+          [
+            "-1",
+            "height"
+          ],
+          [
+            "-1",
+            "length"
+          ],
+          [
+            "1309",
+            "value"
+          ],
+          [
+            "1257",
+            "text"
+          ],
+          [
+            "1250",
             "seed"
           ],
           [
-            "1600",
-            "keep_last_prompt"
+            "1250",
+            "🎲 Randomize Each Time"
+          ],
+          [
+            "1250",
+            "🎲 New Fixed Random"
+          ],
+          [
+            "1636",
+            "cleanup_mode"
           ]
         ],
         "cnr_id": "comfy-core",
-        "ver": "0.13.0"
+        "ver": "0.7.0"
       },
       "widgets_values": [
-        null,
-        null,
-        ""
+        5,
+        "euler",
+        "simple",
+        8,
+        "simple",
+        2,
+        5
       ],
-      "color": "#233",
-      "bgcolor": "#355"
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
     }
   ],
   "links": [
@@ -7557,14 +8505,6 @@
       1344,
       10,
       "INT"
-    ],
-    [
-      5073,
-      1344,
-      0,
-      1061,
-      0,
-      "IMAGE"
     ],
     [
       5094,
@@ -8269,6 +9209,174 @@
       1562,
       0,
       "MODEL"
+    ],
+    [
+      5637,
+      1672,
+      0,
+      1660,
+      0,
+      "IMAGE"
+    ],
+    [
+      5638,
+      1664,
+      0,
+      1670,
+      0,
+      "MODEL"
+    ],
+    [
+      5639,
+      1665,
+      0,
+      1671,
+      0,
+      "MODEL"
+    ],
+    [
+      5640,
+      1670,
+      0,
+      1672,
+      1,
+      "MODEL"
+    ],
+    [
+      5641,
+      1671,
+      0,
+      1672,
+      2,
+      "MODEL"
+    ],
+    [
+      5642,
+      1657,
+      0,
+      1672,
+      3,
+      "VAE"
+    ],
+    [
+      5643,
+      1655,
+      0,
+      1672,
+      4,
+      "INT"
+    ],
+    [
+      5644,
+      1654,
+      0,
+      1672,
+      5,
+      "INT"
+    ],
+    [
+      5645,
+      1659,
+      0,
+      1672,
+      6,
+      "INT"
+    ],
+    [
+      5646,
+      1658,
+      0,
+      1672,
+      7,
+      "INT"
+    ],
+    [
+      5647,
+      1666,
+      0,
+      1672,
+      8,
+      "FLOAT"
+    ],
+    [
+      5648,
+      1656,
+      0,
+      1672,
+      9,
+      "CLIP"
+    ],
+    [
+      5649,
+      1667,
+      0,
+      1672,
+      10,
+      "INT"
+    ],
+    [
+      5650,
+      1661,
+      0,
+      1672,
+      11,
+      "COMBO"
+    ],
+    [
+      5651,
+      1662,
+      0,
+      1672,
+      12,
+      "COMBO"
+    ],
+    [
+      5652,
+      1663,
+      0,
+      1672,
+      13,
+      "FLOAT"
+    ],
+    [
+      5653,
+      1669,
+      0,
+      1672,
+      14,
+      "IMAGE"
+    ],
+    [
+      5654,
+      1668,
+      0,
+      1672,
+      15,
+      "STRING"
+    ],
+    [
+      5656,
+      1344,
+      0,
+      1672,
+      0,
+      "IMAGE"
+    ],
+    [
+      5657,
+      1673,
+      0,
+      1674,
+      0,
+      "*"
+    ],
+    [
+      5659,
+      1602,
+      3,
+      1673,
+      0,
+      "STRING"
     ]
   ],
   "groups": [
@@ -8380,10 +9488,10 @@
       "id": 20,
       "title": "SHORTCUTS",
       "bounding": [
-        -954.9974340708945,
-        325.56416380384934,
-        382.2018660275056,
-        886.3491860080019
+        -1336.5601624984088,
+        286.8605203344654,
+        380,
+        830
       ],
       "color": "#a1309b",
       "font_size": 24,
@@ -8406,10 +9514,10 @@
       "id": 22,
       "title": "COLOR MATCH",
       "bounding": [
-        -1347.4847408912308,
-        327.8132702300354,
-        360.23810572093726,
-        914.4405162502136
+        -935.9722179719868,
+        290.91549071058716,
+        360.7125276060899,
+        1003.7338568707623
       ],
       "color": "#3f789e",
       "font_size": 24,
@@ -8420,9 +9528,9 @@
       "title": "QWEN3 AUTOPROMPT",
       "bounding": [
         -470,
-        -400,
-        1196.2753140227983,
-        1346.753400933939
+        -670,
+        1190,
+        1620
       ],
       "color": "#3f789e",
       "font_size": 24,
@@ -8492,6 +9600,19 @@
       "color": "#8A8",
       "font_size": 24,
       "flags": {}
+    },
+    {
+      "id": 31,
+      "title": "VIDEO 25s",
+      "bounding": [
+        3220.114143721341,
+        -413.6,
+        574.2085012229159,
+        1365.934183263783
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
     }
   ],
   "definitions": {
@@ -8500,9 +9621,9 @@
         "id": "2643c0a2-4f8c-4b66-9bba-7305a874c2db",
         "version": 1,
         "state": {
-          "lastGroupId": 30,
-          "lastNodeId": 1652,
-          "lastLinkId": 5636,
+          "lastGroupId": 31,
+          "lastNodeId": 1674,
+          "lastLinkId": 5659,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -8810,7 +9931,7 @@
               "Node name for S&R": "Seed (rgthree)"
             },
             "widgets_values": [
-              588213602941009,
+              415279867969494,
               "",
               "",
               ""
@@ -8927,7 +10048,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: A twilight amusement park bathed in golden sidelighting, shadows creeping over roller coasters and glowing rides; from a side angle, three figures — two girls and one boy — are framed looking directly at viewer with naughty grins. One girl has white hair in a rattail cut and aqua eyes, topless with petite frame and large breasts; the other wears a lace maroon dress, her absurdly long braided hair cascading down as she leans forward slightly to expose sideboob, grey eyes locked on camera. The boy stands between them, penis visible, precum string glistening in low light.)  \n(At 1 seconds: Slow-motion tonguejob begins — the white-haired girl’s tongue wraps around the boy’s erect shaft while the maroon-haired girl watches with smirk, her lace dress slightly lifted by motion; soft focus on foreground, background rides blurred under twilight glow. Sidelighting casts sharp shadows across their bodies, accentuating curves and skin texture.)  \n(At 2 seconds: Boy leans back slightly as both girls alternate oral stimulation — one’s tongue flicks the tip while the other grips base with lips, saliva glistening in warm ambient light; camera drifts subtly right to capture side profile of all three. Flickering carnival lights reflect off wet skin and glossy hair.)  \n(At 3 seconds: Maroon-haired girl shifts position, her long braided hair swinging as she rises on tiptoes — lace dress strains over exposed thigh and sideboob; white-haired girl maintains oral contact with eyes half-lidded. Twilight fades deeper into indigo sky behind them, park lights now bright halos against darkening trees.)  \n(At 4 seconds: Quick cut to boy’s face mid-oral release — tongue flicks precum droplet onto white-haired girl’s chin; she catches it with lips before licking off. Both girls smile smugly at viewer as camera pans slightly left, revealing roller coaster tracks glinting under dusk. Shadows stretch long and dramatic across foreground.)  \n(At 5 seconds: Final shot — all three freeze mid-action, mouths still around shafts, eyes locked on lens; maroon-haired girl raises hand to brush hair from face while white-haired girl tilts head back with grin. Twilight dissolves into near-darkness as park lights flicker out one by one, leaving only ambient glow and silhouettes of amusement rides behind them.)"
+              "SmootMixAnime. erect penis. A blue-haired woman in a revealing lace outfit extends her tongue with sensual intensity, drawing out a long, glistening strand of saliva from the tip of an artificial penis held by another figure; her wide green eyes glow upward with focused pleasure as moisture beads on her skin under warm stone archway lighting, while behind her, a second woman with short purple hair in delicate white lingerie stands poised, curves accentuated by soft lantern shadows flickering across moss-covered medieval brick walls — the scene pulses with intimate tension beneath an unseen breeze that stirs strands of blue hair and textured stone surfaces rendered in vivid anime style with cinematic depth and vibrant color saturation."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -9582,9 +10703,9 @@
         "id": "322b39f0-a204-4d81-8926-eeb0309f1efc",
         "version": 1,
         "state": {
-          "lastGroupId": 30,
-          "lastNodeId": 1652,
-          "lastLinkId": 5636,
+          "lastGroupId": 31,
+          "lastNodeId": 1674,
+          "lastLinkId": 5659,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -10144,7 +11265,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: A twilight amusement park bathed in golden sidelighting, shadows creeping over roller coasters and glowing rides; from a side angle, three figures — two girls and one boy — are framed looking directly at viewer with naughty grins. One girl has white hair in a rattail cut and aqua eyes, topless with petite frame and large breasts; the other wears a lace maroon dress, her absurdly long braided hair cascading down as she leans forward slightly to expose sideboob, grey eyes locked on camera. The boy stands between them, penis visible, precum string glistening in low light.)  \n(At 1 seconds: Slow-motion tonguejob begins — the white-haired girl’s tongue wraps around the boy’s erect shaft while the maroon-haired girl watches with smirk, her lace dress slightly lifted by motion; soft focus on foreground, background rides blurred under twilight glow. Sidelighting casts sharp shadows across their bodies, accentuating curves and skin texture.)  \n(At 2 seconds: Boy leans back slightly as both girls alternate oral stimulation — one’s tongue flicks the tip while the other grips base with lips, saliva glistening in warm ambient light; camera drifts subtly right to capture side profile of all three. Flickering carnival lights reflect off wet skin and glossy hair.)  \n(At 3 seconds: Maroon-haired girl shifts position, her long braided hair swinging as she rises on tiptoes — lace dress strains over exposed thigh and sideboob; white-haired girl maintains oral contact with eyes half-lidded. Twilight fades deeper into indigo sky behind them, park lights now bright halos against darkening trees.)  \n(At 4 seconds: Quick cut to boy’s face mid-oral release — tongue flicks precum droplet onto white-haired girl’s chin; she catches it with lips before licking off. Both girls smile smugly at viewer as camera pans slightly left, revealing roller coaster tracks glinting under dusk. Shadows stretch long and dramatic across foreground.)  \n(At 5 seconds: Final shot — all three freeze mid-action, mouths still around shafts, eyes locked on lens; maroon-haired girl raises hand to brush hair from face while white-haired girl tilts head back with grin. Twilight dissolves into near-darkness as park lights flicker out one by one, leaving only ambient glow and silhouettes of amusement rides behind them.)"
+              "Anime style. A blue-haired woman in a delicate white lace outfit gazes forward with intense green eyes, her tongue extended to draw out glistening saliva from the tip of an artificial penis held by another figure; beads of moisture shimmer across her skin under warm stone archway lighting as strands of her vibrant hair sway slightly beneath an unseen breeze that also stirs textured moss-covered medieval brick walls behind her — a second woman with short purple hair in white lingerie stands poised, curves accentuated by flickering lantern shadows casting soft depth on the ancient architecture; cinematic anime style renders every detail with vivid color saturation and dynamic motion blur as if caught mid-breath of sensual tension."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -10312,7 +11433,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              ""
+              "Anime style. "
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -10354,7 +11475,7 @@
               "Node name for S&R": "Seed (rgthree)"
             },
             "widgets_values": [
-              6733857466367,
+              719352000237420,
               "",
               "",
               ""
@@ -10980,9 +12101,9 @@
         "id": "0d6adb7c-3efa-4495-b1c9-b738d651f94a",
         "version": 1,
         "state": {
-          "lastGroupId": 30,
-          "lastNodeId": 1652,
-          "lastLinkId": 5636,
+          "lastGroupId": 31,
+          "lastNodeId": 1674,
+          "lastLinkId": 5659,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -11657,7 +12778,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: Boy leans back slightly as both girls alternate oral stimulation — one’s tongue flicks the tip while the other grips base with lips, saliva glistening in warm ambient light; camera drifts subtly right to capture side profile of all three. Flickering carnival lights reflect off wet skin and glossy hair.)  \n(At 1 seconds: Maroon-haired girl shifts position, her long braided hair swinging as she rises on tiptoes — lace dress strains over exposed thigh and sideboob; white-haired girl maintains oral contact with eyes half-lidded. Twilight fades deeper into indigo sky behind them, park lights now bright halos against darkening trees.)  \n(At 2 seconds: Quick cut to boy’s face mid-oral release — tongue flicks precum droplet onto white-haired girl’s chin; she catches it with lips before licking off. Both girls smile smugly at viewer as camera pans slightly left, revealing roller coaster tracks glinting under dusk. Shadows stretch long and dramatic across foreground.)  \n(At 3 seconds: Final shot — all three freeze mid-action, mouths still around shafts, eyes locked on lens; maroon-haired girl raises hand to brush hair from face while white-haired girl tilts head back with grin. Twilight dissolves into near-darkness as park lights flicker out one by one, leaving only ambient glow and silhouettes of amusement rides behind them.)  \n(At 4 seconds: Fade-out transition — scene darkens completely; final frame holds silhouette of three figures against fading carnival lights before cutting to black.)  \n(At 5 seconds: Black screen with soft fade-in text “END SCENE” in glowing neon font, lingering for one second then dissolving into static.)"
+              "Anime style. The camera drifts closer to the woman’s face as her gaze locks onto something beyond frame, eyes glowing brighter in their green hue while saliva continues its slow descent like a living thread connecting flesh to fantasy; warmth radiates from every contour beneath warm ambient lighting that highlights translucent lace edges and glistening moisture clinging tightly to skin — behind them, lantern shadows dance across mossy brickwork as if breathing with the unseen wind stirring strands of hair into hypnotic motion; cinematic depth pulls focus sharply on her face while background elements dissolve slightly like dream fragments but remain vividly rendered in anime’s signature vibrant palette."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -11764,7 +12885,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              ""
+              "Anime style. "
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -11806,7 +12927,7 @@
               "Node name for S&R": "Seed (rgthree)"
             },
             "widgets_values": [
-              355248639414254,
+              775869927853397,
               "",
               "",
               ""
@@ -12091,7 +13212,7 @@
               "Node name for S&R": "VRAMCleanup"
             },
             "widgets_values": [
-              "Full Cleanup"
+              "Text Encoder"
             ]
           }
         ],
@@ -12378,9 +13499,9 @@
         "id": "975e3c19-bc32-4db8-b06f-63d1a4aede97",
         "version": 1,
         "state": {
-          "lastGroupId": 30,
-          "lastNodeId": 1652,
-          "lastLinkId": 5636,
+          "lastGroupId": 31,
+          "lastNodeId": 1674,
+          "lastLinkId": 5659,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -12492,7 +13613,7 @@
               20,
               50,
               4.5,
-              432184415403429,
+              615230267074912,
               "randomize",
               "",
               "man, boy, male, man's voice, boy's voice, male's voice, ",
@@ -12638,9 +13759,9 @@
         "id": "ad95ad96-c709-46d7-914a-111313fa2e1b",
         "version": 1,
         "state": {
-          "lastGroupId": 30,
-          "lastNodeId": 1652,
-          "lastLinkId": 5636,
+          "lastGroupId": 31,
+          "lastNodeId": 1674,
+          "lastLinkId": 5659,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -12716,8 +13837,8 @@
             },
             "widgets_values": [
               "Qwen3-VL-8B-Instruct-c_abliterated-v3.Q8_0.gguf",
-              "profile, amusement park, twilight, bloom, sidelighting, darkness, (2girls, 1boy) ffm threesome, from side, looking at viewer, naughty face, penis, oral, tonguejob, fellatio, precum string BREAK 1girl, white hair, short hair, rattail hair, straight hair, aqua eyes, petite body, large breasts, average height, , topless BREAK 1girl, maroon hair, absurdly long hair, low-braided long hair, pointy hair, grey eyes, average body, large breasts, tall, lace dress, sideboob",
-              "🍿 Wan 2.2 NSFW T2V",
+              "A blue-haired woman in a revealing lace outfit extends her tongue, drawing out a long strand of saliva from the tip of an artificial penis held by another figure. Her expression is one of intense focus and sensual pleasure as she gazes upward with wide green eyes. Behind her stands a second woman with short purple hair wearing delicate white lingerie that accentuates her curves under warm stone archway lighting. The scene unfolds in what appears to be a dimly lit medieval corridor, where flickering lanterns cast soft shadows across weathered brick walls and moss-covered stones. Her skin glistens subtly from the moisture of arousal while strands of blue hair flutter slightly as if caught by an unseen breeze.",
+              "📖 Wan 2.2 NSFW T2V Story",
               "",
               512,
               0.7,
@@ -12726,7 +13847,7 @@
               false,
               "auto",
               false,
-              3247585199,
+              814902302,
               "randomize",
               false
             ],
@@ -12834,7 +13955,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              ""
+              "SmootMixAnime. erect penis. "
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -12876,9 +13997,9 @@
         "id": "640341fd-e818-44a8-81b9-8efd95560e69",
         "version": 1,
         "state": {
-          "lastGroupId": 30,
-          "lastNodeId": 1652,
-          "lastLinkId": 5636,
+          "lastGroupId": 31,
+          "lastNodeId": 1674,
+          "lastLinkId": 5659,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -12899,7 +14020,7 @@
             -218.18238721630928,
             -1705.0465395872054,
             120,
-            100
+            120
           ]
         },
         "inputs": [
@@ -12967,84 +14088,23 @@
               -198.18238721630928,
               -1645.0465395872054
             ]
+          },
+          {
+            "id": "c762ce24-e7bb-495f-b289-113b18a854f8",
+            "name": "prompt_4",
+            "type": "STRING",
+            "linkIds": [
+              5658
+            ],
+            "label": "prompt_5",
+            "pos": [
+              -198.18238721630928,
+              -1625.0465395872054
+            ]
           }
         ],
         "widgets": [],
         "nodes": [
-          {
-            "id": 1601,
-            "type": "StorySplitNode",
-            "pos": [
-              -692.9699536037516,
-              -1983.3980412759488
-            ],
-            "size": [
-              400,
-              216
-            ],
-            "flags": {},
-            "order": 2,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "text",
-                "name": "text",
-                "type": "STRING",
-                "widget": {
-                  "name": "text"
-                },
-                "link": 5593
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "prompt_1",
-                "name": "prompt_1",
-                "type": "STRING",
-                "links": [
-                  5488
-                ]
-              },
-              {
-                "localized_name": "prompt_2",
-                "name": "prompt_2",
-                "type": "STRING",
-                "links": [
-                  5489
-                ]
-              },
-              {
-                "localized_name": "prompt_3",
-                "name": "prompt_3",
-                "type": "STRING",
-                "links": [
-                  5490
-                ]
-              },
-              {
-                "localized_name": "prompt_4",
-                "name": "prompt_4",
-                "type": "STRING",
-                "links": []
-              },
-              {
-                "localized_name": "debug_info",
-                "name": "debug_info",
-                "type": "STRING",
-                "links": null
-              }
-            ],
-            "properties": {
-              "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
-              "ver": "177ca5715c868401d62a746034173bd46bd2801a",
-              "Node name for S&R": "StorySplitNode"
-            },
-            "widgets_values": [
-              "",
-              true,
-              ""
-            ]
-          },
           {
             "id": 1644,
             "type": "Text Concatenate",
@@ -13209,7 +14269,7 @@
             "widgets_values": [
               "Qwen3-VL-8B-Instruct-c_abliterated-v3.Q8_0.gguf",
               "auto",
-              "🎬 Wan 2.2 NSFW I2V Sequence",
+              "📖 Wan 2.2 NSFW I2V Story",
               "",
               1536,
               0.6,
@@ -13223,12 +14283,88 @@
               0,
               4194304,
               false,
-              4085090008,
+              4104982474,
               "randomize",
               false
             ],
             "color": "#474539",
             "bgcolor": "#2c4045"
+          },
+          {
+            "id": 1601,
+            "type": "StorySplitNode",
+            "pos": [
+              -692.9699536037516,
+              -1983.3980412759488
+            ],
+            "size": [
+              400,
+              216
+            ],
+            "flags": {},
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "text",
+                "name": "text",
+                "type": "STRING",
+                "widget": {
+                  "name": "text"
+                },
+                "link": 5593
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "prompt_1",
+                "name": "prompt_1",
+                "type": "STRING",
+                "links": [
+                  5488
+                ]
+              },
+              {
+                "localized_name": "prompt_2",
+                "name": "prompt_2",
+                "type": "STRING",
+                "links": [
+                  5489
+                ]
+              },
+              {
+                "localized_name": "prompt_3",
+                "name": "prompt_3",
+                "type": "STRING",
+                "links": [
+                  5490
+                ]
+              },
+              {
+                "localized_name": "prompt_4",
+                "name": "prompt_4",
+                "type": "STRING",
+                "links": [
+                  5658
+                ]
+              },
+              {
+                "localized_name": "debug_info",
+                "name": "debug_info",
+                "type": "STRING",
+                "links": null
+              }
+            ],
+            "properties": {
+              "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+              "ver": "177ca5715c868401d62a746034173bd46bd2801a",
+              "Node name for S&R": "StorySplitNode"
+            },
+            "widgets_values": [
+              "",
+              true,
+              ""
+            ]
           }
         ],
         "groups": [],
@@ -13296,6 +14432,14 @@
             "target_id": 1601,
             "target_slot": 0,
             "type": "STRING"
+          },
+          {
+            "id": 5658,
+            "origin_id": 1601,
+            "origin_slot": 3,
+            "target_id": -20,
+            "target_slot": 3,
+            "type": "STRING"
           }
         ],
         "extra": {
@@ -13306,9 +14450,9 @@
         "id": "2c67eab5-c773-4dcd-98ba-0787393ad6b7",
         "version": 1,
         "state": {
-          "lastGroupId": 30,
-          "lastNodeId": 1652,
-          "lastLinkId": 5636,
+          "lastGroupId": 31,
+          "lastNodeId": 1674,
+          "lastLinkId": 5659,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -13708,7 +14852,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: Slow-motion tonguejob begins — the white-haired girl’s tongue wraps around the boy’s erect shaft while the maroon-haired girl watches with smirk, her lace dress slightly lifted by motion; soft focus on foreground, background rides blurred under twilight glow. Sidelighting casts sharp shadows across their bodies, accentuating curves and skin texture.)  \n(At 1 seconds: Boy leans back slightly as both girls alternate oral stimulation — one’s tongue flicks the tip while the other grips base with lips, saliva glistening in warm ambient light; camera drifts subtly right to capture side profile of all three. Flickering carnival lights reflect off wet skin and glossy hair.)  \n(At 2 seconds: Maroon-haired girl shifts position, her long braided hair swinging as she rises on tiptoes — lace dress strains over exposed thigh and sideboob; white-haired girl maintains oral contact with eyes half-lidded. Twilight fades deeper into indigo sky behind them, park lights now bright halos against darkening trees.)  \n(At 3 seconds: Quick cut to boy’s face mid-oral release — tongue flicks precum droplet onto white-haired girl’s chin; she catches it with lips before licking off. Both girls smile smugly at viewer as camera pans slightly left, revealing roller coaster tracks glinting under dusk. Shadows stretch long and dramatic across foreground.)  \n(At 4 seconds: Final shot — all three freeze mid-action, mouths still around shafts, eyes locked on lens; maroon-haired girl raises hand to brush hair from face while white-haired girl tilts head back with grin. Twilight dissolves into near-darkness as park lights flicker out one by one, leaving only ambient glow and silhouettes of amusement rides behind them.)  \n(At 5 seconds: Fade-out transition — scene darkens completely; final frame holds silhouette of three figures against fading carnival lights before cutting to black.)"
+              "Anime style. The scene intensifies under golden-hour stone archway illumination where moisture continues to bead along her skin like liquid jewels while her tongue remains taut, pulling a long droplet downward toward an unseen target — the blue-haired woman’s expression shifts subtly from focused pleasure into something more primal and hungry as she leans forward slightly, hair cascading over one shoulder; behind her, the purple-haired companion adjusts position ever so gently, fingertips brushing against draped fabric in delicate white lingerie that catches light unevenly across curves emphasized by shadow play; every surface — stone wall textures, mossy crevices, even individual strands of blue and purple hair — pulses with life under this surreal yet intimate atmosphere."
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -13809,7 +14953,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              ""
+              "Anime style. "
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -13851,7 +14995,7 @@
               "Node name for S&R": "Seed (rgthree)"
             },
             "widgets_values": [
-              1059932641544373,
+              438077472255860,
               "",
               "",
               ""
@@ -14699,6 +15843,1404 @@
         "extra": {
           "workflowRendererVersion": "LG"
         }
+      },
+      {
+        "id": "73b52f1f-6371-4e7e-9c50-bcbf4e64e74d",
+        "version": 1,
+        "state": {
+          "lastGroupId": 31,
+          "lastNodeId": 1674,
+          "lastLinkId": 5659,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "25s",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            -304.6994104934066,
+            1835.258296437946,
+            170.30078125,
+            360.0000000000002
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            1390.9970306350663,
+            2011.059502617436,
+            120,
+            60
+          ]
+        },
+        "inputs": [
+          {
+            "id": "23cb4ab6-868e-4a9e-a2c5-a724712dc9ac",
+            "name": "image_1",
+            "type": "IMAGE",
+            "linkIds": [
+              4861,
+              4862
+            ],
+            "localized_name": "image_1",
+            "pos": [
+              -154.39862924340662,
+              1855.258296437946
+            ]
+          },
+          {
+            "id": "343acf85-ad2f-472c-8a9f-36fd2f39d4c2",
+            "name": "model",
+            "type": "MODEL",
+            "linkIds": [
+              4932
+            ],
+            "localized_name": "model",
+            "label": "model_h",
+            "pos": [
+              -154.39862924340662,
+              1875.258296437946
+            ]
+          },
+          {
+            "id": "7a24203a-3472-4381-981b-a320f41e9070",
+            "name": "model_1",
+            "type": "MODEL",
+            "linkIds": [
+              4933
+            ],
+            "localized_name": "model_1",
+            "label": "model_l",
+            "pos": [
+              -154.39862924340662,
+              1895.258296437946
+            ]
+          },
+          {
+            "id": "8ac1d4d8-100b-4c9d-a841-6695592d8d94",
+            "name": "vae",
+            "type": "VAE",
+            "linkIds": [
+              4866,
+              4867
+            ],
+            "localized_name": "vae",
+            "pos": [
+              -154.39862924340662,
+              1915.258296437946
+            ]
+          },
+          {
+            "id": "d68f9979-08a4-43d8-b2bb-7b8feb605076",
+            "name": "width",
+            "type": "INT",
+            "linkIds": [
+              4869
+            ],
+            "localized_name": "width",
+            "pos": [
+              -154.39862924340662,
+              1935.258296437946
+            ]
+          },
+          {
+            "id": "c0ce70c9-1fec-430e-a14e-ce5df145271b",
+            "name": "height",
+            "type": "INT",
+            "linkIds": [
+              4870
+            ],
+            "localized_name": "height",
+            "pos": [
+              -154.39862924340662,
+              1955.258296437946
+            ]
+          },
+          {
+            "id": "3825cfce-d021-4e7e-8c17-8be639ce19ca",
+            "name": "length",
+            "type": "INT",
+            "linkIds": [
+              4871
+            ],
+            "localized_name": "length",
+            "pos": [
+              -154.39862924340662,
+              1975.258296437946
+            ]
+          },
+          {
+            "id": "59388b53-8db6-48c5-bd7d-5841bc0e64f1",
+            "name": "motion_frames",
+            "type": "INT",
+            "linkIds": [
+              4872
+            ],
+            "localized_name": "motion_frames",
+            "pos": [
+              -154.39862924340662,
+              1995.258296437946
+            ]
+          },
+          {
+            "id": "14495b6c-5b7d-4df4-952c-49303e924a33",
+            "name": "motion_amplitude",
+            "type": "FLOAT",
+            "linkIds": [
+              4873
+            ],
+            "localized_name": "motion_amplitude",
+            "pos": [
+              -154.39862924340662,
+              2015.258296437946
+            ]
+          },
+          {
+            "id": "01cc3dff-850c-415b-a158-241a06d6d3af",
+            "name": "clip",
+            "type": "CLIP",
+            "linkIds": [
+              4875,
+              4960
+            ],
+            "localized_name": "clip",
+            "pos": [
+              -154.39862924340662,
+              2035.258296437946
+            ]
+          },
+          {
+            "id": "d20f059f-d84f-4c61-9faa-af2d6ddab113",
+            "name": "steps",
+            "type": "INT",
+            "linkIds": [
+              4939
+            ],
+            "pos": [
+              -154.39862924340662,
+              2055.2582964379462
+            ]
+          },
+          {
+            "id": "aa412cd5-2f95-4eff-9804-29d851816648",
+            "name": "sampler_name",
+            "type": "COMBO",
+            "linkIds": [
+              4940
+            ],
+            "pos": [
+              -154.39862924340662,
+              2075.2582964379462
+            ]
+          },
+          {
+            "id": "e87d5a3c-bbb5-4cca-b507-a3a288c7ab32",
+            "name": "scheduler",
+            "type": "COMBO",
+            "linkIds": [
+              4941
+            ],
+            "pos": [
+              -154.39862924340662,
+              2095.2582964379462
+            ]
+          },
+          {
+            "id": "52a053a0-e892-40fd-b442-c8fca75d48f5",
+            "name": "sigma_shift",
+            "type": "FLOAT",
+            "linkIds": [
+              4942
+            ],
+            "pos": [
+              -154.39862924340662,
+              2115.2582964379462
+            ]
+          },
+          {
+            "id": "f7714bf3-18c8-4360-83ad-6b3a80027727",
+            "name": "initial_reference_image",
+            "type": "IMAGE",
+            "linkIds": [
+              4944
+            ],
+            "pos": [
+              -154.39862924340662,
+              2135.2582964379462
+            ]
+          },
+          {
+            "id": "ad97491e-b973-4c57-b902-75311eddb2b4",
+            "name": "string_b",
+            "type": "STRING",
+            "linkIds": [
+              4964
+            ],
+            "label": "prompt",
+            "pos": [
+              -154.39862924340662,
+              2155.2582964379462
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "9ef6d72b-a964-41ce-934b-6c85739af2b5",
+            "name": "images",
+            "type": "IMAGE",
+            "linkIds": [
+              4877
+            ],
+            "localized_name": "images",
+            "pos": [
+              1410.9970306350663,
+              2031.059502617436
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 1259,
+            "type": "CLIPTextEncode",
+            "pos": [
+              88.4877048642478,
+              2139.021816623304
+            ],
+            "size": [
+              281.48203125,
+              97.37013244628906
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 5,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "clip",
+                "name": "clip",
+                "type": "CLIP",
+                "link": 4875
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "CONDITIONING",
+                "name": "CONDITIONING",
+                "type": "CONDITIONING",
+                "slot_index": 0,
+                "links": [
+                  4857
+                ]
+              }
+            ],
+            "title": "CLIP Text Encode (Negative Prompt)",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.45",
+              "Node name for S&R": "CLIPTextEncode",
+              "ue_properties": {
+                "version": "7.0.1",
+                "widget_ue_connectable": {
+                  "text": true
+                }
+              }
+            },
+            "widgets_values": [
+              "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走"
+            ],
+            "color": "#322",
+            "bgcolor": "#533"
+          },
+          {
+            "id": 1261,
+            "type": "VHS_SelectImages",
+            "pos": [
+              25.965718465156613,
+              2342.506244097444
+            ],
+            "size": [
+              218.1728515625,
+              98
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 7,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image",
+                "name": "image",
+                "type": "IMAGE",
+                "link": 4862
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "IMAGE",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  4860
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfyui-videohelpersuite",
+              "ver": "8e4d79471bf1952154768e8435a9300077b534fa",
+              "Node name for S&R": "VHS_SelectImages",
+              "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
+              "ue_properties": {
+                "version": "7.0.1",
+                "widget_ue_connectable": {
+                  "indexes": true,
+                  "err_if_missing": true,
+                  "err_if_empty": true
+                }
+              }
+            },
+            "widgets_values": {
+              "indexes": "-1",
+              "err_if_missing": true,
+              "err_if_empty": true
+            }
+          },
+          {
+            "id": 1260,
+            "type": "ImageScaleBy",
+            "pos": [
+              20.78182941625194,
+              2283.1920088072798
+            ],
+            "size": [
+              270,
+              74
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 6,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image",
+                "name": "image",
+                "type": "IMAGE",
+                "link": 4860
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "IMAGE",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  4858
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.50",
+              "Node name for S&R": "ImageScaleBy",
+              "ue_properties": {
+                "version": "7.0.1",
+                "widget_ue_connectable": {
+                  "upscale_method": true,
+                  "scale_by": true
+                }
+              }
+            },
+            "widgets_values": [
+              "nearest-exact",
+              2
+            ]
+          },
+          {
+            "id": 1256,
+            "type": "PainterLongVideo",
+            "pos": [
+              486.17439389826814,
+              2046.0056673752829
+            ],
+            "size": [
+              223.822265625,
+              318
+            ],
+            "flags": {},
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "positive",
+                "name": "positive",
+                "type": "CONDITIONING",
+                "link": 4898
+              },
+              {
+                "localized_name": "negative",
+                "name": "negative",
+                "type": "CONDITIONING",
+                "link": 4857
+              },
+              {
+                "localized_name": "vae",
+                "name": "vae",
+                "type": "VAE",
+                "link": 4866
+              },
+              {
+                "localized_name": "previous_video",
+                "name": "previous_video",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 4858
+              },
+              {
+                "localized_name": "initial_reference_image",
+                "name": "initial_reference_image",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 4944
+              },
+              {
+                "localized_name": "clip_vision_output",
+                "name": "clip_vision_output",
+                "shape": 7,
+                "type": "CLIP_VISION_OUTPUT",
+                "link": null
+              },
+              {
+                "localized_name": "start_image",
+                "name": "start_image",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "localized_name": "end_image",
+                "name": "end_image",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "localized_name": "width",
+                "name": "width",
+                "type": "INT",
+                "widget": {
+                  "name": "width"
+                },
+                "link": 4869
+              },
+              {
+                "localized_name": "height",
+                "name": "height",
+                "type": "INT",
+                "widget": {
+                  "name": "height"
+                },
+                "link": 4870
+              },
+              {
+                "localized_name": "length",
+                "name": "length",
+                "type": "INT",
+                "widget": {
+                  "name": "length"
+                },
+                "link": 4871
+              },
+              {
+                "localized_name": "motion_frames",
+                "name": "motion_frames",
+                "type": "INT",
+                "widget": {
+                  "name": "motion_frames"
+                },
+                "link": 4872
+              },
+              {
+                "localized_name": "motion_amplitude",
+                "name": "motion_amplitude",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "motion_amplitude"
+                },
+                "link": 4873
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "positive",
+                "name": "positive",
+                "type": "CONDITIONING",
+                "links": [
+                  4934
+                ]
+              },
+              {
+                "localized_name": "negative",
+                "name": "negative",
+                "type": "CONDITIONING",
+                "links": [
+                  4935
+                ]
+              },
+              {
+                "localized_name": "latent",
+                "name": "latent",
+                "type": "LATENT",
+                "links": [
+                  4936
+                ]
+              }
+            ],
+            "title": "2-PainterLongVideo",
+            "properties": {
+              "aux_id": "princepainter/ComfyUI-PainterLongVideo",
+              "ver": "889b4ff67909561e52d6ae023f5b9e8c33fdba94",
+              "Node name for S&R": "PainterLongVideo",
+              "ue_properties": {
+                "widget_ue_connectable": {},
+                "input_ue_unconnectable": {},
+                "version": "7.4.1"
+              }
+            },
+            "widgets_values": [
+              5,
+              2,
+              "euler",
+              1,
+              "simple",
+              1.15
+            ]
+          },
+          {
+            "id": 1268,
+            "type": "CLIPTextEncode",
+            "pos": [
+              149.05370033026472,
+              2070.3395048013817
+            ],
+            "size": [
+              440,
+              160
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 8,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": " ",
+                "localized_name": "clip",
+                "name": "clip",
+                "type": "CLIP",
+                "link": 4960
+              },
+              {
+                "localized_name": "text",
+                "name": "text",
+                "type": "STRING",
+                "widget": {
+                  "name": "text"
+                },
+                "link": 4961
+              }
+            ],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "CONDITIONING",
+                "name": "CONDITIONING",
+                "type": "CONDITIONING",
+                "links": [
+                  4898
+                ]
+              }
+            ],
+            "title": "Positive encode",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.26",
+              "Node name for S&R": "CLIPTextEncode",
+              "widget_ue_connectable": {
+                "text": true
+              }
+            },
+            "widgets_values": [
+              ""
+            ],
+            "color": "#222",
+            "bgcolor": "#000",
+            "shape": 1
+          },
+          {
+            "id": 1269,
+            "type": "easy showAnything",
+            "pos": [
+              -2.2145084045387384,
+              1558.7114880729812
+            ],
+            "size": [
+              396.60437297803287,
+              415.61654738177003
+            ],
+            "flags": {},
+            "order": 9,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": " ",
+                "localized_name": "anything",
+                "name": "anything",
+                "shape": 7,
+                "type": "*",
+                "link": 4965
+              }
+            ],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "output",
+                "name": "output",
+                "type": "*",
+                "links": [
+                  4956,
+                  4961
+                ]
+              }
+            ],
+            "title": "Final prompt preview",
+            "properties": {
+              "cnr_id": "comfyui-easy-use",
+              "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
+              "Node name for S&R": "easy showAnything",
+              "aux_id": "yolain/ComfyUI-Easy-Use",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "Anime style. The final moment captures suspended breath: blue-haired woman holds still, eyes half-lidded yet intensely aware as saliva drips slowly toward the ground — no movement except for subtle shifts caused by wind or anticipation; purple-hair companion stands motionless beside her now fully illuminated under lantern glow that casts soft halos around shoulders and hips accentuated against medieval stone textures rendered in crisp anime detail with bold outlines defining every curve and crevice; warmth of scene lingers as if time itself has paused — glistening skin, flickering shadows on brick walls, vibrant colors saturated to maximum intensity all frozen within this 5-second cinematic frame."
+            ],
+            "color": "#232",
+            "bgcolor": "#353",
+            "shape": 2
+          },
+          {
+            "id": 1286,
+            "type": "Text Concatenate",
+            "pos": [
+              149.61400706775197,
+              1484.7811638298165
+            ],
+            "size": [
+              270,
+              142
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 11,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "text_a",
+                "name": "text_a",
+                "shape": 7,
+                "type": "STRING",
+                "link": 4963
+              },
+              {
+                "localized_name": "text_b",
+                "name": "text_b",
+                "shape": 7,
+                "type": "STRING",
+                "link": 4964
+              },
+              {
+                "localized_name": "text_c",
+                "name": "text_c",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              },
+              {
+                "localized_name": "text_d",
+                "name": "text_d",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  4965
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "was-ns",
+              "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
+              "Node name for S&R": "Text Concatenate",
+              "aux_id": "ltdrdata/was-node-suite-comfyui"
+            },
+            "widgets_values": [
+              "",
+              "false"
+            ]
+          },
+          {
+            "id": 1287,
+            "type": "PrimitiveStringMultiline",
+            "pos": [
+              52.547039307817144,
+              1303.1128880285833
+            ],
+            "size": [
+              336.4285647435929,
+              137.58089636900377
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  4963
+                ]
+              }
+            ],
+            "title": "LoRaS Triggers",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.33",
+              "Node name for S&R": "PrimitiveStringMultiline",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "Anime style. "
+            ],
+            "color": "#232",
+            "bgcolor": "#353",
+            "shape": 2
+          },
+          {
+            "id": 308,
+            "type": "Seed (rgthree)",
+            "pos": [
+              506.46245256064225,
+              1559.0768056376442
+            ],
+            "size": [
+              210,
+              130
+            ],
+            "flags": {},
+            "order": 1,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "dir": 4,
+                "localized_name": "SEED",
+                "name": "SEED",
+                "type": "INT",
+                "links": [
+                  4938
+                ]
+              }
+            ],
+            "title": "2-Seed high",
+            "properties": {
+              "cnr_id": "rgthree-comfy",
+              "ver": "50fcbbf580696025e84b111fde75b7580f56979f",
+              "randomMax": 1125899906842624,
+              "randomMin": 0,
+              "aux_id": "aining2022/ComfyUI_Swwan",
+              "Node name for S&R": "Seed (rgthree)"
+            },
+            "widgets_values": [
+              183201834697162,
+              "",
+              "",
+              ""
+            ]
+          },
+          {
+            "id": 1258,
+            "type": "VAEDecode",
+            "pos": [
+              490.5803750876219,
+              1931.0556882875687
+            ],
+            "size": [
+              210,
+              46
+            ],
+            "flags": {
+              "collapsed": false
+            },
+            "order": 4,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "samples",
+                "name": "samples",
+                "type": "LATENT",
+                "link": 5565
+              },
+              {
+                "localized_name": "vae",
+                "name": "vae",
+                "type": "VAE",
+                "link": 4867
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "IMAGE",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "slot_index": 0,
+                "links": [
+                  5563
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.45",
+              "Node name for S&R": "VAEDecode",
+              "ue_properties": {
+                "version": "7.0.1",
+                "widget_ue_connectable": {}
+              }
+            },
+            "widgets_values": []
+          },
+          {
+            "id": 1253,
+            "type": "ImageBatchMulti",
+            "pos": [
+              260.4060363244324,
+              2336.356833167435
+            ],
+            "size": [
+              270,
+              114
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 2,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image_1",
+                "name": "image_1",
+                "type": "IMAGE",
+                "link": 4861
+              },
+              {
+                "localized_name": "image_2",
+                "name": "image_2",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 5563
+              },
+              {
+                "label": "image0",
+                "localized_name": "images.image0",
+                "name": "images.image0",
+                "type": "IMAGE",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "images",
+                "name": "images",
+                "type": "IMAGE",
+                "links": [
+                  4877
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfyui-kjnodes",
+              "ver": "2f7300dc546ec2d36fa8b0feebe493d41026524c",
+              "Node name for S&R": "ImageBatchMulti",
+              "aux_id": "kijai/ComfyUI-KJNodes",
+              "ue_properties": {
+                "version": "7.0.1",
+                "widget_ue_connectable": {
+                  "inputcount": true
+                }
+              }
+            },
+            "widgets_values": [
+              2,
+              null
+            ],
+            "color": "#233",
+            "bgcolor": "#355"
+          },
+          {
+            "id": 1280,
+            "type": "WanMoeKSamplerAdvanced",
+            "pos": [
+              867.5286137465492,
+              1736.2240136394482
+            ],
+            "size": [
+              312.353515625,
+              426
+            ],
+            "flags": {},
+            "order": 10,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model_high_noise",
+                "name": "model_high_noise",
+                "type": "MODEL",
+                "link": 4932
+              },
+              {
+                "localized_name": "model_low_noise",
+                "name": "model_low_noise",
+                "type": "MODEL",
+                "link": 4933
+              },
+              {
+                "localized_name": "positive",
+                "name": "positive",
+                "type": "CONDITIONING",
+                "link": 4934
+              },
+              {
+                "localized_name": "negative",
+                "name": "negative",
+                "type": "CONDITIONING",
+                "link": 4935
+              },
+              {
+                "localized_name": "latent_image",
+                "name": "latent_image",
+                "type": "LATENT",
+                "link": 4936
+              },
+              {
+                "localized_name": "noise_seed",
+                "name": "noise_seed",
+                "type": "INT",
+                "widget": {
+                  "name": "noise_seed"
+                },
+                "link": 4938
+              },
+              {
+                "localized_name": "steps",
+                "name": "steps",
+                "type": "INT",
+                "widget": {
+                  "name": "steps"
+                },
+                "link": 4939
+              },
+              {
+                "localized_name": "sampler_name",
+                "name": "sampler_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "sampler_name"
+                },
+                "link": 4940
+              },
+              {
+                "localized_name": "scheduler",
+                "name": "scheduler",
+                "type": "COMBO",
+                "widget": {
+                  "name": "scheduler"
+                },
+                "link": 4941
+              },
+              {
+                "localized_name": "sigma_shift",
+                "name": "sigma_shift",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "sigma_shift"
+                },
+                "link": 4942
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "LATENT",
+                "name": "LATENT",
+                "type": "LATENT",
+                "links": [
+                  5564
+                ]
+              }
+            ],
+            "properties": {
+              "aux_id": "stduhpf/ComfyUI-WanMoeKSampler",
+              "ver": "ee8fa8ffb356dc5d9f456a0cdb211e60e543cb59",
+              "Node name for S&R": "WanMoeKSamplerAdvanced"
+            },
+            "widgets_values": [
+              0.9,
+              "enable",
+              0,
+              "fixed",
+              5,
+              1,
+              1,
+              "euler",
+              "simple",
+              8,
+              0,
+              10000,
+              "disable"
+            ]
+          },
+          {
+            "id": 1639,
+            "type": "VRAMCleanup",
+            "pos": [
+              481.7807800339333,
+              1787.0195663987797
+            ],
+            "size": [
+              270,
+              58
+            ],
+            "flags": {},
+            "order": 12,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "input",
+                "name": "input",
+                "type": "*",
+                "link": 5564
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "output",
+                "name": "output",
+                "type": "*",
+                "links": [
+                  5565
+                ]
+              }
+            ],
+            "properties": {
+              "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+              "ver": "00f29d50992b3dd1042dccac8e841254c7dbb044",
+              "Node name for S&R": "VRAMCleanup"
+            },
+            "widgets_values": [
+              "Full Cleanup"
+            ]
+          }
+        ],
+        "groups": [],
+        "links": [
+          {
+            "id": 4857,
+            "origin_id": 1259,
+            "origin_slot": 0,
+            "target_id": 1256,
+            "target_slot": 1,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 4858,
+            "origin_id": 1260,
+            "origin_slot": 0,
+            "target_id": 1256,
+            "target_slot": 3,
+            "type": "IMAGE"
+          },
+          {
+            "id": 4860,
+            "origin_id": 1261,
+            "origin_slot": 0,
+            "target_id": 1260,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 4861,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 1253,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 4862,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 1261,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 4866,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 1256,
+            "target_slot": 2,
+            "type": "VAE"
+          },
+          {
+            "id": 4867,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 1258,
+            "target_slot": 1,
+            "type": "VAE"
+          },
+          {
+            "id": 4869,
+            "origin_id": -10,
+            "origin_slot": 4,
+            "target_id": 1256,
+            "target_slot": 8,
+            "type": "INT"
+          },
+          {
+            "id": 4870,
+            "origin_id": -10,
+            "origin_slot": 5,
+            "target_id": 1256,
+            "target_slot": 9,
+            "type": "INT"
+          },
+          {
+            "id": 4871,
+            "origin_id": -10,
+            "origin_slot": 6,
+            "target_id": 1256,
+            "target_slot": 10,
+            "type": "INT"
+          },
+          {
+            "id": 4872,
+            "origin_id": -10,
+            "origin_slot": 7,
+            "target_id": 1256,
+            "target_slot": 11,
+            "type": "INT"
+          },
+          {
+            "id": 4873,
+            "origin_id": -10,
+            "origin_slot": 8,
+            "target_id": 1256,
+            "target_slot": 12,
+            "type": "FLOAT"
+          },
+          {
+            "id": 4875,
+            "origin_id": -10,
+            "origin_slot": 9,
+            "target_id": 1259,
+            "target_slot": 0,
+            "type": "CLIP"
+          },
+          {
+            "id": 4877,
+            "origin_id": 1253,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 4898,
+            "origin_id": 1268,
+            "origin_slot": 0,
+            "target_id": 1256,
+            "target_slot": 0,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 4932,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 1280,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 4933,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 1280,
+            "target_slot": 1,
+            "type": "MODEL"
+          },
+          {
+            "id": 4934,
+            "origin_id": 1256,
+            "origin_slot": 0,
+            "target_id": 1280,
+            "target_slot": 2,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 4935,
+            "origin_id": 1256,
+            "origin_slot": 1,
+            "target_id": 1280,
+            "target_slot": 3,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 4936,
+            "origin_id": 1256,
+            "origin_slot": 2,
+            "target_id": 1280,
+            "target_slot": 4,
+            "type": "LATENT"
+          },
+          {
+            "id": 4938,
+            "origin_id": 308,
+            "origin_slot": 0,
+            "target_id": 1280,
+            "target_slot": 5,
+            "type": "INT"
+          },
+          {
+            "id": 4939,
+            "origin_id": -10,
+            "origin_slot": 10,
+            "target_id": 1280,
+            "target_slot": 6,
+            "type": "INT"
+          },
+          {
+            "id": 4940,
+            "origin_id": -10,
+            "origin_slot": 11,
+            "target_id": 1280,
+            "target_slot": 7,
+            "type": "COMBO"
+          },
+          {
+            "id": 4941,
+            "origin_id": -10,
+            "origin_slot": 12,
+            "target_id": 1280,
+            "target_slot": 8,
+            "type": "COMBO"
+          },
+          {
+            "id": 4942,
+            "origin_id": -10,
+            "origin_slot": 13,
+            "target_id": 1280,
+            "target_slot": 9,
+            "type": "FLOAT"
+          },
+          {
+            "id": 4944,
+            "origin_id": -10,
+            "origin_slot": 14,
+            "target_id": 1256,
+            "target_slot": 4,
+            "type": "IMAGE"
+          },
+          {
+            "id": 4960,
+            "origin_id": -10,
+            "origin_slot": 9,
+            "target_id": 1268,
+            "target_slot": 0,
+            "type": "CLIP"
+          },
+          {
+            "id": 4961,
+            "origin_id": 1269,
+            "origin_slot": 0,
+            "target_id": 1268,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 4963,
+            "origin_id": 1287,
+            "origin_slot": 0,
+            "target_id": 1286,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 4964,
+            "origin_id": -10,
+            "origin_slot": 15,
+            "target_id": 1286,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 4965,
+            "origin_id": 1286,
+            "origin_slot": 0,
+            "target_id": 1269,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 5563,
+            "origin_id": 1258,
+            "origin_slot": 0,
+            "target_id": 1253,
+            "target_slot": 1,
+            "type": "IMAGE"
+          },
+          {
+            "id": 5564,
+            "origin_id": 1280,
+            "origin_slot": 0,
+            "target_id": 1639,
+            "target_slot": 0,
+            "type": "LATENT"
+          },
+          {
+            "id": 5565,
+            "origin_id": 1639,
+            "origin_slot": 0,
+            "target_id": 1258,
+            "target_slot": 0,
+            "type": "LATENT"
+          }
+        ],
+        "extra": {
+          "workflowRendererVersion": "LG"
+        }
       }
     ]
   },
@@ -14713,10 +17255,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.7657345948177569,
+      "scale": 0.6328385081138491,
       "offset": [
-        1151.6907397233654,
-        525.9330212043023
+        1802.430838376705,
+        787.8157874238847
       ]
     }
   },
