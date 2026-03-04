@@ -13,7 +13,11 @@ ENV PATH=$PATH:$CUDA_HOME/bin
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 
 # Install system dependencies (CUDA already included in base image)
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends software-properties-common \
+    gpg-agent \
+    && add-apt-repository ppa:deadsnakes/ppa && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
     git \
     make \
     wget \
@@ -208,6 +212,61 @@ COMFYUI_DIR="/ComfyUI"
 FILEBROWSER_CONFIG="/filebrowser/.config.json"
 DB_FILE="/filebrowser/database/filebrowser.db"
 
+# Function to update custom nodes
+update_nodes() {
+    echo "🔄 Updating custom nodes..."
+    cd /ComfyUI/custom_nodes
+    
+    # List of custom nodes to update
+    nodes=(
+        "https://github.com/ltdrdata/ComfyUI-Manager.git"
+        "https://github.com/cubiq/ComfyUI_essentials.git"
+        "https://github.com/huchukato/comfy-tagcomplete.git"
+        "https://github.com/huchukato/ComfyUI-QwenVL-Mod.git"
+        "https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto.git"
+        "https://github.com/huchukato/ComfyUI-Upscaler-TensorRT-Auto.git"
+        "https://github.com/huchukato/ComfyUI-HuggingFace.git"
+        "https://github.com/MadiatorLabs/ComfyUI-RunpodDirect.git"
+        "https://github.com/city96/ComfyUI-GGUF.git"
+        "https://github.com/MoonGoblinDev/Civicomfy.git"
+        "https://github.com/Koishi-Star/Euler-Smea-Dyn-Sampler.git"
+        "https://github.com/ltdrdata/was-node-suite-comfyui.git"
+        "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git"
+        "https://github.com/rgthree/rgthree-comfy.git"
+        "https://github.com/yolain/ComfyUI-Easy-Use.git"
+        "https://github.com/kijai/ComfyUI-KJNodes.git"
+        "https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git"
+        "https://github.com/Smirnov75/ComfyUI-mxToolkit.git"
+        "https://github.com/princepainter/ComfyUI-PainterI2V.git"
+        "https://github.com/princepainter/ComfyUI-PainterLongVideo.git"
+        "https://github.com/ashtar1984/comfyui-find-perfect-resolution.git"
+        "https://github.com/huchukato/ComfyUI-Selectors.git"
+        "https://github.com/kijai/ComfyUI-MMAudio.git"
+        "https://github.com/GACLove/ComfyUI-VFI.git"
+        "https://github.com/stduhpf/ComfyUI-WanMoeKSampler.git"
+        "https://github.com/melMass/comfy_mtb.git"
+    )
+    
+    for node_url in "${nodes[@]}"; do
+        node_name=$(basename "$node_url" .git)
+        if [ -d "$node_name" ]; then
+            echo "  🔄 Updating: $node_name"
+            cd "$node_name"
+            git pull origin main 2>/dev/null || git pull origin master 2>/dev/null || echo "  ⚠️ Failed to update $node_name"
+            cd ..
+        else
+            echo "  📥 Installing: $node_name"
+            git clone "$node_url" || echo "  ⚠️ Failed to clone $node_name"
+        fi
+    done
+    
+    # Install requirements for updated nodes
+    echo "📦 Installing updated requirements..."
+    bash -c 'for node_dir in */; do if [ -f "$node_dir/requirements.txt" ]; then echo "Installing requirements for $node_dir..." && /opt/comfyui-env/bin/pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; fi; done'
+    
+    echo "✅ Node update completed"
+}
+
 # Function to download latest workflows
 update_workflows() {
     echo "🔄 Updating workflows from latest versions..."
@@ -289,6 +348,9 @@ echo ""
 
 # Update workflows to latest versions
 update_workflows
+
+# Update custom nodes to latest versions
+update_nodes
 
 # Download essential models
 download_models
