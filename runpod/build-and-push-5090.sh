@@ -11,19 +11,20 @@ echo "🐳 Building ComfyUI-QwenVL-Mod Docker image for RTX 5090..."
 IMAGE_NAME="huchukato/comfyui-qwenvl-runpod"
 TAG="5090"
 DOCKERFILE="Dockerfile"
+PLATFORM="linux/x86_64"
 
-# Build the image
-echo "📦 Building image: ${IMAGE_NAME}:${TAG}"
-docker build -f ${DOCKERFILE} -t ${IMAGE_NAME}:${TAG} .
+# Setup buildx for cross-platform builds
+echo "🔧 Using existing buildx for x86_64 platform..."
+docker buildx use desktop-linux
+docker buildx inspect --bootstrap
+
+# Build the image with platform specification
+echo "📦 Building image: ${IMAGE_NAME}:${TAG} for platform: ${PLATFORM}"
+docker buildx build --platform ${PLATFORM} -f ${DOCKERFILE} -t ${IMAGE_NAME}:${TAG} --load .
 
 # Push to Docker Hub
 echo "🚀 Pushing to Docker Hub..."
 docker push ${IMAGE_NAME}:${TAG}
-
-# Also push as latest for 5090
-echo "🏷️  Tagging and pushing as latest-5090..."
-docker tag ${IMAGE_NAME}:${TAG} ${IMAGE_NAME}:latest-5090
-docker push ${IMAGE_NAME}:latest-5090
 
 echo "✅ Build and push completed!"
 echo "📋 Image: ${IMAGE_NAME}:${TAG}"
