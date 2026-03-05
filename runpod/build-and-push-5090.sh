@@ -27,7 +27,7 @@ docker buildx use desktop-linux
 
 # Build the image with platform specification
 echo "📦 Building image: ${IMAGE_NAME}:${TAG} for platform: ${PLATFORM}"
-docker buildx build --platform ${PLATFORM} -f ${DOCKERFILE} -t ${IMAGE_NAME}:${TAG} --load .
+docker buildx build --builder desktop-linux --platform ${PLATFORM} -f ${DOCKERFILE} -t ${IMAGE_NAME}:${TAG} --load .
 
 # Push to Docker Hub
 echo "🚀 Pushing to Docker Hub..."
