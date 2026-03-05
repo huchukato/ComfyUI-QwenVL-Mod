@@ -13,6 +13,14 @@ TAG="5090"
 DOCKERFILE="Dockerfile"
 PLATFORM="linux/x86_64"
 
+# Check Docker login
+echo "🔐 Checking Docker Hub login..."
+if ! docker info | grep -q "Username"; then
+    echo "❌ Not logged in to Docker Hub. Please run 'docker login' first."
+    exit 1
+fi
+echo "✅ Docker Hub login confirmed"
+
 # Setup buildx for cross-platform builds
 echo "🔧 Using existing buildx for x86_64 platform..."
 docker buildx use desktop-linux
