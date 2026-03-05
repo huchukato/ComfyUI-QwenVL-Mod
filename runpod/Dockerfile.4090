@@ -25,7 +25,7 @@ RUN apt-get update && \
     pkg-config \
     ca-certificates \
     build-essential \
-    python3.12=3.12.13-1+noble1 \
+    python3.12=3.12.13-1+jammy1 \
     python3.12-venv \
     python3.12-dev \
     libglx-mesa0 \
