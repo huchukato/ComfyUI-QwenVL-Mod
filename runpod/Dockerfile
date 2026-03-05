@@ -77,7 +77,7 @@ RUN /opt/comfyui-env/bin/pip install --upgrade --force-reinstall --no-cache-dir 
 # Install ALL ComfyUI custom nodes from VastAI provisioning + RunpodDirect
 RUN cd /ComfyUI/custom_nodes && \
     git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
-    git clone https://github.com/cubiq/ComfyUI_essentials.git && \
+    git clone https://github.com/kijai/ComfyUI_essentials.git && \
     git clone https://github.com/huchukato/comfy-tagcomplete.git && \
     git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git && \
     git clone https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto.git && \
