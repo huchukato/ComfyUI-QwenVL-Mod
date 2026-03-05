@@ -227,7 +227,7 @@ update_nodes() {
     # List of custom nodes to update
     nodes=(
         "https://github.com/ltdrdata/ComfyUI-Manager.git"
-        "https://github.com/cubiq/ComfyUI_essentials.git"
+        "https://github.com/kijai/ComfyUI_essentials.git"
         "https://github.com/huchukato/comfy-tagcomplete.git"
         "https://github.com/huchukato/ComfyUI-QwenVL-Mod.git"
         "https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto.git"
