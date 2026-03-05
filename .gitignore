@@ -79,8 +79,7 @@ npm-debug.log*
 prompt_cache.json
 
 # Personal build scripts and backups (don't commit to shared repo)
-build-and-push-4090.sh
-build-and-push-5090.sh
+# Note: build-and-push scripts are included in runpod-docker branch
 vastai/
 
 # API consulting tools (keep local for client work)
