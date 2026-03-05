@@ -15,7 +15,7 @@ PLATFORM="linux/x86_64"
 
 # Check Docker login
 echo "🔐 Checking Docker Hub login..."
-if ! docker info | grep -q "Username"; then
+if ! docker login 2>&1 | grep -q "Login Succeeded\|Already logged in"; then
     echo "❌ Not logged in to Docker Hub. Please run 'docker login' first."
     exit 1
 fi
