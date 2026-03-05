@@ -22,8 +22,8 @@ fi
 echo "✅ Docker Hub login confirmed"
 
 # Setup buildx for cross-platform builds
-echo "🔧 Using existing buildx for x86_64 platform..."
-docker buildx use desktop-linux
+echo "🔧 Using desktop-linux builder globally..."
+docker buildx use --global desktop-linux
 
 # Build the image with platform specification
 echo "📦 Building image: ${IMAGE_NAME}:${TAG} for platform: ${PLATFORM}"
