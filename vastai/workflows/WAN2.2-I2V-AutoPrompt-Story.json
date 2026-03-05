@@ -1,8 +1,8 @@
 {
   "id": "d40a02f0-8c72-4d49-8df5-3b1302b986f9",
   "revision": 0,
-  "last_node_id": 1619,
-  "last_link_id": 5551,
+  "last_node_id": 1622,
+  "last_link_id": 5566,
   "nodes": [
     {
       "id": 544,
@@ -18,7 +18,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 130,
+      "order": 135,
       "mode": 0,
       "inputs": [
         {
@@ -1248,7 +1248,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 147,
+      "order": 150,
       "mode": 0,
       "inputs": [
         {
@@ -1288,7 +1288,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 148,
+      "order": 151,
       "mode": 0,
       "inputs": [
         {
@@ -1353,146 +1353,6 @@
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
-    },
-    {
-      "id": 1468,
-      "type": "Power Lora Loader (rgthree)",
-      "pos": [
-        -864.5519625446146,
-        -881.6183977657612
-      ],
-      "size": [
-        340.519921875,
-        166
-      ],
-      "flags": {},
-      "order": 127,
-      "mode": 4,
-      "inputs": [
-        {
-          "dir": 3,
-          "name": "model",
-          "type": "MODEL",
-          "link": 5430
-        },
-        {
-          "dir": 3,
-          "name": "clip",
-          "type": "CLIP",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "dir": 4,
-          "name": "MODEL",
-          "shape": 3,
-          "type": "MODEL",
-          "links": [
-            5315
-          ]
-        },
-        {
-          "dir": 4,
-          "name": "CLIP",
-          "shape": 3,
-          "type": "CLIP",
-          "links": null
-        }
-      ],
-      "title": "Lightx2v Lora Low",
-      "properties": {
-        "cnr_id": "rgthree-comfy",
-        "ver": "1.0.2512112053",
-        "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy"
-      },
-      "widgets_values": [
-        {},
-        {
-          "type": "PowerLoraLoaderHeaderWidget"
-        },
-        {
-          "on": true,
-          "lora": "lightx2v_I2V_14B_480p_cfg_step_distill_rank128_bf16.safetensors",
-          "strength": 1.5,
-          "strengthTwo": null
-        },
-        {},
-        ""
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
-      "id": 1467,
-      "type": "Power Lora Loader (rgthree)",
-      "pos": [
-        -860.9489039508642,
-        -1078.997370422012
-      ],
-      "size": [
-        340.519921875,
-        166
-      ],
-      "flags": {},
-      "order": 126,
-      "mode": 4,
-      "inputs": [
-        {
-          "dir": 3,
-          "name": "model",
-          "type": "MODEL",
-          "link": 5429
-        },
-        {
-          "dir": 3,
-          "name": "clip",
-          "type": "CLIP",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "dir": 4,
-          "name": "MODEL",
-          "shape": 3,
-          "type": "MODEL",
-          "links": [
-            5313
-          ]
-        },
-        {
-          "dir": 4,
-          "name": "CLIP",
-          "shape": 3,
-          "type": "CLIP",
-          "links": null
-        }
-      ],
-      "title": "Lightx2v Lora High",
-      "properties": {
-        "cnr_id": "rgthree-comfy",
-        "ver": "1.0.2512112053",
-        "Show Strengths": "Single Strength",
-        "aux_id": "rgthree/rgthree-comfy"
-      },
-      "widgets_values": [
-        {},
-        {
-          "type": "PowerLoraLoaderHeaderWidget"
-        },
-        {
-          "on": true,
-          "lora": "lightx2v_I2V_14B_480p_cfg_step_distill_rank128_bf16.safetensors",
-          "strength": 3,
-          "strengthTwo": null
-        },
-        {},
-        ""
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
     },
     {
       "id": 1486,
@@ -1701,7 +1561,7 @@
         "collapsed": true
       },
       "order": 41,
-      "mode": 0,
+      "mode": 4,
       "inputs": [],
       "outputs": [
         {
@@ -1970,13 +1830,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22_05_02-46-20_00001.mp4",
+            "filename": "wan22_05_10-28-47_00001.mp4",
             "subfolder": "",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 16,
-            "workflow": "wan22_05_02-46-20_00001.png",
-            "fullpath": "/ComfyUI/output/wan22_05_02-46-20_00001.mp4"
+            "workflow": "wan22_05_10-28-47_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/wan22_05_10-28-47_00001.mp4"
           }
         }
       }
@@ -2071,7 +1931,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 135,
+      "order": 131,
       "mode": 0,
       "inputs": [
         {
@@ -2098,41 +1958,6 @@
       "bgcolor": "#353"
     },
     {
-      "id": 1476,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -1315.1571534374598,
-        827.6290372386687
-      ],
-      "size": [
-        340,
-        60
-      ],
-      "flags": {},
-      "order": 45,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Lightning LoRaS",
-      "properties": {
-        "matchColors": "",
-        "matchTitle": "lightx2v",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 1520,
       "type": "MarkdownNote",
       "pos": [
@@ -2144,7 +1969,7 @@
         141.47533958757617
       ],
       "flags": {},
-      "order": 46,
+      "order": 45,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -2168,7 +1993,7 @@
         58
       ],
       "flags": {},
-      "order": 47,
+      "order": 46,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2203,7 +2028,7 @@
         58
       ],
       "flags": {},
-      "order": 48,
+      "order": 47,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2278,7 +2103,7 @@
         110
       ],
       "flags": {},
-      "order": 49,
+      "order": 48,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -2353,7 +2178,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 50,
+      "order": 49,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2387,7 +2212,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 51,
+      "order": 50,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2461,7 +2286,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 52,
+      "order": 51,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2535,7 +2360,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 53,
+      "order": 52,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2569,7 +2394,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 54,
+      "order": 53,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2603,7 +2428,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 55,
+      "order": 54,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2635,7 +2460,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 56,
+      "order": 55,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2667,7 +2492,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 57,
+      "order": 56,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2688,54 +2513,6 @@
       "bgcolor": "#29699c"
     },
     {
-      "id": 1466,
-      "type": "MarkdownNote",
-      "pos": [
-        -1860,
-        60
-      ],
-      "size": [
-        460,
-        290
-      ],
-      "flags": {},
-      "order": 58,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "AUTOPROMPT | MMAUDIO",
-      "properties": {},
-      "widgets_values": [
-        "## 🔖 AUTOPROMPT\n\nInstall this modified node that allows you to use an uncensored QwenVL model\n\n\n`git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod`\n\n----\n\n## 🔈 MMAUDIO \n\nAll of these files should be downloaded to `ComfyUI\\models\\mmaudio`\n\n[🔗MMAudio Model](https://huggingface.co/phazei/NSFW_MMaudio/resolve/main/mmaudio_large_44k_nsfw_gold_8.5k_final_fp16.safetensors)\n\n[🔗MMAudio VAE](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/5984623e6b436818c6ff287ef6eec93e3e05aa3f/mmaudio_vae_44k_fp16.safetensors)\n\n[🔗MMAudio Synchformer](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/main/mmaudio_synchformer_fp16.safetensors)\n\n[🔗MMAudio CLIP](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/main/apple_DFN5B-CLIP-ViT-H-14-384_fp16.safetensors)"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 1529,
-      "type": "MarkdownNote",
-      "pos": [
-        -1860,
-        400
-      ],
-      "size": [
-        460,
-        420
-      ],
-      "flags": {},
-      "order": 59,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "QWEN3-VL GGUF",
-      "properties": {},
-      "widgets_values": [
-        "## 🔖 To use the Qwen3-VL GGUF Quantized models you have to install *llama-cpp-python*\n\n\n**🛑 STOP COMFYUI**\n\n**📂 Activate the ComfyUI Virtual Enviroment**\n\nIn your ComfyUI root installation folder type:\non Windows:\n\nCommand Prompt:\n```\n\\venv\\Scripts\\activate.bat\n```\nor Power Shell:\n```\n\\venv\\Scripts\\Activate.ps1\n```\non Linux:\n```\n. /venv/bin/activate\n```\n**⬇️ Install llama-cpp-python**\n```\npip install --upgrade --force-reinstall --no-cache-dir \"llama-cpp-python @ git+https://github.com/JamePeng/llama-cpp-python.git\"\n```\n**🔄 Restart ComfyUI and enjoy**\n\n"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
       "id": 1543,
       "type": "GetNode",
       "pos": [
@@ -2749,7 +2526,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 60,
+      "order": 57,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2783,7 +2560,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 61,
+      "order": 58,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2855,7 +2632,7 @@
         58
       ],
       "flags": {},
-      "order": 62,
+      "order": 59,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2893,7 +2670,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 63,
+      "order": 60,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2927,7 +2704,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 64,
+      "order": 61,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2959,7 +2736,7 @@
         110
       ],
       "flags": {},
-      "order": 65,
+      "order": 62,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3006,7 +2783,7 @@
         82
       ],
       "flags": {},
-      "order": 66,
+      "order": 63,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3162,30 +2939,6 @@
       "bgcolor": "#533"
     },
     {
-      "id": 1561,
-      "type": "MarkdownNote",
-      "pos": [
-        -1850,
-        880
-      ],
-      "size": [
-        450.75994318181824,
-        196.61221590909076
-      ],
-      "flags": {},
-      "order": 67,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "🎨 Visual Style Detection",
-      "properties": {},
-      "widgets_values": [
-        "**Enhanced Style Detection: Comprehensive support for artistic styles:**\n\n- Anime style\n\n- 3D cartoon\n\n- Pixel art\n\n- Puppet animation\n\n- 3D game style\n\n- Claymation\n\n- Watercolor\n\n- Black and white animation\n\n- Oil painting style\n\n- Felt style\n\n- Tilt-shift photography\n\n- Time-lapse photography\n\n"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 919,
       "type": "UnetLoaderGGUF",
       "pos": [
@@ -3197,7 +2950,7 @@
         58
       ],
       "flags": {},
-      "order": 68,
+      "order": 64,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -3232,7 +2985,7 @@
         58
       ],
       "flags": {},
-      "order": 69,
+      "order": 65,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -3269,7 +3022,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 70,
+      "order": 66,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3775,7 +3528,7 @@
         110
       ],
       "flags": {},
-      "order": 71,
+      "order": 67,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3964,7 +3717,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 72,
+      "order": 68,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3998,7 +3751,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 73,
+      "order": 69,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4032,7 +3785,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 74,
+      "order": 70,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4066,7 +3819,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 75,
+      "order": 71,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4125,7 +3878,7 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "(At 0 seconds: The two anime characters remain frozen in their intimate positions from previous shot — purple-haired woman on the left and blue-haired companion on the right. Their expressions are now more focused as if anticipating movement while sunlight continues filtering through arched windows.) (At 1 seconds: Slow-motion frames capture droplets of sweat sliding down each cheek, accentuated by high-contrast anime shading that emphasizes muscle definition beneath their skin tone gradients.) (At 2 seconds: Camera tilts upward slightly to reveal the ceiling beams and ornate molding above them; shadows cast across wooden bookshelves grow darker as afternoon light fades subtly into evening hues in background windows.) (At 3 seconds: The women’s eyes blink slowly, pupils dilated under warm ambient lighting. Their tongues remain extended outward with slight tremors — a cinematic pause emphasizing emotional intensity and stylized anime motion design.) (At 4 seconds: A single drop of moisture falls from the blue-haired woman's chin onto her gloved hand below; lens flare glints off metallic buckles on leather straps as camera zooms in closer to their torsos.) (At 5 seconds: Their bodies shift minutely toward each other — shoulders pressing gently, breasts trembling slightly under soft light. The composition remains tight and centered with shallow focus locking onto facial expressions.)"
+        "(At 0 seconds: The same blonde woman remains seated in photorealistic style as warm stage lights illuminate her glossy black bikini. She maintains intense eye contact while subtly adjusting grip on the straps under dramatic blue-toned backlighting.) (At 1 seconds: Camera pans slightly to right revealing more of dark wooden floorboards and out-of-focus equipment behind, emphasizing isolation within moody environment lit by orange spotlights casting soft glow across scene.) (At 2 seconds: She tilts head ever so minutely toward viewer while lips remain parted — enhancing sensual tension under consistent lighting that highlights sweat glistening on skin near collarbone area. Depth of field keeps focus sharply locked onto her face and upper torso.) (At 3 seconds: The camera begins a slow forward dolly movement bringing closer view to the erect penis emerging from between breasts, capturing texture details like moisture droplets falling down chest under mixed warm-cool lighting conditions.) (At 4 seconds: As she holds pose with slight body sway indicated by motion blur in her hands gripping bikini top straps — maintaining direct eye contact while background remains softly blurred enhancing focus on subject’s expression and anatomy detail.) (At 5 seconds: Final frame zooms slightly tighter focusing exclusively on facial features and upper torso, emphasizing realistic skin texture under ambient lighting from stage equipment casting directional shadows across scene.)"
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -4169,7 +3922,7 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "(At 0 seconds: Both women’s eyes lock again directly at the viewer as they hold steady positions; purple-haired woman's tongue flicks out once more while blue-haired companion keeps her gaze fixed.) (At 1 seconds: Subtle camera shake simulates breathy motion blur around their necklines and collarbones, emphasizing anime-style skin texture with high-detail rendering of pores and sheen under natural lighting conditions.) (At 2 seconds: The clock hanging behind them ticks once — a silent cue for passage of time without changing the scene’s frozen moment. Bookshelf colors appear slightly desaturated compared to earlier frames due to shifting light quality near sunset hourglass window angles.) (At 3 seconds: Their lips part further, revealing glossy inner mouths and tongue tips glowing faintly under warm ambient glow; camera pans slowly across their chests following subtle muscle contractions beneath skin surface layers.) (At 4 seconds: The background becomes slightly out of focus as depth-of-field narrows to emphasize only the two figures in foreground. Shadows grow longer along floorboards near windows, indicating transition toward evening twilight hour.) (At 5 seconds: Both characters remain motionless yet emotionally charged — eyes half-closed with slight eyelid fluttering suggesting internal tension building between them; camera holds final frame for full duration.)"
+        "(At 0 seconds: The blonde woman sits upright in photorealistic style with glossy black bikini top reflecting light. She looks directly into camera while maintaining slight body tension visible through subtle muscle definition beneath smooth skin.) (At 1 seconds: Camera begins slow upward tilt capturing more of her face — highlighting bold yellow eyes and parted lips under dramatic lighting from orange stage lights casting shadows across cheekbones.) (At 2 seconds: Slight shift in posture causes droplets to fall down chest as she adjusts grip on bikini top straps, maintaining steady gaze while background remains dimly lit with visible equipment silhouettes against wooden floorboards.) (At 3 seconds: Camera moves slightly closer focusing primarily on upper torso — capturing texture details of skin and reflective surface of black latex under warm light sources casting long shadows across scene.) (At 4 seconds: She leans forward ever so subtly causing more droplets to fall downward while maintaining intense eye contact with viewer, reinforcing intimacy despite static framing within moody studio environment lit by stage lamps.) (At 5 seconds: Final frame holds steady as camera zooms in slightly enhancing realism — capturing every detail of skin texture and reflective surface under mixed lighting from foreground spotlights casting directional shadows across scene.)"
       ],
       "color": "#232",
       "bgcolor": "#353"
@@ -4213,34 +3966,10 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "(At 0 seconds: The scene returns to its initial composition from first prompt — purple-haired woman on left, blue-haired companion on right. They both maintain identical expressions and positions as before under consistent lighting conditions.) (At 1 seconds: Camera zooms out slightly revealing more of the library environment including additional bookshelves in background while keeping focus tight around their torsos and facial features.) (At 2 seconds: A faint breeze ruffles strands of blue hair across one shoulder, causing slight movement blur captured within anime-style motion lines. Book spines behind them shimmer subtly under changing light quality throughout day’s progression toward dusk.) (At 3 seconds: Their eyes continue to stare directly at viewer — pupils dilated slightly wider than before indicating heightened emotional state or anticipation for next action sequence.) (At 4 seconds: The camera begins a slow circular pan around their bodies, maintaining focus on synchronized movements of tongue-lapping and breast-gripping gestures while background elements blur into soft bokeh effect.) (At 5 seconds: Final freeze-frame captures the moment perfectly — both characters locked in sensual embrace with eyes wide open, mouths slightly parted. The entire scene is rendered entirely within anime-style aesthetic consistency including color palette gradients, lighting design choices, and motion dynamics throughout all five-second intervals.)"
+        "(At 0 seconds: The blonde woman remains seated in photorealistic style with glossy black bikini top reflecting light. She maintains intense eye contact while subtle body movement is suggested through slight motion blur visible near hands gripping straps.) (At 1 seconds: Camera pans slightly to left revealing more of dark wooden floorboards and out-of-focus equipment behind, emphasizing isolation within moody environment lit by orange spotlights casting soft glow across scene.) (At 2 seconds: She tilts head ever so minutely toward viewer while lips remain parted — enhancing sensual tension under consistent lighting that highlights sweat glistening on skin near collarbone area. Depth of field keeps focus sharply locked onto her face and upper torso.) (At 3 seconds: The camera begins a slow forward dolly movement bringing closer view to the erect penis emerging from between breasts, capturing texture details like moisture droplets falling down chest under mixed warm-cool lighting conditions.) (At 4 seconds: As she holds pose with slight body sway indicated by motion blur in her hands gripping bikini top straps — maintaining direct eye contact while background remains softly blurred enhancing focus on subject’s expression and anatomy detail.) (At 5 seconds: Final frame zooms slightly tighter focusing exclusively on facial features and upper torso, emphasizing realistic skin texture under ambient lighting from stage equipment casting directional shadows across scene.)"
       ],
       "color": "#232",
       "bgcolor": "#353"
-    },
-    {
-      "id": 301,
-      "type": "MarkdownNote",
-      "pos": [
-        -1857.1331554934236,
-        -1124.7848181835468
-      ],
-      "size": [
-        460,
-        1130
-      ],
-      "flags": {},
-      "order": 76,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "README",
-      "properties": {},
-      "widgets_values": [
-        "# WAN 2.2 NSFW I2V LONG VIDEO STORY with AUTOPROMPT, MMAUDIO and GGUF support \n\n## 🖥️ Civitai Model \n\n⚙️ **GGUF VERSION**\n\n*Credits to* [taek75799](https://civitai.com/user/taek75799)\n\n- [🔗 NSFW V2 Q6 K High](https://civitai.com/models/2053259?modelVersionId=2524233)\n- [🔗 NSFW V2 Q6 K Low](https://civitai.com/models/2053259?modelVersionId=2524236)\n- [🔗 NSFW V2 Q8 High](https://civitai.com/models/2053259?modelVersionId=2584698)\n- [🔗 NSFW V2 Q8 Low](https://civitai.com/models/2053259?modelVersionId=2584707)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou)\n\n- [🔗 WAN REMIX v2.1 Q6 K High](https://huggingface.co/huchukato/Wan2.2-Remix-I2V-v2.1-GGUF/resolve/main/High/wan22RemixT2VI2V_i2vHighV21-Q6_K.gguf)\n- [🔗 WAN REMIX v2.1 Q6 K Low](https://huggingface.co/huchukato/Wan2.2-Remix-I2V-v2.1-GGUF/resolve/main/Low/wan22RemixT2VI2V_i2vLowV21-Q6_K.gguf)\n- [🔗 WAN REMIX v2.1 Q8 High](https://huggingface.co/huchukato/Wan2.2-Remix-I2V-v2.1-GGUF/resolve/main/High/wan22RemixT2VI2V_i2vHighV21-Q8_0.gguf)\n- [🔗 WAN REMIX v.2.1 Q8 Low](https://huggingface.co/huchukato/Wan2.2-Remix-I2V-v2.1-GGUF/resolve/main/Low/wan22RemixT2VI2V_i2vLowV21-Q8_0.gguf)\n\n---\n\n## Text Encoders\n- **FP8**: [🔗 umt5_xxl_fp8 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors)\n- **FP16**: [🔗 umt5_xxl_fp16 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors)\n- **NSFW FP8**: [🔗 nsfw_wan_umt5-xxl_fp8_scaled](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors)\n- **NSFW BF16**: [🔗 nsfw_wan_umt5-xxl_bf16](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_bf16.safetensors)\n\n⚙️ **GGUF VERSION**\n- **Q6 K**: [🔗 umt5-xxl-encoder-Q6_K](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q6_K.gguf)\n- **Q8**: [🔗 umt5-xxl-encoder-Q8_0](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q8_0.gguf)\n\n## VAE\n- **BF16:**: [🔗 wan_2.1_vae](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors)\n- **FP32:**: [🔗 wan_2.1_fp32_vae](https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors)\n\n## UPSCALE MODEL\n\n- [🔗 2xLexicaRRDBNet](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth)\n- [🔗 2xLexicaRRDBNet_Sharp](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth)\n\n\n---\n\n# 🎬 Motion Settings\n\n## Motion Amplitude\n*Motion intensity multiplier* \n- **1.0** = normal\n- **1.15** = recommended  \n**Range:** 1.0 – 2.0\n\n## Motion Frames\n*Number of trailing frames from `previous_video` used as motion reference* \n\n**Default:** 5\n\n---\n\n# 🎨 Color Strenght\n\nControls color drift correction strength.\n\n- **0.0** → no color issues  \n- **0.01 – 0.05** → slight drift  \n- **0.1 – 0.15** → strong shift  \n- **0.2 – 0.3** → severe drift\n"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
     },
     {
       "id": 1306,
@@ -4256,7 +3985,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 77,
+      "order": 72,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4290,7 +4019,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 78,
+      "order": 73,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4324,7 +4053,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 79,
+      "order": 74,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4358,7 +4087,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 80,
+      "order": 75,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4392,7 +4121,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 81,
+      "order": 76,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4426,7 +4155,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 82,
+      "order": 77,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4460,7 +4189,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 83,
+      "order": 78,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4494,7 +4223,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 84,
+      "order": 79,
       "mode": 4,
       "inputs": [
         {
@@ -4536,7 +4265,7 @@
         60
       ],
       "flags": {},
-      "order": 85,
+      "order": 80,
       "mode": 4,
       "inputs": [],
       "outputs": [
@@ -4683,6 +4412,1795 @@
       "bgcolor": "#535"
     },
     {
+      "id": 1425,
+      "type": "GetNode",
+      "pos": [
+        868.1046877846868,
+        1150.6278539567663
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 81,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5526
+          ]
+        }
+      ],
+      "title": "Get_upscale",
+      "properties": {},
+      "widgets_values": [
+        "upscale"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1609,
+      "type": "VRAMCleanup",
+      "pos": [
+        874.2882951863082,
+        1208.0022987545594
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 126,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "input",
+          "type": "*",
+          "link": 5526
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5527
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+        "ver": "d1230b6b6ce4168cee2afcb90ff3bc66dee51753",
+        "Node name for S&R": "VRAMCleanup"
+      },
+      "widgets_values": [
+        "Full Cleanup"
+      ]
+    },
+    {
+      "id": 1513,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -1315.1571534374598,
+        697.6290372386688
+      ],
+      "size": [
+        340,
+        82
+      ],
+      "flags": {},
+      "order": 82,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "FP8 / GGUF",
+      "properties": {
+        "matchColors": "green",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1439,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -1319.6419900225806,
+        932.2966128996643
+      ],
+      "size": [
+        340,
+        70
+      ],
+      "flags": {},
+      "order": 83,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Previews",
+      "properties": {
+        "matchColors": "",
+        "matchTitle": "QWEN",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 1533,
+      "type": "UpscalerTensorrt",
+      "pos": [
+        -463.17374594307717,
+        1623.986281927873
+      ],
+      "size": [
+        270,
+        76
+      ],
+      "flags": {},
+      "order": 121,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5428
+        },
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "link": 5399
+        }
+      ],
+      "outputs": [
+        {
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            5523
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "yuvraj108c/ComfyUI-Upscaler-Tensorrt",
+        "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
+        "Node name for S&R": "UpscalerTensorrt",
+        "cnr_id": "ComfyUI-Upscaler-Tensorrt"
+      },
+      "widgets_values": [
+        "2x",
+        1024,
+        1024
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 1545,
+      "type": "GetNode",
+      "pos": [
+        -892.5537530590451,
+        789.4070340641088
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 84,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5412
+          ]
+        }
+      ],
+      "title": "Get_finalvideo",
+      "properties": {},
+      "widgets_values": [
+        "finalvideo"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1544,
+      "type": "SetNode",
+      "pos": [
+        -876.1955766448439,
+        927.2394702342656
+      ],
+      "size": [
+        210,
+        34
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 148,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "link": 5410
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Set_colormatch",
+      "properties": {
+        "previousName": ""
+      },
+      "widgets_values": [
+        "colormatch"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 923,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -1320,
+        1060
+      ],
+      "size": [
+        340,
+        120
+      ],
+      "flags": {},
+      "order": 85,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Video Lenght",
+      "properties": {
+        "matchColors": "",
+        "matchTitle": "VIDEO",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1592,
+      "type": "easy showAnything",
+      "pos": [
+        215.57104769031514,
+        -1400.4761342710021
+      ],
+      "size": [
+        420,
+        180
+      ],
+      "flags": {},
+      "order": 142,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 5479
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5480
+          ]
+        }
+      ],
+      "title": "Prompt 1",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "(At 0 seconds: A photorealistic close-up of a blonde woman with intricate braids and shaved sides, wearing a glossy black bikini top. She gazes intensely at the camera while holding her chest as an erect penis emerges from between her breasts. Warm stage lights cast dramatic shadows on wooden floorboards in the background.) (At 1 seconds: The camera slowly pushes forward slightly as she subtly shifts weight, maintaining eye contact with intense yellow eyes and a parted mouth showing glossy lips. A single drop of sweat or liquid glistens near her left cheek under cool blue backlighting from stage lamps.) (At 2 seconds: Her hands grip the straps of her bikini top more firmly while slight motion blur indicates subtle body movement as she holds pose against dimly lit, moody studio lighting with visible equipment in background. The glossy texture reflects light across skin and fabric creating high contrast shadows.) (At 3 seconds: Camera angle tilts slightly downward to emphasize anatomy details — a small white mark on her right shoulder blade and the wetness of lubricant dripping from below nipple area onto chest while maintaining direct eye contact with lens.) (At 4 seconds: The woman’s expression intensifies as she leans forward ever so slightly, causing more droplets to fall down torso under consistent warm light sources casting long shadows across floorboards behind her. Her gaze remains locked on viewer creating intimate connection despite static framing.) (At 5 seconds: Final frame holds steady with slight camera zoom-in enhancing realism — capturing every detail of skin texture and reflective surface of black latex top, reinforcing moody atmosphere created by mixed lighting from foreground spotlights.)"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1608,
+      "type": "VRAMCleanup",
+      "pos": [
+        524.0125677962775,
+        1172.5840013333038
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 115,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "input",
+          "type": "*",
+          "link": 5524
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5525
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+        "ver": "d1230b6b6ce4168cee2afcb90ff3bc66dee51753",
+        "Node name for S&R": "VRAMCleanup"
+      },
+      "widgets_values": [
+        "Full Cleanup"
+      ]
+    },
+    {
+      "id": 1611,
+      "type": "VRAMCleanup",
+      "pos": [
+        1404.0750642312375,
+        1146.0015338247433
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 113,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "input",
+          "type": "*",
+          "link": 5529
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5530
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+        "ver": "d1230b6b6ce4168cee2afcb90ff3bc66dee51753",
+        "Node name for S&R": "VRAMCleanup"
+      },
+      "widgets_values": [
+        "Full Cleanup"
+      ]
+    },
+    {
+      "id": 1351,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        1833.7640331515934,
+        1096.9218284609174
+      ],
+      "size": [
+        365.62743092932715,
+        334
+      ],
+      "flags": {},
+      "order": 164,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5278
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 5094
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": null
+        }
+      ],
+      "title": "MMAudio",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "6e7f63867584bb1fb4944d36172e7f98436da9a1",
+        "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+      },
+      "widgets_values": {
+        "frame_rate": 24,
+        "loop_count": 0,
+        "filename_prefix": "MMAudio\\MMAudio",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "MMAudio\\MMAudio_00001-audio.mp4",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/h264-mp4",
+            "frame_rate": 24,
+            "workflow": "MMAudio\\MMAudio_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/MMAudio\\MMAudio_00001-audio.mp4"
+          },
+          "muted": false
+        }
+      },
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1404,
+      "type": "RIFEInterpolation",
+      "pos": [
+        1629.4168061112105,
+        1146.0310009931125
+      ],
+      "size": [
+        270,
+        178
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 137,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5530
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            5277,
+            5278,
+            5533
+          ]
+        }
+      ],
+      "title": "24FPS",
+      "properties": {
+        "aux_id": "GACLove/ComfyUI-VFI",
+        "ver": "6176a430f12cd16003f4664c1e3c6af8e96cc3c6",
+        "Node name for S&R": "RIFEInterpolation"
+      },
+      "widgets_values": [
+        16,
+        24,
+        1,
+        "flownet.pkl",
+        8,
+        true
+      ]
+    },
+    {
+      "id": 1597,
+      "type": "AutoLoadRifeTensorrtModel",
+      "pos": [
+        499.2303377876616,
+        1230.165069715474
+      ],
+      "size": [
+        322.5669921875,
+        106
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 86,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "custom_config",
+          "shape": 7,
+          "type": "RIFE_RESOLUTION_CONFIG",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "rife_trt_model",
+          "type": "RIFE_TRT_MODEL",
+          "links": [
+            5490
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+        "ver": "b55f69970d666949232b16b31e473fc879b5a51d",
+        "Node name for S&R": "AutoLoadRifeTensorrtModel"
+      },
+      "widgets_values": [
+        "rife49_ensemble_True_scale_1_sim",
+        "fp16",
+        "large"
+      ]
+    },
+    {
+      "id": 1612,
+      "type": "VRAMCleanup",
+      "pos": [
+        2318.145240747929,
+        1112.5797873433942
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 156,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "input",
+          "type": "*",
+          "link": 5533
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            5535
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+        "ver": "d1230b6b6ce4168cee2afcb90ff3bc66dee51753",
+        "Node name for S&R": "VRAMCleanup"
+      },
+      "widgets_values": [
+        "Full Cleanup"
+      ]
+    },
+    {
+      "id": 1613,
+      "type": "AutoLoadRifeTensorrtModel",
+      "pos": [
+        2320.7040581413976,
+        1196.6223489705276
+      ],
+      "size": [
+        322.5669921875,
+        106
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 87,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "custom_config",
+          "shape": 7,
+          "type": "RIFE_RESOLUTION_CONFIG",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "rife_trt_model",
+          "type": "RIFE_TRT_MODEL",
+          "links": [
+            5534
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+        "ver": "b55f69970d666949232b16b31e473fc879b5a51d",
+        "Node name for S&R": "AutoLoadRifeTensorrtModel"
+      },
+      "widgets_values": [
+        "rife49_ensemble_True_scale_1_sim",
+        "fp16",
+        "large"
+      ]
+    },
+    {
+      "id": 1614,
+      "type": "AutoRifeTensorrt",
+      "pos": [
+        2348.5042546045584,
+        1268.0786607113885
+      ],
+      "size": [
+        321.8046875,
+        150
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 165,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "link": 5535
+        },
+        {
+          "name": "rife_trt_model",
+          "type": "RIFE_TRT_MODEL",
+          "link": 5534
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5536
+          ]
+        }
+      ],
+      "title": "MMAUDIO50FPS",
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+        "ver": "b55f69970d666949232b16b31e473fc879b5a51d",
+        "Node name for S&R": "AutoRifeTensorrt"
+      },
+      "widgets_values": [
+        100,
+        2,
+        false
+      ]
+    },
+    {
+      "id": 1374,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        2248.3800531125335,
+        1101.8252081572448
+      ],
+      "size": [
+        373.69577558024,
+        334
+      ],
+      "flags": {},
+      "order": 167,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5536
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 5117
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": null
+        }
+      ],
+      "title": "MMAudio",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "6e7f63867584bb1fb4944d36172e7f98436da9a1",
+        "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+      },
+      "widgets_values": {
+        "frame_rate": 48,
+        "loop_count": 0,
+        "filename_prefix": "MMAudio\\MMAudio50fps",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "MMAudio\\MMAudio50fps_00002-audio.mp4",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/h264-mp4",
+            "frame_rate": 48,
+            "workflow": "MMAudio\\MMAudio50fps_00002.png",
+            "fullpath": "/workspace/ComfyUI/output/MMAudio\\MMAudio50fps_00002-audio.mp4"
+          },
+          "muted": false
+        }
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 1357,
+      "type": "975e3c19-bc32-4db8-b06f-63d1a4aede97",
+      "pos": [
+        1208.094073649352,
+        1095.9983112072152
+      ],
+      "size": [
+        550.8366757812496,
+        443.2323554687496
+      ],
+      "flags": {},
+      "order": 155,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5277
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            5094,
+            5117
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "1348",
+            "duration"
+          ],
+          [
+            "1348",
+            "prompt"
+          ],
+          [
+            "1348",
+            "negative_prompt"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.9.1"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 1437,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -1320,
+        1400
+      ],
+      "size": [
+        340,
+        106
+      ],
+      "flags": {},
+      "order": 88,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "MMAUDIO",
+      "properties": {
+        "matchColors": "yellow",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 1598,
+      "type": "AutoRifeTensorrt",
+      "pos": [
+        912.6232887717317,
+        1349.7790148696088
+      ],
+      "size": [
+        321.8046875,
+        150
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 147,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "link": 5527
+        },
+        {
+          "name": "rife_trt_model",
+          "type": "RIFE_TRT_MODEL",
+          "link": 5495
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5497
+          ]
+        }
+      ],
+      "title": "60FPS",
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+        "ver": "b55f69970d666949232b16b31e473fc879b5a51d",
+        "Node name for S&R": "AutoRifeTensorrt"
+      },
+      "widgets_values": [
+        100,
+        4,
+        false
+      ]
+    },
+    {
+      "id": 1596,
+      "type": "AutoRifeTensorrt",
+      "pos": [
+        501.95300150650706,
+        1294.5060734411645
+      ],
+      "size": [
+        321.8046875,
+        150
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 138,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "link": 5525
+        },
+        {
+          "name": "rife_trt_model",
+          "type": "RIFE_TRT_MODEL",
+          "link": 5490
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5493
+          ]
+        }
+      ],
+      "title": "30FPS",
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+        "ver": "b55f69970d666949232b16b31e473fc879b5a51d",
+        "Node name for S&R": "AutoRifeTensorrt"
+      },
+      "widgets_values": [
+        100,
+        2,
+        false
+      ]
+    },
+    {
+      "id": 1060,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        827.5993831373657,
+        1088.1332696103595
+      ],
+      "size": [
+        303.86366907905494,
+        334
+      ],
+      "flags": {},
+      "order": 162,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5497
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": null
+        }
+      ],
+      "title": "60FPS",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "1.7.2",
+        "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {}
+        }
+      },
+      "widgets_values": {
+        "frame_rate": 64,
+        "loop_count": 0,
+        "filename_prefix": "wan22_60FPS_%date:dd_hh-mm-ss%",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 18,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "wan22_60FPS_07_05-17-49_00001.mp4",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/h264-mp4",
+            "frame_rate": 64,
+            "workflow": "wan22_60FPS_07_05-17-49_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/wan22_60FPS_07_05-17-49_00001.mp4"
+          },
+          "muted": false
+        }
+      },
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 1314,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        456.2794569138482,
+        1084.0351979345576
+      ],
+      "size": [
+        303.86366907905494,
+        760.8926095695344
+      ],
+      "flags": {},
+      "order": 157,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5493
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": null
+        }
+      ],
+      "title": "30FPS",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "1.7.2",
+        "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {}
+        }
+      },
+      "widgets_values": {
+        "frame_rate": 32,
+        "loop_count": 0,
+        "filename_prefix": "wan22_30FPS_%date:dd_hh-mm-ss%",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 18,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "wan22_30FPS_05_10-28-47_00001.mp4",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/h264-mp4",
+            "frame_rate": 32,
+            "workflow": "wan22_30FPS_05_10-28-47_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/wan22_30FPS_05_10-28-47_00001.mp4"
+          },
+          "muted": false
+        }
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 1445,
+      "type": "FindPerfectResolution",
+      "pos": [
+        -900,
+        -290
+      ],
+      "size": [
+        300,
+        332
+      ],
+      "flags": {},
+      "order": 116,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 5294
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            5292
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            5293
+          ]
+        },
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "mask_output",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "resolution_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "aux_id": "ashtar1984/comfyui-find-perfect-resolution",
+        "ver": "b8ee6c1872e796329bffbcbf53a5207aaf964bdb",
+        "Node name for S&R": "FindPerfectResolution"
+      },
+      "widgets_values": [
+        480,
+        832,
+        16,
+        false,
+        "lanczos",
+        "none",
+        "#000000"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 647,
+      "type": "SetNode",
+      "pos": [
+        -799.990724889831,
+        84.40355840840336
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 128,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "link": 4978
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Set_LENGHT",
+      "properties": {
+        "previousName": "LENGHT"
+      },
+      "widgets_values": [
+        "LENGHT"
+      ],
+      "color": "#1b4669",
+      "bgcolor": "#29699c"
+    },
+    {
+      "id": 1282,
+      "type": "mxSlider",
+      "pos": [
+        -900,
+        70
+      ],
+      "size": [
+        300,
+        30
+      ],
+      "flags": {},
+      "order": 89,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "INT",
+          "links": [
+            4978
+          ]
+        }
+      ],
+      "title": "Lenght",
+      "properties": {
+        "cnr_id": "comfyui-mxtoolkit",
+        "ver": "7f7a0e584f12078a1c589645d866ae96bad0cc35",
+        "Node name for S&R": "mxSlider",
+        "value": 81,
+        "min": 0,
+        "max": 200,
+        "step": 1,
+        "decimals": 0,
+        "snap": true,
+        "aux_id": "Smirnov75/ComfyUI-mxToolkit"
+      },
+      "widgets_values": [
+        81,
+        81,
+        0
+      ],
+      "color": "#233",
+      "bgcolor": "#355",
+      "shape": 2
+    },
+    {
+      "id": 1284,
+      "type": "SetNode",
+      "pos": [
+        -800,
+        160
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 134,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "link": 4979
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Set_steps",
+      "properties": {
+        "previousName": "steps"
+      },
+      "widgets_values": [
+        "steps"
+      ],
+      "color": "#1b4669",
+      "bgcolor": "#29699c"
+    },
+    {
+      "id": 610,
+      "type": "SetNode",
+      "pos": [
+        -856.1679482624925,
+        262.2067885359563
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 129,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "link": 2358
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Set_MOTION FRAME",
+      "properties": {
+        "previousName": "MOTION FRAME"
+      },
+      "widgets_values": [
+        "MOTION FRAME"
+      ],
+      "color": "#1b4669",
+      "bgcolor": "#29699c"
+    },
+    {
+      "id": 1617,
+      "type": "SetNode",
+      "pos": [
+        -803.8305216087354,
+        358.3853418149683
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 130,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "link": 5546
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Set_colorstr",
+      "properties": {
+        "previousName": "colorstr"
+      },
+      "widgets_values": [
+        "colorstr"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1619,
+      "type": "GetNode",
+      "pos": [
+        -462.2838647395426,
+        536.9358501264072
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 90,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            5548
+          ]
+        }
+      ],
+      "title": "Get_colorstr",
+      "properties": {},
+      "widgets_values": [
+        "colorstr"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1553,
+      "type": "GetNode",
+      "pos": [
+        -443.006380612974,
+        593.1345843890496
+      ],
+      "size": [
+        210,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 91,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            5416
+          ]
+        }
+      ],
+      "title": "Get_sigmashift",
+      "properties": {},
+      "widgets_values": [
+        "sigmashift"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 605,
+      "type": "INTConstant",
+      "pos": [
+        -898.9240872203773,
+        223.14105602990526
+      ],
+      "size": [
+        300,
+        60
+      ],
+      "flags": {},
+      "order": 92,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "值",
+          "name": "value",
+          "type": "INT",
+          "links": [
+            2358
+          ]
+        }
+      ],
+      "title": "motion_frames",
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "1.1.9",
+        "Node name for S&R": "INTConstant",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.4.1"
+        }
+      },
+      "widgets_values": [
+        5
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 1618,
+      "type": "FloatConstant",
+      "pos": [
+        -899.193065415283,
+        322.6123747502631
+      ],
+      "size": [
+        300,
+        58
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 93,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "值",
+          "name": "value",
+          "type": "FLOAT",
+          "links": [
+            5546
+          ]
+        }
+      ],
+      "title": "color strenght",
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "1.1.9",
+        "Node name for S&R": "FloatConstant",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.4.1"
+        }
+      },
+      "widgets_values": [
+        0.05
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 604,
+      "type": "FloatConstant",
+      "pos": [
+        -900,
+        420.221171406416
+      ],
+      "size": [
+        300,
+        58
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 94,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "值",
+          "name": "value",
+          "type": "FLOAT",
+          "links": [
+            2691
+          ]
+        }
+      ],
+      "title": "motion amplitude",
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "1.1.9",
+        "Node name for S&R": "FloatConstant",
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.4.1"
+        }
+      },
+      "widgets_values": [
+        1.15
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 1546,
+      "type": "ColorMatch",
+      "pos": [
+        -884.0815569062433,
+        857.1159774873934
+      ],
+      "size": [
+        281.26670703125,
+        127.21141796875008
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 127,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_ref",
+          "type": "IMAGE",
+          "link": 5411
+        },
+        {
+          "name": "image_target",
+          "type": "IMAGE",
+          "link": 5412
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            5410,
+            5413
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "e8b70f28be7fd71ee72c3848cfa09e1a89e3061b",
+        "Node name for S&R": "ColorMatch",
+        "aux_id": "kijai/ComfyUI-KJNodes"
+      },
+      "widgets_values": [
+        "reinhard",
+        0.6,
+        true
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 1547,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        -932.5802869482145,
+        702.4427905007045
+      ],
+      "size": [
+        340,
+        813.4545454545455
+      ],
+      "flags": {},
+      "order": 149,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5413
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": []
+        }
+      ],
+      "title": "Final Video",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "993082e4f2473bf4acaf06f51e33877a7eb38960",
+        "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+      },
+      "widgets_values": {
+        "frame_rate": 16,
+        "loop_count": 0,
+        "filename_prefix": "wan22_%date:dd_hh-mm-ss%",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": false,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": false,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "wan22_05_10-28-47_00001.mp4",
+            "subfolder": "",
+            "type": "temp",
+            "format": "video/h264-mp4",
+            "frame_rate": 16,
+            "workflow": "wan22_05_10-28-47_00001.png",
+            "fullpath": "/workspace/ComfyUI/temp/wan22_05_10-28-47_00001.mp4"
+          }
+        }
+      }
+    },
+    {
       "id": 917,
       "type": "UNETLoader",
       "pos": [
@@ -4694,7 +6212,7 @@
         82
       ],
       "flags": {},
-      "order": 86,
+      "order": 95,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4746,7 +6264,7 @@
         82
       ],
       "flags": {},
-      "order": 87,
+      "order": 96,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -4787,79 +6305,277 @@
       "bgcolor": "#353"
     },
     {
-      "id": 1425,
-      "type": "GetNode",
+      "id": 1476,
+      "type": "Fast Groups Bypasser (rgthree)",
       "pos": [
-        868.1046877846868,
-        1150.6278539567663
+        -1315.1571534374598,
+        827.6290372386687
       ],
       "size": [
-        210,
-        34
+        340,
+        60
       ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 88,
-      "mode": 4,
+      "flags": {},
+      "order": 97,
+      "mode": 0,
       "inputs": [],
       "outputs": [
         {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            5526
-          ]
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
         }
       ],
-      "title": "Get_upscale",
-      "properties": {},
-      "widgets_values": [
-        "upscale"
-      ],
+      "title": "Lightning LoRaS",
+      "properties": {
+        "matchColors": "",
+        "matchTitle": "lightx2v",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
       "color": "#2a363b",
       "bgcolor": "#3f5159"
     },
     {
-      "id": 1609,
-      "type": "VRAMCleanup",
+      "id": 1252,
+      "type": "2643c0a2-4f8c-4b66-9bba-7305a874c2db",
       "pos": [
-        874.2882951863082,
-        1208.0022987545594
+        -482.966496834188,
+        132.3869957252369
       ],
       "size": [
-        270,
-        58
+        578.8365457400107,
+        812.9529410156254
       ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 128,
-      "mode": 4,
+      "flags": {},
+      "order": 136,
+      "mode": 0,
       "inputs": [
         {
-          "name": "input",
+          "label": "model_h",
+          "name": "model",
+          "type": "MODEL",
+          "link": 5395
+        },
+        {
+          "label": "model_l",
+          "name": "model_1",
+          "type": "MODEL",
+          "link": 5396
+        },
+        {
+          "label": "model_s_h",
+          "name": "model_2",
+          "type": "MODEL",
+          "link": 5408
+        },
+        {
+          "label": "model_s_l",
+          "name": "model_3",
+          "type": "MODEL",
+          "link": 5409
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 4838
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 4993
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 5353
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 4841
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 4842
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 4843
+        },
+        {
+          "name": "motion_amplitude",
+          "type": "FLOAT",
+          "widget": {
+            "name": "motion_amplitude"
+          },
+          "link": 4844
+        },
+        {
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": 4980
+        },
+        {
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": 5328
+        },
+        {
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": 5329
+        },
+        {
+          "name": "sigma_shift",
+          "type": "FLOAT",
+          "widget": {
+            "name": "sigma_shift"
+          },
+          "link": 5416
+        },
+        {
+          "label": "prompt",
+          "name": "anything",
           "type": "*",
-          "link": 5526
+          "link": 5471
+        },
+        {
+          "name": "correct_strength",
+          "type": "FLOAT",
+          "widget": {
+            "name": "correct_strength"
+          },
+          "link": 5548
         }
       ],
       "outputs": [
         {
-          "name": "output",
-          "type": "*",
+          "label": "MODEL_S_HIGH",
+          "name": "MODEL",
+          "type": "MODEL",
           "links": [
-            5527
+            4846
+          ]
+        },
+        {
+          "label": "MODEL_S_LOW",
+          "name": "MODEL_1",
+          "type": "MODEL",
+          "links": [
+            4847
+          ]
+        },
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            4878
           ]
         }
       ],
       "properties": {
-        "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
-        "ver": "d1230b6b6ce4168cee2afcb90ff3bc66dee51753",
-        "Node name for S&R": "VRAMCleanup"
+        "proxyWidgets": [
+          [
+            "-1",
+            "width"
+          ],
+          [
+            "-1",
+            "height"
+          ],
+          [
+            "-1",
+            "length"
+          ],
+          [
+            "-1",
+            "motion_amplitude"
+          ],
+          [
+            "-1",
+            "steps"
+          ],
+          [
+            "-1",
+            "sampler_name"
+          ],
+          [
+            "-1",
+            "scheduler"
+          ],
+          [
+            "-1",
+            "sigma_shift"
+          ],
+          [
+            "-1",
+            "correct_strength"
+          ],
+          [
+            "1300",
+            "value"
+          ],
+          [
+            "1299",
+            "text"
+          ],
+          [
+            "1250",
+            "seed"
+          ],
+          [
+            "1250",
+            "🎲 Randomize Each Time"
+          ],
+          [
+            "1250",
+            "🎲 New Fixed Random"
+          ],
+          [
+            "1604",
+            "cleanup_mode"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.7.0"
       },
       "widgets_values": [
-        "Full Cleanup"
-      ]
+        5,
+        2,
+        "euler",
+        "simple",
+        5,
+        "euler",
+        "simple",
+        8,
+        0.01
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
     },
     {
       "id": 1262,
@@ -5292,6 +7008,134 @@
       "bgcolor": "#3f5159"
     },
     {
+      "id": 1467,
+      "type": "Power Lora Loader (rgthree)",
+      "pos": [
+        -860.9489039508642,
+        -1078.997370422012
+      ],
+      "size": [
+        343.9980881884354,
+        146.84965791756133
+      ],
+      "flags": {},
+      "order": 132,
+      "mode": 4,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "model",
+          "type": "MODEL",
+          "link": 5429
+        },
+        {
+          "dir": 3,
+          "name": "clip",
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "MODEL",
+          "shape": 3,
+          "type": "MODEL",
+          "links": [
+            5313
+          ]
+        },
+        {
+          "dir": 4,
+          "name": "CLIP",
+          "shape": 3,
+          "type": "CLIP",
+          "links": null
+        }
+      ],
+      "title": "Lightx2v Lora High",
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "1.0.2512112053",
+        "Show Strengths": "Single Strength",
+        "aux_id": "rgthree/rgthree-comfy"
+      },
+      "widgets_values": [
+        {},
+        {
+          "type": "PowerLoraLoaderHeaderWidget"
+        },
+        {},
+        ""
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 1468,
+      "type": "Power Lora Loader (rgthree)",
+      "pos": [
+        -858.5062770979878,
+        -872.7142920033658
+      ],
+      "size": [
+        339.4322044097074,
+        157.53711440793563
+      ],
+      "flags": {},
+      "order": 133,
+      "mode": 4,
+      "inputs": [
+        {
+          "dir": 3,
+          "name": "model",
+          "type": "MODEL",
+          "link": 5430
+        },
+        {
+          "dir": 3,
+          "name": "clip",
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "dir": 4,
+          "name": "MODEL",
+          "shape": 3,
+          "type": "MODEL",
+          "links": [
+            5315
+          ]
+        },
+        {
+          "dir": 4,
+          "name": "CLIP",
+          "shape": 3,
+          "type": "CLIP",
+          "links": null
+        }
+      ],
+      "title": "Lightx2v Lora Low",
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "1.0.2512112053",
+        "Show Strengths": "Single Strength",
+        "aux_id": "rgthree/rgthree-comfy"
+      },
+      "widgets_values": [
+        {},
+        {
+          "type": "PowerLoraLoaderHeaderWidget"
+        },
+        {},
+        ""
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
       "id": 1344,
       "type": "0d6adb7c-3efa-4495-b1c9-b738d651f94a",
       "pos": [
@@ -5507,1238 +7351,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 1513,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -1315.1571534374598,
-        697.6290372386688
-      ],
-      "size": [
-        340,
-        82
-      ],
-      "flags": {},
-      "order": 89,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "FP8 / GGUF",
-      "properties": {
-        "matchColors": "green",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 1439,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -1319.6419900225806,
-        932.2966128996643
-      ],
-      "size": [
-        340,
-        70
-      ],
-      "flags": {},
-      "order": 90,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Previews",
-      "properties": {
-        "matchColors": "",
-        "matchTitle": "QWEN",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
-      "id": 1533,
-      "type": "UpscalerTensorrt",
-      "pos": [
-        -463.17374594307717,
-        1623.986281927873
-      ],
-      "size": [
-        270,
-        76
-      ],
-      "flags": {},
-      "order": 121,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 5428
-        },
-        {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "link": 5399
-        }
-      ],
-      "outputs": [
-        {
-          "name": "upscaled_images",
-          "type": "IMAGE",
-          "links": [
-            5523
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "yuvraj108c/ComfyUI-Upscaler-Tensorrt",
-        "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
-        "Node name for S&R": "UpscalerTensorrt",
-        "cnr_id": "ComfyUI-Upscaler-Tensorrt"
-      },
-      "widgets_values": [
-        "2x",
-        1024,
-        1024
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
-      "id": 1545,
-      "type": "GetNode",
-      "pos": [
-        -892.5537530590451,
-        789.4070340641088
-      ],
-      "size": [
-        210,
-        34
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 91,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            5412
-          ]
-        }
-      ],
-      "title": "Get_finalvideo",
-      "properties": {},
-      "widgets_values": [
-        "finalvideo"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 1544,
-      "type": "SetNode",
-      "pos": [
-        -876.1955766448439,
-        927.2394702342656
-      ],
-      "size": [
-        210,
-        34
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 150,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "link": 5410
-        }
-      ],
-      "outputs": [
-        {
-          "name": "*",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Set_colormatch",
-      "properties": {
-        "previousName": ""
-      },
-      "widgets_values": [
-        "colormatch"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 1546,
-      "type": "ColorMatch",
-      "pos": [
-        -884.0815569062433,
-        857.1159774873934
-      ],
-      "size": [
-        281.26670703125,
-        127.21141796875008
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 129,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image_ref",
-          "type": "IMAGE",
-          "link": 5411
-        },
-        {
-          "name": "image_target",
-          "type": "IMAGE",
-          "link": 5412
-        }
-      ],
-      "outputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "links": [
-            5410,
-            5413
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-kjnodes",
-        "ver": "e8b70f28be7fd71ee72c3848cfa09e1a89e3061b",
-        "Node name for S&R": "ColorMatch",
-        "aux_id": "kijai/ComfyUI-KJNodes"
-      },
-      "widgets_values": [
-        "hm-mvgd-hm",
-        0.4,
-        true
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 923,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -1320,
-        1060
-      ],
-      "size": [
-        340,
-        120
-      ],
-      "flags": {},
-      "order": 92,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Video Lenght",
-      "properties": {
-        "matchColors": "",
-        "matchTitle": "VIDEO",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 1547,
-      "type": "VHS_VideoCombine",
-      "pos": [
-        -931.5875719068101,
-        705.7035482317749
-      ],
-      "size": [
-        340,
-        334
-      ],
-      "flags": {},
-      "order": 151,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 5413
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": null
-        },
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "Filenames",
-          "type": "VHS_FILENAMES",
-          "links": []
-        }
-      ],
-      "title": "Final Video",
-      "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "993082e4f2473bf4acaf06f51e33877a7eb38960",
-        "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
-      },
-      "widgets_values": {
-        "frame_rate": 16,
-        "loop_count": 0,
-        "filename_prefix": "wan22_%date:dd_hh-mm-ss%",
-        "format": "video/h264-mp4",
-        "pix_fmt": "yuv420p",
-        "crf": 19,
-        "save_metadata": false,
-        "trim_to_audio": false,
-        "pingpong": false,
-        "save_output": false,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "wan22_05_03-44-26_00001.mp4",
-            "subfolder": "",
-            "type": "temp",
-            "format": "video/h264-mp4",
-            "frame_rate": 16,
-            "workflow": "wan22_05_03-44-26_00001.png",
-            "fullpath": "/ComfyUI/temp/wan22_05_03-44-26_00001.mp4"
-          }
-        }
-      }
-    },
-    {
-      "id": 1592,
-      "type": "easy showAnything",
-      "pos": [
-        215.57104769031514,
-        -1400.4761342710021
-      ],
-      "size": [
-        420,
-        180
-      ],
-      "flags": {},
-      "order": 142,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "shape": 7,
-          "type": "*",
-          "link": 5479
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": [
-            5480
-          ]
-        }
-      ],
-      "title": "Prompt 1",
-      "properties": {
-        "cnr_id": "comfyui-easy-use",
-        "ver": "b11c63487243d183a967261bdf019c5afcec2cf7",
-        "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
-      },
-      "widgets_values": [
-        "(At 0 seconds: Two anime-style women with vibrant purple and blue hair, wearing black leather harnesses and gloves, lean in intimately from opposite sides of a central phallus. The scene is set inside a sunlit library with arched windows casting warm golden light across bookshelves filled with colorful spines.) (At 1 seconds: Their eyes widen slightly as they simultaneously lick the tip; their expressions shift to playful intensity while maintaining synchronized, stylized anime motion.) (At 2 seconds: The camera subtly pushes in on their faces and upper torsos, enhancing skin texture details under soft backlighting from window glows. Bookshelf shadows deepen with contrast against illuminated pages visible through glass panes.) (At 3 seconds: Their gloved hands gently grip the base of each breast as they tilt heads back slightly, mouths opening wider to reveal glossy tongues in mid-lap; anime-style exaggerated eyelashes flutter dramatically under natural lighting.) (At 4 seconds: The background blurs softly into a shallow depth-of-field effect while keeping focus on their flushed cheeks and sweat-sheened skin tones. A clock hangs motionless above them as time seems suspended within the frame’s composition.) (At 5 seconds: Both women maintain locked gazes with each other, lips parted in sensual anticipation; camera pans gently right to left across both profiles before freezing mid-frame.)"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 1608,
-      "type": "VRAMCleanup",
-      "pos": [
-        524.0125677962775,
-        1172.5840013333038
-      ],
-      "size": [
-        270,
-        58
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 115,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "input",
-          "type": "*",
-          "link": 5524
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": [
-            5525
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
-        "ver": "d1230b6b6ce4168cee2afcb90ff3bc66dee51753",
-        "Node name for S&R": "VRAMCleanup"
-      },
-      "widgets_values": [
-        "Full Cleanup"
-      ]
-    },
-    {
-      "id": 1611,
-      "type": "VRAMCleanup",
-      "pos": [
-        1404.0750642312375,
-        1146.0015338247433
-      ],
-      "size": [
-        270,
-        58
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 113,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "input",
-          "type": "*",
-          "link": 5529
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": [
-            5530
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
-        "ver": "d1230b6b6ce4168cee2afcb90ff3bc66dee51753",
-        "Node name for S&R": "VRAMCleanup"
-      },
-      "widgets_values": [
-        "Full Cleanup"
-      ]
-    },
-    {
-      "id": 1351,
-      "type": "VHS_VideoCombine",
-      "pos": [
-        1833.7640331515934,
-        1096.9218284609174
-      ],
-      "size": [
-        365.62743092932715,
-        334
-      ],
-      "flags": {},
-      "order": 164,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 5278
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": 5094
-        },
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "Filenames",
-          "type": "VHS_FILENAMES",
-          "links": null
-        }
-      ],
-      "title": "MMAudio",
-      "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "6e7f63867584bb1fb4944d36172e7f98436da9a1",
-        "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
-      },
-      "widgets_values": {
-        "frame_rate": 24,
-        "loop_count": 0,
-        "filename_prefix": "MMAudio\\MMAudio",
-        "format": "video/h264-mp4",
-        "pix_fmt": "yuv420p",
-        "crf": 19,
-        "save_metadata": true,
-        "trim_to_audio": false,
-        "pingpong": false,
-        "save_output": true,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "MMAudio\\MMAudio_00001-audio.mp4",
-            "subfolder": "",
-            "type": "output",
-            "format": "video/h264-mp4",
-            "frame_rate": 24,
-            "workflow": "MMAudio\\MMAudio_00001.png",
-            "fullpath": "/workspace/ComfyUI/output/MMAudio\\MMAudio_00001-audio.mp4"
-          },
-          "muted": false
-        }
-      },
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 1404,
-      "type": "RIFEInterpolation",
-      "pos": [
-        1629.4168061112105,
-        1146.0310009931125
-      ],
-      "size": [
-        270,
-        178
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 137,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 5530
-        }
-      ],
-      "outputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "links": [
-            5277,
-            5278,
-            5533
-          ]
-        }
-      ],
-      "title": "24FPS",
-      "properties": {
-        "aux_id": "GACLove/ComfyUI-VFI",
-        "ver": "6176a430f12cd16003f4664c1e3c6af8e96cc3c6",
-        "Node name for S&R": "RIFEInterpolation"
-      },
-      "widgets_values": [
-        16,
-        24,
-        1,
-        "flownet.pkl",
-        8,
-        true
-      ]
-    },
-    {
-      "id": 1597,
-      "type": "AutoLoadRifeTensorrtModel",
-      "pos": [
-        499.2303377876616,
-        1230.165069715474
-      ],
-      "size": [
-        322.5669921875,
-        106
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 93,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "custom_config",
-          "shape": 7,
-          "type": "RIFE_RESOLUTION_CONFIG",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "links": [
-            5490
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "b55f69970d666949232b16b31e473fc879b5a51d",
-        "Node name for S&R": "AutoLoadRifeTensorrtModel"
-      },
-      "widgets_values": [
-        "rife49_ensemble_True_scale_1_sim",
-        "fp16",
-        "large"
-      ]
-    },
-    {
-      "id": 1612,
-      "type": "VRAMCleanup",
-      "pos": [
-        2318.145240747929,
-        1112.5797873433942
-      ],
-      "size": [
-        270,
-        58
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 156,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "input",
-          "type": "*",
-          "link": 5533
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": [
-            5535
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
-        "ver": "d1230b6b6ce4168cee2afcb90ff3bc66dee51753",
-        "Node name for S&R": "VRAMCleanup"
-      },
-      "widgets_values": [
-        "Full Cleanup"
-      ]
-    },
-    {
-      "id": 1613,
-      "type": "AutoLoadRifeTensorrtModel",
-      "pos": [
-        2320.7040581413976,
-        1196.6223489705276
-      ],
-      "size": [
-        322.5669921875,
-        106
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 94,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "custom_config",
-          "shape": 7,
-          "type": "RIFE_RESOLUTION_CONFIG",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "links": [
-            5534
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "b55f69970d666949232b16b31e473fc879b5a51d",
-        "Node name for S&R": "AutoLoadRifeTensorrtModel"
-      },
-      "widgets_values": [
-        "rife49_ensemble_True_scale_1_sim",
-        "fp16",
-        "large"
-      ]
-    },
-    {
-      "id": 1614,
-      "type": "AutoRifeTensorrt",
-      "pos": [
-        2348.5042546045584,
-        1268.0786607113885
-      ],
-      "size": [
-        321.8046875,
-        150
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 165,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "frames",
-          "type": "IMAGE",
-          "link": 5535
-        },
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "link": 5534
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            5536
-          ]
-        }
-      ],
-      "title": "MMAUDIO50FPS",
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "b55f69970d666949232b16b31e473fc879b5a51d",
-        "Node name for S&R": "AutoRifeTensorrt"
-      },
-      "widgets_values": [
-        100,
-        2,
-        false
-      ]
-    },
-    {
-      "id": 1374,
-      "type": "VHS_VideoCombine",
-      "pos": [
-        2248.3800531125335,
-        1101.8252081572448
-      ],
-      "size": [
-        373.69577558024,
-        334
-      ],
-      "flags": {},
-      "order": 167,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 5536
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": 5117
-        },
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "Filenames",
-          "type": "VHS_FILENAMES",
-          "links": null
-        }
-      ],
-      "title": "MMAudio",
-      "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "6e7f63867584bb1fb4944d36172e7f98436da9a1",
-        "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
-      },
-      "widgets_values": {
-        "frame_rate": 48,
-        "loop_count": 0,
-        "filename_prefix": "MMAudio\\MMAudio50fps",
-        "format": "video/h264-mp4",
-        "pix_fmt": "yuv420p",
-        "crf": 19,
-        "save_metadata": true,
-        "trim_to_audio": false,
-        "pingpong": false,
-        "save_output": true,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "MMAudio\\MMAudio50fps_00002-audio.mp4",
-            "subfolder": "",
-            "type": "output",
-            "format": "video/h264-mp4",
-            "frame_rate": 48,
-            "workflow": "MMAudio\\MMAudio50fps_00002.png",
-            "fullpath": "/workspace/ComfyUI/output/MMAudio\\MMAudio50fps_00002-audio.mp4"
-          },
-          "muted": false
-        }
-      },
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
-      "id": 1357,
-      "type": "975e3c19-bc32-4db8-b06f-63d1a4aede97",
-      "pos": [
-        1208.094073649352,
-        1095.9983112072152
-      ],
-      "size": [
-        550.8366757812496,
-        443.2323554687496
-      ],
-      "flags": {},
-      "order": 155,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 5277
-        }
-      ],
-      "outputs": [
-        {
-          "name": "audio",
-          "type": "AUDIO",
-          "links": [
-            5094,
-            5117
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "1348",
-            "duration"
-          ],
-          [
-            "1348",
-            "prompt"
-          ],
-          [
-            "1348",
-            "negative_prompt"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.9.1"
-      },
-      "widgets_values": []
-    },
-    {
-      "id": 1437,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -1320,
-        1400
-      ],
-      "size": [
-        340,
-        106
-      ],
-      "flags": {},
-      "order": 95,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "MMAUDIO",
-      "properties": {
-        "matchColors": "yellow",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
-      "id": 1598,
-      "type": "AutoRifeTensorrt",
-      "pos": [
-        912.6232887717317,
-        1349.7790148696088
-      ],
-      "size": [
-        321.8046875,
-        150
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 149,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "frames",
-          "type": "IMAGE",
-          "link": 5527
-        },
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "link": 5495
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            5497
-          ]
-        }
-      ],
-      "title": "60FPS",
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "b55f69970d666949232b16b31e473fc879b5a51d",
-        "Node name for S&R": "AutoRifeTensorrt"
-      },
-      "widgets_values": [
-        100,
-        4,
-        false
-      ]
-    },
-    {
-      "id": 1596,
-      "type": "AutoRifeTensorrt",
-      "pos": [
-        501.95300150650706,
-        1294.5060734411645
-      ],
-      "size": [
-        321.8046875,
-        150
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 138,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "frames",
-          "type": "IMAGE",
-          "link": 5525
-        },
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "link": 5490
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            5493
-          ]
-        }
-      ],
-      "title": "30FPS",
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "b55f69970d666949232b16b31e473fc879b5a51d",
-        "Node name for S&R": "AutoRifeTensorrt"
-      },
-      "widgets_values": [
-        100,
-        2,
-        false
-      ]
-    },
-    {
-      "id": 1060,
-      "type": "VHS_VideoCombine",
-      "pos": [
-        827.5993831373657,
-        1088.1332696103595
-      ],
-      "size": [
-        303.86366907905494,
-        334
-      ],
-      "flags": {},
-      "order": 162,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 5497
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": null
-        },
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "Filenames",
-          "type": "VHS_FILENAMES",
-          "links": null
-        }
-      ],
-      "title": "60FPS",
-      "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "1.7.2",
-        "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {}
-        }
-      },
-      "widgets_values": {
-        "frame_rate": 64,
-        "loop_count": 0,
-        "filename_prefix": "wan22_60FPS_%date:dd_hh-mm-ss%",
-        "format": "video/h264-mp4",
-        "pix_fmt": "yuv420p",
-        "crf": 18,
-        "save_metadata": true,
-        "trim_to_audio": false,
-        "pingpong": false,
-        "save_output": true,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "wan22_60FPS_07_05-17-49_00001.mp4",
-            "subfolder": "",
-            "type": "output",
-            "format": "video/h264-mp4",
-            "frame_rate": 64,
-            "workflow": "wan22_60FPS_07_05-17-49_00001.png",
-            "fullpath": "/workspace/ComfyUI/output/wan22_60FPS_07_05-17-49_00001.mp4"
-          },
-          "muted": false
-        }
-      },
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 1314,
-      "type": "VHS_VideoCombine",
-      "pos": [
-        456.2794569138482,
-        1084.0351979345576
-      ],
-      "size": [
-        303.86366907905494,
-        334
-      ],
-      "flags": {},
-      "order": 157,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 5493
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": null
-        },
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "Filenames",
-          "type": "VHS_FILENAMES",
-          "links": null
-        }
-      ],
-      "title": "30FPS",
-      "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "1.7.2",
-        "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {}
-        }
-      },
-      "widgets_values": {
-        "frame_rate": 32,
-        "loop_count": 0,
-        "filename_prefix": "wan22_30FPS_%date:dd_hh-mm-ss%",
-        "format": "video/h264-mp4",
-        "pix_fmt": "yuv420p",
-        "crf": 18,
-        "save_metadata": true,
-        "trim_to_audio": false,
-        "pingpong": false,
-        "save_output": true,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "wan22_30FPS_07_08-39-03_00001.mp4",
-            "subfolder": "",
-            "type": "output",
-            "format": "video/h264-mp4",
-            "frame_rate": 32,
-            "workflow": "wan22_30FPS_07_08-39-03_00001.png",
-            "fullpath": "/workspace/ComfyUI/output/wan22_30FPS_07_08-39-03_00001.mp4"
-          },
-          "muted": false
-        }
-      },
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
       "id": 1581,
       "type": "14459234-5392-4fbe-a549-696f4d1ab0b8",
       "pos": [
@@ -6792,6 +7404,10 @@
       "properties": {
         "proxyWidgets": [
           [
+            "1621",
+            "value"
+          ],
+          [
             "1564",
             "custom_prompt"
           ],
@@ -6820,292 +7436,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 97,
-      "type": "LoadImage",
-      "pos": [
-        -1330,
-        -290
-      ],
-      "size": [
-        400,
-        640
-      ],
-      "flags": {},
-      "order": 96,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "slot_index": 0,
-          "links": [
-            2026
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "slot_index": 1,
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.45",
-        "Node name for S&R": "LoadImage",
-        "ue_properties": {
-          "version": "7.0.1",
-          "widget_ue_connectable": {
-            "image": true,
-            "upload": true
-          }
-        }
-      },
-      "widgets_values": [
-        "031356_00001_.png",
-        "image"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
-      "id": 1438,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -1320,
-        1220
-      ],
-      "size": [
-        340,
-        130
-      ],
-      "flags": {},
-      "order": 97,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Upscale and Interpolation",
-      "properties": {
-        "matchColors": "red",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#322",
-      "bgcolor": "#533"
-    },
-    {
-      "id": 1445,
-      "type": "FindPerfectResolution",
-      "pos": [
-        -900,
-        -290
-      ],
-      "size": [
-        300,
-        317.0624350725658
-      ],
-      "flags": {},
-      "order": 116,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 5294
-        },
-        {
-          "name": "mask",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "width",
-          "type": "INT",
-          "links": [
-            5292
-          ]
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": [
-            5293
-          ]
-        },
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": []
-        },
-        {
-          "name": "mask_output",
-          "type": "MASK",
-          "links": null
-        },
-        {
-          "name": "resolution_info",
-          "type": "STRING",
-          "links": null
-        }
-      ],
-      "properties": {
-        "aux_id": "ashtar1984/comfyui-find-perfect-resolution",
-        "ver": "b8ee6c1872e796329bffbcbf53a5207aaf964bdb",
-        "Node name for S&R": "FindPerfectResolution"
-      },
-      "widgets_values": [
-        480,
-        832,
-        16,
-        false,
-        "lanczos",
-        "none",
-        "#000000"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
-      "id": 647,
-      "type": "SetNode",
-      "pos": [
-        -799.990724889831,
-        84.40355840840336
-      ],
-      "size": [
-        210,
-        60
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 131,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "link": 4978
-        }
-      ],
-      "outputs": [
-        {
-          "name": "*",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Set_LENGHT",
-      "properties": {
-        "previousName": "LENGHT"
-      },
-      "widgets_values": [
-        "LENGHT"
-      ],
-      "color": "#1b4669",
-      "bgcolor": "#29699c"
-    },
-    {
-      "id": 1282,
-      "type": "mxSlider",
-      "pos": [
-        -900,
-        70
-      ],
-      "size": [
-        300,
-        30
-      ],
-      "flags": {},
-      "order": 98,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "",
-          "type": "INT",
-          "links": [
-            4978
-          ]
-        }
-      ],
-      "title": "Lenght",
-      "properties": {
-        "cnr_id": "comfyui-mxtoolkit",
-        "ver": "7f7a0e584f12078a1c589645d866ae96bad0cc35",
-        "Node name for S&R": "mxSlider",
-        "value": 81,
-        "min": 0,
-        "max": 200,
-        "step": 1,
-        "decimals": 0,
-        "snap": true,
-        "aux_id": "Smirnov75/ComfyUI-mxToolkit"
-      },
-      "widgets_values": [
-        81,
-        81,
-        0
-      ],
-      "color": "#233",
-      "bgcolor": "#355",
-      "shape": 2
-    },
-    {
-      "id": 1284,
-      "type": "SetNode",
-      "pos": [
-        -800,
-        160
-      ],
-      "size": [
-        210,
-        60
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 132,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "link": 4979
-        }
-      ],
-      "outputs": [
-        {
-          "name": "*",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Set_steps",
-      "properties": {
-        "previousName": "steps"
-      },
-      "widgets_values": [
-        "steps"
-      ],
-      "color": "#1b4669",
-      "bgcolor": "#29699c"
-    },
-    {
       "id": 1283,
       "type": "mxSlider",
       "pos": [
@@ -7117,7 +7447,7 @@
         30
       ],
       "flags": {},
-      "order": 99,
+      "order": 98,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -7151,523 +7481,185 @@
       "bgcolor": "#355"
     },
     {
-      "id": 610,
-      "type": "SetNode",
+      "id": 97,
+      "type": "LoadImage",
       "pos": [
-        -856.1679482624925,
-        262.2067885359563
+        -1330,
+        -290
       ],
       "size": [
-        210,
-        60
+        400,
+        640
       ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 133,
+      "flags": {},
+      "order": 99,
       "mode": 0,
-      "inputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "link": 2358
-        }
-      ],
+      "inputs": [],
       "outputs": [
         {
-          "name": "*",
-          "type": "*",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            2026
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "slot_index": 1,
           "links": null
         }
       ],
-      "title": "Set_MOTION FRAME",
       "properties": {
-        "previousName": "MOTION FRAME"
+        "cnr_id": "comfy-core",
+        "ver": "0.3.45",
+        "Node name for S&R": "LoadImage",
+        "ue_properties": {
+          "version": "7.0.1",
+          "widget_ue_connectable": {
+            "image": true,
+            "upload": true
+          }
+        }
       },
       "widgets_values": [
-        "MOTION FRAME"
+        "071039_00001_.png",
+        "image"
       ],
-      "color": "#1b4669",
-      "bgcolor": "#29699c"
+      "color": "#233",
+      "bgcolor": "#355"
     },
     {
-      "id": 1617,
-      "type": "SetNode",
+      "id": 301,
+      "type": "MarkdownNote",
       "pos": [
-        -803.8305216087354,
-        358.3853418149683
+        -1857.1331554934236,
+        -1124.7848181835468
       ],
       "size": [
-        210,
-        60
+        465.62164427352855,
+        1242.1162362984505
       ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 134,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "link": 5546
-        }
-      ],
-      "outputs": [
-        {
-          "name": "*",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "Set_colorstr",
-      "properties": {
-        "previousName": "colorstr"
-      },
-      "widgets_values": [
-        "colorstr"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
-    },
-    {
-      "id": 1619,
-      "type": "GetNode",
-      "pos": [
-        -462.2838647395426,
-        536.9358501264072
-      ],
-      "size": [
-        210,
-        60
-      ],
-      "flags": {
-        "collapsed": true
-      },
+      "flags": {},
       "order": 100,
       "mode": 0,
       "inputs": [],
-      "outputs": [
-        {
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "links": [
-            5548
-          ]
-        }
-      ],
-      "title": "Get_colorstr",
+      "outputs": [],
+      "title": "README",
       "properties": {},
       "widgets_values": [
-        "colorstr"
+        "# WAN 2.2 NSFW I2V LONG VIDEO STORY with AUTOPROMPT, MMAUDIO and GGUF support \n\n## 🖥️ Civitai Model \n\n⚙️ **GGUF VERSION**\n\n*Credits to* [taek75799](https://civitai.com/user/taek75799)\n\n- [🔗 NSFW V2 Q6 K High](https://civitai.com/models/2053259?modelVersionId=2524233)\n- [🔗 NSFW V2 Q6 K Low](https://civitai.com/models/2053259?modelVersionId=2524236)\n- [🔗 NSFW V2 Q8 High](https://civitai.com/models/2053259?modelVersionId=2584698)\n- [🔗 NSFW V2 Q8 Low](https://civitai.com/models/2053259?modelVersionId=2584707)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou)\n\n- [🔗 WAN REMIX v2.1 Q6 K High](https://civitai.com/models/2347977?modelVersionId=2641160)\n- [🔗 WAN REMIX v2.1 Q6 K Low](https://civitai.com/models/2347977?modelVersionId=2641158)\n- [🔗 WAN REMIX v2.1 Q8 High](https://civitai.com/models/2347977?modelVersionId=2641236)\n- [🔗 WAN REMIX v.2.1 Q8 Low](https://civitai.com/models/2347977?modelVersionId=2641234)\n\n\n⚙️ **FP8 VERSION**\n\n*Credits to* [taek75799](https://civitai.com/user/taek75799)\n\n- [🔗 NSFW V2 FP8 High](https://civitai.com/models/2053259?modelVersionId=2477552)\n- [🔗 NSFW V2 FP8 Low](https://civitai.com/models/2053259?modelVersionId=2477555)\n\n*Credits to* [FX_FeiHou](https://civitai.com/user/FX_FeiHou)\n\n- [🔗 WAN REMIX v2.1 FP8 High](https://civitai.com/models/2347977?modelVersionId=2641160)\n- [🔗 WAN REMIX v2.1 FP8 Low](https://civitai.com/models/2347977?modelVersionId=2641158)\n---\n\n## Text Encoders\n- **FP8**: [🔗 umt5_xxl_fp8 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors)\n- **FP16**: [🔗 umt5_xxl_fp16 text_encoder](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors)\n- **NSFW FP8**: [🔗 nsfw_wan_umt5-xxl_fp8_scaled](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors)\n- **NSFW BF16**: [🔗 nsfw_wan_umt5-xxl_bf16](https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_bf16.safetensors)\n\n⚙️ **GGUF VERSION**\n- **Q6 K**: [🔗 umt5-xxl-encoder-Q6_K](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q6_K.gguf)\n- **Q8**: [🔗 umt5-xxl-encoder-Q8_0](https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q8_0.gguf)\n\n## VAE\n- **BF16:**: [🔗 wan_2.1_vae](https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors)\n- **FP32:**: [🔗 wan_2.1_fp32_vae](https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_fp32.safetensors)\n\n## UPSCALE MODEL\n\n- [🔗 2xLexicaRRDBNet](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet.pth)\n- [🔗 2xLexicaRRDBNet_Sharp](https://huggingface.co/huchukato/favs/resolve/main/ESRGAN/2xLexicaRRDBNet_Sharp.pth)\n\n\n---\n\n# 🎬 Motion Settings\n\n## Motion Amplitude\n*Motion intensity multiplier* \n- **1.0** = normal\n- **1.15** = recommended  \n**Range:** 1.0 – 2.0\n\n## Motion Frames\n*Number of trailing frames from `previous_video` used as motion reference* \n\n**Default:** 5\n\n---\n\n# 🎨 Color Strenght\n\nControls color drift correction strength.\n\n- **0.0** → no color issues  \n- **0.01 – 0.05** → slight drift  \n- **0.1 – 0.15** → strong shift  \n- **0.2 – 0.3** → severe drift\n"
       ],
-      "color": "#232",
-      "bgcolor": "#353"
+      "color": "#233",
+      "bgcolor": "#355"
     },
     {
-      "id": 1553,
-      "type": "GetNode",
+      "id": 1529,
+      "type": "MarkdownNote",
       "pos": [
-        -443.006380612974,
-        593.1345843890496
+        -1860,
+        520
       ],
       "size": [
-        210,
-        60
+        460,
+        420
       ],
-      "flags": {
-        "collapsed": true
-      },
+      "flags": {},
       "order": 101,
       "mode": 0,
       "inputs": [],
-      "outputs": [
-        {
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "links": [
-            5416
-          ]
-        }
-      ],
-      "title": "Get_sigmashift",
+      "outputs": [],
+      "title": "QWEN3-VL GGUF",
       "properties": {},
       "widgets_values": [
-        "sigmashift"
+        "## 🔖 To use the Qwen3-VL GGUF Quantized models you have to install *llama-cpp-python*\n\n\n**🛑 STOP COMFYUI**\n\n**📂 Activate the ComfyUI Virtual Enviroment**\n\nIn your ComfyUI root installation folder type:\non Windows:\n\nCommand Prompt:\n```\n\\venv\\Scripts\\activate.bat\n```\nor Power Shell:\n```\n\\venv\\Scripts\\Activate.ps1\n```\non Linux:\n```\n. /venv/bin/activate\n```\n**⬇️ Install llama-cpp-python**\n```\npip install --upgrade --force-reinstall --no-cache-dir \"llama-cpp-python @ git+https://github.com/JamePeng/llama-cpp-python.git\"\n```\n**🔄 Restart ComfyUI and enjoy**\n\n"
       ],
-      "color": "#232",
-      "bgcolor": "#353"
+      "color": "#233",
+      "bgcolor": "#355"
     },
     {
-      "id": 605,
-      "type": "INTConstant",
+      "id": 1561,
+      "type": "MarkdownNote",
       "pos": [
-        -898.9240872203773,
-        223.14105602990526
+        -1860,
+        1000
       ],
       "size": [
-        300,
-        60
+        460,
+        130
       ],
       "flags": {},
       "order": 102,
       "mode": 0,
       "inputs": [],
-      "outputs": [
-        {
-          "label": "值",
-          "name": "value",
-          "type": "INT",
-          "links": [
-            2358
-          ]
-        }
-      ],
-      "title": "motion_frames",
-      "properties": {
-        "cnr_id": "comfyui-kjnodes",
-        "ver": "1.1.9",
-        "Node name for S&R": "INTConstant",
-        "aux_id": "kijai/ComfyUI-KJNodes",
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "input_ue_unconnectable": {},
-          "version": "7.4.1"
-        }
-      },
+      "outputs": [],
+      "title": "🎨 Visual Style Detection",
+      "properties": {},
       "widgets_values": [
-        5
+        "**Enhanced Style Detection: Comprehensive support for artistic styles:**\n\n- Photorealistic\n- Anime  \n- Cartoon\n- 3D animation\n- Fantasy\n- Artistic portrait"
       ],
-      "color": "#233",
-      "bgcolor": "#355"
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
     },
     {
-      "id": 1618,
-      "type": "FloatConstant",
+      "id": 1466,
+      "type": "MarkdownNote",
       "pos": [
-        -899.193065415283,
-        322.6123747502631
+        -1860,
+        180
       ],
       "size": [
-        300,
-        58
+        460,
+        290
       ],
-      "flags": {
-        "collapsed": false
-      },
+      "flags": {},
       "order": 103,
       "mode": 0,
       "inputs": [],
-      "outputs": [
-        {
-          "label": "值",
-          "name": "value",
-          "type": "FLOAT",
-          "links": [
-            5546
-          ]
-        }
-      ],
-      "title": "color strenght",
-      "properties": {
-        "cnr_id": "comfyui-kjnodes",
-        "ver": "1.1.9",
-        "Node name for S&R": "FloatConstant",
-        "aux_id": "kijai/ComfyUI-KJNodes",
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "input_ue_unconnectable": {},
-          "version": "7.4.1"
-        }
-      },
+      "outputs": [],
+      "title": "AUTOPROMPT | MMAUDIO",
+      "properties": {},
       "widgets_values": [
-        0.05
+        "## 🔖 AUTOPROMPT\n\nInstall this modified node that allows you to use an uncensored QwenVL model\n\n\n`git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git ComfyUI/custom_nodes/ComfyUI-QwenVL-Mod`\n\n----\n\n## 🔈 MMAUDIO \n\nAll of these files should be downloaded to `ComfyUI\\models\\mmaudio`\n\n[🔗MMAudio Model](https://huggingface.co/phazei/NSFW_MMaudio/resolve/main/mmaudio_large_44k_nsfw_gold_8.5k_final_fp16.safetensors)\n\n[🔗MMAudio VAE](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/5984623e6b436818c6ff287ef6eec93e3e05aa3f/mmaudio_vae_44k_fp16.safetensors)\n\n[🔗MMAudio Synchformer](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/main/mmaudio_synchformer_fp16.safetensors)\n\n[🔗MMAudio CLIP](https://huggingface.co/Kijai/MMAudio_safetensors/resolve/main/apple_DFN5B-CLIP-ViT-H-14-384_fp16.safetensors)"
       ],
-      "color": "#233",
-      "bgcolor": "#355"
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
     },
     {
-      "id": 604,
-      "type": "FloatConstant",
+      "id": 1438,
+      "type": "Fast Groups Bypasser (rgthree)",
       "pos": [
-        -900,
-        420.221171406416
+        -1320,
+        1220
       ],
       "size": [
-        300,
-        58
+        340,
+        130
       ],
-      "flags": {
-        "collapsed": false
-      },
+      "flags": {},
       "order": 104,
       "mode": 0,
       "inputs": [],
       "outputs": [
         {
-          "label": "值",
-          "name": "value",
-          "type": "FLOAT",
-          "links": [
-            2691
-          ]
-        }
-      ],
-      "title": "motion amplitude",
-      "properties": {
-        "cnr_id": "comfyui-kjnodes",
-        "ver": "1.1.9",
-        "Node name for S&R": "FloatConstant",
-        "aux_id": "kijai/ComfyUI-KJNodes",
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "input_ue_unconnectable": {},
-          "version": "7.4.1"
-        }
-      },
-      "widgets_values": [
-        1.15
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
-      "id": 1252,
-      "type": "2643c0a2-4f8c-4b66-9bba-7305a874c2db",
-      "pos": [
-        -482.966496834188,
-        132.3869957252369
-      ],
-      "size": [
-        578.8365457400107,
-        812.9529410156254
-      ],
-      "flags": {},
-      "order": 136,
-      "mode": 0,
-      "inputs": [
-        {
-          "label": "model_h",
-          "name": "model",
-          "type": "MODEL",
-          "link": 5395
-        },
-        {
-          "label": "model_l",
-          "name": "model_1",
-          "type": "MODEL",
-          "link": 5396
-        },
-        {
-          "label": "model_s_h",
-          "name": "model_2",
-          "type": "MODEL",
-          "link": 5408
-        },
-        {
-          "label": "model_s_l",
-          "name": "model_3",
-          "type": "MODEL",
-          "link": 5409
-        },
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 4838
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 4993
-        },
-        {
-          "name": "start_image",
-          "type": "IMAGE",
-          "link": 5353
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 4841
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 4842
-        },
-        {
-          "name": "length",
-          "type": "INT",
-          "widget": {
-            "name": "length"
-          },
-          "link": 4843
-        },
-        {
-          "name": "motion_amplitude",
-          "type": "FLOAT",
-          "widget": {
-            "name": "motion_amplitude"
-          },
-          "link": 4844
-        },
-        {
-          "name": "steps",
-          "type": "INT",
-          "widget": {
-            "name": "steps"
-          },
-          "link": 4980
-        },
-        {
-          "name": "sampler_name",
-          "type": "COMBO",
-          "widget": {
-            "name": "sampler_name"
-          },
-          "link": 5328
-        },
-        {
-          "name": "scheduler",
-          "type": "COMBO",
-          "widget": {
-            "name": "scheduler"
-          },
-          "link": 5329
-        },
-        {
-          "name": "sigma_shift",
-          "type": "FLOAT",
-          "widget": {
-            "name": "sigma_shift"
-          },
-          "link": 5416
-        },
-        {
-          "label": "prompt",
-          "name": "anything",
+          "name": "OPT_CONNECTION",
           "type": "*",
-          "link": 5471
-        },
-        {
-          "name": "correct_strength",
-          "type": "FLOAT",
-          "widget": {
-            "name": "correct_strength"
-          },
-          "link": 5548
+          "links": null
         }
       ],
-      "outputs": [
-        {
-          "label": "MODEL_S_HIGH",
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            4846
-          ]
-        },
-        {
-          "label": "MODEL_S_LOW",
-          "name": "MODEL_1",
-          "type": "MODEL",
-          "links": [
-            4847
-          ]
-        },
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            4878
-          ]
-        }
-      ],
+      "title": "Upscale and Interpolation",
       "properties": {
-        "proxyWidgets": [
-          [
-            "-1",
-            "width"
-          ],
-          [
-            "-1",
-            "height"
-          ],
-          [
-            "-1",
-            "length"
-          ],
-          [
-            "-1",
-            "motion_amplitude"
-          ],
-          [
-            "-1",
-            "steps"
-          ],
-          [
-            "-1",
-            "sampler_name"
-          ],
-          [
-            "-1",
-            "scheduler"
-          ],
-          [
-            "-1",
-            "sigma_shift"
-          ],
-          [
-            "-1",
-            "correct_strength"
-          ],
-          [
-            "1300",
-            "value"
-          ],
-          [
-            "1299",
-            "text"
-          ],
-          [
-            "1250",
-            "seed"
-          ],
-          [
-            "1250",
-            "🎲 Randomize Each Time"
-          ],
-          [
-            "1250",
-            "🎲 New Fixed Random"
-          ],
-          [
-            "1604",
-            "cleanup_mode"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.7.0"
+        "matchColors": "red",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
       },
-      "widgets_values": [
-        5,
-        2,
-        "euler",
-        "simple",
-        5,
-        "euler",
-        "simple",
-        8,
-        0.01
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
+      "color": "#322",
+      "bgcolor": "#533"
     }
   ],
   "links": [
@@ -8966,8 +8958,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 22,
-          "lastNodeId": 1619,
-          "lastLinkId": 5551,
+          "lastNodeId": 1622,
+          "lastLinkId": 5566,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -9068,7 +9060,7 @@
             "type": "VAE",
             "linkIds": [
               4824,
-              5539
+              5554
             ],
             "localized_name": "vae",
             "pos": [
@@ -9081,7 +9073,7 @@
             "name": "start_image",
             "type": "IMAGE",
             "linkIds": [
-              5540
+              5555
             ],
             "localized_name": "start_image",
             "shape": 7,
@@ -9095,7 +9087,7 @@
             "name": "width",
             "type": "INT",
             "linkIds": [
-              5541
+              5556
             ],
             "localized_name": "width",
             "pos": [
@@ -9108,7 +9100,7 @@
             "name": "height",
             "type": "INT",
             "linkIds": [
-              5542
+              5557
             ],
             "localized_name": "height",
             "pos": [
@@ -9121,7 +9113,7 @@
             "name": "length",
             "type": "INT",
             "linkIds": [
-              5543
+              5558
             ],
             "localized_name": "length",
             "pos": [
@@ -9134,7 +9126,7 @@
             "name": "motion_amplitude",
             "type": "FLOAT",
             "linkIds": [
-              5544
+              5559
             ],
             "localized_name": "motion_amplitude",
             "pos": [
@@ -9208,7 +9200,7 @@
             "name": "correct_strength",
             "type": "FLOAT",
             "linkIds": [
-              5547
+              5560
             ],
             "pos": [
               -1303.763102460822,
@@ -9344,7 +9336,7 @@
                 "type": "CONDITIONING",
                 "slot_index": 0,
                 "links": [
-                  5538
+                  5553
                 ]
               }
             ],
@@ -9539,7 +9531,7 @@
                 "name": "CONDITIONING",
                 "type": "CONDITIONING",
                 "links": [
-                  5537
+                  5552
                 ]
               }
             ],
@@ -9603,118 +9595,11 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: Two anime-style women with vibrant purple and blue hair, wearing black leather harnesses and gloves, lean in intimately from opposite sides of a central phallus. The scene is set inside a sunlit library with arched windows casting warm golden light across bookshelves filled with colorful spines.) (At 1 seconds: Their eyes widen slightly as they simultaneously lick the tip; their expressions shift to playful intensity while maintaining synchronized, stylized anime motion.) (At 2 seconds: The camera subtly pushes in on their faces and upper torsos, enhancing skin texture details under soft backlighting from window glows. Bookshelf shadows deepen with contrast against illuminated pages visible through glass panes.) (At 3 seconds: Their gloved hands gently grip the base of each breast as they tilt heads back slightly, mouths opening wider to reveal glossy tongues in mid-lap; anime-style exaggerated eyelashes flutter dramatically under natural lighting.) (At 4 seconds: The background blurs softly into a shallow depth-of-field effect while keeping focus on their flushed cheeks and sweat-sheened skin tones. A clock hangs motionless above them as time seems suspended within the frame’s composition.) (At 5 seconds: Both women maintain locked gazes with each other, lips parted in sensual anticipation; camera pans gently right to left across both profiles before freezing mid-frame.)"
+              "(At 0 seconds: A photorealistic close-up of a blonde woman with intricate braids and shaved sides, wearing a glossy black bikini top. She gazes intensely at the camera while holding her chest as an erect penis emerges from between her breasts. Warm stage lights cast dramatic shadows on wooden floorboards in the background.) (At 1 seconds: The camera slowly pushes forward slightly as she subtly shifts weight, maintaining eye contact with intense yellow eyes and a parted mouth showing glossy lips. A single drop of sweat or liquid glistens near her left cheek under cool blue backlighting from stage lamps.) (At 2 seconds: Her hands grip the straps of her bikini top more firmly while slight motion blur indicates subtle body movement as she holds pose against dimly lit, moody studio lighting with visible equipment in background. The glossy texture reflects light across skin and fabric creating high contrast shadows.) (At 3 seconds: Camera angle tilts slightly downward to emphasize anatomy details — a small white mark on her right shoulder blade and the wetness of lubricant dripping from below nipple area onto chest while maintaining direct eye contact with lens.) (At 4 seconds: The woman’s expression intensifies as she leans forward ever so slightly, causing more droplets to fall down torso under consistent warm light sources casting long shadows across floorboards behind her. Her gaze remains locked on viewer creating intimate connection despite static framing.) (At 5 seconds: Final frame holds steady with slight camera zoom-in enhancing realism — capturing every detail of skin texture and reflective surface of black latex top, reinforcing moody atmosphere created by mixed lighting from foreground spotlights.)"
             ],
             "color": "#232",
             "bgcolor": "#353",
             "shape": 2
-          },
-          {
-            "id": 1300,
-            "type": "PrimitiveStringMultiline",
-            "pos": [
-              -1159.5051254479395,
-              1893.298796137241
-            ],
-            "size": [
-              336.4285647435929,
-              137.58089636900377
-            ],
-            "flags": {},
-            "order": 1,
-            "mode": 0,
-            "inputs": [],
-            "outputs": [
-              {
-                "label": " ",
-                "localized_name": "STRING",
-                "name": "STRING",
-                "type": "STRING",
-                "links": [
-                  4961
-                ]
-              }
-            ],
-            "title": "LoRaS Triggers",
-            "properties": {
-              "cnr_id": "comfy-core",
-              "ver": "0.3.33",
-              "Node name for S&R": "PrimitiveStringMultiline",
-              "widget_ue_connectable": {}
-            },
-            "widgets_values": [
-              ""
-            ],
-            "color": "#232",
-            "bgcolor": "#353",
-            "shape": 2
-          },
-          {
-            "id": 1301,
-            "type": "Text Concatenate",
-            "pos": [
-              -1146.7724110198442,
-              2115.1057963158773
-            ],
-            "size": [
-              270,
-              142
-            ],
-            "flags": {
-              "collapsed": true
-            },
-            "order": 11,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "text_a",
-                "name": "text_a",
-                "shape": 7,
-                "type": "STRING",
-                "link": 4961
-              },
-              {
-                "localized_name": "text_b",
-                "name": "text_b",
-                "shape": 7,
-                "type": "STRING",
-                "link": 4962
-              },
-              {
-                "localized_name": "text_c",
-                "name": "text_c",
-                "shape": 7,
-                "type": "STRING",
-                "link": null
-              },
-              {
-                "localized_name": "text_d",
-                "name": "text_d",
-                "shape": 7,
-                "type": "STRING",
-                "link": null
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "STRING",
-                "name": "STRING",
-                "type": "STRING",
-                "links": [
-                  4963
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "was-ns",
-              "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
-              "Node name for S&R": "Text Concatenate",
-              "aux_id": "ltdrdata/was-node-suite-comfyui"
-            },
-            "widgets_values": [
-              "",
-              "false"
-            ]
           },
           {
             "id": 1604,
@@ -9888,19 +9773,19 @@
                 "localized_name": "positive",
                 "name": "positive",
                 "type": "CONDITIONING",
-                "link": 5549
+                "link": 5561
               },
               {
                 "localized_name": "negative",
                 "name": "negative",
                 "type": "CONDITIONING",
-                "link": 5550
+                "link": 5562
               },
               {
                 "localized_name": "latent_image",
                 "name": "latent_image",
                 "type": "LATENT",
-                "link": 5551
+                "link": 5563
               },
               {
                 "localized_name": "noise_seed",
@@ -9980,14 +9865,14 @@
             ]
           },
           {
-            "id": 1616,
-            "type": "PainterI2VAdvanced",
+            "id": 1620,
+            "type": "PainterI2VAdvanced-MoE",
             "pos": [
-              -493.36357001591415,
-              2636.9422799254876
+              -533.8711127982614,
+              2645.071867191611
             ],
             "size": [
-              270,
+              270.319921875,
               282
             ],
             "flags": {},
@@ -9998,19 +9883,19 @@
                 "localized_name": "positive",
                 "name": "positive",
                 "type": "CONDITIONING",
-                "link": 5537
+                "link": 5552
               },
               {
                 "localized_name": "negative",
                 "name": "negative",
                 "type": "CONDITIONING",
-                "link": 5538
+                "link": 5553
               },
               {
                 "localized_name": "vae",
                 "name": "vae",
                 "type": "VAE",
-                "link": 5539
+                "link": 5554
               },
               {
                 "localized_name": "clip_vision",
@@ -10024,7 +9909,7 @@
                 "name": "start_image",
                 "shape": 7,
                 "type": "IMAGE",
-                "link": 5540
+                "link": 5555
               },
               {
                 "localized_name": "width",
@@ -10033,7 +9918,7 @@
                 "widget": {
                   "name": "width"
                 },
-                "link": 5541
+                "link": 5556
               },
               {
                 "localized_name": "height",
@@ -10042,7 +9927,7 @@
                 "widget": {
                   "name": "height"
                 },
-                "link": 5542
+                "link": 5557
               },
               {
                 "localized_name": "length",
@@ -10051,7 +9936,7 @@
                 "widget": {
                   "name": "length"
                 },
-                "link": 5543
+                "link": 5558
               },
               {
                 "localized_name": "motion_amplitude",
@@ -10060,7 +9945,7 @@
                 "widget": {
                   "name": "motion_amplitude"
                 },
-                "link": 5544
+                "link": 5559
               },
               {
                 "localized_name": "correct_strength",
@@ -10069,7 +9954,7 @@
                 "widget": {
                   "name": "correct_strength"
                 },
-                "link": 5547
+                "link": 5560
               }
             ],
             "outputs": [
@@ -10078,7 +9963,7 @@
                 "name": "positive",
                 "type": "CONDITIONING",
                 "links": [
-                  5549
+                  5561
                 ]
               },
               {
@@ -10086,7 +9971,7 @@
                 "name": "negative",
                 "type": "CONDITIONING",
                 "links": [
-                  5550
+                  5562
                 ]
               },
               {
@@ -10094,14 +9979,14 @@
                 "name": "latent",
                 "type": "LATENT",
                 "links": [
-                  5551
+                  5563
                 ]
               }
             ],
             "properties": {
               "aux_id": "huchukato/ComfyUI-PainterI2Vadvanced",
-              "ver": "fc75625b549257cd4fc70904b7ec035bf1be800d",
-              "Node name for S&R": "PainterI2VAdvanced"
+              "ver": "f4773706a324a2a03313ea1fe36eb084043fc574",
+              "Node name for S&R": "PainterI2VAdvanced-MoE"
             },
             "widgets_values": [
               5,
@@ -10111,6 +9996,113 @@
               "simple",
               true,
               0.01
+            ]
+          },
+          {
+            "id": 1300,
+            "type": "PrimitiveStringMultiline",
+            "pos": [
+              -1159.5051254479395,
+              1893.298796137241
+            ],
+            "size": [
+              336.4285647435929,
+              137.58089636900377
+            ],
+            "flags": {},
+            "order": 1,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  4961
+                ]
+              }
+            ],
+            "title": "LoRaS Triggers",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.33",
+              "Node name for S&R": "PrimitiveStringMultiline",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              ""
+            ],
+            "color": "#232",
+            "bgcolor": "#353",
+            "shape": 2
+          },
+          {
+            "id": 1301,
+            "type": "Text Concatenate",
+            "pos": [
+              -1146.7724110198442,
+              2115.1057963158773
+            ],
+            "size": [
+              270,
+              142
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 11,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "text_a",
+                "name": "text_a",
+                "shape": 7,
+                "type": "STRING",
+                "link": 4961
+              },
+              {
+                "localized_name": "text_b",
+                "name": "text_b",
+                "shape": 7,
+                "type": "STRING",
+                "link": 4962
+              },
+              {
+                "localized_name": "text_c",
+                "name": "text_c",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              },
+              {
+                "localized_name": "text_d",
+                "name": "text_d",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  4963
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "was-ns",
+              "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
+              "Node name for S&R": "Text Concatenate",
+              "aux_id": "ltdrdata/was-node-suite-comfyui"
+            },
+            "widgets_values": [
+              "",
+              "false"
             ]
           }
         ],
@@ -10328,96 +10320,96 @@
             "type": "LATENT"
           },
           {
-            "id": 5537,
+            "id": 5552,
             "origin_id": 1258,
             "origin_slot": 0,
-            "target_id": 1616,
+            "target_id": 1620,
             "target_slot": 0,
             "type": "CONDITIONING"
           },
           {
-            "id": 5538,
+            "id": 5553,
             "origin_id": 1245,
             "origin_slot": 0,
-            "target_id": 1616,
+            "target_id": 1620,
             "target_slot": 1,
             "type": "CONDITIONING"
           },
           {
-            "id": 5539,
+            "id": 5554,
             "origin_id": -10,
             "origin_slot": 5,
-            "target_id": 1616,
+            "target_id": 1620,
             "target_slot": 2,
             "type": "VAE"
           },
           {
-            "id": 5540,
+            "id": 5555,
             "origin_id": -10,
             "origin_slot": 6,
-            "target_id": 1616,
+            "target_id": 1620,
             "target_slot": 4,
             "type": "IMAGE"
           },
           {
-            "id": 5541,
+            "id": 5556,
             "origin_id": -10,
             "origin_slot": 7,
-            "target_id": 1616,
+            "target_id": 1620,
             "target_slot": 5,
             "type": "INT"
           },
           {
-            "id": 5542,
+            "id": 5557,
             "origin_id": -10,
             "origin_slot": 8,
-            "target_id": 1616,
+            "target_id": 1620,
             "target_slot": 6,
             "type": "INT"
           },
           {
-            "id": 5543,
+            "id": 5558,
             "origin_id": -10,
             "origin_slot": 9,
-            "target_id": 1616,
+            "target_id": 1620,
             "target_slot": 7,
             "type": "INT"
           },
           {
-            "id": 5544,
+            "id": 5559,
             "origin_id": -10,
             "origin_slot": 10,
-            "target_id": 1616,
+            "target_id": 1620,
             "target_slot": 8,
             "type": "FLOAT"
           },
           {
-            "id": 5547,
+            "id": 5560,
             "origin_id": -10,
             "origin_slot": 16,
-            "target_id": 1616,
+            "target_id": 1620,
             "target_slot": 9,
             "type": "FLOAT"
           },
           {
-            "id": 5549,
-            "origin_id": 1616,
+            "id": 5561,
+            "origin_id": 1620,
             "origin_slot": 0,
             "target_id": 1284,
             "target_slot": 2,
             "type": "CONDITIONING"
           },
           {
-            "id": 5550,
-            "origin_id": 1616,
+            "id": 5562,
+            "origin_id": 1620,
             "origin_slot": 1,
             "target_id": 1284,
             "target_slot": 3,
             "type": "CONDITIONING"
           },
           {
-            "id": 5551,
-            "origin_id": 1616,
+            "id": 5563,
+            "origin_id": 1620,
             "origin_slot": 2,
             "target_id": 1284,
             "target_slot": 4,
@@ -10433,8 +10425,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 22,
-          "lastNodeId": 1619,
-          "lastLinkId": 5551,
+          "lastNodeId": 1622,
+          "lastLinkId": 5566,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -11336,7 +11328,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: The two anime characters remain frozen in their intimate positions from previous shot — purple-haired woman on the left and blue-haired companion on the right. Their expressions are now more focused as if anticipating movement while sunlight continues filtering through arched windows.) (At 1 seconds: Slow-motion frames capture droplets of sweat sliding down each cheek, accentuated by high-contrast anime shading that emphasizes muscle definition beneath their skin tone gradients.) (At 2 seconds: Camera tilts upward slightly to reveal the ceiling beams and ornate molding above them; shadows cast across wooden bookshelves grow darker as afternoon light fades subtly into evening hues in background windows.) (At 3 seconds: The women’s eyes blink slowly, pupils dilated under warm ambient lighting. Their tongues remain extended outward with slight tremors — a cinematic pause emphasizing emotional intensity and stylized anime motion design.) (At 4 seconds: A single drop of moisture falls from the blue-haired woman's chin onto her gloved hand below; lens flare glints off metallic buckles on leather straps as camera zooms in closer to their torsos.) (At 5 seconds: Their bodies shift minutely toward each other — shoulders pressing gently, breasts trembling slightly under soft light. The composition remains tight and centered with shallow focus locking onto facial expressions.)"
+              "(At 0 seconds: The same blonde woman remains seated in photorealistic style as warm stage lights illuminate her glossy black bikini. She maintains intense eye contact while subtly adjusting grip on the straps under dramatic blue-toned backlighting.) (At 1 seconds: Camera pans slightly to right revealing more of dark wooden floorboards and out-of-focus equipment behind, emphasizing isolation within moody environment lit by orange spotlights casting soft glow across scene.) (At 2 seconds: She tilts head ever so minutely toward viewer while lips remain parted — enhancing sensual tension under consistent lighting that highlights sweat glistening on skin near collarbone area. Depth of field keeps focus sharply locked onto her face and upper torso.) (At 3 seconds: The camera begins a slow forward dolly movement bringing closer view to the erect penis emerging from between breasts, capturing texture details like moisture droplets falling down chest under mixed warm-cool lighting conditions.) (At 4 seconds: As she holds pose with slight body sway indicated by motion blur in her hands gripping bikini top straps — maintaining direct eye contact while background remains softly blurred enhancing focus on subject’s expression and anatomy detail.) (At 5 seconds: Final frame zooms slightly tighter focusing exclusively on facial features and upper torso, emphasizing realistic skin texture under ambient lighting from stage equipment casting directional shadows across scene.)"
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -11832,8 +11824,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 22,
-          "lastNodeId": 1619,
-          "lastLinkId": 5551,
+          "lastNodeId": 1622,
+          "lastLinkId": 5566,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -12567,7 +12559,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: Both women’s eyes lock again directly at the viewer as they hold steady positions; purple-haired woman's tongue flicks out once more while blue-haired companion keeps her gaze fixed.) (At 1 seconds: Subtle camera shake simulates breathy motion blur around their necklines and collarbones, emphasizing anime-style skin texture with high-detail rendering of pores and sheen under natural lighting conditions.) (At 2 seconds: The clock hanging behind them ticks once — a silent cue for passage of time without changing the scene’s frozen moment. Bookshelf colors appear slightly desaturated compared to earlier frames due to shifting light quality near sunset hourglass window angles.) (At 3 seconds: Their lips part further, revealing glossy inner mouths and tongue tips glowing faintly under warm ambient glow; camera pans slowly across their chests following subtle muscle contractions beneath skin surface layers.) (At 4 seconds: The background becomes slightly out of focus as depth-of-field narrows to emphasize only the two figures in foreground. Shadows grow longer along floorboards near windows, indicating transition toward evening twilight hour.) (At 5 seconds: Both characters remain motionless yet emotionally charged — eyes half-closed with slight eyelid fluttering suggesting internal tension building between them; camera holds final frame for full duration.)"
+              "(At 0 seconds: The blonde woman sits upright in photorealistic style with glossy black bikini top reflecting light. She looks directly into camera while maintaining slight body tension visible through subtle muscle definition beneath smooth skin.) (At 1 seconds: Camera begins slow upward tilt capturing more of her face — highlighting bold yellow eyes and parted lips under dramatic lighting from orange stage lights casting shadows across cheekbones.) (At 2 seconds: Slight shift in posture causes droplets to fall down chest as she adjusts grip on bikini top straps, maintaining steady gaze while background remains dimly lit with visible equipment silhouettes against wooden floorboards.) (At 3 seconds: Camera moves slightly closer focusing primarily on upper torso — capturing texture details of skin and reflective surface of black latex under warm light sources casting long shadows across scene.) (At 4 seconds: She leans forward ever so subtly causing more droplets to fall downward while maintaining intense eye contact with viewer, reinforcing intimacy despite static framing within moody studio environment lit by stage lamps.) (At 5 seconds: Final frame holds steady as camera zooms in slightly enhancing realism — capturing every detail of skin texture and reflective surface under mixed lighting from foreground spotlights casting directional shadows across scene.)"
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -13231,8 +13223,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 22,
-          "lastNodeId": 1619,
-          "lastLinkId": 5551,
+          "lastNodeId": 1622,
+          "lastLinkId": 5566,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -13606,60 +13598,6 @@
             "bgcolor": "#355"
           },
           {
-            "id": 1261,
-            "type": "VHS_SelectImages",
-            "pos": [
-              25.965718465156613,
-              2342.506244097444
-            ],
-            "size": [
-              218.1728515625,
-              98
-            ],
-            "flags": {
-              "collapsed": true
-            },
-            "order": 7,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "image",
-                "name": "image",
-                "type": "IMAGE",
-                "link": 4862
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "IMAGE",
-                "name": "IMAGE",
-                "type": "IMAGE",
-                "links": [
-                  4860
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfyui-videohelpersuite",
-              "ver": "8e4d79471bf1952154768e8435a9300077b534fa",
-              "Node name for S&R": "VHS_SelectImages",
-              "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
-              "ue_properties": {
-                "version": "7.0.1",
-                "widget_ue_connectable": {
-                  "indexes": true,
-                  "err_if_missing": true,
-                  "err_if_empty": true
-                }
-              }
-            },
-            "widgets_values": {
-              "indexes": "-1",
-              "err_if_missing": true,
-              "err_if_empty": true
-            }
-          },
-          {
             "id": 1256,
             "type": "PainterLongVideo",
             "pos": [
@@ -14027,7 +13965,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: The scene returns to its initial composition from first prompt — purple-haired woman on left, blue-haired companion on right. They both maintain identical expressions and positions as before under consistent lighting conditions.) (At 1 seconds: Camera zooms out slightly revealing more of the library environment including additional bookshelves in background while keeping focus tight around their torsos and facial features.) (At 2 seconds: A faint breeze ruffles strands of blue hair across one shoulder, causing slight movement blur captured within anime-style motion lines. Book spines behind them shimmer subtly under changing light quality throughout day’s progression toward dusk.) (At 3 seconds: Their eyes continue to stare directly at viewer — pupils dilated slightly wider than before indicating heightened emotional state or anticipation for next action sequence.) (At 4 seconds: The camera begins a slow circular pan around their bodies, maintaining focus on synchronized movements of tongue-lapping and breast-gripping gestures while background elements blur into soft bokeh effect.) (At 5 seconds: Final freeze-frame captures the moment perfectly — both characters locked in sensual embrace with eyes wide open, mouths slightly parted. The entire scene is rendered entirely within anime-style aesthetic consistency including color palette gradients, lighting design choices, and motion dynamics throughout all five-second intervals.)"
+              "(At 0 seconds: The blonde woman remains seated in photorealistic style with glossy black bikini top reflecting light. She maintains intense eye contact while subtle body movement is suggested through slight motion blur visible near hands gripping straps.) (At 1 seconds: Camera pans slightly to left revealing more of dark wooden floorboards and out-of-focus equipment behind, emphasizing isolation within moody environment lit by orange spotlights casting soft glow across scene.) (At 2 seconds: She tilts head ever so minutely toward viewer while lips remain parted — enhancing sensual tension under consistent lighting that highlights sweat glistening on skin near collarbone area. Depth of field keeps focus sharply locked onto her face and upper torso.) (At 3 seconds: The camera begins a slow forward dolly movement bringing closer view to the erect penis emerging from between breasts, capturing texture details like moisture droplets falling down chest under mixed warm-cool lighting conditions.) (At 4 seconds: As she holds pose with slight body sway indicated by motion blur in her hands gripping bikini top straps — maintaining direct eye contact while background remains softly blurred enhancing focus on subject’s expression and anatomy detail.) (At 5 seconds: Final frame zooms slightly tighter focusing exclusively on facial features and upper torso, emphasizing realistic skin texture under ambient lighting from stage equipment casting directional shadows across scene.)"
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -14344,6 +14282,60 @@
             "widgets_values": [
               "Full Cleanup"
             ]
+          },
+          {
+            "id": 1261,
+            "type": "VHS_SelectImages",
+            "pos": [
+              -36.42204529995621,
+              2377.009653926723
+            ],
+            "size": [
+              218.1728515625,
+              98
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 7,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image",
+                "name": "image",
+                "type": "IMAGE",
+                "link": 4862
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "IMAGE",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  4860
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfyui-videohelpersuite",
+              "ver": "8e4d79471bf1952154768e8435a9300077b534fa",
+              "Node name for S&R": "VHS_SelectImages",
+              "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
+              "ue_properties": {
+                "version": "7.0.1",
+                "widget_ue_connectable": {
+                  "indexes": true,
+                  "err_if_missing": true,
+                  "err_if_empty": true
+                }
+              }
+            },
+            "widgets_values": {
+              "indexes": "-1",
+              "err_if_missing": true,
+              "err_if_empty": true
+            }
           }
         ],
         "groups": [],
@@ -14630,8 +14622,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 22,
-          "lastNodeId": 1619,
-          "lastLinkId": 5551,
+          "lastNodeId": 1622,
+          "lastLinkId": 5566,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -14743,7 +14735,7 @@
               20,
               50,
               4.5,
-              870004884186783,
+              149824683541933,
               "randomize",
               "",
               "man, boy, male, man's voice, boy's voice, male's voice, ",
@@ -14890,8 +14882,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 22,
-          "lastNodeId": 1619,
-          "lastLinkId": 5551,
+          "lastNodeId": 1622,
+          "lastLinkId": 5566,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -14995,15 +14987,15 @@
             "id": 1566,
             "type": "StorySplitNode",
             "pos": [
-              125.7011099675068,
-              -1245.986526050286
+              143.63221670203762,
+              -1247.3383733574433
             ],
             "size": [
               400,
               216
             ],
             "flags": {},
-            "order": 1,
+            "order": 2,
             "mode": 0,
             "inputs": [
               {
@@ -15013,7 +15005,7 @@
                 "widget": {
                   "name": "text"
                 },
-                "link": 5433
+                "link": 5566
               }
             ],
             "outputs": [
@@ -15068,6 +15060,46 @@
             ]
           },
           {
+            "id": 1621,
+            "type": "PrimitiveStringMultiline",
+            "pos": [
+              -263.4351526152153,
+              -1701.0766516751646
+            ],
+            "size": [
+              336.4285647435929,
+              137.58089636900377
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  5564
+                ]
+              }
+            ],
+            "title": "LoRaS Triggers",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.33",
+              "Node name for S&R": "PrimitiveStringMultiline",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              ""
+            ],
+            "color": "#232",
+            "bgcolor": "#353",
+            "shape": 2
+          },
+          {
             "id": 1564,
             "type": "AILab_QwenVL_GGUF_Advanced",
             "pos": [
@@ -15079,7 +15111,7 @@
               564
             ],
             "flags": {},
-            "order": 0,
+            "order": 1,
             "mode": 0,
             "inputs": [
               {
@@ -15103,7 +15135,7 @@
                 "name": "RESPONSE",
                 "type": "STRING",
                 "links": [
-                  5433
+                  5565
                 ]
               }
             ],
@@ -15115,7 +15147,7 @@
             "widgets_values": [
               "Qwen3-VL-8B-Instruct-c_abliterated-v3.Q8_0.gguf",
               "auto",
-              "🎬 Wan 2.2 NSFW I2V Sequence",
+              "🎬 Wan 2.2 NSFW I2V Timeline (20s)",
               "",
               1536,
               0.6,
@@ -15129,24 +15161,83 @@
               0,
               4194304,
               false,
-              633588735,
+              3061967548,
               "randomize",
               false
             ],
             "color": "#474539",
             "bgcolor": "#2c4045"
+          },
+          {
+            "id": 1622,
+            "type": "Text Concatenate",
+            "pos": [
+              -181.68170586330663,
+              -1409.8765234994257
+            ],
+            "size": [
+              270,
+              142
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "text_a",
+                "name": "text_a",
+                "shape": 7,
+                "type": "STRING",
+                "link": 5564
+              },
+              {
+                "localized_name": "text_b",
+                "name": "text_b",
+                "shape": 7,
+                "type": "STRING",
+                "link": 5565
+              },
+              {
+                "localized_name": "text_c",
+                "name": "text_c",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              },
+              {
+                "localized_name": "text_d",
+                "name": "text_d",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  5566
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "was-ns",
+              "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
+              "Node name for S&R": "Text Concatenate",
+              "aux_id": "ltdrdata/was-node-suite-comfyui"
+            },
+            "widgets_values": [
+              "",
+              "false"
+            ]
           }
         ],
         "groups": [],
         "links": [
-          {
-            "id": 5433,
-            "origin_id": 1564,
-            "origin_slot": 0,
-            "target_id": 1566,
-            "target_slot": 0,
-            "type": "STRING"
-          },
           {
             "id": 5454,
             "origin_id": -10,
@@ -15186,6 +15277,30 @@
             "target_id": -20,
             "target_slot": 3,
             "type": "STRING"
+          },
+          {
+            "id": 5564,
+            "origin_id": 1621,
+            "origin_slot": 0,
+            "target_id": 1622,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 5565,
+            "origin_id": 1564,
+            "origin_slot": 0,
+            "target_id": 1622,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 5566,
+            "origin_id": 1622,
+            "origin_slot": 0,
+            "target_id": 1566,
+            "target_slot": 0,
+            "type": "STRING"
           }
         ],
         "extra": {
@@ -15197,8 +15312,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 22,
-          "lastNodeId": 1619,
-          "lastLinkId": 5551,
+          "lastNodeId": 1622,
+          "lastLinkId": 5566,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -15434,7 +15549,7 @@
               1.2,
               16,
               true,
-              759645884,
+              2835092249,
               "randomize",
               false
             ],
@@ -15510,10 +15625,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.8423080542995308,
+      "scale": 0.5753077346489532,
       "offset": [
-        2365.703423434476,
-        310.5124158095175
+        2899.5461321105113,
+        45.529211621553635
       ]
     }
   },
