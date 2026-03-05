@@ -13,11 +13,8 @@ ENV PATH=$PATH:$CUDA_HOME/bin
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 
 # Install system dependencies (CUDA already included in base image)
-RUN apt-get update && apt-get install -y --no-install-recommends software-properties-common \
-    gpg-agent \
-    && add-apt-repository ppa:deadsnakes/ppa && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
+RUN apt update && \
+    apt install -y --no-install-recommends \
     git \
     make \
     wget \
@@ -39,8 +36,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends software-proper
     ffmpeg \
     openssh-server \
     openssh-client \
-    && apt-get clean \
+    && apt clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Verify Python version
+RUN python3.12 --version
 
 # CUDA toolkit and cuDNN already included in nvidia/cuda base image
 
