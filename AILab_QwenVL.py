@@ -703,6 +703,11 @@ class QwenVLBase:
         print(f"[QwenVL] 🔍 DEBUG - Device: {device}, Dtype: {dtype}")
         print(f"[QwenVL] 🔍 DEBUG - Attention impl: {actual_attn_impl}")
         
+        # TEMPORARY: Disable quantization to test if it's the cause
+        if quant_config:
+            print(f"[QwenVL] ⚠️  TEMPORARY: Skipping quantization to test OOM cause")
+            quant_config = None
+        
         # DEBUG: Check what model is actually being loaded
         print(f"[QwenVL] 🔍 MODEL PATH: {model_path}")
         import os
@@ -716,10 +721,10 @@ class QwenVLBase:
         
         load_kwargs = {
             "device_map": "cpu",  # Force CPU loading to test
-            "dtype": dtype,
+            "torch_dtype": torch.float16,  # Force FP16 explicitly
             "attn_implementation": actual_attn_impl,
             "use_safetensors": True,
-            "low_cpu_mem_usage": True,  # Add this option
+            "low_cpu_mem_usage": True,
         }
             
         if quant_config:
