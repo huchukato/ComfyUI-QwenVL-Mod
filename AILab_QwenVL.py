@@ -698,17 +698,33 @@ class QwenVLBase:
             if allocated_before > 2.0:
                 print(f"[QwenVL] ⚠️  WARNING: {allocated_before:.1f}GB already allocated before loading!")
         
+        # DEBUG: Print quantization config details
+        print(f"[QwenVL] 🔍 DEBUG - Model: {model_name}, Quant: {quant}, Quant config: {quant_config}")
+        print(f"[QwenVL] 🔍 DEBUG - Device: {device}, Dtype: {dtype}")
+        print(f"[QwenVL] 🔍 DEBUG - Attention impl: {actual_attn_impl}")
+        
         load_kwargs = {
-            "device_map": device if device != "auto" else "auto",
+            "device_map": "cpu",  # Force CPU loading to test
             "dtype": dtype,
             "attn_implementation": actual_attn_impl,
             "use_safetensors": True,
+            "low_cpu_mem_usage": True,  # Add this option
         }
             
         if quant_config:
             load_kwargs["quantization_config"] = quant_config
             
         self.model = AutoModelForVision2Seq.from_pretrained(model_path, **load_kwargs).eval()
+        
+        # Move to GPU manually if loading was on CPU
+        if device != "cpu" and torch.cuda.is_available():
+            print(f"[QwenVL] 🔄 Moving model from CPU to {device}...")
+            try:
+                self.model = self.model.to(device)
+                print(f"[QwenVL] ✅ Model moved to {device}")
+            except Exception as e:
+                print(f"[QwenVL] ❌ Failed to move to GPU: {e}")
+                print("[QwenVL] Keeping model on CPU (will be very slow)")
         
         # Apply SageAttention patching if needed
         if attn_impl == "sage":
