@@ -157,6 +157,19 @@ T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) �
 > 🔄 **Focus Continuità**: Ogni paragrafo ripete contenuto precedente per transizioni fluide.  
 > 🎯 **Compatibile WAN 2.2**: Stessa struttura timeline e supporto NSFW del preset I2V.
 
+* **2026/03/06**: **v2.2.4** 🔧 **Fix OOM Critico + Rimozione Quantizzazione**. [[Aggiornamenti](update.md#version-224-20260306)]
+> 🚨 **BitsAndBytes Disabilitato**: Rimosso quantizzazione problematica che causava OOM su RTX 5090.  
+> ✅ **Solo FP16**: Tutti i nodi HF ora usano FP16 stabile (~6GB VRAM).  
+> 🎯 **Interfaccia Pulita**: Rimosso dropdown quantizzazione - usa nodi GGUF per modelli quantizzati.  
+> 🔧 **Entrambi i Nodi Fixati**: Applicati fix a nodi Standard e Advanced con parametri consistenti.  
+> 💡 **Guida Utente**: Nodi HF per qualità, nodi GGUF per quantizzazione - separazione chiara.
+
+* **2026/02/27**: **v2.2.3** 🔧 **Compatibilità CUDA 13 + Rimozione Ridondanze**. [[Aggiornamenti](update.md#version-223-20260227)]
+> 🔧 **Rimosso unload_after_run**: Eliminato checkbox ridondante da tutti i nodi QwenVL per prevenire conflitti CUDA 13.  
+> 🐛 **Fix Errori Parametri**: Risolti errori "missing 1 required positional argument: unload_after_run" in tutti i nodi.  
+> 🎯 **Interfaccia Semplificata**: Interfaccia nodo più pulita senza parametri ridondanti.  
+> 🧠 **Nodo Cleanup VRAM**: Mantenuto per cleanup manuale quando necessario.
+
 * **2026/02/01**: **v2.0.4** Aggiornamento stabilità - rimosso SageAttention per migliore compatibilità e affidabilità output modello. [[Aggiornamenti](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-204-20260201)]
 > [!NOTE]  
 > 🔧 **Flash Attention 2 Rimosso**: Eliminata complessità e problemi interferenza per performance modello stabili.  

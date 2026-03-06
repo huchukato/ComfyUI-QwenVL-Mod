@@ -58,6 +58,13 @@ The ComfyUI-QwenVL custom node integrates powerful Qwen-VL series of vision-lang
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
+* **2026/03/06**: **v2.2.4** 🔧 **Critical OOM Fix + Quantization Removal**. [[Update](update.md#version-224-20260306)]
+> 🚨 **BitsAndBytes Disabled**: Removed problematic quantization causing OOM on RTX 5090.  
+> ✅ **FP16 Only**: All HF nodes now use stable FP16 (~6GB VRAM).  
+> 🎯 **Cleaner Interface**: Removed quantization dropdown - use GGUF nodes for quantized models.  
+> 🔧 **Both Nodes Fixed**: Applied fixes to Standard and Advanced nodes with consistent parameters.  
+> 💡 **User Guidance**: HF nodes for quality, GGUF nodes for quantization - clear separation.  
+
 * **2026/02/27**: **v2.2.3** 🔧 **CUDA 13 Compatibility Fix + Redundancy Removal**. [[Update](update.md#version-223-20260227)]
 > 🔧 **Removed unload_after_run**: Eliminated redundant checkbox from all QwenVL nodes to prevent CUDA 13 conflicts.  
 > 🐛 **Fixed Parameter Errors**: Resolved "missing 1 required positional argument: unload_after_run" errors in all nodes.  

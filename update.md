@@ -1,5 +1,44 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.2.4 (2026/03/06)
+
+🔧 **Critical OOM Fix + Quantization Removal**
+
+This update resolves critical Out-Of-Memory errors on RTX 5090 and simplifies the interface by removing problematic quantization options.
+
+### 🚨 **Major OOM Resolution**
+|- **BitsAndBytes Disabled**: Completely removed BitsAndBytes quantization causing OOM on RTX 5090
+|- **FP16 Only**: All HF nodes now use FP16 exclusively (~6GB VRAM on RTX 5090)
+|- **Quantization Dropdown Removed**: Eliminated confusing quantization options from all HF nodes
+|- **Working Logic Restored**: Reverted to proven working FP16 logic from commit d057b34
+|- **Both Nodes Fixed**: Applied fixes to both Standard and Advanced nodes
+
+### 🎯 **Interface Simplification**
+|- **Cleaner UI**: Removed quantization dropdown from QwenVL and QwenVL Advanced nodes
+|- **GGUF for Quantization**: Users wanting quantized models should use dedicated GGUF nodes
+|- **Consistent Parameters**: Both nodes now have consistent parameter structure
+|- **keep_last_prompt**: Added missing parameter to maintain feature parity
+
+### 🔧 **Technical Changes**
+|- **Memory Management**: Improved model loading with CPU→CUDA transfer pattern
+|- **Attention Backend**: SDPA as stable default (SageAttention can be added later)
+|- **Error Prevention**: Removed all BitsAndBytes-related code paths
+|- **Debug Logging**: Enhanced logging for attention mode selection and model loading
+
+### 🐛 **Bug Fixes**
+|- **OOM on RTX 5090**: Fixed critical Out-Of-Memory during model loading
+|- **Missing Parameters**: Added frame_count and keep_last_prompt to Advanced node
+|- **Quantization Logic**: Simplified to prevent device mismatch and quantization errors
+|- **Function Signatures**: Corrected all process() functions after dropdown removal
+
+### 💡 **User Guidance**
+|- **HF Nodes**: Use for maximum quality with FP16 (~6GB VRAM)
+|- **GGUF Nodes**: Use for quantized models (Q4/Q8, 2-4GB VRAM)
+|- **Performance**: FP16 + SageAttention/FlashAttention for best speed
+|- **Stability**: SDPA fallback ensures compatibility across all hardware
+
+---
+
 ## Version 2.2.3 (2026/02/27)
 
 🔧 **CUDA 13 Compatibility Fix + Redundancy Removal**
