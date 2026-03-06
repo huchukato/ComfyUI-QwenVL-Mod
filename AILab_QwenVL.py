@@ -165,8 +165,8 @@ try:
 except ImportError:
     from transformers import AutoModelForImageTextToText as AutoModelForVision2Seq
 
-# Export cache functions for other modules
-__all__ = ['PROMPT_CACHE', 'get_cache_key', 'get_alternative_cache_key', 'save_prompt_cache', 'get_image_hash', 'get_video_hash']
+# Export memory functions for external use
+__all__ = ['PROMPT_CACHE', 'get_cache_key', 'get_alternative_cache_key', 'save_prompt_cache', 'get_image_hash', 'get_video_hash', 'check_pytorch_memory', 'set_pytorch_memory_fraction', 'get_device_info', 'tensor_to_pil', 'get_video_hash', 'enforce_memory', 'quantization_config', 'ensure_model', 'resolve_attention_mode', 'flash_attn_available', 'normalize_device_choice', 'load_model_configs', 'HF_VL_MODELS', 'HF_TEXT_MODELS', 'HF_ALL_MODELS', 'SYSTEM_PROMPTS', 'PRESET_PROMPTS', 'TOOLTIPS', 'Quantization', 'ATTENTION_MODES', 'NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
 
 import folder_paths
 
@@ -271,6 +271,54 @@ def load_model_configs():
 
 if not HF_ALL_MODELS:
     load_model_configs()
+
+def check_pytorch_memory():
+    """Check current PyTorch memory settings and allow user to set fraction"""
+    try:
+        import torch
+        print(f"[QwenVL] PyTorch {torch.__version__}")
+        print(f"[QwenVL] CUDA Available: {torch.cuda.is_available()}")
+        
+        if torch.cuda.is_available():
+            current_fraction = torch.cuda.get_per_process_memory_fraction()
+            print(f"[QwenVL] Current Memory Fraction: {current_fraction:.3f} ({current_fraction*100:.1f}% of GPU)")
+            print(f"[QwenVL] GPU Memory: {torch.cuda.get_device_properties(0).total_memory / 1024**3:.1f} GB")
+            
+            # Allow user to set new fraction
+            try:
+                new_fraction = float(input(f"[QwenVL] Enter new memory fraction (0.1-0.9, current={current_fraction:.3f}): ") or current_fraction
+                if 0.1 <= new_fraction <= 0.9:
+                    torch.cuda.set_per_process_memory_fraction(new_fraction)
+                    print(f"[QwenVL] ✅ Memory fraction set to: {new_fraction:.3f} ({new_fraction*100:.1f}%)")
+                else:
+                    print(f"[QwenVL] ❌ Invalid fraction. Must be between 0.1 and 0.9")
+            except KeyboardInterrupt:
+                print(f"[QwenVL] ✅ Keeping current fraction: {current_fraction:.3f}")
+            except Exception as e:
+                print(f"[QwenVL] ❌ Error setting fraction: {e}")
+        else:
+            print("[QwenVL] CUDA not available")
+    except Exception as e:
+        print(f"[QwenVL] Error checking PyTorch: {e}")
+
+def set_pytorch_memory_fraction(fraction):
+    """Set PyTorch memory fraction if CUDA is available"""
+    try:
+        import torch
+        if torch.cuda.is_available():
+            if 0.1 <= fraction <= 0.9:
+                torch.cuda.set_per_process_memory_fraction(fraction)
+                print(f"[QwenVL] Memory fraction set to: {fraction:.3f} ({fraction*100:.1f}%)")
+                return True
+            else:
+                print(f"[QwenVL] Invalid fraction: {fraction:.3f}. Must be between 0.1 and 0.9")
+                return False
+        else:
+            print("[QwenVL] CUDA not available")
+            return False
+    except Exception as e:
+        print(f"[QwenVL] Error: {e}")
+        return False
 
 def get_device_info():
     gpu = {"available": False, "total_memory": 0, "free_memory": 0}
