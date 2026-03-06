@@ -650,13 +650,6 @@ class QwenVLBase:
             print(f"[QwenVL] Invalid quantization value: {quant_value}, falling back to FP16")
             quant = Quantization.FP16
         
-        # AGGRESSIVE MEMORY FIX: Force 4-bit on 5090 to prevent OOM
-        if torch.cuda.is_available():
-            gpu_name = torch.cuda.get_device_name(0).upper()
-            if "5090" in gpu_name and quant != Quantization.Q4:
-                print(f"[QwenVL] 🚨 RTX 5090 detected - FORCING 4-bit quantization to prevent OOM")
-                quant = Quantization.Q4
-        
         # Check if BitsAndBytes quantization is being used
         is_bnb_quantization = quant in [Quantization.Q4, Quantization.Q8]
         
@@ -692,6 +685,18 @@ class QwenVLBase:
         actual_attn_impl = attn_impl
         if attn_impl == "sage":
             actual_attn_impl = "sdpa"
+        
+        # MEMORY DEBUGGING: Check memory before loading
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+            allocated_before = torch.cuda.memory_allocated() / 1024**3
+            reserved_before = torch.cuda.memory_reserved() / 1024**3
+            total_memory = torch.cuda.get_device_properties(0).total_memory / 1024**3
+            print(f"[QwenVL] 📊 Memory BEFORE load - Allocated: {allocated_before:.1f}GB, Reserved: {reserved_before:.1f}GB, Total: {total_memory:.1f}GB")
+            
+            # Check what's using memory
+            if allocated_before > 2.0:
+                print(f"[QwenVL] ⚠️  WARNING: {allocated_before:.1f}GB already allocated before loading!")
         
         load_kwargs = {
             "device_map": device if device != "auto" else "auto",
