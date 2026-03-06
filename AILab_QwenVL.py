@@ -286,7 +286,10 @@ def check_pytorch_memory():
             
             # Allow user to set new fraction
             try:
-                new_fraction = float(input(f"[QwenVL] Enter new memory fraction (0.1-0.9, current={current_fraction:.3f}): ") or current_fraction
+                prompt = f"[QwenVL] Enter new memory fraction (0.1-0.9"
+                if current_fraction is not None:
+                    prompt += f", current={current_fraction:.3f})"
+                new_fraction = float(input(prompt + ": ") or current_fraction)
                 if 0.1 <= new_fraction <= 0.9:
                     torch.cuda.set_per_process_memory_fraction(new_fraction)
                     print(f"[QwenVL] ✅ Memory fraction set to: {new_fraction:.3f} ({new_fraction*100:.1f}%)")
