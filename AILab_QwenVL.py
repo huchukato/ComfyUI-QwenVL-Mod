@@ -650,6 +650,13 @@ class QwenVLBase:
             print(f"[QwenVL] Invalid quantization value: {quant_value}, falling back to FP16")
             quant = Quantization.FP16
         
+        # AGGRESSIVE MEMORY FIX: Force 4-bit on 5090 to prevent OOM
+        if torch.cuda.is_available():
+            gpu_name = torch.cuda.get_device_name(0).upper()
+            if "5090" in gpu_name and quant != Quantization.Q4:
+                print(f"[QwenVL] 🚨 RTX 5090 detected - FORCING 4-bit quantization to prevent OOM")
+                quant = Quantization.Q4
+        
         # Check if BitsAndBytes quantization is being used
         is_bnb_quantization = quant in [Quantization.Q4, Quantization.Q8]
         
@@ -708,6 +715,12 @@ class QwenVLBase:
                 print(f"[QwenVL] SageAttention patching failed: {e}")
                 print("[QwenVL] Falling back to SDPA attention")
                 # Model is already loaded with SDPA, so we can continue
+        
+        # MEMORY CLEANUP: Clear cache after model loading
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+            torch.cuda.synchronize()
+            print(f"[QwenVL] GPU memory after load: {torch.cuda.memory_allocated() / 1024**3:.1f}GB / {torch.cuda.get_device_properties(0).total_memory / 1024**3:.1f}GB")
                 
         self.model.config.use_cache = True
         if hasattr(self.model, "generation_config"):
