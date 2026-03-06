@@ -1,8 +1,8 @@
 {
   "id": "599b4f0a-1e8f-4105-9e92-96726e9d46e1",
   "revision": 0,
-  "last_node_id": 221,
-  "last_link_id": 462,
+  "last_node_id": 223,
+  "last_link_id": 466,
   "nodes": [
     {
       "id": 52,
@@ -48,7 +48,7 @@
         }
       },
       "widgets_values": [
-        "045444_00001_.png",
+        "071512_00001_.png",
         "image"
       ],
       "color": "#233",
@@ -1306,204 +1306,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 161,
-      "type": "f838c097-47c7-4eda-971d-a4ca071e3b81",
-      "pos": [
-        -1285.5085135845231,
-        735.0129764602607
-      ],
-      "size": [
-        783.8555924235986,
-        638.0599545311666
-      ],
-      "flags": {},
-      "order": 36,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 403
-        },
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 327
-        },
-        {
-          "label": "model_h",
-          "name": "model",
-          "type": "MODEL",
-          "link": 370
-        },
-        {
-          "label": "model_l",
-          "name": "model_1",
-          "type": "MODEL",
-          "link": 371
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 404
-        },
-        {
-          "name": "length",
-          "type": "INT",
-          "widget": {
-            "name": "length"
-          },
-          "link": 366
-        },
-        {
-          "name": "steps",
-          "type": "INT",
-          "widget": {
-            "name": "steps"
-          },
-          "link": 367
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 372
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 373
-        },
-        {
-          "name": "scheduler",
-          "type": "COMBO",
-          "widget": {
-            "name": "scheduler"
-          },
-          "link": 379
-        },
-        {
-          "name": "sampler_name",
-          "type": "COMBO",
-          "widget": {
-            "name": "sampler_name"
-          },
-          "link": 411
-        },
-        {
-          "name": "motion_amplitude",
-          "type": "FLOAT",
-          "widget": {
-            "name": "motion_amplitude"
-          },
-          "link": 414
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            406
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "-1",
-            "length"
-          ],
-          [
-            "-1",
-            "width"
-          ],
-          [
-            "-1",
-            "height"
-          ],
-          [
-            "-1",
-            "steps"
-          ],
-          [
-            "-1",
-            "sampler_name"
-          ],
-          [
-            "-1",
-            "scheduler"
-          ],
-          [
-            "-1",
-            "motion_amplitude"
-          ],
-          [
-            "197",
-            "value"
-          ],
-          [
-            "146",
-            "custom_prompt"
-          ],
-          [
-            "89",
-            "text"
-          ],
-          [
-            "164",
-            "seed"
-          ],
-          [
-            "164",
-            "🎲 New Fixed Random"
-          ],
-          [
-            "164",
-            "🎲 Randomize Each Time"
-          ],
-          [
-            "146",
-            "control_after_generate"
-          ],
-          [
-            "146",
-            "preset_prompt"
-          ],
-          [
-            "146",
-            "model_name"
-          ],
-          [
-            "191",
-            "sigma_shift"
-          ],
-          [
-            "146",
-            "keep_last_prompt"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.9.2"
-      },
-      "widgets_values": [
-        81,
-        5,
-        2,
-        20,
-        "euler",
-        "simple",
-        1.15
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
       "id": 166,
       "type": "ModelPatchTorchSettings",
       "pos": [
@@ -2329,7 +2131,7 @@
       ],
       "size": [
         477.292724609375,
-        334
+        1013.1530539772727
       ],
       "flags": {},
       "order": 42,
@@ -2399,13 +2201,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "wan22__00058.mp4",
-            "subfolder": "2026-02-14",
+            "filename": "wan22__00002.mp4",
+            "subfolder": "2026-03-06",
             "type": "output",
             "format": "video/h264-mp4",
             "frame_rate": 16,
-            "workflow": "wan22__00058.png",
-            "fullpath": "/workspace/ComfyUI/output/2026-02-14/wan22__00058.mp4"
+            "workflow": "wan22__00002.png",
+            "fullpath": "/workspace/ComfyUI/output/2026-03-06/wan22__00002.mp4"
           }
         }
       },
@@ -2446,6 +2248,204 @@
       },
       "color": "#322",
       "bgcolor": "#533"
+    },
+    {
+      "id": 161,
+      "type": "f838c097-47c7-4eda-971d-a4ca071e3b81",
+      "pos": [
+        -1285.5085135845231,
+        735.0129764602607
+      ],
+      "size": [
+        783.8555924235986,
+        660
+      ],
+      "flags": {},
+      "order": 36,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 403
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 327
+        },
+        {
+          "label": "model_h",
+          "name": "model",
+          "type": "MODEL",
+          "link": 370
+        },
+        {
+          "label": "model_l",
+          "name": "model_1",
+          "type": "MODEL",
+          "link": 371
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 404
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 366
+        },
+        {
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": 367
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 372
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 373
+        },
+        {
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": 379
+        },
+        {
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": 411
+        },
+        {
+          "name": "motion_amplitude",
+          "type": "FLOAT",
+          "widget": {
+            "name": "motion_amplitude"
+          },
+          "link": 414
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            406
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "-1",
+            "length"
+          ],
+          [
+            "-1",
+            "width"
+          ],
+          [
+            "-1",
+            "height"
+          ],
+          [
+            "-1",
+            "steps"
+          ],
+          [
+            "-1",
+            "sampler_name"
+          ],
+          [
+            "-1",
+            "scheduler"
+          ],
+          [
+            "-1",
+            "motion_amplitude"
+          ],
+          [
+            "197",
+            "value"
+          ],
+          [
+            "223",
+            "custom_prompt"
+          ],
+          [
+            "89",
+            "text"
+          ],
+          [
+            "164",
+            "seed"
+          ],
+          [
+            "164",
+            "🎲 New Fixed Random"
+          ],
+          [
+            "164",
+            "🎲 Randomize Each Time"
+          ],
+          [
+            "223",
+            "preset_prompt"
+          ],
+          [
+            "223",
+            "model_name"
+          ],
+          [
+            "223",
+            "control_after_generate"
+          ],
+          [
+            "191",
+            "sigma_shift"
+          ],
+          [
+            "223",
+            "keep_last_prompt"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.9.2"
+      },
+      "widgets_values": [
+        81,
+        5,
+        2,
+        20,
+        "euler",
+        "simple",
+        1.15
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
     }
   ],
   "links": [
@@ -2901,8 +2901,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 21,
-          "lastNodeId": 221,
-          "lastLinkId": 462,
+          "lastNodeId": 223,
+          "lastLinkId": 466,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -2946,9 +2946,9 @@
             "name": "image",
             "type": "IMAGE",
             "linkIds": [
-              302,
               389,
-              431
+              431,
+              465
             ],
             "localized_name": "image",
             "shape": 7,
@@ -3109,7 +3109,7 @@
               94.53972656250005
             ],
             "flags": {},
-            "order": 3,
+            "order": 2,
             "mode": 0,
             "inputs": [
               {
@@ -3160,7 +3160,7 @@
             "flags": {
               "collapsed": false
             },
-            "order": 7,
+            "order": 5,
             "mode": 0,
             "inputs": [
               {
@@ -3252,7 +3252,7 @@
               426
             ],
             "flags": {},
-            "order": 9,
+            "order": 7,
             "mode": 0,
             "inputs": [
               {
@@ -3365,7 +3365,7 @@
               339.48220830078117
             ],
             "flags": {},
-            "order": 4,
+            "order": 3,
             "mode": 0,
             "inputs": [
               {
@@ -3397,7 +3397,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: A blue-haired anime girl with piercing blue eyes and tribal tattoos gazes forward while licking a large phallic object held firmly by her hands—her expression intense yet sensual under warm, intimate spotlighting.)  \n(At 1 seconds: Soft ambient glow emanates from a distant lamp against darkened surroundings; she shifts slightly, maintaining eye contact with viewer through direct gaze and subtle lip movement, emphasizing sensuality without breaking immersion.)  \n(At 2 seconds: Her fingers tighten around the shaft mid-stroke as tension builds visually—with detailed skin textures and realistic anatomical rendering—the background remains blurred to isolate emotional intensity within tight framing.)  \n(At 3 seconds: Lighting subtly intensifies across cheeks and chest contours highlighting muscular definition beneath delicate lingerie straps adorned with bow motifs—all rendered in hyper-detailed cel-shaded aesthetic typical of modern anime erotica conventions.)  \n(At 4 seconds: Camera holds steady focusing solely upon facial expressions and hand placement revealing escalating arousal levels via micro-expressions like dilated pupils and flushed complexion enhanced by dramatic chiaroscuro contrasts.)  \n(At 5 seconds: Final frame freezes moment just before climax—a slight head tilt accompanied by parted lips conveys peak desire while glowing highlights accentuate wetness along ridges creating illusionistic realism despite stylized vector lines defining form and shadow boundaries.)"
+              "(At 0 seconds: A serene bamboo grove bathes the scene in dappled sunlight filtering through tall green stalks, framing a wooden veranda structure where two figures engage intimately under soft, natural illumination — a blue-haired female character with delicate facial features and luminous skin wears a deep-blue lace-trimmed nightgown featuring crisscross lacing at the back, her posture relaxed yet sensual as she leans forward slightly while seated atop another figure whose face remains obscured by shadowed hair and muscular shoulders.)  \n(At 1 seconds: Her hands rest gently on his hips, fingers curled subtly around flesh-toned contours beneath the fabric’s edge, emphasizing tactile realism without overt eroticization — their bodies glisten faintly with moisture reflecting ambient light, enhancing organic texture against the verdant backdrop. Behind them, blurred leaves sway imperceptibly within wind currents unseen, reinforcing environmental immersion rather than narrative focus.)  \n(At 2 seconds: As time advances, only minimal movement occurs—their positions remain static save for subtle shifts suggesting breath and tension—her gaze lowers toward him, eyes half-lidded with languid awareness, lashes catching glints of sunbeams piercing canopy gaps above. His arms anchor behind her thighs like supportive pillars, conveying restraint intertwined with desire, all rendered in hyper-detailed anatomical precision characteristic of modern digital illustration techniques used across platforms such as Wan 2.2.)  \n(At 3 seconds: Ambient tones deepen slightly due to shifting shadows cast along vertical wood beams surrounding them—an effect mimicking real-world geometry distortion caused by angle-of-light variation—but neither intensity nor directionality alters beyond what exists naturally outdoors during midday hours. No added spotlights or filters exist here; instead, chiaroscuro dynamics emerge organically via foliage density differences near ground level versus open sky areas farther away.)  \n(At 4 seconds: Both characters maintain unbroken physical contact despite stillness—a quiet intimacy underscored further when droplets appear clinging briefly before evaporating off exposed genitalia below, mirroring spontaneous condensation patterns observed in humid forest environments—not staged artificially but captured precisely according to atmospheric physics rules inherent even in AI-generated visuals aiming for maximum fidelity.)  \n(At 5 seconds: Final frame holds steady upon this moment suspended in tranquil ambiguity: nothing moves except perhaps distant rustle among vines overhead—and everything remains beautifully composed within established boundaries dictated purely by observable reality conditions presented clearly enough for generative models trained specifically on these parameters to replicate accurately.)\n\n[Note: This response adheres strictly to photographic authenticity guidelines"
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -3417,7 +3417,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 5,
+            "order": 4,
             "mode": 0,
             "inputs": [
               {
@@ -3465,182 +3465,6 @@
             "shape": 1
           },
           {
-            "id": 197,
-            "type": "PrimitiveStringMultiline",
-            "pos": [
-              -688.0187878106718,
-              514.4931945904312
-            ],
-            "size": [
-              336.4285647435929,
-              137.58089636900377
-            ],
-            "flags": {},
-            "order": 1,
-            "mode": 0,
-            "inputs": [],
-            "outputs": [
-              {
-                "label": " ",
-                "localized_name": "STRING",
-                "name": "STRING",
-                "type": "STRING",
-                "links": [
-                  445
-                ]
-              }
-            ],
-            "title": "LoRaS Triggers",
-            "properties": {
-              "cnr_id": "comfy-core",
-              "ver": "0.3.33",
-              "Node name for S&R": "PrimitiveStringMultiline",
-              "widget_ue_connectable": {}
-            },
-            "widgets_values": [
-              ""
-            ],
-            "color": "#232",
-            "bgcolor": "#353",
-            "shape": 2
-          },
-          {
-            "id": 146,
-            "type": "AILab_QwenVL_Advanced",
-            "pos": [
-              -1144.6862225314878,
-              605.1717059434276
-            ],
-            "size": [
-              340,
-              492
-            ],
-            "flags": {
-              "collapsed": false
-            },
-            "order": 6,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "image",
-                "name": "image",
-                "shape": 7,
-                "type": "IMAGE",
-                "link": 302
-              },
-              {
-                "localized_name": "video",
-                "name": "video",
-                "shape": 7,
-                "type": "IMAGE",
-                "link": null
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "RESPONSE",
-                "name": "RESPONSE",
-                "type": "STRING",
-                "links": [
-                  446
-                ]
-              }
-            ],
-            "properties": {
-              "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
-              "ver": "2.0.0",
-              "Node name for S&R": "AILab_QwenVL_Advanced",
-              "cnr_id": "comfyui-qwenvl"
-            },
-            "widgets_values": [
-              "Qwen3-VL-4B-Instruct-Abliterated",
-              "8-bit (Balanced)",
-              "auto",
-              false,
-              "auto",
-              "🍿 Wan 2.2 NSFW I2V Timeline (5s)",
-              "",
-              512,
-              0.6,
-              0.9,
-              1,
-              1.2,
-              16,
-              false,
-              1042007702,
-              "randomize",
-              false
-            ],
-            "color": "#28403f",
-            "bgcolor": "#374539"
-          },
-          {
-            "id": 196,
-            "type": "Text Concatenate",
-            "pos": [
-              -290.4652937998911,
-              576.5772034231212
-            ],
-            "size": [
-              270,
-              142
-            ],
-            "flags": {
-              "collapsed": true
-            },
-            "order": 11,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "text_a",
-                "name": "text_a",
-                "shape": 7,
-                "type": "STRING",
-                "link": 445
-              },
-              {
-                "localized_name": "text_b",
-                "name": "text_b",
-                "shape": 7,
-                "type": "STRING",
-                "link": 446
-              },
-              {
-                "localized_name": "text_c",
-                "name": "text_c",
-                "shape": 7,
-                "type": "STRING",
-                "link": null
-              },
-              {
-                "localized_name": "text_d",
-                "name": "text_d",
-                "shape": 7,
-                "type": "STRING",
-                "link": null
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "STRING",
-                "name": "STRING",
-                "type": "STRING",
-                "links": [
-                  447
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "was-ns",
-              "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
-              "Node name for S&R": "Text Concatenate"
-            },
-            "widgets_values": [
-              "",
-              "false"
-            ]
-          },
-          {
             "id": 192,
             "type": "PainterI2V",
             "pos": [
@@ -3652,7 +3476,7 @@
               234
             ],
             "flags": {},
-            "order": 10,
+            "order": 8,
             "mode": 0,
             "inputs": [
               {
@@ -3779,7 +3603,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 2,
+            "order": 10,
             "mode": 0,
             "inputs": [
               {
@@ -3822,7 +3646,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 8,
+            "order": 6,
             "mode": 0,
             "inputs": [
               {
@@ -3859,6 +3683,178 @@
               0.6,
               true
             ]
+          },
+          {
+            "id": 197,
+            "type": "PrimitiveStringMultiline",
+            "pos": [
+              -713.7973369080606,
+              505.45402410321157
+            ],
+            "size": [
+              336.4285647435929,
+              137.58089636900377
+            ],
+            "flags": {},
+            "order": 1,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  445
+                ]
+              }
+            ],
+            "title": "LoRaS Triggers",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.3.33",
+              "Node name for S&R": "PrimitiveStringMultiline",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              ""
+            ],
+            "color": "#232",
+            "bgcolor": "#353",
+            "shape": 2
+          },
+          {
+            "id": 196,
+            "type": "Text Concatenate",
+            "pos": [
+              -640.8599992457473,
+              733.7666868749926
+            ],
+            "size": [
+              270,
+              142
+            ],
+            "flags": {
+              "collapsed": true
+            },
+            "order": 9,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "text_a",
+                "name": "text_a",
+                "shape": 7,
+                "type": "STRING",
+                "link": 445
+              },
+              {
+                "localized_name": "text_b",
+                "name": "text_b",
+                "shape": 7,
+                "type": "STRING",
+                "link": 466
+              },
+              {
+                "localized_name": "text_c",
+                "name": "text_c",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              },
+              {
+                "localized_name": "text_d",
+                "name": "text_d",
+                "shape": 7,
+                "type": "STRING",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  447
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "was-ns",
+              "ver": "afeee09ba44e713ec52a413ac6b105fd06b2d356",
+              "Node name for S&R": "Text Concatenate"
+            },
+            "widgets_values": [
+              "",
+              "false"
+            ]
+          },
+          {
+            "id": 223,
+            "type": "AILab_QwenVL_Advanced",
+            "pos": [
+              -1139.4560775891835,
+              545.5265638139666
+            ],
+            "size": [
+              340,
+              468
+            ],
+            "flags": {},
+            "order": 11,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image",
+                "name": "image",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 465
+              },
+              {
+                "localized_name": "video",
+                "name": "video",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "RESPONSE",
+                "name": "RESPONSE",
+                "type": "STRING",
+                "links": [
+                  466
+                ]
+              }
+            ],
+            "properties": {
+              "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+              "ver": "6a192f7251005eea641e154d8835372392ea338e",
+              "Node name for S&R": "AILab_QwenVL_Advanced"
+            },
+            "widgets_values": [
+              "Qwen3-VL-4B-Instruct-Unredacted-MAX",
+              "auto",
+              false,
+              "auto",
+              "🍿 Wan 2.2 NSFW I2V Timeline (5s)",
+              "",
+              512,
+              0.6,
+              0.9,
+              1,
+              1.2,
+              16,
+              false,
+              236227021,
+              "randomize",
+              false
+            ],
+            "color": "#28403f",
+            "bgcolor": "#374539"
           }
         ],
         "groups": [],
@@ -3878,14 +3874,6 @@
             "target_id": 90,
             "target_slot": 0,
             "type": "CLIP"
-          },
-          {
-            "id": 302,
-            "origin_id": -10,
-            "origin_slot": 1,
-            "target_id": 146,
-            "target_slot": 0,
-            "type": "IMAGE"
           },
           {
             "id": 363,
@@ -4064,14 +4052,6 @@
             "type": "STRING"
           },
           {
-            "id": 446,
-            "origin_id": 146,
-            "origin_slot": 0,
-            "target_id": 196,
-            "target_slot": 1,
-            "type": "STRING"
-          },
-          {
             "id": 447,
             "origin_id": 196,
             "origin_slot": 0,
@@ -4102,6 +4082,22 @@
             "target_id": 182,
             "target_slot": 1,
             "type": "IMAGE"
+          },
+          {
+            "id": 465,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 223,
+            "target_slot": 0,
+            "type": "IMAGE"
+          },
+          {
+            "id": 466,
+            "origin_id": 223,
+            "origin_slot": 0,
+            "target_id": 196,
+            "target_slot": 1,
+            "type": "STRING"
           }
         ],
         "extra": {
@@ -4121,10 +4117,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.8776500649873266,
+      "scale": 0.6246812479651167,
       "offset": [
-        2677.0805218646165,
-        -459.1201632764597
+        3232.4351567972412,
+        -429.4790531863189
       ]
     }
   },
