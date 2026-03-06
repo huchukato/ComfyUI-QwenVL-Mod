@@ -2,7 +2,7 @@
 
 [![ComfyUI](https://img.shields.io/badge/ComfyUI-Custom%20Node-blue?style=for-the-badge&logo=python)](https://github.com/comfyanonymous/ComfyUI)
 [![License](https://img.shields.io/badge/License-GPL--3.0-green?style=for-the-badge)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-2.2.3-orange?style=for-the-badge)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/releases)
+[![Version](https://img.shields.io/badge/Version-2.2.3-orange?style=for-the-badge&logo=python)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/releases)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)](https://python.org)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red?style=for-the-badge&logo=pytorch)](https://pytorch.org)
 [![CUDA](https://img.shields.io/badge/CUDA-12.8%2B-black?style=for-the-badge&logo=nvidia)](https://developer.nvidia.com/cuda-zone)
@@ -11,38 +11,55 @@
 [![Stars](https://img.shields.io/github/stars/huchukato/ComfyUI-QwenVL-Mod?style=for-the-badge&logo=github)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
 [![Issues](https://img.shields.io/github/issues/huchukato/ComfyUI-QwenVL-Mod?style=for-the-badge&logo=github)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/issues)
 
-[![LightningAI](https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/app-2/studio-badge.svg)](https://lightning.ai/huchukato/environments/comfyui-v0-14-2-wan2-2-qwen3-vl-autoprompt)
+[![LightningAI](https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/app-2/studio-badge.svg)](https://lightning.ai/huchukato/environments/comfyui-v0-14-2-qwen3-vl-autoprompt)
 
 Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguaggio (LVLM) Qwen-VL di Alibaba Cloud, inclusi i più recenti Qwen3-VL e Qwen2.5-VL, oltre a backend GGUF e supporto solo testo Qwen3. Questo nodo avanzato abilita funzionalità multimodali AI senza soluzione di continuità nei tuoi workflow ComfyUI, permettendo efficiente generazione di testo, comprensione di immagini e analisi video.
 
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
-## **🧠 VRAM Cleanup Node**
+## 🛠️ **Fix OOM per QwenVL (v2.2.3)**
 
-Il **VRAM Cleanup** è un nodo generico per la gestione della memoria VRAM nei workflow ComfyUI, progettato per prevenire crash e ottimizzare le prestazioni su sistemi con VRAM limitata.
+### Problema risolto
+Gli utenti riscontravano errori **Out of Memory (OOM)** con il nodo QwenVL, anche avendo VRAM sufficiente (31GB totale, 22GB libera). Il modello Qwen3-VL richiede solo ~741MB ma PyTorch limitava l'allocazione a ~17GB a causa di un'impostazione errata del memory fraction.
 
-### 🎯 **Caratteristiche Principali**
+### 🔧 Soluzioni implementate
+1. **Ottimizzazioni memoria**: `max_tokens` ridotto da 4096→2048, garbage collection aggressiva
+2. **Gestione OOM**: Rilevamento automatico con retry e fallback CPU
+3. **Debug avanzato**: Tracking dettagliato memoria GPU (allocated, reserved, free)
+4. **Controllo utente**: Funzioni per verificare e impostare il memory fraction PyTorch
 
-#### **Modalità di Cleanup**
-- **Cache Only**: Pulizia leggera della cache CUDA senza scaricare modelli
+### 🎯 Risultati
+- **Meno OOM**: Errori drasticamente ridotti
+- **Maggiore stabilità**: Gestione memoria più efficiente
+- **Debugging completo**: Possibilità di diagnosticare problemi PyTorch
+
+### 💡 Utilizzo delle nuove funzioni
+```python
+# Verifica impostazioni PyTorch
+from AILab_QwenVL import check_pytorch_memory
+check_pytorch_memory()
+
+# Imposta memory fraction personalizzata
+from AILab_QwenVL import set_pytorch_memory_fraction
+set_pytorch_memory_fraction(0.8)  # 80% della GPU
+```
+
+## 🧠 VRAM Cleanup Node
+
+Il nodo **VRAM Cleanup** gestisce la memoria VRAM nei workflow ComfyUI, progettato per prevenire crash e ottimizzare le prestazioni su sistemi con VRAM limitata.
+
+### Modalità
+- **Cache Only**: Pulizia leggera della cache CUDA
 - **Text Encoder**: Cleanup mirato per i text encoder
 - **Full Cleanup**: Scaricamento completo dei modelli e pulizia cache aggressiva
-- **T2V + QwenVL Fix**: Modalità speciale per conflitti tra modelli T2V e QwenVL
+- **T2V + QwenVL Fix**: Modalità speciale per conflitti tra modelli
+- **Prevenzione OOM**: Cleanup completo quando la VRAM è quasi piena
+- **Debug**: Modalità diagnostica per problemi di memoria
 
-#### **Quando Usarlo**
-- **Tra segmenti I2V**: Usa "Full Cleanup" tra ogni I2V per liberare VRAM
-- **Con QwenVL**: Usa "Text Encoder" dopo QwenVL per pulire i text encoder
-- **Prevenzione OOM**: Usa "Full Cleanup" quando la VRAM è quasi piena
-- **Debug**: Usa "Cache Only" per diagnosticare problemi di memoria
-
-#### **Compatibilità**
+### Compatibilità
 - ✅ **CUDA 12.8 (RunPod)**: Compatibilità nativa
 - ✅ **CUDA 13 (VastAI)**: Ottimizzato con memory pressure multipla
-- ✅ **Tutti i nodi QwenVL**: Cleanup automatico nel `finally` block
-
-### 🔧 **Implementazione Tecnica**
-
-Il nodo utilizza metodi avanzati di gestione memoria:
+- ✅ **Tutti i nodi QwenVL**: Cleanup automatico nel blocco `finally`
 - `model_management.unload_all_models()` per scaricamento forzato
 - `torch.cuda.empty_cache()` per pulizia cache CUDA
 - `gc.collect()` per garbage collection Python
