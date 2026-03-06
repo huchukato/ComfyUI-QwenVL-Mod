@@ -571,7 +571,8 @@ def enforce_memory(model_name, quantization, device_info):
     }
     needed = mapping.get(quantization, 0)
     if not needed:
-        return quantization
+        return quantization  # Always return quantization
+    
     if device_info["recommended_device"] in {"cpu", "mps"}:
         needed *= 1.5
         available = device_info["system_memory"]["available"]
@@ -597,7 +598,7 @@ def enforce_memory(model_name, quantization, device_info):
             print("[QwenVL] ⚠️  Auto-switch to 4-bit due to VRAM pressure")
             return Quantization.Q4
         print(f"[QwenVL] Memory pressure detected. Consider: 1) Use 4-bit quantization, 2) Reduce max_tokens below 1024, 3) Close other applications")
-        return quantization
+        return quantization  # Always return quantization
 
 def quantization_config(model_name, quantization):
     info = HF_ALL_MODELS.get(model_name, {})
@@ -643,6 +644,11 @@ class QwenVLBase:
         keep_model_loaded,
     ):
         quant = enforce_memory(model_name, Quantization.from_value(quant_value), self.device_info)
+        
+        # Safety check: ensure quant is not None
+        if quant is None:
+            print(f"[QwenVL] Invalid quantization value: {quant_value}, falling back to FP16")
+            quant = Quantization.FP16
         
         # Check if BitsAndBytes quantization is being used
         is_bnb_quantization = quant in [Quantization.Q4, Quantization.Q8]
