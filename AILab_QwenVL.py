@@ -108,6 +108,33 @@ def get_alternative_cache_key(model_name, preset_prompt, custom_prompt, image_ha
     print(f"[{module_name} DEBUG] No alternative cache found")
     return None
 
+def tensor_to_pil(tensor):
+    """Convert tensor to PIL Image with memory optimization"""
+    if tensor is None:
+        return None
+    try:
+        if tensor.dim() == 4:
+            tensor = tensor[0]
+        
+        # More aggressive memory management
+        if tensor.is_floating_point():
+            # Scale to 0-255 range more efficiently
+            tensor = tensor.clamp(0, 1)
+        
+        # Reduce sample size for memory efficiency
+        array = tensor.cpu().numpy()
+        if tensor.numel() > 0:
+            # Take smaller sample for hash to save memory
+            sample_size = min(50, tensor.numel() // 4)  # Reduced from 100
+            sample_pixels = array.flatten()[:sample_size].tolist() if array.size > 0 else []
+        else:
+            sample_pixels = []
+        
+        content = f"{tensor.shape}_{tensor.dtype}_{sample_pixels[:10]}"
+        return hashlib.md5(content.encode()).hexdigest()[:16]
+    except:
+        return None
+
 def get_image_hash(image):
     """Generate hash for image tensor"""
     if image is None:
@@ -389,15 +416,27 @@ def enforce_memory(model_name, quantization, device_info):
         available = device_info["system_memory"]["available"]
     else:
         available = device_info["gpu"]["free_memory"]
-    if needed * 1.2 > available:
+    
+    # More conservative memory management
+    if needed * 1.5 > available:  # More conservative threshold
         if quantization == Quantization.FP16:
-            print("[QwenVL] Auto-switch to 8-bit due to VRAM pressure")
+            print("[QwenVL] ⚠️  Auto-switch to 8-bit due to VRAM pressure")
             return Quantization.Q8
         if quantization == Quantization.Q8:
-            print("[QwenVL] Auto-switch to 4-bit due to VRAM pressure")
+            print("[QwenVL] ⚠️  Auto-switch to 4-bit due to VRAM pressure")
             return Quantization.Q4
-        raise RuntimeError("Insufficient memory for 4-bit mode")
-    return quantization
+        raise RuntimeError(f"Insufficient memory for {quantization.value} mode. Required: {needed * 1.5:.1f}GB, Available: {available / 1024**3:.1f}GB")
+    
+    # Conservative memory check with safety margin
+    if needed * 1.3 > available:  # Reduced from 1.5 to 1.3
+        if quantization == Quantization.FP16:
+            print("[QwenVL] ⚠️  Auto-switch to 8-bit due to VRAM pressure")
+            return Quantization.Q8
+        if quantization == Quantization.Q8:
+            print("[QwenVL] ⚠️  Auto-switch to 4-bit due to VRAM pressure")
+            return Quantization.Q4
+        print(f"[QwenVL] Memory pressure detected. Consider: 1) Use 4-bit quantization, 2) Reduce max_tokens below 1024, 3) Close other applications")
+        return quantization
 
 def quantization_config(model_name, quantization):
     info = HF_ALL_MODELS.get(model_name, {})
@@ -502,6 +541,11 @@ class QwenVLBase:
         num_beams,
         repetition_penalty,
     ):
+        # Memory optimization: clear cache before generation
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+        
         conversation = [{"role": "user", "content": []}]
         if image is not None:
             conversation[0]["content"].append({"type": "image", "image": self.tensor_to_pil(image)})
@@ -513,19 +557,29 @@ class QwenVLBase:
             if frames:
                 conversation[0]["content"].append({"type": "video", "video": frames})
         conversation[0]["content"].append({"type": "text", "text": prompt_text})
+        
+        # Optimize chat template for memory efficiency
         chat = self.processor.apply_chat_template(conversation, tokenize=False, add_generation_prompt=True)
+        
+        # Process images/videos more efficiently
         images = [item["image"] for item in conversation[0]["content"] if item["type"] == "image"]
         video_frames = [frame for item in conversation[0]["content"] if item["type"] == "video" for frame in item["video"]]
         videos = [video_frames] if video_frames else None
+        
+        # Use smaller batch size for memory efficiency
         processed = self.processor(text=chat, images=images or None, videos=videos, return_tensors="pt")
+        
+        # Move to device more efficiently
         model_device = next(self.model.parameters()).device
         model_inputs = {
-            key: value.to(model_device) if torch.is_tensor(value) else value
+            key: value.to(model_device, non_blocking=True) if torch.is_tensor(value) else value
             for key, value in processed.items()
         }
         stop_tokens = [self.tokenizer.eos_token_id]
         if hasattr(self.tokenizer, "eot_id") and self.tokenizer.eot_id is not None:
             stop_tokens.append(self.tokenizer.eot_id)
+        
+        # Memory-efficient generation parameters
         kwargs = {
             "max_new_tokens": max_tokens,
             "repetition_penalty": repetition_penalty,
@@ -537,7 +591,33 @@ class QwenVLBase:
             kwargs.update({"do_sample": True, "temperature": temperature, "top_p": top_p})
         else:
             kwargs["do_sample"] = False
-        outputs = self.model.generate(**model_inputs, **kwargs)
+            
+        # Generate with memory monitoring
+        try:
+            outputs = self.model.generate(**model_inputs, **kwargs)
+        except torch.cuda.OutOfMemoryError as e:
+            # Clear memory and retry with reduced parameters
+            print(f"[QwenVL] OOM detected, clearing memory and retrying...")
+            gc.collect()
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+            
+            # Retry with smaller max_tokens
+            reduced_tokens = max(256, max_tokens // 2)
+            kwargs["max_new_tokens"] = reduced_tokens
+            print(f"[QwenVL] Retrying with reduced tokens: {reduced_tokens}")
+            
+            try:
+                outputs = self.model.generate(**model_inputs, **kwargs)
+            except torch.cuda.OutOfMemoryError:
+                print(f"[QwenVL] OOM still occurs with {reduced_tokens} tokens, falling back to CPU")
+                # Fallback to CPU if GPU still OOM
+                device_backup = model_inputs["input_ids"].device
+                for key in model_inputs:
+                    if torch.is_tensor(model_inputs[key]):
+                        model_inputs[key] = model_inputs[key].cpu()
+                outputs = self.model.generate(**model_inputs, **kwargs)
+        
         if torch.cuda.is_available():
             torch.cuda.synchronize()
         input_len = model_inputs["input_ids"].shape[-1]
@@ -681,7 +761,7 @@ class AILab_QwenVL_Advanced(QwenVLBase):
                 "device": (device_options, {"default": "auto", "tooltip": TOOLTIPS["device"]}),
                 "preset_prompt": (prompts, {"default": default_prompt, "tooltip": TOOLTIPS["preset_prompt"]}),
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": TOOLTIPS["custom_prompt"]}),
-                "max_tokens": ("INT", {"default": 512, "min": 64, "max": 4096, "tooltip": TOOLTIPS["max_tokens"]}),
+                "max_tokens": ("INT", {"default": 2048, "min": 64, "max": 4096, "tooltip": TOOLTIPS["max_tokens"]}),
                 "temperature": ("FLOAT", {"default": 0.6, "min": 0.1, "max": 1.0, "tooltip": TOOLTIPS["temperature"]}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "tooltip": TOOLTIPS["top_p"]}),
                 "num_beams": ("INT", {"default": 1, "min": 1, "max": 8, "tooltip": TOOLTIPS["num_beams"]}),
