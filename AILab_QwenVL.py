@@ -494,6 +494,11 @@ def get_sage_attention_config():
 
     return attn_func, "per_warp", pv_accum_dtype
 
+def is_fp8_model(model_name: str) -> bool:
+    """Check if model name indicates it's a pre-quantized FP8 model."""
+    fp8_indicators = ["-fp8", "_fp8", "-FP8", "_FP8"]
+    return any(indicator in model_name for indicator in fp8_indicators)
+
 def resolve_attention_mode(mode, force_sdpa=False):
     """Resolve attention mode with fallback logic.
 
