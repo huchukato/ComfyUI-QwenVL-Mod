@@ -279,13 +279,29 @@ def get_device_info():
     if torch.cuda.is_available():
         props = torch.cuda.get_device_properties(0)
         total = props.total_memory / 1024**3
+        allocated = torch.cuda.memory_allocated(0) / 1024**3
+        reserved = torch.cuda.memory_reserved(0) / 1024**3
+        free = total - allocated - reserved
+        
         gpu = {
             "available": True,
             "total_memory": total,
-            "free_memory": total - (torch.cuda.memory_allocated(0) / 1024**3),
+            "allocated_memory": allocated,
+            "reserved_memory": reserved, 
+            "free_memory": free,
         }
         device_type = "nvidia_gpu"
         recommended = "cuda"
+        
+        # Detailed memory debugging
+        print(f"[QwenVL] GPU Memory Debug:")
+        print(f"  Total VRAM: {total / 1024**3:.2f} GB")
+        print(f"  Allocated: {allocated / 1024**3:.2f} GB")  
+        print(f"  Reserved: {reserved / 1024**3:.2f} GB")
+        print(f"  Free: {free / 1024**3:.2f} GB")
+        print(f"  Model requires: 0.74 GB")
+        print(f"  Available ratio: {(free / total) * 100:.1f}%")
+        
     elif getattr(torch.backends, "mps", None) and torch.backends.mps.is_available():
         device_type = "apple_silicon"
         recommended = "mps"
