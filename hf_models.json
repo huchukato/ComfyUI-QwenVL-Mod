@@ -74,7 +74,7 @@
   "hf_text_models": {
     "Qwen3-VL-4B-Instruct-Abliterated": {
       "repo_id": "huihui-ai/Huihui-Qwen3-VL-4B-Instruct-abliterated",
-      "default": false,
+      "default": true,
       "quantized": true,
       "vram_requirement": {
         "full": 6.0,
@@ -91,16 +91,6 @@
         "8bit": 7.0,
         "4bit": 4.5
       }
-    },
-    "Josiefied-Qwen3-4B-Instruct-2507-gabliterated-v1": {
-      "repo_id": "Goekdeniz-Guelmez/Josiefied-Qwen3-4B-Instruct-2507-gabliterated-v1",
-      "default": true,
-      "quantized": true
-    },
-    "Josiefied-Qwen3-8B-abliterated-v1": {
-      "repo_id": "Goekdeniz-Guelmez/Josiefied-Qwen3-8B-abliterated-v1",
-      "default": false,
-      "quantized": true
     },
     "qwen3-4b-Z-Image-Engineer": {
       "repo_id": "BennyDaBall/qwen3-4b-Z-Image-Engineer",
