@@ -643,7 +643,7 @@ class QwenVLBase:
         device_choice,
         keep_model_loaded,
     ):
-        quant = enforce_memory(model_name, Quantization.from_value(quant_value), self.device_info)
+        quant = Quantization.from_value(quant_value)  # Skip enforce_memory for now
         
         # Safety check: ensure quant is not None
         if quant is None:
