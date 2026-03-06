@@ -703,25 +703,11 @@ class QwenVLBase:
         print(f"[QwenVL] 🔍 DEBUG - Device: {device}, Dtype: {dtype}")
         print(f"[QwenVL] 🔍 DEBUG - Attention impl: {actual_attn_impl}")
         
-        # TEMPORARY: Disable quantization to test if it's the cause
-        if quant_config:
-            print(f"[QwenVL] ⚠️  TEMPORARY: Skipping quantization to test OOM cause")
-            quant_config = None
-        
-        # DEBUG: Check what model is actually being loaded
-        print(f"[QwenVL] 🔍 MODEL PATH: {model_path}")
-        import os
-        if os.path.exists(model_path):
-            config_path = os.path.join(model_path, "config.json")
-            if os.path.exists(config_path):
-                import json
-                with open(config_path, 'r') as f:
-                    config = json.load(f)
-                print(f"[QwenVL] 🔍 MODEL CONFIG: {config.get('model_type', 'unknown')} - hidden_size: {config.get('hidden_size', 'unknown')} - num_hidden_layers: {config.get('num_hidden_layers', 'unknown')}")
+        # Quantization is back - enforce_memory was the problem
         
         load_kwargs = {
             "device_map": "cpu",  # Force CPU loading to test
-            "torch_dtype": torch.float16,  # Force FP16 explicitly
+            "dtype": torch.float16,  # Use dtype instead of deprecated torch_dtype
             "attn_implementation": actual_attn_impl,
             "use_safetensors": True,
             "low_cpu_mem_usage": True,
