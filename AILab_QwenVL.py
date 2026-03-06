@@ -226,6 +226,18 @@ class Quantization(str, Enum):
 
 ATTENTION_MODES = ["auto", "sage", "flash_attention_2", "sdpa"]
 
+# Debug: Check SageAttention availability
+print(f"[QwenVL Debug] SAGE_ATTENTION_AVAILABLE: {SAGE_ATTENTION_AVAILABLE}")
+if torch.cuda.is_available():
+    major, minor = torch.cuda.get_device_capability()
+    print(f"[QwenVL Debug] CUDA capability: {major}.{minor}")
+else:
+    print("[QwenVL Debug] CUDA not available")
+print(f"[QwenVL Debug] Final ATTENTION_MODES: {ATTENTION_MODES}")
+
+# Temporarily show sage option even if not available for testing
+print("[QwenVL] NOTE: SageAttention option shown for testing. Install with: pip install sageattention")
+
 def load_model_configs():
     global HF_VL_MODELS, HF_TEXT_MODELS, HF_ALL_MODELS, SYSTEM_PROMPTS, PRESET_PROMPTS
     try:
