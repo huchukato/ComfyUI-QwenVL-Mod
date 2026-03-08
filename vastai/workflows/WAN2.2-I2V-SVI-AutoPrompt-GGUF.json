@@ -291,6 +291,9 @@
         2,
         true,
         true,
+        1,
+        "float32",
+        false,
         1
       ]
     },
@@ -343,6 +346,9 @@
         4,
         true,
         true,
+        1,
+        "float32",
+        false,
         1
       ]
     },
@@ -1826,9 +1832,10 @@
         }
       ],
       "properties": {
-        "cnr_id": "ComfyUI-Upscaler-Tensorrt",
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
         "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
-        "Node name for S&R": "LoadUpscalerTensorrtModel"
+        "Node name for S&R": "LoadUpscalerTensorrtModel",
+        "cnr_id": "ComfyUI-Upscaler-Tensorrt"
       },
       "widgets_values": [
         "4x-UltraSharp",
@@ -1865,15 +1872,16 @@
       ],
       "outputs": [
         {
-          "name": "IMAGE",
+          "name": "upscaled_images",
           "type": "IMAGE",
           "links": []
         }
       ],
       "properties": {
-        "cnr_id": "ComfyUI-Upscaler-Tensorrt",
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
         "ver": "dfc266538368e4c9a03a296917716a214517ccb5",
-        "Node name for S&R": "UpscalerTensorrt"
+        "Node name for S&R": "UpscalerTensorrt",
+        "cnr_id": "ComfyUI-Upscaler-Tensorrt"
       },
       "widgets_values": [
         "2x",
@@ -3618,139 +3626,6 @@
       "bgcolor": "#355"
     },
     {
-      "id": 193,
-      "type": "c5a95b71-2875-4c1e-930a-368bc51e3aa7",
-      "pos": [
-        481.6153014391245,
-        -514.2405514698622
-      ],
-      "size": [
-        410,
-        610
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 86,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "noise",
-          "type": "NOISE",
-          "link": 523
-        },
-        {
-          "name": "sampler",
-          "type": "SAMPLER",
-          "link": 375
-        },
-        {
-          "label": "sigmas_high",
-          "name": "sigmas",
-          "type": "SIGMAS",
-          "link": 376
-        },
-        {
-          "label": "sigmas_low",
-          "name": "sigmas_1",
-          "type": "SIGMAS",
-          "link": 377
-        },
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 378
-        },
-        {
-          "label": "model_high",
-          "name": "model",
-          "type": "MODEL",
-          "link": 485
-        },
-        {
-          "label": "model_low",
-          "name": "model_1",
-          "type": "MODEL",
-          "link": 484
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 381
-        },
-        {
-          "name": "anchor_samples",
-          "type": "LATENT",
-          "link": 401
-        },
-        {
-          "name": "prev_samples",
-          "type": "LATENT",
-          "link": null
-        },
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 461
-        }
-      ],
-      "outputs": [
-        {
-          "label": "samples",
-          "name": "output",
-          "type": "LATENT",
-          "links": [
-            465
-          ]
-        },
-        {
-          "label": "decoded_images",
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            466
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "202",
-            "value"
-          ],
-          [
-            "199",
-            "custom_prompt"
-          ],
-          [
-            "190",
-            "text"
-          ],
-          [
-            "199",
-            "control_after_generate"
-          ],
-          [
-            "199",
-            "preset_prompt"
-          ],
-          [
-            "199",
-            "model_name"
-          ],
-          [
-            "199",
-            "keep_last_prompt"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.5.1"
-      },
-      "widgets_values": [],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
       "id": 181,
       "type": "dbe682c8-c9d2-4f3f-a199-35cc09e15d27",
       "pos": [
@@ -4137,6 +4012,139 @@
           ],
           [
             "195",
+            "keep_last_prompt"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.5.1"
+      },
+      "widgets_values": [],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 193,
+      "type": "c5a95b71-2875-4c1e-930a-368bc51e3aa7",
+      "pos": [
+        481.6153014391245,
+        -514.2405514698622
+      ],
+      "size": [
+        410,
+        610
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 86,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "noise",
+          "type": "NOISE",
+          "link": 523
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 375
+        },
+        {
+          "label": "sigmas_high",
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 376
+        },
+        {
+          "label": "sigmas_low",
+          "name": "sigmas_1",
+          "type": "SIGMAS",
+          "link": 377
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 378
+        },
+        {
+          "label": "model_high",
+          "name": "model",
+          "type": "MODEL",
+          "link": 485
+        },
+        {
+          "label": "model_low",
+          "name": "model_1",
+          "type": "MODEL",
+          "link": 484
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 381
+        },
+        {
+          "name": "anchor_samples",
+          "type": "LATENT",
+          "link": 401
+        },
+        {
+          "name": "prev_samples",
+          "type": "LATENT",
+          "link": null
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 461
+        }
+      ],
+      "outputs": [
+        {
+          "label": "samples",
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            465
+          ]
+        },
+        {
+          "label": "decoded_images",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            466
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "202",
+            "value"
+          ],
+          [
+            "199",
+            "custom_prompt"
+          ],
+          [
+            "190",
+            "text"
+          ],
+          [
+            "199",
+            "control_after_generate"
+          ],
+          [
+            "199",
+            "preset_prompt"
+          ],
+          [
+            "199",
+            "model_name"
+          ],
+          [
+            "199",
             "keep_last_prompt"
           ]
         ],
@@ -4907,9 +4915,9 @@
         "id": "dbe682c8-c9d2-4f3f-a199-35cc09e15d27",
         "version": 1,
         "state": {
-          "lastGroupId": 0,
-          "lastNodeId": 198,
-          "lastLinkId": 418,
+          "lastGroupId": 10,
+          "lastNodeId": 310,
+          "lastLinkId": 524,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -5130,7 +5138,7 @@
               200
             ],
             "flags": {},
-            "order": 8,
+            "order": 7,
             "mode": 0,
             "inputs": [
               {
@@ -5173,7 +5181,7 @@
               146
             ],
             "flags": {},
-            "order": 4,
+            "order": 3,
             "mode": 0,
             "inputs": [
               {
@@ -5262,7 +5270,7 @@
               146
             ],
             "flags": {},
-            "order": 3,
+            "order": 2,
             "mode": 0,
             "inputs": [
               {
@@ -5317,7 +5325,7 @@
               365.06318566771085
             ],
             "flags": {},
-            "order": 10,
+            "order": 9,
             "mode": 0,
             "inputs": [
               {
@@ -5386,7 +5394,7 @@
               397.26606114292565
             ],
             "flags": {},
-            "order": 9,
+            "order": 8,
             "mode": 0,
             "inputs": [
               {
@@ -5456,7 +5464,7 @@
               146
             ],
             "flags": {},
-            "order": 7,
+            "order": 6,
             "mode": 0,
             "inputs": [
               {
@@ -5520,7 +5528,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 11,
+            "order": 10,
             "mode": 0,
             "inputs": [
               {
@@ -5581,7 +5589,7 @@
             "flags": {
               "collapsed": false
             },
-            "order": 12,
+            "order": 11,
             "mode": 0,
             "inputs": [
               {
@@ -5633,7 +5641,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 13,
+            "order": 12,
             "mode": 0,
             "inputs": [
               {
@@ -5672,7 +5680,7 @@
               46
             ],
             "flags": {},
-            "order": 6,
+            "order": 5,
             "mode": 0,
             "inputs": [
               {
@@ -5723,7 +5731,7 @@
               142.62576174972867
             ],
             "flags": {},
-            "order": 5,
+            "order": 4,
             "mode": 0,
             "inputs": [
               {
@@ -5802,7 +5810,7 @@
               540
             ],
             "flags": {},
-            "order": 14,
+            "order": 13,
             "mode": 0,
             "inputs": [
               {
@@ -5873,7 +5881,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 1,
+            "order": 14,
             "mode": 0,
             "inputs": [
               {
@@ -5937,7 +5945,7 @@
               137.58089636900377
             ],
             "flags": {},
-            "order": 2,
+            "order": 1,
             "mode": 0,
             "inputs": [],
             "outputs": [
@@ -6265,9 +6273,9 @@
         "id": "c5a95b71-2875-4c1e-930a-368bc51e3aa7",
         "version": 1,
         "state": {
-          "lastGroupId": 0,
-          "lastNodeId": 202,
-          "lastLinkId": 419,
+          "lastGroupId": 10,
+          "lastNodeId": 310,
+          "lastLinkId": 524,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -6485,7 +6493,7 @@
               200
             ],
             "flags": {},
-            "order": 7,
+            "order": 6,
             "mode": 0,
             "inputs": [
               {
@@ -6528,7 +6536,7 @@
               146
             ],
             "flags": {},
-            "order": 4,
+            "order": 3,
             "mode": 0,
             "inputs": [
               {
@@ -6617,7 +6625,7 @@
               146
             ],
             "flags": {},
-            "order": 3,
+            "order": 2,
             "mode": 0,
             "inputs": [
               {
@@ -6672,7 +6680,7 @@
               365.06318566771085
             ],
             "flags": {},
-            "order": 9,
+            "order": 8,
             "mode": 0,
             "inputs": [
               {
@@ -6741,7 +6749,7 @@
               397.26606114292565
             ],
             "flags": {},
-            "order": 8,
+            "order": 7,
             "mode": 0,
             "inputs": [
               {
@@ -6813,7 +6821,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 11,
+            "order": 10,
             "mode": 0,
             "inputs": [
               {
@@ -6872,7 +6880,7 @@
               310.7156811858463
             ],
             "flags": {},
-            "order": 10,
+            "order": 9,
             "mode": 0,
             "inputs": [
               {
@@ -6922,7 +6930,7 @@
               46
             ],
             "flags": {},
-            "order": 6,
+            "order": 5,
             "mode": 0,
             "inputs": [
               {
@@ -6975,7 +6983,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 12,
+            "order": 11,
             "mode": 0,
             "inputs": [
               {
@@ -7014,7 +7022,7 @@
               142.62576174972867
             ],
             "flags": {},
-            "order": 5,
+            "order": 4,
             "mode": 0,
             "inputs": [
               {
@@ -7093,7 +7101,7 @@
               137.58089636900377
             ],
             "flags": {},
-            "order": 2,
+            "order": 1,
             "mode": 0,
             "inputs": [],
             "outputs": [
@@ -7133,7 +7141,7 @@
               540
             ],
             "flags": {},
-            "order": 13,
+            "order": 12,
             "mode": 0,
             "inputs": [
               {
@@ -7204,7 +7212,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 1,
+            "order": 13,
             "mode": 0,
             "inputs": [
               {
@@ -7532,9 +7540,9 @@
         "id": "2f110ae4-3df5-4e0f-9225-d35629e6f51f",
         "version": 1,
         "state": {
-          "lastGroupId": 2,
-          "lastNodeId": 240,
-          "lastLinkId": 453,
+          "lastGroupId": 10,
+          "lastNodeId": 310,
+          "lastLinkId": 524,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -8382,9 +8390,9 @@
         "id": "d2262c38-c2c4-4e42-b649-4ada24dfbf08",
         "version": 1,
         "state": {
-          "lastGroupId": 2,
-          "lastNodeId": 242,
-          "lastLinkId": 450,
+          "lastGroupId": 10,
+          "lastNodeId": 310,
+          "lastLinkId": 524,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -8701,9 +8709,9 @@
         "id": "f1d52f7f-35f7-44fe-a517-dc616865c478",
         "version": 1,
         "state": {
-          "lastGroupId": 0,
-          "lastNodeId": 198,
-          "lastLinkId": 417,
+          "lastGroupId": 10,
+          "lastNodeId": 310,
+          "lastLinkId": 524,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -8923,7 +8931,7 @@
               200
             ],
             "flags": {},
-            "order": 8,
+            "order": 7,
             "mode": 0,
             "inputs": [
               {
@@ -8966,7 +8974,7 @@
               146
             ],
             "flags": {},
-            "order": 4,
+            "order": 3,
             "mode": 0,
             "inputs": [
               {
@@ -9055,7 +9063,7 @@
               146
             ],
             "flags": {},
-            "order": 3,
+            "order": 2,
             "mode": 0,
             "inputs": [
               {
@@ -9110,7 +9118,7 @@
               365.06318566771085
             ],
             "flags": {},
-            "order": 10,
+            "order": 9,
             "mode": 0,
             "inputs": [
               {
@@ -9179,7 +9187,7 @@
               397.26606114292565
             ],
             "flags": {},
-            "order": 9,
+            "order": 8,
             "mode": 0,
             "inputs": [
               {
@@ -9249,7 +9257,7 @@
               146
             ],
             "flags": {},
-            "order": 7,
+            "order": 6,
             "mode": 0,
             "inputs": [
               {
@@ -9313,7 +9321,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 11,
+            "order": 10,
             "mode": 0,
             "inputs": [
               {
@@ -9374,7 +9382,7 @@
             "flags": {
               "collapsed": false
             },
-            "order": 12,
+            "order": 11,
             "mode": 0,
             "inputs": [
               {
@@ -9424,7 +9432,7 @@
               46
             ],
             "flags": {},
-            "order": 6,
+            "order": 5,
             "mode": 0,
             "inputs": [
               {
@@ -9477,7 +9485,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 13,
+            "order": 12,
             "mode": 0,
             "inputs": [
               {
@@ -9516,7 +9524,7 @@
               142.62576174972867
             ],
             "flags": {},
-            "order": 5,
+            "order": 4,
             "mode": 0,
             "inputs": [
               {
@@ -9595,7 +9603,7 @@
               540
             ],
             "flags": {},
-            "order": 14,
+            "order": 13,
             "mode": 0,
             "inputs": [
               {
@@ -9666,7 +9674,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 1,
+            "order": 14,
             "mode": 0,
             "inputs": [
               {
@@ -9730,7 +9738,7 @@
               137.58089636900377
             ],
             "flags": {},
-            "order": 2,
+            "order": 1,
             "mode": 0,
             "inputs": [],
             "outputs": [
@@ -10050,9 +10058,9 @@
         "id": "2d1bb655-03cd-4861-873a-4cb3bebd6712",
         "version": 1,
         "state": {
-          "lastGroupId": 0,
-          "lastNodeId": 198,
-          "lastLinkId": 417,
+          "lastGroupId": 10,
+          "lastNodeId": 310,
+          "lastLinkId": 524,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -10272,7 +10280,7 @@
               200
             ],
             "flags": {},
-            "order": 8,
+            "order": 7,
             "mode": 0,
             "inputs": [
               {
@@ -10315,7 +10323,7 @@
               146
             ],
             "flags": {},
-            "order": 4,
+            "order": 3,
             "mode": 0,
             "inputs": [
               {
@@ -10404,7 +10412,7 @@
               146
             ],
             "flags": {},
-            "order": 3,
+            "order": 2,
             "mode": 0,
             "inputs": [
               {
@@ -10459,7 +10467,7 @@
               365.06318566771085
             ],
             "flags": {},
-            "order": 10,
+            "order": 9,
             "mode": 0,
             "inputs": [
               {
@@ -10528,7 +10536,7 @@
               397.26606114292565
             ],
             "flags": {},
-            "order": 9,
+            "order": 8,
             "mode": 0,
             "inputs": [
               {
@@ -10598,7 +10606,7 @@
               146
             ],
             "flags": {},
-            "order": 7,
+            "order": 6,
             "mode": 0,
             "inputs": [
               {
@@ -10662,7 +10670,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 11,
+            "order": 10,
             "mode": 0,
             "inputs": [
               {
@@ -10723,7 +10731,7 @@
             "flags": {
               "collapsed": false
             },
-            "order": 12,
+            "order": 11,
             "mode": 0,
             "inputs": [
               {
@@ -10773,7 +10781,7 @@
               46
             ],
             "flags": {},
-            "order": 6,
+            "order": 5,
             "mode": 0,
             "inputs": [
               {
@@ -10826,7 +10834,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 13,
+            "order": 12,
             "mode": 0,
             "inputs": [
               {
@@ -10865,7 +10873,7 @@
               142.62576174972867
             ],
             "flags": {},
-            "order": 5,
+            "order": 4,
             "mode": 0,
             "inputs": [
               {
@@ -10944,7 +10952,7 @@
               540
             ],
             "flags": {},
-            "order": 14,
+            "order": 13,
             "mode": 0,
             "inputs": [
               {
@@ -11015,7 +11023,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 1,
+            "order": 14,
             "mode": 0,
             "inputs": [
               {
@@ -11079,7 +11087,7 @@
               137.58089636900377
             ],
             "flags": {},
-            "order": 2,
+            "order": 1,
             "mode": 0,
             "inputs": [],
             "outputs": [
@@ -11399,7 +11407,7 @@
   },
   "config": {},
   "extra": {
-    "frontendVersion": "1.38.14",
+    "frontendVersion": "1.39.19",
     "workflowRendererVersion": "LG",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
@@ -11407,10 +11415,10 @@
     "VHS_KeepIntermediate": true,
     "ue_links": [],
     "ds": {
-      "scale": 0.555734855581416,
+      "scale": 0.8136514020567515,
       "offset": [
-        1680.1331251580393,
-        1631.4605106721613
+        952.8936267632123,
+        1010.9291662152821
       ]
     }
   },

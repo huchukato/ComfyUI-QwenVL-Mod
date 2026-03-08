@@ -1751,204 +1751,6 @@
       "bgcolor": "#533"
     },
     {
-      "id": 161,
-      "type": "f838c097-47c7-4eda-971d-a4ca071e3b81",
-      "pos": [
-        -1285.5085135845231,
-        735.0129764602607
-      ],
-      "size": [
-        783.8555924235986,
-        660
-      ],
-      "flags": {},
-      "order": 37,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 403
-        },
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 327
-        },
-        {
-          "label": "model_h",
-          "name": "model",
-          "type": "MODEL",
-          "link": 370
-        },
-        {
-          "label": "model_l",
-          "name": "model_1",
-          "type": "MODEL",
-          "link": 371
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 404
-        },
-        {
-          "name": "length",
-          "type": "INT",
-          "widget": {
-            "name": "length"
-          },
-          "link": 366
-        },
-        {
-          "name": "steps",
-          "type": "INT",
-          "widget": {
-            "name": "steps"
-          },
-          "link": 367
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 372
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 373
-        },
-        {
-          "name": "scheduler",
-          "type": "COMBO",
-          "widget": {
-            "name": "scheduler"
-          },
-          "link": 379
-        },
-        {
-          "name": "sampler_name",
-          "type": "COMBO",
-          "widget": {
-            "name": "sampler_name"
-          },
-          "link": 411
-        },
-        {
-          "name": "motion_amplitude",
-          "type": "FLOAT",
-          "widget": {
-            "name": "motion_amplitude"
-          },
-          "link": 414
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            473
-          ]
-        }
-      ],
-      "properties": {
-        "proxyWidgets": [
-          [
-            "-1",
-            "length"
-          ],
-          [
-            "-1",
-            "width"
-          ],
-          [
-            "-1",
-            "height"
-          ],
-          [
-            "-1",
-            "steps"
-          ],
-          [
-            "-1",
-            "sampler_name"
-          ],
-          [
-            "-1",
-            "scheduler"
-          ],
-          [
-            "-1",
-            "motion_amplitude"
-          ],
-          [
-            "206",
-            "value"
-          ],
-          [
-            "193",
-            "custom_prompt"
-          ],
-          [
-            "89",
-            "text"
-          ],
-          [
-            "164",
-            "seed"
-          ],
-          [
-            "164",
-            "🎲 New Fixed Random"
-          ],
-          [
-            "164",
-            "🎲 Randomize Each Time"
-          ],
-          [
-            "193",
-            "control_after_generate"
-          ],
-          [
-            "193",
-            "preset_prompt"
-          ],
-          [
-            "193",
-            "model_name"
-          ],
-          [
-            "191",
-            "sigma_shift"
-          ],
-          [
-            "193",
-            "keep_last_prompt"
-          ]
-        ],
-        "cnr_id": "comfy-core",
-        "ver": "0.9.2"
-      },
-      "widgets_values": [
-        81,
-        5,
-        2,
-        20,
-        "euler",
-        "simple",
-        1.15
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
       "id": 229,
       "type": "VRAMCleanup",
       "pos": [
@@ -2464,6 +2266,204 @@
       },
       "color": "#322",
       "bgcolor": "#533"
+    },
+    {
+      "id": 161,
+      "type": "f838c097-47c7-4eda-971d-a4ca071e3b81",
+      "pos": [
+        -1285.5085135845231,
+        735.0129764602607
+      ],
+      "size": [
+        783.8555924235986,
+        660
+      ],
+      "flags": {},
+      "order": 37,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 403
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 327
+        },
+        {
+          "label": "model_h",
+          "name": "model",
+          "type": "MODEL",
+          "link": 370
+        },
+        {
+          "label": "model_l",
+          "name": "model_1",
+          "type": "MODEL",
+          "link": 371
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 404
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 366
+        },
+        {
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": 367
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 372
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 373
+        },
+        {
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": 379
+        },
+        {
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": 411
+        },
+        {
+          "name": "motion_amplitude",
+          "type": "FLOAT",
+          "widget": {
+            "name": "motion_amplitude"
+          },
+          "link": 414
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            473
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "-1",
+            "length"
+          ],
+          [
+            "-1",
+            "width"
+          ],
+          [
+            "-1",
+            "height"
+          ],
+          [
+            "-1",
+            "steps"
+          ],
+          [
+            "-1",
+            "sampler_name"
+          ],
+          [
+            "-1",
+            "scheduler"
+          ],
+          [
+            "-1",
+            "motion_amplitude"
+          ],
+          [
+            "206",
+            "value"
+          ],
+          [
+            "193",
+            "custom_prompt"
+          ],
+          [
+            "89",
+            "text"
+          ],
+          [
+            "164",
+            "seed"
+          ],
+          [
+            "164",
+            "🎲 New Fixed Random"
+          ],
+          [
+            "164",
+            "🎲 Randomize Each Time"
+          ],
+          [
+            "193",
+            "control_after_generate"
+          ],
+          [
+            "193",
+            "preset_prompt"
+          ],
+          [
+            "193",
+            "model_name"
+          ],
+          [
+            "191",
+            "sigma_shift"
+          ],
+          [
+            "193",
+            "keep_last_prompt"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.9.2"
+      },
+      "widgets_values": [
+        81,
+        5,
+        2,
+        20,
+        "euler",
+        "simple",
+        1.15
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
     }
   ],
   "links": [
@@ -4138,8 +4138,8 @@
     "ds": {
       "scale": 0.7571105826017448,
       "offset": [
-        3316.5077026037798,
-        337.24887605059473
+        3155.9104971966553,
+        -253.45805504675084
       ]
     }
   },
