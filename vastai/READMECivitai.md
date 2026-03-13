@@ -210,10 +210,12 @@ A powerful **enhanced vision-language node** for ComfyUI that combines Qwen3-VL 
 ## 🎯 Included Workflows
 
 ### **🍿 WAN 2.2 Presets**
-- **Wan 2.2 I2V**: Image-to-video with timeline structure
-- **Wan 2.2 T2V**: Text-to-video with professional specs
-- **Wan Extended Storyboard**: Multi-segment continuity
-- **Wan Cinematic Video**: Single scene with cinematography
+- **🍿 Wan 2.2 I2V Timeline**: Image-to-video with timeline structure
+- **🎥 Wan 2.2 I2V Scene**: Image-to-video with professional specs
+- **🍿 Wan 2.2 T2V Timeline**: Text-to-video with timeline structure
+- **🎥 Wan 2.2 T2V Scene**: Text-to-video with professional specs
+- **🎬 Wan 2.2 I2V Timeline**: 20-second multi-segment continuity
+- **📖 Wan 2.2 I2V Scene**: 20-second single scene with cinematography
 
 ### **🔥 Advanced Features**
 - **NSFW Enhancement**: Uncensored content generation
