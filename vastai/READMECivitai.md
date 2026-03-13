@@ -228,18 +228,12 @@ A powerful **enhanced vision-language node** for ComfyUI that combines Qwen3-VL 
 ## 🎨 Visual Style Detection
 
 Automatically detects and enhances:
-- **Anime style** - Japanese animation aesthetics
-- **3D cartoon** - Computer-generated animation
-- **Pixel art** - Retro gaming graphics
-- **Puppet animation** - Stop-motion style
-- **3D game style** - Video game graphics
-- **Claymation** - Clay animation
-- **Watercolor** - Painting style
-- **Black and white animation** - Monochrome
-- **Oil painting style** - Classical art
-- **Felt style** - Textile art
-- **Tilt-shift photography** - Miniature effect
-- **Time-lapse photography** - Speed photography
+- **Photorealistic style** - Realistic lighting, natural textures, lifelike details
+- **Anime style** - Japanese animation aesthetics with vibrant colors
+- **Cartoon style** - Bold outlines, flat colors, exaggerated expressions
+- **3D animation style** - Computer-generated 3D rendering characteristics
+- **Fantasy style** - Magical elements, ethereal lighting, imaginative atmosphere
+- **Artistic portrait style** - Painterly qualities, artistic brushwork, stylized composition
 
 ---
 
