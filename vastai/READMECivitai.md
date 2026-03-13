@@ -159,8 +159,14 @@ A powerful **enhanced vision-language node** for ComfyUI that combines Qwen3-VL 
 
 ## 🎮 Usage Examples
 
-### **Basic Text-to-Video**
+### **Basic Image-to-Video**
 1. Load **WAN2.2-I2V-AutoPrompt.json**
+2. Upload your image
+3. Select model (HF or GGUF)
+4. Generate enhanced video
+
+### **Basic Text-to-Video**
+1. Load **WAN2.2-T2V-AutoPrompt.json**
 2. Input your text prompt
 3. Select model (HF or GGUF)
 4. Generate enhanced video
