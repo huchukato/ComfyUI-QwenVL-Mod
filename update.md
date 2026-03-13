@@ -1,13 +1,37 @@
 # ComfyUI-QwenVL Update Log
 
-## Version 2.2.4 (2026/03/06)
+## Version 2.2.4 (2026/03/13)
 
-🔧 **Critical OOM Fix + Quantization Removal**
+🎬 **Critical I2V Timeline Fixes & NSFW Presets Optimization**
 
-This update resolves critical Out-Of-Memory errors on RTX 5090 and simplifies the interface by removing problematic quantization options.
+This update resolves critical issues with I2V Timeline preset generation and optimizes all NSFW presets for better user experience.
 
-### 🚨 **Major OOM Resolution**
-|- **BitsAndBytes Disabled**: Completely removed BitsAndBytes quantization causing OOM on RTX 5090
+### 🚨 **Major I2V Timeline Fixes**
+|- **Style Coherence**: Fixed AI changing anime→realism mid-sequence
+|- **Character Stability**: Fixed characters disappearing/appearing incorrectly  
+|- **Natural Lighting**: Fixed AI adding artificial lights not in image  
+|- **Timeline Structure**: Fixed continuous numbering (6,7,8...) instead of 0-5 restart  
+|- **Format Consistency**: Fixed missing parentheses and unwanted labels  
+|- **Output Format**: Each prompt starts directly with timeline markers
+
+### � **NSFW Presets Optimization**
+|- **Complete Specifications**: All 8 NSFW presets now include full NSFW descriptions
+|- **Emoji Display**: Restored proper emoji rendering (🍿🎥🎬📖🍿🎥🎬📖)
+|- **Clear Instructions**: Removed confusing recommendations from presets
+|- **User Notes**: Token settings guide created for workflow optimization
+
+### 📋 **Technical Improvements**
+|- **Timeline Markers**: Correct `(At X seconds: ...)` format for all 4 prompts
+|- **Character Continuity**: Natural progression without forced artificial presence
+|- **Lighting Rules**: Logical progression instead of absolute prohibitions
+|- **Style Detection**: Consistent style application across all timeline segments
+
+### 🎯 **Model Recommendations**
+|- **Qwen3-VL-8B**: Recommended for I2V Timeline (20s) complex sequences
+|- **Qwen3-VL-4B**: Sufficient for I2V Scene (5s) single prompts
+|- **Token Settings**: 2048+ for 20s timeline, 1024+ for 5s prompts
+
+## Version 2.0.7 (2026/02/03)
 |- **FP16 Only**: All HF nodes now use FP16 exclusively (~6GB VRAM on RTX 5090)
 |- **Quantization Dropdown Removed**: Eliminated confusing quantization options from all HF nodes
 |- **Working Logic Restored**: Reverted to proven working FP16 logic from commit d057b34

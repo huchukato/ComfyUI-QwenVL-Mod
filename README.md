@@ -2,7 +2,7 @@
 
 [![ComfyUI](https://img.shields.io/badge/ComfyUI-Custom%20Node-blue?style=for-the-badge&logo=python)](https://github.com/comfyanonymous/ComfyUI)
 [![License](https://img.shields.io/badge/License-GPL--3.0-green?style=for-the-badge)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-2.2.3-orange?style=for-the-badge)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/releases)
+[![Version](https://img.shields.io/badge/Version-2.2.4-orange?style=for-the-badge)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/releases)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)](https://python.org)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red?style=for-the-badge&logo=pytorch)](https://pytorch.org)
 [![CUDA](https://img.shields.io/badge/CUDA-12.8%2B-black?style=for-the-badge&logo=nvidia)](https://developer.nvidia.com/cuda-zone)
@@ -138,6 +138,16 @@ The ComfyUI-QwenVL custom node integrates powerful Qwen-VL series of vision-lang
 > 🎬 **Professional Specs**: All WAN 2.2 presets now include comprehensive cinematography specifications.  
 > 📹 **Technical Details**: Light sources, shot types, lens specs, camera movements, color tone requirements.  
 > 🎯 **Consistent Branding**: Updated preset names with WAN family branding for better organization.
+
+* **2026/03/13**: **v2.2.4** 🎬 Critical I2V Timeline Fixes & NSFW Presets Optimization. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-240-20260313)]
+> 🎬 **I2V Timeline (20s) Critical Fixes**: 
+> - ✅ **Style Coherence**: Fixed AI changing anime→realism mid-sequence
+> - ✅ **Character Stability**: Fixed characters disappearing/appearing incorrectly  
+> - ✅ **Natural Lighting**: Fixed AI adding artificial lights not in image
+> - ✅ **Timeline Structure**: Fixed continuous numbering (6,7,8...) instead of 0-5 restart
+> - ✅ **Format Consistency**: Fixed missing parentheses and unwanted labels
+> - 🔧 **All 8 NSFW Presets**: Complete specifications + emoji display restored
+> - 📋 **Token Settings Guide**: Comprehensive workflow note for optimal parameters
 
 * **2026/02/01**: **v2.0.5** Extended Storyboard preset added for WAN 2.2 format continuity. [[Update](https://github.com/huchukato/ComfyUI-QwenVL-Mod/blob/main/update.md#version-205-20260201)]
 > [!NOTE]  
