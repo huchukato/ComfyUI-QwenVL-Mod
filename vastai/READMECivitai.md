@@ -1,6 +1,6 @@
 # ComfyUI-QwenVL-Mod - Enhanced Vision-Language with WAN 2.2
 
-**Version 2.2.3** (2026/02/27) - 🧠 Advanced Memory Management + Documentation Updates
+**Version 2.2.4** (2026/03/13) - 🎬 Critical I2V Timeline Fixes & NSFW Presets Optimization
 
 ---
 
@@ -36,6 +36,33 @@ A powerful **enhanced vision-language node** for ComfyUI that combines Qwen3-VL 
 
 ---
 
+## 🎯 What's New in v2.2.4 - CRITICAL I2V TIMELINE FIXES
+
+### **🚨 Major I2V Timeline (20s) Fixes**
+- **✅ Style Coherence**: Fixed AI changing anime→realism mid-sequence
+- **✅ Character Stability**: Fixed characters disappearing/appearing incorrectly  
+- **✅ Natural Lighting**: Fixed AI adding artificial lights not in image
+- **✅ Timeline Structure**: Fixed continuous numbering (6,7,8...) instead of 0-5 restart
+- **✅ Format Consistency**: Fixed missing parentheses and unwanted labels
+- **✅ Output Format**: Each prompt starts directly with timeline markers
+
+### **🔧 NSFW Presets Optimization**
+- **✅ Complete Specifications**: All 8 NSFW presets now include full NSFW descriptions
+- **✅ Emoji Display**: Restored proper emoji rendering (🍿🎥🎬📖)
+- **✅ Clear Instructions**: Removed confusing recommendations from presets
+- **✅ User Guide**: Token settings guide created for workflow optimization
+
+### **📋 Technical Improvements**
+- **✅ Timeline Markers**: Correct `(At X seconds: ...)` format for all 4 prompts
+- **✅ Character Continuity**: Natural progression without forced artificial presence
+- **✅ Lighting Rules**: Logical progression instead of absolute prohibitions
+- **✅ Style Detection**: Consistent style application across all timeline segments
+
+### **🎯 Model Recommendations**
+- **Qwen3-VL-8B**: Recommended for I2V Timeline (20s) complex sequences
+- **Qwen3-VL-4B**: Sufficient for I2V Scene (5s) single prompts
+- **Token Settings**: 2048+ for 20s timeline, 1024+ for 5s prompts
+
 ## 🎯 What's New in v2.2.3
 - **CUDA 13 Compatibility**: Fixed crashes caused by conflicting unload operations
 - **Parameter Cleanup**: Removed redundant unload_after_run from all nodes
@@ -63,6 +90,33 @@ A powerful **enhanced vision-language node** for ComfyUI that combines Qwen3-VL 
 - **Consistent Behavior**: Both GGUF and PromptEnhancer now have identical memory management
 - **Conditional Cleanup**: Proper cleanup based on keep_model_loaded setting
 - **User Control**: Full control over memory usage vs performance
+
+---
+
+## 🚨 CRITICAL BUG FIXES - v2.2.4
+
+### **🎬 I2V Timeline (20s) - COMPLETELY FIXED**
+**Before v2.2.4:**
+- ❌ Anime style changed to realism mid-sequence
+- ❌ Characters disappeared/appeared randomly
+- ❌ AI added artificial lights not in image
+- ❌ Timeline numbering: 6,7,8... instead of 0-5 restart
+- ❌ Missing parentheses and unwanted "Prompt 1:" labels
+
+**After v2.2.4:**
+- ✅ **Perfect Style Coherence**: Anime stays anime, realism stays realism
+- ✅ **Character Stability**: Same characters throughout all 4 prompts
+- ✅ **Natural Lighting**: Only lights visible in image, logical progression
+- ✅ **Correct Timeline**: Each prompt uses 0-5 seconds format
+- ✅ **Clean Output**: Proper `(At X seconds: ...)` format, no labels
+
+### **🔥 NSFW Presets - ENHANCED & FIXED**
+- ✅ **Complete Specifications**: All 8 presets with full explicit descriptions
+- ✅ **Emoji Display**: Proper 🍿🎥🎬📖 icons (no more unicode codes)
+- ✅ **User-Friendly**: Removed confusing technical recommendations
+- ✅ **Token Guide**: Workflow note for optimal settings
+
+**🎯 Result**: Perfect I2V Timeline generation every time!
 
 ---
 
