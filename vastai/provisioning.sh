@@ -9,7 +9,7 @@ APT_PACKAGES=(
 )
 
 PIP_PACKAGES=(
-    "--upgrade --force-reinstall --no-cache-dir https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.33-cu130-Basic-linux-20260315/llama_cpp_python-0.3.33+cu130.basic-cp312-cp312-linux_x86_64.whl"
+    "--upgrade --force-reinstall --no-cache-dir https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.34-cu130-Basic-linux-20260331/llama_cpp_python-0.3.34+cu130.basic-cp312-cp312-linux_x86_64.whl"
 )
 
 NODES=(
