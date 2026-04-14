@@ -71,7 +71,7 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
 
 # Install llama-cpp-python for GGUF support (CUDA 12.8 compatible with base image)
 RUN /opt/comfyui-env/bin/pip install --upgrade --force-reinstall --no-cache-dir \
-    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.34-cu128-Basic-linux-20260331/llama_cpp_python-0.3.34+cu128.basic-cp312-cp312-linux_x86_64.whl && \
+    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.35-cu128-Basic-linux-20260406/llama_cpp_python-0.3.35+cu128.basic-cp312-cp312-linux_x86_64.whl && \
     /opt/comfyui-env/bin/pip cache purge
 
 # Install ALL ComfyUI custom nodes from VastAI provisioning + RunpodDirect
