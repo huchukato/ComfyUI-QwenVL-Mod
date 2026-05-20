@@ -55,7 +55,7 @@ RUN python3.12 -m venv /opt/comfyui-env && \
     /opt/comfyui-env/bin/pip install --upgrade pip
 
 # Install PyTorch with CUDA 12.8 (compatible with base image CUDA 12.8.0) - optimized for RTX 5090
-RUN /opt/comfyui-env/bin/pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu128 && \
+RUN /opt/comfyui-env/bin/pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128 && \
     /opt/comfyui-env/bin/pip cache purge
 
 # Remove uv to force ComfyUI-Manager to use pip (uv doesn't respect --system-site-packages properly)
@@ -71,7 +71,7 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
 
 # Install llama-cpp-python for GGUF support (CUDA 12.8 compatible with base image)
 RUN /opt/comfyui-env/bin/pip install --upgrade --force-reinstall --no-cache-dir \
-    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.38-cu128-Basic-linux-20260504/llama_cpp_python-0.3.38+cu128.basic-cp312-cp312-linux_x86_64.whl && \
+    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.39-cu128-linux-20260519/llama_cpp_python-0.3.39+cu128-cp312-cp312-linux_x86_64.whl && \
     /opt/comfyui-env/bin/pip cache purge
 
 # Install ALL ComfyUI custom nodes from VastAI provisioning + RunpodDirect
@@ -247,22 +247,35 @@ update_nodes() {
         "https://github.com/melMass/comfy_mtb.git"
     )
     
+    nodes_updated=false
     for node_url in "${nodes[@]}"; do
         node_name=$(basename "$node_url" .git)
         if [ -d "$node_name" ]; then
             echo "  🔄 Updating: $node_name"
             cd "$node_name"
-            git pull origin main 2>/dev/null || git pull origin master 2>/dev/null || echo "  ⚠️ Failed to update $node_name"
+            if git pull origin main 2>/dev/null || git pull origin master 2>/dev/null; then
+                nodes_updated=true
+            else
+                echo "  ⚠️ Failed to update $node_name"
+            fi
             cd ..
         else
             echo "  📥 Installing: $node_name"
-            git clone "$node_url" || echo "  ⚠️ Failed to clone $node_name"
+            if git clone "$node_url"; then
+                nodes_updated=true
+            else
+                echo "  ⚠️ Failed to clone $node_name"
+            fi
         fi
     done
     
-    # Install requirements for updated nodes
-    echo "📦 Installing updated requirements..."
-    bash -c 'for node_dir in */; do if [ -f "$node_dir/requirements.txt" ]; then echo "Installing requirements for $node_dir..." && /opt/comfyui-env/bin/pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; fi; done'
+    # Install requirements for updated nodes (only if nodes were updated)
+    if [ "$nodes_updated" = true ]; then
+        echo "📦 Installing updated requirements..."
+        bash -c 'for node_dir in */; do if [ -f "$node_dir/requirements.txt" ]; then echo "Installing requirements for $node_dir..." && /opt/comfyui-env/bin/pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; fi; done'
+    else
+        echo "ℹ️ No nodes updated, skipping requirements installation"
+    fi
     
     echo "✅ Node update completed"
 }
