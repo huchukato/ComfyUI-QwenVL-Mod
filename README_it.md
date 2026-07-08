@@ -2,7 +2,7 @@
 
 [![ComfyUI](https://img.shields.io/badge/ComfyUI-Custom%20Node-blue?style=for-the-badge&logo=python)](https://github.com/comfyanonymous/ComfyUI)
 [![License](https://img.shields.io/badge/License-GPL--3.0-green?style=for-the-badge)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-2.2.3-orange?style=for-the-badge&logo=python)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/releases)
+[![Version](https://img.shields.io/badge/Version-2.3-orange?style=for-the-badge&logo=python)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/releases)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)](https://python.org)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red?style=for-the-badge&logo=pytorch)](https://pytorch.org)
 [![CUDA](https://img.shields.io/badge/CUDA-12.8%2B-black?style=for-the-badge&logo=nvidia)](https://developer.nvidia.com/cuda-zone)
@@ -74,6 +74,13 @@ T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) �
 ---
 
 ## **📰 Notizie & Aggiornamenti**
+* **2026/07/09**: **v2.3** 🎬 **Nuovi Preset LTX 2.3 + Supporto Multilingua**. [[Aggiornamenti](update.md#version-23-20260709)]
+> 🎬 **LTX 2.3 Preset**: Nuovi preset specializzati per LTX 2.3 I2V e T2V con prompting guide ufficiali.
+> 🌐 **Supporto Multilingua**: Supporto completo multilingua per tutti i preset LTX 2.3.
+> 📝 **Prompting Guide**: Core Actions, Visual Details, Audio per generazione video ottimizzata.
+> 🎯 **Formato Semplificato**: Nessuna timeline, singolo paragrafo fluido max 200 parole.
+> 🔥 **Supporto NSFW**: Supporto completo NSFW per entrambi i preset LTX 2.3.
+
 * **2026/02/27**: **v2.2.3** 🔧 **Fix Compatibilità CUDA 13 + Rimozione Ridondanze**. [[Aggiornamenti](update.md#version-223-20260227)]
 > 🔧 **Rimozione unload_after_run**: Eliminata checkbox ridondante da tutti i nodi QwenVL per prevenire conflitti su CUDA 13.  
 > 🐛 **Fix Errori Parametri**: Risolti errori "missing 1 required positional argument: unload_after_run" in tutti i nodi.  
@@ -520,6 +527,46 @@ Questa versione migliorata include prompt specializzati per **WAN 2.2** generazi
 - Includi dettagli umore e atmosfera per risultati cinematografici
 - Sfrutta specifiche cinematografia professionale per qualità video ottimale
 - Il sistema gestisce automaticamente ottimizzazione timeline per preset WAN 2.2
+
+## **🎬 Integrazione LTX 2.3**
+
+Questa versione include nuovi preset specializzati per **LTX 2.3** generazione video, supportando sia workflow I2V (immagine-a-video) che T2V (testo-a-video) con prompting guide ufficiali.
+
+### **🎯 Prompt LTX 2.3 Disponibili**
+
+| Tipo Prompt | Caso Uso | Input | Output | Posizione |
+|:---|:---|:---|:---|:---|
+| **🎥 LTX 2.3 NSFW I2V** | Immagine-a-Video | Immagine + Testo | Descrizione cambiamenti | Nodi QwenVL |
+| **🎥 LTX 2.3 NSFW T2V** | Testo-a-Video | Testo solo | Descrizione scena completa | Nodi Prompt Enhancer |
+
+### **⚡ Funzionalità**
+
+- **Prompting Guide Ufficiale**: Core Actions, Visual Details, Audio per generazione ottimizzata
+- **Supporto Multilingua**: Input in qualsiasi lingua → Output ottimizzato Inglese
+- **Formato Semplificato**: Nessuna timeline, singolo paragrafo fluido max 200 parole
+- **Descrizione Scena Professionale**: Direzione stile cinematografico inclusi illuminazione, camera, composizione
+- **Gestione NSFW**: Supporto completo NSFW per entrambi i preset
+- **Ottimizzazione LTX 2.3**: Formattato specificamente per migliori risultati generazione video
+
+### **📝 Esempio Formato Output**
+
+```
+A woman in a red dress walks slowly through a sunlit garden, her hands gently brushing against blooming roses as golden afternoon light filters through the leaves, creating dappled patterns on her flowing fabric while the camera follows her graceful movement with a smooth tracking shot.
+```
+
+### **🔧 Utilizzo**
+
+1. **Per I2V**: Usa "🎥 LTX 2.3 NSFW I2V" preset in nodi QwenVL con input immagine
+2. **Per T2V**: Usa "🎥 LTX 2.3 NSFW T2V" style in nodi Prompt Enhancer con testo solo
+3. **Prompting Guide**: Segui Core Actions, Visual Details, Audio per risultati ottimali
+
+### **🎨 Best Practices**
+
+- Descrivi eventi e azioni come si verificano nel tempo
+- Includi tutti i dettagli visivi che vuoi apparire nel video
+- Descrivi suoni e dialoghi necessari per la scena
+- Mantieni descrizioni letterali e precise
+- Pensa come un regista cinematografico che descrive una shot list
 
 ## **🗺️ Roadmap**
 
