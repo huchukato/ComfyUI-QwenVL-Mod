@@ -2,7 +2,7 @@
 
 [![ComfyUI](https://img.shields.io/badge/ComfyUI-Custom%20Node-blue?style=for-the-badge&logo=python)](https://github.com/comfyanonymous/ComfyUI)
 [![License](https://img.shields.io/badge/License-GPL--3.0-green?style=for-the-badge)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-2.2.4-orange?style=for-the-badge)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/releases)
+[![Version](https://img.shields.io/badge/Version-2.3-orange?style=for-the-badge)](https://github.com/huchukato/ComfyUI-QwenVL-Mod/releases)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)](https://python.org)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red?style=for-the-badge&logo=pytorch)](https://pytorch.org)
 [![CUDA](https://img.shields.io/badge/CUDA-12.8%2B-black?style=for-the-badge&logo=nvidia)](https://developer.nvidia.com/cuda-zone)
@@ -58,6 +58,13 @@ The ComfyUI-QwenVL custom node integrates powerful Qwen-VL series of vision-lang
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
+* **2026/07/09**: **v2.3** 🎬 **New LTX 2.3 Presets + Multilingual Support**. [[Update](update.md#version-23-20260709)]
+> 🎬 **LTX 2.3 Presets**: New specialized presets for LTX 2.3 I2V and T2V with official prompting guides.
+> 🌐 **Multilingual Support**: Complete multilingual support for all LTX 2.3 presets.
+> 📝 **Prompting Guide**: Core Actions, Visual Details, Audio for optimized video generation.
+> 🎯 **Simplified Format**: No timeline, single fluid paragraph max 200 words.
+> 🔥 **NSFW Support**: Full NSFW support for both LTX 2.3 presets.
+
 * **2026/03/06**: **v2.2.4** 🔧 **Critical OOM Fix + Quantization Removal**. [[Update](update.md#version-224-20260306)]
 > 🚨 **BitsAndBytes Disabled**: Removed problematic quantization causing OOM on RTX 5090.  
 > ✅ **FP16 Only**: All HF nodes now use stable FP16 (~6GB VRAM).  
@@ -504,6 +511,46 @@ This enhanced version includes specialized prompts for **WAN 2.2** video generat
 - Include mood and atmosphere details for cinematic results
 - Leverage professional cinematography specs for optimal video quality
 - The system automatically handles timeline optimization for WAN 2.2 presets
+
+## **🎬 LTX 2.3 Integration**
+
+This version includes new specialized presets for **LTX 2.3** video generation, supporting both I2V (image-to-video) and T2V (text-to-video) workflows with official prompting guides.
+
+### **🎯 Available LTX 2.3 Prompts**
+
+| Prompt Type | Use Case | Input | Output | Location |
+|:---|:---|:---|:---|:---|
+| **🎥 LTX 2.3 NSFW I2V** | Image-to-Video | Image + Text | Description of changes | QwenVL nodes |
+| **🎥 LTX 2.3 NSFW T2V** | Text-to-Video | Text only | Complete scene description | Prompt Enhancer nodes |
+
+### **⚡ Features**
+
+- **Official Prompting Guide**: Core Actions, Visual Details, Audio for optimized generation
+- **Multilingual Support**: Input in any language → English optimized output
+- **Simplified Format**: No timeline, single fluid paragraph max 200 words
+- **Professional Scene Description**: Film-style direction including lighting, camera, composition
+- **NSFW Handling**: Full NSFW support for both presets
+- **LTX 2.3 Optimization**: Specifically formatted for best video generation results
+
+### **📝 Output Format Example**
+
+```
+A woman in a red dress walks slowly through a sunlit garden, her hands gently brushing against blooming roses as golden afternoon light filters through the leaves, creating dappled patterns on her flowing fabric while the camera follows her graceful movement with a smooth tracking shot.
+```
+
+### **🔧 Usage**
+
+1. **For I2V**: Use "🎥 LTX 2.3 NSFW I2V" preset in QwenVL nodes with image input
+2. **For T2V**: Use "🎥 LTX 2.3 NSFW T2V" style in Prompt Enhancer nodes with text only
+3. **Prompting Guide**: Follow Core Actions, Visual Details, Audio for optimal results
+
+### **🎨 Best Practices**
+
+- Describe events and actions as they occur over time
+- Include all visual details you want to appear in the video
+- Describe sounds and dialogue needed for the scene
+- Keep descriptions literal and precise
+- Think like a film director describing a shot list
 
 ## **🗺️ Roadmap**
 
