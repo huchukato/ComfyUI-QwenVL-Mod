@@ -72,6 +72,12 @@ T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) �
 ---
 
 ## **📰 Notizie & Aggiornamenti**
+* **2026/08/04**: **v2.4** 🚀 **Scoperta Modelli Locali + Qwen3.5 + SageAttention**. [[Aggiornamenti](update.md#version-24-20260804)]
+> 🔍 **Scoperta Modelli Locali**: Droppa modelli GGUF/HF nella directory models — appaiono nel dropdown automaticamente, senza editare JSON.
+> 🧠 **Supporto Qwen3.5**: Rilevamento architettura da metadati file, disabilitazione thinking mode, top_k=20.
+> ⚡ **SageAttention Ripristinato**: Kernel specifici per architettura (Blackwell/Hopper/Ada/Ampere) con fallback SDPA.
+> 🛠️ **Gestione VRAM, fix immagini, max_tokens 8192, fix caricamento BitsAndBytes**.
+
 * **2026/07/09**: **v2.3** 🎬 **Nuovi Preset LTX 2.3 + Supporto Multilingua**. [[Aggiornamenti](update.md#version-23-20260709)]
 > 🎬 **LTX 2.3 Preset**: Nuovi preset specializzati per LTX 2.3 I2V e T2V con prompting guide ufficiali.
 > 🌐 **Supporto Multilingua**: Supporto completo multilingua per tutti i preset LTX 2.3.

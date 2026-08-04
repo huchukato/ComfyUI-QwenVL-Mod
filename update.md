@@ -1,5 +1,39 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.4 (2026/08/04)
+
+🚀 **Local Model Discovery + Qwen3.5 Support + SageAttention**
+
+Major update porting the best features from the community fork (Deaquay/ComfyUI-Qwen3.5-Uncensored, 36 stars).
+
+### 🔍 **Automatic Local Model Discovery**
+|- **GGUF**: Drop `.gguf` files in `models/LLM/GGUF` — they appear in the dropdown automatically with `[local]` prefix
+|- **HF**: Drop model directories in `models/LLM/Qwen-VL` — detected and listed automatically
+|- **mmproj auto-pairing**: GGUF mmproj files in the same directory are paired automatically
+|- **Multi-path support**: Respects `extra_model_paths.yaml` and all registered LLM paths
+|- **No more JSON editing**: Pre-configured models still work, but local models don't require config edits
+
+### 🧠 **Qwen3.5 Support**
+|- **Architecture detection**: Reads GGUF header (`general.architecture`) or HF `config.json` (`model_type`) instead of model name
+|- **Disable thinking**: Qwen3.5 thinking mode automatically disabled for prompt generation
+|- **Top K tuning**: Forces `top_k=20` for Qwen3.5 (official recommendation)
+|- **New models**: Qwen3.5-4B/9B/27B (uncensored, heretic, unsloth) added to model configs
+
+### ⚡ **SageAttention Restored**
+|- **Architecture-aware kernels**: Blackwell FP8, Hopper FP8, Ada FP8, Ampere FP16
+|- **Graceful fallback**: Falls back to SDPA if SageAttention unavailable
+|- **Auto-mode priority**: Sage → Flash → SDPA
+|- **Runtime patching**: Patches `Qwen2Attention` and `Qwen3VLTextAttention` without model reload
+
+### 🛠️ **Other Improvements**
+|- **VRAM headroom**: Proactive VRAM cleanup before each run (threshold: max 1GB or 8% total)
+|- **Image handling**: Fixed grayscale (mode="L") and RGBA image conversion
+|- **BitsAndBytes fix**: Separate loading path for quantized models (device_map direct vs CPU→GPU)
+|- **max_tokens**: Increased from 512 to 8192 for both Standard and Advanced nodes
+|- **Batch image warning**: Alerts when batch >1 images provided (uses first only)
+
+---
+
 ## Version 2.3 (2026/07/09)
 
 🎬 **New LTX 2.3 Presets + Multilingual Support**

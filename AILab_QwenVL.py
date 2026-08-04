@@ -26,9 +26,22 @@ from PIL import Image
 from huggingface_hub import snapshot_download
 from transformers import AutoProcessor, AutoTokenizer, BitsAndBytesConfig
 
+# SageAttention support
+try:
+    from sageattention.core import (
+        sageattn_qk_int8_pv_fp16_cuda,
+        sageattn_qk_int8_pv_fp8_cuda,
+        sageattn_qk_int8_pv_fp8_cuda_sm90,
+    )
+    SAGE_ATTENTION_AVAILABLE = True
+except ImportError:
+    SAGE_ATTENTION_AVAILABLE = False
+
 # Global cache for generated prompts
 PROMPT_CACHE = {}
 CACHE_FILE = Path(__file__).parent / "prompt_cache.json"
+
+ATTENTION_MODES = ["auto", "sage", "flash_attention_2", "sdpa"]
 
 # Simple global variable to store last generated prompt
 LAST_SAVED_PROMPT = None
@@ -107,6 +120,52 @@ def get_alternative_cache_key(model_name, preset_prompt, custom_prompt, image_ha
     print(f"[{module_name} DEBUG] No alternative cache found")
     return None
 
+def ensure_cuda_vram_headroom(module_name="QwenVL", min_free_gb=1.0, min_free_ratio=0.08):
+    if not torch.cuda.is_available():
+        return True
+    try:
+        torch.cuda.synchronize()
+    except Exception:
+        pass
+    try:
+        free_before, total = torch.cuda.mem_get_info()
+    except Exception:
+        gc.collect()
+        torch.cuda.empty_cache()
+        return True
+
+    allocated = torch.cuda.memory_allocated()
+    reserved = torch.cuda.memory_reserved()
+    reclaimable = max(reserved - allocated, 0)
+    threshold = max(int(min_free_gb * 1024**3), int(total * min_free_ratio))
+
+    if free_before >= threshold and reclaimable < 512 * 1024**2:
+        return True
+
+    print(
+        f"[{module_name}] VRAM headroom low before run: "
+        f"free={free_before / 1024**3:.2f}GB, "
+        f"reserved={reserved / 1024**3:.2f}GB, "
+        f"allocated={allocated / 1024**3:.2f}GB. Cleaning CUDA cache..."
+    )
+    gc.collect()
+    torch.cuda.empty_cache()
+    try:
+        torch.cuda.ipc_collect()
+    except Exception:
+        pass
+    try:
+        torch.cuda.synchronize()
+    except Exception:
+        pass
+
+    try:
+        free_after, _ = torch.cuda.mem_get_info()
+        print(f"[{module_name}] VRAM after cleanup: free={free_after / 1024**3:.2f}GB")
+        return free_after >= threshold
+    except Exception:
+        return True
+
 def tensor_to_pil(tensor):
     """Convert tensor to PIL Image with memory optimization"""
     if tensor is None:
@@ -181,7 +240,7 @@ PRESET_PROMPTS: list[str] = ["Describe this image in detail."]
 TOOLTIPS = {
     "model_name": "Pick the Qwen-VL checkpoint. First run downloads weights into models/LLM/Qwen-VL, so leave disk space.",
     "quantization": "Precision vs VRAM. FP16 gives the best quality if memory allows; 8-bit suits 8–16 GB GPUs; 4-bit fits 6 GB or lower but is slower.",
-    "attention_mode": "auto tries FlashAttention 2 → SDPA in order. SDPA is stable and recommended. Only override when debugging attention backends.",
+    "attention_mode": "auto tries SageAttention → FlashAttention 2 → SDPA in order. SDPA is stable and recommended. Only override when debugging attention backends.",
     "preset_prompt": "Built-in instruction describing how Qwen-VL should analyze the media input.",
     "custom_prompt": "Additional user input that gets combined with the preset template. Leave empty to use only the template.",
     "max_tokens": "Maximum number of new tokens to decode. Larger values yield longer answers but consume more time and memory.",
@@ -211,8 +270,6 @@ class Quantization(str, Enum):
             if item.value == value:
                 return item
         raise ValueError(f"Unsupported quantization: {value}")
-
-ATTENTION_MODES = ["auto", "flash_attention_2", "sdpa"]
 
 def load_model_configs():
     global HF_VL_MODELS, HF_TEXT_MODELS, HF_ALL_MODELS, SYSTEM_PROMPTS, PRESET_PROMPTS
@@ -268,8 +325,83 @@ def load_model_configs():
     HF_ALL_MODELS = dict(HF_VL_MODELS)
     HF_ALL_MODELS.update(HF_TEXT_MODELS)
 
+    # Scan local models directory for HF models not in JSON config
+    _scan_local_hf_models()
+
+
+def _scan_local_hf_models():
+    """Scan all LLM/Qwen-VL directories for locally available HF models not already in the config."""
+    global HF_VL_MODELS, HF_ALL_MODELS
+
+    # Collect all Qwen-VL directories to scan from ComfyUI's multi-path system
+    scan_dirs: list[Path] = []
+    llm_paths = folder_paths.get_folder_paths("LLM") if "LLM" in folder_paths.folder_names_and_paths else []
+    for llm_path in llm_paths:
+        qwen_dir = Path(llm_path) / "Qwen-VL"
+        if qwen_dir not in scan_dirs:
+            scan_dirs.append(qwen_dir)
+    # Always include the default location as fallback
+    default_dir = Path(folder_paths.models_dir) / "LLM" / "Qwen-VL"
+    if default_dir not in scan_dirs:
+        scan_dirs.append(default_dir)
+
+    # Collect known local directory names from JSON config
+    known_dirs = set()
+    for info in HF_ALL_MODELS.values():
+        repo_id = info.get("repo_id", "")
+        if isinstance(repo_id, str) and "/" in repo_id:
+            known_dirs.add(repo_id.split("/")[-1])
+        local_path = info.get("local_path")
+        if local_path:
+            known_dirs.add(Path(local_path).name)
+
+    count = 0
+    for models_dir in scan_dirs:
+        if not models_dir.exists() or not models_dir.is_dir():
+            continue
+        try:
+            for entry in models_dir.iterdir():
+                if not entry.is_dir():
+                    continue
+                if entry.name in known_dirs:
+                    continue
+                # Check if the directory contains model weights
+                has_weights = any(entry.glob("*.safetensors")) or any(entry.glob("*.bin"))
+                if not has_weights:
+                    continue
+                display = f"[local] {entry.name}"
+                model_info = {
+                    "local_path": str(entry),
+                    "repo_id": None,
+                    "is_local": True,
+                    "quantized": False,
+                }
+                HF_VL_MODELS[display] = model_info
+                HF_ALL_MODELS[display] = model_info
+                known_dirs.add(entry.name)
+                count += 1
+        except PermissionError:
+            pass
+
+    if count:
+        print(f"[QwenVL] Discovered {count} local HF model(s) on disk")
+
+
 if not HF_ALL_MODELS:
     load_model_configs()
+
+
+def read_hf_model_type(model_dir: str) -> str | None:
+    """Read model_type from a HuggingFace model's config.json."""
+    try:
+        config_path = Path(model_dir) / "config.json"
+        if config_path.exists():
+            with open(config_path, "r", encoding="utf-8") as f:
+                config = json.load(f)
+            return config.get("model_type")
+    except Exception:
+        pass
+    return None
 
 def check_pytorch_memory():
     """Check current PyTorch memory settings and allow user to set fraction"""
@@ -425,6 +557,51 @@ def flash_attn_available():
 
     return True
 
+def sage_attn_available():
+    """Check if SageAttention is available and GPU supports it."""
+    if not SAGE_ATTENTION_AVAILABLE:
+        return False
+    if not torch.cuda.is_available():
+        return False
+    major, _ = torch.cuda.get_device_capability()
+    if major < 8:
+        return False
+    return True
+
+
+def get_sage_attention_config():
+    """Get the appropriate SageAttention kernel based on GPU architecture."""
+    if not sage_attn_available():
+        return None, None, None
+
+    major, minor = torch.cuda.get_device_capability()
+    arch_code = major * 10 + minor
+
+    attn_func = None
+    pv_accum_dtype = "fp32"
+
+    if arch_code >= 120:  # Blackwell
+        pv_accum_dtype = "fp32+fp32"
+        attn_func = sageattn_qk_int8_pv_fp8_cuda
+        print(f"[QwenVL] SageAttention: Using SM120 (Blackwell) FP8 kernel")
+    elif arch_code >= 90:  # Hopper
+        pv_accum_dtype = "fp32+fp32"
+        attn_func = sageattn_qk_int8_pv_fp8_cuda_sm90
+        print(f"[QwenVL] SageAttention: Using SM90 (Hopper) FP8 kernel")
+    elif arch_code == 89:  # Ada Lovelace
+        pv_accum_dtype = "fp32+fp32"
+        attn_func = sageattn_qk_int8_pv_fp8_cuda
+        print(f"[QwenVL] SageAttention: Using SM89 (Ada) FP8 kernel")
+    elif arch_code >= 80:  # Ampere
+        pv_accum_dtype = "fp32"
+        attn_func = sageattn_qk_int8_pv_fp16_cuda
+        print(f"[QwenVL] SageAttention: Using SM80+ (Ampere) FP16 kernel")
+    else:
+        print(f"[QwenVL] SageAttention not supported on SM{arch_code}")
+        return None, None, None
+
+    return attn_func, "per_warp", pv_accum_dtype
+
 def is_fp8_model(model_name: str) -> bool:
     """Check if model name indicates it's a pre-quantized FP8 model."""
     fp8_indicators = ["-fp8", "_fp8", "-FP8", "_FP8"]
@@ -442,13 +619,21 @@ def resolve_attention_mode(mode, force_sdpa=False):
 
     if mode == "sdpa":
         return "sdpa"
+    if mode == "sage":
+        if sage_attn_available():
+            return "sage"
+        print("[QwenVL] SageAttention forced but unavailable, falling back to SDPA")
+        return "sdpa"
     if mode == "flash_attention_2":
         if flash_attn_available():
             return "flash_attention_2"
         print("[QwenVL] Flash-Attn forced but unavailable, falling back to SDPA")
         return "sdpa"
 
-    # Auto mode: try flash → sdpa
+    # Auto mode: try sage → flash → sdpa
+    if sage_attn_available():
+        print("[QwenVL] Auto mode: Using SageAttention")
+        return "sage"
     if flash_attn_available():
         print("[QwenVL] Auto mode: Using Flash Attention 2")
         return "flash_attention_2"
@@ -459,7 +644,18 @@ def ensure_model(model_name):
     info = HF_ALL_MODELS.get(model_name)
     if not info:
         raise ValueError(f"Model '{model_name}' not in config")
-    repo_id = info["repo_id"]
+
+    # Local models have a direct path — use it, skip download
+    local_path = info.get("local_path")
+    if local_path:
+        target = Path(local_path)
+        if target.exists() and target.is_dir():
+            return str(target)
+        raise FileNotFoundError(f"[QwenVL] Local HF model directory not found: {target}")
+
+    repo_id = info.get("repo_id")
+    if not repo_id:
+        raise ValueError(f"Model '{model_name}' has no repo_id or local_path")
 
     # Use ComfyUI's multi-path system if available
     llm_paths = folder_paths.get_folder_paths("LLM") if "LLM" in folder_paths.folder_names_and_paths else []
@@ -472,7 +668,7 @@ def ensure_model(model_name):
     models_dir.mkdir(parents=True, exist_ok=True)
     target = models_dir / repo_id.split("/")[-1]
 
-    # ✅ If already downloaded (has weights), use local without calling snapshot_download
+    # If already downloaded (has weights), use local without calling snapshot_download
     if target.exists() and target.is_dir():
         if any(target.glob("*.safetensors")) or any(target.glob("*.bin")):
             return str(target)
@@ -556,6 +752,10 @@ class QwenVLBase:
         gc.collect()
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
+            try:
+                torch.cuda.ipc_collect()
+            except Exception:
+                pass
 
     def load_model(
         self,
@@ -586,7 +786,7 @@ class QwenVLBase:
         attn_impl = resolve_attention_mode(attention_mode, force_sdpa=force_sdpa)
         
         # Additional info messages for forced SDPA
-        if force_sdpa and attention_mode in ["auto", "flash_attention_2"]:
+        if force_sdpa and attention_mode in ["auto", "sage", "flash_attention_2"]:
             if is_prequantized_fp8:
                 print("[QwenVL] FP8 model detected - forcing SDPA attention")
             elif is_bnb_quantization:
@@ -598,13 +798,17 @@ class QwenVLBase:
         device = normalize_device_choice(device_requested)
         signature = (model_name, quant.value, attn_impl, device, use_compile)
         if keep_model_loaded and self.model is not None and self.current_signature == signature:
+            ensure_cuda_vram_headroom("QwenVL", min_free_gb=1.0, min_free_ratio=0.08)
             return
         self.clear()
         model_path = ensure_model(model_name)
         quant_config, dtype = quantization_config(model_name, quant)
         
         # Handle attention mode for loading
+        # SageAttention requires loading with SDPA first, then patching
         actual_attn_impl = attn_impl
+        if attn_impl == "sage":
+            actual_attn_impl = "sdpa"
         
         # MEMORY DEBUGGING: Check memory before loading
         if torch.cuda.is_available():
@@ -624,29 +828,59 @@ class QwenVLBase:
         print(f"[QwenVL] 🔍 DEBUG - Attention impl: {actual_attn_impl}")
         
         # Quantization is back - enforce_memory was the problem
+
+        # BitsAndBytes-quantized models are dispatched by accelerate and CANNOT
+        # be created on CPU then moved via .to(device). They must be loaded
+        # directly onto a GPU through device_map. FP16/FP32 paths can keep the
+        # old "load on CPU, move to device" behavior, which is friendlier to
+        # tight VRAM during the initial weight materialization.
+        if quant_config is not None and device == "cpu":
+            print("[QwenVL] ⚠️  BitsAndBytes requires a CUDA/ROCm GPU — falling back to FP16/FP32 on CPU")
+            quant_config = None
+            quant = Quantization.FP16
+
+        if quant_config is not None:
+            # Bnb path: hand the model directly to the target device.
+            bnb_device_map = device if device.startswith("cuda") else "auto"
+            load_kwargs = {
+                "device_map": bnb_device_map,
+                "quantization_config": quant_config,
+                "attn_implementation": actual_attn_impl,
+                "use_safetensors": True,
+                "low_cpu_mem_usage": True,
+            }
+            print(f"[QwenVL] 🔧 BnB load_kwargs device_map={bnb_device_map}")
+            self.model = AutoModelForVision2Seq.from_pretrained(model_path, **load_kwargs).eval()
+            print(f"[QwenVL] ✅ BitsAndBytes model loaded ({quant.value})")
+        else:
+            load_kwargs = {
+                "device_map": "cpu",  # Materialize on CPU first to limit VRAM spikes
+                "dtype": torch.float16,
+                "attn_implementation": actual_attn_impl,
+                "use_safetensors": True,
+                "low_cpu_mem_usage": True,
+            }
+            self.model = AutoModelForVision2Seq.from_pretrained(model_path, **load_kwargs).eval()
+
+            if device != "cpu" and torch.cuda.is_available():
+                print(f"[QwenVL] 🔄 Moving model from CPU to {device}...")
+                try:
+                    self.model = self.model.to(device)
+                    print(f"[QwenVL] ✅ Model moved to {device}")
+                except Exception as e:
+                    print(f"[QwenVL] ❌ Failed to move to GPU: {e}")
+                    print("[QwenVL] Keeping model on CPU (will be very slow)")
         
-        load_kwargs = {
-            "device_map": "cpu",  # Force CPU loading to test
-            "dtype": torch.float16,  # Use dtype instead of deprecated torch_dtype
-            "attn_implementation": actual_attn_impl,
-            "use_safetensors": True,
-            "low_cpu_mem_usage": True,
-        }
-            
-        if quant_config:
-            load_kwargs["quantization_config"] = quant_config
-            
-        self.model = AutoModelForVision2Seq.from_pretrained(model_path, **load_kwargs).eval()
-        
-        # Move to GPU manually if loading was on CPU
-        if device != "cpu" and torch.cuda.is_available():
-            print(f"[QwenVL] 🔄 Moving model from CPU to {device}...")
+        # Apply SageAttention patching if needed
+        if attn_impl == "sage":
             try:
-                self.model = self.model.to(device)
-                print(f"[QwenVL] ✅ Model moved to {device}")
+                from sageattention_patch import set_sage_attention
+                set_sage_attention(self.model)
+                print("[QwenVL] SageAttention patching applied successfully")
             except Exception as e:
-                print(f"[QwenVL] ❌ Failed to move to GPU: {e}")
-                print("[QwenVL] Keeping model on CPU (will be very slow)")
+                print(f"[QwenVL] SageAttention patching failed: {e}")
+                print("[QwenVL] Falling back to SDPA attention")
+                # Model is already loaded with SDPA, so we can continue
         
         # MEMORY CLEANUP: Clear cache after model loading
         if torch.cuda.is_available():
@@ -665,6 +899,11 @@ class QwenVLBase:
                 print(f"[QwenVL] torch.compile skipped: {exc}")
         self.processor = AutoProcessor.from_pretrained(model_path, trust_remote_code=True)
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
+        # Detect architecture from config.json instead of relying on model name
+        hf_model_type = read_hf_model_type(model_path)
+        self.is_qwen35 = hf_model_type in ("qwen3_5", "qwen3_5_moe", "qwen3_5_vl") if hf_model_type else "qwen3.5-" in model_name.lower()
+        if self.is_qwen35:
+            print(f"[QwenVL] Qwen3.5 detected (model_type={hf_model_type}): Will disable thinking in chat template.")
         self.current_signature = signature
 
     @staticmethod
@@ -674,7 +913,13 @@ class QwenVLBase:
         if tensor.dim() == 4:
             tensor = tensor[0]
         array = (tensor.cpu().numpy() * 255).clip(0, 255).astype(np.uint8)
-        return Image.fromarray(array)
+        if array.ndim == 2:
+            return Image.fromarray(array, mode="L")
+        if array.shape[-1] == 1:
+            return Image.fromarray(array[..., 0], mode="L")
+        if array.shape[-1] == 4:
+            return Image.fromarray(array, mode="RGBA")
+        return Image.fromarray(array[..., :3], mode="RGB")
 
     @torch.no_grad()
     def generate(
@@ -688,14 +933,15 @@ class QwenVLBase:
         top_p,
         num_beams,
         repetition_penalty,
+        model_name="",
     ):
         # Memory optimization: clear cache before generation
-        gc.collect()
-        if torch.cuda.is_available():
-            torch.cuda.empty_cache()
-        
+        ensure_cuda_vram_headroom("QwenVL", min_free_gb=1.0, min_free_ratio=0.08)
+
         conversation = [{"role": "user", "content": []}]
         if image is not None:
+            if image.dim() == 4 and image.shape[0] > 1:
+                print(f"[QwenVL] IMAGE input contains {image.shape[0]} items; using the first item only. Use the video input for multi-frame analysis.")
             conversation[0]["content"].append({"type": "image", "image": self.tensor_to_pil(image)})
         if video is not None:
             frames = [self.tensor_to_pil(frame) for frame in video]
@@ -706,8 +952,19 @@ class QwenVLBase:
                 conversation[0]["content"].append({"type": "video", "video": frames})
         conversation[0]["content"].append({"type": "text", "text": prompt_text})
         
+        # --- Qwen3.5 Heretic Logic: Template ---
+        is_qwen35 = getattr(self, "is_qwen35", False)
+        chat_kwargs = {}
+        if is_qwen35:
+            chat_kwargs["enable_thinking"] = False
+
         # Optimize chat template for memory efficiency
-        chat = self.processor.apply_chat_template(conversation, tokenize=False, add_generation_prompt=True)
+        chat = self.processor.apply_chat_template(
+            conversation,
+            tokenize=False,
+            add_generation_prompt=True,
+            **chat_kwargs
+        )
         
         # Process images/videos more efficiently
         images = [item["image"] for item in conversation[0]["content"] if item["type"] == "image"]
@@ -737,6 +994,10 @@ class QwenVLBase:
         }
         if num_beams == 1:
             kwargs.update({"do_sample": True, "temperature": temperature, "top_p": top_p})
+            # --- Qwen3.5 Heretic Logic: Top K ---
+            if is_qwen35:
+                kwargs["top_k"] = 20
+                print("[QwenVL] Qwen3.5 detected: Forcing top_k=20 for recommended tuning.")
         else:
             kwargs["do_sample"] = False
             
@@ -829,6 +1090,7 @@ class QwenVLBase:
                 top_p,
                 num_beams,
                 repetition_penalty,
+                model_name=model_name,
             )
             
             # Cache the generated text
@@ -865,10 +1127,11 @@ class AILab_QwenVL(QwenVLBase):
         return {
             "required": {
                 "model_name": (models, {"default": default_model, "tooltip": TOOLTIPS["model_name"]}),
+                "quantization": (Quantization.get_values(), {"default": Quantization.FP16.value, "tooltip": TOOLTIPS["quantization"]}),
                 "attention_mode": (ATTENTION_MODES, {"default": "auto", "tooltip": TOOLTIPS["attention_mode"]}),
                 "preset_prompt": (prompts, {"default": default_prompt, "tooltip": TOOLTIPS["preset_prompt"]}),
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": TOOLTIPS["custom_prompt"]}),
-                "max_tokens": ("INT", {"default": 512, "min": 64, "max": 2048, "tooltip": TOOLTIPS["max_tokens"]}),
+                "max_tokens": ("INT", {"default": 8192, "min": 64, "max": 8192, "tooltip": TOOLTIPS["max_tokens"]}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": TOOLTIPS["keep_model_loaded"]}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1, "tooltip": TOOLTIPS["seed"] + "\n\n💡 Cache Info: Prompts are cached automatically. Use the same inputs (model, preset, custom prompt, image/video) to reuse cached prompts and avoid regeneration.\n\n🔒 Fixed Seed Mode: Set seed = 1 to ignore image/video changes and only use text-based caching. Perfect for keeping the same prompt regardless of media input variations."}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
@@ -882,11 +1145,9 @@ class AILab_QwenVL(QwenVLBase):
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("RESPONSE",)
     FUNCTION = "process"
-    CATEGORY = "🔷 QwenVL-Mod/QwenVL"
+    CATEGORY = "QwenVL-Mod/QwenVL"
 
-    def process(self, model_name, preset_prompt, custom_prompt, attention_mode, max_tokens, keep_model_loaded, seed, keep_last_prompt=False, image=None, video=None):
-        # Always use FP16 - dropdown removed but keep working logic
-        quantization = Quantization.FP16.value
+    def process(self, model_name, quantization, preset_prompt, custom_prompt, attention_mode, max_tokens, keep_model_loaded, seed, keep_last_prompt=False, image=None, video=None):
         return self.run(model_name, quantization, preset_prompt, custom_prompt, image, video, 16, max_tokens, 0.6, 0.9, 1, 1.2, seed, keep_model_loaded, attention_mode, False, "auto", keep_last_prompt)
 
 class AILab_QwenVL_Advanced(QwenVLBase):
@@ -905,16 +1166,17 @@ class AILab_QwenVL_Advanced(QwenVLBase):
         return {
             "required": {
                 "model_name": (models, {"default": default_model, "tooltip": TOOLTIPS["model_name"]}),
+                "quantization": (Quantization.get_values(), {"default": Quantization.FP16.value, "tooltip": TOOLTIPS["quantization"]}),
                 "attention_mode": (ATTENTION_MODES, {"default": "auto", "tooltip": TOOLTIPS["attention_mode"]}),
                 "use_torch_compile": ("BOOLEAN", {"default": False, "tooltip": TOOLTIPS["use_torch_compile"]}),
                 "device": (device_options, {"default": "auto", "tooltip": TOOLTIPS["device"]}),
                 "preset_prompt": (prompts, {"default": default_prompt, "tooltip": TOOLTIPS["preset_prompt"]}),
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": TOOLTIPS["custom_prompt"]}),
-                "max_tokens": ("INT", {"default": 2048, "min": 64, "max": 4096, "tooltip": TOOLTIPS["max_tokens"]}),
+                "max_tokens": ("INT", {"default": 8192, "min": 64, "max": 8192, "tooltip": TOOLTIPS["max_tokens"]}),
                 "temperature": ("FLOAT", {"default": 0.6, "min": 0.1, "max": 1.0, "tooltip": TOOLTIPS["temperature"]}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "tooltip": TOOLTIPS["top_p"]}),
                 "num_beams": ("INT", {"default": 1, "min": 1, "max": 8, "tooltip": TOOLTIPS["num_beams"]}),
-                "repetition_penalty": ("FLOAT", {"default": 1.2, "min": 0.5, "max": 2.0, "tooltip": TOOLTIPS["repetition_penalty"]}),
+                "repetition_penalty": ("FLOAT", {"default": 1.0, "min": 0.5, "max": 2.0, "tooltip": TOOLTIPS["repetition_penalty"]}),
                 "frame_count": ("INT", {"default": 16, "min": 1, "max": 64, "tooltip": TOOLTIPS["frame_count"]}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": TOOLTIPS["keep_model_loaded"]}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1, "tooltip": TOOLTIPS["seed"] + "\n\n💡 Cache Info: Prompts are cached automatically. Use same inputs (model, preset, custom prompt, image/video) to reuse cached prompts and avoid regeneration.\n\n🔒 Fixed Seed Mode: Set seed = 1 to ignore image/video changes and only use text-based caching. Perfect for keeping the same prompt regardless of media input variations."}),
@@ -929,11 +1191,9 @@ class AILab_QwenVL_Advanced(QwenVLBase):
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("RESPONSE",)
     FUNCTION = "process"
-    CATEGORY = "🔷 QwenVL-Mod/QwenVL"
+    CATEGORY = "QwenVL-Mod/QwenVL"
 
-    def process(self, model_name, attention_mode, use_torch_compile, device, preset_prompt, custom_prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, frame_count, keep_model_loaded, seed, keep_last_prompt, image=None, video=None):
-        # Always use FP16 - dropdown removed but keep working logic
-        quantization = Quantization.FP16.value
+    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, custom_prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, frame_count, keep_model_loaded, seed, keep_last_prompt, image=None, video=None):
         return self.run(model_name, quantization, preset_prompt, custom_prompt, image, video, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt)
 
 NODE_CLASS_MAPPINGS = {
