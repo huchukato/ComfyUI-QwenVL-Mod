@@ -13,7 +13,7 @@
 
 [![LightningAI](https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/app-2/studio-badge.svg)](https://lightning.ai/huchukato/environments/comfyui-v0-14-2-qwen3-vl-autoprompt)
 
-Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguaggio (LVLM) Qwen-VL di Alibaba Cloud, inclusi i più recenti Qwen3-VL e Qwen2.5-VL, oltre a backend GGUF e supporto solo testo Qwen3. Questo nodo avanzato abilita funzionalità multimodali AI senza soluzione di continuità nei tuoi workflow ComfyUI, permettendo efficiente generazione di testo, comprensione di immagini e analisi video.
+Il custom node ComfyUI-QwenVL integra la potente serie di modelli vision-linguaggio (LVLM) Qwen-VL di Alibaba Cloud, inclusi i più recenti Qwen3-VL, oltre a backend GGUF e supporto solo testo Qwen3. Questo nodo avanzato abilita funzionalità multimodali AI senza soluzione di continuità nei tuoi workflow ComfyUI, permettendo efficiente generazione di testo, comprensione di immagini e analisi video.
 
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
@@ -209,7 +209,7 @@ T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) �
 * **2025/10/31**: **v1.0.4** Modelli Personalizzati Supportati [[Aggiornamenti](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-104-20251031)]
 * **2025/10/22**: **v1.0.3** Elenco modelli aggiornato [[Aggiornamenti](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-103-20251022)]
 * **2025/10/17**: **v1.0.0** Rilascio Iniziale  
-  * Supporto per serie modelli Qwen3-VL e Qwen2.5-VL.  
+  * Supporto per serie modelli Qwen3-VL.  
   * Download automatico modelli da Hugging Face.  
   * Quantizzazione al volo (4-bit, 8-bit, FP16).  
   * Sistema Preset e Prompt Personalizzati per uso flessibile e facile.  
@@ -224,7 +224,7 @@ T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) �
 ## **✨ Funzionalità**
 
 [![Multimodal](https://img.shields.io/badge/Multimodal-Image%20%7C%20Video%20%7C%20Text-purple?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
-[![Models](https://img.shields.io/badge/Models-Qwen3%20%7C%20Qwen2.5%20%7C%20GGUF-blue?style=flat-square)](https://huggingface.co/Qwen)
+[![Models](https://img.shields.io/badge/Models-Qwen3%20%7C%20GGUF-blue?style=flat-square)](https://huggingface.co/Qwen)
 [![Quantization](https://img.shields.io/badge/Quantization-4%20%7C%208%20%7C%2016%20bit-orange?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
 [![Performance](https://img.shields.io/badge/Performance-Flash%20Attention%20%7C%20SDPA-green?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
 [![WAN2.2](https://img.shields.io/badge/WAN%202.2-Video%20Generation-red?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
@@ -341,8 +341,6 @@ I modelli saranno scaricati automaticamente al primo utilizzo. Se preferisci sca
 | Qwen3-VL-32B-Thinking | [Download](https://huggingface.co/Qwen/Qwen3-VL-32B-Thinking) |
 | Qwen3-VL-32B-Instruct-FP8 | [Download](https://huggingface.co/Qwen/Qwen3-VL-32B-Instruct-FP8) |
 | Qwen3-VL-32B-Thinking-FP8 | [Download](https://huggingface.co/Qwen/Qwen3-VL-32B-Thinking-FP8) |
-| Qwen2.5-VL-3B-Instruct | [Download](https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct) |
-| Qwen2.5-VL-7B-Instruct | [Download](https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct) |
 
 ### **Modelli Testo HF (Qwen3)**
 | Modello | Link |
@@ -439,7 +437,6 @@ Questa integrazione include supporto per **Flash Attention 2**, un'implementazio
 
 | Modello | Flash Attention 2 | Velocità |
 |-------|----------------|---------|
-| Qwen2.5-VL-3B | 100% | 200-300% | 2-3x |
 | Qwen3-VL-4B | 100% | 150-250% | 1.5-2.5x |
 
 ### **🎯 Come Usare**
@@ -572,7 +569,7 @@ A woman in a red dress walks slowly through a sunlit garden, her hands gently br
 
 ### **✅ Completato (v2.0.7)**
 
-* ✅ Supporto per modelli Qwen3-VL e Qwen2.5-VL.  
+* ✅ Supporto per modelli Qwen3-VL.  
 * ✅ Supporto backend GGUF per inferenza più rapida.  
 * ✅ Nodi Prompt Enhancer per workflow solo testo.  
 * ✅ Integrazione Flash Attention 2 per 2-3x boost performance.  

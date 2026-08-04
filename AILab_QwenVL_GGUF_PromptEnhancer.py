@@ -1,6 +1,6 @@
 # ComfyUI-QwenVL GGUF prompt enhancer
 #
-# GGUF nodes powered by llama.cpp for Qwen-VL models, including Qwen3-VL and Qwen2.5-VL.
+# GGUF nodes powered by llama.cpp for Qwen-VL models, including Qwen3-VL.
 # Provides vision-capable GGUF inference and prompt execution.
 #
 # Models are loaded via llama-cpp-python and configured through gguf_models.json.
