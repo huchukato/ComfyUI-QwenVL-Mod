@@ -155,3 +155,12 @@ def _strip_planning_paragraphs(text: str) -> str:
     if not kept:
         return text.strip()
     return "\n\n".join(kept).strip()
+
+
+def prompt_output_guard() -> str:
+    return (
+        "Output rules that override all style preferences: return only the final usable prompt text. "
+        "Do not include analysis, planning, bullet points, headings, markdown, JSON, explanations, alternatives, self-corrections, or notes. "
+        "Do not write phrases such as Final Plan, Final Check, Wait, Okay, First, Next, Then, I will, or I need. "
+        "Start directly with the required prompt text."
+    )
