@@ -1,11 +1,10 @@
 # ComfyUI-QwenVL
 # This custom node integrates the Qwen-VL series, including the latest Qwen3-VL models,
-# including Qwen2.5-VL and the latest Qwen3-VL, to enable advanced multimodal AI for text generation,
+# to enable advanced multimodal AI for text generation,
 # image understanding, and video analysis.
 #
 # Models License Notice:
 # - Qwen3-VL: Apache-2.0 License (https://huggingface.co/Qwen/Qwen3-VL-4B-Instruct)
-# - Qwen2.5-VL: Apache-2.0 License (https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct)
 #
 # This integration script follows GPL-3.0 License.
 # When using or modifying this code, please respect both the original model licenses

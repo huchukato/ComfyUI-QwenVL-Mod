@@ -799,7 +799,7 @@ This release introduces a full rework of the QwenVL runtime to significantly imp
 - Optimized video input logic
 
 ## v1.0.0 Initial Release (2025/10/17)
-- Support for Qwen3-VL and Qwen2.5-VL series models.
+- Support for Qwen3-VL series models.
 - Automatic model downloading from Hugging Face.
 - On-the-fly quantization (4-bit, 8-bit, FP16).
 - Preset and Custom Prompt system for flexible and easy use.
