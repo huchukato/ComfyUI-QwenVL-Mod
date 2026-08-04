@@ -1,5 +1,5 @@
 # ComfyUI-QwenVL (GGUF)
-# GGUF nodes powered by llama.cpp for Qwen-VL models, including Qwen3-VL.
+# GGUF nodes powered by llama.cpp for Qwen-VL models, including the latest Qwen3-VL.
 # Provides vision-capable GGUF inference and prompt execution.
 #
 # Models are loaded via llama-cpp-python and configured through gguf_models.json.
@@ -16,6 +16,7 @@ import io
 import inspect
 import json
 import os
+import struct
 import sys
 import time
 from dataclasses import dataclass
@@ -29,13 +30,72 @@ from PIL import Image
 
 # Import cache functions from main module
 sys.path.append(str(Path(__file__).parent))
-from AILab_QwenVL import PROMPT_CACHE, get_cache_key, get_alternative_cache_key, get_image_hash, get_video_hash, save_prompt_cache
+from AILab_QwenVL import PROMPT_CACHE, ensure_cuda_vram_headroom, get_cache_key, get_alternative_cache_key, get_image_hash, get_video_hash, save_prompt_cache
 
 import folder_paths
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output
 
 # Simple global variable to store last generated prompt
 LAST_SAVED_PROMPT = None
+
+
+def read_gguf_architecture(filepath: Path) -> str | None:
+    """Read general.architecture from a GGUF file header without loading the model.
+
+    Returns the architecture string (e.g. 'qwen3', 'qwen2vl', 'llama') or None on failure.
+    """
+    # GGUF value type enum
+    _VTYPE_SIZE = {
+        0: 1, 1: 1, 2: 2, 3: 2, 4: 4, 5: 4, 6: 4, 7: 1, 10: 8, 11: 8, 12: 8,
+    }
+    _VTYPE_STRING = 8
+    _VTYPE_ARRAY = 9
+
+    def _read_string(f):
+        length = struct.unpack("<Q", f.read(8))[0]
+        return f.read(length).decode("utf-8", errors="replace")
+
+    def _skip_value(f, vtype):
+        if vtype in _VTYPE_SIZE:
+            f.seek(_VTYPE_SIZE[vtype], 1)
+        elif vtype == _VTYPE_STRING:
+            length = struct.unpack("<Q", f.read(8))[0]
+            f.seek(length, 1)
+        elif vtype == _VTYPE_ARRAY:
+            arr_type = struct.unpack("<I", f.read(4))[0]
+            arr_len = struct.unpack("<Q", f.read(8))[0]
+            for _ in range(arr_len):
+                _skip_value(f, arr_type)
+        else:
+            return False  # unknown type, bail
+        return True
+
+    try:
+        with open(filepath, "rb") as f:
+            magic = f.read(4)
+            if magic != b"GGUF":
+                return None
+            version = struct.unpack("<I", f.read(4))[0]
+            if version not in (2, 3):
+                return None
+            _tensor_count = struct.unpack("<Q", f.read(8))[0]
+            kv_count = struct.unpack("<Q", f.read(8))[0]
+
+            for _ in range(kv_count):
+                key = _read_string(f)
+                vtype = struct.unpack("<I", f.read(4))[0]
+                if key == "general.architecture":
+                    if vtype == _VTYPE_STRING:
+                        return _read_string(f)
+                    else:
+                        return None
+                # Skip this value and continue searching
+                if not _skip_value(f, vtype):
+                    return None
+    except Exception:
+        return None
+    return None
+
 
 NODE_DIR = Path(__file__).parent
 CONFIG_PATH = NODE_DIR / "hf_models.json"
@@ -106,6 +166,49 @@ def _safe_dirname(value: str) -> str:
     return "".join(ch for ch in value if ch.isalnum() or ch in "._- ").strip() or "unknown"
 
 
+def find_in_llm_paths(filename: str, author: str = "", repo_dirname: str = "") -> Path | None:
+    """Search ComfyUI's registered LLM folder paths for an existing GGUF file.
+
+    Honours alternate paths declared via extra_model_paths.yaml so catalog entries
+    whose default location is empty can still be located on a secondary drive.
+    """
+    bare = Path(filename).name
+    try:
+        if "LLM" not in folder_paths.folder_names_and_paths:
+            return None
+        llm_roots = folder_paths.get_folder_paths("LLM")
+    except Exception:
+        return None
+
+    author_dir = _safe_dirname(author) if author else ""
+    repo_dir = _safe_dirname(repo_dirname) if repo_dirname else ""
+
+    for llm_root in llm_roots:
+        root = Path(llm_root)
+        candidates: list[Path] = []
+        if author_dir and author_dir != "unknown" and repo_dir:
+            candidates.append(root / "GGUF" / author_dir / repo_dir / bare)
+            candidates.append(root / author_dir / repo_dir / bare)
+        if repo_dir:
+            candidates.append(root / "GGUF" / repo_dir / bare)
+            candidates.append(root / repo_dir / bare)
+        candidates.append(root / "GGUF" / bare)
+        candidates.append(root / bare)
+        for c in candidates:
+            if c.exists():
+                return c
+
+    for llm_root in llm_roots:
+        try:
+            matches = list(Path(llm_root).rglob(bare))
+            if matches:
+                return matches[0]
+        except Exception:
+            continue
+
+    return None
+
+
 def _model_name_to_filename_candidates(model_name: str) -> set[str]:
     raw = (model_name or "").strip()
     if not raw:
@@ -120,15 +223,69 @@ def _model_name_to_filename_candidates(model_name: str) -> set[str]:
     return candidates
 
 
-def _load_gguf_vl_catalog():
-    if not GGUF_CONFIG_PATH.exists():
-        return {"base_dir": "LLM/GGUF", "models": {}}
+def _scan_local_gguf_models(base_dir: Path, existing_filenames: set[str]) -> dict[str, dict]:
+    """Scan the GGUF base directory for locally available .gguf files not already in the JSON catalog."""
+    local_models: dict[str, dict] = {}
+    if not base_dir.exists() or not base_dir.is_dir():
+        return local_models
+
+    # Walk all subdirectories and collect .gguf files grouped by parent directory
+    dirs_with_gguf: dict[Path, list[Path]] = {}
     try:
-        with open(GGUF_CONFIG_PATH, "r", encoding="utf-8") as fh:
-            data = json.load(fh) or {}
-    except Exception as exc:
-        print(f"[QwenVL] gguf_models.json load failed: {exc}")
-        return {"base_dir": "LLM/GGUF", "models": {}}
+        for gguf_file in base_dir.rglob("*.gguf", recurse_symlinks=True):
+            if gguf_file.is_file():
+                parent = gguf_file.parent
+                dirs_with_gguf.setdefault(parent, []).append(gguf_file)
+    except PermissionError:
+        pass
+
+    for dir_path, gguf_files in dirs_with_gguf.items():
+        # Separate mmproj files from model files
+        mmproj_files = [f for f in gguf_files if "mmproj" in f.name.lower()]
+        model_files = [f for f in gguf_files if "mmproj" not in f.name.lower()]
+
+        # Vision-only node: skip directories without a paired mmproj
+        if not mmproj_files:
+            continue
+
+        mmproj_path = mmproj_files[0]
+
+        for model_file in model_files:
+            # Skip if this filename is already in the JSON catalog
+            if model_file.name in existing_filenames:
+                continue
+
+            display = f"[local] {model_file.name}"
+            local_models[display] = {
+                "filename": str(model_file),
+                "mmproj_filename": str(mmproj_path),
+                "is_local": True,
+                "repo_id": None,
+                "alt_repo_ids": [],
+                "author": None,
+                "repo_dirname": dir_path.name,
+                "context_length": 32768,
+                "image_max_tokens": 4096,
+                "n_batch": 512,
+                "gpu_layers": -1,
+                "top_k": 20,
+                "pool_size": 4194304,
+            }
+
+    if local_models:
+        print(f"[QwenVL] Discovered {len(local_models)} local GGUF model(s) on disk")
+
+    return local_models
+
+
+def _load_gguf_vl_catalog():
+    data = {}
+    if GGUF_CONFIG_PATH.exists():
+        try:
+            with open(GGUF_CONFIG_PATH, "r", encoding="utf-8") as fh:
+                data = json.load(fh) or {}
+        except Exception as exc:
+            print(f"[QwenVL] gguf_models.json load failed: {exc}")
 
     base_dir = data.get("base_dir") or "LLM/GGUF"
 
@@ -147,6 +304,10 @@ def _load_gguf_vl_catalog():
         defaults = repo.get("defaults") or {}
         mmproj_file = repo.get("mmproj_file")
         model_files = repo.get("model_files") or []
+
+        # Vision-only node: skip catalog repos without an mmproj projector
+        if not mmproj_file:
+            continue
 
         for model_file in model_files:
             display = Path(model_file).name
@@ -167,6 +328,28 @@ def _load_gguf_vl_catalog():
     for name, entry in legacy_models.items():
         if isinstance(entry, dict):
             flattened[name] = entry
+
+    # Scan filesystem for locally available models not in JSON config
+    # Collect all directories to scan: the configured base_dir + any extra LLM paths from ComfyUI
+    existing_filenames = {Path(e.get("filename", "")).name for e in flattened.values() if e.get("filename")}
+    scan_dirs: list[Path] = [_resolve_base_dir(base_dir)]
+    try:
+        if "LLM" in folder_paths.folder_names_and_paths:
+            for llm_path in folder_paths.get_folder_paths("LLM"):
+                gguf_dir = Path(llm_path) / "GGUF"
+                if gguf_dir not in scan_dirs:
+                    scan_dirs.append(gguf_dir)
+                # Also scan the LLM path itself (users may put GGUFs directly there)
+                llm_p = Path(llm_path)
+                if llm_p not in scan_dirs:
+                    scan_dirs.append(llm_p)
+    except Exception:
+        pass
+    for scan_dir in scan_dirs:
+        local_models = _scan_local_gguf_models(scan_dir, existing_filenames)
+        flattened.update(local_models)
+        # Update existing_filenames so we don't add duplicates across directories
+        existing_filenames.update(Path(e.get("filename", "")).name for e in local_models.values() if e.get("filename"))
 
     return {"base_dir": base_dir, "models": flattened}
 
@@ -197,7 +380,12 @@ def _tensor_to_base64_png(tensor) -> str | None:
     if tensor.ndim == 4:
         tensor = tensor[0]
     array = (tensor * 255).clamp(0, 255).to(torch.uint8).cpu().numpy()
-    pil_img = Image.fromarray(array, mode="RGB")
+    if array.ndim == 2:
+        pil_img = Image.fromarray(array, mode="L")
+    elif array.shape[-1] == 4:
+        pil_img = Image.fromarray(array, mode="RGBA")
+    else:
+        pil_img = Image.fromarray(array[..., :3], mode="RGB")
     buf = io.BytesIO()
     pil_img.save(buf, format="PNG")
     return base64.b64encode(buf.getvalue()).decode("utf-8")
@@ -305,7 +493,7 @@ def _resolve_model_entry(model_name: str) -> GGUFVLResolved:
         image_max_tokens=_int("image_max_tokens", 4096),
         n_batch=_int("n_batch", 512),
         gpu_layers=_int("gpu_layers", -1),
-        top_k=_int("top_k", 0),
+        top_k=_int("top_k", 20),
         pool_size=_int("pool_size", 4194304),
     )
 
@@ -318,7 +506,7 @@ class QwenVLGGUFBase:
 
     def clear(self):
         print(f"[QwenVL GGUF DEBUG] Starting VRAM cleanup...")
-        
+
         # Force cleanup of chat handler first
         if self.chat_handler is not None:
             try:
@@ -331,7 +519,7 @@ class QwenVLGGUFBase:
                 print(f"[QwenVL GGUF DEBUG] Error closing chat_handler: {e}")
             finally:
                 self.chat_handler = None
-        
+
         # Force cleanup of LLM model
         if self.llm is not None:
             try:
@@ -346,21 +534,25 @@ class QwenVLGGUFBase:
                 print(f"[QwenVL GGUF DEBUG] Error closing LLM: {e}")
             finally:
                 self.llm = None
-        
+
         # Clear signature
         self.current_signature = None
-        
+
         # Aggressive garbage collection
         gc.collect()
-        
+
         # Force CUDA cache cleanup multiple times
         if torch.cuda.is_available():
             print(f"[QwenVL GGUF DEBUG] Clearing CUDA cache...")
             torch.cuda.empty_cache()
+            try:
+                torch.cuda.ipc_collect()
+            except Exception:
+                pass
             torch.cuda.synchronize()
             # Additional cleanup
             torch.cuda.empty_cache()
-        
+
         print(f"[QwenVL GGUF DEBUG] VRAM cleanup completed")
 
     def _load_backend(self):
@@ -385,29 +577,49 @@ class QwenVLGGUFBase:
         self._load_backend()
 
         resolved = _resolve_model_entry(model_name)
-        base_dir = _resolve_base_dir(GGUF_VL_CATALOG.get("base_dir") or "llm/GGUF")
 
-        author_dir = _safe_dirname(resolved.author or "")
-        repo_dir = _safe_dirname(resolved.repo_dirname)
-        target_dir = base_dir / author_dir / repo_dir
+        # Local models store absolute paths — use them directly, skip download logic
+        if Path(resolved.model_filename).is_absolute():
+            model_path = Path(resolved.model_filename)
+            mmproj_path = Path(resolved.mmproj_filename) if resolved.mmproj_filename else None
+            if not model_path.exists():
+                raise FileNotFoundError(f"[QwenVL] Local GGUF model not found: {model_path}")
+            if mmproj_path is not None and not mmproj_path.exists():
+                raise FileNotFoundError(f"[QwenVL] Local mmproj not found: {mmproj_path}")
+        else:
+            base_dir = _resolve_base_dir(GGUF_VL_CATALOG.get("base_dir") or "llm/GGUF")
 
-        model_path = target_dir / Path(resolved.model_filename).name
-        mmproj_path = target_dir / Path(resolved.mmproj_filename).name if resolved.mmproj_filename else None
+            author_dir = _safe_dirname(resolved.author or "")
+            repo_dir = _safe_dirname(resolved.repo_dirname)
+            target_dir = base_dir / author_dir / repo_dir
 
-        repo_ids: list[str] = []
-        if resolved.repo_id:
-            repo_ids.append(resolved.repo_id)
-        repo_ids.extend(resolved.alt_repo_ids)
+            model_path = target_dir / Path(resolved.model_filename).name
+            mmproj_path = target_dir / Path(resolved.mmproj_filename).name if resolved.mmproj_filename else None
 
-        if not model_path.exists():
-            if not repo_ids:
-                raise FileNotFoundError(f"[QwenVL] GGUF model not found locally and no repo_id provided: {model_path}")
-            _download_single_file(repo_ids, resolved.model_filename, model_path)
+            repo_ids: list[str] = []
+            if resolved.repo_id:
+                repo_ids.append(resolved.repo_id)
+            repo_ids.extend(resolved.alt_repo_ids)
 
-        if mmproj_path is not None and not mmproj_path.exists():
-            if not repo_ids:
-                raise FileNotFoundError(f"[QwenVL] mmproj not found locally and no repo_id provided: {mmproj_path}")
-            _download_single_file(repo_ids, resolved.mmproj_filename, mmproj_path)
+            if not model_path.exists():
+                found = find_in_llm_paths(resolved.model_filename, resolved.author or "", resolved.repo_dirname or "")
+                if found is not None:
+                    print(f"[QwenVL] Using model from alternate LLM path: {found}")
+                    model_path = found
+                else:
+                    if not repo_ids:
+                        raise FileNotFoundError(f"[QwenVL] GGUF model not found locally and no repo_id provided: {model_path}")
+                    _download_single_file(repo_ids, resolved.model_filename, model_path)
+
+            if mmproj_path is not None and not mmproj_path.exists():
+                found_mm = find_in_llm_paths(resolved.mmproj_filename, resolved.author or "", resolved.repo_dirname or "")
+                if found_mm is not None:
+                    print(f"[QwenVL] Using mmproj from alternate LLM path: {found_mm}")
+                    mmproj_path = found_mm
+                else:
+                    if not repo_ids:
+                        raise FileNotFoundError(f"[QwenVL] mmproj not found locally and no repo_id provided: {mmproj_path}")
+                    _download_single_file(repo_ids, resolved.mmproj_filename, mmproj_path)
 
         device_kind = _pick_device(device)
 
@@ -437,12 +649,13 @@ class QwenVLGGUFBase:
             pool_size_val,
         )
         if self.llm is not None and self.current_signature == signature:
+            ensure_cuda_vram_headroom("QwenVL GGUF", min_free_gb=1.0, min_free_ratio=0.08)
             return
 
         # Force aggressive cleanup before loading new model (especially for same model conflicts)
         print(f"[QwenVL GGUF DEBUG] Forcing cleanup before model loading...")
         self.clear()
-        
+
         # Additional wait for CUDA cleanup
         if torch.cuda.is_available():
             torch.cuda.synchronize()
@@ -491,6 +704,14 @@ class QwenVLGGUFBase:
             "pool_size": pool_size_val,
             "top_k": top_k_val,
         }
+
+        # Detect architecture from GGUF metadata instead of relying on model name
+        arch = read_gguf_architecture(model_path)
+        is_qwen35 = arch in ("qwen35", "qwen35moe") if arch else "qwen3.5-" in model_name.lower()
+        if is_qwen35:
+            llm_kwargs["chat_template_kwargs"] = {"enable_thinking": False}
+            print(f"[QwenVL] Qwen3.5 detected (arch={arch}): Disabling thinking in chat template.")
+
         if has_mmproj and self.chat_handler is not None:
             llm_kwargs["chat_handler"] = self.chat_handler
             llm_kwargs["image_min_tokens"] = 1024
@@ -505,6 +726,7 @@ class QwenVLGGUFBase:
             )
         if device_kind == "cuda" and n_gpu_layers == 0:
             print("[QwenVL] Warning: device=cuda selected but n_gpu_layers=0; model will run on CPU.")
+
         self.llm = Llama(**llm_kwargs_filtered)
         self.current_signature = signature
 
@@ -518,7 +740,15 @@ class QwenVLGGUFBase:
         top_p: float,
         repetition_penalty: float,
         seed: int,
+        model_name: str = "",
     ) -> str:
+        ensure_cuda_vram_headroom("QwenVL GGUF", min_free_gb=1.0, min_free_ratio=0.08)
+        if self.llm is not None and hasattr(self.llm, "reset"):
+            try:
+                self.llm.reset()
+            except Exception as exc:
+                print(f"[QwenVL GGUF DEBUG] llama context reset skipped: {exc}")
+
         if images_b64:
             content = [{"type": "text", "text": user_prompt}]
             for img in images_b64:
@@ -543,7 +773,7 @@ class QwenVLGGUFBase:
             top_p=float(top_p),
             repeat_penalty=float(repetition_penalty),
             seed=int(seed),
-            stop=["<|im_end|>", "<|im_start|>"],
+            stop=["<|im_end|>", "<|im_start|>"]
         )
         elapsed = max(time.perf_counter() - start, 1e-6)
 
@@ -588,9 +818,9 @@ class QwenVLGGUFBase:
         keep_last_prompt=False,
     ):
         print(f"[QwenVL GGUF DEBUG] Starting run with seed={seed}, keep_last_prompt={keep_last_prompt}")
-        
+
         global LAST_SAVED_PROMPT
-        
+
         # Simple keep last prompt logic
         if keep_last_prompt:
             print(f"[QwenVL GGUF] Keep last prompt enabled - using last saved prompt")
@@ -600,17 +830,17 @@ class QwenVLGGUFBase:
             else:
                 print(f"[QwenVL GGUF] No previous prompt found, returning empty")
                 return ("",)
-        
+
         # Always generate when keep last prompt is disabled
         print(f"[QwenVL GGUF] Keep last prompt disabled - generating new prompt")
-        
+
         prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
-        
+
         # Generate cache key with all inputs including seed
         image_hash = get_image_hash(image)
         video_hash = get_video_hash(video)
         cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash, int(seed))
-        
+
         # TEMPORARILY DISABLED CACHE FOR DEBUGGING
         # Check cache first (only for random mode)
         # if cache_key in PROMPT_CACHE:
@@ -618,40 +848,30 @@ class QwenVLGGUFBase:
         #     if cached_text:
         #         print(f"[QwenVL GGUF] Using cached prompt for seed {seed}: {cache_key[:8]}...")
         #         return cached_text.strip()
-        
+
         print(f"[QwenVL GGUF DEBUG] Cache disabled - proceeding with generation")
-        
+
         if custom_prompt and custom_prompt.strip():
             # Combine user input with template - custom prompt first for priority
             prompt = f"{custom_prompt.strip()}\n\n{prompt_template}"
         else:
             prompt = prompt_template
-            
+
         print(f"[QwenVL GGUF DEBUG] Final prompt: {prompt[:100]}...")
 
         images_b64: list[str] = []
         if image is not None:
             print(f"[QwenVL GGUF DEBUG] Processing image...")
             print(f"[QwenVL GGUF DEBUG] Image shape before processing: {image.shape}")
-            
-            # Handle batch images from T2V
+
             if len(image.shape) == 4:  # [batch, height, width, channels]
                 print(f"[QwenVL GGUF DEBUG] Detected batch image with shape: {image.shape}")
-                # Take first frame from batch or process all frames
+                frame_img = image[0]
                 if image.shape[0] > 1:
-                    print(f"[QwenVL GGUF DEBUG] Processing {image.shape[0]} frames from batch")
-                    for i in range(image.shape[0]):
-                        frame_img = image[i]  # Take each frame from batch
-                        print(f"[QwenVL GGUF DEBUG] Processing batch frame {i} with shape: {frame_img.shape}")
-                        img = _tensor_to_base64_png(frame_img)
-                        if img:
-                            images_b64.append(img)
-                else:
-                    # Single frame in batch format
-                    frame_img = image[0]
-                    print(f"[QwenVL GGUF DEBUG] Single frame in batch, shape: {frame_img.shape}")
-                    img = _tensor_to_base64_png(frame_img)
-                    if img:
+                    print(f"[QwenVL GGUF DEBUG] IMAGE input contains {image.shape[0]} items; using the first item only. Use the video input for multi-frame analysis.")
+                print(f"[QwenVL GGUF DEBUG] Single image from batch, shape: {frame_img.shape}")
+                img = _tensor_to_base64_png(frame_img)
+                if img:
                         images_b64.append(img)
             else:
                 # Regular single image [height, width, channels]
@@ -666,14 +886,14 @@ class QwenVLGGUFBase:
                     images_b64.append(img)
 
         print(f"[QwenVL GGUF DEBUG] Images processed: {len(images_b64)} images/videos")
-        
+
         # Debug video/image info
         if video is not None:
             print(f"[QwenVL GGUF DEBUG] Video shape: {video.shape}")
             print(f"[QwenVL GGUF DEBUG] Frame count requested: {frame_count}")
         if image is not None:
             print(f"[QwenVL GGUF DEBUG] Image shape: {image.shape}")
-        
+
         # Debug VRAM before model loading
         if torch.cuda.is_available():
             allocated = torch.cuda.memory_allocated()
@@ -708,11 +928,12 @@ class QwenVLGGUFBase:
                 top_p=top_p,
                 repetition_penalty=repetition_penalty,
                 seed=seed,
+                model_name=model_name,
             )
-            
+
             print(f"[QwenVL GGUF DEBUG] Generation completed. Text length: {len(text) if text else 0}")
             print(f"[QwenVL GGUF DEBUG] Generated text: {text[:100] if text else 'EMPTY'}...")
-            
+
             # Cache the generated text
             PROMPT_CACHE[cache_key] = {
                 "text": text,
@@ -724,15 +945,15 @@ class QwenVLGGUFBase:
                 "video_hash": video_hash
             }
             save_prompt_cache()  # Save cache to file
-            
+
             print(f"[QwenVL GGUF] Cached new prompt for seed {seed}: {cache_key[:8]}...")
-            
+
             print(f"[QwenVL GGUF DEBUG] Returning tuple with text...")
-            
+
             # Save the generated prompt for future bypass mode
             LAST_SAVED_PROMPT = text
             print(f"[QwenVL GGUF] Saved prompt for bypass mode: {text[:50]}...")
-            
+
             return (text,)
         finally:
             if not keep_model_loaded:
@@ -743,7 +964,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
     @classmethod
     def INPUT_TYPES(cls):
         all_models = GGUF_VL_CATALOG.get("models") or {}
-        model_keys = sorted([key for key, entry in all_models.items() if (entry or {}).get("mmproj_filename")]) or ["(edit gguf_models.json)"]
+        model_keys = sorted([key for key, entry in all_models.items() if (entry or {}).get("mmproj_filename")]) or ["(no GGUF VL models found)"]
         default_model = model_keys[0]
 
         prompts = PRESET_PROMPTS or ["🖼️ Detailed Description"]
@@ -755,7 +976,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
                 "model_name": (model_keys, {"default": default_model}),
                 "preset_prompt": (prompts, {"default": default_prompt}),
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": "Additional user input that gets combined with the preset template. Leave empty to use only the template."}),
-                "max_tokens": ("INT", {"default": 512, "min": 64, "max": 2048}),
+                "max_tokens": ("INT", {"default": 8192, "min": 64, "max": 8192}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
@@ -769,7 +990,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("RESPONSE",)
     FUNCTION = "process"
-    CATEGORY = "🔷 QwenVL-Mod/QwenVL"
+    CATEGORY = "QwenVL-Mod/QwenVL"
 
     def process(
         self,
@@ -780,7 +1001,6 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
         keep_model_loaded,
         seed,
         keep_last_prompt,
-        unload_after_run,
         image=None,
         video=None,
     ):
@@ -794,10 +1014,9 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
             max_tokens=max_tokens,
             temperature=0.6,
             top_p=0.9,
-            repetition_penalty=1.05,
+            repetition_penalty=1.0,
             seed=seed,
             keep_model_loaded=keep_model_loaded,
-            unload_after_run=unload_after_run,
             device="auto",
             ctx=None,
             n_batch=None,
@@ -813,7 +1032,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
     @classmethod
     def INPUT_TYPES(cls):
         all_models = GGUF_VL_CATALOG.get("models") or {}
-        model_keys = sorted([key for key, entry in all_models.items() if (entry or {}).get("mmproj_filename")]) or ["(edit gguf_models.json)"]
+        model_keys = sorted([key for key, entry in all_models.items() if (entry or {}).get("mmproj_filename")]) or ["(no GGUF VL models found)"]
         default_model = model_keys[0]
 
         prompts = PRESET_PROMPTS or ["🖼️ Detailed Description"]
@@ -830,16 +1049,16 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
                 "device": (device_options, {"default": "auto"}),
                 "preset_prompt": (prompts, {"default": default_prompt}),
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": "Additional user input that gets combined with the preset template. Leave empty to use only the template."}),
-                "max_tokens": ("INT", {"default": 512, "min": 64, "max": 4096}),
+                "max_tokens": ("INT", {"default": 8192, "min": 64, "max": 8192}),
                 "temperature": ("FLOAT", {"default": 0.6, "min": 0.0, "max": 2.0}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0}),
-                "repetition_penalty": ("FLOAT", {"default": 1.2, "min": 0.5, "max": 2.0}),
+                "repetition_penalty": ("FLOAT", {"default": 1.0, "min": 0.5, "max": 2.0}),
                 "frame_count": ("INT", {"default": 16, "min": 1, "max": 64}),
                 "ctx": ("INT", {"default": 32768, "min": 1024, "max": 262144, "step": 512}),
                 "n_batch": ("INT", {"default": 512, "min": 64, "max": 32768, "step": 64}),
                 "gpu_layers": ("INT", {"default": -1, "min": -1, "max": 200}),
                 "image_max_tokens": ("INT", {"default": 4096, "min": 256, "max": 1024000, "step": 256}),
-                "top_k": ("INT", {"default": 0, "min": 0, "max": 32768}),
+                "top_k": ("INT", {"default": 20, "min": 0, "max": 32768}),
                 "pool_size": ("INT", {"default": 4194304, "min": 1048576, "max": 10485760, "step": 524288}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
@@ -854,7 +1073,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("RESPONSE",)
     FUNCTION = "process"
-    CATEGORY = "🔷 QwenVL-Mod/QwenVL"
+    CATEGORY = "QwenVL-Mod/QwenVL"
 
     def process(
         self,
