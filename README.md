@@ -15,6 +15,8 @@
 
 [![buy-me-coffees](https://i.imgur.com/3MDbAtw.png)](https://buymeacoffee.com/huchukato)
 
+[![Deploy ComfyUI-QwenVL-Mod on RunPod](https://raw.githubusercontent.com/huchukato/ComfyUI-QwenVL-Mod/main/img/bannercu13.png)](https://console.runpod.io/deploy?template=1v8gfux2zd&ref=ioakclrv)
+
 ## 🚀 **API Support & Troubleshooting**
 
 Having issues with ComfyUI API? We've got you covered!
