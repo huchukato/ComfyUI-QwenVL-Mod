@@ -9,13 +9,12 @@ APT_PACKAGES=(
 )
 
 PIP_PACKAGES=(
-    "--upgrade --force-reinstall --no-cache-dir https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.40-cu131-linux-20260607/llama_cpp_python-0.3.40+cu131-cp312-cp312-linux_x86_64.whl"
+    "--upgrade --force-reinstall --no-cache-dir https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.45-cu131-linux-20260801/llama_cpp_python-0.3.45+cu131-cp312-cp312-linux_x86_64.whl"
     "comfyui-manager"
 )
 
 NODES=(
     "https://github.com/Comfy-Org/ComfyUI-Manager"
-    "https://github.com/kijai/ComfyUI_essentials"
     "https://github.com/huchukato/comfy-tagcomplete"
     "https://github.com/huchukato/ComfyUI-QwenVL-Mod"
     "https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto"
