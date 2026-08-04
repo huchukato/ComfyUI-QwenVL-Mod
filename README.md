@@ -53,7 +53,7 @@ Ask user for:
 
 ---
 
-The ComfyUI-QwenVL custom node integrates powerful Qwen-VL series of vision-language models (LVLMs) from Alibaba Cloud, including latest Qwen3-VL and Qwen2.5-VL, plus GGUF backends and text-only Qwen3 support. This advanced node enables seamless multimodal AI capabilities within your ComfyUI workflows, allowing for efficient text generation, image understanding, and video analysis.
+The ComfyUI-QwenVL custom node integrates powerful Qwen-VL series of vision-language models (LVLMs) from Alibaba Cloud, including latest Qwen3-VL, plus GGUF backends and text-only Qwen3 support. This advanced node enables seamless multimodal AI capabilities within your ComfyUI workflows, allowing for efficient text generation, image understanding, and video analysis.
 
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
@@ -193,7 +193,7 @@ The ComfyUI-QwenVL custom node integrates powerful Qwen-VL series of vision-lang
 * **2025/10/31**: **v1.0.4** Custom Models Supported [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-104-20251031)]
 * **2025/10/22**: **v1.0.3** Models list updated [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-103-20251022)]
 * **2025/10/17**: **v1.0.0** Initial Release  
-  * Support for Qwen3-VL and Qwen2.5-VL series models.  
+  * Support for Qwen3-VL series models.  
   * Automatic model downloading from Hugging Face.  
   * On-the-fly quantization (4-bit, 8-bit, FP16).  
   * Preset and Custom Prompt system for flexible and easy use.  
@@ -208,7 +208,7 @@ The ComfyUI-QwenVL custom node integrates powerful Qwen-VL series of vision-lang
 ## **✨ Features**
 
 [![Multimodal](https://img.shields.io/badge/Multimodal-Image%20%7C%20Video%20%7C%20Text-purple?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
-[![Models](https://img.shields.io/badge/Models-Qwen3%20%7C%20Qwen2.5%20%7C%20GGUF-blue?style=flat-square)](https://huggingface.co/Qwen)
+[![Models](https://img.shields.io/badge/Models-Qwen3%20%7C%20GGUF-blue?style=flat-square)](https://huggingface.co/Qwen)
 [![Quantization](https://img.shields.io/badge/Quantization-4%20%7C%208%20%7C%2016%20bit-orange?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
 [![Performance](https://img.shields.io/badge/Performance-Flash%20Attention%20%7C%20SDPA-green?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
 [![WAN2.2](https://img.shields.io/badge/WAN%202.2-Video%20Generation-red?style=flat-square)](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
@@ -325,8 +325,6 @@ The models will be automatically downloaded on first use. If you prefer to downl
 | Qwen3-VL-32B-Thinking | [Download](https://huggingface.co/Qwen/Qwen3-VL-32B-Thinking) |
 | Qwen3-VL-32B-Instruct-FP8 | [Download](https://huggingface.co/Qwen/Qwen3-VL-32B-Instruct-FP8) |
 | Qwen3-VL-32B-Thinking-FP8 | [Download](https://huggingface.co/Qwen/Qwen3-VL-32B-Thinking-FP8) |
-| Qwen2.5-VL-3B-Instruct | [Download](https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct) |
-| Qwen2.5-VL-7B-Instruct | [Download](https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct) |
 
 ### **HF Text Models (Qwen3)**
 | Model | Link |
@@ -423,7 +421,6 @@ This integration includes support for **Flash Attention 2**, a cutting-edge atte
 
 | Model | Flash Attention 2 | Speedup |
 |-------|----------------|---------|
-| Qwen2.5-VL-3B | 100% | 200-300% | 2-3x |
 | Qwen3-VL-4B | 100% | 150-250% | 1.5-2.5x |
 
 ### **🎯 How to Use**
@@ -556,7 +553,7 @@ A woman in a red dress walks slowly through a sunlit garden, her hands gently br
 
 ### **✅ Completed (v2.0.7)**
 
-* ✅ Support for Qwen3-VL and Qwen2.5-VL models.  
+* ✅ Support for Qwen3-VL models.  
 * ✅ GGUF backend support for faster inference.  
 * ✅ Prompt Enhancer nodes for text-only workflows.  
 * ✅ Flash Attention 2 integration for 2-3x performance boost.  
