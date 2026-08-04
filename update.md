@@ -1,5 +1,36 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.3 (2026/07/09)
+
+🎬 **New LTX 2.3 Presets + Multilingual Support**
+
+This update introduces specialized presets for LTX 2.3 video generation, with official prompting guides and complete multilingual support.
+
+### 🎬 **LTX 2.3 Presets**
+|- **LTX 2.3 NSFW I2V**: Image-to-Video preset for QwenVL nodes with image + text input
+|- **LTX 2.3 NSFW T2V**: Text-to-Video preset for Prompt Enhancer nodes with text only
+|- **Official Prompting Guide**: Core Actions, Visual Details, Audio structure for optimized results
+|- **Simplified Format**: No timeline, single fluid paragraph max 200 words
+|- **NSFW Support**: Full NSFW descriptions for both presets
+
+### 🌐 **Multilingual Support**
+|- **Complete Translations**: All LTX 2.3 presets available in multiple languages
+|- **Consistent Style**: Visual style detection maintained across all languages
+
+### 📝 **Prompting Tips**
+|- **Core Actions**: Primary subject motion and camera movement
+|- **Visual Details**: Appearance, environment, lighting, atmosphere
+|- **Audio**: Ambient sounds, music, dialogue cues
+|- **Optimization**: Specifically formatted for LTX 2.3 best results
+
+### 🐛 **Other Changes**
+|- **Removed Qwen2.5-VL**: Dropped support for Qwen2.5-VL (Qwen3-VL only now)
+|- **Cleaned Model Lists**: Added Qwen3.5-4B/9B Unredacted-MAX, Heretic-Stable 8B
+|- **Removed Obsolete Nodes**: kijai/ComfyUI_essentials removed
+|- **Updated llama-cpp-python**: Bumped to v0.3.45
+
+---
+
 ## Version 2.2.4 (2026/03/13)
 
 🎬 **Critical I2V Timeline Fixes & NSFW Presets Optimization**
