@@ -20,6 +20,12 @@ The ComfyUI-QwenVL custom node integrates powerful Qwen-VL series of vision-lang
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
+* **2026/08/04**: **v2.4** 🚀 **Local Model Discovery + Qwen3.5 + SageAttention**. [[Update](update.md#version-24-20260804)]
+> 🔍 **Local Model Discovery**: Drop GGUF/HF models in your models directory — they appear in the dropdown automatically, no JSON editing needed.
+> 🧠 **Qwen3.5 Support**: Architecture detection from file metadata, auto-disable thinking mode, top_k=20 tuning.
+> ⚡ **SageAttention Restored**: Architecture-aware kernels (Blackwell/Hopper/Ada/Ampere) with graceful SDPA fallback.
+> 🛠️ **VRAM headroom, image fixes, max_tokens 8192, BitsAndBytes loading fix**.
+
 * **2026/07/09**: **v2.3** 🎬 **New LTX 2.3 Presets + Multilingual Support**. [[Update](update.md#version-23-20260709)]
 > 🎬 **LTX 2.3 Presets**: New specialized presets for LTX 2.3 I2V and T2V with official prompting guides.
 > 🌐 **Multilingual Support**: Complete multilingual support for all LTX 2.3 presets.
