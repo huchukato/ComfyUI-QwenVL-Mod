@@ -22,9 +22,29 @@
     }
   },
   "hf_text_models": {
+    "Qwen3.5-4B-Unredacted-MAX": {
+      "repo_id": "prithivMLmods/Qwen3.5-4B-Unredacted-MAX",
+      "default": true,
+      "quantized": false,
+      "vram_requirement": {
+        "full": 6.0,
+        "8bit": 3.5,
+        "4bit": 2.0
+      }
+    },
+    "Qwen3.5-9B-Unredacted-MAX": {
+      "repo_id": "prithivMLmods/Qwen3.5-9B-Unredacted-MAX",
+      "default": false,
+      "quantized": false,
+      "vram_requirement": {
+        "full": 12.0,
+        "8bit": 7.0,
+        "4bit": 4.5
+      }
+    },
     "qwen3-4b-Z-Image-Engineer": {
       "repo_id": "BennyDaBall/qwen3-4b-Z-Image-Engineer",
-      "default": true,
+      "default": false,
       "quantized": false
     }
   }
