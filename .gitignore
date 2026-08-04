@@ -1,4 +1,4 @@
-.DS_S# ComfyUI-QwenVL-Mod Git Ignore File
+# ComfyUI-QwenVL-Mod Git Ignore File
 
 # Python
 __pycache__/
@@ -53,7 +53,6 @@ models/
 input/
 output/
 temp/
-*.png
 *.jpg
 *.jpeg
 *.gif
@@ -79,11 +78,7 @@ npm-debug.log*
 prompt_cache.json
 
 # Personal build scripts and backups (don't commit to shared repo)
-build-and-push-4090.sh
-build-and-push-5090.sh
-build-and-push-CU13.sh
 runpod/
-vastai/
 
 # API consulting tools (keep local for client work)
 API_GUIDE.md
@@ -92,7 +87,7 @@ api_client_examples/
 consulting/
 client_work/
 
-# VastAI README files
+# VastAI README files (keep local, not for shared repo)
 vastai/READMECivitai.md
 vastai/READMEVast4090.md
 vastai/READMEVast5090.md
