@@ -41,11 +41,6 @@
         "8bit": 7.0,
         "4bit": 4.5
       }
-    },
-    "qwen3-4b-Z-Image-Engineer": {
-      "repo_id": "BennyDaBall/qwen3-4b-Z-Image-Engineer",
-      "default": false,
-      "quantized": false
     }
   }
 }
