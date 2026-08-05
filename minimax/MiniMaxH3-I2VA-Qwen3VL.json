@@ -44,7 +44,7 @@
       "mode": 0,
       "inputs": [
         {
-          "name": "video",
+          "name": "image2",
           "type": "VIDEO",
           "link": 194
         }
@@ -1632,8 +1632,8 @@
                 "link": 229
               },
               {
-                "localized_name": "video",
-                "name": "video",
+                "localized_name": "image2",
+                "name": "image2",
                 "shape": 7,
                 "type": "IMAGE",
                 "link": null
