@@ -1,8 +1,8 @@
 {
   "id": "cb1682ce-6347-41dc-8632-cf8853381ef8",
   "revision": 0,
-  "last_node_id": 152,
-  "last_link_id": 291,
+  "last_node_id": 154,
+  "last_link_id": 300,
   "nodes": [
     {
       "id": 118,
@@ -37,14 +37,14 @@
       ],
       "size": [
         1146.9778644557782,
-        738.1736917892715
+        106
       ],
       "flags": {},
       "order": 10,
       "mode": 0,
       "inputs": [
         {
-          "name": "image2",
+          "name": "video",
           "type": "VIDEO",
           "link": 194
         }
@@ -162,10 +162,10 @@
         }
       ],
       "properties": {
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
+        "cnr_id": "comfyui-videohelpersuite",
         "ver": "4ee72c065db22c9d96c2427954dc69e7b908444b",
         "Node name for S&R": "VHS_VideoCombine",
-        "cnr_id": "comfyui-videohelpersuite"
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
       },
       "widgets_values": {
         "frame_rate": 48,
@@ -182,13 +182,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "MiniMax_H3_48FPS_00001-audio.webm",
+            "filename": "MiniMax_H3_48FPS_00003-audio.webm",
             "subfolder": "video",
             "type": "output",
             "format": "video/webm",
             "frame_rate": 48,
-            "workflow": "MiniMax_H3_48FPS_00001.png",
-            "fullpath": "/workspace/runpod-slim/ComfyUI/output/video/MiniMax_H3_48FPS_00001-audio.webm"
+            "workflow": "MiniMax_H3_48FPS_00003.png",
+            "fullpath": "/workspace/runpod-slim/ComfyUI/output/video/MiniMax_H3_48FPS_00003-audio.webm"
           }
         }
       },
@@ -226,13 +226,13 @@
       ],
       "title": "QWEN3VL GENERATED PROMPT",
       "properties": {
-        "aux_id": "yolain/ComfyUI-Easy-Use",
+        "cnr_id": "comfyui-easy-use",
         "ver": "595e0738a9e3f8d0d9c4d875461b2d2c9e7559c7",
         "Node name for S&R": "easy showAnything",
-        "cnr_id": "comfyui-easy-use"
+        "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 2) aligns with the 10.00-second mark of the target video.\n\nintegrated_multimodal_description: [Shot 1] 3D CG, cinematic, a medium shot frames two nude women on a bed with a wooden headboard. The woman on top, with dark hair and red nail polish, leans over the woman below, who lies on her back with dark hair and a slight smile. The top woman's hands are on the bottom woman's hips and thighs, and her body is positioned for penetration. The bottom woman's head rests on the bed, her gaze upward. The lighting is soft and warm, highlighting the skin tones and creating a sensual atmosphere. The camera is static. The diegetic soundscape includes soft breathing, the sound of skin contact, and a gentle moan from the bottom woman. [Shot 2] At 00:03.500, the camera cuts to a medium shot from behind the top woman, showing her leaning over the bottom woman's chest and neck. Her head is lowered, and her mouth is near the bottom woman's neck, with a visible sheen of sweat. Her right hand rests on the bottom woman's shoulder, and her left hand is on her own hip. The bottom woman's body is partially visible, and her skin tone is warm. The lighting remains soft and warm, emphasizing the intimacy. The diegetic soundscape includes the sound of skin contact, soft breathing, and a low moan from the bottom woman. [Shot 3] At 00:07.000, the camera cuts to a close-up shot of the top woman's face, showing her eyes closed and a slight smile as she leans in. Her hair is slightly disheveled, and her skin is glistening with sweat. The bottom woman's hand is visible, resting on the top woman's back. The lighting remains soft and warm, highlighting the intimate moment. The diegetic soundscape includes soft breathing and a gentle moan from the bottom woman.\n\noverall_soundscape: Soft, rhythmic breathing, the sound of skin sliding against skin, gentle moans from the woman on the bottom, and a low, continuous hum of intimacy.\n\nnon_diegetic_music: N/A"
+        "```\nsubject_definitions:\n<Subject 1> is a woman with dark hair in a high ponytail, red nail polish, and a slender, athletic build, lying on her back on a bed with a wooden headboard, looking up with an expression of pleasure and anticipation.\n<Picture 1> is the first reference image showing <Subject 1> in a receptive position as another woman leans over her, their bodies in close contact.\n<Video 1> is the second reference image showing <Subject 1> from a rear three-quarter angle, actively engaging in intercourse while the other woman's head is buried near her neck.\n<Audio 1> is the audio reference for <Subject 1> (S1), capturing her breathy, sensual vocalizations and the soft sounds of skin-on-skin contact.\n\nsummary:\n[reference generation + audio reference] Generate a 10-second video clip depicting two women in an intimate, passionate sexual encounter on a bed, with the first reference image as a keyframe and the second as a motion reference, using the voice timbre and breathing sounds of <Subject 1> (S1) as the primary audio reference.\n\nretention_analysis:\n<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - maintains her physical appearance, hair style, red nail polish, and expressive facial features throughout the sequence.\n<Audio 1>: reference - the voice timbre and breathing patterns of <Subject 1> (S1) are referenced to guide the audio layer, not copied directly.\n\ndetailed_description:\nThe target video uses a hyper-realistic, cinematic adult animation style with soft, warm lighting and shallow depth of field to emphasize skin texture and intimate emotion. The camera begins with a low-angle close-up on <Subject 1>, who is lying supine on a bed with a wooden headboard, her dark hair pulled back, her gaze locked on her partner. Her body is arched slightly, breasts exposed, and her expression is one of rapturous anticipation. The camera slowly pushes in on her face as she breathes deeply, then pans slightly right to follow the movement of her partner’s hand as it gently grips her hip. [Shot 2] At 00:05.000, the shot cuts to a rear three-quarter view as <Subject 1> rolls onto her side, her back now to the camera, as her partner, whose body is partially visible, leans over her. The camera tracks slightly forward with a slow dolly, focusing on the motion of their bodies as they move together. The shot is tight, capturing the fluid motion and skin contact. <Subject 1> (S1) emits a soft, breathy moan as her partner’s head buries into her neck, her hand resting on the partner’s shoulder. The camera then tilts up slightly to capture the angle of their embrace as they continue their intimate movement. The scene ends with a slow zoom out, revealing the full context of their position on the bed.\n\noverall_soundscape:\nThe soundscape is dominated by the soft, rhythmic sounds of skin-on-skin contact, the gentle thud of bodies moving together, and the shallow, breathy moans of <Subject 1> (S1) as she experiences pleasure. There is a subtle, soft rustling of bedding and the occasional soft gasp as the partners shift positions. The room is quiet, with only the intimate sounds of their bodies and breaths filling the space.\n\nnon_diegetic_music: N/A\n```"
       ],
       "color": "#233",
       "bgcolor": "#355"
@@ -495,6 +495,90 @@
       "bgcolor": "#533"
     },
     {
+      "id": 152,
+      "type": "LoadImage",
+      "pos": [
+        -1629.8015801176796,
+        4860.337293833874
+      ],
+      "size": [
+        437.8556590296455,
+        707.0429930952259
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            289
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "REF IMAGE 1",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.1",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "s02_ep06_unexpectedcall_371_v01.jpg",
+        "image"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 114,
+      "type": "LoadImage",
+      "pos": [
+        -2153.7632571498216,
+        4869.231521270249
+      ],
+      "size": [
+        478.665145170673,
+        699.6343689418964
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            288
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "REF IMAGE O",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.1",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "s02_ep06_unexpectedcall_370a_v01.jpg",
+        "image"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
       "id": 105,
       "type": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
       "pos": [
@@ -597,99 +681,15 @@
         1344,
         768,
         10,
-        215873595408985,
+        1065364320112918,
         "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
         "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
         "minimax_h3_video_vae_fp16.safetensors",
         "minimax_h3_audio_vae_fp32.safetensors",
         "Qwen3-VL-8B-Heretic-Stable",
-        "🎬 MiniMax H3 NSFW (10s)",
+        "🎞️ MiniMax H3 NSFW R2VA (10s)",
         false,
         20
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 152,
-      "type": "LoadImage",
-      "pos": [
-        -1632.3268795377514,
-        4868.614664155215
-      ],
-      "size": [
-        437.8556590296455,
-        707.0429930952259
-      ],
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            289
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "title": "REF IMAGE 1",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.30.1",
-        "Node name for S&R": "LoadImage"
-      },
-      "widgets_values": [
-        "s02_ep06_unexpectedcall_371_v01.jpg",
-        "image"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 114,
-      "type": "LoadImage",
-      "pos": [
-        -2155.657231714875,
-        4869.959973026034
-      ],
-      "size": [
-        478.665145170673,
-        699.6343689418964
-      ],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            288
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "title": "REF IMAGE O",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.30.1",
-        "Node name for S&R": "LoadImage"
-      },
-      "widgets_values": [
-        "s02_ep06_unexpectedcall_370a_v01.jpg",
-        "image"
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
@@ -826,8 +826,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 8,
-          "lastNodeId": 152,
-          "lastLinkId": 291,
+          "lastNodeId": 154,
+          "lastLinkId": 300,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -857,7 +857,7 @@
             "name": "prompt",
             "type": "STRING",
             "linkIds": [
-              230
+              299
             ],
             "pos": [
               -2401.76171875,
@@ -967,7 +967,7 @@
             "name": "model_name",
             "type": "COMBO",
             "linkIds": [
-              232
+              297
             ],
             "pos": [
               -2401.76171875,
@@ -979,7 +979,7 @@
             "name": "preset_prompt",
             "type": "COMBO",
             "linkIds": [
-              233
+              298
             ],
             "pos": [
               -2401.76171875,
@@ -991,7 +991,7 @@
             "name": "keep_last_prompt",
             "type": "BOOLEAN",
             "linkIds": [
-              254
+              300
             ],
             "pos": [
               -2401.76171875,
@@ -1016,7 +1016,7 @@
             "type": "IMAGE",
             "linkIds": [
               286,
-              290
+              293
             ],
             "pos": [
               -2401.76171875,
@@ -1029,7 +1029,7 @@
             "type": "IMAGE",
             "linkIds": [
               287,
-              291
+              294
             ],
             "pos": [
               -2401.76171875,
@@ -1080,7 +1080,7 @@
             "name": "output",
             "type": "*",
             "linkIds": [
-              251
+              296
             ],
             "label": "PROMPT",
             "pos": [
@@ -1611,110 +1611,6 @@
             "widgets_values": []
           },
           {
-            "id": 121,
-            "type": "AILab_QwenVL_Advanced",
-            "pos": [
-              -2060.168678977275,
-              3997.2833806818107
-            ],
-            "size": [
-              340,
-              492
-            ],
-            "flags": {},
-            "order": 14,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "image",
-                "name": "image",
-                "shape": 7,
-                "type": "IMAGE",
-                "link": 290
-              },
-              {
-                "localized_name": "image2",
-                "name": "image2",
-                "shape": 7,
-                "type": "IMAGE",
-                "link": 291
-              },
-              {
-                "localized_name": "model_name",
-                "name": "model_name",
-                "type": "COMBO",
-                "widget": {
-                  "name": "model_name"
-                },
-                "link": 232
-              },
-              {
-                "localized_name": "preset_prompt",
-                "name": "preset_prompt",
-                "type": "COMBO",
-                "widget": {
-                  "name": "preset_prompt"
-                },
-                "link": 233
-              },
-              {
-                "localized_name": "custom_prompt",
-                "name": "custom_prompt",
-                "type": "STRING",
-                "widget": {
-                  "name": "custom_prompt"
-                },
-                "link": 230
-              },
-              {
-                "localized_name": "keep_last_prompt",
-                "name": "keep_last_prompt",
-                "type": "BOOLEAN",
-                "widget": {
-                  "name": "keep_last_prompt"
-                },
-                "link": 254
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "RESPONSE",
-                "name": "RESPONSE",
-                "type": "STRING",
-                "links": [
-                  251,
-                  285
-                ]
-              }
-            ],
-            "properties": {
-              "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
-              "ver": "94843a8153cce9336810388f9322ef699e2d99ec",
-              "Node name for S&R": "AILab_QwenVL_Advanced"
-            },
-            "widgets_values": [
-              "Qwen3-VL-8B-Heretic-Stable",
-              "None (FP16)",
-              "auto",
-              false,
-              "auto",
-              "🎥 LTX 2.3 NSFW I2V",
-              "",
-              8192,
-              0.6,
-              0.9,
-              1,
-              1,
-              16,
-              false,
-              4202651268,
-              "randomize",
-              false
-            ],
-            "color": "#28403f",
-            "bgcolor": "#374539"
-          },
-          {
             "id": 17,
             "type": "KSamplerSelect",
             "pos": [
@@ -1814,7 +1710,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 15,
+            "order": 14,
             "mode": 0,
             "inputs": [
               {
@@ -1835,10 +1731,10 @@
               }
             ],
             "properties": {
-              "aux_id": "kijai/ComfyUI-KJNodes",
+              "cnr_id": "comfyui-kjnodes",
               "ver": "c2a47f161bdcecc1e6baf3412f1d116febc26ce3",
               "Node name for S&R": "PathchSageAttentionKJ",
-              "cnr_id": "comfyui-kjnodes"
+              "aux_id": "kijai/ComfyUI-KJNodes"
             },
             "widgets_values": [
               "auto",
@@ -1912,7 +1808,7 @@
             "flags": {
               "collapsed": true
             },
-            "order": 16,
+            "order": 15,
             "mode": 0,
             "inputs": [
               {
@@ -1933,10 +1829,10 @@
               }
             ],
             "properties": {
-              "aux_id": "kijai/ComfyUI-KJNodes",
+              "cnr_id": "comfyui-kjnodes",
               "ver": "a6b867b63a29ca48ddb15c589e17a9f2d8530d57",
               "Node name for S&R": "ModelPatchTorchSettings",
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ue_properties": {
                 "version": "7.0.1",
                 "widget_ue_connectable": {
@@ -2012,7 +1908,7 @@
               591.6348907497004
             ],
             "flags": {},
-            "order": 17,
+            "order": 16,
             "mode": 0,
             "inputs": [
               {
@@ -2088,7 +1984,7 @@
                 "widget": {
                   "name": "prompt"
                 },
-                "link": 285
+                "link": 295
               },
               {
                 "localized_name": "width",
@@ -2148,6 +2044,110 @@
               124,
               "match"
             ]
+          },
+          {
+            "id": 154,
+            "type": "AILab_QwenVL_Advanced",
+            "pos": [
+              -2035.1626305940715,
+              4006.576285859514
+            ],
+            "size": [
+              340,
+              512
+            ],
+            "flags": {},
+            "order": 17,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image",
+                "name": "image",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 293
+              },
+              {
+                "localized_name": "image2",
+                "name": "image2",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 294
+              },
+              {
+                "localized_name": "model_name",
+                "name": "model_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "model_name"
+                },
+                "link": 297
+              },
+              {
+                "localized_name": "preset_prompt",
+                "name": "preset_prompt",
+                "type": "COMBO",
+                "widget": {
+                  "name": "preset_prompt"
+                },
+                "link": 298
+              },
+              {
+                "localized_name": "custom_prompt",
+                "name": "custom_prompt",
+                "type": "STRING",
+                "widget": {
+                  "name": "custom_prompt"
+                },
+                "link": 299
+              },
+              {
+                "localized_name": "keep_last_prompt",
+                "name": "keep_last_prompt",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "keep_last_prompt"
+                },
+                "link": 300
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "RESPONSE",
+                "name": "RESPONSE",
+                "type": "STRING",
+                "links": [
+                  295,
+                  296
+                ]
+              }
+            ],
+            "properties": {
+              "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+              "ver": "94843a8153cce9336810388f9322ef699e2d99ec",
+              "Node name for S&R": "AILab_QwenVL_Advanced"
+            },
+            "widgets_values": [
+              "Qwen3-VL-8B-Heretic-Stable",
+              "None (FP16)",
+              "auto",
+              false,
+              "auto",
+              "🎥 LTX 2.3 NSFW I2V",
+              "",
+              8192,
+              0.6,
+              0.9,
+              1,
+              1,
+              16,
+              false,
+              866131175,
+              "randomize",
+              false
+            ],
+            "color": "#28403f",
+            "bgcolor": "#374539"
           }
         ],
         "groups": [
@@ -2350,30 +2350,6 @@
             "type": "COMBO"
           },
           {
-            "id": 230,
-            "origin_id": -10,
-            "origin_slot": 0,
-            "target_id": 121,
-            "target_slot": 4,
-            "type": "STRING"
-          },
-          {
-            "id": 232,
-            "origin_id": -10,
-            "origin_slot": 9,
-            "target_id": 121,
-            "target_slot": 2,
-            "type": "COMBO"
-          },
-          {
-            "id": 233,
-            "origin_id": -10,
-            "origin_slot": 10,
-            "target_id": 121,
-            "target_slot": 3,
-            "type": "COMBO"
-          },
-          {
             "id": 237,
             "origin_id": 10,
             "origin_slot": 0,
@@ -2404,22 +2380,6 @@
             "target_id": -20,
             "target_slot": 2,
             "type": "AUDIO"
-          },
-          {
-            "id": 251,
-            "origin_id": 121,
-            "origin_slot": 0,
-            "target_id": -20,
-            "target_slot": 3,
-            "type": "STRING"
-          },
-          {
-            "id": 254,
-            "origin_id": -10,
-            "origin_slot": 11,
-            "target_id": 121,
-            "target_slot": 5,
-            "type": "BOOLEAN"
           },
           {
             "id": 273,
@@ -2518,14 +2478,6 @@
             "type": "INT"
           },
           {
-            "id": 285,
-            "origin_id": 121,
-            "origin_slot": 0,
-            "target_id": 149,
-            "target_slot": 9,
-            "type": "STRING"
-          },
-          {
             "id": 286,
             "origin_id": -10,
             "origin_slot": 13,
@@ -2542,20 +2494,68 @@
             "type": "IMAGE"
           },
           {
-            "id": 290,
+            "id": 293,
             "origin_id": -10,
             "origin_slot": 13,
-            "target_id": 121,
+            "target_id": 154,
             "target_slot": 0,
             "type": "IMAGE"
           },
           {
-            "id": 291,
+            "id": 294,
             "origin_id": -10,
             "origin_slot": 14,
-            "target_id": 121,
+            "target_id": 154,
             "target_slot": 1,
             "type": "IMAGE"
+          },
+          {
+            "id": 295,
+            "origin_id": 154,
+            "origin_slot": 0,
+            "target_id": 149,
+            "target_slot": 9,
+            "type": "STRING"
+          },
+          {
+            "id": 296,
+            "origin_id": 154,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 3,
+            "type": "STRING"
+          },
+          {
+            "id": 297,
+            "origin_id": -10,
+            "origin_slot": 9,
+            "target_id": 154,
+            "target_slot": 2,
+            "type": "COMBO"
+          },
+          {
+            "id": 298,
+            "origin_id": -10,
+            "origin_slot": 10,
+            "target_id": 154,
+            "target_slot": 3,
+            "type": "COMBO"
+          },
+          {
+            "id": 299,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 154,
+            "target_slot": 4,
+            "type": "STRING"
+          },
+          {
+            "id": 300,
+            "origin_id": -10,
+            "origin_slot": 11,
+            "target_id": 154,
+            "target_slot": 5,
+            "type": "BOOLEAN"
           }
         ],
         "extra": {}
@@ -2564,16 +2564,16 @@
   },
   "config": {},
   "extra": {
-    "frontendVersion": "1.47.11",
+    "frontendVersion": "1.47.12",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
     "VHS_MetadataImage": true,
     "VHS_KeepIntermediate": true,
     "ds": {
-      "scale": 0.5982843441967866,
+      "scale": 0.796316462125923,
       "offset": [
-        2680.994609975053,
-        -4466.0826878349835
+        2433.1551893102137,
+        -4579.117325298571
       ]
     }
   },
