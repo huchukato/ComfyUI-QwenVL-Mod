@@ -2,8 +2,10 @@
 
 source /venv/main/bin/activate
 COMFYUI_DIR=${WORKSPACE}/ComfyUI
+APT_INSTALL="${APT_INSTALL:-apt-get install -y}"
 
 APT_PACKAGES=(
+    "aria2"
 )
 
 PIP_PACKAGES=(
@@ -124,11 +126,20 @@ function download_minimax_model() {
             echo "📥 Downloading $name (attempt $attempt/$max_retries)..."
         fi
 
-        wget -q -c --tries=3 --timeout=120 "${hf_auth[@]}" "$url" -O "$dest" &
-        local wget_pid=$!
+        local downloader_pid
+        if command -v aria2c >/dev/null 2>&1; then
+            # aria2c: 8 connessioni parallele, split in 8 segmenti, resume
+            aria2c -q -c -x 8 -s 8 --max-connection-per-server=8 --min-split-size=10M \
+                --auto-file-renaming=false --allow-overwrite=true --continue=true \
+                --dir="$base_dir/$subdir" --out="$name" "${hf_auth[@]}" "$url" &
+            downloader_pid=$!
+        else
+            wget -q -c --tries=3 --timeout=120 "${hf_auth[@]}" "$url" -O "$dest" &
+            downloader_pid=$!
+        fi
 
         (
-            while kill -0 $wget_pid 2>/dev/null; do
+            while kill -0 $downloader_pid 2>/dev/null; do
                 if [ -f "$dest" ]; then
                     local s
                     s=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
@@ -142,7 +153,7 @@ function download_minimax_model() {
         ) &
         local monitor_pid=$!
 
-        if wait $wget_pid; then
+        if wait $downloader_pid; then
             kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
             local size
             size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
@@ -154,7 +165,7 @@ function download_minimax_model() {
             fi
         else
             kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
-            echo "⚠️  wget failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
+            echo "⚠️  Download failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
         fi
 
         [ "$attempt" -lt "$max_retries" ] && sleep $((attempt * 10))
