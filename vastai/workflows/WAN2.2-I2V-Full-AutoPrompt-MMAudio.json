@@ -10302,6 +10302,56 @@
             ]
           },
           {
+            "id": 1257,
+            "type": "easy showAnything",
+            "pos": [
+              -814.783339771278,
+              2189.623131168957
+            ],
+            "size": [
+              367.29366928693776,
+              310.7156811858463
+            ],
+            "flags": {},
+            "order": 3,
+            "mode": 0,
+            "inputs": [
+              {
+                "label": " ",
+                "localized_name": "anything",
+                "name": "anything",
+                "shape": 7,
+                "type": "*",
+                "link": 4934
+              }
+            ],
+            "outputs": [
+              {
+                "label": " ",
+                "localized_name": "output",
+                "name": "output",
+                "type": "*",
+                "links": [
+                  4881
+                ]
+              }
+            ],
+            "title": "Final prompt preview",
+            "properties": {
+              "aux_id": "yolain/ComfyUI-Easy-Use",
+              "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
+              "Node name for S&R": "easy showAnything",
+              "cnr_id": "comfyui-easy-use",
+              "widget_ue_connectable": {}
+            },
+            "widgets_values": [
+              "(At 0 seconds: A cinematic, photorealistic close-up captures two women locked in an intimate, slow-motion kiss under the warm, golden glow of a setting sun. The woman on the left, with voluminous, platinum blonde curls, wears a black halter top and has her eyes gently closed, her head tilted slightly as her lips meet the other woman’s. Her left hand rests tenderly on the shoulder of her partner, nails painted a bold red. The woman on the right, with long, straight honey-blonde hair cascading down her back, wears a fitted, pale pink halter dress and large, geometric silver hoop earrings. Her eyes are half-lidded with desire, her lips parted as she leans in, her right hand gripping the other woman’s waist. Both have flawless, sun-kissed skin and are rendered with hyper-detailed 3D textures and natural lighting. The background is softly blurred, revealing the silhouettes of other people in a lively outdoor social setting — possibly a rooftop bar or beachside lounge — with palm fronds visible against the hazy, amber sky. The camera is positioned at a low, intimate angle, emphasizing the connection between the two figures. At 1 seconds: The kiss deepens slightly as the woman on the right subtly shifts her weight forward, pressing her body closer. Her silver hoop earrings catch the fading sunlight, creating a soft glint. The woman on the left’s hand tightens its grip on her partner’s shoulder, fingers slightly curled. The golden light casts long, warm shadows across their skin, enhancing the contours of their necks and shoulders. At 2 seconds: The camera pans slightly to the right, following the subtle movement of the woman on the right’s head as she tilts it, bringing their foreheads almost into contact. Her long hair flows gently, catching the last rays of the sun. The background figures remain out of focus, their forms blurred into warm silhouettes against the vibrant orange sky. At 3 seconds: The kiss becomes more passionate as both women open their mouths slightly, tongues brushing gently. The woman on the left’s eyes flutter open briefly, revealing long, dark lashes, before closing again. The camera zooms in slightly, focusing on the delicate interplay of their lips and the subtle tension in their necks. At 4 seconds: The woman on the right lifts her head slightly, her lips pulling away just enough to whisper against the other woman’s cheek, her breath visible in the warm air. The woman on the left responds by pressing her lips against her partner’s neck, her hand sliding down to cup the back of her head. The golden light now casts a soft, romantic haze over the entire scene. At 5 seconds: The kiss ends with a final, lingering touch of lips, their eyes now open and gazing into each other’s with deep affection. The camera pulls back slightly, revealing the full intimacy of the moment — the woman on the right’s hand resting possessively on the other’s waist, their bodies pressed together. The background remains a soft, glowing blur of people and palm trees, emphasizing the private, romantic moment between the two women.)"
+            ],
+            "color": "#232",
+            "bgcolor": "#353",
+            "shape": 2
+          },
+          {
             "id": 1612,
             "type": "AILab_QwenVL_Advanced",
             "pos": [
@@ -10396,63 +10446,13 @@
               1,
               1,
               16,
-              true,
-              3186206362,
+              false,
+              126151684,
               "randomize",
               false
             ],
             "color": "#28403f",
             "bgcolor": "#374539"
-          },
-          {
-            "id": 1257,
-            "type": "easy showAnything",
-            "pos": [
-              -814.783339771278,
-              2189.623131168957
-            ],
-            "size": [
-              367.29366928693776,
-              310.7156811858463
-            ],
-            "flags": {},
-            "order": 3,
-            "mode": 0,
-            "inputs": [
-              {
-                "label": " ",
-                "localized_name": "anything",
-                "name": "anything",
-                "shape": 7,
-                "type": "*",
-                "link": 4934
-              }
-            ],
-            "outputs": [
-              {
-                "label": " ",
-                "localized_name": "output",
-                "name": "output",
-                "type": "*",
-                "links": [
-                  4881
-                ]
-              }
-            ],
-            "title": "Final prompt preview",
-            "properties": {
-              "aux_id": "yolain/ComfyUI-Easy-Use",
-              "ver": "5c8cdb58c798a404e50636c6f3e179b084a23fab",
-              "Node name for S&R": "easy showAnything",
-              "cnr_id": "comfyui-easy-use",
-              "widget_ue_connectable": {}
-            },
-            "widgets_values": [
-              "(At 0 seconds: Two anime-style women in intimate embrace, one with brown curly hair and the other with blue spiky hair, both eyes closed in sensual pleasure under warm candlelight; soft natural light filters through a large window behind them, casting gentle shadows on wooden beams and floor. The woman with blue hair is partially dressed in a light blue button-up shirt tied at the waist, her body arched slightly as she leans into the other woman's touch. A single lit candle glows softly on a dark table to the right, adding an intimate atmosphere.)  \n(At 1 seconds: The brown-haired woman’s hand gently strokes the blue-haired woman’s hip while her fingers trace along the curve of her thigh; their skin glistens with subtle sheen under soft lighting, emphasizing smooth textures and realistic anatomical detail rendered in anime art style. Background remains blurred to focus on their intertwined forms, enhancing emotional intimacy.)  \n(At 2 seconds: The blue-haired woman’s head tilts back slightly as she exhales softly, her lips parted; a single drop of liquid falls from her mouth onto the floor below, catching light and reflecting warmth like a mirage. Candle flame flickers in slow motion, adding cinematic rhythm to the moment.)  \n(At 3 seconds: The brown-haired woman leans forward slowly, her hand moving upward toward the blue-haired woman’s shoulder; their bodies remain close, almost fused together, suggesting deep connection without direct contact. Camera remains static but subtly zooms inward, enhancing emotional intensity through framing and focus.)  \n(At 4 seconds: Both women exhale simultaneously as they share a moment of quiet release; the candle flame dims slightly before reigniting with soft glow, mirroring their shared vulnerability. The composition shifts to center on their intertwined limbs and expressions, emphasizing sensuality within serene lighting conditions.)  \n(At 5 seconds: A final frame captures them still in embrace, eyes closed, lips parted—no movement beyond subtle muscle tension suggesting lingering passion; background remains softly blurred with warm tones fading into shadowed corners. The candle’s flame flickers one last time before extinguishing gently, leaving a quiet afterglow.)"
-            ],
-            "color": "#232",
-            "bgcolor": "#353",
-            "shape": 2
           }
         ],
         "groups": [
@@ -11690,7 +11690,7 @@
               "widget_ue_connectable": {}
             },
             "widgets_values": [
-              "(At 0 seconds: Two anime-style women, one with brown curly hair and the other with vibrant blue curls, are intimately embracing in a warmly lit room; soft natural light streams through a window behind them, casting gentle shadows across their skin as the candle on the table flickers faintly.) (At 1 seconds: The woman with blue hair leans her head gently against the other’s shoulder, eyes closed, while the brown-haired woman wraps her arms around her in a tender embrace; both exhibit subtle anime-style motion blur indicating slow, intimate movement.) (At 2 seconds: Their expressions remain serene and peaceful as they continue to hold each other closely, with the blue-haired woman’s hand resting lightly on the wooden table beside them, emphasizing the tactile texture of the surface beneath their fingers.) (At 3 seconds: The camera slowly zooms in on their faces, capturing the soft glow of the candlelight reflecting off their skin and highlighting the delicate contours of their features; the background remains softly blurred to maintain focus on their emotional connection.) (At 4 seconds: As the scene progresses, the blue-haired woman’s eyes flutter open slightly, gazing upward with a hint of affectionate awareness, while the other woman holds her tighter, reinforcing the intimate moment within the stylized anime aesthetic.) (At 5 seconds: The final shot lingers on their intertwined forms, bathed in warm golden light from the window and candle, as the camera gently pans to reveal more of the room’s wooden architecture, emphasizing the romantic atmosphere without distracting elements.)"
+              "(At 0 seconds: A tender, intimate kiss unfolds between two women under the warm, golden glow of ambient evening lighting. The woman on the left, with voluminous, wavy platinum blonde hair cascading over her shoulder, leans in with closed eyes, her lips meeting the other woman’s in a soft, passionate embrace. She wears a sleek black sleeveless top, her skin glowing with the soft, diffused light. The woman on the right, with long, straight platinum blonde hair flowing down her back, reciprocates the kiss with equal intensity, her eyes gently closed. She is adorned with large, geometric silver earrings and wears a form-fitting, high-neck white dress that accentuates her elegant silhouette. Her hand rests gently on the other woman’s shoulder, anchoring their connection. The background is softly blurred, revealing hints of an outdoor setting with warm-toned architectural elements and out-of-focus greenery, suggesting a luxurious patio or garden at dusk. The lighting casts a dreamy, romantic purple and gold hue over the scene, enhancing the emotional intimacy. The camera holds a tight, intimate close-up, capturing the subtle textures of their skin and hair, the delicate movement of their lips, and the quiet intensity of the moment. The scene is rendered in photorealistic 3D animation with hyper-detailed textures, lifelike skin, and naturalistic motion, creating an immersive, cinematic experience. The atmosphere is serene, sensual, and deeply romantic, emphasizing emotional connection over physicality.)\n\n(At 1 seconds: The kiss deepens slightly as the woman on the left tilts her head, her curly hair brushing against the other woman’s cheek. Her hand moves from her shoulder to gently cradle the back of the other woman’s neck, pulling her closer. The woman on the right responds by leaning into the embrace, her lips parting slightly to allow for a more intimate, lingering kiss. The golden ambient light from the background continues to bathe them in a warm, romantic glow, casting soft shadows that accentuate the contours of their faces and necks. The camera subtly shifts to a slightly lower angle, emphasizing the closeness and vulnerability of the moment. The background remains softly blurred, with the warm tones of the architecture and the hint of greenery creating a dreamy, luxurious atmosphere. The scene remains photorealistic 3D animation, with smooth, natural motion and detailed textures that enhance the realism. The emotional intensity of the kiss is palpable, with the focus on the subtle expressions and the gentle, synchronized movement of their lips and bodies.)\n\n(At 2 seconds: The kiss becomes more passionate as the woman on the left presses her body closer, her hand tightening its grip on the other woman’s neck. Her eyes remain closed, her expression one of deep affection and surrender. The woman on the right responds by tilting her head back slightly, her lips moving against the other woman’s with increasing intensity. Her long hair flows over her shoulder, catching the golden light and adding a soft, ethereal glow to the scene. The camera remains steady, maintaining the close-up shot that captures every subtle movement and expression. The background remains softly blurred, with the warm, golden tones of the evening lighting creating a romantic, dreamy atmosphere. The scene is rendered in photorealistic 3D animation with hyper-detailed textures, lifelike skin, and naturalistic motion, creating an immersive, cinematic experience. The emotional connection between the two women is palpable, with the focus on the intimacy and passion of the kiss.)\n\n(At 3 seconds: The kiss reaches its peak as the woman on the left gently bites the other woman’s lower lip, eliciting a soft, sensual response. Her hand moves from the neck to the back of the other woman’s head, holding her firmly in place. The woman on the right opens her mouth slightly, allowing for a deeper, more passionate kiss. Her eyes remain closed, her expression one of pure pleasure and surrender. The golden ambient light continues to bathe them in a warm, romantic glow, casting soft shadows that accentuate the contours of their faces and necks. The camera remains steady, maintaining the close-up shot that captures every subtle movement and expression. The background remains softly blurred, with the warm tones of the architecture and the hint of greenery creating a dreamy, luxurious atmosphere. The scene is rendered in photorealistic 3D animation with hyper-detailed textures, lifelike skin, and naturalistic motion, creating an immersive, cinematic experience. The emotional intensity of the kiss is palpable, with the focus on the subtle expressions and the gentle, synchronized movement of their lips and bodies.)\n\n(At 4 seconds: The kiss begins to soften as the woman on the left slowly pulls back, her lips lingering against the other woman’s. Her eyes remain closed, her expression one of contentment and affection. The woman on the right responds by tilting her head back slightly, her lips parting slightly as she breathes in the lingering scent of the other woman. Her hand remains gently on the other woman’s shoulder, holding her close. The golden ambient light continues to bathe them in a warm, romantic glow, casting soft shadows that accentuate the contours of their faces and necks. The camera remains steady, maintaining the close-up shot that captures every subtle movement and expression. The background remains softly blurred, with the warm tones of the architecture and the hint of greenery creating a dreamy, luxurious atmosphere. The scene is rendered in photorealistic 3D animation with hyper-detailed textures, lifelike skin, and naturalistic motion, creating an immersive, cinematic experience. The emotional connection between the two women is palpable, with the focus on the intimacy and tenderness of the moment.)\n\n(At 5 seconds: The kiss ends as the woman on the left gently pulls away, her lips brushing against the other woman’s cheek. Her eyes remain closed, her expression one of deep affection and contentment. The woman on the right responds by tilting her head back slightly, her lips parting slightly as she breathes in the lingering scent of the other woman. Her hand remains gently on the other woman’s shoulder, holding her close. The golden ambient light continues to bathe them in a warm, romantic glow, casting soft shadows that accentuate the contours of their faces and necks. The camera remains steady, maintaining the close-up shot that captures every subtle movement and expression. The background remains softly blurred, with the warm tones of the architecture and the hint of greenery creating a dreamy, luxurious atmosphere. The scene is rendered in photorealistic 3D animation with hyper-detailed textures, lifelike skin, and naturalistic motion, creating an immersive, cinematic experience. The emotional connection between the two women is palpable, with the focus on the intimacy and tenderness of the moment.)"
             ],
             "color": "#232",
             "bgcolor": "#353",
@@ -12122,8 +12122,8 @@
               1,
               1,
               16,
-              true,
-              3186206362,
+              false,
+              2329648763,
               "randomize",
               false
             ],
@@ -13570,109 +13570,6 @@
             ]
           },
           {
-            "id": 1614,
-            "type": "AILab_QwenVL_Advanced",
-            "pos": [
-              71.38469527353683,
-              1316.1785009633563
-            ],
-            "size": [
-              340,
-              492
-            ],
-            "flags": {},
-            "order": 13,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "image",
-                "name": "image",
-                "shape": 7,
-                "type": "IMAGE",
-                "link": null
-              },
-              {
-                "localized_name": "video",
-                "name": "video",
-                "shape": 7,
-                "type": "IMAGE",
-                "link": 5506
-              },
-              {
-                "localized_name": "model_name",
-                "name": "model_name",
-                "type": "COMBO",
-                "widget": {
-                  "name": "model_name"
-                },
-                "link": 5507
-              },
-              {
-                "localized_name": "preset_prompt",
-                "name": "preset_prompt",
-                "type": "COMBO",
-                "widget": {
-                  "name": "preset_prompt"
-                },
-                "link": 5508
-              },
-              {
-                "localized_name": "custom_prompt",
-                "name": "custom_prompt",
-                "type": "STRING",
-                "widget": {
-                  "name": "custom_prompt"
-                },
-                "link": 5509
-              },
-              {
-                "localized_name": "keep_last_prompt",
-                "name": "keep_last_prompt",
-                "type": "BOOLEAN",
-                "widget": {
-                  "name": "keep_last_prompt"
-                },
-                "link": 5510
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "RESPONSE",
-                "name": "RESPONSE",
-                "type": "STRING",
-                "links": [
-                  5511
-                ]
-              }
-            ],
-            "properties": {
-              "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
-              "ver": "a567f577eec80ce73f955a3b12f5f5229344f228",
-              "Node name for S&R": "AILab_QwenVL_Advanced"
-            },
-            "widgets_values": [
-              "Qwen3-VL-4B-Instruct-c_abliterated-v2",
-              "None (FP16)",
-              "auto",
-              false,
-              "auto",
-              "🖼️ Detailed Description",
-              "",
-              8192,
-              0.6,
-              0.9,
-              1,
-              1,
-              16,
-              true,
-              3186206362,
-              "randomize",
-              false
-            ],
-            "color": "#28403f",
-            "bgcolor": "#374539"
-          },
-          {
             "id": 1584,
             "type": "PrimitiveStringMultiline",
             "pos": [
@@ -13788,6 +13685,109 @@
               "",
               "false"
             ]
+          },
+          {
+            "id": 1614,
+            "type": "AILab_QwenVL_Advanced",
+            "pos": [
+              71.38469527353683,
+              1316.1785009633563
+            ],
+            "size": [
+              340,
+              492
+            ],
+            "flags": {},
+            "order": 13,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "image",
+                "name": "image",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "localized_name": "video",
+                "name": "video",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": 5506
+              },
+              {
+                "localized_name": "model_name",
+                "name": "model_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "model_name"
+                },
+                "link": 5507
+              },
+              {
+                "localized_name": "preset_prompt",
+                "name": "preset_prompt",
+                "type": "COMBO",
+                "widget": {
+                  "name": "preset_prompt"
+                },
+                "link": 5508
+              },
+              {
+                "localized_name": "custom_prompt",
+                "name": "custom_prompt",
+                "type": "STRING",
+                "widget": {
+                  "name": "custom_prompt"
+                },
+                "link": 5509
+              },
+              {
+                "localized_name": "keep_last_prompt",
+                "name": "keep_last_prompt",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "keep_last_prompt"
+                },
+                "link": 5510
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "RESPONSE",
+                "name": "RESPONSE",
+                "type": "STRING",
+                "links": [
+                  5511
+                ]
+              }
+            ],
+            "properties": {
+              "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+              "ver": "a567f577eec80ce73f955a3b12f5f5229344f228",
+              "Node name for S&R": "AILab_QwenVL_Advanced"
+            },
+            "widgets_values": [
+              "Qwen3-VL-4B-Instruct-c_abliterated-v2",
+              "None (FP16)",
+              "auto",
+              false,
+              "auto",
+              "🖼️ Detailed Description",
+              "",
+              8192,
+              0.6,
+              0.9,
+              1,
+              1,
+              16,
+              false,
+              2167792922,
+              "randomize",
+              false
+            ],
+            "color": "#28403f",
+            "bgcolor": "#374539"
           }
         ],
         "groups": [],
@@ -15440,8 +15440,8 @@
               1,
               1,
               16,
-              true,
-              3186206362,
+              false,
+              3020647187,
               "randomize",
               false
             ],
@@ -15973,7 +15973,7 @@
               20,
               50,
               4.5,
-              898797660904234,
+              942105996026731,
               "randomize",
               "",
               "man, boy, male, man's voice, boy's voice, male's voice, ",
@@ -16152,10 +16152,10 @@
     "ue_links": [],
     "links_added_by_ue": [],
     "ds": {
-      "scale": 0.4894713600421888,
+      "scale": 0.9538412092744706,
       "offset": [
-        2446.1469921749085,
-        1532.6096068757247
+        821.1988584295156,
+        -409.12139524650877
       ]
     }
   },
