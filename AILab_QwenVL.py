@@ -901,9 +901,14 @@ class QwenVLBase:
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
         # Detect architecture from config.json instead of relying on model name
         hf_model_type = read_hf_model_type(model_path)
-        self.is_qwen35 = hf_model_type in ("qwen3_5", "qwen3_5_moe", "qwen3_5_vl") if hf_model_type else "qwen3.5-" in model_name.lower()
+        name_lower = model_name.lower()
+        self.is_qwen35 = (
+            hf_model_type in ("qwen3_5", "qwen3_5_moe", "qwen3_5_vl", "qwen35", "qwen35moe", "qwen35_vl")
+            if hf_model_type
+            else ("qwen3.5" in name_lower or "qwen35" in name_lower)
+        )
         if self.is_qwen35:
-            print(f"[QwenVL] Qwen3.5 detected (model_type={hf_model_type}): Will disable thinking in chat template.")
+            print(f"[QwenVL] Qwen3.5 detected (model_type={hf_model_type}): Will disable thinking via enable_thinking + /no_think.")
         self.current_signature = signature
 
     @staticmethod
@@ -955,7 +960,7 @@ class QwenVLBase:
                 # instead of treating them as a single video sequence.
                 for frame in frames:
                     conversation[0]["content"].append({"type": "image", "image": frame})
-        conversation[0]["content"].append({"type": "text", "text": prompt_text})
+        conversation[0]["content"].append({"type": "text", "text": ("/no_think\n" if getattr(self, "is_qwen35", False) else "") + prompt_text})
         
         # --- Qwen3.5 Heretic Logic: Template ---
         is_qwen35 = getattr(self, "is_qwen35", False)
