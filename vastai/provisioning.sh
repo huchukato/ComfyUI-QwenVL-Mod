@@ -4,13 +4,10 @@ source /venv/main/bin/activate
 COMFYUI_DIR=${WORKSPACE}/ComfyUI
 
 APT_PACKAGES=(
-    "nodejs"
-    "npm"
 )
 
 PIP_PACKAGES=(
     "--upgrade --force-reinstall --no-cache-dir https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.45-cu131-linux-20260801/llama_cpp_python-0.3.45+cu131-cp312-cp312-linux_x86_64.whl"
-    "comfyui-manager"
     "sageattention"
     "tensorrt_cu13==10.15.1.29"
     "tensorrt_cu13_bindings==10.15.1.29"
@@ -99,9 +96,6 @@ function provisioning_start() {
     
     echo "🔧 Installing custom nodes..."
     provisioning_get_nodes
-    
-    echo "🎴 Copying wildcards to Easy-Use..."
-    provisioning_copy_wildcards
     
     echo "📦 Installing PIP packages..."
     provisioning_get_pip_packages
@@ -203,57 +197,8 @@ function provisioning_get_nodes() {
             fi
         fi
         
-        # Special handling for ComfyUI-Easy-Use-Frontend
-        if [[ "$dir" == "ComfyUI-Easy-Use" ]]; then
-            echo "  → Installing ComfyUI-Easy-Use-Frontend..."
-            cd "${path}"
-            if [[ ! -d "ComfyUI-Easy-Use-Frontend" ]]; then
-                git clone https://github.com/yolain/ComfyUI-Easy-Use-Frontend.git
-            fi
-            cd ComfyUI-Easy-Use-Frontend
-            if [[ ! -d "node_modules" ]]; then
-                echo "    → Installing npm dependencies..."
-                npm install
-            fi
-            echo "    → Building frontend..."
-            npm run build:dev
-            # Create config.yaml with WEB_VERSION: dev
-            if [[ ! -f "${path}/config.yaml" ]]; then
-                echo "WEB_VERSION: dev" > "${path}/config.yaml"
-            fi
-            cd "${COMFYUI_DIR}"
-        fi
     done
     echo "All nodes processed successfully!"
-}
-
-function provisioning_copy_wildcards() {
-    echo "Copying wildcards from comfy-tagcomplete to Easy-Use..."
-    
-    local source_dir="${COMFYUI_DIR}/custom_nodes/comfy-tagcomplete/wildcards/mbe"
-    local target_dir="${COMFYUI_DIR}/custom_nodes/ComfyUI-Easy-Use/wildcards"
-    
-    # Create target directory if it doesn't exist
-    mkdir -p "$target_dir"
-    
-    # Copy the entire mbe directory
-    if [[ -d "$source_dir" ]]; then
-        echo "  → Copying mbe wildcards..."
-        cp -r "$source_dir" "$target_dir/"
-        echo "  ✓ Wildcards copied successfully to $target_dir/mbe"
-    else
-        echo "  ⚠ Source directory not found: $source_dir"
-        echo "  → Trying alternative path..."
-        # Try alternative path if comfy-tagcomplete is in workspace
-        local alt_source_dir="/workspace/comfy-tagcomplete/wildcards/mbe"
-        if [[ -d "$alt_source_dir" ]]; then
-            echo "  → Found at alternative path, copying..."
-            cp -r "$alt_source_dir" "$target_dir/"
-            echo "  ✓ Wildcards copied successfully from alternative path"
-        else
-            echo "  ⚠ Source directory not found at: $alt_source_dir"
-        fi
-    fi
 }
 
 function provisioning_get_files() {
