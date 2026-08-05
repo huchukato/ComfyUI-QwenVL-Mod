@@ -6,13 +6,56 @@
 
 ## 🗂️ Choose the right workflow
 
-| Workflow | Mode | Required inputs |
-|---|---|---|
-| `MiniMaxH3-T2VA-Qwen3VL.json` | 📝 **T2VA** | text only |
-| `MiniMaxH3-I2VA-Qwen3VL.json` | 🖼️ **I2VA** | text + first-frame image |
-| `MiniMaxH3-R2VA-Qwen3VL.json` | 🎞️ **R2VA / Reference** | text + reference image/video/audio for style, character, motion, or camera |
+| Workflow | Mode | Required inputs | Preset icon |
+|---|---|---|---|
+| `MiniMaxH3-T2VA-Qwen3VL.json` | 📝 **T2VA** | text only | 🎬 |
+| `MiniMaxH3-I2VA-Qwen3VL.json` | 🖼️ **I2VA** | text + first-frame image (`image`) | 🎬 |
+| `MiniMaxH3-FL2VA-Qwen3VL.json` | 🔄 **FL2VA** | text + first-frame (`image`) + last-frame (`image2`) | 🔄 |
+| `MiniMaxH3-R2VA-Qwen3VL.json` | 🎞️ **R2VA** | text + reference images (`image` + `image2`) | 🎞️ |
 
-> 🧩 **FL2VA** (first frame + last frame) and **L2VA** (last frame only) are handled automatically by the preset when you load more than one image or clearly indicate the last frame.
+> 🧩 **L2VA** (last frame only) is handled by the I2VA preset when you connect only the last frame.
+
+---
+
+## 🎯 Choose the right preset
+
+| Icon | Preset | Mode | Format |
+|---|---|---|---|
+| 🎬 | MiniMax H3 NSFW (5s/10s/15s) | T2VA / I2VA | 3 fields: `integrated_multimodal_description` + `overall_soundscape` + `non_diegetic_music` |
+| 🔄 | MiniMax H3 NSFW FL2VA (5s/10s/15s) | FL2VA | 3 fields, transition-focused (describes the path between frames, not the scene) |
+| 🎞️ | MiniMax H3 NSFW R2VA (5s/10s/15s) | R2VA | 6 fields: `subject_definitions` + `summary` + `retention_analysis` + `detailed_description` + `overall_soundscape` + `non_diegetic_music` |
+
+> ⚠️ **Use the correct preset for each mode!** R2VA and FL2VA have dedicated presets that follow the official MiniMax H3 prompt writing guides.
+
+---
+
+## 🖼️ How to connect images
+
+### T2VA (text only)
+- No images needed
+- Uses `AILab_QwenVL_PromptEnhancer` (text-only node)
+
+### I2VA (first-frame)
+| Input | What to connect |
+|---|---|
+| `image` | First-frame image |
+| `image2` | (empty) |
+
+### FL2VA (first + last frame)
+| Input | What to connect | `frame_count` |
+|---|---|---|
+| `image` | First-frame image | — |
+| `image2` | Last-frame image | 1 |
+
+> 💡 Qwen3-VL sees **both** images and describes the transition between them.
+
+### R2VA (reference)
+| Input | What to connect | `frame_count` |
+|---|---|---|
+| `image` | Primary reference (character, style, scene) | — |
+| `image2` | Additional references (batch, up to 9) | 1–9 |
+
+> 💡 Qwen3-VL sees **all** reference images. Reference them by order in your prompt: `<Picture 1>`, `<Picture 2>`, etc.
 
 ---
 
@@ -38,6 +81,10 @@ Describe the scene naturally. Be clear about the concepts below — the model ha
 - What happens and in what order
 - Speed: slow 🐢 · rhythmic 🎵 · accelerating 🚀 · pause ⏸️
 - Interaction between characters: contact, gestures, movements
+
+> 🔄 **FL2VA**: Describe the **transition** between frames — how subjects move, poses change, composition evolves. Do NOT re-describe the scene (the images already fix it).
+
+> 🎞️ **R2VA**: Reference your inputs by tag: `<Picture 1>`, `<Picture 2>`, `<Video 1>`, `<Audio 1>`. State what each reference controls (identity, style, motion, voice).
 
 ### 📷 4. Camera
 
@@ -100,9 +147,9 @@ Pick the matching QwenVL-Mod preset:
 
 | Preset | Duration |
 |---|---|
-| 🎬 MiniMax H3 NSFW (5s) | 5 seconds |
-| 🎬 MiniMax H3 NSFW (10s) | 10 seconds |
-| 🎬 MiniMax H3 NSFW (15s) | 15 seconds |
+| 🎬 / 🔄 / 🎞️ MiniMax H3 NSFW (5s) | 5 seconds |
+| 🎬 / 🔄 / 🎞️ MiniMax H3 NSFW (10s) | 10 seconds |
+| 🎬 / 🔄 / 🎞️ MiniMax H3 NSFW (15s) | 15 seconds |
 
 > MiniMax H3 supports clips from **4 to 15 seconds**.
 
@@ -118,14 +165,26 @@ MiniMax H3 is trained with the **short edge at 768 px** and the long edge **capp
 | `896x1152` | 📱 portrait |
 | `960x1280` | 📱 portrait |
 | `1024x1024` | ⬛ square |
+| `1344x768` | 🖥️ landscape |
+| `1152x896` | 🖥️ landscape |
+| `1280x960` | 🖥️ landscape |
 
-> ⚠️ **Avoid generating directly at 1080p.** Generate at native resolution, then use the bundled TensorRT upscale/interpolation nodes.
+> ⚠️ **Match the aspect ratio to your input image!** If your image is portrait (e.g. 832×1216), select a portrait resolution (e.g. 768×1344). Forcing 16:9 on a portrait image will squash it.
+>
+> ⚠️ **Avoid generating directly at 1080p.** Generate at native resolution, then use the bundled TensorRT upscale/interpolation nodes (I2VA + FL2VA workflows).
 
 ---
 
-## 📝 Example prompt
+## 📝 Example prompts
 
+### T2VA / I2VA
 > *"A photorealistic cinematic scene in a bedroom with warm lamplight. A young dark-haired woman lies on the bed wearing only white sheets. A man approaches slowly; the camera does a gentle push in from wide shot to close-up. He kisses her neck, she closes her eyes and sighs. Audio: heavy breathing, whispers, sheets rustling. No background music. Intimate, realistic style, warm light."*
+
+### FL2VA
+> *"The woman is lying on the bed in the first frame and sitting up in the last frame. Describe the transition: she slowly rises, the sheets slide off, the camera tilts up with her movement. Audio: sheets rustling, soft gasp as she sits up. No music."*
+
+### R2VA
+> *"<Picture 1> is the character reference — a young woman with red hair. <Picture 2> is the environment — a luxury bathroom. Generate a scene where the woman from <Picture 1> is in the environment from <Picture 2>, relaxing in the tub. Audio: water splashing, soft sighs. No music."*
 
 ---
 
@@ -135,3 +194,5 @@ MiniMax H3 is trained with the **short edge at 768 px** and the long edge **capp
 - ❌ Do not add lighting or effects inconsistent with the described environment
 - ❌ Do not request durations longer than 15 seconds
 - ❌ Do not request 1080p native generation — use the recommended resolutions and upscale after
+- ❌ Do not use a 🎬 base preset for R2VA or FL2VA — use the dedicated 🎞️ / 🔄 presets
+- ❌ Do not force 16:9 resolution on a portrait image — match the aspect ratio
