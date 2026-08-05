@@ -1,7 +1,7 @@
 {
   "name": "ComfyUI - Wan 2.2 I2V/T2V - 5090 Blackwell",
-  "description": "Complete AI video generation environment with ComfyUI, QwenVL-Mod enhanced vision-language capabilities, and WAN 2.2 workflows. Features professional video generation, multilingual support, visual style detection, and pre-installed custom nodes.",
-  "version": "1.0.0",
+  "description": "Complete AI video generation environment with ComfyUI, QwenVL-Mod enhanced vision-language capabilities, and WAN 2.2 workflows. Features professional video generation, multilingual support, visual style detection, and pre-installed custom nodes. Pre-baked Docker image with all nodes, models, and workflows ready to go.",
+  "version": "2.0.0",
   "author": "huchukato",
   "referral_id": "188688",
   "creator_id": "188688",
@@ -20,7 +20,7 @@
   "features": {
     "gpu_optimized": true,
     "pre_installed_nodes": 30,
-    "pre_installed_workflows": 9,
+    "pre_installed_workflows": 13,
     "pre_installed_models": true,
     "multilingual_support": true,
     "style_detection": true,
@@ -30,12 +30,17 @@
   "requirements": {
     "min_vram": "24GB",
     "recommended_gpu": "RTX 5090",
-    "cuda_version": "13.0+"
+    "cuda_version": "13.2+"
+  },
+  "image": {
+    "docker_image": "huchukato/comfyui-qwenvl-vastai:cu132",
+    "image_type": "docker"
   },
   "provisioning": {
     "script_url": "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/provisioning.sh",
     "supports_tokens": ["HF_TOKEN", "CIVITAI_TOKEN"],
-    "auto_download": true
+    "auto_download": true,
+    "note": "Provisioning script kept as fallback. With the pre-baked Docker image, most nodes/models/workflows are already in the image and the script becomes mostly a no-op or handles only incremental updates."
   },
   "links": {
     "repository": "https://github.com/huchukato/ComfyUI-QwenVL-Mod",
