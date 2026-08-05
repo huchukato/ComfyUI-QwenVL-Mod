@@ -1,95 +1,116 @@
-# MiniMax H3 - Hint per l'utente
+# MiniMax H3 - User Hints
 
-Puoi scrivere il prompt in italiano (o in qualsiasi lingua). Qwen3-VL lo analizza, lo traduce e lo converte nel formato ufficiale MiniMax H3.
+You can write your prompt in any language. Qwen3-VL analyzes it, translates it, and converts it into the official MiniMax H3 prompt format.
 
-## Scegli il workflow corretto
+## Choose the right workflow
 
-| Workflow | Modalità | Input richiesti |
+| Workflow | Mode | Required inputs |
 |---|---|---|
-| `MiniMaxH3-T2VA-Qwen3VL.json` | **T2VA** | solo testo |
-| `MiniMaxH3-I2VA-Qwen3VL.json` | **I2VA** | testo + immagine primo frame |
-| `MiniMaxH3-R2VA-Qwen3VL.json` | **R2VA / Reference** | testo + immagine/video/audio di riferimento per stile, personaggio, movimento o camera |
+| `MiniMaxH3-T2VA-Qwen3VL.json` | **T2VA** | text only |
+| `MiniMaxH3-I2VA-Qwen3VL.json` | **I2VA** | text + first-frame image |
+| `MiniMaxH3-R2VA-Qwen3VL.json` | **R2VA / Reference** | text + reference image/video/audio for style, character, motion, or camera |
 
-> **FL2VA** (primo frame + ultimo frame) e **L2VA** (solo ultimo frame) sono gestiti automaticamente dal preset se carichi più di un'immagine o indichi chiaramente l'ultimo frame.
+> **FL2VA** (first frame + last frame) and **L2VA** (last frame only) are handled automatically by the preset when you load more than one image or clearly indicate the last frame.
 
-## Cosa scrivere nel prompt
+## What to write in the prompt
 
-Descrivi la scena in modo naturale. Non serve usare inglese: basta che siano chiari i concetti.
+Describe the scene naturally. Be clear about the concepts below; the model handles the rest.
 
-### 1. Stile visivo (obbligatorio, mettilo all'inizio)
+### 1. Visual style (required, put it first)
 
 - `photorealistic`, `cinematic`, `live-action`
 - `anime`, `cartoon`, `3D CG`, `claymation`
 - `vintage film`, `watercolor`, `fantasy`, `artistic portrait`
 
-Esempio: *"Una scena photorealistic cinematografica in una camera da letto con luce calda..."*
+Example: *"A photorealistic cinematic scene in a bedroom with warm light..."*
 
-### 2. Soggetti
+### 2. Subjects
 
-- Numero, genere, età apparente, aspetto fisico, capelli, trucco, abiti (o nudità)
-- Posizione iniziale, sguardo, espressione
+- Number, gender, apparent age, physical appearance, hair, makeup, clothing (or nudity)
+- Initial position, gaze, expression
 
-### 3. Azione / movimento
+### 3. Action / motion
 
-- Cosa succede e in che ordine
-- Velocità: lento, ritmico, accelerazione, pausa
-- Interazione tra personaggi: contatto, gesti, spostamenti
+- What happens and in what order
+- Speed: slow, rhythmic, accelerating, pause
+- Interaction between characters: contact, gestures, movements
 
 ### 4. Camera
 
-- Tipo di inquadratura: `close-up`, `medium shot`, `wide shot`, `POV`
-- Movimento: `static shot`, `push in`, `pull out`, `pan left/right`, `tilt up/down`, `tracking shot`, `arc shot`, `zoom in/out`
-- Velocità e ampiezza: lento/veloce, piccola ampiezza/grande ampiezza
+- Shot type: `close-up`, `medium shot`, `wide shot`, `POV`
+- Motion: `static shot`, `push in`, `pull out`, `pan left/right`, `tilt up/down`, `tracking shot`, `arc shot`, `zoom in/out`
+- Speed and amplitude: slow/fast, small amplitude/large amplitude
 
-Esempio: *"La camera parte da un medium-wide shot statico e poi fa un push in lento verso il viso."*
+Example: *"The camera starts with a static medium-wide shot, then slowly pushes in toward the face."*
 
-### 5. Ambiente e luce
+### 5. Environment and lighting
 
-- Luogo: camera, bagno, divano, esterno, notturno, neon, naturale
-- Luce: luce calda, fredda, neon rosa/rosso, finestre, ombre
-- Colore dominante e atmosfera
+- Location: bedroom, bathroom, couch, outdoor, night, neon, natural
+- Light: warm, cold, pink/red neon, windows, shadows
+- Dominant color and atmosphere
 
-### 6. Audio (molto importante)
+### 6. Audio (very important)
 
-MiniMax H3 genera audio nativo. Specifica esplicitamente cosa vuoi sentire:
+MiniMax H3 generates native audio. Explicitly state what you want to hear.
 
-- **Suoni diegetici** (presenti nella scena): respiri, gemiti, sospiri, battiti del cuore, contatto pelle-pelle, tessuti, letto, liquidi, voci sussurrate, ambiente (acqua, pioggia, traffico lontano).
-- **Musica di sottofondo**: se la vuoi, indica genere, strumenti, ritmo e intensità. **Se non la menzioni, il preset imposta `N/A` e non genera musica generica.**
+#### Diegetic sounds (present in the scene)
 
-Esempi:
-- *"Si sentono respiri affannosi, gemiti sommessi e il rumore delle lenzuola."*
-- *"Aggiungi una colonna sonora R&B lenta con basso profondo e synth atmosferici."*
-- *"Nessuna musica, solo i suoni realistici della scena."*
+These are always described in the prompt. Be concrete:
 
-### 7. Durata
+- Breathing, moans, sighs, gasps, whimpers
+- Heartbeat, skin-to-skin contact, fabric/bedding movement, body fluids
+- Kisses, licks, slaps, impacts
+- Whispered voices, spoken dialogue
+- Ambient: water, rain, distant traffic, room tone, wind
 
-Scegli il preset QwenVL-Mod corrispondente alla durata desiderata:
+Example: *"Heavy breathing, soft moans, and the sound of sheets rustling."*
+
+#### Non-diegetic music (background score)
+
+By default the preset outputs `N/A` — no background music is generated. To add music, you must explicitly request it and describe:
+
+- **Genre**: R&B, ambient, synthwave, jazz, deep house, orchestral, lo-fi, etc.
+- **Instrumentation**: piano, strings, bass, synths, guitar, drums
+- **Tempo**: slow, moderate, fast
+- **Rhythm and dynamics**: when it enters, builds, fades
+
+Examples:
+- *"Add a slow R&B background track with deep bass and atmospheric synths."*
+- *"Soft piano notes at a slow tempo, joined by sustained low strings that gradually increase in volume before fading out."*
+- *"No music, only realistic sounds from the scene."* (this is the default behavior)
+
+> **Tip**: For NSFW scenes, diegetic sounds alone usually feel more realistic. Add music only when it clearly supports the mood.
+
+### 7. Duration
+
+Pick the matching QwenVL-Mod preset:
 
 - **MiniMax H3 NSFW (5s)**
 - **MiniMax H3 NSFW (10s)**
 - **MiniMax H3 NSFW (15s)**
 
-MiniMax H3 supporta clip da **4 a 15 secondi**.
+MiniMax H3 supports clips from **4 to 15 seconds**.
 
-## Risoluzione consigliata
+## Recommended resolution
 
-MiniMax H3 è addestrato con il **lato corto a 768 px** e il lato lungo **massimo 1344 px**, in multipli di 32.
+MiniMax H3 is trained with the **short edge at 768 px** and the long edge **capped at 1344 px**, in multiples of 32.
 
-Esempi validi:
+Valid examples:
 
-- `768x1344` (verticale)
+- `768x1344` (portrait)
 - `896x1152`
 - `960x1280`
 - `1024x1024`
 
-**Evita di generare direttamente a 1080p.** Genera a risoluzione nativa e poi usa i nodi TensorRT di upscale/interpolazione inclusi nel template.
+**Avoid generating directly at 1080p.** Generate at native resolution, then use the bundled TensorRT upscale/interpolation nodes.
 
-## Esempio di prompt italiano
+## Example prompt
 
-> *"Scena photorealistic cinematografica in una camera da letto con luce calda di lampada da comodino. Una giovane donna dai capelli scuri è sdraiata sul letto, indossa solo lenzuola bianche. Un uomo si avvicina lentamente, la camera fa un push in morbido dal wide shot al close-up. Lui la bacia sul collo, lei chiude gli occhi e sospira. Audio: respiri affannosi, sussurri, rumore delle lenzuola. Nessuna musica di sottofondo. Stile intimo, realistico, luce calda."*
+> *"A photorealistic cinematic scene in a bedroom with warm lamplight. A young dark-haired woman lies on the bed wearing only white sheets. A man approaches slowly; the camera does a gentle push in from wide shot to close-up. He kisses her neck, she closes her eyes and sighs. Audio: heavy breathing, whispers, sheets rustling. No background music. Intimate, realistic style, warm light."*
 
-## Cosa NON mettere
+## What NOT to do
 
-- Non richiedere personaggi minorenni o scene non consensuali/illegali: il preset rifiuta automaticamente.
-- Non aggiungere luci o effetti che non siano coerenti con l'ambiente descritto.
-- Non chiedere durate superiori a 15 secondi.
+- Do not request minors, non-consent, or illegal acts: the preset refuses automatically.
+- Do not add lighting or effects inconsistent with the described environment.
+- Do not request durations longer than 15 seconds.
+- Do not request 1080p native generation — use the recommended resolutions and upscale after.
