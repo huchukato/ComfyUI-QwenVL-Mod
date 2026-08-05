@@ -707,10 +707,12 @@ class QwenVLGGUFBase:
 
         # Detect architecture from GGUF metadata instead of relying on model name
         arch = read_gguf_architecture(model_path)
-        is_qwen35 = arch in ("qwen35", "qwen35moe") if arch else "qwen3.5-" in model_name.lower()
-        if is_qwen35:
+        self.is_qwen35 = arch in ("qwen35", "qwen35moe") if arch else "qwen3.5-" in model_name.lower()
+        if self.is_qwen35:
+            # enable_thinking is deprecated/ignored in recent llama.cpp builds.
+            # Use reasoning=False (server-side) + /no_think in prompt (template-side) as fallback.
             llm_kwargs["chat_template_kwargs"] = {"enable_thinking": False}
-            print(f"[QwenVL] Qwen3.5 detected (arch={arch}): Disabling thinking in chat template.")
+            print(f"[QwenVL] Qwen3.5 detected (arch={arch}): Disabling thinking via enable_thinking + /no_think.")
 
         if has_mmproj and self.chat_handler is not None:
             llm_kwargs["chat_handler"] = self.chat_handler
@@ -916,12 +918,14 @@ class QwenVLGGUFBase:
             if images_b64 and self.chat_handler is None:
                 print("[QwenVL] Warning: images provided but this model entry has no mmproj_file; images will be ignored")
             print(f"[QwenVL GGUF DEBUG] Starting generation...")
+            # Prepend /no_think for Qwen3.5 models (enable_thinking is deprecated in recent llama.cpp)
+            effective_prompt = ("/no_think\n" + prompt) if getattr(self, "is_qwen35", False) else prompt
             text = self._invoke(
                 system_prompt=(
                     "You are a helpful vision-language assistant. "
                     "Answer directly with the final answer only. No <think> and no reasoning."
                 ),
-                user_prompt=prompt,
+                user_prompt=effective_prompt,
                 images_b64=images_b64 if self.chat_handler is not None else [],
                 max_tokens=max_tokens,
                 temperature=temperature,
