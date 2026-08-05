@@ -941,7 +941,7 @@ class QwenVLBase:
         conversation = [{"role": "user", "content": []}]
         if image is not None:
             if image.dim() == 4 and image.shape[0] > 1:
-                print(f"[QwenVL] IMAGE input contains {image.shape[0]} items; using the first item only. Use the video input for multi-frame analysis.")
+                print(f"[QwenVL] IMAGE input contains {image.shape[0]} items; using the first item only. Use the video input for multi-image analysis.")
             conversation[0]["content"].append({"type": "image", "image": self.tensor_to_pil(image)})
         if video is not None:
             frames = [self.tensor_to_pil(frame) for frame in video]
@@ -949,7 +949,12 @@ class QwenVLBase:
                 idx = np.linspace(0, len(frames) - 1, frame_count, dtype=int)
                 frames = [frames[i] for i in idx]
             if frames:
-                conversation[0]["content"].append({"type": "video", "video": frames})
+                # Pass each frame as a separate image (not as a video).
+                # This allows Qwen3-VL to see multiple reference images
+                # (e.g. first+last frame for FL2VA, or multiple references for R2VA)
+                # instead of treating them as a single video sequence.
+                for frame in frames:
+                    conversation[0]["content"].append({"type": "image", "image": frame})
         conversation[0]["content"].append({"type": "text", "text": prompt_text})
         
         # --- Qwen3.5 Heretic Logic: Template ---
@@ -966,11 +971,11 @@ class QwenVLBase:
             **chat_kwargs
         )
         
-        # Process images/videos more efficiently
+        # Process images more efficiently
+        # All frames (image + video inputs) are now passed as individual images
         images = [item["image"] for item in conversation[0]["content"] if item["type"] == "image"]
-        video_frames = [frame for item in conversation[0]["content"] if item["type"] == "video" for frame in item["video"]]
-        videos = [video_frames] if video_frames else None
-        
+        videos = None  # no longer used — all frames are images
+
         # Use smaller batch size for memory efficiency
         processed = self.processor(text=chat, images=images or None, videos=videos, return_tensors="pt")
         
