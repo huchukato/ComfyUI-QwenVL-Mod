@@ -11,23 +11,19 @@ Version 2.5 (2026/08/05) — 🎬 MiniMax H3 Native Video+Audio + Qwen3-VL Auto-
 
 ### GPU & VRAM
 
-| Tier | GPU | VRAM | Quantization | Performance |
-|---|---|---|---|---|
-| 🟢 **Recommended** | RTX 5090 / 4090 | 24 GB+ | INT8 (pruned) | Fast, best quality |
-| 🟡 **Enthusiast** | RTX 3090 / 4080 | 16-24 GB | INT8 (pruned) + offload | Slower, good quality |
-| 🟠 **Budget** | RTX 3060 / 4060 Ti | 12-16 GB | INT4 (pruned) + offload | Slow, usable quality |
-| 🔴 **Experimental** | Blackwell GPUs | 12 GB+ | NVFP4 | Requires Blackwell Tensor Cores |
+- 🟢 **Recommended** — RTX 5090 / 4090 (24 GB+) → INT8 pruned → Fast, best quality
+- 🟡 **Enthusiast** — RTX 3090 / 4080 (16-24 GB) → INT8 pruned + offload → Slower, good quality
+- 🟠 **Budget** — RTX 3060 / 4060 Ti (12-16 GB) → INT4 pruned + offload → Slow, usable quality
+- 🔴 **Experimental** — Blackwell GPUs (12 GB+) → NVFP4 → Requires Blackwell Tensor Cores
 
 > **12 GB GPUs (e.g. RTX 3060 12GB)**: Technically possible with INT4 models + aggressive offloading, but **very slow**. You need 32 GB+ system RAM and a fast NVMe SSD. Not recommended for production use.
 
 ### Model Quantization Options
 
-| Quantization | Diffusion model | Text encoder | Total | Source |
-|---|---|---|---|---|
-| BF16 (full) | ~42 GB | ~65 GB | ~110 GB | [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3) |
-| INT8 (pruned) | ~21 GB | ~27 GB | ~50 GB | [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3) |
-| INT4 (pruned) | ~11 GB | ~15 GB | ~27 GB | [Merserk/MiniMax-H3-INT4-ConvRot](https://huggingface.co/Merserk/MiniMax-H3-INT4-ConvRot) |
-| NVFP4 (pruned) | ~12.5 GB | ~15 GB | ~28 GB | [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3) (Blackwell) |
+- **BF16 (full)** — Diffusion ~42 GB + Text encoder ~65 GB = ~110 GB total → [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3)
+- **INT8 (pruned)** — Diffusion ~21 GB + Text encoder ~27 GB = ~50 GB total → [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3)
+- **INT4 (pruned)** — Diffusion ~11 GB + Text encoder ~15 GB = ~27 GB total → [Merserk/MiniMax-H3-INT4-ConvRot](https://huggingface.co/Merserk/MiniMax-H3-INT4-ConvRot)
+- **NVFP4 (pruned)** — Diffusion ~12.5 GB + Text encoder ~15 GB = ~28 GB total → [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3) (Blackwell)
 
 ### Software
 
@@ -86,12 +82,10 @@ Think: *"Your all-in-one solution for intelligent prompt enhancement and video+a
 
 ## 📦 What's Included — 4 Workflows
 
-| # | Workflow | Mode | Inputs | Description |
-|---|---|---|---|---|
-| 1 | `MiniMaxH3-T2VA-Qwen3VL.json` | 📝 **T2VA** | text only | Text-to-video+audio. Simplest workflow. Uses PromptEnhancer (text-only). |
-| 2 | `MiniMaxH3-I2VA-Qwen3VL.json` | 🖼️ **I2VA** | text + first-frame image (`image`) | Image-to-video. First-frame animation with audio. |
-| 3 | `MiniMaxH3-FL2VA-Qwen3VL.json` | 🔄 **FL2VA** | text + first-frame (`image`) + last-frame (`image2`) | First-Last-Frame to video. Qwen3-VL sees both frames and describes the transition. Includes TensorRT upscale + RIFE frame interpolation for 48 fps output. |
-| 4 | `MiniMaxH3-R2VA-Qwen3VL.json` | 🎞️ **R2VA** | text + reference images (`image` + `image2`) | Reference-to-video. Qwen3-VL sees all references. Lock identity, style, motion, camera, or voice using up to 9 ref images. |
+1. 📝 **T2VA** — `MiniMaxH3-T2VA-Qwen3VL.json` — text only — Text-to-video+audio. Simplest workflow. Uses PromptEnhancer (text-only).
+2. 🖼️ **I2VA** — `MiniMaxH3-I2VA-Qwen3VL.json` — text + first-frame image (`image`) — Image-to-video. First-frame animation with audio.
+3. 🔄 **FL2VA** — `MiniMaxH3-FL2VA-Qwen3VL.json` — text + first-frame (`image`) + last-frame (`image2`) — First-Last-Frame to video. Qwen3-VL sees both frames and describes the transition. Includes TensorRT upscale + RIFE frame interpolation for 48 fps output.
+4. 🎞️ **R2VA** — `MiniMaxH3-R2VA-Qwen3VL.json` — text + reference images (`image` + `image2`) — Reference-to-video. Qwen3-VL sees all references. Lock identity, style, motion, camera, or voice using up to 9 ref images.
 
 > Workflows 3 and 4 include **TensorRT upscaling** (RealESRGAN x4) and **RIFE frame interpolation** (rife49) for 48 fps high-resolution output.
 
@@ -101,11 +95,10 @@ Think: *"Your all-in-one solution for intelligent prompt enhancement and video+a
 
 The QwenVL-Mod node has two image inputs:
 
-| Input | T2VA | I2VA | FL2VA | R2VA |
-|---|---|---|---|---|
-| `image` | — | first frame | first frame | primary reference |
-| `image2` | — | — | last frame | additional references (batch, up to 9) |
-| `frame_count` | — | — | 1 | 1–9 |
+- **T2VA**: no images needed
+- **I2VA**: `image` = first frame
+- **FL2VA**: `image` = first frame, `image2` = last frame, `frame_count` = 1
+- **R2VA**: `image` = primary reference, `image2` = additional references (batch, up to 9), `frame_count` = 1–9
 
 > Qwen3-VL sees **all** connected images as individual images (not as a video sequence), enabling proper multi-reference analysis for FL2VA and R2VA.
 
@@ -117,27 +110,21 @@ The workflows include built-in NSFW presets for the Qwen3-VL prompt enhancer:
 
 ### 🎬 Base Presets (T2VA / I2VA)
 
-| Preset | Duration | Format |
-|---|---|---|
-| `🎬 MiniMax H3 NSFW (5s)` | 5 seconds | 3 fields: `integrated_multimodal_description` + `overall_soundscape` + `non_diegetic_music` |
-| `🎬 MiniMax H3 NSFW (10s)` | 10 seconds | Same as above |
-| `🎬 MiniMax H3 NSFW (15s)` | 15 seconds | Same as above |
+- `🎬 MiniMax H3 NSFW (5s)` — 5 seconds — 3 fields: `integrated_multimodal_description` + `overall_soundscape` + `non_diegetic_music`
+- `🎬 MiniMax H3 NSFW (10s)` — 10 seconds — Same format
+- `🎬 MiniMax H3 NSFW (15s)` — 15 seconds — Same format
 
 ### 🔄 FL2VA Presets (First-Last-Frame)
 
-| Preset | Duration | Format |
-|---|---|---|
-| `🔄 MiniMax H3 NSFW FL2VA (5s)` | 5 seconds | 3 fields, transition-focused (describes the path between frames) |
-| `🔄 MiniMax H3 NSFW FL2VA (10s)` | 10 seconds | Same as above |
-| `🔄 MiniMax H3 NSFW FL2VA (15s)` | 15 seconds | Same as above |
+- `🔄 MiniMax H3 NSFW FL2VA (5s)` — 5 seconds — 3 fields, transition-focused (describes the path between frames)
+- `🔄 MiniMax H3 NSFW FL2VA (10s)` — 10 seconds — Same format
+- `🔄 MiniMax H3 NSFW FL2VA (15s)` — 15 seconds — Same format
 
 ### 🎞️ R2VA Presets (Reference)
 
-| Preset | Duration | Format |
-|---|---|---|
-| `🎞️ MiniMax H3 NSFW R2VA (5s)` | 5 seconds | 6 fields: `subject_definitions` + `summary` + `retention_analysis` + `detailed_description` + `overall_soundscape` + `non_diegetic_music` |
-| `🎞️ MiniMax H3 NSFW R2VA (10s)` | 10 seconds | Same as above |
-| `🎞️ MiniMax H3 NSFW R2VA (15s)` | 15 seconds | Same as above |
+- `🎞️ MiniMax H3 NSFW R2VA (5s)` — 5 seconds — 6 fields: `subject_definitions` + `summary` + `retention_analysis` + `detailed_description` + `overall_soundscape` + `non_diegetic_music`
+- `🎞️ MiniMax H3 NSFW R2VA (10s)` — 10 seconds — Same format
+- `🎞️ MiniMax H3 NSFW R2VA (15s)` — 15 seconds — Same format
 
 ### What the presets produce
 
@@ -221,15 +208,13 @@ The workflows include built-in NSFW presets for the Qwen3-VL prompt enhancer:
 
 ### Custom Nodes Required
 
-| Custom Node | Used by | Repo |
-|---|---|---|
-| **ComfyUI-QwenVL-Mod** | All workflows (Qwen3-VL prompt enhancer) | [huchukato/ComfyUI-QwenVL-Mod](https://github.com/huchukato/ComfyUI-QwenVL-Mod) |
-| **ComfyUI-RIFE-TensorRT-Auto** | FL2VA, R2VA (frame interpolation) | [huchukato/ComfyUI-RIFE-TensorRT-Auto](https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto) |
-| **ComfyUI-Upscaler-TensorRT-Auto** | FL2VA, R2VA (upscaling) | [huchukato/ComfyUI-Upscaler-TensorRT-Auto](https://github.com/huchukato/ComfyUI-Upscaler-TensorRT-Auto) |
-| **ComfyUI-VideoHelperSuite** | FL2VA, R2VA (VHS_VideoCombine) | [Kosinkadink/ComfyUI-VideoHelperSuite](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite) |
-| **ComfyUI-Easy-Use** | FL2VA, R2VA (easy showAnything) | [yolain/ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use) |
-| **comfyui-find-perfect-resolution** | All workflows (ResolutionSelector) | [ashtar1984/comfyui-find-perfect-resolution](https://github.com/ashtar1984/comfyui-find-perfect-resolution) |
-| **was-node-suite-comfyui** | R2VA (ComfyMathExpression) | [ltdrdata/was-node-suite-comfyui](https://github.com/ltdrdata/was-node-suite-comfyui) |
+- **ComfyUI-QwenVL-Mod** — All workflows (Qwen3-VL prompt enhancer) — [huchukato/ComfyUI-QwenVL-Mod](https://github.com/huchukato/ComfyUI-QwenVL-Mod)
+- **ComfyUI-RIFE-TensorRT-Auto** — FL2VA, R2VA (frame interpolation) — [huchukato/ComfyUI-RIFE-TensorRT-Auto](https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto)
+- **ComfyUI-Upscaler-TensorRT-Auto** — FL2VA, R2VA (upscaling) — [huchukato/ComfyUI-Upscaler-TensorRT-Auto](https://github.com/huchukato/ComfyUI-Upscaler-TensorRT-Auto)
+- **ComfyUI-VideoHelperSuite** — FL2VA, R2VA (VHS_VideoCombine) — [Kosinkadink/ComfyUI-VideoHelperSuite](https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite)
+- **ComfyUI-Easy-Use** — FL2VA, R2VA (easy showAnything) — [yolain/ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use)
+- **comfyui-find-perfect-resolution** — All workflows (ResolutionSelector) — [ashtar1984/comfyui-find-perfect-resolution](https://github.com/ashtar1984/comfyui-find-perfect-resolution)
+- **was-node-suite-comfyui** — R2VA (ComfyMathExpression) — [ltdrdata/was-node-suite-comfyui](https://github.com/ltdrdata/was-node-suite-comfyui)
 
 ### Models Required
 
@@ -237,33 +222,25 @@ All MiniMax H3 models from [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-O
 
 **T2VA / I2VA / FL2VA (fl2va)**
 
-| Subfolder | Model | Size |
-|---|---|---|
-| `models/vae/` | `minimax_h3_video_vae_fp16.safetensors` | ~5 GB |
-| `models/vae/` | `minimax_h3_audio_vae_fp32.safetensors` | ~0.6 GB |
-| `models/diffusion_models/` | `minimax_h3_fl2va_pruned_int8_convrot.safetensors` | ~21 GB |
-| `models/text_encoders/` | `qwen3vl_32b_minimax_h3_int8_convrot.safetensors` | ~27 GB |
+- `models/vae/` → `minimax_h3_video_vae_fp16.safetensors` (~5 GB)
+- `models/vae/` → `minimax_h3_audio_vae_fp32.safetensors` (~0.6 GB)
+- `models/diffusion_models/` → `minimax_h3_fl2va_pruned_int8_convrot.safetensors` (~21 GB)
+- `models/text_encoders/` → `qwen3vl_32b_minimax_h3_int8_convrot.safetensors` (~27 GB)
 
 **R2VA (ref2va)** — same as above, except:
 
-| Subfolder | Model | Size |
-|---|---|---|
-| `models/diffusion_models/` | `minimax_h3_ref2va_pruned_int8_convrot.safetensors` | ~21 GB |
+- `models/diffusion_models/` → `minimax_h3_ref2va_pruned_int8_convrot.safetensors` (~21 GB)
 
 **INT4 alternative** (for 12-16 GB GPUs): [Merserk/MiniMax-H3-INT4-ConvRot](https://huggingface.co/Merserk/MiniMax-H3-INT4-ConvRot)
 
 **Qwen3-VL Prompt Enhancer**
 
-| Subfolder | Model |
-|---|---|
-| `models/LLM/` | `Qwen3-VL-8B-Heretic-Stable` (GGUF or HF) |
+- `models/LLM/` → `Qwen3-VL-8B-Heretic-Stable` (GGUF or HF)
 
 **TensorRT Engines (FL2VA + R2VA only)**
 
-| Subfolder | Model |
-|---|---|
-| `models/upscale_models/` | `RealESRGAN_x4` (TensorRT engine) |
-| `models/rife/` | `rife49_ensemble_True_scale_1_sim` (TensorRT engine) |
+- `models/upscale_models/` → `RealESRGAN_x4` (TensorRT engine)
+- `models/rife/` → `rife49_ensemble_True_scale_1_sim` (TensorRT engine)
 
 > TensorRT engines must be built for your specific GPU. See [ComfyUI-RIFE-TensorRT-Auto](https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto) and [ComfyUI-Upscaler-TensorRT-Auto](https://github.com/huchukato/ComfyUI-Upscaler-TensorRT-Auto) for build instructions.
 
@@ -297,11 +274,9 @@ Describe the scene naturally. Be clear about the concepts below — Qwen3-VL han
 
 MiniMax H3 native canvas: **768 px short edge**, long edge capped at **1344 px**, multiples of **32**.
 
-| Orientation | Resolutions |
-|---|---|
-| 📱 Portrait | 768×1344 · 896×1152 · 960×1280 |
-| ⬛ Square | 1024×1024 |
-| 🖥️ Landscape | 1344×768 · 1152×896 · 1280×960 |
+- 📱 **Portrait**: 768×1344 · 896×1152 · 960×1280
+- ⬛ **Square**: 1024×1024
+- 🖥️ **Landscape**: 1344×768 · 1152×896 · 1280×960
 
 > ⚠️ **Match the aspect ratio to your input image!** Forcing 16:9 on a portrait image will squash it.
 >
