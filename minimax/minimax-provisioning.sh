@@ -100,17 +100,73 @@ function provisioning_force_comfyui_version() {
     fi
 }
 
+function download_minimax_model() {
+    local base_dir="$1" subdir="$2" name="$3" url="$4" min_size="$5"
+    local dest="$base_dir/$subdir/$name"
+    local max_retries=5
+    local hf_auth=()
+
+    if [ -n "$HF_TOKEN" ] && [[ "$url" == *"huggingface.co"* ]]; then
+        hf_auth=(--header="Authorization: Bearer $HF_TOKEN")
+    fi
+
+    for attempt in $(seq 1 $max_retries); do
+        if [ -f "$dest" ]; then
+            local size
+            size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
+            if [ "$size" -ge "$min_size" ]; then
+                echo "✅ $name already present ($size bytes >= $min_size), skipping"
+                return 0
+            else
+                echo "⚠️  $name incomplete ($size bytes < $min_size), resuming (attempt $attempt/$max_retries)"
+            fi
+        else
+            echo "📥 Downloading $name (attempt $attempt/$max_retries)..."
+        fi
+
+        wget -q -c --tries=3 --timeout=120 "${hf_auth[@]}" "$url" -O "$dest" &
+        local wget_pid=$!
+
+        (
+            while kill -0 $wget_pid 2>/dev/null; do
+                if [ -f "$dest" ]; then
+                    local s
+                    s=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
+                    local pct=$(( s * 100 / min_size ))
+                    local gb=$(( s / 1073741824 ))
+                    local total_gb=$(( min_size / 1073741824 ))
+                    echo "📊 PROGRESS: $name — ${gb}GB / ${total_gb}GB (${pct}%)"
+                fi
+                sleep 10
+            done
+        ) &
+        local monitor_pid=$!
+
+        if wait $wget_pid; then
+            kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
+            local size
+            size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
+            if [ "$size" -ge "$min_size" ]; then
+                echo "✅ $name downloaded successfully ($size bytes)"
+                return 0
+            else
+                echo "⚠️  $name downloaded but size $size < $min_size, will retry"
+            fi
+        else
+            kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
+            echo "⚠️  wget failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
+        fi
+
+        [ "$attempt" -lt "$max_retries" ] && sleep $((attempt * 10))
+    done
+
+    echo "❌ FAILED: $name could not be downloaded after $max_retries attempts"
+    return 1
+}
+
 function provisioning_get_minimax_models() {
     local base_dir="${WORKSPACE:-/workspace}/ComfyUI/models"
-    local log_file="/var/log/minimax-h3-models.log"
-    local script_file="${WORKSPACE:-/workspace}/download-minimax-h3-models.sh"
-
-    if command -v pgrep >/dev/null 2>&1; then
-        if pgrep -f "download-minimax-h3-models.sh" >/dev/null 2>&1; then
-            echo "⚠️  MiniMax H3 model download already running, skipping"
-            return 0
-        fi
-    fi
+    local ready_marker="${WORKSPACE:-/workspace}/ComfyUI/main.py"
 
     local all_complete=true
     for entry in "${MINIMAX_MODELS[@]}"; do
@@ -124,121 +180,33 @@ function provisioning_get_minimax_models() {
         fi
     done
     if [ "$all_complete" = true ]; then
-        echo "✅ All MiniMax H3 models already complete, no background download needed"
+        echo "✅ All MiniMax H3 models already complete, no download needed"
         return 0
     fi
 
     mkdir -p "$base_dir"/{vae,diffusion_models,text_encoders}
 
-    cat > "$script_file" <<'EOF'
-#!/bin/bash
-BASE_DIR="${WORKSPACE:-/workspace}/ComfyUI/models"
-LOG="/var/log/minimax-h3-models.log"
-READY_MARKER="${WORKSPACE:-/workspace}/ComfyUI/main.py"
-
-MINIMAX_MODELS=(
-    "vae|minimax_h3_video_vae_fp16.safetensors|https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors|5200000000"
-    "vae|minimax_h3_audio_vae_fp32.safetensors|https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors|600000000"
-    "diffusion_models|10Eros_Max_H3_FL2VA-INT8-ConvRot.safetensors|https://huggingface.co/DmitryDB/MiniMax-H3-10Eros-Max-Quants/resolve/main/FL2VA/10Eros_Max_H3_FL2VA-INT8-ConvRot.safetensors|20900000000"
-    "text_encoders|qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors|https://huggingface.co/ethanfel/Qwen3-VL-32B-Ultra-Heretic-H3-ComfyUI-INT8-ConvRot/resolve/main/qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors|24000000000"
-)
-
-log() { echo "$(date): $*"; }
-
-log "📥 === MiniMax H3 model download started (PID $$) ==="
-log "⏳ Waiting for ComfyUI ready marker..."
-for i in $(seq 1 120); do
-    [ -f "$READY_MARKER" ] && break
-    sleep 5
-done
-
-if [ ! -f "$READY_MARKER" ]; then
-    log "❌ ERROR: ComfyUI ready marker not found after 600s, aborting"
-    exit 1
-fi
-
-log "✅ ComfyUI ready, base dir: $BASE_DIR"
-mkdir -p "$BASE_DIR"/{vae,diffusion_models,text_encoders}
-
-download_model() {
-    local subdir="$1" name="$2" url="$3" min_size="$4"
-    local dest="$BASE_DIR/$subdir/$name"
-    local max_retries=5
-    local hf_auth=()
-    if [ -n "$HF_TOKEN" ]; then
-        hf_auth=(--header="Authorization: Bearer $HF_TOKEN")
-    fi
-
-    for attempt in $(seq 1 $max_retries); do
-        if [ -f "$dest" ]; then
-            local size
-            size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
-            if [ "$size" -ge "$min_size" ]; then
-                log "✅ $name already present ($size bytes >= $min_size), skipping"
-                return 0
-            else
-                log "⚠️  $name incomplete ($size bytes < $min_size), resuming (attempt $attempt/$max_retries)"
-            fi
-        else
-            log "📥 Downloading $name (attempt $attempt/$max_retries)..."
-        fi
-
-        (
-            while true; do
-                if [ ! -f "$dest" ]; then sleep 5; continue; fi
-                local s
-                s=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
-                local pct=$(( s * 100 / min_size ))
-                local gb=$(( s / 1073741824 ))
-                local total_gb=$(( min_size / 1073741824 ))
-                log "📊 PROGRESS: $name — ${gb}GB / ${total_gb}GB (${pct}%)"
-                [ "$pct" -ge 100 ] && break
-                sleep 30
-            done
-        ) &
-        local monitor_pid=$!
-
-        if wget -q --continue --tries=3 --timeout=120 "${hf_auth[@]}" "$url" -O "$dest"; then
-            kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
-            local size
-            size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
-            if [ "$size" -ge "$min_size" ]; then
-                log "✅ $name downloaded successfully ($size bytes)"
-                return 0
-            else
-                log "⚠️  $name downloaded but size $size < $min_size, will retry"
-            fi
-        else
-            kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
-            log "⚠️  wget failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
-        fi
-
-        [ "$attempt" -lt "$max_retries" ] && sleep $((attempt * 10))
+    echo "� === MiniMax H3 model download started (PID $$) ==="
+    echo "⏳ Waiting for ComfyUI ready marker..."
+    for i in $(seq 1 120); do
+        [ -f "$ready_marker" ] && break
+        sleep 5
     done
 
-    log "❌ FAILED: $name could not be downloaded after $max_retries attempts"
-    return 1
-}
-
-failures=0
-for entry in "${MINIMAX_MODELS[@]}"; do
-    IFS='|' read -r subdir name url min_size <<< "$entry"
-    download_model "$subdir" "$name" "$url" "$min_size" || failures=$((failures + 1))
-done
-
-log "📦 === MiniMax H3 model download finished ($failures failures) ==="
-EOF
-
-    chmod +x "$script_file"
-    echo "🔄 Starting background MiniMax H3 model download..."
-    setsid "$script_file" >> "$log_file" 2>&1 &
-    local pid=$!
-    echo "📝 Progress log: $log_file"
-    echo "⏳ MiniMax H3 models will download in background (PID $pid)."
-    sleep 2
-    if [ -f "$log_file" ]; then
-        tail -n 5 "$log_file"
+    if [ ! -f "$ready_marker" ]; then
+        echo "❌ ERROR: ComfyUI ready marker not found after 600s, aborting"
+        return 1
     fi
+
+    echo "✅ ComfyUI ready, base dir: $base_dir"
+
+    local failures=0
+    for entry in "${MINIMAX_MODELS[@]}"; do
+        IFS='|' read -r subdir name url min_size <<< "$entry"
+        download_minimax_model "$base_dir" "$subdir" "$name" "$url" "$min_size" || failures=$((failures + 1))
+    done
+
+    echo "📦 === MiniMax H3 model download finished ($failures failures) ==="
 }
 
 function provisioning_configure_args() {
