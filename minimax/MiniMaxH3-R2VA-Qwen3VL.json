@@ -124,7 +124,7 @@
       ],
       "size": [
         1155.5330597730813,
-        981.7858938268361
+        334
       ],
       "flags": {},
       "order": 14,
@@ -2140,7 +2140,7 @@
               0.9,
               1,
               1,
-              16,
+              1,
               false,
               866131175,
               "randomize",
@@ -2564,7 +2564,7 @@
   },
   "config": {},
   "extra": {
-    "frontendVersion": "1.47.12",
+    "frontendVersion": "1.47.11",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
     "VHS_MetadataImage": true,
