@@ -1,8 +1,8 @@
 {
-  "id": "e3f2b845-8f2c-4b5a-9caf-eac1029d3e7e",
+  "id": "8afa20e3-cff2-415c-b1d8-bfa1229cdd40",
   "revision": 0,
-  "last_node_id": 146,
-  "last_link_id": 272,
+  "last_node_id": 147,
+  "last_link_id": 273,
   "nodes": [
     {
       "id": 118,
@@ -37,10 +37,10 @@
       ],
       "size": [
         1146.9778644557782,
-        738.1736917892715
+        106
       ],
       "flags": {},
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
@@ -71,78 +71,6 @@
       "bgcolor": "#593930"
     },
     {
-      "id": 135,
-      "type": "MarkdownNote",
-      "pos": [
-        -1656.0747547168846,
-        5655.2841316706945
-      ],
-      "size": [
-        776.3088375968157,
-        1025.3613147621545
-      ],
-      "flags": {},
-      "order": 1,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "USER HINTS",
-      "properties": {},
-      "widgets_values": [
-        "# 🎬 MiniMax H3 — User Hints\n\n> 💡 You can write your prompt in **any language**. Qwen3-VL analyzes it, translates it, and converts it into the official MiniMax H3 prompt format.\n\n---\n\n## 🗂️ Choose the right workflow\n\n| Workflow | Mode | Required inputs |\n|---|---|---|\n| `MiniMaxH3-T2VA-Qwen3VL.json` | 📝 **T2VA** | text only |\n| `MiniMaxH3-I2VA-Qwen3VL.json` | 🖼️ **I2VA** | text + first-frame image |\n| `MiniMaxH3-R2VA-Qwen3VL.json` | 🎞️ **R2VA / Reference** | text + reference image/video/audio for style, character, motion, or camera |\n\n> 🧩 **FL2VA** (first frame + last frame) and **L2VA** (last frame only) are handled automatically by the preset when you load more than one image or clearly indicate the last frame.\n\n---\n\n## ✍️ What to write in the prompt\n\nDescribe the scene naturally. Be clear about the concepts below — the model handles the rest.\n\n### 🎨 1. Visual style *(required — put it first)*\n\n- `photorealistic` 📷 · `cinematic` 🎥 · `live-action` 🎬\n- `anime` 🌸 · `cartoon` 🖍️ · `3D CG` 🧊 · `claymation` 🏺\n- `vintage film` 📼 · `watercolor` 🎨 · `fantasy` ✨ · `artistic portrait` 🖼️\n\n> Example: *\"A photorealistic cinematic scene in a bedroom with warm light...\"*\n\n### 👥 2. Subjects\n\n- Number, gender, apparent age, physical appearance, hair, makeup, clothing (or nudity)\n- Initial position, gaze, expression\n\n### 🏃 3. Action / motion\n\n- What happens and in what order\n- Speed: slow 🐢 · rhythmic 🎵 · accelerating 🚀 · pause ⏸️\n- Interaction between characters: contact, gestures, movements\n\n### 📷 4. Camera\n\n- **Shot type**: `close-up` 🔍 · `medium shot` 🎥 · `wide shot` 🌅 · `POV` 👁️\n- **Motion**: `static shot` · `push in` / `pull out` · `pan left/right` · `tilt up/down` · `tracking shot` · `arc shot` · `zoom in/out`\n- **Speed & amplitude**: slow/fast, small amplitude/large amplitude\n\n> Example: *\"The camera starts with a static medium-wide shot, then slowly pushes in toward the face.\"*\n\n### 🌆 5. Environment & lighting\n\n- 📍 Location: bedroom, bathroom, couch, outdoor, night, neon, natural\n- 💡 Light: warm, cold, pink/red neon, windows, shadows\n- 🎨 Dominant color and atmosphere\n\n---\n\n## 🎧 6. Audio *(very important)*\n\nMiniMax H3 generates **native audio**. Explicitly state what you want to hear.\n\n### 🔊 Diegetic sounds *(present in the scene)*\n\nAlways described in the prompt. Be concrete:\n\n| Category | Examples |\n|---|---|\n| 🫁 Breathing | soft, heavy, gasping, rhythmic |\n| 😏 Vocal | moans, sighs, gasps, whimpers, whispers |\n| 💓 Body | heartbeat, skin-to-skin contact, body fluids |\n| 🛏️ Movement | fabric, bedding, sheets rustling |\n| 💋 Contact | kisses, licks, slaps, impacts |\n| 🌧️ Ambient | water, rain, distant traffic, room tone, wind |\n\n> Example: *\"Heavy breathing, soft moans, and the sound of sheets rustling.\"*\n\n### 🎵 Non-diegetic music *(background score)*\n\nBy default the preset outputs **`N/A`** — no background music is generated. 🚫🎵\n\nTo add music, you must **explicitly request it** and describe:\n\n- 🎼 **Genre**: R&B, ambient, synthwave, jazz, deep house, orchestral, lo-fi...\n- 🎸 **Instrumentation**: piano, strings, bass, synths, guitar, drums\n- ⏱️ **Tempo**: slow, moderate, fast\n- 📈 **Rhythm & dynamics**: when it enters, builds, fades\n\n> Examples:\n> - *\"Add a slow R&B background track with deep bass and atmospheric synths.\"*\n> - *\"Soft piano notes at a slow tempo, joined by sustained low strings that gradually increase in volume before fading out.\"*\n> - *\"No music, only realistic sounds from the scene.\"* ← this is the **default** behavior\n\n> 💡 **Tip**: For NSFW scenes, diegetic sounds alone usually feel more realistic. Add music only when it clearly supports the mood.\n\n---\n\n## ⏱️ 7. Duration\n\nPick the matching QwenVL-Mod preset:\n\n| Preset | Duration |\n|---|---|\n| 🎬 MiniMax H3 NSFW (5s) | 5 seconds |\n| 🎬 MiniMax H3 NSFW (10s) | 10 seconds |\n| 🎬 MiniMax H3 NSFW (15s) | 15 seconds |\n\n> MiniMax H3 supports clips from **4 to 15 seconds**.\n\n---\n\n## 📐 Recommended resolution\n\nMiniMax H3 is trained with the **short edge at 768 px** and the long edge **capped at 1344 px**, in multiples of 32.\n\n| Resolution | Orientation |\n|---|---|\n| `768x1344` | 📱 portrait |\n| `896x1152` | 📱 portrait |\n| `960x1280` | 📱 portrait |\n| `1024x1024` | ⬛ square |\n\n> ⚠️ **Avoid generating directly at 1080p.** Generate at native resolution, then use the bundled TensorRT upscale/interpolation nodes.\n\n---\n\n## 📝 Example prompt\n\n> *\"A photorealistic cinematic scene in a bedroom with warm lamplight. A young dark-haired woman lies on the bed wearing only white sheets. A man approaches slowly; the camera does a gentle push in from wide shot to close-up. He kisses her neck, she closes her eyes and sighs. Audio: heavy breathing, whispers, sheets rustling. No background music. Intimate, realistic style, warm light.\"*\n\n---\n\n## 🚫 What NOT to do\n\n- ❌ Do not request minors, non-consent, or illegal acts — the preset refuses automatically\n- ❌ Do not add lighting or effects inconsistent with the described environment\n- ❌ Do not request durations longer than 15 seconds\n- ❌ Do not request 1080p native generation — use the recommended resolutions and upscale after\n"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 116,
-      "type": "MarkdownNote",
-      "pos": [
-        -2163.5947789694455,
-        5431.290066124539
-      ],
-      "size": [
-        478.10204995669346,
-        386.73203108836515
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "Note: MiniMax H3",
-      "properties": {},
-      "widgets_values": [
-        "## MiniMax H3\n\n[MiniMax H3](https://www.minimax.io/blog/minimax-h3) is MiniMax's general-purpose, omni-modal generation model. It jointly understands text, image, video, and audio, and generates video with **native stereo audio**: voice, sound effects, and music are modeled jointly in a single forward pass, not layered on afterward. Output is 768p, 24fps, and up to about 15 seconds. The open weights are 768p only. 2K comes from MiniMax's hosted H3-Regenerate-2K API and is not available locally.\n\n## About this workflow\n\nThis template runs the **Image to Video** task (`MiniMaxH3ImageToVideo` node), which covers both:\n\n- **t2va** (text-to-video), when no images are connected\n- **fl2va** (first/last-frame image-to-video), when `first_frame` and/or `last_frame` are connected\n\n**Key inputs**\n\n- **first_frame / last_frame**: optional keyframes; the model generates the motion between them\n- **prompt**: describe the shots, motion, and the accompanying audio (dialogue, SFX, music) in one block\n- **width / height**: set via Resolution Selector. H3's native canvas is a 768px short edge, capped at 768x1344 pixels, rounded to a multiple of 32\n- **duration (seconds)**: converted to a valid frame `length` by the Math Expression node, snapping up to the model's 17-frame-per-block (17k+5) grid at 24fps"
-      ],
-      "color": "#332922",
-      "bgcolor": "#593930"
-    },
-    {
-      "id": 117,
-      "type": "MarkdownNote",
-      "pos": [
-        -2159.017124154668,
-        4852.401007121157
-      ],
-      "size": [
-        469.952857010293,
-        513.7942890234126
-      ],
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "Note: Model Links",
-      "properties": {},
-      "widgets_values": [
-        "## Model Links\n\n**vae**\n\n- [minimax_h3_video_vae_fp16.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors)\n- [minimax_h3_audio_vae_fp32.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors)\n\n**diffusion_models**\n\n- [minimax_h3_fl2va_pruned_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors)\n\n**text_encoders**\n\n- [qwen3vl_32b_minimax_h3_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors)\n\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 vae/\n│   │   ├── minimax_h3_video_vae_fp16.safetensors\n│   │   └── minimax_h3_audio_vae_fp32.safetensors\n│   ├── 📂 diffusion_models/\n│   │   └── minimax_h3_fl2va_pruned_int8_convrot.safetensors\n│   └── 📂 text_encoders/\n│       └── qwen3vl_32b_minimax_h3_int8_convrot.safetensors\n```\n\n## Report Issue\n\nNote: Please update ComfyUI first ([guide](https://docs.comfy.org/installation/update_comfyui)) and prepare required models. Desktop/Cloud updates follow stable releases, so some nightly-supported models may not be available yet.\n\n- Cannot run / runtime errors: [ComfyUI/issues](https://github.com/comfyanonymous/ComfyUI/issues)\n- UI / frontend issues: [ComfyUI_frontend/issues](https://github.com/Comfy-Org/ComfyUI_frontend/issues)\n- Workflow issues: [workflow_templates/issues](https://github.com/Comfy-Org/workflow_templates/issues)\n"
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
       "id": 115,
       "type": "ResolutionSelector",
       "pos": [
@@ -154,7 +82,7 @@
         170
       ],
       "flags": {},
-      "order": 4,
+      "order": 1,
       "mode": 0,
       "showAdvanced": false,
       "inputs": [],
@@ -199,7 +127,7 @@
         981.7858938268361
       ],
       "flags": {},
-      "order": 13,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -268,6 +196,274 @@
       "bgcolor": "#353"
     },
     {
+      "id": 137,
+      "type": "easy showAnything",
+      "pos": [
+        -856.1781450430237,
+        5402.11021783787
+      ],
+      "size": [
+        644.2917395113784,
+        391.0883454630102
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 253
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": []
+        }
+      ],
+      "title": "QWEN3VL GENERATED PROMPT",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "595e0738a9e3f8d0d9c4d875461b2d2c9e7559c7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "How the reference pictures align with the target video — <Picture 1> (from [Shot 1]) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 2) aligns with the 5.00-second mark of the target video.\n\nintegrated_multimodal_description: [Shot 1] 3D CG, ultra-detailed, cinematic, a tight close-up shot frames a woman with brown hair tied up, wearing a blue lace top, her eyes closed, lips parted as she deeply sucks on a man’s erect penis, her tongue wrapped around the glans, her red-nailed hands gripping his thigh. The man, in a dark suit, is partially visible. A beer bottle rests in the foreground. The scene is lit with warm, red ambient lighting from behind, casting soft shadows. Diegetic sounds: wet sucking, soft moans, the bottle’s glass clink. [Shot 2] At 00:05.000, the camera holds static, the woman’s head tilts back slightly, her eyes flutter open briefly, lips still wrapped around the penis, the man’s hand grips her hip. The beer bottle remains in the foreground, slightly blurred.\n\noverall_soundscape: Wet, rhythmic sucking sounds, soft moans from the woman, the faint clink of the beer bottle, the man’s steady breathing, skin contact sounds.\n\nnon_diegetic_music: N/A"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 128,
+      "type": "LoadUpscalerTensorrtModel",
+      "pos": [
+        -170.47794442125317,
+        4919.51396554292
+      ],
+      "size": [
+        295.4078125,
+        82
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "links": [
+            244
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
+        "Node name for S&R": "LoadUpscalerTensorrtModel"
+      },
+      "widgets_values": [
+        "RealESRGAN_x4",
+        "fp16"
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 127,
+      "type": "UpscalerTensorrt",
+      "pos": [
+        -166.78868299309204,
+        5068.384676392131
+      ],
+      "size": [
+        294.81271348921337,
+        76
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 243
+        },
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "link": 244
+        }
+      ],
+      "outputs": [
+        {
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            271
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
+        "Node name for S&R": "UpscalerTensorrt"
+      },
+      "widgets_values": [
+        "2x",
+        2048,
+        2048
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 146,
+      "type": "AutoLoadRifeTensorrtModel",
+      "pos": [
+        -173.50202809332382,
+        5282.8177661041345
+      ],
+      "size": [
+        322.5669921875,
+        130
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "custom_config",
+          "shape": 7,
+          "type": "RIFE_RESOLUTION_CONFIG",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "rife_trt_model",
+          "type": "RIFE_TRT_MODEL",
+          "links": [
+            269
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+        "ver": "51d88c0c0db49308dd3ade9edd4a5c1bcdf4ec72",
+        "Node name for S&R": "AutoLoadRifeTensorrtModel"
+      },
+      "widgets_values": [
+        "rife49_ensemble_True_scale_1_sim",
+        "fp16",
+        "large",
+        1
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 145,
+      "type": "AutoRifeTensorrt",
+      "pos": [
+        -165.26232790270515,
+        5459.50658683213
+      ],
+      "size": [
+        311.24876401618576,
+        229.6878304442398
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "link": 271
+        },
+        {
+          "name": "rife_trt_model",
+          "type": "RIFE_TRT_MODEL",
+          "link": 269
+        },
+        {
+          "name": "interpolation_states",
+          "shape": 7,
+          "type": "INTERPOLATION_STATES",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            272
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+        "ver": "51d88c0c0db49308dd3ade9edd4a5c1bcdf4ec72",
+        "Node name for S&R": "AutoRifeTensorrt"
+      },
+      "widgets_values": [
+        100,
+        2,
+        false,
+        1,
+        ""
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 114,
+      "type": "LoadImage",
+      "pos": [
+        -1665.6561222473242,
+        4842.702983295172
+      ],
+      "size": [
+        481.3900943312203,
+        755.2125399391971
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            218
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.1",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "s02_ep09_clubisopenclosejasminesex_render_630.jpg",
+        "image"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
       "id": 105,
       "type": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
       "pos": [
@@ -279,7 +475,7 @@
         488.1139551136903
       ],
       "flags": {},
-      "order": 8,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
@@ -326,7 +522,7 @@
           "name": "last_frame",
           "shape": 7,
           "type": "IMAGE",
-          "link": null
+          "link": 273
         }
       ],
       "outputs": [
@@ -383,15 +579,15 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 114,
+      "id": 147,
       "type": "LoadImage",
       "pos": [
-        -1665.6561222473242,
-        4842.702983295172
+        -1662.9754713193804,
+        5650.574129113532
       ],
       "size": [
-        481.3900943312203,
-        755.2125399391971
+        472.1603407884161,
+        754.5062115330275
       ],
       "flags": {},
       "order": 5,
@@ -402,7 +598,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            218
+            273
           ]
         },
         {
@@ -424,231 +620,76 @@
       "bgcolor": "#355"
     },
     {
-      "id": 137,
-      "type": "easy showAnything",
+      "id": 117,
+      "type": "MarkdownNote",
       "pos": [
-        -856.1781450430237,
-        5402.11021783787
+        -2960.866060076235,
+        4865.696600649051
       ],
       "size": [
-        644.2917395113784,
-        391.0883454630102
-      ],
-      "flags": {},
-      "order": 11,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "shape": 7,
-          "type": "*",
-          "link": 253
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": []
-        }
-      ],
-      "title": "QWEN3VL GENERATED PROMPT",
-      "properties": {
-        "cnr_id": "comfyui-easy-use",
-        "ver": "595e0738a9e3f8d0d9c4d875461b2d2c9e7559c7",
-        "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
-      },
-      "widgets_values": [
-        "How the reference pictures align with the target video — <Picture 1> (from [Shot 1]) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 2) aligns with the 5.00-second mark of the target video.\n\nintegrated_multimodal_description: [Shot 1] 3D CG, ultra-detailed, cinematic, a tight close-up shot frames a woman with brown hair tied up, wearing a blue lace top, her eyes closed, lips parted as she deeply sucks on a man’s erect penis, her tongue wrapped around the glans, her red-nailed hands gripping his thigh. The man, in a dark suit, is partially visible. A beer bottle rests in the foreground. The scene is lit with warm, red ambient lighting from behind, casting soft shadows. Diegetic sounds: wet sucking, soft moans, the bottle’s glass clink. [Shot 2] At 00:05.000, the camera holds static, the woman’s head tilts back slightly, her eyes flutter open briefly, lips still wrapped around the penis, the man’s hand grips her hip. The beer bottle remains in the foreground, slightly blurred.\n\noverall_soundscape: Wet, rhythmic sucking sounds, soft moans from the woman, the faint clink of the beer bottle, the man’s steady breathing, skin contact sounds.\n\nnon_diegetic_music: N/A"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
-      "id": 128,
-      "type": "LoadUpscalerTensorrtModel",
-      "pos": [
-        -170.47794442125317,
-        4919.51396554292
-      ],
-      "size": [
-        295.4078125,
-        82
+        469.952857010293,
+        513.7942890234126
       ],
       "flags": {},
       "order": 6,
       "mode": 0,
       "inputs": [],
-      "outputs": [
-        {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "links": [
-            244
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
-        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
-        "Node name for S&R": "LoadUpscalerTensorrtModel"
-      },
+      "outputs": [],
+      "title": "Note: Model Links",
+      "properties": {},
       "widgets_values": [
-        "RealESRGAN_x4",
-        "fp16"
+        "## Model Links\n\n**vae**\n\n- [minimax_h3_video_vae_fp16.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors)\n- [minimax_h3_audio_vae_fp32.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors)\n\n**diffusion_models**\n\n- [minimax_h3_fl2va_pruned_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors)\n\n**text_encoders**\n\n- [qwen3vl_32b_minimax_h3_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors)\n\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 vae/\n│   │   ├── minimax_h3_video_vae_fp16.safetensors\n│   │   └── minimax_h3_audio_vae_fp32.safetensors\n│   ├── 📂 diffusion_models/\n│   │   └── minimax_h3_fl2va_pruned_int8_convrot.safetensors\n│   └── 📂 text_encoders/\n│       └── qwen3vl_32b_minimax_h3_int8_convrot.safetensors\n```\n\n## Report Issue\n\nNote: Please update ComfyUI first ([guide](https://docs.comfy.org/installation/update_comfyui)) and prepare required models. Desktop/Cloud updates follow stable releases, so some nightly-supported models may not be available yet.\n\n- Cannot run / runtime errors: [ComfyUI/issues](https://github.com/comfyanonymous/ComfyUI/issues)\n- UI / frontend issues: [ComfyUI_frontend/issues](https://github.com/Comfy-Org/ComfyUI_frontend/issues)\n- Workflow issues: [workflow_templates/issues](https://github.com/Comfy-Org/workflow_templates/issues)\n"
       ],
-      "color": "#323",
-      "bgcolor": "#535"
+      "color": "#432",
+      "bgcolor": "#653"
     },
     {
-      "id": 127,
-      "type": "UpscalerTensorrt",
+      "id": 116,
+      "type": "MarkdownNote",
       "pos": [
-        -166.78868299309204,
-        5068.384676392131
+        -2957.2942283223497,
+        5440.602917126879
       ],
       "size": [
-        294.81271348921337,
-        76
-      ],
-      "flags": {},
-      "order": 10,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 243
-        },
-        {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "link": 244
-        }
-      ],
-      "outputs": [
-        {
-          "name": "upscaled_images",
-          "type": "IMAGE",
-          "links": [
-            271
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
-        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
-        "Node name for S&R": "UpscalerTensorrt"
-      },
-      "widgets_values": [
-        "2x",
-        2048,
-        2048
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
-    },
-    {
-      "id": 146,
-      "type": "AutoLoadRifeTensorrtModel",
-      "pos": [
-        -173.50202809332382,
-        5282.8177661041345
-      ],
-      "size": [
-        322.5669921875,
-        130
+        458.1824017961467,
+        396.5256602495401
       ],
       "flags": {},
       "order": 7,
       "mode": 0,
-      "inputs": [
-        {
-          "name": "custom_config",
-          "shape": 7,
-          "type": "RIFE_RESOLUTION_CONFIG",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "links": [
-            269
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "51d88c0c0db49308dd3ade9edd4a5c1bcdf4ec72",
-        "Node name for S&R": "AutoLoadRifeTensorrtModel"
-      },
+      "inputs": [],
+      "outputs": [],
+      "title": "Note: MiniMax H3",
+      "properties": {},
       "widgets_values": [
-        "rife49_ensemble_True_scale_1_sim",
-        "fp16",
-        "large",
-        1
+        "## MiniMax H3\n\n[MiniMax H3](https://www.minimax.io/blog/minimax-h3) is MiniMax's general-purpose, omni-modal generation model. It jointly understands text, image, video, and audio, and generates video with **native stereo audio**: voice, sound effects, and music are modeled jointly in a single forward pass, not layered on afterward. Output is 768p, 24fps, and up to about 15 seconds. The open weights are 768p only. 2K comes from MiniMax's hosted H3-Regenerate-2K API and is not available locally.\n\n## About this workflow\n\nThis template runs the **Image to Video** task (`MiniMaxH3ImageToVideo` node), which covers both:\n\n- **t2va** (text-to-video), when no images are connected\n- **fl2va** (first/last-frame image-to-video), when `first_frame` and/or `last_frame` are connected\n\n**Key inputs**\n\n- **first_frame / last_frame**: optional keyframes; the model generates the motion between them\n- **prompt**: describe the shots, motion, and the accompanying audio (dialogue, SFX, music) in one block\n- **width / height**: set via Resolution Selector. H3's native canvas is a 768px short edge, capped at 768x1344 pixels, rounded to a multiple of 32\n- **duration (seconds)**: converted to a valid frame `length` by the Math Expression node, snapping up to the model's 17-frame-per-block (17k+5) grid at 24fps"
       ],
-      "color": "#223",
-      "bgcolor": "#335"
+      "color": "#332922",
+      "bgcolor": "#593930"
     },
     {
-      "id": 145,
-      "type": "AutoRifeTensorrt",
+      "id": 135,
+      "type": "MarkdownNote",
       "pos": [
-        -165.26232790270515,
-        5459.50658683213
+        -2461.0279743059073,
+        4852.657640949059
       ],
       "size": [
-        311.24876401618576,
-        229.6878304442398
+        755.3445356590767,
+        1367.277683143654
       ],
       "flags": {},
-      "order": 12,
+      "order": 8,
       "mode": 0,
-      "inputs": [
-        {
-          "name": "frames",
-          "type": "IMAGE",
-          "link": 271
-        },
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "link": 269
-        },
-        {
-          "name": "interpolation_states",
-          "shape": 7,
-          "type": "INTERPOLATION_STATES",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            272
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "51d88c0c0db49308dd3ade9edd4a5c1bcdf4ec72",
-        "Node name for S&R": "AutoRifeTensorrt"
-      },
+      "inputs": [],
+      "outputs": [],
+      "title": "USER HINTS",
+      "properties": {},
       "widgets_values": [
-        100,
-        2,
-        false,
-        1,
-        ""
+        "# 🎬 MiniMax H3 — User Hints\n\n> 💡 You can write your prompt in **any language**. Qwen3-VL analyzes it, translates it, and converts it into the official MiniMax H3 prompt format.\n\n---\n\n## 🗂️ Choose the right workflow\n\n| Workflow | Mode | Required inputs |\n|---|---|---|\n| `MiniMaxH3-T2VA-Qwen3VL.json` | 📝 **T2VA** | text only |\n| `MiniMaxH3-I2VA-Qwen3VL.json` | 🖼️ **I2VA** | text + first-frame image |\n| `MiniMaxH3-R2VA-Qwen3VL.json` | 🎞️ **R2VA / Reference** | text + reference image/video/audio for style, character, motion, or camera |\n\n> 🧩 **FL2VA** (first frame + last frame) and **L2VA** (last frame only) are handled automatically by the preset when you load more than one image or clearly indicate the last frame.\n\n---\n\n## ✍️ What to write in the prompt\n\nDescribe the scene naturally. Be clear about the concepts below — the model handles the rest.\n\n### 🎨 1. Visual style *(required — put it first)*\n\n- `photorealistic` 📷 · `cinematic` 🎥 · `live-action` 🎬\n- `anime` 🌸 · `cartoon` 🖍️ · `3D CG` 🧊 · `claymation` 🏺\n- `vintage film` 📼 · `watercolor` 🎨 · `fantasy` ✨ · `artistic portrait` 🖼️\n\n> Example: *\"A photorealistic cinematic scene in a bedroom with warm light...\"*\n\n### 👥 2. Subjects\n\n- Number, gender, apparent age, physical appearance, hair, makeup, clothing (or nudity)\n- Initial position, gaze, expression\n\n### 🏃 3. Action / motion\n\n- What happens and in what order\n- Speed: slow 🐢 · rhythmic 🎵 · accelerating 🚀 · pause ⏸️\n- Interaction between characters: contact, gestures, movements\n\n### 📷 4. Camera\n\n- **Shot type**: `close-up` 🔍 · `medium shot` 🎥 · `wide shot` 🌅 · `POV` 👁️\n- **Motion**: `static shot` · `push in` / `pull out` · `pan left/right` · `tilt up/down` · `tracking shot` · `arc shot` · `zoom in/out`\n- **Speed & amplitude**: slow/fast, small amplitude/large amplitude\n\n> Example: *\"The camera starts with a static medium-wide shot, then slowly pushes in toward the face.\"*\n\n### 🌆 5. Environment & lighting\n\n- 📍 Location: bedroom, bathroom, couch, outdoor, night, neon, natural\n- 💡 Light: warm, cold, pink/red neon, windows, shadows\n- 🎨 Dominant color and atmosphere\n\n---\n\n## 🎧 6. Audio *(very important)*\n\nMiniMax H3 generates **native audio**. Explicitly state what you want to hear.\n\n### 🔊 Diegetic sounds *(present in the scene)*\n\nAlways described in the prompt. Be concrete:\n\n| Category | Examples |\n|---|---|\n| 🫁 Breathing | soft, heavy, gasping, rhythmic |\n| 😏 Vocal | moans, sighs, gasps, whimpers, whispers |\n| 💓 Body | heartbeat, skin-to-skin contact, body fluids |\n| 🛏️ Movement | fabric, bedding, sheets rustling |\n| 💋 Contact | kisses, licks, slaps, impacts |\n| 🌧️ Ambient | water, rain, distant traffic, room tone, wind |\n\n> Example: *\"Heavy breathing, soft moans, and the sound of sheets rustling.\"*\n\n### 🎵 Non-diegetic music *(background score)*\n\nBy default the preset outputs **`N/A`** — no background music is generated. 🚫🎵\n\nTo add music, you must **explicitly request it** and describe:\n\n- 🎼 **Genre**: R&B, ambient, synthwave, jazz, deep house, orchestral, lo-fi...\n- 🎸 **Instrumentation**: piano, strings, bass, synths, guitar, drums\n- ⏱️ **Tempo**: slow, moderate, fast\n- 📈 **Rhythm & dynamics**: when it enters, builds, fades\n\n> Examples:\n> - *\"Add a slow R&B background track with deep bass and atmospheric synths.\"*\n> - *\"Soft piano notes at a slow tempo, joined by sustained low strings that gradually increase in volume before fading out.\"*\n> - *\"No music, only realistic sounds from the scene.\"* ← this is the **default** behavior\n\n> 💡 **Tip**: For NSFW scenes, diegetic sounds alone usually feel more realistic. Add music only when it clearly supports the mood.\n\n---\n\n## ⏱️ 7. Duration\n\nPick the matching QwenVL-Mod preset:\n\n| Preset | Duration |\n|---|---|\n| 🎬 MiniMax H3 NSFW (5s) | 5 seconds |\n| 🎬 MiniMax H3 NSFW (10s) | 10 seconds |\n| 🎬 MiniMax H3 NSFW (15s) | 15 seconds |\n\n> MiniMax H3 supports clips from **4 to 15 seconds**.\n\n---\n\n## 📐 Recommended resolution\n\nMiniMax H3 is trained with the **short edge at 768 px** and the long edge **capped at 1344 px**, in multiples of 32.\n\n| Resolution | Orientation |\n|---|---|\n| `768x1344` | 📱 portrait |\n| `896x1152` | 📱 portrait |\n| `960x1280` | 📱 portrait |\n| `1024x1024` | ⬛ square |\n\n> ⚠️ **Avoid generating directly at 1080p.** Generate at native resolution, then use the bundled TensorRT upscale/interpolation nodes.\n\n---\n\n## 📝 Example prompt\n\n> *\"A photorealistic cinematic scene in a bedroom with warm lamplight. A young dark-haired woman lies on the bed wearing only white sheets. A man approaches slowly; the camera does a gentle push in from wide shot to close-up. He kisses her neck, she closes her eyes and sighs. Audio: heavy breathing, whispers, sheets rustling. No background music. Intimate, realistic style, warm light.\"*\n\n---\n\n## 🚫 What NOT to do\n\n- ❌ Do not request minors, non-consent, or illegal acts — the preset refuses automatically\n- ❌ Do not add lighting or effects inconsistent with the described environment\n- ❌ Do not request durations longer than 15 seconds\n- ❌ Do not request 1080p native generation — use the recommended resolutions and upscale after\n"
       ],
-      "color": "#223",
-      "bgcolor": "#335"
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
     }
   ],
   "links": [
@@ -739,6 +780,14 @@
       126,
       0,
       "IMAGE"
+    ],
+    [
+      273,
+      147,
+      0,
+      105,
+      5,
+      "IMAGE"
     ]
   ],
   "groups": [
@@ -774,8 +823,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 7,
-          "lastNodeId": 146,
-          "lastLinkId": 272,
+          "lastNodeId": 147,
+          "lastLinkId": 273,
           "lastRerouteId": 0
         },
         "revision": 0,
