@@ -1,5 +1,41 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.5 (2026/08/05)
+
+🎬 **MiniMax H3 Full Support + Multi-Reference Input + R2VA/FL2VA Presets**
+
+Major update adding complete MiniMax H3 video+audio generation support with all 4 modes (T2VA, I2VA, FL2VA, R2VA), dedicated NSFW presets for each mode, and a new multi-reference input system.
+
+### 🎬 **MiniMax H3 Workflows (4)**
+|- **T2VA**: Text-to-video+audio with PromptEnhancer integration
+|- **I2VA**: Image-to-video+audio (first-frame, last-frame, or both)
+|- **FL2VA**: First-Last-Frame to video with TensorRT upscale + RIFE interpolation
+|- **R2VA**: Reference-to-video with up to 9 reference images, 3 videos, 3 audio clips
+|- All workflows auto-downloaded at boot from GitHub
+
+### 🖼️ **Multi-Reference Input (image2)**
+|- **Renamed `video` input to `image2`**: Clearer name for multi-reference workflows
+|- **Frames as individual images**: `image2` frames are now passed to Qwen3-VL as separate images (not as a video sequence), enabling proper multi-reference analysis
+|- **FL2VA**: First frame on `image`, last frame on `image2` → Qwen3-VL sees both
+|- **R2VA**: Primary reference on `image`, additional references on `image2` → all visible
+|- **Backward compatible**: Existing workflows updated automatically, no reconnection needed
+
+### 🎯 **NSFW Presets (9 total)**
+|- 🎬 **MiniMax H3 NSFW (5s/10s/15s)**: Base presets for T2VA/I2VA — 3-field format (integrated_multimodal_description + overall_soundscape + non_diegetic_music)
+|- 🎞️ **MiniMax H3 NSFW R2VA (5s/10s/15s)**: Reference presets — 6-section format per official guide (subject_definitions + summary + retention_analysis + detailed_description + overall_soundscape + non_diegetic_music) with `<Subject N>`, `<Picture N>`, `<Video N>`, `<Audio N>` labels
+|- 🔄 **MiniMax H3 NSFW FL2VA (5s/10s/15s)**: First-Last-Frame presets — describe the transition path between frames, favor single continuous shot
+
+### 📦 **Workflow Organization**
+|- Moved all MiniMax H3 workflows from `vastai/workflows/MiniMaxH3/` to `minimax/`
+|- Renamed `MiniMaxH3-I2VA-FLF-Qwen3VL.json` to `MiniMaxH3-FL2VA-Qwen3VL.json`
+|- Added `Civitai_MiniMaxH3.md` for Civitai publication
+|- Updated Dockerfile download paths
+
+### 🛠️ **Other Changes**
+|- Updated tooltips for `image2` and `frame_count`
+|- GGUF node already handled multi-image correctly (no changes needed)
+|- Internal cache functions retain `video_hash` for backward compatibility
+
 ## Version 2.4 (2026/08/04)
 
 🚀 **Local Model Discovery + Qwen3.5 Support + SageAttention**
