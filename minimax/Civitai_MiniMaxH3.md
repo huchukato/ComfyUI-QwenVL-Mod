@@ -224,7 +224,7 @@ All MiniMax H3 models from [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-O
 
 - `models/vae/` → `minimax_h3_video_vae_fp16.safetensors` (~5 GB)
 - `models/vae/` → `minimax_h3_audio_vae_fp32.safetensors` (~0.6 GB)
-- `models/diffusion_models/` → `minimax_h3_fl2va_pruned_int8_convrot.safetensors` (~21 GB)
+- `models/diffusion_models/` → `10Eros_Max_H3_FL2VA-INT8-ConvRot.safetensors` (~21 GB)
 - `models/text_encoders/` → `qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors` (~24.5 GB)
 
 **R2VA (ref2va)** — same as above, except:
@@ -247,7 +247,7 @@ All MiniMax H3 models from [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-O
 ### Download Links
 
 - **VAE**: [video_vae_fp16](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors) · [audio_vae_fp32](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors)
-- **Diffusion (fl2va)**: [minimax_h3_fl2va_pruned_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors)
+- **Diffusion (fl2va)**: [10Eros_Max_H3_FL2VA-INT8-ConvRot.safetensors](https://huggingface.co/DmitryDB/MiniMax-H3-10Eros-Max-Quants/resolve/main/FL2VA/10Eros_Max_H3_FL2VA-INT8-ConvRot.safetensors)
 - **Diffusion (ref2va)**: [minimax_h3_ref2va_pruned_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors)
 - **Text encoder**: [qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors](https://huggingface.co/ethanfel/Qwen3-VL-32B-Ultra-Heretic-H3-ComfyUI-INT8-ConvRot/resolve/main/qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors)
 - **INT4 models**: [Merserk/MiniMax-H3-INT4-ConvRot](https://huggingface.co/Merserk/MiniMax-H3-INT4-ConvRot)

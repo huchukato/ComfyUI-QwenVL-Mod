@@ -1783,14 +1783,14 @@
               "Node name for S&R": "UNETLoader",
               "models": [
                 {
-                  "name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
-                  "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+                  "name": "10Eros_Max_H3_FL2VA-INT8-ConvRot.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/10Eros_Max_H3_FL2VA-INT8-ConvRot.safetensors",
                   "directory": "diffusion_models"
                 }
               ]
             },
             "widgets_values": [
-              "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+              "10Eros_Max_H3_FL2VA-INT8-ConvRot.safetensors",
               "default"
             ]
           },
