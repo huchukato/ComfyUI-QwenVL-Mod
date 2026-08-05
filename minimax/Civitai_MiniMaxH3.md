@@ -21,8 +21,8 @@ Version 2.5 (2026/08/05) — 🎬 MiniMax H3 Native Video+Audio + Qwen3-VL Auto-
 ### Model Quantization Options
 
 - **BF16 (full)** — Diffusion ~42 GB + Text encoder ~65 GB = ~110 GB total → [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3)
-- **INT8 (pruned)** — Diffusion ~21 GB + Text encoder ~27 GB = ~50 GB total → [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3)
-- **INT4 (pruned)** — Diffusion ~11 GB + Text encoder ~15 GB = ~27 GB total → [Merserk/MiniMax-H3-INT4-ConvRot](https://huggingface.co/Merserk/MiniMax-H3-INT4-ConvRot)
+- **INT8 (pruned)** — Diffusion ~21 GB + Text encoder ~24.5 GB = ~50 GB total → [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3)
+- **INT4 (pruned)** — Diffusion ~11 GB + Text encoder ~15 GB = ~24.5 GB total → [Merserk/MiniMax-H3-INT4-ConvRot](https://huggingface.co/Merserk/MiniMax-H3-INT4-ConvRot)
 - **NVFP4 (pruned)** — Diffusion ~12.5 GB + Text encoder ~15 GB = ~28 GB total → [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3) (Blackwell)
 
 ### Software
@@ -225,7 +225,7 @@ All MiniMax H3 models from [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-O
 - `models/vae/` → `minimax_h3_video_vae_fp16.safetensors` (~5 GB)
 - `models/vae/` → `minimax_h3_audio_vae_fp32.safetensors` (~0.6 GB)
 - `models/diffusion_models/` → `minimax_h3_fl2va_pruned_int8_convrot.safetensors` (~21 GB)
-- `models/text_encoders/` → `qwen3vl_32b_minimax_h3_int8_convrot.safetensors` (~27 GB)
+- `models/text_encoders/` → `qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors` (~24.5 GB)
 
 **R2VA (ref2va)** — same as above, except:
 
@@ -249,7 +249,7 @@ All MiniMax H3 models from [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-O
 - **VAE**: [video_vae_fp16](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors) · [audio_vae_fp32](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors)
 - **Diffusion (fl2va)**: [minimax_h3_fl2va_pruned_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors)
 - **Diffusion (ref2va)**: [minimax_h3_ref2va_pruned_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors)
-- **Text encoder**: [qwen3vl_32b_minimax_h3_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors)
+- **Text encoder**: [qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors](https://huggingface.co/ethanfel/Qwen3-VL-32B-Ultra-Heretic-H3-ComfyUI-INT8-ConvRot/resolve/main/qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors)
 - **INT4 models**: [Merserk/MiniMax-H3-INT4-ConvRot](https://huggingface.co/Merserk/MiniMax-H3-INT4-ConvRot)
 
 ---
