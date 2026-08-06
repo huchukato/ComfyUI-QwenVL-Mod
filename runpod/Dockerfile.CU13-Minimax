@@ -1,0 +1,342 @@
+# ComfyUI-QwenVL-Mod RunPod Worker (CUDA 13.0) — MiniMax H3 edition
+# Based on runpod/comfyui:cuda13.0 template (includes ComfyUI core, Manager legacy UI,
+# KJNodes, Civicomfy, RunpodDirect, FileBrowser, Jupyter, SSH, persistence on /workspace)
+# Adds: QwenVL-Mod + MiniMax H3 support nodes, all heavy MiniMax-H3 models
+#       downloaded at boot in background (~50GB total).
+
+FROM runpod/comfyui:cuda13.0
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Ensure ComfyUI core is v0.30.0+ (MiniMax H3 requires ComfyUI 0.30.0)
+# The base image may ship an older tag, so we force-checkout the release.
+# Use --force on fetch to avoid "would clobber existing tag" errors.
+# ──────────────────────────────────────────────────────────────────────────────
+RUN cd /opt/comfyui-baked && \
+    git fetch --tags --force origin && \
+    git status --short && \
+    git -c advice.detachedHead=false checkout -f v0.30.0 && \
+    echo "ComfyUI checked out at:" && git rev-parse --short HEAD
+
+# Re-install / verify ComfyUI requirements after the version switch.
+# This is best-effort: if it fails, the image still has the base packages.
+RUN cd /opt/comfyui-baked && \
+    (pip install --no-cache-dir -r requirements.txt || echo "requirements install returned non-zero, continuing") && \
+    pip cache purge
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Custom nodes (excludes 4 already baked: Manager, KJNodes, Civicomfy, RunpodDirect)
+# MiniMax H3 support is built into ComfyUI 0.30.0; no separate node required.
+# ──────────────────────────────────────────────────────────────────────────────
+RUN cd /opt/comfyui-baked/custom_nodes && \
+    git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git && \
+    git clone https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto.git && \
+    git clone https://github.com/huchukato/ComfyUI-Upscaler-TensorRT-Auto.git && \
+    git clone https://github.com/huchukato/ComfyUI-HuggingFace.git && \
+    git clone https://github.com/huchukato/comfy-tagcomplete.git && \
+    git clone https://github.com/Koishi-Star/Euler-Smea-Dyn-Sampler.git && \
+    git clone https://github.com/ltdrdata/was-node-suite-comfyui.git && \
+    git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git && \
+    git clone https://github.com/rgthree/rgthree-comfy.git && \
+    git clone https://github.com/yolain/ComfyUI-Easy-Use.git && \
+    git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git && \
+    git clone https://github.com/ashtar1984/comfyui-find-perfect-resolution.git
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Install requirements for all custom nodes
+# ──────────────────────────────────────────────────────────────────────────────
+RUN bash -c 'cd /opt/comfyui-baked/custom_nodes && for node_dir in */; do \
+        if [ -f "$node_dir/requirements.txt" ]; then \
+            echo "Installing requirements for $node_dir..." && \
+            pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; \
+        fi; \
+    done' && \
+    pip cache purge
+
+# ──────────────────────────────────────────────────────────────────────────────
+# llama-cpp-python (CUDA 13 wheel for QwenVL GGUF support)
+# ──────────────────────────────────────────────────────────────────────────────
+RUN pip install --upgrade --force-reinstall --no-cache-dir \
+    https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.45-cu131-linux-20260801/llama_cpp_python-0.3.45+cu131-cp312-cp312-linux_x86_64.whl && \
+    pip cache purge
+
+# ──────────────────────────────────────────────────────────────────────────────
+# sageattention (required by --use-sage-attention)
+# ──────────────────────────────────────────────────────────────────────────────
+RUN pip install --no-cache-dir sageattention && \
+    pip cache purge
+
+# ──────────────────────────────────────────────────────────────────────────────
+# TensorRT CUDA 13 wheels (only if needed by MiniMax H3 workflow; keep minimal)
+# TODO: remove if not needed
+# ──────────────────────────────────────────────────────────────────────────────
+RUN pip install --no-cache-dir \
+        tensorrt-cu13==10.15.1.29 \
+        tensorrt-cu13-bindings==10.15.1.29 \
+        tensorrt-cu13-libs==10.15.1.29 && \
+    pip cache purge
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Model directories (models downloaded at boot, not baked due to 50GB total)
+# ──────────────────────────────────────────────────────────────────────────────
+RUN mkdir -p /opt/comfyui-baked/models/vae && \
+    mkdir -p /opt/comfyui-baked/models/diffusion_models && \
+    mkdir -p /opt/comfyui-baked/models/text_encoders
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Optional Hugging Face token (runtime env var) for gated/high-rate-limit
+# downloads. Set HF_TOKEN in the RunPod template environment variables.
+# ──────────────────────────────────────────────────────────────────────────────
+ENV HF_TOKEN=""
+
+# ──────────────────────────────────────────────────────────────────────────────
+# MiniMax H3 workflow download script (small JSONs, downloaded at boot)
+# Always fetches latest from GitHub into the active /workspace install.
+# Overwrites existing files at every boot.
+# ──────────────────────────────────────────────────────────────────────────────
+RUN cat > /usr/local/bin/download-minimax-workflows.sh << 'EOF'
+#!/bin/bash
+LOG="/var/log/minimax-h3-workflows.log"
+BASE_DIR="/workspace/runpod-slim/ComfyUI/user/default/workflows"
+MINIMAX_WF_URL="https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/minimax"
+EXTRA_WF_URL="https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows"
+READY_MARKER="/workspace/runpod-slim/ComfyUI/main.py"
+MINIMAX_WORKFLOWS=(
+    "MiniMaxH3-I2VA-Qwen3VL.json"
+    "MiniMaxH3-FL2VA-Qwen3VL.json"
+    "MiniMaxH3-T2VA-Qwen3VL.json"
+    "MiniMaxH3-R2VA-Qwen3VL.json"
+)
+EXTRA_WORKFLOWS=(
+    "PMP-LoRaStack-Upscale-Wildcards.json"
+)
+
+log() { echo "$(date): $*" | tee -a "$LOG"; }
+
+download_list() {
+    local base_url="$1"
+    shift
+    local wfs=("$@")
+    for wf in "${wfs[@]}"; do
+        dest="$BASE_DIR/$wf"
+        if wget -q --tries=3 --timeout=30 "$base_url/$wf" -O "$dest"; then
+            log "✅ $wf downloaded"
+        else
+            log "❌ $wf download failed"
+        fi
+    done
+}
+
+log "⏳ Waiting for /workspace ComfyUI..."
+for i in $(seq 1 120); do
+    [ -f "$READY_MARKER" ] && break
+    sleep 5
+done
+
+if [ ! -f "$READY_MARKER" ]; then
+    log "❌ ERROR: ComfyUI not ready after 600s, aborting workflow download"
+    exit 1
+fi
+
+mkdir -p "$BASE_DIR"
+log "🔄 Downloading latest MiniMax H3 workflows..."
+download_list "$MINIMAX_WF_URL" "${MINIMAX_WORKFLOWS[@]}"
+
+log "🔄 Downloading extra workflows..."
+download_list "$EXTRA_WF_URL" "${EXTRA_WORKFLOWS[@]}"
+
+log "🏁 Workflow downloads done"
+EOF
+RUN chmod +x /usr/local/bin/download-minimax-workflows.sh
+
+# ──────────────────────────────────────────────────────────────────────────────
+# NO VAE/diffusion/text_encoder baked-in here — all MiniMax-H3 models are huge:
+#   ~50GB total. Instead, a boot script downloads them to /workspace on first run.
+# ──────────────────────────────────────────────────────────────────────────────
+
+# ──────────────────────────────────────────────────────────────────────────────
+# MiniMax H3 model download script (~50GB, downloaded at boot in background)
+# Waits for /workspace/runpod-slim/ComfyUI to exist, then downloads if missing.
+# Robust: retries with backoff, resumes interrupted downloads, verifies size.
+# ──────────────────────────────────────────────────────────────────────────────
+RUN cat > /usr/local/bin/download-minimax-h3-models.sh << 'EOF'
+#!/bin/bash
+BASE_DIR="/workspace/runpod-slim/ComfyUI/models"
+LOG="/var/log/minimax-h3-models.log"
+READY_MARKER="/workspace/runpod-slim/ComfyUI/main.py"   # created by start.sh copy
+
+# Optional Hugging Face authentication for gated/high-rate-limit downloads.
+HF_AUTH=()
+if [ -n "${HF_TOKEN}" ]; then
+    HF_AUTH=(--header="Authorization: Bearer ${HF_TOKEN}")
+    log "🔑 HF_TOKEN detected, using authenticated Hugging Face downloads"
+fi
+
+# Models: subdir|name|url|min_size_bytes (min_size = sanity check)
+MODELS=(
+    "vae|minimax_h3_video_vae_fp16.safetensors|https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors|5200000000"
+    "vae|minimax_h3_audio_vae_fp32.safetensors|https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors|600000000"
+    "diffusion_models|10Eros_Max_H3_FL2VA-NVFP4-HQ.safetensors|https://huggingface.co/DmitryDB/MiniMax-H3-10Eros-Max-Quants/resolve/main/FL2VA/10Eros_Max_H3_FL2VA-NVFP4-HQ.safetensors|14599328348"
+    "text_encoders|qwen3vl_32b_heretic_minimax_h3_nvfp4.safetensors|https://huggingface.co/sakamakismile/Qwen3-VL-32B-Heretic-MiniMax-H3-NVFP4/resolve/main/qwen3vl_32b_heretic_minimax_h3_nvfp4.safetensors|15683129587"
+)
+
+log() { echo "$(date): $*" | tee -a "$LOG"; }
+
+log "📥 === MiniMax H3 model download started (PID $$) ==="
+log "⏳ Waiting for /workspace mount and ComfyUI ready marker..."
+for i in $(seq 1 120); do
+    [ -f "$READY_MARKER" ] && break
+    sleep 5
+done
+
+if [ ! -f "$READY_MARKER" ]; then
+    log "❌ ERROR: ComfyUI ready marker not found after 600s, aborting"
+    exit 1
+fi
+
+log "✅ ComfyUI ready, base dir: $BASE_DIR"
+mkdir -p "$BASE_DIR"/{vae,diffusion_models,text_encoders}
+
+download_model() {
+    local subdir="$1" name="$2" url="$3" min_size="$4"
+    local dest="$BASE_DIR/$subdir/$name"
+    local max_retries=5
+
+    for attempt in $(seq 1 $max_retries); do
+        if [ -f "$dest" ]; then
+            local size
+            size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
+            if [ "$size" -ge "$min_size" ]; then
+                log "✅ $name already present ($size bytes >= $min_size), skipping"
+                return 0
+            else
+                log "⚠️  $name incomplete ($size bytes < $min_size), resuming (attempt $attempt/$max_retries)"
+            fi
+        else
+            log "📥 Downloading $name (attempt $attempt/$max_retries)..."
+        fi
+
+        (
+            while true; do
+                if [ ! -f "$dest" ]; then sleep 5; continue; fi
+                local s
+                s=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
+                local pct=$(( s * 100 / min_size ))
+                local gb=$(( s / 1073741824 ))
+                local total_gb=$(( min_size / 1073741824 ))
+                log "📊 PROGRESS: $name — ${gb}GB / ${total_gb}GB (${pct}%)"
+                [ "$pct" -ge 100 ] && break
+                sleep 30
+            done
+        ) &
+        local monitor_pid=$!
+
+        if wget -q --continue --tries=3 --timeout=120 "${HF_AUTH[@]}" "$url" -O "$dest"; then
+            kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
+            local size
+            size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
+            if [ "$size" -ge "$min_size" ]; then
+                log "✅ $name downloaded successfully ($size bytes)"
+                return 0
+            else
+                log "⚠️  $name downloaded but size $size < $min_size, will retry"
+            fi
+        else
+            kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
+            log "⚠️  wget failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
+        fi
+
+        [ "$attempt" -lt "$max_retries" ] && sleep $((attempt * 10))
+    done
+
+    log "❌ FAILED: $name could not be downloaded after $max_retries attempts"
+    return 1
+}
+
+failures=0
+for entry in "${MODELS[@]}"; do
+    IFS='|' read -r subdir name url min_size <<< "$entry"
+    download_model "$subdir" "$name" "$url" "$min_size" || failures=$((failures + 1))
+done
+
+log "📦 === MiniMax H3 model download finished ($failures failures) ==="
+EOF
+RUN chmod +x /usr/local/bin/download-minimax-h3-models.sh
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Custom entrypoint: force ComfyUI v0.30.0, pre-populate args,
+# launch MiniMax H3 model download in background, then exec /start.sh
+# ──────────────────────────────────────────────────────────────────────────────
+RUN cat > /usr/local/bin/custom-entrypoint.sh << 'EOF'
+#!/bin/bash
+COMFY_LOG="/var/log/comfyui-update.log"
+MINIMAX_TAG="v0.30.0"
+
+force_comfyui_version() {
+    local repo_dir="$1"
+    local label="$2"
+    if [ ! -d "$repo_dir/.git" ]; then
+        echo "$(date): ⚠️  $label no .git, skipping" | tee -a "$COMFY_LOG"
+        return 0
+    fi
+    echo "$(date): � Ensuring $label is on $MINIMAX_TAG (MiniMax H3 requirement)..." | tee -a "$COMFY_LOG"
+
+    # Fetch tags, then checkout the required tag, discarding any local changes
+    if timeout 60 git -C "$repo_dir" fetch --tags origin 2>>"$COMFY_LOG"; then
+        local current_hash target_hash
+        current_hash=$(git -C "$repo_dir" rev-parse --short HEAD 2>/dev/null || echo "unknown")
+        if timeout 30 git -C "$repo_dir" -c advice.detachedHead=false checkout -f "$MINIMAX_TAG" 2>>"$COMFY_LOG"; then
+            target_hash=$(git -C "$repo_dir" rev-parse --short HEAD 2>/dev/null || echo "unknown")
+            echo "$(date): ✅ $label forced to $MINIMAX_TAG ($current_hash -> $target_hash)" | tee -a "$COMFY_LOG"
+        else
+            echo "$(date): ❌ $label checkout $MINIMAX_TAG failed" | tee -a "$COMFY_LOG"
+        fi
+    else
+        echo "$(date): ⚠️  $label fetch tags failed/timed out (offline?), leaving at current version" | tee -a "$COMFY_LOG"
+    fi
+}
+
+# Force baked ComfyUI core to v0.30.0
+force_comfyui_version /opt/comfyui-baked "ComfyUI (baked template)"
+
+# Force active install on /workspace if it already exists (affects restarts)
+if [ -d /workspace/runpod-slim/ComfyUI/.git ]; then
+    force_comfyui_version /workspace/runpod-slim/ComfyUI "ComfyUI (active install)"
+fi
+
+# Pre-populate comfyui_args.txt with MiniMax H3 / QwenVL-Mod args if it doesn't exist
+ARGS_FILE="/workspace/runpod-slim/comfyui_args.txt"
+if [ ! -f "$ARGS_FILE" ]; then
+    mkdir -p /workspace/runpod-slim
+    cat > "$ARGS_FILE" << 'INNER'
+# Custom ComfyUI arguments (one per line, # = comment)
+--disable-auto-launch
+--fast fp16_accumulation
+--use-sage-attention
+--reserve-vram 2
+--cuda-malloc
+--async-offload
+INNER
+    echo "Created comfyui_args.txt with MiniMax H3 / QwenVL-Mod optimized args"
+fi
+
+# Launch MiniMax H3 workflow download in background (always fetches latest from GitHub)
+setsid /usr/local/bin/download-minimax-workflows.sh </dev/null &
+
+# Launch MiniMax H3 model download in a detached session (survives exec /start.sh)
+# ~50GB, takes a long time on first boot; models persist on /workspace volume.
+setsid /usr/local/bin/download-minimax-h3-models.sh </dev/null &
+
+# Execute original start.sh from template base — ComfyUI starts immediately.
+exec /start.sh
+EOF
+RUN chmod +x /usr/local/bin/custom-entrypoint.sh
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Clean up heavy Git files to save space
+# ──────────────────────────────────────────────────────────────────────────────
+RUN find /opt/comfyui-baked/custom_nodes -name ".git" -type d -exec find {} -name "*.pack" -delete + 2>/dev/null || true && \
+    find /opt/comfyui-baked/custom_nodes -name ".git" -type d -exec find {} -name "pack-*.idx" -delete + 2>/dev/null || true && \
+    find /opt/comfyui-baked/custom_nodes -name ".git" -type d -exec find {} -name "objects" -type d -exec rm -rf {} + 2>/dev/null || true
+
+# Override entrypoint
+ENTRYPOINT ["/usr/local/bin/custom-entrypoint.sh"]
