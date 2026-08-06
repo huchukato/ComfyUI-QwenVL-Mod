@@ -1,8 +1,8 @@
 {
   "id": "cb1682ce-6347-41dc-8632-cf8853381ef8",
   "revision": 0,
-  "last_node_id": 154,
-  "last_link_id": 303,
+  "last_node_id": 155,
+  "last_link_id": 305,
   "nodes": [
     {
       "id": 118,
@@ -29,51 +29,6 @@
       "bgcolor": "#653"
     },
     {
-      "id": 115,
-      "type": "ResolutionSelector",
-      "pos": [
-        -1160.3439562862548,
-        4849.291389086567
-      ],
-      "size": [
-        270,
-        170
-      ],
-      "flags": {},
-      "order": 1,
-      "mode": 0,
-      "showAdvanced": false,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "width",
-          "type": "INT",
-          "links": [
-            219
-          ]
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": [
-            220
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.30.1",
-        "Node name for S&R": "ResolutionSelector"
-      },
-      "widgets_values": [
-        "16:9 (Widescreen)",
-        1,
-        32
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 128,
       "type": "LoadUpscalerTensorrtModel",
       "pos": [
@@ -85,7 +40,7 @@
         82
       ],
       "flags": {},
-      "order": 2,
+      "order": 1,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -121,7 +76,7 @@
         130
       ],
       "flags": {},
-      "order": 3,
+      "order": 2,
       "mode": 0,
       "inputs": [
         {
@@ -166,7 +121,7 @@
         999.520163217875
       ],
       "flags": {},
-      "order": 4,
+      "order": 3,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -190,14 +145,14 @@
         556.5218885027944
       ],
       "flags": {},
-      "order": 5,
+      "order": 4,
       "mode": 0,
       "inputs": [],
       "outputs": [],
       "title": "Note: Model Links",
       "properties": {},
       "widgets_values": [
-        "## Model Links\n[🤗 Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3)\n\n**vae**\n\n- [minimax_h3_video_vae_fp16.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors)\n- [minimax_h3_audio_vae_fp32.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors)\n\n**diffusion_models**\n\n- [MiniMax-H3_Ref2VA-NVFP4-HQ.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/MiniMax-H3_Ref2VA-NVFP4-HQ.safetensors)\n\n**text_encoders**\n\n- [qwen3vl_32b_heretic_minimax_h3_nvfp4.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_heretic_minimax_h3_nvfp4.safetensors)\n\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 vae/\n│   │   ├── minimax_h3_video_vae_fp16.safetensors\n│   │   └── minimax_h3_audio_vae_fp32.safetensors\n│   ├── 📂 diffusion_models/\n│   │   └── MiniMax-H3_Ref2VA-NVFP4-HQ.safetensors\n│   └── 📂 text_encoders/\n│       └── qwen3vl_32b_heretic_minimax_h3_nvfp4.safetensors\n```\n\n## Report Issue\n\nNote: Please update ComfyUI first ([guide](https://docs.comfy.org/installation/update_comfyui)) and prepare required models. Desktop/Cloud updates follow stable releases, so some nightly-supported models may not be available yet.\n\n- Cannot run / runtime errors: [ComfyUI/issues](https://github.com/comfyanonymous/ComfyUI/issues)\n- UI / frontend issues: [ComfyUI_frontend/issues](https://github.com/Comfy-Org/ComfyUI_frontend/issues)\n- Workflow issues: [workflow_templates/issues](https://github.com/Comfy-Org/workflow_templates/issues)\n"
+        "## Model Links\n[🤗 Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3)\n\n**vae**\n\n- [minimax_h3_video_vae_fp16.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors)\n- [minimax_h3_audio_vae_fp32.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors)\n\n**diffusion_models**\n\n- [MiniMax-H3_Ref2VA-INT8-ConvRot-HQ.safetensors](https://huggingface.co/DmitryDB/MiniMax-H3-ComfyUI-Quants/resolve/main/Ref2VA/MiniMax-H3_Ref2VA-INT8-ConvRot-HQ.safetensors)\n\n**text_encoders**\n\n- [qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors](https://huggingface.co/ethanfel/Qwen3-VL-32B-Ultra-Heretic-H3-ComfyUI-INT8-ConvRot/resolve/main/qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors)\n\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 vae/\n│   │   ├── minimax_h3_video_vae_fp16.safetensors\n│   │   └── minimax_h3_audio_vae_fp32.safetensors\n│   ├── 📂 diffusion_models/\n│   │   └── MiniMax-H3_Ref2VA-INT8-ConvRot-HQ.safetensors\n│   └── 📂 text_encoders/\n│       └── qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors\n```\n\n## Report Issue\n\nNote: Please update ComfyUI first ([guide](https://docs.comfy.org/installation/update_comfyui)) and prepare required models. Desktop/Cloud updates follow stable releases, so some nightly-supported models may not be available yet.\n\n- Cannot run / runtime errors: [ComfyUI/issues](https://github.com/comfyanonymous/ComfyUI/issues)\n- UI / frontend issues: [ComfyUI_frontend/issues](https://github.com/Comfy-Org/ComfyUI_frontend/issues)\n- Workflow issues: [workflow_templates/issues](https://github.com/Comfy-Org/workflow_templates/issues)\n"
       ],
       "color": "#432",
       "bgcolor": "#653"
@@ -214,14 +169,14 @@
         687.9279474019359
       ],
       "flags": {},
-      "order": 6,
+      "order": 5,
       "mode": 0,
       "inputs": [],
       "outputs": [],
       "title": "Note: MiniMax H3",
       "properties": {},
       "widgets_values": [
-        "## MiniMax H3\n\n[MiniMax H3](https://www.minimax.io/blog/minimax-h3) is MiniMax's general-purpose, omni-modal generation model. It jointly understands text, image, video, and audio, and generates video with **native stereo audio**: voice, sound effects, and music are modeled jointly in a single forward pass, not layered on afterward. Output is 768p, 24fps, and up to about 15 seconds. The open weights are 768p only. 2K comes from MiniMax's hosted H3-Regenerate-2K API and is not available locally.\n\n## ComfyUI links\n- [ComfyUI#15224](https://github.com/Comfy-Org/ComfyUI/pull/15224)\n- [🤗 Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3)\n\n## About this workflow\n\nThis template runs the **reference-to-video (ref2va)** task using the `MiniMaxH3ReferenceToVideo` node. It takes any mix of reference images, videos, and standalone audio, and weaves them into the generation to lock in a character's identity, a style, a motion, a camera move, or a voice.\n\n**Key inputs**\n\n- **ref_images / ref_videos / ref_video_audios / ref_audios**: up to 9 reference images, 3 reference videos (each may carry its own paired soundtrack), and 3 standalone reference audio clips\n- **prompt**: reference the inputs by tag, in the exact order they were connected, for example `<Picture 1>`, `<Video 1>`, `<Audio 1>`, then describe the target scene, motion, and audio\n- **ref_image_size**: `match` scales references down to the generation's resolution (faster); `max` keeps up to a 2048px short edge for stronger identity fidelity, at the cost of speed since reference tokens ride along every sampling step\n- **width / height**: set via Resolution Selector.\n- **duration (seconds)**: converted to a valid frame `length` by the Math Expression node\n\n**Sampling and decode**\n\n- Sampler: `res_multistep`. `beta` or `normal` scheduler tends to outperform `simple` for reference-heavy prompts like this one\n- The sampler's joint audio+video `LATENT` output feeds directly into both `VAEDecode` (video, `minimax_h3_video_vae_fp16`) and `VAEDecodeAudio` (audio, `minimax_h3_audio_vae_fp32`); each decode node automatically pulls its own half out of the packed latent. `CreateVideo` then muxes the two into a single MP4 with synced sound\n- The diffusion model here is `MiniMax-H3_Ref2VA-NVFP4-HQ.safetensors`, a different set of weights from the `fl2va` model used by the t2v/i2v templates\n\nRef2va's output is very sensitive to prompt wording; matching the reference tags precisely and being explicit about which reference drives which part of the shot tends to work best."
+        "## MiniMax H3\n\n[MiniMax H3](https://www.minimax.io/blog/minimax-h3) is MiniMax's general-purpose, omni-modal generation model. It jointly understands text, image, video, and audio, and generates video with **native stereo audio**: voice, sound effects, and music are modeled jointly in a single forward pass, not layered on afterward. Output is 768p, 24fps, and up to about 15 seconds. The open weights are 768p only. 2K comes from MiniMax's hosted H3-Regenerate-2K API and is not available locally.\n\n## ComfyUI links\n- [ComfyUI#15224](https://github.com/Comfy-Org/ComfyUI/pull/15224)\n- [🤗 Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3)\n\n## About this workflow\n\nThis template runs the **reference-to-video (ref2va)** task using the `MiniMaxH3ReferenceToVideo` node. It takes any mix of reference images, videos, and standalone audio, and weaves them into the generation to lock in a character's identity, a style, a motion, a camera move, or a voice.\n\n**Key inputs**\n\n- **ref_images / ref_videos / ref_video_audios / ref_audios**: up to 9 reference images, 3 reference videos (each may carry its own paired soundtrack), and 3 standalone reference audio clips\n- **prompt**: reference the inputs by tag, in the exact order they were connected, for example `<Picture 1>`, `<Video 1>`, `<Audio 1>`, then describe the target scene, motion, and audio\n- **ref_image_size**: `match` scales references down to the generation's resolution (faster); `max` keeps up to a 2048px short edge for stronger identity fidelity, at the cost of speed since reference tokens ride along every sampling step\n- **width / height**: set via Resolution Selector.\n- **duration (seconds)**: converted to a valid frame `length` by the Math Expression node\n\n**Sampling and decode**\n\n- Sampler: `res_multistep`. `beta` or `normal` scheduler tends to outperform `simple` for reference-heavy prompts like this one\n- The sampler's joint audio+video `LATENT` output feeds directly into both `VAEDecode` (video, `minimax_h3_video_vae_fp16`) and `VAEDecodeAudio` (audio, `minimax_h3_audio_vae_fp32`); each decode node automatically pulls its own half out of the packed latent. `CreateVideo` then muxes the two into a single MP4 with synced sound\n- The diffusion model here is `MiniMax-H3_Ref2VA-INT8-ConvRot-HQ.safetensors`, a different set of weights from the `fl2va` model used by the t2v/i2v templates\n\nRef2va's output is very sensitive to prompt wording; matching the reference tags precisely and being explicit about which reference drives which part of the shot tends to work best."
       ],
       "color": "#322",
       "bgcolor": "#533"
@@ -238,7 +193,7 @@
         707.0429930952259
       ],
       "flags": {},
-      "order": 7,
+      "order": 6,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -280,7 +235,7 @@
         699.6343689418964
       ],
       "flags": {},
-      "order": 8,
+      "order": 7,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -456,8 +411,8 @@
         768,
         10,
         1065364320112918,
-        "MiniMax-H3_Ref2VA-NVFP4-HQ.safetensors",
-        "qwen3vl_32b_heretic_minimax_h3_nvfp4.safetensors",
+        "MiniMax-H3_Ref2VA-INT8-ConvRot-HQ.safetensors",
+        "qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
         "minimax_h3_video_vae_fp16.safetensors",
         "minimax_h3_audio_vae_fp32.safetensors",
         "Qwen3-VL-8B-Heretic-Stable",
@@ -467,62 +422,6 @@
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
-    },
-    {
-      "id": 145,
-      "type": "AutoRifeTensorrt",
-      "pos": [
-        -149.53071321706167,
-        5087.299624717198
-      ],
-      "size": [
-        311.24876401618576,
-        229.6878304442398
-      ],
-      "flags": {},
-      "order": 11,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "frames",
-          "type": "IMAGE",
-          "link": 301
-        },
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "link": 269
-        },
-        {
-          "name": "interpolation_states",
-          "shape": 7,
-          "type": "INTERPOLATION_STATES",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            302
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "51d88c0c0db49308dd3ade9edd4a5c1bcdf4ec72",
-        "Node name for S&R": "AutoRifeTensorrt"
-      },
-      "widgets_values": [
-        100,
-        2,
-        false,
-        1,
-        ""
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
     },
     {
       "id": 127,
@@ -536,13 +435,13 @@
         76
       ],
       "flags": {},
-      "order": 13,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 302
+          "link": 305
         },
         {
           "name": "upscaler_trt_model",
@@ -584,7 +483,7 @@
         334
       ],
       "flags": {},
-      "order": 14,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -689,10 +588,152 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "```\nsubject_definitions:\n<Subject 1> is a woman with dark hair in a high ponytail, red nail polish, and a slender, athletic build, lying on her back on a bed with a wooden headboard, looking up with an expression of pleasure and anticipation.\n<Picture 1> is the first reference image showing <Subject 1> in a receptive position as another woman leans over her, their bodies in close contact.\n<Video 1> is the second reference image showing <Subject 1> from a rear three-quarter angle, actively engaging in intercourse while the other woman's head is buried near her neck.\n<Audio 1> is the audio reference for <Subject 1> (S1), capturing her breathy, sensual vocalizations and the soft sounds of skin-on-skin contact.\n\nsummary:\n[reference generation + audio reference] Generate a 10-second video clip depicting two women in an intimate, passionate sexual encounter on a bed, with the first reference image as a keyframe and the second as a motion reference, using the voice timbre and breathing sounds of <Subject 1> (S1) as the primary audio reference.\n\nretention_analysis:\n<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - maintains her physical appearance, hair style, red nail polish, and expressive facial features throughout the sequence.\n<Audio 1>: reference - the voice timbre and breathing patterns of <Subject 1> (S1) are referenced to guide the audio layer, not copied directly.\n\ndetailed_description:\nThe target video uses a hyper-realistic, cinematic adult animation style with soft, warm lighting and shallow depth of field to emphasize skin texture and intimate emotion. The camera begins with a low-angle close-up on <Subject 1>, who is lying supine on a bed with a wooden headboard, her dark hair pulled back, her gaze locked on her partner. Her body is arched slightly, breasts exposed, and her expression is one of rapturous anticipation. The camera slowly pushes in on her face as she breathes deeply, then pans slightly right to follow the movement of her partner’s hand as it gently grips her hip. [Shot 2] At 00:05.000, the shot cuts to a rear three-quarter view as <Subject 1> rolls onto her side, her back now to the camera, as her partner, whose body is partially visible, leans over her. The camera tracks slightly forward with a slow dolly, focusing on the motion of their bodies as they move together. The shot is tight, capturing the fluid motion and skin contact. <Subject 1> (S1) emits a soft, breathy moan as her partner’s head buries into her neck, her hand resting on the partner’s shoulder. The camera then tilts up slightly to capture the angle of their embrace as they continue their intimate movement. The scene ends with a slow zoom out, revealing the full context of their position on the bed.\n\noverall_soundscape:\nThe soundscape is dominated by the soft, rhythmic sounds of skin-on-skin contact, the gentle thud of bodies moving together, and the shallow, breathy moans of <Subject 1> (S1) as she experiences pleasure. There is a subtle, soft rustling of bedding and the occasional soft gasp as the partners shift positions. The room is quiet, with only the intimate sounds of their bodies and breaths filling the space.\n\nnon_diegetic_music: N/A\n```"
+        "How the reference pictures align with the target video — Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 2) aligns with the 10.00-second mark of the target video.\n\nintegrated_multimodal_description: [Shot 1] A realistic, highly detailed 3D render of a nude woman with wet skin, standing in a modern bedroom, holding a black towel. She looks directly at the camera with a slight smile. The camera is static, positioned at eye level. [Shot 2] At 00:00.000, the camera begins a slow, continuous push-in as the woman lowers her body from a standing position to a kneeling, forward-leaning pose on the floor, her torso arching slightly forward and her head tilting down to meet the viewer’s gaze. Her hands remain gripping the towel, now held lower as her body descends. The lighting remains consistent, focused on her glistening skin. The diegetic soundscape includes soft, steady breathing and the subtle sound of fabric rustling as she lowers herself.\n\noverall_soundscape: The scene is filled with the woman’s soft, rhythmic breathing and the gentle, wet sound of her skin moving against the towel and the floor as she lowers her body.\n\nnon_diegetic_music: N/A"
       ],
       "color": "#233",
       "bgcolor": "#355"
+    },
+    {
+      "id": 115,
+      "type": "ResolutionSelector",
+      "pos": [
+        -1160.3439562862548,
+        4849.291389086567
+      ],
+      "size": [
+        270,
+        170
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "showAdvanced": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            219
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            220
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.1",
+        "Node name for S&R": "ResolutionSelector"
+      },
+      "widgets_values": [
+        "16:9 (Widescreen)",
+        0.9,
+        32
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 155,
+      "type": "VRAMCleanup",
+      "pos": [
+        -81.34657823430813,
+        5281.379797019999
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "input",
+          "type": "*",
+          "link": 304
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": [
+            305
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+        "ver": "ba8b0648b7ea5fcc15c62d535343b275cae5de3e",
+        "Node name for S&R": "VRAMCleanup"
+      },
+      "widgets_values": [
+        "Full Cleanup"
+      ]
+    },
+    {
+      "id": 145,
+      "type": "AutoRifeTensorrt",
+      "pos": [
+        -151.13477869950822,
+        5089.8209998180455
+      ],
+      "size": [
+        311.24876401618576,
+        229.6878304442398
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "link": 301
+        },
+        {
+          "name": "rife_trt_model",
+          "type": "RIFE_TRT_MODEL",
+          "link": 269
+        },
+        {
+          "name": "interpolation_states",
+          "shape": 7,
+          "type": "INTERPOLATION_STATES",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            304
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+        "ver": "51d88c0c0db49308dd3ade9edd4a5c1bcdf4ec72",
+        "Node name for S&R": "AutoRifeTensorrt"
+      },
+      "widgets_values": [
+        100,
+        2,
+        false,
+        1,
+        ""
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
     }
   ],
   "links": [
@@ -777,18 +818,26 @@
       "IMAGE"
     ],
     [
-      302,
-      145,
-      0,
-      127,
-      0,
-      "IMAGE"
-    ],
-    [
       303,
       127,
       0,
       126,
+      0,
+      "IMAGE"
+    ],
+    [
+      304,
+      145,
+      0,
+      155,
+      0,
+      "IMAGE"
+    ],
+    [
+      305,
+      155,
+      0,
+      127,
       0,
       "IMAGE"
     ]
@@ -826,8 +875,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 8,
-          "lastNodeId": 154,
-          "lastLinkId": 303,
+          "lastNodeId": 155,
+          "lastLinkId": 305,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -1299,14 +1348,14 @@
               "Node name for S&R": "CLIPLoader",
               "models": [
                 {
-                  "name": "qwen3vl_32b_heretic_minimax_h3_nvfp4.safetensors",
-                  "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_heretic_minimax_h3_nvfp4.safetensors",
+                  "name": "qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
+                  "url": "https://huggingface.co/ethanfel/Qwen3-VL-32B-Ultra-Heretic-H3-ComfyUI-INT8-ConvRot/resolve/main/qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
                   "directory": "text_encoders"
                 }
               ]
             },
             "widgets_values": [
-              "qwen3vl_32b_heretic_minimax_h3_nvfp4.safetensors",
+              "qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
               "minimax",
               "default"
             ]
@@ -1783,14 +1832,14 @@
               "Node name for S&R": "UNETLoader",
               "models": [
                 {
-                  "name": "10Eros_Max_H3_FL2VA-NVFP4-HQ.safetensors",
-                  "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/10Eros_Max_H3_FL2VA-NVFP4-HQ.safetensors",
+                  "name": "MiniMax-H3_Ref2VA-INT8-ConvRot-HQ.safetensors",
+                  "url": "https://huggingface.co/DmitryDB/MiniMax-H3-ComfyUI-Quants/resolve/main/Ref2VA/MiniMax-H3_Ref2VA-INT8-ConvRot-HQ.safetensors",
                   "directory": "diffusion_models"
                 }
               ]
             },
             "widgets_values": [
-              "10Eros_Max_H3_FL2VA-NVFP4-HQ.safetensors",
+              "MiniMax-H3_Ref2VA-INT8-ConvRot-HQ.safetensors",
               "default"
             ]
           },
@@ -2572,8 +2621,8 @@
     "ds": {
       "scale": 0.796316462125923,
       "offset": [
-        2500.646717364615,
-        -4522.34008150589
+        1825.8698377488458,
+        -4593.581191602427
       ]
     }
   },
