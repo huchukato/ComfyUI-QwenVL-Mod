@@ -149,6 +149,11 @@ EOF
 RUN chmod +x /usr/local/bin/download-minimax-workflows.sh
 
 # ──────────────────────────────────────────────────────────────────────────────
+# Install aria2 for faster multi-connection Hugging Face / GitHub downloads
+# ──────────────────────────────────────────────────────────────────────────────
+RUN apt-get update && apt-get install -y aria2
+
+# ──────────────────────────────────────────────────────────────────────────────
 # NO VAE/diffusion/text_encoder baked-in here — all MiniMax-H3 models are huge:
 #   ~50GB total. Instead, a boot script downloads them to /workspace on first run.
 # ──────────────────────────────────────────────────────────────────────────────
@@ -230,19 +235,40 @@ download_model() {
         ) &
         local monitor_pid=$!
 
-        if wget -q --continue --tries=3 --timeout=120 "${HF_AUTH[@]}" "$url" -O "$dest"; then
-            kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
-            local size
-            size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
-            if [ "$size" -ge "$min_size" ]; then
-                log "✅ $name downloaded successfully ($size bytes)"
-                return 0
+        if command -v aria2c >/dev/null 2>&1; then
+            log "📥 Downloading $name with aria2c (8 connections)..."
+            if aria2c -q -c -x 8 -s 8 --max-connection-per-server=8 \
+                --auto-file-renaming=false --allow-overwrite=true --continue=true \
+                --dir="$BASE_DIR/$subdir" --out="$name" "${HF_AUTH[@]}" "$url"; then
+                kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
+                local size
+                size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
+                if [ "$size" -ge "$min_size" ]; then
+                    log "✅ $name downloaded successfully with aria2c ($size bytes)"
+                    return 0
+                else
+                    log "⚠️  $name downloaded but size $size < $min_size, will retry"
+                fi
             else
-                log "⚠️  $name downloaded but size $size < $min_size, will retry"
+                kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
+                log "⚠️  aria2c failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
             fi
         else
-            kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
-            log "⚠️  wget failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
+            log "⚠️  aria2c not found, falling back to wget for $name"
+            if wget -q --continue --tries=3 --timeout=120 "${HF_AUTH[@]}" "$url" -O "$dest"; then
+                kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
+                local size
+                size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
+                if [ "$size" -ge "$min_size" ]; then
+                    log "✅ $name downloaded successfully ($size bytes)"
+                    return 0
+                else
+                    log "⚠️  $name downloaded but size $size < $min_size, will retry"
+                fi
+            else
+                kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
+                log "⚠️  wget failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
+            fi
         fi
 
         [ "$attempt" -lt "$max_retries" ] && sleep $((attempt * 10))
