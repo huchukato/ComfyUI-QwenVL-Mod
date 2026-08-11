@@ -281,11 +281,14 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         if quant_cfg is None:
             self.text_model.to(device)
         ensure_cuda_vram_headroom("QwenVL PromptEnhancer HF", min_free_gb=1.0, min_free_ratio=0.08)
-        # Detect architecture from loaded model config
+        # Detect Qwen3.x family from loaded model config
         hf_model_type = getattr(self.text_model.config, "model_type", None)
-        self.is_qwen35 = hf_model_type in ("qwen3_5", "qwen3_5_moe", "qwen3_5_vl") if hf_model_type else "qwen3.5-" in model_name.lower()
+        self.is_qwen35 = bool(
+            (hf_model_type and "qwen3" in hf_model_type)
+            or "qwen3" in model_name.lower()
+        )
         if self.is_qwen35:
-            print(f"[QwenVL] Qwen3.5 detected (model_type={hf_model_type}): Will disable thinking in chat template.")
+            print(f"[QwenVL] Qwen3 family detected (model_type={hf_model_type}): Will disable thinking in chat template.")
         self.text_signature = signature
 
     def _invoke_text(
@@ -309,8 +312,11 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         else:
             device_choice = device
 
-        messages = [{"role": "user", "content": prompt}]
         is_qwen35 = getattr(self, "is_qwen35", False)
+        if is_qwen35:
+            prompt = "/no_think\n" + prompt
+
+        messages = [{"role": "user", "content": prompt}]
         template_kwargs = {"tokenize": False, "add_generation_prompt": True}
 
         # Inject the disable thinking kwargs for HF Transformers correctly
@@ -319,6 +325,13 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
 
         try:
             formatted_prompt = self.text_tokenizer.apply_chat_template(messages, **template_kwargs)
+        except TypeError:
+            # Older chat templates may not accept enable_thinking; retry without it
+            template_kwargs.pop("chat_template_kwargs", None)
+            try:
+                formatted_prompt = self.text_tokenizer.apply_chat_template(messages, **template_kwargs)
+            except Exception:
+                formatted_prompt = prompt
         except Exception:
             # Fallback to raw prompt if the tokenizer lacks a chat template
             formatted_prompt = prompt
