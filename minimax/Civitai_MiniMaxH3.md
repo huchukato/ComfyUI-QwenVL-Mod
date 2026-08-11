@@ -321,13 +321,13 @@ Choose a preset: **5s / 10s / 15s**. The Math Expression node snaps the frame co
 
 ### OneClick RunPod Template
 
-Prefer a ready-to-go environment? Use the **OneClick ComfyUI MiniMax H3 Qwen3VL** RunPod template:
+Prefer a ready-to-go environment? Use the **OneClick - ComfyUI - MiniMax H3 Turbo - Qwen3VL** RunPod template:
 
 - **Docker image**: `huchukato/comfyui-qwenvl-runpod:cu13-minimax`
 - **Base**: `runpod/comfyui:cuda13.0`
 - All custom nodes pre-installed
-- All 4 workflows auto-downloaded at boot
-- Models auto-downloaded at first boot (~50 GB, persistent)
+- All 8 workflows auto-downloaded at boot
+- Models auto-downloaded at first boot (~70 GB with Turbo LoRA, persistent)
 - ComfyUI v0.30.0+ forced at boot
 - Sage Attention, FP16 accumulation, async offload
 - TensorRT upscaling + RIFE interpolation
