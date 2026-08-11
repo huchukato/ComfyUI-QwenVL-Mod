@@ -30,7 +30,7 @@ from AILab_OutputCleaner import OutputCleanConfig, clean_model_output, prompt_ou
 import sys
 sys.path.append(str(Path(__file__).parent))
 from AILab_QwenVL import PROMPT_CACHE, ensure_cuda_vram_headroom, get_cache_key, get_alternative_cache_key, save_prompt_cache
-from AILab_QwenVL_GGUF import read_gguf_architecture, find_in_llm_paths
+from AILab_QwenVL_GGUF import read_gguf_architecture, find_in_llm_paths, _filter_kwargs_for_callable
 
 # Simple global variable to store last generated prompt
 LAST_SAVED_PROMPT = None
@@ -423,12 +423,14 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
             "chat_format": "qwen",
         }
 
-        # Detect architecture from GGUF metadata instead of relying on model name
+        # Detect Qwen3.x family from GGUF metadata instead of relying on model name
         arch = read_gguf_architecture(resolved)
-        is_qwen35 = arch in ("qwen35", "qwen35moe") if arch else "qwen3.5-" in model_name.lower()
-        if is_qwen35:
-            kwargs["chat_template_kwargs"] = {"enable_thinking": False}
-            print(f"[QwenVL] Qwen3.5 detected (arch={arch}): Disabling thinking in chat template.")
+        self.is_qwen35 = bool(
+            (arch and "qwen3" in arch)
+            or "qwen3" in model_name.lower()
+        )
+        if self.is_qwen35:
+            print(f"[QwenVL] Qwen3 family detected (arch={arch}): Will disable thinking via /no_think + chat_template_kwargs/reasoning.")
 
         self.llm = Llama(**kwargs)
         self.current_signature = signature
@@ -461,16 +463,26 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
                     self.llm.reset()
                 except Exception as exc:
                     print(f"[QwenVL PromptEnhancer DEBUG] llama context reset skipped: {exc}")
+
+            effective_user = user
+            extra_kwargs = {}
+            if getattr(self, "is_qwen35", False):
+                effective_user = "/no_think\n" + user
+                extra_kwargs["chat_template_kwargs"] = {"enable_thinking": False}
+                extra_kwargs["reasoning"] = False
+                extra_kwargs = _filter_kwargs_for_callable(self.llm.create_chat_completion, extra_kwargs)
+
             response = self.llm.create_chat_completion(
                 messages=[
                     {"role": "system", "content": system},
-                    {"role": "user", "content": user},
+                    {"role": "user", "content": effective_user},
                 ],
                 max_tokens=max_tokens,
                 temperature=temp,
                 top_p=top_p,
                 repeat_penalty=repetition_penalty,
                 seed=seed_val,
+                **extra_kwargs
             )
             if not response or "choices" not in response or not response["choices"]:
                 raise RuntimeError("[QwenVL] llama_cpp returned empty response")
