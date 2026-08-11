@@ -18,6 +18,7 @@ NODES=(
     "https://github.com/Comfy-Org/ComfyUI-Manager"
     "https://github.com/huchukato/comfy-tagcomplete"
     "https://github.com/huchukato/ComfyUI-QwenVL-Mod"
+    "https://github.com/BobRandomNumber/ComfyUI-Crystools-MonitorOnly"
     "https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto"
     "https://github.com/huchukato/ComfyUI-Upscaler-TensorRT-Auto"
     "https://github.com/huchukato/ComfyUI-HuggingFace"
