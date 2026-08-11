@@ -72,6 +72,11 @@ T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) �
 ---
 
 ## **📰 Notizie & Aggiornamenti**
+* **2026/08/11**: **v2.5.1** 🚀 **MiniMax-H3 Turbo LoRA + Modelli Comfy-Org Ufficiali**. [[Aggiornamenti](update.md#version-251-20260811)]
+> ⚡ **Turbo LoRA**: Nuovi workflow 4–8 step (`MiniMaxH3-Turbo-*-Qwen3VL.json`) con `Larryvrh/ComfyUI-MiniMax-H3-Turbo` e `minimax_h3_turbo_v4_step600_ema.safetensors`.
+> 📦 **Modelli Ufficiali**: Provisioning MiniMax-H3 passato ai modelli pruned INT8-ConvRot di Comfy-Org e al text encoder `qwen3vl_32b_minimax_h3_int8_convrot`.
+> 📝 **Docs Aggiornate**: `minimax/Civitai_MiniMaxH3.md` e `runpod/README_MiniMaxH3.md` puntano ai nuovi link dei modelli.
+
 * **2026/08/04**: **v2.4** 🚀 **Scoperta Modelli Locali + Qwen3.5 + SageAttention**. [[Aggiornamenti](update.md#version-24-20260804)]
 > 🔍 **Scoperta Modelli Locali**: Droppa modelli GGUF/HF nella directory models — appaiono nel dropdown automaticamente, senza editare JSON.
 > 🧠 **Supporto Qwen3.5**: Rilevamento architettura da metadati file, disabilitazione thinking mode, top_k=20.
