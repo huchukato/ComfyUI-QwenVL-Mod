@@ -899,16 +899,15 @@ class QwenVLBase:
                 print(f"[QwenVL] torch.compile skipped: {exc}")
         self.processor = AutoProcessor.from_pretrained(model_path, trust_remote_code=True)
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
-        # Detect architecture from config.json instead of relying on model name
+        # Detect Qwen3.x family from config.json instead of relying on model name
         hf_model_type = read_hf_model_type(model_path)
         name_lower = model_name.lower()
-        self.is_qwen35 = (
-            hf_model_type in ("qwen3_5", "qwen3_5_moe", "qwen3_5_vl", "qwen35", "qwen35moe", "qwen35_vl")
-            if hf_model_type
-            else ("qwen3.5" in name_lower or "qwen35" in name_lower)
+        self.is_qwen35 = bool(
+            (hf_model_type and "qwen3" in hf_model_type)
+            or "qwen3" in name_lower
         )
         if self.is_qwen35:
-            print(f"[QwenVL] Qwen3.5 detected (model_type={hf_model_type}): Will disable thinking via enable_thinking + /no_think.")
+            print(f"[QwenVL] Qwen3 family detected (model_type={hf_model_type}): Will disable thinking via enable_thinking + /no_think.")
         self.current_signature = signature
 
     @staticmethod

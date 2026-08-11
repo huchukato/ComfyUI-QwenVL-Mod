@@ -705,14 +705,14 @@ class QwenVLGGUFBase:
             "top_k": top_k_val,
         }
 
-        # Detect architecture from GGUF metadata instead of relying on model name
+        # Detect Qwen3.x family from GGUF metadata instead of relying on model name
         arch = read_gguf_architecture(model_path)
-        self.is_qwen35 = arch in ("qwen35", "qwen35moe") if arch else "qwen3.5-" in model_name.lower()
+        self.is_qwen35 = bool(
+            (arch and "qwen3" in arch)
+            or "qwen3" in model_name.lower()
+        )
         if self.is_qwen35:
-            # enable_thinking is deprecated/ignored in recent llama.cpp builds.
-            # Use reasoning=False (server-side) + /no_think in prompt (template-side) as fallback.
-            llm_kwargs["chat_template_kwargs"] = {"enable_thinking": False}
-            print(f"[QwenVL] Qwen3.5 detected (arch={arch}): Disabling thinking via enable_thinking + /no_think.")
+            print(f"[QwenVL] Qwen3 family detected (arch={arch}): Will disable thinking via /no_think + chat_template_kwargs/reasoning.")
 
         if has_mmproj and self.chat_handler is not None:
             llm_kwargs["chat_handler"] = self.chat_handler
@@ -768,6 +768,11 @@ class QwenVLGGUFBase:
             ]
 
         start = time.perf_counter()
+        extra_kwargs = {}
+        if getattr(self, "is_qwen35", False):
+            extra_kwargs["chat_template_kwargs"] = {"enable_thinking": False}
+            extra_kwargs["reasoning"] = False
+            extra_kwargs = _filter_kwargs_for_callable(self.llm.create_chat_completion, extra_kwargs)
         result = self.llm.create_chat_completion(
             messages=messages,
             max_tokens=int(max_tokens),
@@ -775,7 +780,8 @@ class QwenVLGGUFBase:
             top_p=float(top_p),
             repeat_penalty=float(repetition_penalty),
             seed=int(seed),
-            stop=["<|im_end|>", "<|im_start|>"]
+            stop=["<|im_end|>", "<|im_start|>"],
+            **extra_kwargs
         )
         elapsed = max(time.perf_counter() - start, 1e-6)
 
