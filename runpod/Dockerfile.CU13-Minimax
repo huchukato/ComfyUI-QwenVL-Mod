@@ -29,6 +29,7 @@ RUN cd /opt/comfyui-baked && \
 # ──────────────────────────────────────────────────────────────────────────────
 RUN cd /opt/comfyui-baked/custom_nodes && \
     git clone https://github.com/huchukato/ComfyUI-QwenVL-Mod.git && \
+    git clone https://github.com/BobRandomNumber/ComfyUI-Crystools-MonitorOnly.git && \
     git clone https://github.com/huchukato/ComfyUI-RIFE-TensorRT-Auto.git && \
     git clone https://github.com/huchukato/ComfyUI-Upscaler-TensorRT-Auto.git && \
     git clone https://github.com/huchukato/ComfyUI-HuggingFace.git && \
