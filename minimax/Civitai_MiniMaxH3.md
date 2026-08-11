@@ -3,7 +3,7 @@
 ![MiniMax H3 Qwen3VL](https://raw.githubusercontent.com/huchukato/ComfyUI-QwenVL-Mod/main/img/bannerminimax.png)
 
 ComfyUI-QwenVL-Mod — Enhanced Vision-Language with MiniMax H3
-Version 2.5 (2026/08/05) — 🎬 MiniMax H3 Native Video+Audio + Qwen3-VL Auto-Prompting
+Version 2.5.1 (2026/08/11) — 🎬 MiniMax H3 Native Video+Audio + Qwen3-VL Auto-Prompting + Turbo LoRA
 
 ---
 
@@ -36,6 +36,18 @@ Version 2.5 (2026/08/05) — 🎬 MiniMax H3 Native Video+Audio + Qwen3-VL Auto-
 
 - **GGUF**: Q4_K_S (~4.8 GB) or Q5_K_S (~5.5 GB) for 8B model
 - **HF**: Qwen3-VL-8B-Heretic-Stable (~16 GB) or Qwen3-VL-4B (~8 GB)
+
+### ⚡ MiniMax-H3 Turbo LoRA (Optional — Faster & Sharper)
+
+A distilled 4–8 step LoRA for MiniMax-H3 that replaces the default ~20-step sampling, with a dedicated ComfyUI node.
+
+- **Custom node**: [Larryvrh/ComfyUI-MiniMax-H3-Turbo](https://github.com/Larryvrh/ComfyUI-MiniMax-H3-Turbo)
+- **Recommended checkpoint**: `minimax_h3_turbo_v4_step600_ema.safetensors` (~744 MB)
+- **Download**: [larryvrh/MiniMax-H3-Turbo-Lora](https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora/resolve/main/minimax_h3_turbo_v4_step600_ema.safetensors)
+- **Install**: place the `.safetensors` in `ComfyUI/models/loras/`
+- **Usage**: insert `MiniMax-H3 Turbo LoRA` between `Load Diffusion Model` and `SamplerCustomAdvanced`, and use `MiniMax-H3 Turbo Sampler` with scheduler `simple` at **6–8 steps**.
+
+Works with all tasks: T2VA, I2VA, FL2VA and R2VA.
 
 ---
 
@@ -80,14 +92,25 @@ Think: *"Your all-in-one solution for intelligent prompt enhancement and video+a
 
 ---
 
-## 📦 What's Included — 4 Workflows
+## 📦 What's Included — 8 Workflows
+
+### Base workflows
 
 1. 📝 **T2VA** — `MiniMaxH3-T2VA-Qwen3VL.json` — text only — Text-to-video+audio. Simplest workflow. Uses PromptEnhancer (text-only).
 2. 🖼️ **I2VA** — `MiniMaxH3-I2VA-Qwen3VL.json` — text + first-frame image (`image`) — Image-to-video. First-frame animation with audio.
 3. 🔄 **FL2VA** — `MiniMaxH3-FL2VA-Qwen3VL.json` — text + first-frame (`image`) + last-frame (`image2`) — First-Last-Frame to video. Qwen3-VL sees both frames and describes the transition. Includes TensorRT upscale + RIFE frame interpolation for 48 fps output.
 4. 🎞️ **R2VA** — `MiniMaxH3-R2VA-Qwen3VL.json` — text + reference images (`image` + `image2`) — Reference-to-video. Qwen3-VL sees all references. Lock identity, style, motion, camera, or voice using up to 9 ref images.
 
-> Workflows 3 and 4 include **TensorRT upscaling** (RealESRGAN x4) and **RIFE frame interpolation** (rife49) for 48 fps high-resolution output.
+### Turbo LoRA workflows ⚡
+
+Same tasks as above but pre-wired with `MiniMax-H3 Turbo LoRA` + `MiniMax-H3 Turbo Sampler` at 6–8 steps.
+
+5. ⚡ **T2VA Turbo** — `MiniMaxH3-Turbo-T2VA-Qwen3VL.json`
+6. ⚡ **I2VA Turbo** — `MiniMaxH3-Turbo-I2VA-Qwen3VL.json`
+7. ⚡ **FL2VA Turbo** — `MiniMaxH3-Turbo-FL2VA-Qwen3VL.json`
+8. ⚡ **R2VA Turbo** — `MiniMaxH3-Turbo-R2VA-Qwen3VL.json`
+
+> Workflows 3, 4, 7 and 8 include **TensorRT upscaling** (RealESRGAN x4) and **RIFE frame interpolation** (rife49) for 48 fps high-resolution output.
 
 ---
 
@@ -224,12 +247,17 @@ All MiniMax H3 models from [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-O
 
 - `models/vae/` → `minimax_h3_video_vae_fp16.safetensors` (~5 GB)
 - `models/vae/` → `minimax_h3_audio_vae_fp32.safetensors` (~0.6 GB)
-- `models/diffusion_models/` → `10Eros_Max_H3_FL2VA-INT8-ConvRot.safetensors` (~21 GB)
-- `models/text_encoders/` → `qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors` (~24.5 GB)
+- `models/diffusion_models/` → `minimax_h3_fl2va_pruned_int8_convrot.safetensors` (~21 GB)
+- `models/text_encoders/` → `qwen3vl_32b_minimax_h3_int8_convrot.safetensors` (~27 GB)
 
 **R2VA (ref2va)** — same as above, except:
 
 - `models/diffusion_models/` → `minimax_h3_ref2va_pruned_int8_convrot.safetensors` (~21 GB)
+
+**Turbo LoRA (optional — all tasks)**
+
+- `models/loras/` → `minimax_h3_turbo_v4_step600_ema.safetensors` (~744 MB)
+- **Custom node**: [Larryvrh/ComfyUI-MiniMax-H3-Turbo](https://github.com/Larryvrh/ComfyUI-MiniMax-H3-Turbo)
 
 **INT4 alternative** (for 12-16 GB GPUs): [Merserk/MiniMax-H3-INT4-ConvRot](https://huggingface.co/Merserk/MiniMax-H3-INT4-ConvRot)
 
@@ -247,9 +275,10 @@ All MiniMax H3 models from [Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-O
 ### Download Links
 
 - **VAE**: [video_vae_fp16](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors) · [audio_vae_fp32](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors)
-- **Diffusion (fl2va)**: [10Eros_Max_H3_FL2VA-INT8-ConvRot.safetensors](https://huggingface.co/DmitryDB/MiniMax-H3-10Eros-Max-Quants/resolve/main/FL2VA/10Eros_Max_H3_FL2VA-INT8-ConvRot.safetensors)
+- **Diffusion (fl2va)**: [minimax_h3_fl2va_pruned_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors)
 - **Diffusion (ref2va)**: [minimax_h3_ref2va_pruned_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors)
-- **Text encoder**: [qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors](https://huggingface.co/ethanfel/Qwen3-VL-32B-Ultra-Heretic-H3-ComfyUI-INT8-ConvRot/resolve/main/qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors)
+- **Text encoder**: [qwen3vl_32b_minimax_h3_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors)
+- **Turbo LoRA**: [minimax_h3_turbo_v4_step600_ema.safetensors](https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora/resolve/main/minimax_h3_turbo_v4_step600_ema.safetensors)
 - **INT4 models**: [Merserk/MiniMax-H3-INT4-ConvRot](https://huggingface.co/Merserk/MiniMax-H3-INT4-ConvRot)
 
 ---
@@ -346,7 +375,7 @@ Prefer a ready-to-go environment? Use the **OneClick ComfyUI MiniMax H3 Qwen3VL*
 
 - **First**: Complete MiniMax H3 workflow pack with Qwen3-VL auto-prompting
 - **Native audio**: No separate audio node — MiniMax H3 does it all
-- **4 workflows**: T2VA, I2VA, FL2VA, R2VA — covers all MiniMax H3 modes
+- **8 workflows**: 4 base + 4 Turbo — covers all MiniMax H3 modes
 - **Multi-reference**: Qwen3-VL sees all connected images (not just the first)
 - **TensorRT**: Built-in upscaling and frame interpolation
 - **9 NSFW presets**: Dedicated presets for each mode with correct prompt structure
@@ -355,17 +384,26 @@ Prefer a ready-to-go environment? Use the **OneClick ComfyUI MiniMax H3 Qwen3VL*
 
 ---
 
-## 🎯 What's New in v2.5
+## 🎯 What's New in v2.5.1
+
+### ⚡ MiniMax-H3 Turbo LoRA
+- ✅ **4 Turbo workflows**: T2VA, I2VA, FL2VA, R2VA with 6–8 step sampling
+- ✅ **Dedicated ComfyUI node**: `Larryvrh/ComfyUI-MiniMax-H3-Turbo`
+- ✅ **Recommended checkpoint**: `minimax_h3_turbo_v4_step600_ema.safetensors`
+
+### 📦 Official Comfy-Org Models
+- ✅ Switched to pruned INT8-ConvRot diffusion models and official Qwen3VL text encoder
+- ✅ Removed reliance on third-party quantized mirrors
 
 ### 🚀 MiniMax H3 Full Support
-- ✅ **4 workflows**: T2VA, I2VA, FL2VA, R2VA — all modes covered
+- ✅ **8 workflows**: 4 base + 4 Turbo — all modes covered
 - ✅ **Multi-reference input**: `image2` input — Qwen3-VL sees all images as individual images
 - ✅ **9 NSFW presets**: 3 base 🎬 + 3 R2VA 🎞️ + 3 FL2VA 🔄 with correct prompt structure
 - ✅ **Smooth camera**: All presets enforce smooth, continuous camera motion
 - ✅ **Native audio**: Video + stereo audio in one pass
 - ✅ **Official format**: 3-field (base) and 6-field (R2VA) prompt formats
 
-### � Qwen3.5 Thinking Fix
+### 🧠 Qwen3.5 Thinking Fix
 - ✅ `/no_think` prefix for Qwen3.5 models (enable_thinking deprecated in recent llama.cpp)
 - ✅ Broadened architecture detection (qwen35, qwen35moe, qwen35_vl)
 - ✅ Works across both HF and GGUF nodes

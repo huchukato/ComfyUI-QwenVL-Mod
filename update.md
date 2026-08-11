@@ -1,5 +1,29 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.5.1 (2026/08/11)
+
+🚀 **MiniMax-H3 Turbo LoRA Workflows + Official Comfy-Org Models**
+
+### ⚡ MiniMax-H3 Turbo LoRA
+- Added 4 new Turbo workflows: `MiniMaxH3-Turbo-T2VA-Qwen3VL.json`, `MiniMaxH3-Turbo-I2VA-Qwen3VL.json`, `MiniMaxH3-Turbo-FL2VA-Qwen3VL.json`, `MiniMaxH3-Turbo-R2VA-Qwen3VL.json`
+- Uses `Larryvrh/ComfyUI-MiniMax-H3-Turbo` custom node and `minimax_h3_turbo_v4_step600_ema.safetensors` (~744 MB)
+- Reduces sampling from ~20 steps to **6–8 steps** with scheduler `simple`
+- Works with all tasks: T2VA, I2VA, FL2VA and R2VA
+
+### 📦 Official MiniMax-H3 Models
+- Switched provisioning and Docker to Comfy-Org official pruned INT8-ConvRot models:
+  - `minimax_h3_fl2va_pruned_int8_convrot.safetensors`
+  - `minimax_h3_ref2va_pruned_int8_convrot.safetensors`
+  - `qwen3vl_32b_minimax_h3_int8_convrot.safetensors`
+- Removed reliance on third-party quantized mirrors that showed quality degradation
+- Turbo LoRA is downloaded to `models/loras/`
+
+### 📝 Documentation
+- Updated `minimax/Civitai_MiniMaxH3.md` and `runpod/README_MiniMaxH3.md` with new model links and Turbo instructions
+- Added 8-workflow list including Turbo variants
+
+---
+
 ## Version 2.5 (2026/08/05)
 
 🎬 **MiniMax H3 Full Support + Multi-Reference Input + R2VA/FL2VA Presets**
