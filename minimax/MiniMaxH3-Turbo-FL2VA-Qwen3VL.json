@@ -154,7 +154,7 @@
       ],
       "size": [
         1155.5330597730813,
-        981.7858938268361
+        991.4687338714127
       ],
       "flags": {},
       "order": 16,
@@ -192,10 +192,10 @@
         }
       ],
       "properties": {
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
+        "cnr_id": "comfyui-videohelpersuite",
         "ver": "4ee72c065db22c9d96c2427954dc69e7b908444b",
         "Node name for S&R": "VHS_VideoCombine",
-        "cnr_id": "comfyui-videohelpersuite"
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
       },
       "widgets_values": {
         "frame_rate": 48,
@@ -212,60 +212,18 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "MiniMax_H3_48FPS_00001-audio.webm",
+            "filename": "MiniMax_H3_48FPS_00011-audio.webm",
             "subfolder": "video",
             "type": "output",
             "format": "video/webm",
             "frame_rate": 48,
-            "workflow": "MiniMax_H3_48FPS_00001.png",
-            "fullpath": "/workspace/runpod-slim/ComfyUI/output/video/MiniMax_H3_48FPS_00001-audio.webm"
+            "workflow": "MiniMax_H3_48FPS_00011.png",
+            "fullpath": "/workspace/runpod-slim/ComfyUI/output/video/MiniMax_H3_48FPS_00011-audio.webm"
           }
         }
       },
       "color": "#232",
       "bgcolor": "#353"
-    },
-    {
-      "id": 137,
-      "type": "easy showAnything",
-      "pos": [
-        -856.1781450430237,
-        5402.11021783787
-      ],
-      "size": [
-        644.4670905794355,
-        323.47297362020254
-      ],
-      "flags": {},
-      "order": 13,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "shape": 7,
-          "type": "*",
-          "link": 253
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": []
-        }
-      ],
-      "title": "QWEN3VL GENERATED PROMPT",
-      "properties": {
-        "aux_id": "yolain/ComfyUI-Easy-Use",
-        "ver": "595e0738a9e3f8d0d9c4d875461b2d2c9e7559c7",
-        "Node name for S&R": "easy showAnything",
-        "cnr_id": "comfyui-easy-use"
-      },
-      "widgets_values": [
-        "How the reference pictures align with the target video — Picture 1 (from [Shot 1]) aligns with the 0.00-second mark of the target video; Picture 2 (from [Shot 2]) aligns with the 10.00-second mark of the target video.\n\nintegrated_multimodal_description: [Shot 1] A hyperrealistic, cinematic close-up, static shot captures a woman lying on her back on a bed with a wooden headboard, her head tilted up, eyes wide, mouth slightly parted. Above her, a man leans forward, his face close to hers, his hands resting on her thighs. His right hand is positioned near her hip, fingers slightly curled. The camera is locked in a tight, intimate frame, focusing on their faces and upper torsos. [Shot 2] At 00:00.000, the camera begins a slow, continuous push-in, narrowing the frame to an extreme close-up on the woman's face as she looks up. Her expression shifts from anticipation to intense pleasure. The man's head tilts slightly downward, his gaze locking with hers. His right hand moves from her hip to gently cup her left breast, while his left hand slides down her thigh. The camera pushes in smoothly, maintaining focus on their locked eyes and the intimate contact of their hands. The lighting remains warm and focused on their skin, highlighting the subtle sheen of sweat and the texture of their bodies. The scene ends with the camera locked on their faces, the man's hand firmly on her breast, their breaths syncing in a shared moment of climax.\n\noverall_soundscape: The soundscape is dominated by the woman’s soft, continuous moans and the man’s deep, rhythmic breathing. The sound of skin sliding against skin, a soft gasp from the woman, and the subtle rustle of fabric as the man shifts his position are layered beneath the intimate, synchronized breathing.\n\nnon_diegetic_music: N/A"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
     },
     {
       "id": 152,
@@ -461,7 +419,7 @@
       ],
       "flags": {},
       "order": 11,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "video",
@@ -491,6 +449,90 @@
       "bgcolor": "#335"
     },
     {
+      "id": 114,
+      "type": "LoadImage",
+      "pos": [
+        -2223.5780688047253,
+        4866.287265035046
+      ],
+      "size": [
+        482.2566821236637,
+        717.2904207205629
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            218
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "FIRST FRAME",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.1",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "s02_ep06_unexpectedcall_354_a_v01.jpg",
+        "image"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 147,
+      "type": "LoadImage",
+      "pos": [
+        -1678.753921970089,
+        4866.257297015804
+      ],
+      "size": [
+        486.1266495255343,
+        715.9489903021231
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            273
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "LAST FRAME",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.1",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "s02_ep06_unexpectedcall_354_v01.jpg",
+        "image"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
       "id": 115,
       "type": "ResolutionSelector",
       "pos": [
@@ -502,7 +544,7 @@
         170
       ],
       "flags": {},
-      "order": 6,
+      "order": 8,
       "mode": 0,
       "showAdvanced": false,
       "inputs": [],
@@ -529,92 +571,8 @@
       },
       "widgets_values": [
         "16:9 (Widescreen)",
-        1,
+        0.5,
         32
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
-      "id": 114,
-      "type": "LoadImage",
-      "pos": [
-        -2223.5780688047253,
-        4866.287265035046
-      ],
-      "size": [
-        482.2566821236637,
-        717.2904207205629
-      ],
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            218
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "title": "FIRST FRAME",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.30.1",
-        "Node name for S&R": "LoadImage"
-      },
-      "widgets_values": [
-        "s02_ep06_unexpectedcall_370a_v01.jpg",
-        "image"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 147,
-      "type": "LoadImage",
-      "pos": [
-        -1678.753921970089,
-        4866.257297015804
-      ],
-      "size": [
-        486.1266495255343,
-        715.9489903021231
-      ],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            273
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "title": "LAST FRAME",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.30.1",
-        "Node name for S&R": "LoadImage"
-      },
-      "widgets_values": [
-        "s02_ep06_unexpectedcall_371a_v01.jpg",
-        "image"
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
@@ -653,6 +611,48 @@
       },
       "color": "#322",
       "bgcolor": "#533"
+    },
+    {
+      "id": 137,
+      "type": "easy showAnything",
+      "pos": [
+        -856.1781450430237,
+        5402.11021783787
+      ],
+      "size": [
+        644.4670905794355,
+        323.47297362020254
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 253
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": []
+        }
+      ],
+      "title": "QWEN3VL GENERATED PROMPT",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "595e0738a9e3f8d0d9c4d875461b2d2c9e7559c7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "How the reference pictures align with the target video — Picture 1 (from [Shot 1]) aligns with the 0.00-second mark of the target video; Picture 2 (from [Shot 2]) aligns with the 15.00-second mark of the target video.\n\nintegrated_multimodal_description: [Shot 1] A cinematic, hyperrealistic close-up shot, POV from a male perspective, shows a nude woman with glistening skin arching her back, leaning forward to meet the viewer's gaze. The camera is static, focused tightly on her upper body and face as she looks down, lips parted. Her body is slick with sweat or oil, highlighting every curve and muscle. [Shot 2] At 00:00.000, the camera begins a slow, continuous pull back and slight upward tilt, revealing the full scene: the woman transitions from a kneeling, leaning position to lying supine on a bed, her body now fully extended and relaxed, eyes closed in contentment. Her skin remains glistening, and she is now positioned beside a man who is lying on his side, partially covered by a blanket. The camera continues its smooth, slow arc, maintaining a steady focus on the woman as she settles into her final position. The lighting remains soft and intimate, casting gentle shadows across the room.\n\noverall_soundscape: The soundscape is intimate and quiet, dominated by the soft, rhythmic sounds of their breathing, the subtle wetness of skin sliding against skin, and the faint rustle of fabric as the man shifts slightly. A low, satisfied sigh escapes the woman as she settles into the bed, followed by the gentle, steady sound of her heartbeat.\n\nnon_diegetic_music: N/A"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
     },
     {
       "id": 105,
@@ -757,9 +757,9 @@
         1344,
         768,
         10,
-        977966957950603,
-        "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
-        "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+        639628514551909,
+        "10Eros_Max_h3_fl2va_pruned_int8_convrot.safetensors",
+        "qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
         "minimax_h3_video_vae_fp16.safetensors",
         "minimax_h3_audio_vae_fp32.safetensors",
         "Qwen3-VL-8B-Heretic-Stable",
@@ -1855,10 +1855,10 @@
               }
             ],
             "properties": {
-              "aux_id": "kijai/ComfyUI-KJNodes",
+              "cnr_id": "comfyui-kjnodes",
               "ver": "c2a47f161bdcecc1e6baf3412f1d116febc26ce3",
               "Node name for S&R": "PathchSageAttentionKJ",
-              "cnr_id": "comfyui-kjnodes"
+              "aux_id": "kijai/ComfyUI-KJNodes"
             },
             "widgets_values": [
               "auto",
@@ -1946,10 +1946,10 @@
               }
             ],
             "properties": {
-              "aux_id": "kijai/ComfyUI-KJNodes",
+              "cnr_id": "comfyui-kjnodes",
               "ver": "a6b867b63a29ca48ddb15c589e17a9f2d8530d57",
               "Node name for S&R": "ModelPatchTorchSettings",
-              "cnr_id": "comfyui-kjnodes",
+              "aux_id": "kijai/ComfyUI-KJNodes",
               "ue_properties": {
                 "version": "7.0.1",
                 "widget_ue_connectable": {
@@ -2058,7 +2058,7 @@
               1,
               1,
               false,
-              1291912968,
+              2925307094,
               "randomize",
               false
             ],
@@ -2091,9 +2091,10 @@
               }
             ],
             "properties": {
-              "aux_id": "Larryvrh/ComfyUI-MiniMax-H3-Turbo",
+              "cnr_id": "comfyui-minimax-h3-turbo",
               "ver": "55fee864dd7b2976b1c4ce3c3d5f7968f181409f",
-              "Node name for S&R": "MiniMaxH3TurboSampler"
+              "Node name for S&R": "MiniMaxH3TurboSampler",
+              "aux_id": "Larryvrh/ComfyUI-MiniMax-H3-Turbo"
             },
             "widgets_values": []
           },
@@ -2182,9 +2183,10 @@
               }
             ],
             "properties": {
-              "aux_id": "Larryvrh/ComfyUI-MiniMax-H3-Turbo",
+              "cnr_id": "comfyui-minimax-h3-turbo",
               "ver": "55fee864dd7b2976b1c4ce3c3d5f7968f181409f",
-              "Node name for S&R": "MiniMaxH3TurboLoRA"
+              "Node name for S&R": "MiniMaxH3TurboLoRA",
+              "aux_id": "Larryvrh/ComfyUI-MiniMax-H3-Turbo"
             },
             "widgets_values": [
               "minimax_h3_turbo_v4_step600_ema.safetensors",
@@ -2659,16 +2661,16 @@
   },
   "config": {},
   "extra": {
-    "frontendVersion": "1.47.11",
+    "frontendVersion": "1.48.7",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
     "VHS_MetadataImage": true,
     "VHS_KeepIntermediate": true,
     "ds": {
-      "scale": 0.585789533955558,
+      "scale": 0.8576544566643333,
       "offset": [
-        2622.652224280855,
-        -4455.957325095324
+        1468.9131977960235,
+        -4532.468996259065
       ]
     }
   },
