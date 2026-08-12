@@ -69,6 +69,16 @@ RUN pip install --no-cache-dir sageattention && \
     pip cache purge
 
 # ──────────────────────────────────────────────────────────────────────────────
+# TensorRT CUDA 13 wheels (required by ComfyUI-RIFE-TensorRT-Auto and
+# ComfyUI-Upscaler-TensorRT-Auto nodes for video frame interpolation/upscaling)
+# ──────────────────────────────────────────────────────────────────────────────
+RUN pip install --no-cache-dir \
+        tensorrt-cu13==10.15.1.29 \
+        tensorrt-cu13-bindings==10.15.1.29 \
+        tensorrt-cu13-libs==10.15.1.29 && \
+    pip cache purge
+
+# ──────────────────────────────────────────────────────────────────────────────
 # Model directories (models downloaded at boot, not baked due to ~40GB total)
 # ──────────────────────────────────────────────────────────────────────────────
 RUN mkdir -p /opt/comfyui-baked/models/checkpoints && \
