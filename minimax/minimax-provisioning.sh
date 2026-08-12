@@ -5,13 +5,13 @@ COMFYUI_DIR=${WORKSPACE}/ComfyUI
 APT_INSTALL="${APT_INSTALL:-apt-get install -y}"
 
 APT_PACKAGES=(
+    "aria2"
 )
 
 PIP_PACKAGES=(
     "--upgrade --force-reinstall --no-cache-dir https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.45-cu131-linux-20260801/llama_cpp_python-0.3.45+cu131-cp312-cp312-linux_x86_64.whl"
     "huggingface_hub"
     "sageattention"
-    "hf-transfer"
     "tensorrt-cu13==10.15.1.29"
     "tensorrt-cu13-bindings==10.15.1.29"
     "tensorrt-cu13-libs==10.15.1.29"
@@ -135,7 +135,6 @@ function download_minimax_model() {
 
         mkdir -p "$base_dir"
         # HF_TOKEN is picked up automatically when set in the environment.
-        export HF_HUB_ENABLE_HF_TRANSFER=1
         export HF_XET_HIGH_PERFORMANCE=1
         if huggingface-cli download "$repo_id" "$repo_path" \
                 --local-dir "$base_dir" \
