@@ -13,6 +13,7 @@ PIP_PACKAGES=(
     "huggingface_hub"
     "hf-transfer"
     "sageattention"
+    "kornia==0.8.2"
     "tensorrt-cu13==10.15.1.29"
     "tensorrt-cu13-bindings==10.15.1.29"
     "tensorrt-cu13-libs==10.15.1.29"
