@@ -10,6 +10,7 @@ APT_PACKAGES=(
 
 PIP_PACKAGES=(
     "--upgrade --force-reinstall --no-cache-dir https://github.com/JamePeng/llama-cpp-python/releases/download/v0.3.45-cu131-linux-20260801/llama_cpp_python-0.3.45+cu131-cp312-cp312-linux_x86_64.whl"
+    "huggingface_hub"
     "sageattention"
     "tensorrt-cu13==10.15.1.29"
     "tensorrt-cu13-bindings==10.15.1.29"
@@ -70,7 +71,7 @@ TEXT_ENCODERS=(
 MINIMAX_MODELS=(
     "vae|minimax_h3_video_vae_fp16.safetensors|https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors|5200000000"
     "vae|minimax_h3_audio_vae_fp32.safetensors|https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors|600000000"
-    "diffusion_models|10Eros_Max_h3_fl2va_pruned_int8_convrot.safetensors|https://huggingface.co/QrusherZA/10Eros-Max-int8-convrot/resolve/main/10Eros_Max_h3_fl2va_pruned_int8_convrot.safetensors|20900000000"
+    "diffusion_models|minimax_h3_fl2va_pruned_int8_convrot.safetensors|https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors|20970379616"
     "diffusion_models|minimax_h3_ref2va_pruned_int8_convrot.safetensors|https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors|20970379616"
     "text_encoders|qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors|https://huggingface.co/ethanfel/Qwen3-VL-32B-Ultra-Heretic-H3-ComfyUI-INT8-ConvRot/resolve/main/qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors|26000000000"
     "loras|minimax_h3_turbo_v4_step600_ema.safetensors|https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora/resolve/main/minimax_h3_turbo_v4_step600_ema.safetensors|779849816"
@@ -112,66 +113,54 @@ function download_minimax_model() {
     local base_dir="$1" subdir="$2" name="$3" url="$4" min_size="$5"
     local dest="$base_dir/$subdir/$name"
     local max_retries=5
-    local hf_auth=()
 
-    if [ -n "$HF_TOKEN" ] && [[ "$url" == *"huggingface.co"* ]]; then
-        hf_auth=(--header="Authorization: Bearer $HF_TOKEN")
-    fi
+    # Parse Hugging Face repo_id and relative repo path from the URL.
+    local repo_id repo_path
+    repo_id=$(echo "$url" | awk -F/ '{print $4"/"$5}')
+    repo_path=$(echo "$url" | sed -E 's#https?://[^/]+/[^/]+/[^/]+/resolve/main/(.+)#\1#')
 
     for attempt in $(seq 1 $max_retries); do
-        if [ -f "$dest" ]; then
+        if [ -f "$dest" ] || [ -L "$dest" ]; then
             local size
-            size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
+            size=$(stat -L -c%s "$dest" 2>/dev/null || stat -L -f%z "$dest" 2>/dev/null || echo 0)
             if [ "$size" -ge "$min_size" ]; then
                 echo "✅ $name already present ($size bytes >= $min_size), skipping"
                 return 0
             else
-                echo "⚠️  $name incomplete ($size bytes < $min_size), resuming (attempt $attempt/$max_retries)"
+                echo "⚠️  $name incomplete ($size bytes < $min_size), retrying (attempt $attempt/$max_retries)"
             fi
         else
             echo "📥 Downloading $name (attempt $attempt/$max_retries)..."
         fi
 
-        local downloader_pid
-        if command -v aria2c >/dev/null 2>&1; then
-            # aria2c: 8 connessioni parallele, split in 8 segmenti, resume
-            aria2c -q -c -x 8 -s 8 --max-connection-per-server=8 --min-split-size=10M \
-                --auto-file-renaming=false --allow-overwrite=true --continue=true \
-                --dir="$base_dir/$subdir" --out="$name" "${hf_auth[@]}" "$url" &
-            downloader_pid=$!
-        else
-            wget -q -c --tries=3 --timeout=120 "${hf_auth[@]}" "$url" -O "$dest" &
-            downloader_pid=$!
-        fi
-
-        (
-            while kill -0 $downloader_pid 2>/dev/null; do
-                if [ -f "$dest" ]; then
-                    local s
-                    s=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
-                    local pct=$(( s * 100 / min_size ))
-                    local gb=$(( s / 1073741824 ))
-                    local total_gb=$(( min_size / 1073741824 ))
-                    echo "📊 PROGRESS: $name — ${gb}GB / ${total_gb}GB (${pct}%)"
+        mkdir -p "$base_dir"
+        # HF_TOKEN is picked up automatically when set in the environment.
+        export HF_XET_HIGH_PERFORMANCE=1
+        if huggingface-cli download "$repo_id" "$repo_path" \
+                --local-dir "$base_dir" \
+                --local-dir-use-symlinks auto \
+                --resume-download \
+                --cache-dir "$base_dir/.cache/huggingface" 2>&1; then
+            local downloaded_path="$base_dir/$repo_path"
+            if [ -f "$downloaded_path" ] || [ -L "$downloaded_path" ]; then
+                # If the downloaded path differs from the expected subdir, symlink it.
+                if [ "$downloaded_path" != "$dest" ]; then
+                    mkdir -p "$(dirname "$dest")"
+                    ln -sf "$downloaded_path" "$dest"
                 fi
-                sleep 10
-            done
-        ) &
-        local monitor_pid=$!
-
-        if wait $downloader_pid; then
-            kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
-            local size
-            size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
-            if [ "$size" -ge "$min_size" ]; then
-                echo "✅ $name downloaded successfully ($size bytes)"
-                return 0
+                local size
+                size=$(stat -L -c%s "$dest" 2>/dev/null || stat -L -f%z "$dest" 2>/dev/null || echo 0)
+                if [ "$size" -ge "$min_size" ]; then
+                    echo "✅ $name downloaded successfully ($size bytes)"
+                    return 0
+                else
+                    echo "⚠️  $name downloaded but size $size < $min_size, will retry"
+                fi
             else
-                echo "⚠️  $name downloaded but size $size < $min_size, will retry"
+                echo "⚠️  $name not found after download, will retry"
             fi
         else
-            kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
-            echo "⚠️  Download failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
+            echo "⚠️  huggingface-cli failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
         fi
 
         [ "$attempt" -lt "$max_retries" ] && sleep $((attempt * 10))

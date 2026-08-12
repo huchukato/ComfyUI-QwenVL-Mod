@@ -20,9 +20,10 @@ The ComfyUI-QwenVL custom node integrates powerful Qwen-VL series of vision-lang
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
-* **2026/08/11**: **v2.5.1** 🚀 **MiniMax-H3 Turbo LoRA + Uncensored Models**. [[Update](update.md#version-251-20260811)]
+* **2026/08/11**: **v2.5.1** 🚀 **MiniMax-H3 Turbo LoRA + Official Diffusion + Uncensored Text Encoder**. [[Update](update.md#version-251-20260811)]
 > ⚡ **Turbo LoRA**: New 4–8 step workflows (`MiniMaxH3-Turbo-*-Qwen3VL.json`) using `Larryvrh/ComfyUI-MiniMax-H3-Turbo` and `minimax_h3_turbo_v4_step600_ema.safetensors`.
-> 📦 **Uncensored Models**: T2VA/I2VA/FL2VA now use `10Eros_Max_h3_fl2va_pruned_int8_convrot.safetensors` (QrusherZA) + `qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors` (ethanfel). R2VA keeps the official Comfy-Org ref2va model.
+> 📦 **Models**: T2VA/I2VA/FL2VA use the official `minimax_h3_fl2va_pruned_int8_convrot.safetensors` (Comfy-Org). R2VA keeps the official `ref2va`. Text encoder remains `qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors` (ethanfel) for uncensored prompting.
+> 🏷️ **Explicit Tag Handling**: MiniMax H3 system prompts now expand short explicit tags (e.g., `blowjob`, `deepthroat`) into full cinematic NSFW descriptions instead of refusing or asking for clarification.
 > 📝 **Docs Updated**: `minimax/Civitai_MiniMaxH3.md` and `runpod/README_MiniMaxH3.md` now point to the current model links.
 
 * **2026/08/04**: **v2.4** 🚀 **Local Model Discovery + Qwen3.5 + SageAttention**. [[Update](update.md#version-24-20260804)]
