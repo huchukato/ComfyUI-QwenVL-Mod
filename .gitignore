@@ -82,13 +82,6 @@ runpod/
 example_workflows/
 vastai/build-and-push-*.sh
 
-# API consulting tools (keep local for client work)
-API_GUIDE.md
-debug_api.py
-api_client_examples/
-consulting/
-client_work/
-
 # VastAI README files (keep local, not for shared repo)
 vastai/READMECivitai.md
 vastai/READMEVast4090.md
