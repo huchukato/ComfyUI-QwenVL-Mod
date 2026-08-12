@@ -119,6 +119,10 @@ function download_minimax_model() {
     repo_id=$(echo "$url" | awk -F/ '{print $4"/"$5}')
     repo_path=$(echo "$url" | sed -E 's#https?://[^/]+/[^/]+/[^/]+/resolve/main/(.+)#\1#')
 
+    # Use 'hf' command (newer huggingface_hub) or fall back to 'huggingface-cli'
+    local hf_cmd="hf"
+    command -v hf >/dev/null 2>&1 || hf_cmd="huggingface-cli"
+
     for attempt in $(seq 1 $max_retries); do
         if [ -f "$dest" ] || [ -L "$dest" ]; then
             local size
@@ -133,21 +137,23 @@ function download_minimax_model() {
             echo "📥 Downloading $name (attempt $attempt/$max_retries)..."
         fi
 
-        mkdir -p "$base_dir"
-        # HF_TOKEN is picked up automatically when set in the environment.
+        # Download to a temp dir to avoid path nesting issues.
+        local tmp_dir="$base_dir/.tmp_download_${name//\//_}"
+        rm -rf "$tmp_dir"
+        mkdir -p "$tmp_dir" "$(dirname "$dest")"
+        export HF_HUB_ENABLE_HF_TRANSFER=1
         export HF_XET_HIGH_PERFORMANCE=1
-        if huggingface-cli download "$repo_id" "$repo_path" \
-                --local-dir "$base_dir" \
-                --local-dir-use-symlinks auto \
-                --resume-download \
-                --cache-dir "$base_dir/.cache/huggingface" 2>&1; then
-            local downloaded_path="$base_dir/$repo_path"
+        if $hf_cmd download "$repo_id" "$repo_path" \
+                --local-dir "$tmp_dir" \
+                --resume-download 2>&1; then
+            local downloaded_path="$tmp_dir/$repo_path"
             if [ -f "$downloaded_path" ] || [ -L "$downloaded_path" ]; then
-                # If the downloaded path differs from the expected subdir, symlink it.
-                if [ "$downloaded_path" != "$dest" ]; then
-                    mkdir -p "$(dirname "$dest")"
-                    ln -sf "$downloaded_path" "$dest"
+                if [ -L "$downloaded_path" ]; then
+                    ln -sf "$(readlink -f "$downloaded_path")" "$dest"
+                else
+                    mv -f "$downloaded_path" "$dest"
                 fi
+                rm -rf "$tmp_dir"
                 local size
                 size=$(stat -L -c%s "$dest" 2>/dev/null || stat -L -f%z "$dest" 2>/dev/null || echo 0)
                 if [ "$size" -ge "$min_size" ]; then
@@ -157,10 +163,12 @@ function download_minimax_model() {
                     echo "⚠️  $name downloaded but size $size < $min_size, will retry"
                 fi
             else
-                echo "⚠️  $name not found after download, will retry"
+                echo "⚠️  $name not found at $downloaded_path after download, will retry"
+                rm -rf "$tmp_dir"
             fi
         else
-            echo "⚠️  huggingface-cli failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
+            echo "⚠️  $hf_cmd failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
+            rm -rf "$tmp_dir"
         fi
 
         [ "$attempt" -lt "$max_retries" ] && sleep $((attempt * 10))
