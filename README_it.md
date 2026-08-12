@@ -72,9 +72,10 @@ T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) �
 ---
 
 ## **📰 Notizie & Aggiornamenti**
-* **2026/08/11**: **v2.5.1** 🚀 **MiniMax-H3 Turbo LoRA + Modelli Uncensored**. [[Aggiornamenti](update.md#version-251-20260811)]
+* **2026/08/11**: **v2.5.1** 🚀 **MiniMax-H3 Turbo LoRA + Diffusion Ufficiale + Text Encoder Uncensored**. [[Aggiornamenti](update.md#version-251-20260811)]
 > ⚡ **Turbo LoRA**: Nuovi workflow 4–8 step (`MiniMaxH3-Turbo-*-Qwen3VL.json`) con `Larryvrh/ComfyUI-MiniMax-H3-Turbo` e `minimax_h3_turbo_v4_step600_ema.safetensors`.
-> 📦 **Modelli Uncensored**: T2VA/I2VA/FL2VA tornano a usare `10Eros_Max_h3_fl2va_pruned_int8_convrot.safetensors` (QrusherZA) + `qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors` (ethanfel). R2VA mantiene il modello ufficiale Comfy-Org ref2va.
+> 📦 **Modelli**: T2VA/I2VA/FL2VA usano il diffusion model ufficiale `minimax_h3_fl2va_pruned_int8_convrot.safetensors` (Comfy-Org). R2VA mantiene il ref2va ufficiale. Il text encoder rimane `qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors` (ethanfel).
+> 🏷️ **Gestione Tag Espliciti**: I system prompt MiniMax H3 espandono ora tag brevi espliciti (es. `blowjob`, `deepthroat`) in descrizioni cinematografiche NSFW complete, senza rifiuti o richieste di chiarimento.
 > 📝 **Docs Aggiornate**: `minimax/Civitai_MiniMaxH3.md` e `runpod/README_MiniMaxH3.md` puntano ai link dei modelli attuali.
 
 * **2026/08/04**: **v2.4** 🚀 **Scoperta Modelli Locali + Qwen3.5 + SageAttention**. [[Aggiornamenti](update.md#version-24-20260804)]
