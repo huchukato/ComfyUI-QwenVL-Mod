@@ -158,13 +158,19 @@ RUN chmod +x /usr/local/bin/download-minimax-workflows.sh
 # Install huggingface_hub with XET support (hf-xet) for reliable downloads of
 # both LFS and XET-backed Hugging Face repositories.
 # ──────────────────────────────────────────────────────────────────────────────
-RUN pip install --no-cache-dir -U "huggingface_hub" && \
+RUN pip install --no-cache-dir -U "huggingface_hub" "hf-transfer" && \
     pip cache purge
 
 # ──────────────────────────────────────────────────────────────────────────────
 # NO VAE/diffusion/text_encoder baked-in here — all MiniMax-H3 models are huge:
 #   ~50GB total. Instead, a boot script downloads them to /workspace on first run.
 # ──────────────────────────────────────────────────────────────────────────────
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Enable Rust-based Hugging Face downloader (hf-transfer) for model downloads
+# This is much faster than aria2/wget single-connection on HF-hosted files.
+# ──────────────────────────────────────────────────────────────────────────────
+ENV HF_HUB_ENABLE_HF_TRANSFER=1
 
 # ──────────────────────────────────────────────────────────────────────────────
 # MiniMax H3 model download script (~50GB, downloaded at boot in background)
