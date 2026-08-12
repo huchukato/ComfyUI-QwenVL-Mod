@@ -710,7 +710,7 @@
         768,
         10,
         501059613701036,
-        "10Eros_Max_h3_fl2va_pruned_int8_convrot.safetensors",
+        "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
         "qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
         "minimax_h3_video_vae_fp16.safetensors",
         "minimax_h3_audio_vae_fp32.safetensors",
@@ -1837,14 +1837,14 @@
               "Node name for S&R": "UNETLoader",
               "models": [
                 {
-                  "name": "10Eros_Max_H3_FL2VA-INT8-ConvRot-HQ.safetensors",
-                  "url": "https://huggingface.co/DmitryDB/MiniMax-H3-10Eros-Max-Quants/resolve/main/FL2VA/10Eros_Max_H3_FL2VA-INT8-ConvRot-HQ.safetensors",
+                  "name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+                  "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors",
                   "directory": "diffusion_models"
                 }
               ]
             },
             "widgets_values": [
-              "10Eros_Max_H3_FL2VA-INT8-ConvRot-HQ.safetensors",
+              "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
               "default"
             ]
           },
