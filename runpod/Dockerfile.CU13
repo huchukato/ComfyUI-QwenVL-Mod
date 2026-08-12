@@ -160,6 +160,10 @@ download_model() {
     local dest="$MODELS_DIR/$name"
     local max_retries=5
 
+    # Use 'hf' command (newer huggingface_hub) or fall back to 'huggingface-cli'
+    local hf_cmd="hf"
+    command -v hf >/dev/null 2>&1 || hf_cmd="huggingface-cli"
+
     for attempt in $(seq 1 $max_retries); do
         # Check if already complete (size >= min_size)
         if [ -f "$dest" ]; then
@@ -175,19 +179,25 @@ download_model() {
             log "📥 Downloading $name (attempt $attempt/$max_retries)..."
         fi
 
-        mkdir -p "$MODELS_DIR/.cache/huggingface" "$MODELS_DIR/.tmp"
-        # Use huggingface-cli with hf-transfer for multi-connection HF downloads.
-        if HF_HUB_ENABLE_HF_TRANSFER=1 huggingface-cli download "$repo_id" "$repo_path" \
-                --local-dir "$MODELS_DIR/.tmp" \
-                --local-dir-use-symlinks False \
-                --resume-download \
-                --cache-dir "$MODELS_DIR/.cache/huggingface" 2>&1 | tee -a "$LOG"; then
-            local tmp_file="$MODELS_DIR/.tmp/$repo_path"
-            if [ -f "$tmp_file" ]; then
-                mv -f "$tmp_file" "$dest"
-                rm -rf "$MODELS_DIR/.tmp"
+        # Download to a temp dir to avoid path nesting issues.
+        local tmp_dir="$MODELS_DIR/.tmp_${name//\//_}"
+        rm -rf "$tmp_dir"
+        mkdir -p "$tmp_dir" "$(dirname "$dest")"
+        export HF_HUB_ENABLE_HF_TRANSFER=1
+        export HF_XET_HIGH_PERFORMANCE=1
+        if $hf_cmd download "$repo_id" "$repo_path" \
+                --local-dir "$tmp_dir" \
+                --resume-download 2>&1 | tee -a "$LOG"; then
+            local downloaded_path="$tmp_dir/$repo_path"
+            if [ -f "$downloaded_path" ] || [ -L "$downloaded_path" ]; then
+                if [ -L "$downloaded_path" ]; then
+                    ln -sf "$(readlink -f "$downloaded_path")" "$dest"
+                else
+                    mv -f "$downloaded_path" "$dest"
+                fi
+                rm -rf "$tmp_dir"
                 local size
-                size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
+                size=$(stat -L -c%s "$dest" 2>/dev/null || stat -L -f%z "$dest" 2>/dev/null || echo 0)
                 if [ "$size" -ge "$min_size" ]; then
                     log "✅ $name downloaded successfully ($size bytes)"
                     return 0
@@ -195,10 +205,12 @@ download_model() {
                     log "⚠️  $name downloaded but size $size < $min_size, will retry"
                 fi
             else
-                log "⚠️  $name not found after download, will retry"
+                log "⚠️  $name not found at $downloaded_path after download, will retry"
+                rm -rf "$tmp_dir"
             fi
         else
-            log "⚠️  huggingface-cli failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
+            log "⚠️  $hf_cmd failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
+            rm -rf "$tmp_dir"
         fi
 
         # Backoff before retry (skip on last attempt)
