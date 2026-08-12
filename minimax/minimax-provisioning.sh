@@ -75,9 +75,6 @@ MINIMAX_MODELS=(
     "diffusion_models|minimax_h3_ref2va_pruned_int8_convrot.safetensors|https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors|20970379616"
     "text_encoders|qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors|https://huggingface.co/ethanfel/Qwen3-VL-32B-Ultra-Heretic-H3-ComfyUI-INT8-ConvRot/resolve/main/qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors|26000000000"
     "loras|minimax_h3_turbo_v4_step600_ema.safetensors|https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora/resolve/main/minimax_h3_turbo_v4_step600_ema.safetensors|779849816"
-    # 10Eros-Max beta1 (optional, ~40GB bf16) — H3 + LTX Eros + Wan + Krea merge
-    # Prompt it like LTX (descriptive, directive), not like standard H3
-    "diffusion_models|10Eros_Max_h3_fl2va_beta1_pruned.safetensors|https://huggingface.co/TenStrip/10Eros-Max/resolve/main/10Eros_Max_h3_fl2va_beta1_pruned.safetensors|40000000000"
     # 10Eros-Max INT8 ConvRot HQ (~22GB) — only 32 QKV tensors modified, rest bit-identical to H3
     # Better prompt adherence + audio than beta1, same VRAM as standard H3 int8
     "diffusion_models|10Eros_Max_H3_FL2VA-INT8-ConvRot-HQ.safetensors|https://huggingface.co/DmitryDB/MiniMax-H3-10Eros-Max-Quants/resolve/main/FL2VA/10Eros_Max_H3_FL2VA-INT8-ConvRot-HQ.safetensors|22000000000"
