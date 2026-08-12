@@ -78,6 +78,9 @@ MINIMAX_MODELS=(
     # 10Eros-Max beta1 (optional, ~40GB bf16) — H3 + LTX Eros + Wan + Krea merge
     # Prompt it like LTX (descriptive, directive), not like standard H3
     "diffusion_models|10Eros_Max_h3_fl2va_beta1_pruned.safetensors|https://huggingface.co/TenStrip/10Eros-Max/resolve/main/10Eros_Max_h3_fl2va_beta1_pruned.safetensors|40000000000"
+    # 10Eros-Max INT8 ConvRot HQ (~22GB) — only 32 QKV tensors modified, rest bit-identical to H3
+    # Better prompt adherence + audio than beta1, same VRAM as standard H3 int8
+    "diffusion_models|10Eros_Max_H3_FL2VA-INT8-ConvRot-HQ.safetensors|https://huggingface.co/DmitryDB/MiniMax-H3-10Eros-Max-Quants/resolve/main/FL2VA/10Eros_Max_H3_FL2VA-INT8-ConvRot-HQ.safetensors|22000000000"
 )
 
 CONTROLNET_MODELS=(
