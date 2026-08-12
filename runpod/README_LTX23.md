@@ -1,10 +1,10 @@
-![ComfyUI-QwenVL-Mod LTX 2.3](https://raw.githubusercontent.com/huchukato/ComfyUI-QwenVL-Mod/main/img/bannerltx.png)
+![ComfyUI-QwenVL-Mod LTX 2.3](https://raw.githubusercontent.com/huchukato/ComfyUI-QwenVL-Mod/main/img/bannerltx23.png)
 
-# OneClick - ComfyUI - LTX 2.3 - Qwen3VL
+# OneClick - ComfyUI - LTX 2.3 Uncensored - Qwen3VL
 
-Custom ComfyUI based on `runpod/comfyui:cuda13.0`, enhanced with QwenVL-Mod and LTX 2.3 video+audio generation with Qwen3-VL auto-prompting. Uncensored 10Eros setup for NSFW I2V.
+Custom ComfyUI based on `runpod/comfyui:cuda13.0`, enhanced with QwenVL-Mod and native LTX 2.3 video+audio generation with Qwen3-VL auto-prompting. Uncensored 10Eros setup for NSFW I2V.
 
-**Template**: `OneClick - ComfyUI - LTX 2.3 - Qwen3VL`
+**Template**: `OneClick - ComfyUI - LTX 2.3 Uncensored - Qwen3VL`
 
 **Docker image**: `huchukato/comfyui-qwenvl-runpod:cu13-ltx`
 
@@ -75,11 +75,13 @@ In the RunPod template environment variables add:
 HF_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
+The boot script detects `HF_TOKEN` automatically and passes it to every Hugging Face download.
+
 ---
 
 ## 🚀 Quick Start
 
-1. **Deploy**: Select `OneClick - ComfyUI - LTX 2.3 - Qwen3VL`
+1. **Deploy**: Select `OneClick - ComfyUI - LTX 2.3 Uncensored - Qwen3VL`
 2. **First boot**: ComfyUI copies to `/workspace`, then LTX 2.3 models download in background
 3. **Load a workflow** from `ComfyUI > Load > LTX23-I2VA-Qwen3VL.json`
 4. **Access**:
@@ -102,6 +104,8 @@ Pre-populated in `/workspace/runpod-slim/comfyui_args.txt`:
 --cuda-malloc
 --async-offload
 ```
+
+Edit via FileBrowser or Jupyter to customize.
 
 ---
 
@@ -139,9 +143,17 @@ LTX 2.3 uses 8:1 temporal compression. Frame count must be N×8+1:
 
 For longer videos: generate 121-201 frames, then apply the **temporal upscaler** to double the frame count.
 
-### Resolution Guide
+### Resolution Guidance
 
 LTX 2.3 native resolution uses ~768px short edge. For higher resolution, apply the **spatial upscaler** after generation (already wired in the workflow).
+
+Examples:
+- 768x1344 (portrait)
+- 896x1152
+- 960x1280
+- 1024x1024
+
+Avoid direct 1080p. For best quality, generate at native resolution and then upscale / interpolate frames with the bundled TensorRT nodes.
 
 ---
 
