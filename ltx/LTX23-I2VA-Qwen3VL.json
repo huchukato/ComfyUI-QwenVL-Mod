@@ -50,90 +50,6 @@
       "bgcolor": "#335"
     },
     {
-      "id": 333,
-      "type": "LoadUpscalerTensorrtModel",
-      "pos": [
-        679.0888540531764,
-        4107.919887730162
-      ],
-      "size": [
-        295.4078125,
-        82
-      ],
-      "flags": {},
-      "order": 1,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "links": [
-            656
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
-        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
-        "Node name for S&R": "LoadUpscalerTensorrtModel"
-      },
-      "widgets_values": [
-        "4x-UltraSharp",
-        "fp16"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 334,
-      "type": "UpscalerTensorrt",
-      "pos": [
-        679.0888540531764,
-        4257.919887730162
-      ],
-      "size": [
-        294.81271348921337,
-        76
-      ],
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 663
-        },
-        {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "link": 656
-        }
-      ],
-      "outputs": [
-        {
-          "name": "upscaled_images",
-          "type": "IMAGE",
-          "links": [
-            657
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
-        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
-        "Node name for S&R": "UpscalerTensorrt"
-      },
-      "widgets_values": [
-        "2x",
-        2048,
-        2048
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
       "id": 332,
       "type": "AutoRifeTensorrt",
       "pos": [
@@ -235,93 +151,89 @@
       ]
     },
     {
-      "id": 336,
-      "type": "VHS_VideoCombine",
+      "id": 75,
+      "type": "SaveVideo",
       "pos": [
-        1086.1632044433288,
-        3507.748334810191
+        1097.7121977191553,
+        4583.87168521572
       ],
       "size": [
-        1155.5330597730813,
-        334
+        1127.2954881148669,
+        106
       ],
-      "flags": {},
-      "order": 10,
+      "flags": {
+        "collapsed": false
+      },
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 657
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": 664
-        },
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        },
-        {
-          "name": "filename_prefix",
-          "type": "STRING",
-          "widget": {
-            "name": "filename_prefix"
-          },
-          "link": 661
+          "name": "video",
+          "type": "VIDEO",
+          "link": 632
         }
       ],
       "outputs": [
         {
-          "name": "Filenames",
-          "type": "VHS_FILENAMES",
+          "name": "video",
+          "type": "VIDEO",
           "links": null
         }
       ],
-      "title": "48FPS",
       "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "4ee72c065db22c9d96c2427954dc69e7b908444b",
-        "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
-      },
-      "widgets_values": {
-        "frame_rate": 50,
-        "loop_count": 0,
-        "filename_prefix": "video/MiniMax_H3_48FPS",
-        "format": "video/webm",
-        "pix_fmt": "yuv420p",
-        "crf": 20,
-        "save_metadata": true,
-        "trim_to_audio": false,
-        "pingpong": false,
-        "save_output": true,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "s02_ep07_newjob_350.jpg_00001-audio.webm",
-            "subfolder": "",
-            "type": "output",
-            "format": "video/webm",
-            "frame_rate": 48,
-            "workflow": "s02_ep07_newjob_350.jpg_00001.png",
-            "fullpath": "/workspace/runpod-slim/ComfyUI/output/s02_ep07_newjob_350.jpg_00001-audio.webm"
-          }
+        "cnr_id": "comfy-core",
+        "ver": "0.5.1",
+        "Node name for S&R": "SaveVideo",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.7",
+          "input_ue_unconnectable": {}
         }
       },
-      "color": "#232",
-      "bgcolor": "#353"
+      "widgets_values": [
+        "video/LTX_2.3_i2v",
+        "auto",
+        "auto"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 103,
+      "type": "MarkdownNote",
+      "pos": [
+        -1430.587558395163,
+        3514.8752232756274
+      ],
+      "size": [
+        754.7124038197308,
+        851.3196877576256
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Model Links",
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.7",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "- Huggingface: [Lightricks/LTX-2.3](https://huggingface.co/Lightricks/LTX-2.3/)\n- Github: [LTX-2](https://github.com/Lightricks/LTX-2)\n\n## LTX-2.3 Prompting Tips\n\n1. **Core Actions**: Describe events and actions as they occur over time  \n2. **Visual Details**: Describe all visual details you want to appear in the video  \n3. **Audio**: Describe sounds and dialogue needed for the scene\n\n## Report LTX-2.3 Issues\nTo report any issues when running this workflow, [go to GitHub](https://github.com/Lightricks/ComfyUI-LTXVideo/issues)\n\n## Model Links (for Local Users)\n\n**checkpoints**\n\n- [ltx-2.3-22b-dev-fp8.safetensors](https://huggingface.co/Lightricks/LTX-2.3-fp8/resolve/main/ltx-2.3-22b-dev-fp8.safetensors)\n\n**text_encoders**\n\n- [gemma_3_12B_it_fp4_mixed.safetensors](https://huggingface.co/Comfy-Org/ltx-2/resolve/main/split_files/text_encoders/gemma_3_12B_it_fp4_mixed.safetensors)\n\n**loras**\n\n- [ltx_2.3_22b_distilled_1.1_lora_dynamic_fro09_avg_rank_111_bf16.safetensors](https://huggingface.co/Comfy-Org/ltx-2.3/resolve/main/split_files/loras/ltx_2.3_22b_distilled_1.1_lora_dynamic_fro09_avg_rank_111_bf16.safetensors)\n- [gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors](https://huggingface.co/Comfy-Org/ltx-2/resolve/main/split_files/loras/gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors)\n\n**latent_upscale_models**\n\n- [ltx-2.3-spatial-upscaler-x2-1.1.safetensors](https://huggingface.co/Lightricks/LTX-2.3/resolve/main/ltx-2.3-spatial-upscaler-x2-1.1.safetensors)\n\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 checkpoints/\n│   │   └── ltx-2.3-22b-dev-fp8.safetensors\n│   ├── 📂 text_encoders/\n│   │   └── gemma_3_12B_it_fp4_mixed.safetensors\n│   ├── 📂 loras/\n│   │   ├── ltx_2.3_22b_distilled_1.1_lora_dynamic_fro09_avg_rank_111_bf16.safetensors\n│   │   └── gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors\n│   └── 📂 latent_upscale_models/\n│       └── ltx-2.3-spatial-upscaler-x2-1.1.safetensors\n```\n\n## Report Issue\n\nNote: Please update ComfyUI first ([guide](https://docs.comfy.org/installation/update_comfyui)) and prepare required models. Desktop/Cloud updates follow stable releases, so some nightly-supported models may not be available yet.\n\n- Cannot run / runtime errors: [ComfyUI/issues](https://github.com/comfyanonymous/ComfyUI/issues)\n- Workflow issues: [ComfyUI-LTXVideo/issues](https://github.com/Lightricks/ComfyUI-LTXVideo/issues)"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
     },
     {
       "id": 269,
@@ -372,11 +284,100 @@
         }
       },
       "widgets_values": [
-        "egyptian_queen.png",
+        "s02_ep07_newjob_423.jpg",
         "image"
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
+    },
+    {
+      "id": 336,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        1086.1632044433288,
+        3507.748334810191
+      ],
+      "size": [
+        1155.5330597730813,
+        953.6176318789767
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 657
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 664
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        },
+        {
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": 661
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": null
+        }
+      ],
+      "title": "50FPS",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "4ee72c065db22c9d96c2427954dc69e7b908444b",
+        "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+      },
+      "widgets_values": {
+        "frame_rate": 50,
+        "loop_count": 0,
+        "filename_prefix": "video/MiniMax_H3_48FPS",
+        "format": "video/webm",
+        "pix_fmt": "yuv420p",
+        "crf": 20,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "s02_ep07_newjob_423.jpg_00001-audio.webm",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/webm",
+            "frame_rate": 50,
+            "workflow": "s02_ep07_newjob_423.jpg_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/s02_ep07_newjob_423.jpg_00001-audio.webm"
+          }
+        }
+      },
+      "color": "#232",
+      "bgcolor": "#353"
     },
     {
       "id": 335,
@@ -387,7 +388,7 @@
       ],
       "size": [
         492.5463282006857,
-        118.7460582216163
+        130
       ],
       "flags": {},
       "order": 3,
@@ -414,56 +415,85 @@
       "bgcolor": "#533"
     },
     {
-      "id": 75,
-      "type": "SaveVideo",
+      "id": 333,
+      "type": "LoadUpscalerTensorrtModel",
       "pos": [
-        1097.7121977191553,
-        4583.87168521572
+        683.1253452107234,
+        4097.416139311401
       ],
       "size": [
-        1127.2954881148669,
-        148.41700158010462
+        295.4078125,
+        82
       ],
-      "flags": {
-        "collapsed": false
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "links": [
+            656
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
+        "Node name for S&R": "LoadUpscalerTensorrtModel"
       },
-      "order": 7,
+      "widgets_values": [
+        "4x-UltraSharp",
+        "fp16"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 334,
+      "type": "UpscalerTensorrt",
+      "pos": [
+        686.6339875245912,
+        4231.833509161439
+      ],
+      "size": [
+        294.81271348921337,
+        126
+      ],
+      "flags": {},
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
-          "name": "video",
-          "type": "VIDEO",
-          "link": 632
+          "name": "images",
+          "type": "IMAGE",
+          "link": 663
+        },
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "link": 656
         }
       ],
       "outputs": [
         {
-          "name": "video",
-          "type": "VIDEO",
-          "links": null
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            657
+          ]
         }
       ],
       "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.5.1",
-        "Node name for S&R": "SaveVideo",
-        "enableTabs": false,
-        "tabWidth": 65,
-        "tabXOffset": 10,
-        "hasSecondTab": false,
-        "secondTabText": "Send Back",
-        "secondTabOffset": 80,
-        "secondTabWidth": 65,
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.7",
-          "input_ue_unconnectable": {}
-        }
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
+        "Node name for S&R": "UpscalerTensorrt"
       },
       "widgets_values": [
-        "video/LTX_2.3_i2v",
-        "auto",
-        "auto"
+        "custom",
+        2560,
+        1440
       ],
       "color": "#223",
       "bgcolor": "#335"
@@ -640,13 +670,13 @@
       "widgets_values": [
         "",
         false,
-        1280,
-        720,
+        1920,
+        1080,
         5,
         25,
-        60540193790228,
-        "ltx-2.3-22b-dev-fp8.safetensors",
-        "ltx_2.3_22b_distilled_1.1_lora_dynamic_fro09_avg_rank_111_bf16.safetensors",
+        191966393262861,
+        "10Eros_v1.5_fp8mixed_experimental_learned.safetensors",
+        "ltx23/LTX2.3_DMD_hybrid_v2.safetensors",
         "gemma_3_12B_it_fp4_mixed.safetensors",
         "ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
         "gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors",
@@ -656,36 +686,6 @@
       ],
       "color": "#233",
       "bgcolor": "#355"
-    },
-    {
-      "id": 103,
-      "type": "MarkdownNote",
-      "pos": [
-        -1430.587558395163,
-        3514.8752232756274
-      ],
-      "size": [
-        754.7124038197308,
-        851.3196877576256
-      ],
-      "flags": {},
-      "order": 4,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "title": "Model Links",
-      "properties": {
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.7",
-          "input_ue_unconnectable": {}
-        }
-      },
-      "widgets_values": [
-        "- Huggingface: [Lightricks/LTX-2.3](https://huggingface.co/Lightricks/LTX-2.3/)\n- Github: [LTX-2](https://github.com/Lightricks/LTX-2)\n\n## LTX-2.3 Prompting Tips\n\n1. **Core Actions**: Describe events and actions as they occur over time  \n2. **Visual Details**: Describe all visual details you want to appear in the video  \n3. **Audio**: Describe sounds and dialogue needed for the scene\n\n## Report LTX-2.3 Issues\nTo report any issues when running this workflow, [go to GitHub](https://github.com/Lightricks/ComfyUI-LTXVideo/issues)\n\n## Model Links (for Local Users)\n\n**checkpoints**\n\n- [ltx-2.3-22b-dev-fp8.safetensors](https://huggingface.co/Lightricks/LTX-2.3-fp8/resolve/main/ltx-2.3-22b-dev-fp8.safetensors)\n\n**text_encoders**\n\n- [gemma_3_12B_it_fp4_mixed.safetensors](https://huggingface.co/Comfy-Org/ltx-2/resolve/main/split_files/text_encoders/gemma_3_12B_it_fp4_mixed.safetensors)\n\n**loras**\n\n- [ltx_2.3_22b_distilled_1.1_lora_dynamic_fro09_avg_rank_111_bf16.safetensors](https://huggingface.co/Comfy-Org/ltx-2.3/resolve/main/split_files/loras/ltx_2.3_22b_distilled_1.1_lora_dynamic_fro09_avg_rank_111_bf16.safetensors)\n- [gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors](https://huggingface.co/Comfy-Org/ltx-2/resolve/main/split_files/loras/gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors)\n\n**latent_upscale_models**\n\n- [ltx-2.3-spatial-upscaler-x2-1.1.safetensors](https://huggingface.co/Lightricks/LTX-2.3/resolve/main/ltx-2.3-spatial-upscaler-x2-1.1.safetensors)\n\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 checkpoints/\n│   │   └── ltx-2.3-22b-dev-fp8.safetensors\n│   ├── 📂 text_encoders/\n│   │   └── gemma_3_12B_it_fp4_mixed.safetensors\n│   ├── 📂 loras/\n│   │   ├── ltx_2.3_22b_distilled_1.1_lora_dynamic_fro09_avg_rank_111_bf16.safetensors\n│   │   └── gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors\n│   └── 📂 latent_upscale_models/\n│       └── ltx-2.3-spatial-upscaler-x2-1.1.safetensors\n```\n\n## Report Issue\n\nNote: Please update ComfyUI first ([guide](https://docs.comfy.org/installation/update_comfyui)) and prepare required models. Desktop/Cloud updates follow stable releases, so some nightly-supported models may not be available yet.\n\n- Cannot run / runtime errors: [ComfyUI/issues](https://github.com/comfyanonymous/ComfyUI/issues)\n- Workflow issues: [ComfyUI-LTXVideo/issues](https://github.com/Lightricks/ComfyUI-LTXVideo/issues)"
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
     }
   ],
   "links": [
@@ -797,7 +797,7 @@
     },
     {
       "id": 29,
-      "title": "24FPS",
+      "title": "25FPS",
       "bounding": [
         1087.712197719155,
         4513.87168521572,
@@ -4224,7 +4224,7 @@
               1,
               16,
               false,
-              350688962,
+              3813287440,
               "randomize",
               false
             ],
@@ -5663,10 +5663,10 @@
     "VHS_KeepIntermediate": true,
     "ue_links": [],
     "ds": {
-      "scale": 0.7278000000000001,
+      "scale": 0.8806380000000005,
       "offset": [
-        1691.762427205412,
-        -3063.8223076944146
+        625.1835078371487,
+        -3253.7703685002125
       ]
     }
   },
