@@ -27,7 +27,7 @@ Version 2.5.1 (2026/08/11) — 🎬 MiniMax H3 Native Video+Audio + Qwen3-VL Aut
 
 ### Software
 
-- **ComfyUI**: v0.30.0+ (required for MiniMax H3 native support)
+- **ComfyUI**: v0.31.0+ (required for MiniMax H3 native support)
 - **Python**: 3.10+
 - **CUDA**: 12.8+ (13.0 recommended)
 - **Storage**: 30-110 GB SSD depending on quantization
@@ -327,7 +327,7 @@ Prefer a ready-to-go environment? Use the **OneClick - ComfyUI - MiniMax H3 Turb
 - All custom nodes pre-installed
 - All 8 workflows auto-downloaded at boot
 - Models auto-downloaded at first boot (~70 GB with Turbo LoRA, persistent)
-- ComfyUI v0.30.0+ forced at boot
+- ComfyUI v0.31.0+ forced at boot
 - Sage Attention, FP16 accumulation, async offload
 - TensorRT upscaling + RIFE interpolation
 
