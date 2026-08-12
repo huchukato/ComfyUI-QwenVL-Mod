@@ -88,12 +88,49 @@ CONTROLNET_MODELS=(
 
 ### DO NOT EDIT BELOW HERE UNLESS YOU KNOW WHAT YOU ARE DOING ###
 
+function provisioning_force_comfyui_version() {
+    local repo_dir="$1"
+    local tag="v0.31.0"
+    if [ ! -d "$repo_dir/.git" ]; then
+        echo "⚠️  ComfyUI has no .git directory, skipping version force"
+        return 0
+    fi
+
+    local current_tag
+    current_tag=$(git -C "$repo_dir" describe --tags --exact-match HEAD 2>/dev/null || echo "")
+    if [ "$current_tag" = "$tag" ]; then
+        echo "✅ ComfyUI already on $tag"
+        return 0
+    fi
+
+    echo "🔧 Ensuring ComfyUI is on $tag (current: ${current_tag:-unknown})..."
+    git -C "$repo_dir" reset --hard 2>/dev/null || true
+    git -C "$repo_dir" clean -fd 2>/dev/null || true
+
+    if timeout 60 git -C "$repo_dir" fetch --tags origin 2>/dev/null; then
+        if timeout 30 git -C "$repo_dir" -c advice.detachedHead=false checkout -f "$tag" 2>/dev/null; then
+            echo "✅ ComfyUI forced to $tag ($(git -C "$repo_dir" rev-parse --short HEAD))"
+            if [ -f "$repo_dir/requirements.txt" ]; then
+                echo "🔄 Re-installing ComfyUI requirements..."
+                pip install --root-user-action=ignore --no-cache-dir -r "$repo_dir/requirements.txt" 2>&1 | tail -n 20
+            fi
+        else
+            echo "❌ ComfyUI checkout $tag failed"
+        fi
+    else
+        echo "⚠️  ComfyUI fetch tags failed/timed out, leaving at current version"
+    fi
+}
+
 function provisioning_start() {
     provisioning_print_header
     echo "🚀 Starting provisioning process..."
     
     echo "📦 Installing APT packages..."
     provisioning_get_apt_packages
+
+    echo "🔧 Ensuring ComfyUI version..."
+    provisioning_force_comfyui_version "${COMFYUI_DIR}"
     
     echo "🔧 Installing custom nodes..."
     provisioning_get_nodes
@@ -181,7 +218,16 @@ function provisioning_get_nodes() {
         if [[ -d $path ]]; then
             if [[ ${AUTO_UPDATE,,} != "false" ]]; then
                 echo "  → Updating existing node..."
-                ( cd "$path" && git pull )
+                local branch
+                branch=$(git -C "$path" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "main")
+                if git -C "$path" pull --ff-only origin "$branch" 2>/dev/null; then
+                    echo "  ✅ $dir updated"
+                else
+                    echo "  ⚠️  $dir pull failed, resetting to origin/$branch..."
+                    git -C "$path" fetch origin "$branch" 2>/dev/null && \
+                        git -C "$path" reset --hard "origin/$branch" 2>/dev/null || \
+                        echo "  ⚠️  $dir reset failed, leaving as-is"
+                fi
                 if [[ -e $requirements ]]; then
                    echo "  → Installing requirements..."
                    pip install --root-user-action=ignore --no-cache-dir -r "$requirements"
