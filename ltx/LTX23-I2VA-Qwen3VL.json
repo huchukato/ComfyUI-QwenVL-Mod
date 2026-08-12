@@ -1313,7 +1313,7 @@
               }
             },
             "widgets_values": [
-              "ltx-2.3-22b-dev-fp8.safetensors"
+              "10Eros_v1.5_fp8mixed_experimental_learned.safetensors"
             ]
           },
           {
@@ -3651,7 +3651,7 @@
             },
             "widgets_values": [
               "gemma_3_12B_it_fp4_mixed.safetensors",
-              "ltx-2.3-22b-dev-fp8.safetensors",
+              "10Eros_v1.5_fp8mixed_experimental_learned.safetensors",
               "default"
             ]
           },
