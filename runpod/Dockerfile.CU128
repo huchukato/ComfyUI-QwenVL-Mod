@@ -43,6 +43,7 @@ RUN bash -c 'cd /opt/comfyui-baked/custom_nodes && for node_dir in */; do \
             pip install --no-cache-dir -r "$node_dir/requirements.txt" || echo "Failed to install requirements for $node_dir"; \
         fi; \
     done' && \
+    pip install --no-cache-dir -U "huggingface_hub" "hf-transfer" && \
     pip cache purge
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -123,6 +124,12 @@ RUN mkdir -p /opt/comfyui-baked/user/default/workflows && \
     done
 
 # ──────────────────────────────────────────────────────────────────────────────
+# Enable Rust-based Hugging Face downloader (hf-transfer) for model downloads
+# This is much faster than aria2/wget single-connection on HF-hosted files.
+# ──────────────────────────────────────────────────────────────────────────────
+ENV HF_HUB_ENABLE_HF_TRANSFER=1
+
+# ──────────────────────────────────────────────────────────────────────────────
 # WAN models download script (~30GB, downloaded at boot in background)
 # Waits for /workspace/runpod-slim/ComfyUI to exist, then downloads if missing.
 # Robust: retries with backoff, resumes interrupted downloads, verifies size.
@@ -133,10 +140,10 @@ MODELS_DIR="/workspace/runpod-slim/ComfyUI/models/diffusion_models"
 LOG="/var/log/wan-models.log"
 READY_MARKER="/workspace/runpod-slim/ComfyUI/main.py"   # created by start.sh copy
 
-# Models: name|url|min_size_bytes (min_size = sanity check, ~98% of real 14.29GB)
+# Models: name|repo_id|repo_path|min_size_bytes (min_size = sanity check, ~98% of real 14.29GB)
 MODELS=(
-    "wan22RemixT2VI2V_i2vHighV30.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/FP8/wan22RemixT2VI2V_i2vHighV30.safetensors|14000000000"
-    "wan22RemixT2VI2V_i2vLowV30.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/FP8/wan22RemixT2VI2V_i2vLowV30.safetensors|14000000000"
+    "wan22RemixT2VI2V_i2vHighV30.safetensors|huchukato/pimp-my-wan|FP8/wan22RemixT2VI2V_i2vHighV30.safetensors|14000000000"
+    "wan22RemixT2VI2V_i2vLowV30.safetensors|huchukato/pimp-my-wan|FP8/wan22RemixT2VI2V_i2vLowV30.safetensors|14000000000"
 )
 
 log() { echo "$(date): $*" | tee -a "$LOG"; }
@@ -160,7 +167,7 @@ mkdir -p "$MODELS_DIR"
 
 # ── Phase 2: download each model with retry + resume + size check ──
 download_model() {
-    local name="$1" url="$2" min_size="$3"
+    local name="$1" repo_id="$2" repo_path="$3" min_size="$4"
     local dest="$MODELS_DIR/$name"
     local max_retries=5
 
@@ -179,35 +186,30 @@ download_model() {
             log "📥 Downloading $name (attempt $attempt/$max_retries)..."
         fi
 
-        # --continue resumes partial downloads; -q suppresses wget's own output
-        # Progress monitor runs in background, logs file size every 30s
-        (
-            while true; do
-                if [ ! -f "$dest" ]; then sleep 5; continue; fi
-                local s
-                s=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
-                local pct=$(( s * 100 / min_size ))
-                local mb=$(( s / 1048576 ))
-                log "📊 PROGRESS: $name — ${mb}MB / $(( min_size / 1048576 ))MB (${pct}%)"
-                [ "$pct" -ge 100 ] && break
-                sleep 30
-            done
-        ) &
-        local monitor_pid=$!
-
-        if wget -q --continue --tries=3 --timeout=60 "$url" -O "$dest"; then
-            kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
-            local size
-            size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
-            if [ "$size" -ge "$min_size" ]; then
-                log "✅ $name downloaded successfully ($size bytes)"
-                return 0
+        mkdir -p "$MODELS_DIR/.cache/huggingface" "$MODELS_DIR/.tmp"
+        # Use huggingface-cli with hf-transfer for multi-connection HF downloads.
+        if HF_HUB_ENABLE_HF_TRANSFER=1 huggingface-cli download "$repo_id" "$repo_path" \
+                --local-dir "$MODELS_DIR/.tmp" \
+                --local-dir-use-symlinks False \
+                --resume-download \
+                --cache-dir "$MODELS_DIR/.cache/huggingface" 2>&1 | tee -a "$LOG"; then
+            local tmp_file="$MODELS_DIR/.tmp/$repo_path"
+            if [ -f "$tmp_file" ]; then
+                mv -f "$tmp_file" "$dest"
+                rm -rf "$MODELS_DIR/.tmp"
+                local size
+                size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
+                if [ "$size" -ge "$min_size" ]; then
+                    log "✅ $name downloaded successfully ($size bytes)"
+                    return 0
+                else
+                    log "⚠️  $name downloaded but size $size < $min_size, will retry"
+                fi
             else
-                log "⚠️  $name downloaded but size $size < $min_size, will retry"
+                log "⚠️  $name not found after download, will retry"
             fi
         else
-            kill $monitor_pid 2>/dev/null; wait $monitor_pid 2>/dev/null
-            log "⚠️  wget failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
+            log "⚠️  huggingface-cli failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
         fi
 
         # Backoff before retry (skip on last attempt)
@@ -220,8 +222,8 @@ download_model() {
 
 failures=0
 for entry in "${MODELS[@]}"; do
-    IFS='|' read -r name url min_size <<< "$entry"
-    download_model "$name" "$url" "$min_size" || failures=$((failures + 1))
+    IFS='|' read -r name repo_id repo_path min_size <<< "$entry"
+    download_model "$name" "$repo_id" "$repo_path" "$min_size" || failures=$((failures + 1))
 done
 
 log "📦 === WAN models download finished ($failures failures) ==="
