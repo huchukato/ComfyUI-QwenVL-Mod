@@ -17,7 +17,7 @@
       ],
       "flags": {},
       "order": 0,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "custom_config",
@@ -62,7 +62,7 @@
       ],
       "flags": {},
       "order": 8,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "frames",
@@ -165,7 +165,7 @@
         "collapsed": false
       },
       "order": 7,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "video",
@@ -291,6 +291,42 @@
       "bgcolor": "#3f5159"
     },
     {
+      "id": 333,
+      "type": "LoadUpscalerTensorrtModel",
+      "pos": [
+        683.1253452107234,
+        4097.416139311401
+      ],
+      "size": [
+        295.4078125,
+        82
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "links": [
+            656
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
+        "Node name for S&R": "LoadUpscalerTensorrtModel"
+      },
+      "widgets_values": [
+        "4x-UltraSharp",
+        "fp16"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
       "id": 336,
       "type": "VHS_VideoCombine",
       "pos": [
@@ -299,7 +335,7 @@
       ],
       "size": [
         1155.5330597730813,
-        953.6176318789767
+        334
       ],
       "flags": {},
       "order": 10,
@@ -376,8 +412,8 @@
           }
         }
       },
-      "color": "#232",
-      "bgcolor": "#353"
+      "color": "#223",
+      "bgcolor": "#335"
     },
     {
       "id": 335,
@@ -391,7 +427,7 @@
         130
       ],
       "flags": {},
-      "order": 3,
+      "order": 4,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -413,90 +449,6 @@
       },
       "color": "#322",
       "bgcolor": "#533"
-    },
-    {
-      "id": 333,
-      "type": "LoadUpscalerTensorrtModel",
-      "pos": [
-        683.1253452107234,
-        4097.416139311401
-      ],
-      "size": [
-        295.4078125,
-        82
-      ],
-      "flags": {},
-      "order": 4,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "links": [
-            656
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
-        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
-        "Node name for S&R": "LoadUpscalerTensorrtModel"
-      },
-      "widgets_values": [
-        "4x-UltraSharp",
-        "fp16"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 334,
-      "type": "UpscalerTensorrt",
-      "pos": [
-        686.6339875245912,
-        4231.833509161439
-      ],
-      "size": [
-        294.81271348921337,
-        126
-      ],
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 663
-        },
-        {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "link": 656
-        }
-      ],
-      "outputs": [
-        {
-          "name": "upscaled_images",
-          "type": "IMAGE",
-          "links": [
-            657
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
-        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
-        "Node name for S&R": "UpscalerTensorrt"
-      },
-      "widgets_values": [
-        "custom",
-        2560,
-        1440
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
     },
     {
       "id": 320,
@@ -672,13 +624,13 @@
         false,
         1920,
         1080,
-        5,
-        25,
+        10,
+        50,
         191966393262861,
         "10Eros_v1.5_fp8mixed_experimental_learned.safetensors",
         "ltx23/LTX2.3_DMD_hybrid_v2.safetensors",
         "gemma_3_12B_it_fp4_mixed.safetensors",
-        "ltx-2.3-spatial-upscaler-x2-1.1.safetensors",
+        "ltx-2.3-temporal-upscaler-x2-1.0.safetensors",
         "gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors",
         "Qwen3-VL-8B-Heretic-Stable",
         "None (FP16)",
@@ -686,6 +638,54 @@
       ],
       "color": "#233",
       "bgcolor": "#355"
+    },
+    {
+      "id": 334,
+      "type": "UpscalerTensorrt",
+      "pos": [
+        688.9174882365751,
+        4248.135167021986
+      ],
+      "size": [
+        294.81271348921337,
+        76
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 663
+        },
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "link": 656
+        }
+      ],
+      "outputs": [
+        {
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            657
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
+        "Node name for S&R": "UpscalerTensorrt"
+      },
+      "widgets_values": [
+        "2K",
+        2560,
+        1440
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
     }
   ],
   "links": [
@@ -806,6 +806,18 @@
       ],
       "color": "#a1309b",
       "flags": {}
+    },
+    {
+      "id": 30,
+      "title": "50FPS",
+      "bounding": [
+        1076.1632044433288,
+        3437.748334810191,
+        1175.533059773081,
+        414
+      ],
+      "color": "#a1309b",
+      "flags": {}
     }
   ],
   "definitions": {
@@ -814,7 +826,7 @@
         "id": "2454ad83-157c-40dd-9f19-5daaf4041ce0",
         "version": 1,
         "state": {
-          "lastGroupId": 29,
+          "lastGroupId": 30,
           "lastNodeId": 337,
           "lastLinkId": 664,
           "lastRerouteId": 0
@@ -5665,8 +5677,8 @@
     "ds": {
       "scale": 0.8005800000000004,
       "offset": [
-        1337.664544726219,
-        -3166.214614883756
+        886.4682245583406,
+        -3435.272477620771
       ]
     }
   },
