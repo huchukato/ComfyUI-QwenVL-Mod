@@ -1,8 +1,8 @@
 {
   "id": "2e5fb033-7e4f-4e73-a580-590a2a38a074",
   "revision": 0,
-  "last_node_id": 156,
-  "last_link_id": 296,
+  "last_node_id": 159,
+  "last_link_id": 300,
   "nodes": [
     {
       "id": 118,
@@ -159,7 +159,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 13,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -187,62 +187,6 @@
       ]
     },
     {
-      "id": 145,
-      "type": "AutoRifeTensorrt",
-      "pos": [
-        -165.73815160850788,
-        5083.831507603763
-      ],
-      "size": [
-        311.24876401618576,
-        229.6878304442398
-      ],
-      "flags": {},
-      "order": 11,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "frames",
-          "type": "IMAGE",
-          "link": 284
-        },
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "link": 269
-        },
-        {
-          "name": "interpolation_states",
-          "shape": 7,
-          "type": "INTERPOLATION_STATES",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            287
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "51d88c0c0db49308dd3ade9edd4a5c1bcdf4ec72",
-        "Node name for S&R": "AutoRifeTensorrt"
-      },
-      "widgets_values": [
-        100,
-        2,
-        false,
-        1,
-        ""
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
       "id": 127,
       "type": "UpscalerTensorrt",
       "pos": [
@@ -254,7 +198,7 @@
         76
       ],
       "flags": {},
-      "order": 14,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -294,15 +238,15 @@
       "id": 92,
       "type": "SaveVideo",
       "pos": [
-        197.39573104755894,
-        5927.0586009150065
+        246.27803237042747,
+        5947.989938571272
       ],
       "size": [
         1146.9778644557782,
         106
       ],
       "flags": {},
-      "order": 10,
+      "order": 11,
       "mode": 4,
       "inputs": [
         {
@@ -449,18 +393,105 @@
       "bgcolor": "#3f5159"
     },
     {
+      "id": 137,
+      "type": "easy showAnything",
+      "pos": [
+        -856.1781450430237,
+        5402.11021783787
+      ],
+      "size": [
+        646.6021824539848,
+        334.35740569392055
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 253
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": []
+        }
+      ],
+      "title": "QWEN3VL GENERATED PROMPT",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "595e0738a9e3f8d0d9c4d875461b2d2c9e7559c7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] Cinematic, 3D CG, a tight medium shot frames a woman with dark hair tied in a messy bun, her body arched backward as she deeply engulfs a man’s erect penis in her throat. Her arms are wrapped around his torso, her left hand with red-painted nails resting firmly on his chest, while her right hand grips his hip. The man lies on his back, his torso bare, his neck glistening with saliva as the woman’s mouth moves rhythmically. The scene is set in a bedroom with a wooden door in the background and a gray bedspread beneath them. Soft, warm lighting from an unseen source illuminates their skin, casting gentle shadows and highlighting the sheen of sweat and saliva. The camera slowly drifts forward, inching closer to the woman’s face and the man’s neck, emphasizing the intensity of the act. The sound of wet, rhythmic swallowing and the man’s low, guttural moans fill the air.\n\noverall_soundscape: The sound of wet, rhythmic swallowing is the dominant diegetic sound, layered with the man’s low, guttural moans and the soft, rhythmic thud of their bodies moving together. A faint whisper of breath escapes the woman’s lips between gulps, and the occasional soft slap of skin against skin adds texture to the intimate soundscape.\n\nnon_diegetic_music: N/A"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 159,
+      "type": "WidgetToString",
+      "pos": [
+        264.69075033484415,
+        4876.2870794633845
+      ],
+      "size": [
+        294.341796875,
+        154
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "any_input",
+          "shape": 7,
+          "type": "*",
+          "link": 299
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            300
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "c2a47f161bdcecc1e6baf3412f1d116febc26ce3",
+        "Node name for S&R": "WidgetToString",
+        "aux_id": "kijai/ComfyUI-KJNodes"
+      },
+      "widgets_values": [
+        114,
+        "image",
+        false,
+        "LoadImage",
+        2
+      ]
+    },
+    {
       "id": 126,
       "type": "VHS_VideoCombine",
       "pos": [
-        194.6030406279182,
-        4858.256645907475
+        229.09868743329403,
+        4841.978033161371
       ],
       "size": [
         1155.5330597730813,
         991.4687338714127
       ],
       "flags": {},
-      "order": 15,
+      "order": 16,
       "mode": 0,
       "inputs": [
         {
@@ -485,6 +516,14 @@
           "shape": 7,
           "type": "VAE",
           "link": null
+        },
+        {
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": 300
         }
       ],
       "outputs": [
@@ -516,18 +555,74 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "MiniMax_H3_48FPS_00012-audio.webm",
-            "subfolder": "video",
+            "filename": "s02_ep07_newjob_350.jpg_00001-audio.webm",
+            "subfolder": "",
             "type": "output",
             "format": "video/webm",
             "frame_rate": 48,
-            "workflow": "MiniMax_H3_48FPS_00012.png",
-            "fullpath": "/workspace/runpod-slim/ComfyUI/output/video/MiniMax_H3_48FPS_00012-audio.webm"
+            "workflow": "s02_ep07_newjob_350.jpg_00001.png",
+            "fullpath": "/workspace/runpod-slim/ComfyUI/output/s02_ep07_newjob_350.jpg_00001-audio.webm"
           }
         }
       },
       "color": "#232",
       "bgcolor": "#353"
+    },
+    {
+      "id": 145,
+      "type": "AutoRifeTensorrt",
+      "pos": [
+        -165.73815160850788,
+        5083.831507603763
+      ],
+      "size": [
+        311.24876401618576,
+        229.6878304442398
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "link": 284
+        },
+        {
+          "name": "rife_trt_model",
+          "type": "RIFE_TRT_MODEL",
+          "link": 269
+        },
+        {
+          "name": "interpolation_states",
+          "shape": 7,
+          "type": "INTERPOLATION_STATES",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            287
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+        "ver": "51d88c0c0db49308dd3ade9edd4a5c1bcdf4ec72",
+        "Node name for S&R": "AutoRifeTensorrt"
+      },
+      "widgets_values": [
+        100,
+        2,
+        false,
+        1,
+        ""
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
     },
     {
       "id": 114,
@@ -549,7 +644,8 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            218
+            218,
+            299
           ]
         },
         {
@@ -558,56 +654,15 @@
           "links": null
         }
       ],
+      "title": "LoadImage",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.30.1",
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "s02_ep06_unexpectedcall_372a_v01.jpg",
+        "s02_ep06_unexpectedcall_371_v01.jpg",
         "image"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
-      "id": 137,
-      "type": "easy showAnything",
-      "pos": [
-        -856.1781450430237,
-        5402.11021783787
-      ],
-      "size": [
-        646.6021824539848,
-        334.35740569392055
-      ],
-      "flags": {},
-      "order": 12,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "shape": 7,
-          "type": "*",
-          "link": 253
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": []
-        }
-      ],
-      "title": "QWEN3VL GENERATED PROMPT",
-      "properties": {
-        "cnr_id": "comfyui-easy-use",
-        "ver": "595e0738a9e3f8d0d9c4d875461b2d2c9e7559c7",
-        "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
-      },
-      "widgets_values": [
-        "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] Cinematic, 3D CG, a medium close-up shot frames a woman with fair skin, dark brown hair loosely tied back, lying supine on a white bedsheet with her eyes closed and lips slightly parted, her bare torso exposed as a man’s hand gently cups her left breast while his face leans down from above, his dark hair partially obscuring his features, the scene set in a warmly lit bedroom with soft golden ambient light casting gentle shadows across her skin and the wooden floor in the background, the camera slowly pushes in slightly toward her face as her breathing becomes more pronounced, accompanied by the soft, rhythmic sound of her breaths and the gentle pressure of his hand against her breast.\n\noverall_soundscape: The woman’s soft, shallow breathing fills the air, punctuated by a low, involuntary moan as his hand presses slightly firmer against her breast, the sound of skin against skin and the subtle rustle of the bedsheet beneath her body adding to the intimate atmosphere.\n\nnon_diegetic_music: N/A"
       ],
       "color": "#233",
       "bgcolor": "#355"
@@ -705,17 +760,17 @@
         "previewExposures": []
       },
       "widgets_values": [
-        "",
+        "deepthroat",
         1344,
         768,
-        10,
-        501059613701036,
+        5,
+        717371772721804,
         "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
         "qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
         "minimax_h3_video_vae_fp16.safetensors",
         "minimax_h3_audio_vae_fp32.safetensors",
         "Qwen3-VL-8B-Heretic-Stable",
-        "🎬 MiniMax H3 NSFW (10s)",
+        "🎬 MiniMax H3 NSFW (5s)",
         false,
         6
       ],
@@ -819,6 +874,22 @@
       127,
       0,
       "IMAGE"
+    ],
+    [
+      299,
+      114,
+      0,
+      159,
+      0,
+      "IMAGE"
+    ],
+    [
+      300,
+      159,
+      0,
+      126,
+      4,
+      "STRING"
     ]
   ],
   "groups": [
@@ -850,8 +921,8 @@
       "id": 9,
       "title": "24FPS",
       "bounding": [
-        187.39573104755894,
-        5857.0586009150065,
+        236.27803237042747,
+        5877.989938571272,
         1166.9778644557782,
         186
       ],
@@ -866,8 +937,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 9,
-          "lastNodeId": 156,
-          "lastLinkId": 296,
+          "lastNodeId": 159,
+          "lastLinkId": 300,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -1996,7 +2067,7 @@
               1,
               16,
               false,
-              3843651686,
+              350688962,
               "randomize",
               false
             ],
@@ -2576,7 +2647,7 @@
   },
   "config": {},
   "extra": {
-    "frontendVersion": "1.48.7",
+    "frontendVersion": "1.47.11",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
     "VHS_MetadataImage": true,
@@ -2584,8 +2655,8 @@
     "ds": {
       "scale": 0.796316462125923,
       "offset": [
-        2285.396410795259,
-        -4619.396519844495
+        1989.5559409964437,
+        -4540.434029551522
       ]
     }
   },
