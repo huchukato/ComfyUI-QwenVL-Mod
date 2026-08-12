@@ -291,15 +291,23 @@ force_comfyui_version() {
         echo "$(date): ⚠️  $label no .git, skipping" | tee -a "$COMFY_LOG"
         return 0
     fi
-    echo "$(date): � Ensuring $label is on $MINIMAX_TAG (MiniMax H3 requirement)..." | tee -a "$COMFY_LOG"
+    echo "$(date): 🔧 Ensuring $label is on $MINIMAX_TAG (MiniMax H3 requirement)..." | tee -a "$COMFY_LOG"
 
-    # Fetch tags, then checkout the required tag, discarding any local changes
+    # Make sure checkout cannot fail on dirty/local files
+    git -C "$repo_dir" reset --hard 2>>"$COMFY_LOG" || true
+    git -C "$repo_dir" clean -fd 2>>"$COMFY_LOG" || true
+
+    # Fetch tags, then checkout the required tag
     if timeout 60 git -C "$repo_dir" fetch --tags origin 2>>"$COMFY_LOG"; then
         local current_hash target_hash
         current_hash=$(git -C "$repo_dir" rev-parse --short HEAD 2>/dev/null || echo "unknown")
         if timeout 30 git -C "$repo_dir" -c advice.detachedHead=false checkout -f "$MINIMAX_TAG" 2>>"$COMFY_LOG"; then
             target_hash=$(git -C "$repo_dir" rev-parse --short HEAD 2>/dev/null || echo "unknown")
             echo "$(date): ✅ $label forced to $MINIMAX_TAG ($current_hash -> $target_hash)" | tee -a "$COMFY_LOG"
+            if [ -f "$repo_dir/requirements.txt" ]; then
+                echo "$(date): 🔄 Re-installing $label requirements..." | tee -a "$COMFY_LOG"
+                pip install --no-cache-dir -r "$repo_dir/requirements.txt" 2>>"$COMFY_LOG" | tail -n 10 | tee -a "$COMFY_LOG" || true
+            fi
         else
             echo "$(date): ❌ $label checkout $MINIMAX_TAG failed" | tee -a "$COMFY_LOG"
         fi
@@ -308,12 +316,43 @@ force_comfyui_version() {
     fi
 }
 
+update_custom_nodes() {
+    local nodes_dir="$1"
+    [ ! -d "$nodes_dir" ] && return 0
+    echo "$(date): 🔄 Updating custom nodes in $nodes_dir..." | tee -a "$COMFY_LOG"
+    for node_dir in "$nodes_dir"/*; do
+        [ ! -d "$node_dir/.git" ] && continue
+        local name branch
+        name=$(basename "$node_dir")
+        branch=$(git -C "$node_dir" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "main")
+        echo "$(date): ⏳ Updating $name (branch $branch)..." | tee -a "$COMFY_LOG"
+        # Try fast-forward first; if the repo is divergent/dirty, hard-reset to remote.
+        if timeout 60 git -C "$node_dir" pull --ff-only origin "$branch" 2>>"$COMFY_LOG"; then
+            echo "$(date): ✅ $name updated" | tee -a "$COMFY_LOG"
+        else
+            echo "$(date): ⚠️  $name pull failed, attempting hard reset to origin/$branch" | tee -a "$COMFY_LOG"
+            if timeout 60 git -C "$node_dir" fetch origin "$branch" 2>>"$COMFY_LOG" && \
+               timeout 30 git -C "$node_dir" reset --hard "origin/$branch" 2>>"$COMFY_LOG"; then
+                echo "$(date): ✅ $name reset to origin/$branch" | tee -a "$COMFY_LOG"
+            else
+                echo "$(date): ⚠️  $name update failed, leaving as-is" | tee -a "$COMFY_LOG"
+            fi
+        fi
+        if [ -f "$node_dir/requirements.txt" ]; then
+            echo "$(date): 🔄 Installing requirements for $name..." | tee -a "$COMFY_LOG"
+            pip install --no-cache-dir -r "$node_dir/requirements.txt" 2>>"$COMFY_LOG" | tail -n 5 | tee -a "$COMFY_LOG" || true
+        fi
+    done
+}
+
 # Force baked ComfyUI core to v0.30.0
 force_comfyui_version /opt/comfyui-baked "ComfyUI (baked template)"
 
 # Force active install on /workspace if it already exists (affects restarts)
 if [ -d /workspace/runpod-slim/ComfyUI/.git ]; then
     force_comfyui_version /workspace/runpod-slim/ComfyUI "ComfyUI (active install)"
+    # Also update custom nodes in the active install
+    update_custom_nodes /workspace/runpod-slim/ComfyUI/custom_nodes
 fi
 
 # Pre-populate comfyui_args.txt with MiniMax H3 / QwenVL-Mod args if it doesn't exist
