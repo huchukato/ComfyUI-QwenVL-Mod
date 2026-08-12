@@ -7,14 +7,14 @@
 FROM runpod/comfyui:cuda13.0
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Ensure ComfyUI core is v0.30.0+ (MiniMax H3 requires ComfyUI 0.30.0)
+# Ensure ComfyUI core is v0.31.0+ (MiniMax H3 requires ComfyUI 0.30.0)
 # The base image may ship an older tag, so we force-checkout the release.
 # Use --force on fetch to avoid "would clobber existing tag" errors.
 # ──────────────────────────────────────────────────────────────────────────────
 RUN cd /opt/comfyui-baked && \
     git fetch --tags --force origin && \
     git status --short && \
-    git -c advice.detachedHead=false checkout -f v0.30.0 && \
+    git -c advice.detachedHead=false checkout -f v0.31.0 && \
     echo "ComfyUI checked out at:" && git rev-parse --short HEAD
 
 # Re-install / verify ComfyUI requirements after the version switch.
@@ -276,13 +276,13 @@ EOF
 RUN chmod +x /usr/local/bin/download-minimax-h3-models.sh
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Custom entrypoint: force ComfyUI v0.30.0, pre-populate args,
+# Custom entrypoint: force ComfyUI v0.31.0, pre-populate args,
 # launch MiniMax H3 model download in background, then exec /start.sh
 # ──────────────────────────────────────────────────────────────────────────────
 RUN cat > /usr/local/bin/custom-entrypoint.sh << 'EOF'
 #!/bin/bash
 COMFY_LOG="/var/log/comfyui-update.log"
-MINIMAX_TAG="v0.30.0"
+MINIMAX_TAG="v0.31.0"
 
 force_comfyui_version() {
     local repo_dir="$1"
@@ -291,7 +291,16 @@ force_comfyui_version() {
         echo "$(date): ⚠️  $label no .git, skipping" | tee -a "$COMFY_LOG"
         return 0
     fi
-    echo "$(date): 🔧 Ensuring $label is on $MINIMAX_TAG (MiniMax H3 requirement)..." | tee -a "$COMFY_LOG"
+
+    # If already on the required tag, just verify and skip the heavy reset/checkout.
+    local current_tag
+    current_tag=$(git -C "$repo_dir" describe --tags --exact-match HEAD 2>/dev/null || echo "")
+    if [ "$current_tag" = "$MINIMAX_TAG" ]; then
+        echo "$(date): ✅ $label already on $MINIMAX_TAG" | tee -a "$COMFY_LOG"
+        return 0
+    fi
+
+    echo "$(date): 🔧 Ensuring $label is on $MINIMAX_TAG (current: ${current_tag:-unknown})..." | tee -a "$COMFY_LOG"
 
     # Make sure checkout cannot fail on dirty/local files
     git -C "$repo_dir" reset --hard 2>>"$COMFY_LOG" || true
@@ -345,7 +354,7 @@ update_custom_nodes() {
     done
 }
 
-# Force baked ComfyUI core to v0.30.0
+# Force baked ComfyUI core to v0.31.0
 force_comfyui_version /opt/comfyui-baked "ComfyUI (baked template)"
 
 # Force active install on /workspace if it already exists (affects restarts)

@@ -83,14 +83,14 @@ CONTROLNET_MODELS=(
 function provisioning_force_comfyui_version() {
     local repo_dir="$1"
     local label="$2"
-    local tag="v0.30.0"
+    local tag="v0.31.0"
 
     if [ ! -d "$repo_dir/.git" ]; then
         echo "⚠️  $label has no .git directory, skipping version force"
         return 0
     fi
 
-    echo "🔧 Ensuring $label is on $tag (MiniMax H3 requirement)..."
+    echo "🔧 Ensuring $label is on v0.31.0 (MiniMax H3 requirement)..."
     if timeout 60 git -C "$repo_dir" fetch --tags --force origin 2>/dev/null; then
         local current_hash target_hash
         current_hash=$(git -C "$repo_dir" rev-parse --short HEAD 2>/dev/null || echo "unknown")
