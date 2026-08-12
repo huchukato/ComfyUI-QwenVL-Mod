@@ -137,9 +137,12 @@ function download_ltx_model() {
         mkdir -p "$tmp_dir" "$(dirname "$dest")"
         export HF_HUB_ENABLE_HF_TRANSFER=1
         export HF_XET_HIGH_PERFORMANCE=1
+        # hf: resume is automatic; huggingface-cli: needs --resume-download
+        local resume_flag=""
+        [ "$hf_cmd" = "huggingface-cli" ] && resume_flag="--resume-download"
         if $hf_cmd download "$repo_id" "$repo_path" \
                 --local-dir "$tmp_dir" \
-                --resume-download 2>&1; then
+                $resume_flag 2>&1; then
             local downloaded_path="$tmp_dir/$repo_path"
             if [ -f "$downloaded_path" ] || [ -L "$downloaded_path" ]; then
                 if [ -L "$downloaded_path" ]; then
