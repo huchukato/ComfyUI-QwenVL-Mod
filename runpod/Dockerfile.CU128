@@ -288,6 +288,9 @@ update_comfyui() {
     local current_hash
     current_hash=$(git -C "$repo_dir" rev-parse --short HEAD 2>/dev/null || echo "unknown")
 
+    # Switch to main/master branch (base image may be on detached HEAD at a tag)
+    git -C "$repo_dir" checkout main 2>/dev/null || git -C "$repo_dir" checkout master 2>/dev/null || true
+
     if timeout 60 git -C "$repo_dir" pull --ff-only 2>>"$COMFY_LOG"; then
         local target_hash
         target_hash=$(git -C "$repo_dir" rev-parse --short HEAD 2>/dev/null || echo "unknown")
