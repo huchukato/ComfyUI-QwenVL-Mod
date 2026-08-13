@@ -17,8 +17,10 @@ RUN cd /opt/comfyui-baked && \
 
 # Re-install / verify ComfyUI requirements after the version switch.
 # This is best-effort: if it fails, the image still has the base packages.
+# Also fix torchvision version mismatch between system and venv (torchvision::nms error)
 RUN cd /opt/comfyui-baked && \
     (pip install --no-cache-dir -r requirements.txt || echo "requirements install returned non-zero, continuing") && \
+    pip install --no-cache-dir --force-reinstall torchvision && \
     pip cache purge
 
 # ──────────────────────────────────────────────────────────────────────────────
