@@ -268,15 +268,17 @@ RUN cat > /usr/local/bin/boot-updates.sh << 'EOF'
 #!/bin/bash
 COMFY_LOG="/var/log/comfyui-update.log"
 WF_LOG="/var/log/workflow-update.log"
+COMFY_TAG="v0.32.0"
 
 clog() { echo "$(date): $*" | tee -a "$COMFY_LOG"; }
 wlog() { echo "$(date): $*" | tee -a "$WF_LOG"; }
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Update ComfyUI core via git pull (baked + active install)
+# Force ComfyUI core to the required tag (baked + active install)
+# Skips if already on the tag, otherwise resets/cleans and checks out the tag.
 # Re-installs requirements when the version changes.
 # ──────────────────────────────────────────────────────────────────────────────
-update_comfyui() {
+force_comfyui_version() {
     local repo_dir="$1"
     local label="$2"
     if [ ! -d "$repo_dir/.git" ]; then
@@ -284,29 +286,32 @@ update_comfyui() {
         return 0
     fi
 
-    clog "🔄 Updating $label via git pull..."
-    local current_hash
-    current_hash=$(git -C "$repo_dir" rev-parse --short HEAD 2>/dev/null || echo "unknown")
+    local current_tag
+    current_tag=$(git -C "$repo_dir" describe --tags --exact-match HEAD 2>/dev/null || echo "")
+    if [ "$current_tag" = "$COMFY_TAG" ]; then
+        clog "✅ $label already on $COMFY_TAG"
+        return 0
+    fi
 
-    # Switch to main/master branch (base image may be on detached HEAD at a tag)
-    git -C "$repo_dir" checkout main 2>/dev/null || git -C "$repo_dir" checkout master 2>/dev/null || true
-    git -C "$repo_dir" branch --set-upstream-to=origin/main main 2>/dev/null || \
-        git -C "$repo_dir" branch --set-upstream-to=origin/master master 2>/dev/null || true
+    clog "🔧 Ensuring $label is on $COMFY_TAG (current: ${current_tag:-unknown})..."
+    git -C "$repo_dir" reset --hard 2>>"$COMFY_LOG" || true
+    git -C "$repo_dir" clean -fd 2>>"$COMFY_LOG" || true
 
-    if timeout 60 git -C "$repo_dir" pull --ff-only 2>>"$COMFY_LOG"; then
-        local target_hash
-        target_hash=$(git -C "$repo_dir" rev-parse --short HEAD 2>/dev/null || echo "unknown")
-        if [ "$current_hash" = "$target_hash" ]; then
-            clog "✅ $label already up to date ($target_hash)"
-        else
-            clog "✅ $label updated ($current_hash -> $target_hash)"
+    if timeout 60 git -C "$repo_dir" fetch --tags origin 2>>"$COMFY_LOG"; then
+        local current_hash target_hash
+        current_hash=$(git -C "$repo_dir" rev-parse --short HEAD 2>/dev/null || echo "unknown")
+        if timeout 30 git -C "$repo_dir" -c advice.detachedHead=false checkout -f "$COMFY_TAG" 2>>"$COMFY_LOG"; then
+            target_hash=$(git -C "$repo_dir" rev-parse --short HEAD 2>/dev/null || echo "unknown")
+            clog "✅ $label forced to $COMFY_TAG ($current_hash -> $target_hash)"
             if [ -f "$repo_dir/requirements.txt" ]; then
                 clog "🔄 Re-installing $label requirements..."
                 pip install --no-cache-dir -r "$repo_dir/requirements.txt" 2>>"$COMFY_LOG" | tail -n 10 || true
             fi
+        else
+            clog "❌ $label checkout $COMFY_TAG failed"
         fi
     else
-        clog "⚠️  $label git pull failed/timed out (offline?), leaving at current version"
+        clog "⚠️  $label fetch tags failed/timed out (offline?), leaving at current version"
     fi
 }
 
@@ -412,12 +417,12 @@ wlog "✅ /workspace ComfyUI ready"
 # Now safe to download active install workflows
 download_workflows "$WF_ACTIVE" "active"
 
-# Update baked ComfyUI core
-update_comfyui /opt/comfyui-baked "ComfyUI (baked template)"
+# Force baked ComfyUI core to v0.32.0
+force_comfyui_version /opt/comfyui-baked "ComfyUI (baked template)"
 
-# Update active install on /workspace if it already exists (affects restarts)
+# Force active install on /workspace if it already exists (affects restarts)
 if [ -d /workspace/runpod-slim/ComfyUI/.git ]; then
-    update_comfyui /workspace/runpod-slim/ComfyUI "ComfyUI (active install)"
+    force_comfyui_version /workspace/runpod-slim/ComfyUI "ComfyUI (active install)"
     update_custom_nodes /workspace/runpod-slim/ComfyUI/custom_nodes
 fi
 
