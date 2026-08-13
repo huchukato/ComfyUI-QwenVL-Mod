@@ -25,7 +25,7 @@ RUN cd /opt/comfyui-baked && \
 # Custom nodes — ALL repos cloned once (cached)
 # ──────────────────────────────────────────────────────────────────────────────
 # Bump NODES_CACHE_BUSTER to force re-clone of all custom nodes
-ARG NODES_CACHE_BUSTER=2026-08-13-v3
+ARG NODES_CACHE_BUSTER=2026-08-13-v4
 RUN cd /opt/comfyui-baked/custom_nodes && \
     git clone https://github.com/BobRandomNumber/ComfyUI-Crystools-MonitorOnly.git && \
     git clone https://github.com/Larryvrh/ComfyUI-MiniMax-H3-Turbo.git && \
@@ -41,7 +41,8 @@ RUN cd /opt/comfyui-baked/custom_nodes && \
     git clone https://github.com/huchukato/ComfyUI-Upscaler-TensorRT-Auto.git && \
     git clone https://github.com/huchukato/ComfyUI-HuggingFace.git && \
     git clone https://github.com/huchukato/comfy-tagcomplete.git && \
-    git clone https://github.com/Saganaki22/ComfyUI-sol-attn.git
+    git clone https://github.com/Saganaki22/ComfyUI-sol-attn.git && \
+    git clone https://github.com/Comfy-Org/Nvidia_RTX_Nodes_ComfyUI.git
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Install requirements (single layer, cached)
