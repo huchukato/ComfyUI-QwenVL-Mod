@@ -25,6 +25,8 @@ RUN cd /opt/comfyui-baked && \
 # Custom nodes — ALL repos cloned once (cached)
 # LTX 2.3 core support is built into ComfyUI 0.30.0+; LTXVideo node adds workflow nodes.
 # ──────────────────────────────────────────────────────────────────────────────
+# Bump NODES_CACHE_BUSTER to force re-clone of all custom nodes
+ARG NODES_CACHE_BUSTER=2026-08-13-v2
 RUN cd /opt/comfyui-baked/custom_nodes && \
     git clone https://github.com/BobRandomNumber/ComfyUI-Crystools-MonitorOnly.git && \
     git clone https://github.com/Lightricks/ComfyUI-LTXVideo.git && \
