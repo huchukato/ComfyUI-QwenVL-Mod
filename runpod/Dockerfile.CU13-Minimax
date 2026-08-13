@@ -402,7 +402,7 @@ if [ ! -f "$ARGS_FILE" ]; then
     mkdir -p /workspace/runpod-slim
     cat > "$ARGS_FILE" << 'INNER'
 # Custom ComfyUI arguments (one per line, # = comment)
---disable-auto-launch --port 18188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --cuda-malloc --async-offload
+--disable-auto-launch --fast fp16_accumulation --use-sage-attention --cuda-malloc --async-offload
 INNER
     echo "Created comfyui_args.txt with MiniMax H3 / QwenVL-Mod optimized args"
 fi
