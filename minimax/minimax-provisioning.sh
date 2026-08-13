@@ -237,7 +237,7 @@ function provisioning_configure_args() {
 --disable-auto-launch
 --fast fp16_accumulation
 --use-sage-attention
---reserve-vram 2
+--reserve-vram 0.5
 --cuda-malloc
 --async-offload
 EOF
