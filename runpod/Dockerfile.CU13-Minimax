@@ -193,6 +193,11 @@ BASE_DIR="/workspace/runpod-slim/ComfyUI/models"
 LOG="/var/log/minimax-h3-models.log"
 READY_MARKER="/workspace/runpod-slim/ComfyUI/main.py"   # created by start.sh copy
 
+# Ensure hf-transfer is available (Rust accelerator for HF downloads)
+pip install --no-cache-dir -q "hf-transfer" "huggingface_hub" 2>/dev/null
+export HF_HUB_ENABLE_HF_TRANSFER=1
+export HF_XET_HIGH_PERFORMANCE=1
+
 # Models: subdir|name|url|min_size_bytes (min_size = sanity check)
 MODELS=(
     "vae|minimax_h3_video_vae_fp16.safetensors|https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors|5200000000"
@@ -260,7 +265,8 @@ download_model() {
         # hf: resume is automatic; huggingface-cli: needs --resume-download
         local resume_flag=""
         [ "$hf_cmd" = "huggingface-cli" ] && resume_flag="--resume-download"
-        if $hf_cmd download "$repo_id" "$repo_path" \
+        # Timeout: 15 min per file, prevents infinite stalls
+        if timeout 900 $hf_cmd download "$repo_id" "$repo_path" \
                 --local-dir "$tmp_dir" \
                 $resume_flag 2>&1 | tee -a "$LOG"; then
             local downloaded_path="$tmp_dir/$repo_path"
