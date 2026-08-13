@@ -34,6 +34,7 @@ NODES=(
     "https://github.com/ashtar1984/comfyui-find-perfect-resolution"
     "https://github.com/kijai/ComfyUI-KJNodes"
     "https://github.com/MoonGoblinDev/Civicomfy"
+    "https://github.com/Saganaki22/ComfyUI-sol-attn"
 )
 
 WORKFLOWS=(
