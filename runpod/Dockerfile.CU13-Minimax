@@ -17,11 +17,25 @@ RUN cd /opt/comfyui-baked && \
 
 # Re-install / verify ComfyUI requirements after the version switch.
 # This is best-effort: if it fails, the image still has the base packages.
-# Also fix torchvision version mismatch between system and venv (torchvision::nms error)
 RUN cd /opt/comfyui-baked && \
     (pip install --no-cache-dir -r requirements.txt || echo "requirements install returned non-zero, continuing") && \
-    pip install --no-cache-dir --force-reinstall torchvision && \
     pip cache purge
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Fix torchvision::nms crash: the base image's /start.sh creates a venv with
+# --system-site-packages, which inherits the system torchvision (built for a
+# different torch version than the venv ends up with). Patch /start.sh to:
+#   1. Create venv WITHOUT system site packages
+#   2. Install torch+torchvision from PyTorch cu130 index into the venv
+# This ensures torch and torchvision versions always match inside the venv.
+# ──────────────────────────────────────────────────────────────────────────────
+RUN sed -i 's/python3.12 -m venv --system-site-packages "$VENV_DIR"/python3.12 -m venv "$VENV_DIR"/g' /start.sh && \
+    sed -i '/echo "Base packages (torch, numpy, etc.) available from system site-packages"/i\
+        pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu130\
+        pip install --no-cache-dir -r "$COMFYUI_DIR/requirements.txt"' /start.sh && \
+    sed -i 's/echo "Base packages (torch, numpy, etc.) available from system site-packages"/echo "torch+torchvision installed from PyTorch cu130 index"/g' /start.sh && \
+    sed -i 's/echo "ComfyUI ready — all dependencies pre-installed in image"/echo "ComfyUI ready — torch+torchvision installed from PyTorch index"/g' /start.sh && \
+    echo "Patched /start.sh: venv will install torch+torchvision from PyTorch cu130 index"
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Custom nodes — ALL repos cloned once (cached)
