@@ -34,8 +34,9 @@ try:
         sageattn_qk_int8_pv_fp8_cuda_sm90,
     )
     SAGE_ATTENTION_AVAILABLE = True
-except ImportError:
+except ImportError as _sage_err:
     SAGE_ATTENTION_AVAILABLE = False
+    print(f"[QwenVL] SageAttention import failed: {_sage_err}")
 
 # Global cache for generated prompts
 PROMPT_CACHE = {}
