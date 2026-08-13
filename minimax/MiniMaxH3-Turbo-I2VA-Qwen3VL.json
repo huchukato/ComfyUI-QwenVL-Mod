@@ -1,8 +1,8 @@
 {
   "id": "2e5fb033-7e4f-4e73-a580-590a2a38a074",
   "revision": 0,
-  "last_node_id": 159,
-  "last_link_id": 300,
+  "last_node_id": 167,
+  "last_link_id": 313,
   "nodes": [
     {
       "id": 118,
@@ -187,54 +187,6 @@
       ]
     },
     {
-      "id": 127,
-      "type": "UpscalerTensorrt",
-      "pos": [
-        -169.23647710850744,
-        5616.82300401889
-      ],
-      "size": [
-        294.81271348921337,
-        76
-      ],
-      "flags": {},
-      "order": 15,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 288
-        },
-        {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "link": 244
-        }
-      ],
-      "outputs": [
-        {
-          "name": "upscaled_images",
-          "type": "IMAGE",
-          "links": [
-            286
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
-        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
-        "Node name for S&R": "UpscalerTensorrt"
-      },
-      "widgets_values": [
-        "2x",
-        2048,
-        2048
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
       "id": 92,
       "type": "SaveVideo",
       "pos": [
@@ -277,122 +229,6 @@
       "bgcolor": "#335"
     },
     {
-      "id": 154,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -850.5248533642684,
-        5813.743039730826
-      ],
-      "size": [
-        492.5463282006857,
-        118.7460582216163
-      ],
-      "flags": {},
-      "order": 5,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "OPTIONS",
-      "properties": {
-        "matchColors": "Purple",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#322",
-      "bgcolor": "#533"
-    },
-    {
-      "id": 128,
-      "type": "LoadUpscalerTensorrtModel",
-      "pos": [
-        -172.92573853666855,
-        5467.952293169679
-      ],
-      "size": [
-        295.4078125,
-        82
-      ],
-      "flags": {},
-      "order": 6,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "links": [
-            244
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
-        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
-        "Node name for S&R": "LoadUpscalerTensorrtModel"
-      },
-      "widgets_values": [
-        "4x-UltraSharp",
-        "fp16"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 115,
-      "type": "ResolutionSelector",
-      "pos": [
-        -1160.3439562862548,
-        4849.291389086567
-      ],
-      "size": [
-        270,
-        170
-      ],
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "showAdvanced": false,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "width",
-          "type": "INT",
-          "links": [
-            219
-          ]
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": [
-            220
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.30.1",
-        "Node name for S&R": "ResolutionSelector"
-      },
-      "widgets_values": [
-        "16:9 (Widescreen)",
-        0.5,
-        32
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 137,
       "type": "easy showAnything",
       "pos": [
@@ -429,7 +265,7 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] Cinematic, 3D CG, a tight medium shot frames a woman with dark hair tied in a messy bun, her body arched backward as she deeply engulfs a man’s erect penis in her throat. Her arms are wrapped around his torso, her left hand with red-painted nails resting firmly on his chest, while her right hand grips his hip. The man lies on his back, his torso bare, his neck glistening with saliva as the woman’s mouth moves rhythmically. The scene is set in a bedroom with a wooden door in the background and a gray bedspread beneath them. Soft, warm lighting from an unseen source illuminates their skin, casting gentle shadows and highlighting the sheen of sweat and saliva. The camera slowly drifts forward, inching closer to the woman’s face and the man’s neck, emphasizing the intensity of the act. The sound of wet, rhythmic swallowing and the man’s low, guttural moans fill the air.\n\noverall_soundscape: The sound of wet, rhythmic swallowing is the dominant diegetic sound, layered with the man’s low, guttural moans and the soft, rhythmic thud of their bodies moving together. A faint whisper of breath escapes the woman’s lips between gulps, and the occasional soft slap of skin against skin adds texture to the intimate soundscape.\n\nnon_diegetic_music: N/A"
+        "The woman arches her back violently as the man thrusts deeply, her legs tensed and held high by his grip, her mouth opens wide in a scream as she feels the peak of ecstasy. Her arms stretch outward, fingers splayed on the white sheets, while her red hair fans out around her head. The man’s shirt rides up, exposing his defined abs and chest as he drives forward with force. The camera stays locked in a tight, low-angle shot, capturing the raw intensity of their coupling. The room remains still, the only movement the slow, rhythmic motion of their bodies. No speech, only the wet, guttural moans of the woman and the deep, rhythmic grunts of the man, punctuated by the soft creaking of the bed and the rustling of the black lace bodysuit against the sheets."
       ],
       "color": "#233",
       "bgcolor": "#355"
@@ -488,7 +324,7 @@
       ],
       "size": [
         1155.5330597730813,
-        991.4687338714127
+        986.7373461223583
       ],
       "flags": {},
       "order": 16,
@@ -555,13 +391,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "s02_ep07_newjob_350.jpg_00001-audio.webm",
+            "filename": "img75.jpg_00001-audio.webm",
             "subfolder": "",
             "type": "output",
             "format": "video/webm",
             "frame_rate": 48,
-            "workflow": "s02_ep07_newjob_350.jpg_00001.png",
-            "fullpath": "/workspace/runpod-slim/ComfyUI/output/s02_ep07_newjob_350.jpg_00001-audio.webm"
+            "workflow": "img75.jpg_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/img75.jpg_00001-audio.webm"
           }
         }
       },
@@ -625,6 +461,170 @@
       "bgcolor": "#335"
     },
     {
+      "id": 115,
+      "type": "ResolutionSelector",
+      "pos": [
+        -1160.3439562862548,
+        4849.291389086567
+      ],
+      "size": [
+        270,
+        170
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "showAdvanced": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            219
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            220
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.1",
+        "Node name for S&R": "ResolutionSelector"
+      },
+      "widgets_values": [
+        "16:9 (Widescreen)",
+        1,
+        32
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 154,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -835.8822372630377,
+        5800.601475732436
+      ],
+      "size": [
+        492.5463282006857,
+        118.7460582216163
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "OPTIONS",
+      "properties": {
+        "matchColors": "Purple",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 127,
+      "type": "UpscalerTensorrt",
+      "pos": [
+        -169.23647710850744,
+        5616.82300401889
+      ],
+      "size": [
+        294.81271348921337,
+        76
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 288
+        },
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "link": 244
+        }
+      ],
+      "outputs": [
+        {
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            286
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
+        "Node name for S&R": "UpscalerTensorrt"
+      },
+      "widgets_values": [
+        "1080p",
+        2048,
+        2048
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 128,
+      "type": "LoadUpscalerTensorrtModel",
+      "pos": [
+        -172.92573853666855,
+        5467.952293169679
+      ],
+      "size": [
+        295.4078125,
+        82
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "links": [
+            244
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "6b8951d7413b41d9639be91888ef65b63827b930",
+        "Node name for S&R": "LoadUpscalerTensorrtModel"
+      },
+      "widgets_values": [
+        "RealESRGAN_x4",
+        "fp16"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
       "id": 114,
       "type": "LoadImage",
       "pos": [
@@ -661,7 +661,7 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "s02_ep06_unexpectedcall_371_v01.jpg",
+        "img75.jpg",
         "image"
       ],
       "color": "#233",
@@ -671,8 +671,8 @@
       "id": 105,
       "type": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
       "pos": [
-        -858.0295962972581,
-        4856.035022916853
+        -857.6282454676217,
+        4861.63609671711
       ],
       "size": [
         643.7447588082441,
@@ -760,19 +760,19 @@
         "previewExposures": []
       },
       "widgets_values": [
-        "deepthroat",
+        "",
         1344,
         768,
         5,
-        717371772721804,
-        "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        380644890551616,
+        "10Eros_Max_H3_FL2VA-INT8-ConvRot-HQ.safetensors",
         "qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
         "minimax_h3_video_vae_fp16.safetensors",
         "minimax_h3_audio_vae_fp32.safetensors",
         "Qwen3-VL-8B-Heretic-Stable",
-        "🎬 MiniMax H3 NSFW (5s)",
+        "🎥 LTX 2.3 NSFW I2V",
         false,
-        6
+        8
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
@@ -937,8 +937,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 9,
-          "lastNodeId": 159,
-          "lastLinkId": 300,
+          "lastNodeId": 167,
+          "lastLinkId": 313,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -1823,51 +1823,6 @@
             ]
           },
           {
-            "id": 147,
-            "type": "PathchSageAttentionKJ",
-            "pos": [
-              -919.87108923046,
-              4434.720831286692
-            ],
-            "size": [
-              270,
-              82
-            ],
-            "flags": {
-              "collapsed": true
-            },
-            "order": 15,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "model",
-                "name": "model",
-                "type": "MODEL",
-                "link": 294
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "MODEL",
-                "name": "MODEL",
-                "type": "MODEL",
-                "links": [
-                  274
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfyui-kjnodes",
-              "ver": "c2a47f161bdcecc1e6baf3412f1d116febc26ce3",
-              "Node name for S&R": "PathchSageAttentionKJ",
-              "aux_id": "kijai/ComfyUI-KJNodes"
-            },
-            "widgets_values": [
-              "auto",
-              false
-            ]
-          },
-          {
             "id": 6,
             "type": "UNETLoader",
             "pos": [
@@ -1920,57 +1875,6 @@
             ]
           },
           {
-            "id": 148,
-            "type": "ModelPatchTorchSettings",
-            "pos": [
-              -922.599039105781,
-              4491.929994198978
-            ],
-            "size": [
-              252.095703125,
-              50.00000000000001
-            ],
-            "flags": {
-              "collapsed": true
-            },
-            "order": 16,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "model",
-                "name": "model",
-                "type": "MODEL",
-                "link": 274
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "MODEL",
-                "name": "MODEL",
-                "type": "MODEL",
-                "links": [
-                  295,
-                  296
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfyui-kjnodes",
-              "ver": "a6b867b63a29ca48ddb15c589e17a9f2d8530d57",
-              "Node name for S&R": "ModelPatchTorchSettings",
-              "aux_id": "kijai/ComfyUI-KJNodes",
-              "ue_properties": {
-                "version": "7.0.1",
-                "widget_ue_connectable": {
-                  "enable_fp16_accumulation": true
-                }
-              }
-            },
-            "widgets_values": [
-              true
-            ]
-          },
-          {
             "id": 150,
             "type": "AILab_QwenVL_Advanced",
             "pos": [
@@ -1982,7 +1886,7 @@
               512
             ],
             "flags": {},
-            "order": 17,
+            "order": 15,
             "mode": 0,
             "inputs": [
               {
@@ -2067,7 +1971,7 @@
               1,
               16,
               false,
-              350688962,
+              1386015379,
               "randomize",
               false
             ],
@@ -2108,50 +2012,6 @@
             "widgets_values": []
           },
           {
-            "id": 155,
-            "type": "MiniMaxH3TurboLoRA",
-            "pos": [
-              -1316.3554976310998,
-              4394.85096237844
-            ],
-            "size": [
-              336.625,
-              112.578125
-            ],
-            "flags": {},
-            "order": 18,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "model",
-                "name": "model",
-                "type": "MODEL",
-                "link": 292
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "MODEL",
-                "name": "MODEL",
-                "type": "MODEL",
-                "links": [
-                  294
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfyui-minimax-h3-turbo",
-              "ver": "55fee864dd7b2976b1c4ce3c3d5f7968f181409f",
-              "Node name for S&R": "MiniMaxH3TurboLoRA",
-              "aux_id": "Larryvrh/ComfyUI-MiniMax-H3-Turbo"
-            },
-            "widgets_values": [
-              "minimax_h3_turbo_v4_step600_ema.safetensors",
-              1,
-              false
-            ]
-          },
-          {
             "id": 16,
             "type": "BasicGuider",
             "pos": [
@@ -2170,7 +2030,7 @@
                 "localized_name": "model",
                 "name": "model",
                 "type": "MODEL",
-                "link": 295
+                "link": 307
               },
               {
                 "localized_name": "conditioning",
@@ -2215,7 +2075,7 @@
                 "localized_name": "model",
                 "name": "model",
                 "type": "MODEL",
-                "link": 296
+                "link": 308
               },
               {
                 "localized_name": "steps",
@@ -2246,6 +2106,128 @@
               "simple",
               20,
               1
+            ]
+          },
+          {
+            "id": 155,
+            "type": "MiniMaxH3TurboLoRA",
+            "pos": [
+              -1318.6402810117706,
+              4379.7040838273015
+            ],
+            "size": [
+              336.625,
+              112.578125
+            ],
+            "flags": {},
+            "order": 16,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 292
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "MODEL",
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  312
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfyui-minimax-h3-turbo",
+              "ver": "55fee864dd7b2976b1c4ce3c3d5f7968f181409f",
+              "Node name for S&R": "MiniMaxH3TurboLoRA",
+              "aux_id": "Larryvrh/ComfyUI-MiniMax-H3-Turbo"
+            },
+            "widgets_values": [
+              "minimax_h3_turbo_v4_step600_ema.safetensors",
+              1,
+              false
+            ]
+          },
+          {
+            "id": 160,
+            "type": "Reroute",
+            "pos": [
+              -910.6038323955208,
+              4477.040278048496
+            ],
+            "size": [
+              75,
+              26
+            ],
+            "flags": {},
+            "order": 17,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "",
+                "type": "*",
+                "link": 313
+              }
+            ],
+            "outputs": [
+              {
+                "name": "",
+                "type": "MODEL",
+                "links": [
+                  307,
+                  308
+                ]
+              }
+            ],
+            "properties": {
+              "showOutputText": false,
+              "horizontal": false
+            }
+          },
+          {
+            "id": 167,
+            "type": "PathchSageAttentionKJ",
+            "pos": [
+              -901.4955653500581,
+              4349.344123929191
+            ],
+            "size": [
+              270,
+              82
+            ],
+            "flags": {},
+            "order": 18,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 312
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "MODEL",
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  313
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfyui-kjnodes",
+              "ver": "6ab7e8130e449ed2c0037589bcf84146ceb7fc9c",
+              "Node name for S&R": "PathchSageAttentionKJ"
+            },
+            "widgets_values": [
+              "auto",
+              true
             ]
           }
         ],
@@ -2296,18 +2278,6 @@
               800
             ],
             "color": "#3f789e",
-            "flags": {}
-          },
-          {
-            "id": 8,
-            "title": "SPEED PATCH",
-            "bounding": [
-              -932.599039105781,
-              4364.720831286692,
-              236.08203125,
-              137.20916291228605
-            ],
-            "color": "#A88",
             "flags": {}
           }
         ],
@@ -2537,14 +2507,6 @@
             "type": "INT"
           },
           {
-            "id": 274,
-            "origin_id": 147,
-            "origin_slot": 0,
-            "target_id": 148,
-            "target_slot": 0,
-            "type": "MODEL"
-          },
-          {
             "id": 277,
             "origin_id": -10,
             "origin_slot": 11,
@@ -2617,26 +2579,34 @@
             "type": "MODEL"
           },
           {
-            "id": 294,
-            "origin_id": 155,
-            "origin_slot": 0,
-            "target_id": 147,
-            "target_slot": 0,
-            "type": "MODEL"
-          },
-          {
-            "id": 295,
-            "origin_id": 148,
+            "id": 307,
+            "origin_id": 160,
             "origin_slot": 0,
             "target_id": 16,
             "target_slot": 0,
             "type": "MODEL"
           },
           {
-            "id": 296,
-            "origin_id": 148,
+            "id": 308,
+            "origin_id": 160,
             "origin_slot": 0,
             "target_id": 9,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 312,
+            "origin_id": 155,
+            "origin_slot": 0,
+            "target_id": 167,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 313,
+            "origin_id": 167,
+            "origin_slot": 0,
+            "target_id": 160,
             "target_slot": 0,
             "type": "MODEL"
           }
@@ -2647,7 +2617,7 @@
   },
   "config": {},
   "extra": {
-    "frontendVersion": "1.47.11",
+    "frontendVersion": "1.48.7",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
     "VHS_MetadataImage": true,
@@ -2655,8 +2625,8 @@
     "ds": {
       "scale": 0.796316462125923,
       "offset": [
-        1989.5559409964437,
-        -4540.434029551522
+        1946.5537177180397,
+        -4685.697876313039
       ]
     }
   },
