@@ -78,7 +78,7 @@ LTX_MODELS=(
     # ── LTX 2.5 (from huchukato/pimp-my-wan mirror, not gated) ──
     "diffusion_models|ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/LTX/diffusion_models/ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors|21000000000"
     "text_encoders|gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/LTX/text_encoders/gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors|15000000000"
-    "text_encoders|gemma4_e2b_it_bf16.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/LTX/text_encoders/gemma4_e2b_it_bf16.safetensors|5000000000"
+    "text_encoders|gemma4_e2b_it_bf16.safetensors|https://huggingface.co/Comfy-Org/gemma-4/resolve/main/text_encoders/gemma4_e2b_it_bf16.safetensors|5000000000"
     "vae|ltx-2.5-video-vae-bf16.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/LTX/vae/ltx-2.5-video-vae-bf16.safetensors|1400000000"
     "vae|ltx-2.5-audio-vae-bf16.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/LTX/vae/ltx-2.5-audio-vae-bf16.safetensors|350000000"
     "latent_upscale_models|ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/LTX/latent_upscale_models/ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors|990000000"
