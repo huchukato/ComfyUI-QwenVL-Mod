@@ -27,16 +27,25 @@ from huggingface_hub import snapshot_download
 from transformers import AutoProcessor, AutoTokenizer, BitsAndBytesConfig
 
 # SageAttention support
+# SageAttention 2.x exposes functions at top-level; 1.x had them in .core
 try:
-    from sageattention.core import (
+    from sageattention import (
         sageattn_qk_int8_pv_fp16_cuda,
         sageattn_qk_int8_pv_fp8_cuda,
         sageattn_qk_int8_pv_fp8_cuda_sm90,
     )
     SAGE_ATTENTION_AVAILABLE = True
-except ImportError as _sage_err:
-    SAGE_ATTENTION_AVAILABLE = False
-    print(f"[QwenVL] SageAttention import failed: {_sage_err}")
+except ImportError:
+    try:
+        from sageattention.core import (
+            sageattn_qk_int8_pv_fp16_cuda,
+            sageattn_qk_int8_pv_fp8_cuda,
+            sageattn_qk_int8_pv_fp8_cuda_sm90,
+        )
+        SAGE_ATTENTION_AVAILABLE = True
+    except ImportError as _sage_err:
+        SAGE_ATTENTION_AVAILABLE = False
+        print(f"[QwenVL] SageAttention import failed: {_sage_err}")
 
 # Global cache for generated prompts
 PROMPT_CACHE = {}
