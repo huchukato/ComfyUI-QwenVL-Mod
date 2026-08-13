@@ -11,6 +11,8 @@ FROM runpod/comfyui:cuda13.0
 # ──────────────────────────────────────────────────────────────────────────────
 RUN cd /opt/comfyui-baked && \
     git checkout main 2>/dev/null || git checkout master 2>/dev/null || true && \
+    git branch --set-upstream-to=origin/main main 2>/dev/null || \
+    git branch --set-upstream-to=origin/master master 2>/dev/null || true && \
     git pull --ff-only && \
     echo "ComfyUI updated to:" && git rev-parse --short HEAD
 
@@ -326,6 +328,8 @@ update_comfyui() {
 
     # Switch to main/master branch (base image may be on detached HEAD at a tag)
     git -C "$repo_dir" checkout main 2>/dev/null || git -C "$repo_dir" checkout master 2>/dev/null || true
+    git -C "$repo_dir" branch --set-upstream-to=origin/main main 2>/dev/null || \
+        git -C "$repo_dir" branch --set-upstream-to=origin/master master 2>/dev/null || true
 
     if timeout 60 git -C "$repo_dir" pull --ff-only 2>>"$COMFY_LOG"; then
         local target_hash
