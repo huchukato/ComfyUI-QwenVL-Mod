@@ -98,7 +98,8 @@ RUN echo "CACHEBUST=$CACHEBUST" && \
 RUN mkdir -p /opt/comfyui-baked/models/checkpoints && \
     mkdir -p /opt/comfyui-baked/models/text_encoders && \
     mkdir -p /opt/comfyui-baked/models/loras && \
-    mkdir -p /opt/comfyui-baked/models/upscale_models
+    mkdir -p /opt/comfyui-baked/models/upscale_models && \
+    mkdir -p /opt/comfyui-baked/models/vae
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Optional Hugging Face token (runtime env var) for gated/high-rate-limit
@@ -198,6 +199,8 @@ MODELS=(
     "loras|ltx23/LTX2.3_DMD_hybrid_v2.safetensors|TenStrip/LTX2.3_DMD_Lora|LTX2.3_DMD_hybrid_v2.safetensors|600000000"
     "latent_upscale_models|ltx-2.3-spatial-upscaler-x2-1.1.safetensors|Lightricks/LTX-2.3|ltx-2.3-spatial-upscaler-x2-1.1.safetensors|900000000"
     "latent_upscale_models|ltx-2.3-temporal-upscaler-x2-1.0.safetensors|Lightricks/LTX-2.3|ltx-2.3-temporal-upscaler-x2-1.0.safetensors|250000000"
+    # Pruna optimized VAE (faster decode than stock LTX VAE)
+    "vae|pruna_ltx2.3_vae_comfy_bf16.safetensors|Kijai/LTX2.3_comfy|vae/pruna_ltx2.3_vae_comfy_bf16.safetensors|500000000"
 )
 
 log() { echo "$(date): $*" | tee -a "$LOG"; }
@@ -215,7 +218,7 @@ if [ ! -f "$READY_MARKER" ]; then
 fi
 
 log "✅ ComfyUI ready, base dir: $BASE_DIR"
-mkdir -p "$BASE_DIR"/{checkpoints,text_encoders,loras/ltx23,latent_upscale_models}
+mkdir -p "$BASE_DIR"/{checkpoints,text_encoders,loras/ltx23,latent_upscale_models,vae}
 
 download_model() {
     local subdir="$1" name="$2" repo_id="$3" repo_path="$4" min_size="$5"
