@@ -2,7 +2,7 @@
   "id": "13f3e4c9-d7f9-45e6-97bb-cd0a676c8187",
   "revision": 0,
   "last_node_id": 159,
-  "last_link_id": 308,
+  "last_link_id": 311,
   "nodes": [
     {
       "id": 118,
@@ -291,7 +291,7 @@
       ],
       "flags": {},
       "order": 12,
-      "mode": 0,
+      "mode": 4,
       "inputs": [
         {
           "name": "video",
@@ -507,6 +507,218 @@
       "bgcolor": "#3f5159"
     },
     {
+      "id": 126,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        200.3732231528242,
+        4856.368165004811
+      ],
+      "size": [
+        1155.5330597730813,
+        334
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 289
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 242
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        },
+        {
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": 297
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": null
+        }
+      ],
+      "title": "48FPS",
+      "properties": {
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
+        "ver": "4ee72c065db22c9d96c2427954dc69e7b908444b",
+        "Node name for S&R": "VHS_VideoCombine",
+        "cnr_id": "comfyui-videohelpersuite"
+      },
+      "widgets_values": {
+        "frame_rate": 48,
+        "loop_count": 0,
+        "filename_prefix": "video/MiniMax_H3_48FPS",
+        "format": "video/webm",
+        "pix_fmt": "yuv420p",
+        "crf": 20,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "k1075.jpg_00001-audio.webm",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/webm",
+            "frame_rate": 48,
+            "workflow": "k1075.jpg_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/k1075.jpg_00001-audio.webm"
+          }
+        }
+      },
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 156,
+      "type": "WidgetToString",
+      "pos": [
+        -677.9705073378924,
+        5485.275843716909
+      ],
+      "size": [
+        294.341796875,
+        154
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "any_input",
+          "shape": 7,
+          "type": "*",
+          "link": 296
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            297,
+            308
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "kijai/ComfyUI-KJNodes",
+        "ver": "c2a47f161bdcecc1e6baf3412f1d116febc26ce3",
+        "Node name for S&R": "WidgetToString",
+        "cnr_id": "comfyui-kjnodes"
+      },
+      "widgets_values": [
+        114,
+        "image",
+        false,
+        "FirstFrame",
+        2
+      ]
+    },
+    {
+      "id": 137,
+      "type": "easy showAnything",
+      "pos": [
+        -856.1781450430237,
+        5402.11021783787
+      ],
+      "size": [
+        644.4670905794355,
+        323.47297362020254
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 253
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": []
+        }
+      ],
+      "title": "QWEN3VL GENERATED PROMPT",
+      "properties": {
+        "aux_id": "yolain/ComfyUI-Easy-Use",
+        "ver": "595e0738a9e3f8d0d9c4d875461b2d2c9e7559c7",
+        "Node name for S&R": "easy showAnything",
+        "cnr_id": "comfyui-easy-use"
+      },
+      "widgets_values": [
+        "How the reference pictures align with the target video — Picture 1 (from [Shot 1]) aligns with the 0.00-second mark of the target video; Picture 2 (from [Shot 1]) aligns with the 10.00-second mark of the target video.\n\nintegrated_multimodal_description: In a luxurious, sun-drenched bedroom with cream curtains and a glimpse of a pool outside, a muscular man in patterned shorts is being mounted by a voluptuous woman with fiery red hair and a shimmering black lace bodysuit, while a blonde woman in a black bikini watches intently from the floor. The scene is saturated with sweat and oil, glinting under warm, golden ambient lighting that casts soft shadows and highlights the glossy skin of all three figures. The camera begins with a medium shot capturing the full dynamic, then smoothly pushes in for an intimate close-up as the red-haired woman leans forward, her hands gripping the man’s shoulders and hips, her head tilting back in a display of intense arousal. Her legs, clad in sheer black lace stockings and high heels, adjust with deliberate pressure as she shifts her weight, her thigh pressing against his hip while her other leg drapes over his shoulder. The man’s hands tighten on her waist, his body arching slightly under her weight, his face contorting with effort as he lifts his hips to meet her rhythm. Around the midpoint, the camera angle drops lower, focusing on the interplay of skin and fabric as her hips roll forward, her fingers digging into his back, her mouth opening slightly to release a soft, wet moan. The blonde woman’s gaze remains fixed, her hand moving from her cheek to her chin, her expression a mix of desire and voyeurism as she watches the couple’s escalating intimacy. The camera continues its slow, deliberate push-in, tightening the frame around the couple’s entwined bodies, capturing the glistening sweat on their skin, the subtle tremors in their limbs, and the way their breaths sync in a shared rhythm. The focus narrows to the woman’s face as she leans further back, her eyes fluttering shut, her lips parting to emit a low, sustained groan as she rides the man’s thrusts. The final frame locks in on the close-up of her torso and the man’s lower body, her fingers now curled around his neck as she rides him with increasing intensity, her head thrown back in ecstasy, the blonde woman’s hand now resting on her own thigh as she watches, her expression a silent witness to the peak of their passion. The scene ends with the red-haired woman’s body fully tensed, her hips grinding against the man’s, her eyes closed, her moans deepening as the camera holds steady on the final, climactic pose.\n\noverall_soundscape: The soundscape opens with the soft, rhythmic slap of skin against skin as the woman’s hips grind against the man’s, layered with the deep, guttural groans of exertion from the man and the wet, breathy moans from the woman. As the action builds, the soundscape intensifies with the slick, wet sounds of their bodies moving together, punctuated by sharp gasps and the rhythmic thud of their hearts. Around the midpoint, the moans become more sustained and louder, blending into a low, continuous hum of pleasure as the camera zooms in. The final moments are dominated by the woman’s deep, resonant cries of release, her body trembling as she climaxes, the sounds of her breathing turning into a rapid, ragged gasp that fades into a soft, satisfied sigh as the camera holds on the final pose.\n\nnon_diegetic_music: N/A"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 153,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -854.2053733642697,
+        5784.029481122856
+      ],
+      "size": [
+        492.5463282006857,
+        130
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "OPTIONS",
+      "properties": {
+        "matchColors": "Purple",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
       "id": 105,
       "type": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
       "pos": [
@@ -621,218 +833,6 @@
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
-    },
-    {
-      "id": 153,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -854.2053733642697,
-        5784.029481122856
-      ],
-      "size": [
-        492.5463282006857,
-        130
-      ],
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "OPTIONS",
-      "properties": {
-        "matchColors": "Purple",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#322",
-      "bgcolor": "#533"
-    },
-    {
-      "id": 126,
-      "type": "VHS_VideoCombine",
-      "pos": [
-        200.3732231528242,
-        4856.368165004811
-      ],
-      "size": [
-        1155.5330597730813,
-        986.7373461223583
-      ],
-      "flags": {},
-      "order": 17,
-      "mode": 4,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 289
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": 242
-        },
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        },
-        {
-          "name": "filename_prefix",
-          "type": "STRING",
-          "widget": {
-            "name": "filename_prefix"
-          },
-          "link": 297
-        }
-      ],
-      "outputs": [
-        {
-          "name": "Filenames",
-          "type": "VHS_FILENAMES",
-          "links": null
-        }
-      ],
-      "title": "48FPS",
-      "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "4ee72c065db22c9d96c2427954dc69e7b908444b",
-        "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
-      },
-      "widgets_values": {
-        "frame_rate": 48,
-        "loop_count": 0,
-        "filename_prefix": "video/MiniMax_H3_48FPS",
-        "format": "video/webm",
-        "pix_fmt": "yuv420p",
-        "crf": 20,
-        "save_metadata": true,
-        "trim_to_audio": false,
-        "pingpong": false,
-        "save_output": true,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "k1075.jpg_00001-audio.webm",
-            "subfolder": "",
-            "type": "output",
-            "format": "video/webm",
-            "frame_rate": 48,
-            "workflow": "k1075.jpg_00001.png",
-            "fullpath": "/workspace/ComfyUI/output/k1075.jpg_00001-audio.webm"
-          }
-        }
-      },
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 156,
-      "type": "WidgetToString",
-      "pos": [
-        -677.9705073378924,
-        5485.275843716909
-      ],
-      "size": [
-        294.341796875,
-        154
-      ],
-      "flags": {},
-      "order": 10,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "any_input",
-          "shape": 7,
-          "type": "*",
-          "link": 296
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            297,
-            308
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-kjnodes",
-        "ver": "c2a47f161bdcecc1e6baf3412f1d116febc26ce3",
-        "Node name for S&R": "WidgetToString",
-        "aux_id": "kijai/ComfyUI-KJNodes"
-      },
-      "widgets_values": [
-        114,
-        "image",
-        false,
-        "FirstFrame",
-        2
-      ]
-    },
-    {
-      "id": 137,
-      "type": "easy showAnything",
-      "pos": [
-        -856.1781450430237,
-        5402.11021783787
-      ],
-      "size": [
-        644.4670905794355,
-        323.47297362020254
-      ],
-      "flags": {},
-      "order": 14,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "shape": 7,
-          "type": "*",
-          "link": 253
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": []
-        }
-      ],
-      "title": "QWEN3VL GENERATED PROMPT",
-      "properties": {
-        "cnr_id": "comfyui-easy-use",
-        "ver": "595e0738a9e3f8d0d9c4d875461b2d2c9e7559c7",
-        "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
-      },
-      "widgets_values": [
-        "How the reference pictures align with the target video — Picture 1 (from [Shot 1]) aligns with the 0.00-second mark of the target video; Picture 2 (from [Shot 1]) aligns with the 10.00-second mark of the target video.\n\nintegrated_multimodal_description: In a luxurious, sun-drenched bedroom with cream curtains and a glimpse of a pool outside, a muscular man in patterned shorts is being mounted by a voluptuous woman with fiery red hair and a shimmering black lace bodysuit, while a blonde woman in a black bikini watches intently from the floor. The scene is saturated with sweat and oil, glinting under warm, golden ambient lighting that casts soft shadows and highlights the glossy skin of all three figures. The camera begins with a medium shot capturing the full dynamic, then smoothly pushes in for an intimate close-up as the red-haired woman leans forward, her hands gripping the man’s shoulders and hips, her head tilting back in a display of intense arousal. Her legs, clad in sheer black lace stockings and high heels, adjust with deliberate pressure as she shifts her weight, her thigh pressing against his hip while her other leg drapes over his shoulder. The man’s hands tighten on her waist, his body arching slightly under her weight, his face contorting with effort as he lifts his hips to meet her rhythm. Around the midpoint, the camera angle drops lower, focusing on the interplay of skin and fabric as her hips roll forward, her fingers digging into his back, her mouth opening slightly to release a soft, wet moan. The blonde woman’s gaze remains fixed, her hand moving from her cheek to her chin, her expression a mix of desire and voyeurism as she watches the couple’s escalating intimacy. The camera continues its slow, deliberate push-in, tightening the frame around the couple’s entwined bodies, capturing the glistening sweat on their skin, the subtle tremors in their limbs, and the way their breaths sync in a shared rhythm. The focus narrows to the woman’s face as she leans further back, her eyes fluttering shut, her lips parting to emit a low, sustained groan as she rides the man’s thrusts. The final frame locks in on the close-up of her torso and the man’s lower body, her fingers now curled around his neck as she rides him with increasing intensity, her head thrown back in ecstasy, the blonde woman’s hand now resting on her own thigh as she watches, her expression a silent witness to the peak of their passion. The scene ends with the red-haired woman’s body fully tensed, her hips grinding against the man’s, her eyes closed, her moans deepening as the camera holds steady on the final, climactic pose.\n\noverall_soundscape: The soundscape opens with the soft, rhythmic slap of skin against skin as the woman’s hips grind against the man’s, layered with the deep, guttural groans of exertion from the man and the wet, breathy moans from the woman. As the action builds, the soundscape intensifies with the slick, wet sounds of their bodies moving together, punctuated by sharp gasps and the rhythmic thud of their hearts. Around the midpoint, the moans become more sustained and louder, blending into a low, continuous hum of pleasure as the camera zooms in. The final moments are dominated by the woman’s deep, resonant cries of release, her body trembling as she climaxes, the sounds of her breathing turning into a rapid, ragged gasp that fades into a soft, satisfied sigh as the camera holds on the final pose.\n\nnon_diegetic_music: N/A"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
     }
   ],
   "links": [
@@ -1023,7 +1023,7 @@
         "state": {
           "lastGroupId": 10,
           "lastNodeId": 159,
-          "lastLinkId": 308,
+          "lastLinkId": 311,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -2050,10 +2050,10 @@
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-minimax-h3-turbo",
+              "aux_id": "Larryvrh/ComfyUI-MiniMax-H3-Turbo",
               "ver": "55fee864dd7b2976b1c4ce3c3d5f7968f181409f",
               "Node name for S&R": "MiniMaxH3TurboSampler",
-              "aux_id": "Larryvrh/ComfyUI-MiniMax-H3-Turbo"
+              "cnr_id": "comfyui-minimax-h3-turbo"
             },
             "widgets_values": []
           },
@@ -2110,42 +2110,6 @@
             ]
           },
           {
-            "id": 158,
-            "type": "Reroute",
-            "pos": [
-              -812.3110964633755,
-              4475.781211228801
-            ],
-            "size": [
-              75,
-              26
-            ],
-            "flags": {},
-            "order": 17,
-            "mode": 0,
-            "inputs": [
-              {
-                "name": "",
-                "type": "*",
-                "link": 307
-              }
-            ],
-            "outputs": [
-              {
-                "name": "",
-                "type": "MODEL",
-                "links": [
-                  303,
-                  304
-                ]
-              }
-            ],
-            "properties": {
-              "showOutputText": false,
-              "horizontal": false
-            }
-          },
-          {
             "id": 16,
             "type": "BasicGuider",
             "pos": [
@@ -2164,7 +2128,7 @@
                 "localized_name": "model",
                 "name": "model",
                 "type": "MODEL",
-                "link": 303
+                "link": 310
               },
               {
                 "localized_name": "conditioning",
@@ -2209,7 +2173,7 @@
                 "localized_name": "model",
                 "name": "model",
                 "type": "MODEL",
-                "link": 304
+                "link": 311
               },
               {
                 "localized_name": "steps",
@@ -2270,62 +2234,21 @@
                 "name": "MODEL",
                 "type": "MODEL",
                 "links": [
-                  306
+                  310,
+                  311
                 ]
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-minimax-h3-turbo",
+              "aux_id": "Larryvrh/ComfyUI-MiniMax-H3-Turbo",
               "ver": "55fee864dd7b2976b1c4ce3c3d5f7968f181409f",
               "Node name for S&R": "MiniMaxH3TurboLoRA",
-              "aux_id": "Larryvrh/ComfyUI-MiniMax-H3-Turbo"
+              "cnr_id": "comfyui-minimax-h3-turbo"
             },
             "widgets_values": [
               "minimax_h3_turbo_v4_step600_ema.safetensors",
               1,
               false
-            ]
-          },
-          {
-            "id": 159,
-            "type": "PathchSageAttentionKJ",
-            "pos": [
-              -837.8459221348551,
-              4361.517841523241
-            ],
-            "size": [
-              270,
-              82
-            ],
-            "flags": {},
-            "order": 18,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "model",
-                "name": "model",
-                "type": "MODEL",
-                "link": 306
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "MODEL",
-                "name": "MODEL",
-                "type": "MODEL",
-                "links": [
-                  307
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfyui-kjnodes",
-              "ver": "6ab7e8130e449ed2c0037589bcf84146ceb7fc9c",
-              "Node name for S&R": "PathchSageAttentionKJ"
-            },
-            "widgets_values": [
-              "auto",
-              true
             ]
           }
         ],
@@ -2693,34 +2616,18 @@
             "type": "MODEL"
           },
           {
-            "id": 303,
-            "origin_id": 158,
+            "id": 310,
+            "origin_id": 154,
             "origin_slot": 0,
             "target_id": 16,
             "target_slot": 0,
             "type": "MODEL"
           },
           {
-            "id": 304,
-            "origin_id": 158,
-            "origin_slot": 0,
-            "target_id": 9,
-            "target_slot": 0,
-            "type": "MODEL"
-          },
-          {
-            "id": 306,
+            "id": 311,
             "origin_id": 154,
             "origin_slot": 0,
-            "target_id": 159,
-            "target_slot": 0,
-            "type": "MODEL"
-          },
-          {
-            "id": 307,
-            "origin_id": 159,
-            "origin_slot": 0,
-            "target_id": 158,
+            "target_id": 9,
             "target_slot": 0,
             "type": "MODEL"
           }
@@ -2737,10 +2644,10 @@
     "VHS_MetadataImage": true,
     "VHS_KeepIntermediate": true,
     "ds": {
-      "scale": 0.644368487351115,
+      "scale": 0.9434199023307677,
       "offset": [
-        2137.9281661012465,
-        -4388.570415695603
+        1660.657281259732,
+        -4627.9829697464065
       ]
     }
   },
