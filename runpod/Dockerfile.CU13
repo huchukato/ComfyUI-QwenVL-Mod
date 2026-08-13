@@ -8,6 +8,8 @@ FROM runpod/comfyui:cuda13.0
 # ──────────────────────────────────────────────────────────────────────────────
 # Custom nodes — ALL repos cloned once (cached)
 # ──────────────────────────────────────────────────────────────────────────────
+# Bump NODES_CACHE_BUSTER to force re-clone of all custom nodes
+ARG NODES_CACHE_BUSTER=2026-08-13-v2
 RUN cd /opt/comfyui-baked/custom_nodes && \
     git clone https://github.com/BobRandomNumber/ComfyUI-Crystools-MonitorOnly.git && \
     git clone https://github.com/city96/ComfyUI-GGUF.git && \

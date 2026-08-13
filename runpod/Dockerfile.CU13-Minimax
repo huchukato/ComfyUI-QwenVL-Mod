@@ -24,6 +24,8 @@ RUN cd /opt/comfyui-baked && \
 # ──────────────────────────────────────────────────────────────────────────────
 # Custom nodes — ALL repos cloned once (cached)
 # ──────────────────────────────────────────────────────────────────────────────
+# Bump NODES_CACHE_BUSTER to force re-clone of all custom nodes
+ARG NODES_CACHE_BUSTER=2026-08-13-v2
 RUN cd /opt/comfyui-baked/custom_nodes && \
     git clone https://github.com/BobRandomNumber/ComfyUI-Crystools-MonitorOnly.git && \
     git clone https://github.com/Larryvrh/ComfyUI-MiniMax-H3-Turbo.git && \
@@ -294,7 +296,7 @@ download_model() {
             rm -rf "$tmp_dir"
         fi
 
-        [ "$attempt" -lt "$max_retries" ] && sleep $((attempt * 10))
+        [ "$attempt" -lt "$max_retries" ] && sleep $((attempt * 30))
     done
 
     log "❌ FAILED: $name could not be downloaded after $max_retries attempts"
@@ -305,6 +307,8 @@ failures=0
 for entry in "${MODELS[@]}"; do
     IFS='|' read -r subdir name url min_size <<< "$entry"
     download_model "$subdir" "$name" "$url" "$min_size" || failures=$((failures + 1))
+    # Small delay between downloads to avoid HF rate limiting (429)
+    sleep 5
 done
 
 log "📦 === MiniMax H3 model download finished ($failures failures) ==="
