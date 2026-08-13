@@ -183,6 +183,11 @@ BASE_DIR="/workspace/runpod-slim/ComfyUI/models"
 LOG="/var/log/ltx-models.log"
 READY_MARKER="/workspace/runpod-slim/ComfyUI/main.py"   # created by start.sh copy
 
+# Ensure hf-transfer is available (Rust accelerator for HF downloads)
+pip install --no-cache-dir -q "hf-transfer" "huggingface_hub" 2>/dev/null
+export HF_HUB_ENABLE_HF_TRANSFER=1
+export HF_XET_HIGH_PERFORMANCE=1
+
 # Models: subdir|name|repo_id|repo_path|min_size_bytes (min_size = sanity check)
 MODELS=(
     "checkpoints|10Eros_v1.5_fp8mixed_experimental_learned.safetensors|LokkenJP/10EROS_1.5_fp8_exp_learned|10Eros_v1.5_fp8mixed_experimental_learned.safetensors|28000000000"
@@ -242,7 +247,8 @@ download_model() {
         # hf: resume is automatic; huggingface-cli: needs --resume-download
         local resume_flag=""
         [ "$hf_cmd" = "huggingface-cli" ] && resume_flag="--resume-download"
-        if $hf_cmd download "$repo_id" "$repo_path" \
+        # Timeout: 15 min per file, prevents infinite stalls
+        if timeout 900 $hf_cmd download "$repo_id" "$repo_path" \
                 --local-dir "$tmp_dir" \
                 $resume_flag 2>&1 | tee -a "$LOG"; then
             # Find the downloaded file (hf preserves repo_path structure)
