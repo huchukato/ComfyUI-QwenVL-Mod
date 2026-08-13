@@ -234,11 +234,7 @@ function provisioning_configure_args() {
     if [ ! -f "$args_file" ]; then
         mkdir -p "$(dirname "$args_file")"
         cat > "$args_file" <<'EOF'
---disable-auto-launch
---fast fp16_accumulation
---use-sage-attention
---cuda-malloc
---async-offload
+--disable-auto-launch --port 18188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --cuda-malloc --async-offload
 EOF
         echo "✅ Created $args_file with MiniMax H3 / QwenVL-Mod optimized args"
     else
