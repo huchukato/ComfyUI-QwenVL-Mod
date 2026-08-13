@@ -67,12 +67,7 @@ WAN 2.2 T2V/I2V/SVI (GGUF variants), Full MMAudio, AutoPrompt Story, PMP LoRaSta
 
 Pre-populated in `/workspace/runpod-slim/comfyui_args.txt`:
 ```
---disable-auto-launch
---fast fp16_accumulation
---use-sage-attention
---reserve-vram 2
---cuda-malloc
---async-offload
+--disable-auto-launch --fast fp16_accumulation --use-sage-attention --cuda-malloc --async-offload
 ```
 
 Edit via FileBrowser or Jupyter to customize.

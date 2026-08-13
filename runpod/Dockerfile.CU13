@@ -431,12 +431,7 @@ if [ ! -f "$ARGS_FILE" ]; then
     mkdir -p /workspace/runpod-slim
     cat > "$ARGS_FILE" << 'INNER'
 # Custom ComfyUI arguments (one per line, # = comment)
---disable-auto-launch
---fast fp16_accumulation
---use-sage-attention
---reserve-vram 2
---cuda-malloc
---async-offload
+--disable-auto-launch --fast fp16_accumulation --use-sage-attention --cuda-malloc --async-offload
 INNER
     echo "Created comfyui_args.txt with WAN2.2 optimized args"
 fi
