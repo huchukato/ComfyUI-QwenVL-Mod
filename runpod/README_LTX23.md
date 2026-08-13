@@ -83,12 +83,7 @@ HF_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ## ⚙️ ComfyUI Args
 
 ```
---disable-auto-launch
---fast fp16_accumulation
---use-sage-attention
---reserve-vram 2
---cuda-malloc
---async-offload
+--disable-auto-launch --fast fp16_accumulation --use-sage-attention --cuda-malloc --async-offload
 ```
 
 ---
