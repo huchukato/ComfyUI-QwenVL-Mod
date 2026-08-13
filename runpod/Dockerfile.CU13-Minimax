@@ -101,7 +101,7 @@ RUN pip install --no-cache-dir \
 ARG CACHEBUST=1
 RUN echo "CACHEBUST=$CACHEBUST" && \
     cd /opt/comfyui-baked/custom_nodes && \
-    for repo in ComfyUI-QwenVL-Mod ComfyUI-HuggingFace comfy-tagcomplete; do \
+    for repo in ComfyUI-QwenVL-Mod; do \
         if [ -d "$repo" ]; then \
             cd "$repo" && git pull --ff-only && cd ..; \
         fi; \
