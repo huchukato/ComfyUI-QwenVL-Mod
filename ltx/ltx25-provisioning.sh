@@ -39,7 +39,8 @@ NODES=(
 )
 
 WORKFLOWS=(
-    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/ltx/LTX23-I2VA-Qwen3VL.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/ltx/LTX25-I2VA-Qwen3VL.json"
+    "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/ltx/LTX25-FL2VA-Qwen3VL.json"
     "https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/vastai/workflows/PMP-LoRaStack-Upscale-Wildcards.json"
 )
 
@@ -64,17 +65,17 @@ TEXT_ENCODERS=(
 CONTROLNET_MODELS=(
 )
 
-# LTX 2.3 models: subdir|name|url|min_size_bytes
-# Uncensored setup: 10Eros v1.5 checkpoint + Gemma abliterated LoRA + DMD hybrid v2 LoRA
+# LTX 2.5 models: subdir|name|url|min_size_bytes (native uncensored, from huchukato/pimp-my-wan mirror)
 LTX_MODELS=(
-    "checkpoints|10Eros_v1.5_fp8mixed_experimental_learned.safetensors|https://huggingface.co/LokkenJP/10EROS_1.5_fp8_exp_learned/resolve/main/10Eros_v1.5_fp8mixed_experimental_learned.safetensors|28000000000"
-    "text_encoders|gemma_3_12B_it_fp4_mixed.safetensors|https://huggingface.co/Comfy-Org/ltx-2/resolve/main/split_files/text_encoders/gemma_3_12B_it_fp4_mixed.safetensors|9000000000"
-    "loras|gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors|https://huggingface.co/Comfy-Org/ltx-2/resolve/main/split_files/loras/gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors|600000000"
-    "loras|ltx23/LTX2.3_DMD_hybrid_v2.safetensors|https://huggingface.co/TenStrip/LTX2.3_DMD_Lora/resolve/main/LTX2.3_DMD_hybrid_v2.safetensors|600000000"
-    "latent_upscale_models|ltx-2.3-spatial-upscaler-x2-1.1.safetensors|https://huggingface.co/Lightricks/LTX-2.3/resolve/main/ltx-2.3-spatial-upscaler-x2-1.1.safetensors|900000000"
-    "latent_upscale_models|ltx-2.3-temporal-upscaler-x2-1.0.safetensors|https://huggingface.co/Lightricks/LTX-2.3/resolve/main/ltx-2.3-temporal-upscaler-x2-1.0.safetensors|250000000"
-    # Pruna optimized VAE (faster decode than stock LTX VAE)
-    "vae|pruna_ltx2.3_vae_comfy_bf16.safetensors|https://huggingface.co/Kijai/LTX2.3_comfy/resolve/main/vae/pruna_ltx2.3_vae_comfy_bf16.safetensors|500000000"
+    # ── LTX 2.5 (native uncensored) ──
+    "diffusion_models|ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/LTX/diffusion_models/ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors|21000000000"
+    "text_encoders|gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/LTX/text_encoders/gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors|15000000000"
+    "text_encoders|gemma4_e2b_it_bf16.safetensors|https://huggingface.co/TrevorJS/gemma-4-E2B-it-uncensored/resolve/main/model.safetensors|10000000000"
+    "vae|ltx-2.5-video-vae-bf16.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/LTX/vae/ltx-2.5-video-vae-bf16.safetensors|1400000000"
+    "vae|ltx-2.5-audio-vae-bf16.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/LTX/vae/ltx-2.5-audio-vae-bf16.safetensors|350000000"
+    "latent_upscale_models|ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/LTX/latent_upscale_models/ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors|990000000"
+    "latent_upscale_models|ltx-2.5-latent-temporal-upscaler-x2-bf16-1.0.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/LTX/latent_upscale_models/ltx-2.5-latent-temporal-upscaler-x2-bf16-1.0.safetensors|250000000"
+    "model_patches|ltx-2.5-duration-head-bf16.safetensors|https://huggingface.co/huchukato/pimp-my-wan/resolve/main/LTX/model_patches/ltx-2.5-duration-head-bf16.safetensors|3800000"
 )
 
 function provisioning_force_comfyui_version() {
@@ -87,7 +88,7 @@ function provisioning_force_comfyui_version() {
         return 0
     fi
 
-    echo "🔧 Ensuring $label is on v0.31.0 (LTX 2.3 requirement)..."
+    echo "🔧 Ensuring $label is on v0.31.0 (LTX 2.5 requirement)..."
     if timeout 60 git -C "$repo_dir" fetch --tags --force origin 2>/dev/null; then
         local current_hash target_hash
         current_hash=$(git -C "$repo_dir" rev-parse --short HEAD 2>/dev/null || echo "unknown")
@@ -194,13 +195,13 @@ function provisioning_get_ltx_models() {
         fi
     done
     if [ "$all_complete" = true ]; then
-        echo "✅ All LTX 2.3 models already complete, no download needed"
+        echo "✅ All LTX 2.5 models already complete, no download needed"
         return 0
     fi
 
-    mkdir -p "$base_dir"/{checkpoints,text_encoders,loras/ltx23,latent_upscale_models,vae}
+    mkdir -p "$base_dir"/{checkpoints,text_encoders,loras/ltx23,latent_upscale_models,vae,diffusion_models,model_patches}
 
-    echo "📥 === LTX 2.3 model download started (PID $$) ==="
+    echo "📥 === LTX 2.5 model download started (PID $$) ==="
     echo "⏳ Waiting for ComfyUI ready marker..."
     for i in $(seq 1 120); do
         [ -f "$ready_marker" ] && break
@@ -220,7 +221,7 @@ function provisioning_get_ltx_models() {
         download_ltx_model "$base_dir" "$subdir" "$name" "$url" "$min_size" || failures=$((failures + 1))
     done
 
-    echo "📦 === LTX 2.3 model download finished ($failures failures) ==="
+    echo "📦 === LTX 2.5 model download finished ($failures failures) ==="
 }
 
 function provisioning_configure_args() {
@@ -235,7 +236,7 @@ function provisioning_configure_args() {
 --cuda-malloc
 --async-offload
 EOF
-        echo "✅ Created $args_file with LTX 2.3 / QwenVL-Mod optimized args"
+        echo "✅ Created $args_file with LTX 2.5 / QwenVL-Mod optimized args"
     else
         echo "ℹ️  $args_file already exists, leaving untouched"
     fi
@@ -250,7 +251,7 @@ function provisioning_start() {
     echo "📦 Installing APT packages..."
     provisioning_get_apt_packages
     
-    echo "🔧 Ensuring ComfyUI is on v0.31.0 (LTX 2.3 requirement)..."
+    echo "🔧 Ensuring ComfyUI is on v0.31.0 (LTX 2.5 requirement)..."
     provisioning_force_comfyui_version "${COMFYUI_DIR}" "ComfyUI"
     
     echo "🔧 Installing custom nodes..."
@@ -303,7 +304,7 @@ function provisioning_start() {
         "${COMFYUI_DIR}/models/text_encoders" \
         "${TEXT_ENCODERS[@]}"        
     
-    echo "🧬 Starting LTX 2.3 model download in background..."
+    echo "🧬 Starting LTX 2.5 model download in background..."
     provisioning_get_ltx_models
     
     echo "🎛️ Configuring ComfyUI arguments..."
