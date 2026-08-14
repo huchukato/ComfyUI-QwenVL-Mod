@@ -184,6 +184,10 @@ function download_ltx_model() {
 function provisioning_get_ltx_models() {
     local base_dir="${WORKSPACE:-/workspace}/ComfyUI/models"
     local ready_marker="${WORKSPACE:-/workspace}/ComfyUI/main.py"
+    local log_file="/var/log/ltx-models.log"
+    mkdir -p /var/log
+
+    dllog() { echo "$(date): $*" | tee -a "$log_file"; }
 
     local all_complete=true
     for entry in "${LTX_MODELS[@]}"; do
@@ -197,33 +201,39 @@ function provisioning_get_ltx_models() {
         fi
     done
     if [ "$all_complete" = true ]; then
-        echo "✅ All LTX 2.3 models already complete, no download needed"
+        dllog "✅ All LTX 2.3 models already complete, no download needed"
+        dllog "✅ All models ready — ComfyUI can now use LTX 2.3 workflows"
         return 0
     fi
 
     mkdir -p "$base_dir"/{checkpoints,text_encoders,loras/ltx23,latent_upscale_models,vae}
 
-    echo "📥 === LTX 2.3 model download started (PID $$) ==="
-    echo "⏳ Waiting for ComfyUI ready marker..."
+    local total=${#LTX_MODELS[@]}
+    dllog "📥 === LTX 2.3 model download started (PID $$) — $total models ==="
+    dllog "⏳ Waiting for ComfyUI ready marker..."
     for i in $(seq 1 120); do
         [ -f "$ready_marker" ] && break
         sleep 5
     done
 
     if [ ! -f "$ready_marker" ]; then
-        echo "❌ ERROR: ComfyUI ready marker not found after 600s, aborting"
+        dllog "❌ ERROR: ComfyUI ready marker not found after 600s, aborting"
         return 1
     fi
 
-    echo "✅ ComfyUI ready, base dir: $base_dir"
+    dllog "✅ ComfyUI ready, base dir: $base_dir"
 
     local failures=0
+    local idx=0
     for entry in "${LTX_MODELS[@]}"; do
+        idx=$((idx + 1))
         IFS='|' read -r subdir name url min_size <<< "$entry"
+        dllog "━━━ [$idx/$total] ━━━"
         download_ltx_model "$base_dir" "$subdir" "$name" "$url" "$min_size" || failures=$((failures + 1))
     done
 
-    echo "📦 === LTX 2.3 model download finished ($failures failures) ==="
+    dllog "📦 === LTX 2.3 model download finished ($failures failures) ==="
+    dllog "✅ All models ready — ComfyUI can now use LTX 2.3 workflows"
 }
 
 function provisioning_configure_args() {
