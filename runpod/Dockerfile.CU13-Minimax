@@ -37,7 +37,7 @@ RUN sed -i '/echo "Base packages (torch, numpy, etc.) available from system site
 # Custom nodes — ALL repos cloned once (cached)
 # ──────────────────────────────────────────────────────────────────────────────
 # Bump NODES_CACHE_BUSTER to force re-clone of all custom nodes
-ARG NODES_CACHE_BUSTER=2026-08-13-v4
+ARG NODES_CACHE_BUSTER=2026-08-14-v5
 RUN cd /opt/comfyui-baked/custom_nodes && \
     git clone https://github.com/BobRandomNumber/ComfyUI-Crystools-MonitorOnly.git && \
     git clone https://github.com/Larryvrh/ComfyUI-MiniMax-H3-Turbo.git && \
@@ -137,7 +137,6 @@ MINIMAX_WORKFLOWS=(
     "MiniMaxH3-Turbo-FL2VA-Qwen3VL.json"
     "MiniMaxH3-Turbo-T2VA-Qwen3VL.json"
     "MiniMaxH3-Turbo-R2VA-Qwen3VL.json"
-    "MiniMaxH3-Turbo-FL2VA-Qwen3VL-RTX.json"
 )
 EXTRA_WORKFLOWS=(
     "PMP-LoRaStack-Upscale-Wildcards.json"
