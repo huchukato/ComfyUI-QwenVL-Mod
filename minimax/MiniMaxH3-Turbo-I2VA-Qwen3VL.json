@@ -421,49 +421,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 114,
-      "type": "LoadImage",
-      "pos": [
-        -1657.3752735521248,
-        4831.901071660882
-      ],
-      "size": [
-        481.3900943312203,
-        742.267682441865
-      ],
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            299,
-            341
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "title": "LoadImage",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.30.1",
-        "Node name for S&R": "LoadImage"
-      },
-      "widgets_values": [
-        "784.jpg",
-        "image"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
       "id": 126,
       "type": "VHS_VideoCombine",
       "pos": [
@@ -539,13 +496,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "784.jpg_00016-audio.webm",
+            "filename": "MBDS2_Ep1_StripClub_033_preview.png_00001-audio.webm",
             "subfolder": "",
             "type": "output",
             "format": "video/webm",
             "frame_rate": 48,
-            "workflow": "784.jpg_00016.png",
-            "fullpath": "/workspace/runpod-slim/ComfyUI/output/784.jpg_00016-audio.webm"
+            "workflow": "MBDS2_Ep1_StripClub_033_preview.png_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/MBDS2_Ep1_StripClub_033_preview.png_00001-audio.webm"
           }
         }
       },
@@ -637,10 +594,130 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] Live-action, cinematic, a medium-wide shot frames a luxurious, opulent living room with marble floors, a grand piano in the background, and ornate wooden furniture. In the foreground, a woman with long black hair, wearing glasses and a sleek black satin dress, is seated on a white tufted couch, her legs spread wide as she rides a man beneath her. Her expression is intense, mouth slightly open, eyes locked forward. The man beneath her, with short brown hair, is shirtless, gripping her waist as he thrusts upward. To the right, another woman with long black hair, nude, sits beside them, her hand resting on her own thigh, her gaze fixed on the couple. She wears black strappy heels. The lighting is warm and soft, coming from a large window behind them, casting gentle glows on their skin and creating soft shadows. The camera remains stationary, capturing the intimate, sensual moment with a shallow depth of field, focusing sharply on the trio while blurring the background slightly. Diegetic sounds: wet, rhythmic moans from the woman on top, shallow breaths from the man beneath, and the soft rustle of fabric as she shifts. The woman on the side emits a low, sensual sigh as she watches.\n\noverall_soundscape: The air is thick with the sound of skin slapping against skin, deep, guttural moans from the woman on top, and the man’s rhythmic groans as he drives into her. The wet, slick sounds of their bodies moving together dominate, punctuated by the soft gasps and breaths that rise and fall with their movements. The occasional soft click of heels against the marble floor adds a sensual rhythm to the scene.\n\nnon_diegetic_music: N/A"
+        "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] Live-action, cinematic, a medium-wide shot frames a sultry nightclub scene bathed in crimson and violet neon. A young woman with short, tousled dark hair, viewed from behind, stands poised beside a gleaming chrome pole. She wears a sheer, intricate white lace bodysuit with floral embroidery, revealing her toned back and buttocks, paired with bright blue thong underwear. Her left hand grips the pole, fingers curling slightly as she sways with deliberate, seductive motion. In the background, a man in a dark button-down shirt and jeans sits slumped on a plush red leather couch, his gaze fixed on her with a mixture of hunger and fascination. A neon sign shaped like a pair of glossy lips glows above him, casting a pinkish hue on the textured brick wall. A low wooden coffee table in front of the couch holds two dark beer bottles. Warm, flickering lantern light spills from the floor beside the couch, contrasting with the cool, electric glow of the pole. The camera holds steady, subtly panning right to follow the woman’s slow, hypnotic turn as she leans into the pole, her hips swaying, her back arched slightly. The sound of her breath catching, a soft, wet moan escaping her lips as she presses her back against the pole, the faint rustle of her lace fabric against her skin, and the gentle clink of a bottle cap being opened.\n\noverall_soundscape: A deep, throaty moan vibrates as the woman leans into the pole, her breath catching in her throat. The soft, wet sound of her skin sliding against the cool chrome echoes as she sways, punctuated by the faint, rhythmic slap of her hips against the pole. A low, sensual groan escapes her lips as she arches her back, the sound muffled yet intimate. The ambient hum of the club fades into the background, replaced by the gentle clink of a bottle cap being opened.\n\nnon_diegetic_music: N/A"
       ],
       "color": "#233",
       "bgcolor": "#355"
+    },
+    {
+      "id": 154,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -835.8822372630377,
+        5800.601475732436
+      ],
+      "size": [
+        492.5463282006857,
+        154
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "OPTIONS",
+      "properties": {
+        "matchColors": "Purple",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 185,
+      "type": "UpscalerTensorrt",
+      "pos": [
+        -164.20142513085486,
+        5571.788028916906
+      ],
+      "size": [
+        311.232421875,
+        94
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 357
+        },
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "link": 356
+        }
+      ],
+      "outputs": [
+        {
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            358
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
+        "Node name for S&R": "UpscalerTensorrt"
+      },
+      "widgets_values": [
+        "2K",
+        "2",
+        2048,
+        2048
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 186,
+      "type": "LoadUpscalerTensorrtModel",
+      "pos": [
+        -163.7070379842013,
+        5434.827947848934
+      ],
+      "size": [
+        295.4078125,
+        82
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "links": [
+            356
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
+        "Node name for S&R": "LoadUpscalerTensorrtModel"
+      },
+      "widgets_values": [
+        "RealESRGAN_x2plus",
+        "fp16"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
     },
     {
       "id": 105,
@@ -739,8 +816,8 @@
         1344,
         768,
         5,
-        586618486457061,
-        "10Eros_Max_H3_FL2VA-INT8-ConvRot-HQ.safetensors",
+        475306180378751,
+        "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
         "qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
         "minimax_h3_video_vae_fp16.safetensors",
         "minimax_h3_audio_vae_fp32.safetensors",
@@ -748,56 +825,21 @@
         "🎬 MiniMax H3 NSFW (5s)",
         false,
         8,
-        "minimax_h3_fl2v_turbo_8step_v1.0_10ErosMax_beta1_pruned_compat_v001_T8.safetensors"
+        "minimax_h3_turbo_v4_step600_ema.safetensors"
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
     },
     {
-      "id": 154,
-      "type": "Fast Groups Bypasser (rgthree)",
+      "id": 114,
+      "type": "LoadImage",
       "pos": [
-        -835.8822372630377,
-        5800.601475732436
+        -1657.3752735521248,
+        4831.901071660882
       ],
       "size": [
-        492.5463282006857,
-        154
-      ],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "OPTIONS",
-      "properties": {
-        "matchColors": "Purple",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#322",
-      "bgcolor": "#533"
-    },
-    {
-      "id": 186,
-      "type": "LoadUpscalerTensorrtModel",
-      "pos": [
-        -163.7070379842013,
-        5434.827947848934
-      ],
-      "size": [
-        295.4078125,
-        82
+        481.3900943312203,
+        742.267682441865
       ],
       "flags": {},
       "order": 9,
@@ -805,73 +847,31 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "links": [
-            356
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
-        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
-        "Node name for S&R": "LoadUpscalerTensorrtModel"
-      },
-      "widgets_values": [
-        "2xLexicaRRDBNet_Sharp",
-        "fp16"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 185,
-      "type": "UpscalerTensorrt",
-      "pos": [
-        -164.20142513085486,
-        5571.788028916906
-      ],
-      "size": [
-        311.232421875,
-        94
-      ],
-      "flags": {},
-      "order": 16,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
+          "name": "IMAGE",
           "type": "IMAGE",
-          "link": 357
+          "links": [
+            299,
+            341
+          ]
         },
         {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "link": 356
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
         }
       ],
-      "outputs": [
-        {
-          "name": "upscaled_images",
-          "type": "IMAGE",
-          "links": [
-            358
-          ]
-        }
-      ],
+      "title": "LoadImage",
       "properties": {
-        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
-        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
-        "Node name for S&R": "UpscalerTensorrt"
+        "cnr_id": "comfy-core",
+        "ver": "0.30.1",
+        "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "1080p",
-        "2",
-        2048,
-        2048
+        "MBDS2_Ep1_StripClub_033_preview.png",
+        "image"
       ],
-      "color": "#223",
-      "bgcolor": "#335"
+      "color": "#233",
+      "bgcolor": "#355"
     }
   ],
   "links": [
@@ -2070,7 +2070,7 @@
               1,
               16,
               false,
-              3516854749,
+              266323229,
               "randomize",
               false
             ],
@@ -2923,8 +2923,8 @@
     "ds": {
       "scale": 0.796316462125923,
       "offset": [
-        1641.0151317432192,
-        -4715.555962862064
+        2248.0092554892985,
+        -4582.336835050502
       ]
     }
   },

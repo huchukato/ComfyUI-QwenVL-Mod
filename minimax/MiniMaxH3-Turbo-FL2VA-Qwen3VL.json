@@ -159,7 +159,7 @@
       ],
       "size": [
         1155.5330597730813,
-        991.4687338714127
+        986.7373461223583
       ],
       "flags": {},
       "order": 19,
@@ -226,13 +226,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "784.jpg_00011-audio.webm",
+            "filename": "MBDS2_Ep1_StripClub_051_preview.png_00001-audio.webm",
             "subfolder": "",
             "type": "output",
             "format": "video/webm",
             "frame_rate": 48,
-            "workflow": "784.jpg_00011.png",
-            "fullpath": "/workspace/runpod-slim/ComfyUI/output/784.jpg_00011-audio.webm"
+            "workflow": "MBDS2_Ep1_StripClub_051_preview.png_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/MBDS2_Ep1_StripClub_051_preview.png_00001-audio.webm"
           }
         }
       },
@@ -322,7 +322,7 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "How the reference pictures align with the target video — Picture 1 (from [Shot 1]) aligns with the 0.00-second mark of the target video; Picture 2 (from [Shot 1]) aligns with the 10.00-second mark of the target video.\n\nintegrated_multimodal_description: A cinematic, ultra-detailed 3D-rendered scene in a modern, minimalist white-tiled bathroom with recessed ceiling lights casting soft, warm glows, where a curvaceous woman with dark bobbed hair, wearing a glossy red halter bodysuit and matching lace-up sandals, kneels on the floor while a muscular man in a red-and-blue polka-dot briefs slowly lowers his head to her mouth; the camera begins with a low-angle shot from the side, capturing her head tilted back, eyes closed, lips parted as his hand gently cradles her head, then smoothly arcs upward and forward into a top-down perspective, revealing her hands gripping his shoulders as she deepthroats him, her expression shifting from passive surrender to intense focus, her spine arching slightly as she leans forward, his arms tensing around her head, her thighs pressing against his hips, her body trembling with each deep inhale, his skin glistening with sweat under the ambient light, the red fabric of her bodysuit catching highlights as she moves, the camera maintaining a shallow depth of field, keeping her face and his torso in sharp focus while the tiled floor and white cabinetry blur into soft bokeh around the midpoint, then pulling back slightly to frame the full intimacy as she continues to swallow, her gaze locked on his chest, her breaths becoming more labored and audible, the camera settling into a tight, intimate frame mirroring the final reference image, her lips wrapped around his shaft, his fingers digging into her hair, her body pressed flush against his, the scene saturated with raw, sensual tension.\noverall_soundscape: The soundscape begins with the soft, rhythmic inhale of the woman and the subtle scrape of her sandals against the tile, evolving into a deep, wet moan as she takes him in, punctuated by the occasional soft gasp and the rhythmic slap of her thighs against his hips, her breathing growing more labored and audible as she leans in, the sound of her tongue moving against his skin, the occasional wet slurp, and the faint, rhythmic thump of her heart against her ribs, all layered over the ambient hum of the room’s ventilation system.\nnon_diegetic_music: N/A"
+        "How the reference pictures align with the target video — Picture 1 (from [Shot 1]) aligns with the 0.00-second mark of the target video; Picture 2 (from [Shot 1]) aligns with the 5.00-second mark of the target video.\n\nintegrated_multimodal_description: In a sultry, neon-drenched lounge with exposed brick walls and crimson leather couches, a curvaceous woman with high ponytail and blue thong paired with white lace thigh-highs sits provocatively between two men; one in a black polo shirt gestures animatedly while the other in a dark shirt watches intently, all bathed in the warm glow of pink neon lips and ambient red lighting. As the scene unfolds, the woman slowly turns her head to her right, her gaze locking with the second man’s, her expression shifting from engaged conversation to a subtle, knowing smirk as her body subtly shifts weight forward, her hands resting deliberately on her thighs, her fingers slightly curling around the lace edges. The man in the black shirt gradually slumps back into the couch, his head tilting down as if exhausted or entranced, his hand drifting from his chest to his lap, while the man beside her leans in closer, his arm resting lightly on the back of the couch, his eyes fixed on her with growing intensity. Her spine arcs slightly as she leans forward, her breasts swaying gently with the motion, her nipples subtly tightening against the cool air, her skin glistening with a sheen of sweat or oil under the neon. The camera glides smoothly forward on a gentle dolly-in, maintaining a medium close-up that follows her torso and face, subtly tightening the frame to emphasize the intimacy between her and the second man. Depth of field softens the background, blurring the neon sign and brick texture while keeping her skin and the men’s faces in sharp focus, the lighting intensifying slightly as the scene progresses, casting longer, warmer shadows and highlighting the contours of her body. At 5.00, she is fully turned toward the second man, her smile now open and inviting, her body poised and ready, her thighs pressed together slightly as if anticipating a movement, her gaze locked with his, her expression radiating confidence and desire.\n\noverall_soundscape: A deep, rhythmic breathing pattern from the woman grows louder and more labored as she leans forward, punctuated by a soft, wet sigh as her lips part slightly, followed by a low, throaty moan as her body shifts weight. The man in the black shirt exhales a heavy, tired sigh that blends into the ambient room tone, while the second man emits a quiet, almost inaudible groan as he leans closer, his breath catching slightly. The sound of skin brushing against fabric is barely audible, a soft rustle of her thigh-highs as she adjusts her position, and the faintest slap of her hand against her thigh as she grips the lace. The overall audio is dominated by these intimate, sexual sounds, layered over the gentle hum of the neon lights and the distant murmur of the lounge.\n\nnon_diegetic_music: N/A"
       ],
       "color": "#233",
       "bgcolor": "#355"
@@ -590,91 +590,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 114,
-      "type": "LoadImage",
-      "pos": [
-        -2238.7384211458884,
-        4878.667050439871
-      ],
-      "size": [
-        482.2566821236637,
-        717.2904207205629
-      ],
-      "flags": {},
-      "order": 6,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            296,
-            372
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "title": "FirstFrame",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.30.1",
-        "Node name for S&R": "LoadImage"
-      },
-      "widgets_values": [
-        "k648.jpg",
-        "image"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 147,
-      "type": "LoadImage",
-      "pos": [
-        -1696.9854230175088,
-        4888.9677653444505
-      ],
-      "size": [
-        486.1266495255343,
-        715.9489903021231
-      ],
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            376
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "title": "LastFrame",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.30.1",
-        "Node name for S&R": "LoadImage"
-      },
-      "widgets_values": [
-        "k649.jpg",
-        "image"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 184,
       "type": "PrimitiveInt",
       "pos": [
@@ -686,7 +601,7 @@
         82
       ],
       "flags": {},
-      "order": 8,
+      "order": 6,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -712,6 +627,150 @@
       ],
       "color": "#323",
       "bgcolor": "#535"
+    },
+    {
+      "id": 183,
+      "type": "PrimitiveInt",
+      "pos": [
+        -1161.4796597857392,
+        4780.466201009992
+      ],
+      "size": [
+        270.6447909273984,
+        95.9247742670932
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            366,
+            370,
+            374
+          ]
+        }
+      ],
+      "title": "WIDTH",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.31.0",
+        "Node name for S&R": "PrimitiveInt"
+      },
+      "widgets_values": [
+        1344,
+        "fixed"
+      ],
+      "color": "#323",
+      "bgcolor": "#535"
+    },
+    {
+      "id": 180,
+      "type": "AutoRifeTensorrt",
+      "pos": [
+        -168.13492926301825,
+        5078.343189403588
+      ],
+      "size": [
+        327.0858377006316,
+        224
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "link": 356
+        },
+        {
+          "name": "rife_trt_model",
+          "type": "RIFE_TRT_MODEL",
+          "link": 355
+        },
+        {
+          "name": "interpolation_states",
+          "shape": 7,
+          "type": "INTERPOLATION_STATES",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            383
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+        "ver": "120f2ca1b1e226d7e3c23917647d78a6a3318b92",
+        "Node name for S&R": "AutoRifeTensorrt"
+      },
+      "widgets_values": [
+        100,
+        2,
+        false,
+        1,
+        ""
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 189,
+      "type": "UpscalerTensorrt",
+      "pos": [
+        -166.97802512978765,
+        5571.206708055735
+      ],
+      "size": [
+        311.232421875,
+        94
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 383
+        },
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "link": 382
+        }
+      ],
+      "outputs": [
+        {
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            384
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
+        "Node name for S&R": "UpscalerTensorrt"
+      },
+      "widgets_values": [
+        "2K",
+        "2",
+        2048,
+        2048
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
     },
     {
       "id": 105,
@@ -815,59 +874,20 @@
         "",
         1344,
         768,
-        10,
-        623583191807521,
+        5,
+        447306702491577,
         "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
         "qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
         "minimax_h3_video_vae_fp16.safetensors",
         "minimax_h3_audio_vae_fp32.safetensors",
         "Qwen3-VL-8B-Heretic-Stable",
-        "🔄 MiniMax H3 NSFW FL2VA (10s)",
+        "🔄 MiniMax H3 NSFW FL2VA (5s)",
         false,
         8,
         "minimax_h3_turbo_v4_step600_ema.safetensors"
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
-    },
-    {
-      "id": 183,
-      "type": "PrimitiveInt",
-      "pos": [
-        -1161.4796597857392,
-        4780.466201009992
-      ],
-      "size": [
-        270.6447909273984,
-        95.9247742670932
-      ],
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            366,
-            370,
-            374
-          ]
-        }
-      ],
-      "title": "WIDTH",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.31.0",
-        "Node name for S&R": "PrimitiveInt"
-      },
-      "widgets_values": [
-        1344,
-        "fixed"
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
     },
     {
       "id": 188,
@@ -881,7 +901,7 @@
         82
       ],
       "flags": {},
-      "order": 10,
+      "order": 8,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -899,116 +919,96 @@
         "Node name for S&R": "LoadUpscalerTensorrtModel"
       },
       "widgets_values": [
-        "2xLexicaRRDBNet_Sharp",
+        "RealESRGAN_x2plus",
         "fp16"
       ],
       "color": "#223",
       "bgcolor": "#335"
     },
     {
-      "id": 180,
-      "type": "AutoRifeTensorrt",
+      "id": 114,
+      "type": "LoadImage",
       "pos": [
-        -168.13492926301825,
-        5078.343189403588
+        -2238.7384211458884,
+        4878.667050439871
       ],
       "size": [
-        327.0858377006316,
-        224
+        482.2566821236637,
+        717.2904207205629
       ],
       "flags": {},
-      "order": 16,
+      "order": 9,
       "mode": 0,
-      "inputs": [
-        {
-          "name": "frames",
-          "type": "IMAGE",
-          "link": 356
-        },
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "link": 355
-        },
-        {
-          "name": "interpolation_states",
-          "shape": 7,
-          "type": "INTERPOLATION_STATES",
-          "link": null
-        }
-      ],
+      "inputs": [],
       "outputs": [
         {
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            383
+            296,
+            372
           ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
         }
       ],
+      "title": "FirstFrame",
       "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "120f2ca1b1e226d7e3c23917647d78a6a3318b92",
-        "Node name for S&R": "AutoRifeTensorrt"
+        "cnr_id": "comfy-core",
+        "ver": "0.30.1",
+        "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        100,
-        2,
-        false,
-        1,
-        ""
+        "MBDS2_Ep1_StripClub_051_preview.png",
+        "image"
       ],
       "color": "#223",
       "bgcolor": "#335"
     },
     {
-      "id": 189,
-      "type": "UpscalerTensorrt",
+      "id": 147,
+      "type": "LoadImage",
       "pos": [
-        -166.97802512978765,
-        5571.206708055735
+        -1696.9854230175088,
+        4888.9677653444505
       ],
       "size": [
-        311.232421875,
-        94
+        486.1266495255343,
+        715.9489903021231
       ],
       "flags": {},
-      "order": 18,
+      "order": 10,
       "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 383
-        },
-        {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "link": 382
-        }
-      ],
+      "inputs": [],
       "outputs": [
         {
-          "name": "upscaled_images",
+          "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            384
+            376
           ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
         }
       ],
+      "title": "LastFrame",
       "properties": {
-        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
-        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
-        "Node name for S&R": "UpscalerTensorrt"
+        "cnr_id": "comfy-core",
+        "ver": "0.30.1",
+        "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "1080p",
-        "2",
-        2048,
-        2048
+        "MBDS2_Ep1_StripClub_052_preview.png",
+        "image"
       ],
-      "color": "#223",
-      "bgcolor": "#335"
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
     }
   ],
   "links": [
@@ -2245,7 +2245,7 @@
               1,
               1,
               false,
-              2262306262,
+              4254388022,
               "randomize",
               false
             ],
@@ -3131,10 +3131,10 @@
     "VHS_MetadataImage": true,
     "VHS_KeepIntermediate": true,
     "ds": {
-      "scale": 0.7796858696948513,
+      "scale": 0.7088053360862284,
       "offset": [
-        2330.272374717206,
-        -4279.609586980781
+        2780.518235760182,
+        -4494.2469211225025
       ]
     }
   },
