@@ -194,6 +194,9 @@ export HF_XET_HIGH_PERFORMANCE=1
 # Models: subdir|name|repo_id|repo_path|min_size_bytes (min_size = sanity check)
 MODELS=(
     "checkpoints|10Eros_v1.5_fp8mixed_experimental_learned.safetensors|LokkenJP/10EROS_1.5_fp8_exp_learned|10Eros_v1.5_fp8mixed_experimental_learned.safetensors|28000000000"
+    # ── Sulphur 2 (native uncensored LTX 2.3 fine-tune) ──
+    "checkpoints|sulphur_dev_fp8mixed.safetensors|SulphurAI/Sulphur-2-base|sulphur_dev_fp8mixed.safetensors|28000000000"
+    "loras|sulphur_lora_rank_768.safetensors|SulphurAI/Sulphur-2-base|sulphur_lora_rank_768.safetensors|10000000000"
     "text_encoders|gemma_3_12B_it_fp4_mixed.safetensors|Comfy-Org/ltx-2|split_files/text_encoders/gemma_3_12B_it_fp4_mixed.safetensors|9000000000"
     "loras|gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors|Comfy-Org/ltx-2|split_files/loras/gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors|600000000"
     "loras|ltx23/LTX2.3_DMD_hybrid_v2.safetensors|TenStrip/LTX2.3_DMD_Lora|LTX2.3_DMD_hybrid_v2.safetensors|600000000"
