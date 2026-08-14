@@ -1,8 +1,8 @@
 {
   "id": "c0033410-f90d-46e0-9e2a-7228d5a7b623",
   "revision": 0,
-  "last_node_id": 187,
-  "last_link_id": 380,
+  "last_node_id": 189,
+  "last_link_id": 384,
   "nodes": [
     {
       "id": 118,
@@ -109,10 +109,10 @@
       ],
       "size": [
         1146.9778644557782,
-        753.415922546159
+        106
       ],
       "flags": {},
-      "order": 14,
+      "order": 15,
       "mode": 4,
       "inputs": [
         {
@@ -162,13 +162,13 @@
         991.4687338714127
       ],
       "flags": {},
-      "order": 18,
+      "order": 19,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 380
+          "link": 384
         },
         {
           "name": "audio",
@@ -251,7 +251,7 @@
         154
       ],
       "flags": {},
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -297,7 +297,7 @@
         323.47297362020254
       ],
       "flags": {},
-      "order": 16,
+      "order": 17,
       "mode": 0,
       "inputs": [
         {
@@ -421,7 +421,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 12,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -512,7 +512,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 11,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -714,135 +714,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 180,
-      "type": "AutoRifeTensorrt",
-      "pos": [
-        -168.13492926301825,
-        5078.343189403588
-      ],
-      "size": [
-        327.0858377006316,
-        224
-      ],
-      "flags": {},
-      "order": 15,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "frames",
-          "type": "IMAGE",
-          "link": 356
-        },
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "link": 355
-        },
-        {
-          "name": "interpolation_states",
-          "shape": 7,
-          "type": "INTERPOLATION_STATES",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            379
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "120f2ca1b1e226d7e3c23917647d78a6a3318b92",
-        "Node name for S&R": "AutoRifeTensorrt"
-      },
-      "widgets_values": [
-        100,
-        2,
-        false,
-        1,
-        ""
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 187,
-      "type": "FindPerfectResolution",
-      "pos": [
-        -161.1934871891421,
-        5441.594193630953
-      ],
-      "size": [
-        324.02406586906136,
-        344
-      ],
-      "flags": {},
-      "order": 17,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 379
-        },
-        {
-          "name": "mask",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "width",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            380
-          ]
-        },
-        {
-          "name": "mask_output",
-          "type": "MASK",
-          "links": null
-        },
-        {
-          "name": "resolution_info",
-          "type": "STRING",
-          "links": null
-        }
-      ],
-      "properties": {
-        "aux_id": "ashtar1984/comfyui-find-perfect-resolution",
-        "ver": "b8ee6c1872e796329bffbcbf53a5207aaf964bdb",
-        "Node name for S&R": "FindPerfectResolution"
-      },
-      "widgets_values": [
-        1920,
-        1088,
-        32,
-        true,
-        "lanczos",
-        "none",
-        "#000000"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
       "id": 105,
       "type": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
       "pos": [
@@ -854,7 +725,7 @@
         488.1139551136903
       ],
       "flags": {},
-      "order": 13,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -997,6 +868,147 @@
       ],
       "color": "#323",
       "bgcolor": "#535"
+    },
+    {
+      "id": 188,
+      "type": "LoadUpscalerTensorrtModel",
+      "pos": [
+        -166.4836379831341,
+        5434.246626987763
+      ],
+      "size": [
+        295.4078125,
+        82
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "links": [
+            382
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
+        "Node name for S&R": "LoadUpscalerTensorrtModel"
+      },
+      "widgets_values": [
+        "2xLexicaRRDBNet_Sharp",
+        "fp16"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 180,
+      "type": "AutoRifeTensorrt",
+      "pos": [
+        -168.13492926301825,
+        5078.343189403588
+      ],
+      "size": [
+        327.0858377006316,
+        224
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "link": 356
+        },
+        {
+          "name": "rife_trt_model",
+          "type": "RIFE_TRT_MODEL",
+          "link": 355
+        },
+        {
+          "name": "interpolation_states",
+          "shape": 7,
+          "type": "INTERPOLATION_STATES",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            383
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+        "ver": "120f2ca1b1e226d7e3c23917647d78a6a3318b92",
+        "Node name for S&R": "AutoRifeTensorrt"
+      },
+      "widgets_values": [
+        100,
+        2,
+        false,
+        1,
+        ""
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 189,
+      "type": "UpscalerTensorrt",
+      "pos": [
+        -166.97802512978765,
+        5571.206708055735
+      ],
+      "size": [
+        311.232421875,
+        94
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 383
+        },
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "link": 382
+        }
+      ],
+      "outputs": [
+        {
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            384
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
+        "Node name for S&R": "UpscalerTensorrt"
+      },
+      "widgets_values": [
+        "1080p",
+        "2",
+        2048,
+        2048
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
     }
   ],
   "links": [
@@ -1145,17 +1157,25 @@
       "IMAGE"
     ],
     [
-      379,
+      382,
+      188,
+      0,
+      189,
+      1,
+      "UPSCALER_TRT_MODEL"
+    ],
+    [
+      383,
       180,
       0,
-      187,
+      189,
       0,
       "IMAGE"
     ],
     [
-      380,
-      187,
-      2,
+      384,
+      189,
+      0,
       126,
       0,
       "IMAGE"
@@ -1199,13 +1219,13 @@
       "flags": {}
     },
     {
-      "id": 14,
+      "id": 15,
       "title": "UPSCALE",
       "bounding": [
-        -179.1167687287532,
-        5354.568911610887,
-        352.4248587415807,
-        452.85535829466517
+        -184.5817224171128,
+        5352.775543791527,
+        353.08890270001507,
+        333.11325781765845
       ],
       "color": "#a1309b",
       "flags": {}
@@ -1217,9 +1237,9 @@
         "id": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
         "version": 1,
         "state": {
-          "lastGroupId": 14,
-          "lastNodeId": 187,
-          "lastLinkId": 380,
+          "lastGroupId": 15,
+          "lastNodeId": 189,
+          "lastLinkId": 384,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -3111,10 +3131,10 @@
     "VHS_MetadataImage": true,
     "VHS_KeepIntermediate": true,
     "ds": {
-      "scale": 0.7088053360862283,
+      "scale": 0.7796858696948513,
       "offset": [
-        2755.6055202498833,
-        -4432.759273563604
+        2330.272374717206,
+        -4279.609586980781
       ]
     }
   },
