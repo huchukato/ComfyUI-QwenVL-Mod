@@ -1,8 +1,8 @@
 {
   "id": "2e5fb033-7e4f-4e73-a580-590a2a38a074",
   "revision": 0,
-  "last_node_id": 184,
-  "last_link_id": 355,
+  "last_node_id": 186,
+  "last_link_id": 358,
   "nodes": [
     {
       "id": 118,
@@ -109,11 +109,11 @@
       ],
       "size": [
         1146.9778644557782,
-        753.415922546159
+        106
       ],
       "flags": {},
-      "order": 12,
-      "mode": 0,
+      "order": 13,
+      "mode": 4,
       "inputs": [
         {
           "name": "video",
@@ -244,7 +244,7 @@
         224
       ],
       "flags": {},
-      "order": 13,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -269,7 +269,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            353
+            357
           ]
         }
       ],
@@ -326,79 +326,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 183,
-      "type": "FindPerfectResolution",
-      "pos": [
-        -176.09940730630663,
-        5457.415523490839
-      ],
-      "size": [
-        324.02406586906136,
-        344
-      ],
-      "flags": {},
-      "order": 15,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 353
-        },
-        {
-          "name": "mask",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "width",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            354
-          ]
-        },
-        {
-          "name": "mask_output",
-          "type": "MASK",
-          "links": null
-        },
-        {
-          "name": "resolution_info",
-          "type": "STRING",
-          "links": null
-        }
-      ],
-      "properties": {
-        "aux_id": "ashtar1984/comfyui-find-perfect-resolution",
-        "ver": "b8ee6c1872e796329bffbcbf53a5207aaf964bdb",
-        "Node name for S&R": "FindPerfectResolution"
-      },
-      "widgets_values": [
-        1920,
-        1088,
-        32,
-        true,
-        "lanczos",
-        "none",
-        "#000000"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
       "id": 178,
       "type": "FindPerfectResolution",
       "pos": [
@@ -412,7 +339,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -545,16 +472,16 @@
       ],
       "size": [
         1155.5330597730813,
-        991.4687338714127
+        986.7373461223583
       ],
       "flags": {},
-      "order": 16,
+      "order": 17,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 354
+          "link": 358
         },
         {
           "name": "audio",
@@ -612,13 +539,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "784.jpg_00007-audio.webm",
+            "filename": "784.jpg_00016-audio.webm",
             "subfolder": "",
             "type": "output",
             "format": "video/webm",
             "frame_rate": 48,
-            "workflow": "784.jpg_00007.png",
-            "fullpath": "/workspace/runpod-slim/ComfyUI/output/784.jpg_00007-audio.webm"
+            "workflow": "784.jpg_00016.png",
+            "fullpath": "/workspace/runpod-slim/ComfyUI/output/784.jpg_00016-audio.webm"
           }
         }
       },
@@ -639,7 +566,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
@@ -685,7 +612,7 @@
         334.35740569392055
       ],
       "flags": {},
-      "order": 14,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -710,45 +637,10 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "The woman in the black satin dress arches her back with a gasp as she rides the man beneath her, her thighs clenching rhythmically around his hips while her glasses slip down her nose; the other woman, nude with dark hair cascading over her shoulder, leans forward with a smirk, her hand sliding down the man’s thigh as her red-painted nails graze his skin, her gaze locked on the couple; the camera glides smoothly from right to left, revealing the opulent living room with its grand piano and ornate fireplace in soft, ambient evening light; the man groans deeply as he thrusts upward, his hands gripping her waist; the woman in black moans “harder” in a breathy whisper as her hips roll in sync with his motion; the nude woman whispers “yes, right there” with a sultry tone as her fingers trace his inner thigh; the scene is saturated with wet, skin-on-skin sounds, labored breathing, and the soft creak of the white velvet couch beneath them, all synchronized to the slow, sensual rhythm of their movements."
+        "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] Live-action, cinematic, a medium-wide shot frames a luxurious, opulent living room with marble floors, a grand piano in the background, and ornate wooden furniture. In the foreground, a woman with long black hair, wearing glasses and a sleek black satin dress, is seated on a white tufted couch, her legs spread wide as she rides a man beneath her. Her expression is intense, mouth slightly open, eyes locked forward. The man beneath her, with short brown hair, is shirtless, gripping her waist as he thrusts upward. To the right, another woman with long black hair, nude, sits beside them, her hand resting on her own thigh, her gaze fixed on the couple. She wears black strappy heels. The lighting is warm and soft, coming from a large window behind them, casting gentle glows on their skin and creating soft shadows. The camera remains stationary, capturing the intimate, sensual moment with a shallow depth of field, focusing sharply on the trio while blurring the background slightly. Diegetic sounds: wet, rhythmic moans from the woman on top, shallow breaths from the man beneath, and the soft rustle of fabric as she shifts. The woman on the side emits a low, sensual sigh as she watches.\n\noverall_soundscape: The air is thick with the sound of skin slapping against skin, deep, guttural moans from the woman on top, and the man’s rhythmic groans as he drives into her. The wet, slick sounds of their bodies moving together dominate, punctuated by the soft gasps and breaths that rise and fall with their movements. The occasional soft click of heels against the marble floor adds a sensual rhythm to the scene.\n\nnon_diegetic_music: N/A"
       ],
       "color": "#233",
       "bgcolor": "#355"
-    },
-    {
-      "id": 154,
-      "type": "Fast Groups Bypasser (rgthree)",
-      "pos": [
-        -835.8822372630377,
-        5800.601475732436
-      ],
-      "size": [
-        492.5463282006857,
-        154
-      ],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "OPT_CONNECTION",
-          "type": "*",
-          "links": null
-        }
-      ],
-      "title": "OPTIONS",
-      "properties": {
-        "matchColors": "Purple",
-        "matchTitle": "",
-        "showNav": true,
-        "showAllGraphs": true,
-        "sort": "position",
-        "customSortAlphabet": "",
-        "toggleRestriction": "default"
-      },
-      "color": "#322",
-      "bgcolor": "#533"
     },
     {
       "id": 105,
@@ -762,7 +654,7 @@
         488.1139551136903
       ],
       "flags": {},
-      "order": 11,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -847,19 +739,139 @@
         1344,
         768,
         5,
-        195641807279938,
-        "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        586618486457061,
+        "10Eros_Max_H3_FL2VA-INT8-ConvRot-HQ.safetensors",
         "qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
         "minimax_h3_video_vae_fp16.safetensors",
         "minimax_h3_audio_vae_fp32.safetensors",
         "Qwen3-VL-8B-Heretic-Stable",
-        "🎥 LTX 2.3 NSFW I2V",
+        "🎬 MiniMax H3 NSFW (5s)",
         false,
         8,
-        "minimax_h3_turbo_v4_step600_ema.safetensors"
+        "minimax_h3_fl2v_turbo_8step_v1.0_10ErosMax_beta1_pruned_compat_v001_T8.safetensors"
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
+    },
+    {
+      "id": 154,
+      "type": "Fast Groups Bypasser (rgthree)",
+      "pos": [
+        -835.8822372630377,
+        5800.601475732436
+      ],
+      "size": [
+        492.5463282006857,
+        154
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "OPT_CONNECTION",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "OPTIONS",
+      "properties": {
+        "matchColors": "Purple",
+        "matchTitle": "",
+        "showNav": true,
+        "showAllGraphs": true,
+        "sort": "position",
+        "customSortAlphabet": "",
+        "toggleRestriction": "default"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 186,
+      "type": "LoadUpscalerTensorrtModel",
+      "pos": [
+        -163.7070379842013,
+        5434.827947848934
+      ],
+      "size": [
+        295.4078125,
+        82
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "links": [
+            356
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
+        "Node name for S&R": "LoadUpscalerTensorrtModel"
+      },
+      "widgets_values": [
+        "2xLexicaRRDBNet_Sharp",
+        "fp16"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 185,
+      "type": "UpscalerTensorrt",
+      "pos": [
+        -164.20142513085486,
+        5571.788028916906
+      ],
+      "size": [
+        311.232421875,
+        94
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 357
+        },
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "link": 356
+        }
+      ],
+      "outputs": [
+        {
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            358
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
+        "Node name for S&R": "UpscalerTensorrt"
+      },
+      "widgets_values": [
+        "1080p",
+        "2",
+        2048,
+        2048
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
     }
   ],
   "links": [
@@ -968,28 +980,36 @@
       "INT"
     ],
     [
-      353,
-      177,
-      0,
-      183,
-      0,
-      "IMAGE"
-    ],
-    [
-      354,
-      183,
-      2,
-      126,
-      0,
-      "IMAGE"
-    ],
-    [
       355,
       159,
       0,
       92,
       1,
       "STRING"
+    ],
+    [
+      356,
+      186,
+      0,
+      185,
+      1,
+      "UPSCALER_TRT_MODEL"
+    ],
+    [
+      357,
+      177,
+      0,
+      185,
+      0,
+      "IMAGE"
+    ],
+    [
+      358,
+      185,
+      0,
+      126,
+      0,
+      "IMAGE"
     ]
   ],
   "groups": [
@@ -997,10 +1017,10 @@
       "id": 6,
       "title": "UPSCALE",
       "bounding": [
-        -192.2536223497112,
-        5378.433264488374,
-        344.06296848686134,
-        450.22965963235856
+        -181.80512241818002,
+        5353.356864652697,
+        353.08890270001507,
+        333.11325781765845
       ],
       "color": "#a1309b",
       "flags": {}
@@ -1049,8 +1069,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 12,
-          "lastNodeId": 184,
-          "lastLinkId": 355,
+          "lastNodeId": 186,
+          "lastLinkId": 358,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -2050,7 +2070,7 @@
               1,
               16,
               false,
-              1155997625,
+              3516854749,
               "randomize",
               false
             ],
@@ -2903,8 +2923,8 @@
     "ds": {
       "scale": 0.796316462125923,
       "offset": [
-        1653.0739909776375,
-        -4596.821833754586
+        1641.0151317432192,
+        -4715.555962862064
       ]
     }
   },

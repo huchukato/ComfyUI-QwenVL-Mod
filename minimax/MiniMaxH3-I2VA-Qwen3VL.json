@@ -1,8 +1,8 @@
 {
   "id": "58305243-d4d0-4545-beb2-59d4f7696759",
   "revision": 0,
-  "last_node_id": 185,
-  "last_link_id": 357,
+  "last_node_id": 187,
+  "last_link_id": 361,
   "nodes": [
     {
       "id": 118,
@@ -109,10 +109,10 @@
       ],
       "size": [
         1146.9778644557782,
-        753.415922546159
+        106
       ],
       "flags": {},
-      "order": 12,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -233,62 +233,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 177,
-      "type": "AutoRifeTensorrt",
-      "pos": [
-        -167.0362059699841,
-        5095.068328091564
-      ],
-      "size": [
-        327.0858377006316,
-        224
-      ],
-      "flags": {},
-      "order": 13,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "frames",
-          "type": "IMAGE",
-          "link": 333
-        },
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "link": 332
-        },
-        {
-          "name": "interpolation_states",
-          "shape": 7,
-          "type": "INTERPOLATION_STATES",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            353
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "120f2ca1b1e226d7e3c23917647d78a6a3318b92",
-        "Node name for S&R": "AutoRifeTensorrt"
-      },
-      "widgets_values": [
-        100,
-        2,
-        false,
-        1,
-        ""
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
       "id": 174,
       "type": "PrimitiveInt",
       "pos": [
@@ -326,79 +270,6 @@
       "bgcolor": "#535"
     },
     {
-      "id": 183,
-      "type": "FindPerfectResolution",
-      "pos": [
-        -176.09940730630663,
-        5457.415523490839
-      ],
-      "size": [
-        324.02406586906136,
-        344
-      ],
-      "flags": {},
-      "order": 15,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 353
-        },
-        {
-          "name": "mask",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "width",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            354
-          ]
-        },
-        {
-          "name": "mask_output",
-          "type": "MASK",
-          "links": null
-        },
-        {
-          "name": "resolution_info",
-          "type": "STRING",
-          "links": null
-        }
-      ],
-      "properties": {
-        "aux_id": "ashtar1984/comfyui-find-perfect-resolution",
-        "ver": "b8ee6c1872e796329bffbcbf53a5207aaf964bdb",
-        "Node name for S&R": "FindPerfectResolution"
-      },
-      "widgets_values": [
-        1920,
-        1088,
-        32,
-        true,
-        "lanczos",
-        "none",
-        "#000000"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
       "id": 178,
       "type": "FindPerfectResolution",
       "pos": [
@@ -412,7 +283,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -548,13 +419,13 @@
         991.4687338714127
       ],
       "flags": {},
-      "order": 16,
+      "order": 17,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 354
+          "link": 361
         },
         {
           "name": "audio",
@@ -612,13 +483,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "784.jpg_00009-audio.webm",
+            "filename": "784.jpg_00013-audio.webm",
             "subfolder": "",
             "type": "output",
             "format": "video/webm",
             "frame_rate": 48,
-            "workflow": "784.jpg_00009.png",
-            "fullpath": "/workspace/runpod-slim/ComfyUI/output/784.jpg_00009-audio.webm"
+            "workflow": "784.jpg_00013.png",
+            "fullpath": "/workspace/runpod-slim/ComfyUI/output/784.jpg_00013-audio.webm"
           }
         }
       },
@@ -639,7 +510,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
@@ -685,7 +556,7 @@
         334.35740569392055
       ],
       "flags": {},
-      "order": 14,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -710,7 +581,7 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] Live-action, cinematic, a medium-wide shot frames a luxurious, opulent living room with marble floors, ornate wooden furniture, and a grand piano visible through a large window, where three adults are engaged in an intimate, passionate moment on a plush white sofa. A woman with long black hair, wearing stylish black-rimmed glasses and a tight, glossy black satin halter dress, sits astride a man who is kneeling before her, his hands gripping her thighs as he penetrates her deeply. Her expression is one of intense pleasure, mouth slightly open as she moans, eyes locked on the man’s face. To her right, another woman with long, dark, wavy hair and bare skin, wearing black strappy high heels, is reclined on the sofa, her hand resting on her own thigh as she watches the couple with a look of quiet arousal and desire. The lighting is warm and soft, coming from an unseen source that casts gentle highlights on their skin and creates deep shadows that accentuate their curves. The camera slowly glides forward, maintaining a smooth, continuous motion, subtly zooming in on the couple’s intimate embrace while keeping the second woman in frame to emphasize the dynamic. Diegetic sounds include the soft, rhythmic moans of the woman on top, the wet, heavy breathing of the man, the faint sound of fabric shifting as he moves, and the soft slap of skin against skin as he thrusts. The environment is rich with texture — the plush white cushions, the polished wood of the cabinet behind them, the gleaming piano keys visible through the window — all contributing to the sensual, decadent atmosphere.\n\noverall_soundscape: The scene is dominated by the deep, wet moans of the woman atop as she rides the man, punctuated by sharp gasps as she reaches climax, the rhythmic thudding of her hips against his body, and the soft, heavy breathing of the man as he grunts with effort. The sound of skin slapping skin is audible with each thrust, layered beneath the faint rustle of the satin dress as it shifts with her movements. Ambient room tone is minimal, allowing the intimate, physical sounds to dominate.\n\nnon_diegetic_music: N/A"
+        "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] Cinematic 3D CG, a medium-wide shot frames a luxurious, opulent living room with marble floors and ornate wooden furniture, where a woman with long black hair and glasses, wearing a tight black satin dress, is riding a man seated on a white velvet couch while another woman with long dark hair, nude, sits beside them, her hand resting on her thigh. The man’s face is pressed against the woman’s thigh as she straddles him, her expression intense and focused, her mouth slightly open in a gasp. The second woman gazes at them with a calm, observant expression. A grand piano is visible in the background through a large window, and a carved wooden mantelpiece holds vases and framed photos. The lighting is soft and warm, coming from a hidden source above, casting gentle shadows and glints on skin and fabric. The camera slowly drifts forward, subtly zooming in on the central couple’s interaction, maintaining a shallow depth of field that blurs the background slightly. Synchronized diegetic sounds: the woman’s breath is heavy and labored, a low moan escapes her lips as she adjusts her position, the man’s steady breathing is audible beneath her, and the soft rustle of fabric as her thigh shifts against his pelvis.\n\noverall_soundscape: The woman’s moans grow louder and more urgent as she presses down, her hips grinding against him with a wet, rhythmic sound. The man’s breathing deepens, his groans muffled against her thigh, punctuated by a soft, wet slap as her skin brushes against his. A faint, rhythmic thumping of her heartbeat is audible beneath the fabric of her dress.\n\nnon_diegetic_music: N/A"
       ],
       "color": "#233",
       "bgcolor": "#355"
@@ -762,7 +633,7 @@
         488.1139551136903
       ],
       "flags": {},
-      "order": 11,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -852,7 +723,7 @@
         1344,
         768,
         5,
-        526674646099626,
+        692085072488260,
         "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
         "qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
         "minimax_h3_video_vae_fp16.safetensors",
@@ -864,6 +735,147 @@
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
+    },
+    {
+      "id": 177,
+      "type": "AutoRifeTensorrt",
+      "pos": [
+        -167.0362059699841,
+        5095.068328091564
+      ],
+      "size": [
+        327.0858377006316,
+        224
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "link": 333
+        },
+        {
+          "name": "rife_trt_model",
+          "type": "RIFE_TRT_MODEL",
+          "link": 332
+        },
+        {
+          "name": "interpolation_states",
+          "shape": 7,
+          "type": "INTERPOLATION_STATES",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            360
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+        "ver": "120f2ca1b1e226d7e3c23917647d78a6a3318b92",
+        "Node name for S&R": "AutoRifeTensorrt"
+      },
+      "widgets_values": [
+        100,
+        2,
+        false,
+        1,
+        ""
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 186,
+      "type": "LoadUpscalerTensorrtModel",
+      "pos": [
+        -162.69396900836418,
+        5451.364182307425
+      ],
+      "size": [
+        306.05743379171565,
+        84.29572674551946
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "links": [
+            359
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
+        "Node name for S&R": "LoadUpscalerTensorrtModel"
+      },
+      "widgets_values": [
+        "2xLexicaRRDBNet_Sharp",
+        "fp16"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 187,
+      "type": "UpscalerTensorrt",
+      "pos": [
+        -163.18835615501774,
+        5588.324263375397
+      ],
+      "size": [
+        311.232421875,
+        94
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 360
+        },
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "link": 359
+        }
+      ],
+      "outputs": [
+        {
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            361
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
+        "Node name for S&R": "UpscalerTensorrt"
+      },
+      "widgets_values": [
+        "1080p",
+        "2",
+        2048,
+        2048
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
     }
   ],
   "links": [
@@ -972,43 +984,39 @@
       "INT"
     ],
     [
-      353,
-      177,
-      0,
-      183,
-      0,
-      "IMAGE"
-    ],
-    [
-      354,
-      183,
-      2,
-      126,
-      0,
-      "IMAGE"
-    ],
-    [
       355,
       159,
       0,
       92,
       1,
       "STRING"
+    ],
+    [
+      359,
+      186,
+      0,
+      187,
+      1,
+      "UPSCALER_TRT_MODEL"
+    ],
+    [
+      360,
+      177,
+      0,
+      187,
+      0,
+      "IMAGE"
+    ],
+    [
+      361,
+      187,
+      0,
+      126,
+      0,
+      "IMAGE"
     ]
   ],
   "groups": [
-    {
-      "id": 6,
-      "title": "UPSCALE",
-      "bounding": [
-        -192.2536223497112,
-        5378.433264488374,
-        344.06296848686134,
-        450.22965963235856
-      ],
-      "color": "#a1309b",
-      "flags": {}
-    },
     {
       "id": 7,
       "title": "FRAME INTERPOLATION",
@@ -1044,6 +1052,18 @@
       ],
       "color": "#a1309b",
       "flags": {}
+    },
+    {
+      "id": 13,
+      "title": "UPSCALE",
+      "bounding": [
+        -180.79205344234293,
+        5369.893099111188,
+        353.08890270001507,
+        333.11325781765845
+      ],
+      "color": "#a1309b",
+      "flags": {}
     }
   ],
   "definitions": {
@@ -1052,9 +1072,9 @@
         "id": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
         "version": 1,
         "state": {
-          "lastGroupId": 12,
-          "lastNodeId": 185,
-          "lastLinkId": 357,
+          "lastGroupId": 13,
+          "lastNodeId": 187,
+          "lastLinkId": 361,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -2052,7 +2072,7 @@
               1,
               16,
               false,
-              2660434489,
+              296141981,
               "randomize",
               false
             ],
@@ -2337,40 +2357,6 @@
             ]
           },
           {
-            "id": 185,
-            "type": "KSamplerSelect",
-            "pos": [
-              -775.0935752737768,
-              4951.389783767308
-            ],
-            "size": [
-              370,
-              70
-            ],
-            "flags": {},
-            "order": 0,
-            "mode": 0,
-            "inputs": [],
-            "outputs": [
-              {
-                "localized_name": "SAMPLER",
-                "name": "SAMPLER",
-                "type": "SAMPLER",
-                "links": [
-                  357
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfy-core",
-              "ver": "0.30.1",
-              "Node name for S&R": "KSamplerSelect"
-            },
-            "widgets_values": [
-              "res_multistep"
-            ]
-          },
-          {
             "id": 9,
             "type": "BasicScheduler",
             "pos": [
@@ -2420,6 +2406,40 @@
               "simple",
               20,
               1
+            ]
+          },
+          {
+            "id": 185,
+            "type": "KSamplerSelect",
+            "pos": [
+              -775.0935752737768,
+              4951.389783767308
+            ],
+            "size": [
+              370,
+              70
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "localized_name": "SAMPLER",
+                "name": "SAMPLER",
+                "type": "SAMPLER",
+                "links": [
+                  357
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.30.1",
+              "Node name for S&R": "KSamplerSelect"
+            },
+            "widgets_values": [
+              "res_multistep"
             ]
           }
         ],
@@ -2835,10 +2855,10 @@
     "VHS_MetadataImage": true,
     "VHS_KeepIntermediate": true,
     "ds": {
-      "scale": 0.796316462125923,
+      "scale": 0.7239240564781118,
       "offset": [
-        2364.974930444033,
-        -4698.599052805943
+        2088.4085410439584,
+        -4616.931989561527
       ]
     }
   },
