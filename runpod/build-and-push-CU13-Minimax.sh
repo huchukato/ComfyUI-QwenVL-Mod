@@ -52,7 +52,7 @@ docker buildx use --global desktop-linux
 # --pull removed: was invalidating all cache layers on every build
 # Cache enabled: only changed layers are rebuilt (much faster)
 echo "📦 Building image: ${IMAGE_NAME}:${TAG} for platform: ${PLATFORM}"
-docker buildx build --builder desktop-linux --platform ${PLATFORM} --build-arg COMFYUI_VERSION="$COMFYUI_VERSION" --build-arg CACHEBUST=$(date +%s) -f ${DOCKERFILE} -t ${IMAGE_NAME}:${TAG} --load .
+docker buildx build --builder desktop-linux --platform ${PLATFORM} --no-cache --build-arg COMFYUI_VERSION="$COMFYUI_VERSION" --build-arg CACHEBUST=$(date +%s) -f ${DOCKERFILE} -t ${IMAGE_NAME}:${TAG} --load .
 
 # Push to Docker Hub
 echo "🚀 Pushing to Docker Hub..."
