@@ -260,24 +260,6 @@ function provisioning_get_ltx_models() {
     dllog "✅ All models ready — ComfyUI can now use LTX 2.3 workflows"
 }
 
-function provisioning_configure_args() {
-    local args_file="${WORKSPACE:-/workspace}/ComfyUI/comfyui_args.txt"
-    if [ ! -f "$args_file" ]; then
-        mkdir -p "$(dirname "$args_file")"
-        cat > "$args_file" <<'EOF'
---disable-auto-launch
---fast fp16_accumulation
---use-sage-attention
---reserve-vram 2
---cuda-malloc
---async-offload
-EOF
-        echo "✅ Created $args_file with LTX 2.3 / QwenVL-Mod optimized args"
-    else
-        echo "ℹ️  $args_file already exists, leaving untouched"
-    fi
-}
-
 ### DO NOT EDIT BELOW HERE UNLESS YOU KNOW WHAT YOU ARE DOING ###
 
 function provisioning_start() {
@@ -342,9 +324,6 @@ function provisioning_start() {
     
     echo "🧬 Starting LTX 2.3 model download in background..."
     provisioning_get_ltx_models
-    
-    echo "🎛️ Configuring ComfyUI arguments..."
-    provisioning_configure_args
     
     provisioning_print_end
 }
