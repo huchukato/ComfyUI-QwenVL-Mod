@@ -8,20 +8,42 @@
         "full": 9.0
       }
     },
-    "Qwen3.5-9B-ultra-uncensored-heretic-v2": {
-      "repo_id": "llmfan46/Qwen3.5-9B-ultra-uncensored-heretic-v2",
+    "Qwen3.5-4B-Deckard-Heretic-Thinking": {
+      "repo_id": "DavidAU/Qwen3.5-4B-Deckard-HERETIC-UNCENSORED-Thinking",
       "default": false,
       "quantized": false,
       "vram_requirement": {
-        "full": 19.0
+        "full": 9.0,
+        "8bit": 5.0,
+        "4bit": 3.0
       }
     },
-    "Qwen3-VL-32B-Heretic-v2": {
-      "repo_id": "rpDungeon/Qwen3-VL-32B-Heretic-v2",
+    "Qwen3.5-9B-ultra-uncensored-heretic": {
+      "repo_id": "llmfan46/Qwen3.5-9B-ultra-uncensored-heretic",
       "default": false,
       "quantized": false,
       "vram_requirement": {
-        "full": 48.0,
+        "full": 19.0,
+        "8bit": 10.0,
+        "4bit": 6.0
+      }
+    },
+    "Qwen3.5-9B-Defiant-Fable-Heretic": {
+      "repo_id": "DavidAU/Qwen3.5-9B-The-Defiant-Fable-DARK-ROAST-Uncensored-Heretic-NEO-IMATRIX-MAX-MTP",
+      "default": false,
+      "quantized": false,
+      "vram_requirement": {
+        "full": 19.0,
+        "8bit": 10.0,
+        "4bit": 6.0
+      }
+    },
+    "Qwen3.5-27B-ultra-uncensored-heretic": {
+      "repo_id": "llmfan46/Qwen3.5-27B-ultra-uncensored-heretic-v1",
+      "default": false,
+      "quantized": false,
+      "vram_requirement": {
+        "full": 54.0,
         "8bit": 28.0,
         "4bit": 16.0
       }
