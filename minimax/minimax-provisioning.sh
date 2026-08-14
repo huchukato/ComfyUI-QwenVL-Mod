@@ -153,9 +153,31 @@ function download_minimax_model() {
         # hf: resume is automatic; huggingface-cli: needs --resume-download
         local resume_flag=""
         [ "$hf_cmd" = "huggingface-cli" ] && resume_flag="--resume-download"
+
+        # Progress monitor: log file size every 10s while downloading
+        local progress_pid=""
+        (
+            sleep 5
+            while true; do
+                local cur_size=0
+                if [ -d "$tmp_dir" ]; then
+                    cur_size=$(find "$tmp_dir" -type f -name "*.safetensors*" -exec stat -L -c%s {} + 2>/dev/null | awk '{s+=$1} END {print s+0}')
+                fi
+                if [ "$cur_size" -gt 0 ]; then
+                    local mb=$((cur_size / 1048576))
+                    local pct=$((cur_size * 100 / min_size))
+                    [ "$pct" -gt 100 ] && pct=100
+                    dllog "   📊 $name: ${mb}MB / $((min_size / 1048576))MB (${pct}%)"
+                fi
+                sleep 10
+            done
+        ) &
+        progress_pid=$!
+
         if $hf_cmd download "$repo_id" "$repo_path" \
                 --local-dir "$tmp_dir" \
-                $resume_flag 2>&1; then
+                $resume_flag >> /var/log/minimax-h3-models.log 2>&1; then
+            kill "$progress_pid" 2>/dev/null || true
             local downloaded_path="$tmp_dir/$repo_path"
             if [ -f "$downloaded_path" ] || [ -L "$downloaded_path" ]; then
                 if [ -L "$downloaded_path" ]; then
@@ -177,6 +199,7 @@ function download_minimax_model() {
                 rm -rf "$tmp_dir"
             fi
         else
+            kill "$progress_pid" 2>/dev/null || true
             dllog "⚠️  $hf_cmd failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
             rm -rf "$tmp_dir"
         fi
