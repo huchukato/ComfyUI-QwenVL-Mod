@@ -2,7 +2,7 @@
   "id": "d45e25ee-8e76-4890-ab38-b6dcaa6d9280",
   "revision": 0,
   "last_node_id": 188,
-  "last_link_id": 362,
+  "last_link_id": 365,
   "nodes": [
     {
       "id": 118,
@@ -154,8 +154,8 @@
       "id": 176,
       "type": "AutoLoadRifeTensorrtModel",
       "pos": [
-        -164.3720041264415,
-        5554.371376647136
+        -150.73214969469612,
+        4906.96500483087
       ],
       "size": [
         322.5669921875,
@@ -231,62 +231,6 @@
       ],
       "color": "#323",
       "bgcolor": "#535"
-    },
-    {
-      "id": 177,
-      "type": "AutoRifeTensorrt",
-      "pos": [
-        -164.76333838393955,
-        5750.37818071518
-      ],
-      "size": [
-        327.0858377006316,
-        224
-      ],
-      "flags": {},
-      "order": 16,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "frames",
-          "type": "IMAGE",
-          "link": 362
-        },
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "link": 332
-        },
-        {
-          "name": "interpolation_states",
-          "shape": 7,
-          "type": "INTERPOLATION_STATES",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            359
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "120f2ca1b1e226d7e3c23917647d78a6a3318b92",
-        "Node name for S&R": "AutoRifeTensorrt"
-      },
-      "widgets_values": [
-        100,
-        2,
-        false,
-        1,
-        ""
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
     },
     {
       "id": 174,
@@ -438,7 +382,7 @@
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 359
+          "link": 365
         },
         {
           "name": "audio",
@@ -496,13 +440,13 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "MBDS2_Ep1_StripClub_033_preview.png_00001-audio.webm",
+            "filename": "MBD_S2_EP1_Render_134.jpg_00001-audio.webm",
             "subfolder": "",
             "type": "output",
             "format": "video/webm",
             "frame_rate": 48,
-            "workflow": "MBDS2_Ep1_StripClub_033_preview.png_00001.png",
-            "fullpath": "/workspace/ComfyUI/output/MBDS2_Ep1_StripClub_033_preview.png_00001-audio.webm"
+            "workflow": "MBD_S2_EP1_Render_134.jpg_00001.png",
+            "fullpath": "/workspace/ComfyUI/output/MBD_S2_EP1_Render_134.jpg_00001-audio.webm"
           }
         }
       },
@@ -558,48 +502,6 @@
       ]
     },
     {
-      "id": 137,
-      "type": "easy showAnything",
-      "pos": [
-        -856.1781450430237,
-        5402.11021783787
-      ],
-      "size": [
-        646.6021824539848,
-        334.35740569392055
-      ],
-      "flags": {},
-      "order": 14,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "anything",
-          "shape": 7,
-          "type": "*",
-          "link": 253
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "*",
-          "links": []
-        }
-      ],
-      "title": "QWEN3VL GENERATED PROMPT",
-      "properties": {
-        "cnr_id": "comfyui-easy-use",
-        "ver": "595e0738a9e3f8d0d9c4d875461b2d2c9e7559c7",
-        "Node name for S&R": "easy showAnything",
-        "aux_id": "yolain/ComfyUI-Easy-Use"
-      },
-      "widgets_values": [
-        "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] Live-action, cinematic, a medium-wide shot frames a sultry nightclub scene bathed in crimson and violet neon. A young woman with short, tousled dark hair, viewed from behind, stands poised beside a gleaming chrome pole. She wears a sheer, intricate white lace bodysuit with floral embroidery, revealing her toned back and buttocks, paired with bright blue thong underwear. Her left hand grips the pole, fingers curling slightly as she sways with deliberate, seductive motion. In the background, a man in a dark button-down shirt and jeans sits slumped on a plush red leather couch, his gaze fixed on her with a mixture of hunger and fascination. A neon sign shaped like a pair of glossy lips glows above him, casting a pinkish hue on the textured brick wall. A low wooden coffee table in front of the couch holds two dark beer bottles. Warm, flickering lantern light spills from the floor beside the couch, contrasting with the cool, electric glow of the pole. The camera holds steady, subtly panning right to follow the woman’s slow, hypnotic turn as she leans into the pole, her hips swaying, her back arched slightly. The sound of her breath catching, a soft, wet moan escaping her lips as she presses her back against the pole, the faint rustle of her lace fabric against her skin, and the gentle clink of a bottle cap being opened.\n\noverall_soundscape: A deep, throaty moan vibrates as the woman leans into the pole, her breath catching in her throat. The soft, wet sound of her skin sliding against the cool chrome echoes as she sways, punctuated by the faint, rhythmic slap of her hips against the pole. A low, sensual groan escapes her lips as she arches her back, the sound muffled yet intimate. The ambient hum of the club fades into the background, replaced by the gentle clink of a bottle cap being opened.\n\nnon_diegetic_music: N/A"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
-    },
-    {
       "id": 154,
       "type": "Fast Groups Bypasser (rgthree)",
       "pos": [
@@ -633,6 +535,49 @@
       },
       "color": "#322",
       "bgcolor": "#533"
+    },
+    {
+      "id": 187,
+      "type": "RTXVideoSuperResolution",
+      "pos": [
+        -149.0336487559427,
+        5454.135247467132
+      ],
+      "size": [
+        285.81015625,
+        106
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 364
+        }
+      ],
+      "outputs": [
+        {
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            360
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui_nvidia_rtx_nodes",
+        "ver": "892515e3eb9a4920a131a502a047e47adca9eb0d",
+        "Node name for S&R": "RTXVideoSuperResolution"
+      },
+      "widgets_values": [
+        "scale by multiplier",
+        2,
+        "ULTRA"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
     },
     {
       "id": 114,
@@ -671,51 +616,175 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "MBDS2_Ep1_StripClub_033_preview.png",
+        "MBD_S2_EP1_Render_134.jpg",
         "image"
       ],
       "color": "#233",
       "bgcolor": "#355"
     },
     {
-      "id": 187,
-      "type": "RTXVideoSuperResolution",
+      "id": 137,
+      "type": "easy showAnything",
       "pos": [
-        -154.70801813659895,
-        4948.950177669605
+        -856.1781450430237,
+        5402.11021783787
       ],
       "size": [
-        285.81015625,
-        106
+        646.6021824539848,
+        334.35740569392055
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 253
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": []
+        }
+      ],
+      "title": "QWEN3VL GENERATED PROMPT",
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "595e0738a9e3f8d0d9c4d875461b2d2c9e7559c7",
+        "Node name for S&R": "easy showAnything",
+        "aux_id": "yolain/ComfyUI-Easy-Use"
+      },
+      "widgets_values": [
+        "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nintegrated_multimodal_description: [Shot 1] Live-action, cinematic, a low-angle, over-the-shoulder close-up frames a nude woman with dark, voluminous hair lying supine on a blue bed, her head tilted back and mouth slightly open in a gasp of anticipation, while a nude man with short brown hair and a lean build leans forward over her, his face inches from hers, eyes locked in a gaze of intense focus and desire. The man's left arm is draped over the woman's waist, his hand gripping her hip, while his right arm reaches down, fingers tangling in her dark hair, pulling her head back slightly to expose her throat and neck. The lighting is cool and blue-toned, likely from a window in the background, casting soft shadows across their skin and highlighting the sheen of sweat on their bodies. The atmosphere is intimate and charged with sexual tension. The camera slowly pushes in and tilts up, following the man's face as he leans closer, the depth of field blurring the background window panes. The audio is dominated by the woman's ragged breathing, a sharp intake of breath as the man's hair is pulled, and the wet, slick sound of skin sliding against skin as his hand moves along her torso.\n\noverall_soundscape: The scene is filled with the heavy, rhythmic breathing of the woman, punctuated by sharp gasps and soft moans as the man's grip tightens and his face descends. The wet, slick sound of their bodies moving together is prominent, layered with the friction of skin against skin and the soft, wet slap of a hand on a shoulder. The ambient room tone is barely audible, drowned out by the intensity of the sexual soundscape.\n\nnon_diegetic_music: N/A"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 177,
+      "type": "AutoRifeTensorrt",
+      "pos": [
+        -151.12348395219416,
+        5102.971808898915
+      ],
+      "size": [
+        327.0858377006316,
+        224
       ],
       "flags": {},
       "order": 13,
       "mode": 0,
       "inputs": [
         {
-          "name": "images",
+          "name": "frames",
           "type": "IMAGE",
-          "link": 361
+          "link": 363
+        },
+        {
+          "name": "rife_trt_model",
+          "type": "RIFE_TRT_MODEL",
+          "link": 332
+        },
+        {
+          "name": "interpolation_states",
+          "shape": 7,
+          "type": "INTERPOLATION_STATES",
+          "link": null
         }
       ],
       "outputs": [
         {
-          "name": "upscaled_images",
+          "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            360
+            364
           ]
         }
       ],
       "properties": {
-        "cnr_id": "comfyui_nvidia_rtx_nodes",
-        "ver": "892515e3eb9a4920a131a502a047e47adca9eb0d",
-        "Node name for S&R": "RTXVideoSuperResolution"
+        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+        "ver": "120f2ca1b1e226d7e3c23917647d78a6a3318b92",
+        "Node name for S&R": "AutoRifeTensorrt"
       },
       "widgets_values": [
-        "scale by multiplier",
+        100,
         2,
-        "ULTRA"
+        false,
+        1,
+        ""
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 188,
+      "type": "ImageResizeKJv2",
+      "pos": [
+        -139.03364875594266,
+        5624.135247467132
+      ],
+      "size": [
+        270,
+        336
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 360
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            365
+          ]
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "3f20054214fec9f9234fd3841ae6f1e4287948f6",
+        "Node name for S&R": "ImageResizeKJv2"
+      },
+      "widgets_values": [
+        2560,
+        1440,
+        "nvidia_rtx_vsr",
+        "crop",
+        "0, 0, 0",
+        "center",
+        16,
+        "gpu"
       ],
       "color": "#223",
       "bgcolor": "#335"
@@ -788,7 +857,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            361
+            363
           ]
         },
         {
@@ -817,88 +886,19 @@
         1344,
         768,
         5,
-        475306180378751,
-        "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        691236557311406,
+        "10Eros_Max_H3_FL2VA-INT8-ConvRot-HQ.safetensors",
         "qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
         "minimax_h3_video_vae_fp16.safetensors",
         "minimax_h3_audio_vae_fp32.safetensors",
-        "Qwen3-VL-8B-Heretic-Stable",
+        "Qwen3.5-4B-heretic-v2",
         "🎬 MiniMax H3 NSFW (5s)",
         false,
         8,
-        "minimax_h3_turbo_v4_step600_ema.safetensors"
+        "minimax_h3_fl2v_turbo_8step_v1.0_10ErosMax_beta1_pruned_compat_v001_T8.safetensors"
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
-    },
-    {
-      "id": 188,
-      "type": "ImageResizeKJv2",
-      "pos": [
-        -144.70801813659892,
-        5118.950177669605
-      ],
-      "size": [
-        270,
-        286
-      ],
-      "flags": {},
-      "order": 15,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 360
-        },
-        {
-          "name": "mask",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            362
-          ]
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "mask",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-kjnodes",
-        "ver": "3f20054214fec9f9234fd3841ae6f1e4287948f6",
-        "Node name for S&R": "ImageResizeKJv2"
-      },
-      "widgets_values": [
-        2560,
-        1440,
-        "nvidia_rtx_vsr",
-        "crop",
-        "0, 0, 0",
-        "center",
-        16,
-        "gpu"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
     }
   ],
   "links": [
@@ -1007,14 +1007,6 @@
       "STRING"
     ],
     [
-      359,
-      177,
-      0,
-      126,
-      0,
-      "IMAGE"
-    ],
-    [
       360,
       187,
       0,
@@ -1023,18 +1015,26 @@
       "IMAGE"
     ],
     [
-      361,
+      363,
       105,
       1,
+      177,
+      0,
+      "IMAGE"
+    ],
+    [
+      364,
+      177,
+      0,
       187,
       0,
       "IMAGE"
     ],
     [
-      362,
+      365,
       188,
       0,
-      177,
+      126,
       0,
       "IMAGE"
     ]
@@ -1044,8 +1044,8 @@
       "id": 7,
       "title": "FRAME INTERPOLATION",
       "bounding": [
-        -186.9921982557527,
-        5480.272533240957,
+        -173.3523438240073,
+        4832.866161424692,
         360.18135699195864,
         506.4775823828222
       ],
@@ -1080,8 +1080,8 @@
       "id": 13,
       "title": "UPSCALE",
       "bounding": [
-        -174.70801813659892,
-        4848.950177669605,
+        -169.03364875594255,
+        5354.135247467132,
         345.8411917625151,
         593.9736601614086
       ],
@@ -1097,7 +1097,7 @@
         "state": {
           "lastGroupId": 13,
           "lastNodeId": 188,
-          "lastLinkId": 362,
+          "lastLinkId": 365,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -2097,7 +2097,7 @@
               1,
               16,
               false,
-              266323229,
+              4203788100,
               "randomize",
               false
             ],
@@ -2948,10 +2948,10 @@
     "VHS_MetadataImage": true,
     "VHS_KeepIntermediate": true,
     "ds": {
-      "scale": 0.6581127786164652,
+      "scale": 0.7239240564781118,
       "offset": [
-        1695.7577814368055,
-        -4547.634109236168
+        2053.581045523035,
+        -4437.0006467817675
       ]
     }
   },
