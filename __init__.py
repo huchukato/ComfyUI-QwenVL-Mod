@@ -13,6 +13,8 @@ import importlib.util
 import os
 import sys
 
+from aiohttp import web
+
 # Get the directory of the current script
 current_dir = os.path.dirname(__file__)
 sys.path.insert(0, current_dir)
@@ -20,6 +22,74 @@ sys.path.insert(0, current_dir)
 NODE_CLASS_MAPPINGS = {}
 NODE_DISPLAY_NAME_MAPPINGS = {}
 WEB_DIRECTORY = "./web"
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Download log endpoint: serves last 30 lines of model download log at /dlstatus
+# Works on the same port as ComfyUI (8188), no extra port exposure needed.
+# ──────────────────────────────────────────────────────────────────────────────
+_DL_LOGS = [
+    "/var/log/minimax-h3-models.log",
+    "/var/log/ltx-models.log",
+    "/var/log/wan-models.log",
+]
+
+@web.middleware
+async def _cors_middleware(request, handler):
+    resp = await handler(request)
+    resp.headers["Access-Control-Allow-Origin"] = "*"
+    return resp
+
+async def _dlstatus(request):
+    for log_path in _DL_LOGS:
+        if os.path.exists(log_path):
+            try:
+                with open(log_path, "r") as f:
+                    lines = f.readlines()[-30:]
+                return web.Response(text="".join(lines), content_type="text/plain")
+            except Exception:
+                pass
+    return web.Response(text="Download log not yet available...", content_type="text/plain")
+
+async def _dlstatus_html(request):
+    for log_path in _DL_LOGS:
+        if os.path.exists(log_path):
+            try:
+                with open(log_path, "r") as f:
+                    lines = f.readlines()[-30:]
+                body = "<!DOCTYPE html><html><head><meta http-equiv='refresh' content='3'></head><body><pre style='font-family:monospace;font-size:12px;white-space:pre-wrap;'>" + "".join(lines).replace("<", "&lt;").replace(">", "&gt;") + "</pre></body></html>"
+                return web.Response(text=body, content_type="text/html")
+            except Exception:
+                pass
+    return web.Response(text="Download log not yet available...", content_type="text/plain")
+
+def _register_dl_routes(server):
+    """Register /dlstatus and /dlstatus.html on the ComfyUI aiohttp app."""
+    app = server.app if hasattr(server, "app") else server
+    try:
+        app.router.add_get("/dlstatus", _dlstatus)
+        app.router.add_get("/dlstatus.html", _dlstatus_html)
+        print("[QwenVL-Mod] Registered /dlstatus endpoint for download log")
+    except Exception as e:
+        print(f"[QwenVL-Mod] Could not register /dlstatus: {e}")
+
+# Hook into ComfyUI's server startup via WEB_DIRECTORY setup
+from server import PromptServer
+_orig_setup = PromptServer.instance.init_routes if hasattr(PromptServer.instance, "init_routes") else None
+
+def _patched_init_routes(*args, **kwargs):
+    if _orig_setup:
+        result = _orig_setup(*args, **kwargs)
+    _register_dl_routes(PromptServer.instance)
+    return result
+
+if hasattr(PromptServer.instance, "init_routes"):
+    PromptServer.instance.init_routes = _patched_init_routes
+else:
+    # Fallback: register directly (app may already exist)
+    try:
+        _register_dl_routes(PromptServer.instance)
+    except Exception as e:
+        print(f"[QwenVL-Mod] Deferred /dlstatus registration: {e}")
 
 def load_modules_from_directory(directory):
     for file in os.listdir(directory):

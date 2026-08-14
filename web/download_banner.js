@@ -23,33 +23,33 @@ app.registerExtension({
 
         const header = document.createElement("div");
         header.style.cssText = "font-weight:bold;color:#ff9800;margin-bottom:4px;";
+        const headerText = document.createElement("span");
+        header.appendChild(headerText);
+        const closeBtn = document.createElement("span");
+        closeBtn.textContent = " \u2715";
+        closeBtn.style.cssText = "float:right;cursor:pointer;color:#888;";
+        closeBtn.onclick = () => { panel.style.display = "none"; };
+        header.appendChild(closeBtn);
         panel.appendChild(header);
 
         const logText = document.createElement("div");
         logText.style.cssText = "white-space:pre-wrap;";
         panel.appendChild(logText);
 
-        const closeBtn = document.createElement("span");
-        closeBtn.textContent = " \u2715";
-        closeBtn.style.cssText = "float:right;cursor:pointer;color:#888;";
-        closeBtn.onclick = () => { panel.style.display = "none"; };
-        header.appendChild(closeBtn);
-
         document.body.appendChild(panel);
 
         let done = false;
-        let hidden = false;
 
         async function poll() {
-            if (done || hidden) return;
+            if (done) return;
             try {
-                const resp = await fetch("http://localhost:8189/", { cache: "no-store" });
+                const resp = await fetch("/dlstatus", { cache: "no-store" });
                 if (!resp.ok) return;
                 const text = await resp.text();
                 logText.textContent = text;
 
                 if (text.includes("All models ready")) {
-                    header.firstChild.textContent = "\u2705 Download modelli completato";
+                    headerText.textContent = "\u2705 Download modelli completato";
                     header.style.color = "#4caf50";
                     panel.style.borderTopColor = "#4caf50";
                     done = true;
@@ -57,12 +57,14 @@ app.registerExtension({
                 } else {
                     const m = text.match(/\[(\d+)\/(\d+)\]/);
                     if (m) {
-                        header.firstChild.textContent = "\u{1F4E5} Download modelli in corso [" + m[1] + "/" + m[2] + "] — NON scaricare manualmente";
+                        headerText.textContent = "\u{1F4E5} Download modelli in corso [" + m[1] + "/" + m[2] + "] \u2014 NON scaricare manualmente";
+                    } else if (text.includes("Download log not yet available")) {
+                        headerText.textContent = "\u{1F4E5} In attesa del download modelli...";
                     } else {
-                        header.firstChild.textContent = "\u{1F4E5} Download modelli in corso — NON scaricare manualmente";
+                        headerText.textContent = "\u{1F4E5} Download modelli in corso \u2014 NON scaricare manualmente";
                     }
                 }
-            } catch (e) { /* server not up yet */ }
+            } catch (e) { /* endpoint not up yet */ }
         }
 
         setInterval(poll, 3000);

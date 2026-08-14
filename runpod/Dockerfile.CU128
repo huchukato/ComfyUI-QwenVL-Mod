@@ -145,24 +145,6 @@ RUN mkdir -p /opt/comfyui-baked/user/default/workflows && \
 ENV HF_HUB_ENABLE_HF_TRANSFER=1
 
 # ──────────────────────────────────────────────────────────────────────────────
-# ──────────────────────────────────────────────────────────────────────────────
-# Download log server: serves last 30 lines of download log on port 8189
-# ──────────────────────────────────────────────────────────────────────────────
-RUN cat > /usr/local/bin/download-log-server.sh << 'EOF'
-#!/bin/bash
-LOG="/var/log/wan-models.log"
-PORT=8189
-while true; do
-    if [ -f "$LOG" ]; then
-        body=$(tail -30 "$LOG")
-    else
-        body="Download log not yet available..."
-    fi
-    len=${#body}
-    printf 'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: %d\r\nAccess-Control-Allow-Origin: *\r\nConnection: close\r\n\r\n%s' "$len" "$body" | nc -l -p "$PORT" -w 1 >/dev/null 2>&1
-done
-EOF
-RUN chmod +x /usr/local/bin/download-log-server.sh
 
 # WAN models download script (~30GB, downloaded at boot in background)
 # Waits for /workspace/runpod-slim/ComfyUI to exist, then downloads if missing.
@@ -483,7 +465,6 @@ fi
 setsid /usr/local/bin/boot-updates.sh </dev/null &
 
 # Launch WAN models download in a detached session (survives exec /start.sh)
-setsid /usr/local/bin/download-log-server.sh </dev/null &
 setsid /usr/local/bin/download-wan-models.sh </dev/null &
 
 # Execute original start.sh from template base — runs immediately, never
