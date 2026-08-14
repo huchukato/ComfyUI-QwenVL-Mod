@@ -83,9 +83,12 @@ RUN pip install --no-cache-dir sageattention && \
 
 # ──────────────────────────────────────────────────────────────────────────────
 # TensorRT CUDA 13 wheels (only if needed by MiniMax H3 workflow; keep minimal)
-# TODO: remove if not needed
+# Remove any pre-existing TRT 10.9 from the base image to avoid .so conflicts.
 # ──────────────────────────────────────────────────────────────────────────────
-RUN pip install --no-cache-dir \
+RUN pip uninstall -y tensorrt tensorrt-cu12 tensorrt-cu13 tensorrt-cu12-bindings tensorrt-cu13-bindings tensorrt-cu12-libs tensorrt-cu13-libs 2>/dev/null; \
+    rm -f /usr/lib/x86_64-linux-gnu/libnvinfer_builder_resource.so.10.9* 2>/dev/null; \
+    rm -f /usr/local/lib/libnvinfer_builder_resource.so.10.9* 2>/dev/null; \
+    pip install --no-cache-dir \
         tensorrt-cu13==10.15.1.29 \
         tensorrt-cu13-bindings==10.15.1.29 \
         tensorrt-cu13-libs==10.15.1.29 && \
@@ -287,10 +290,33 @@ download_model() {
         # hf: resume is automatic; huggingface-cli: needs --resume-download
         local resume_flag=""
         [ "$hf_cmd" = "huggingface-cli" ] && resume_flag="--resume-download"
+
+        # Progress monitor: log file size every 10s while downloading
+        local progress_pid=""
+        (
+            sleep 5  # wait for download to start
+            while true; do
+                local cur_size=0
+                # Check temp dir for partial downloads
+                if [ -d "$tmp_dir" ]; then
+                    cur_size=$(find "$tmp_dir" -type f -name "*.safetensors*" -exec stat -L -c%s {} + 2>/dev/null | awk '{s+=$1} END {print s+0}')
+                fi
+                if [ "$cur_size" -gt 0 ]; then
+                    local mb=$((cur_size / 1048576))
+                    local pct=$((cur_size * 100 / min_size))
+                    [ "$pct" -gt 100 ] && pct=100
+                    log "   📊 $name: ${mb}MB / $((min_size / 1048576))MB (${pct}%)"
+                fi
+                sleep 10
+            done
+        ) &
+        progress_pid=$!
+
         # Timeout: 15 min per file, prevents infinite stalls
         if timeout 900 $hf_cmd download "$repo_id" "$repo_path" \
                 --local-dir "$tmp_dir" \
-                $resume_flag 2>&1 | tee -a "$LOG"; then
+                $resume_flag >> "$LOG" 2>&1; then
+            kill "$progress_pid" 2>/dev/null || true
             local downloaded_path="$tmp_dir/$repo_path"
             if [ -f "$downloaded_path" ] || [ -L "$downloaded_path" ]; then
                 if [ -L "$downloaded_path" ]; then
@@ -312,6 +338,7 @@ download_model() {
                 rm -rf "$tmp_dir"
             fi
         else
+            kill "$progress_pid" 2>/dev/null || true
             log "⚠️  $hf_cmd failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
             rm -rf "$tmp_dir"
         fi
