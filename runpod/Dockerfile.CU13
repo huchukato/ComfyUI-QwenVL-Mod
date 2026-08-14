@@ -132,6 +132,25 @@ RUN mkdir -p /opt/comfyui-baked/user/default/workflows && \
 ENV HF_HUB_ENABLE_HF_TRANSFER=1
 
 # ──────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
+# Download log server: serves last 30 lines of download log on port 8189
+# ──────────────────────────────────────────────────────────────────────────────
+RUN cat > /usr/local/bin/download-log-server.sh << 'EOF'
+#!/bin/bash
+LOG="/var/log/wan-models.log"
+PORT=8189
+while true; do
+    if [ -f "$LOG" ]; then
+        body=$(tail -30 "$LOG")
+    else
+        body="Download log not yet available..."
+    fi
+    len=${#body}
+    printf 'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: %d\r\nAccess-Control-Allow-Origin: *\r\nConnection: close\r\n\r\n%s' "$len" "$body" | nc -l -p "$PORT" -w 1 >/dev/null 2>&1
+done
+EOF
+RUN chmod +x /usr/local/bin/download-log-server.sh
+
 # WAN models download script (~30GB, downloaded at boot in background)
 # Waits for /workspace/runpod-slim/ComfyUI to exist, then downloads if missing.
 # Robust: retries with backoff, resumes interrupted downloads, verifies size.
@@ -150,7 +169,7 @@ MODELS=(
 
 log() { echo "$(date): $*" | tee -a "$LOG"; }
 
-log "📥 === WAN models download started (PID $$) ==="
+log "📥 === WAN models download started (PID $$) — ${#MODELS[@]} models ==="
 
 # ── Phase 1: wait for /workspace to be mounted and start.sh to finish copying ──
 log "⏳ Waiting for /workspace mount and ComfyUI ready marker..."
@@ -238,12 +257,17 @@ download_model() {
 }
 
 failures=0
+MODEL_IDX=0
+TOTAL_MODELS=${#MODELS[@]}
 for entry in "${MODELS[@]}"; do
+    MODEL_IDX=$((MODEL_IDX + 1))
     IFS='|' read -r name repo_id repo_path min_size <<< "$entry"
+    log "━━━ [$MODEL_IDX/$TOTAL_MODELS] ━━━"
     download_model "$name" "$repo_id" "$repo_path" "$min_size" || failures=$((failures + 1))
 done
 
 log "📦 === WAN models download finished ($failures failures) ==="
+log "✅ All models ready — ComfyUI can now use WAN workflows"
 EOF
 RUN chmod +x /usr/local/bin/download-wan-models.sh
 
@@ -446,6 +470,7 @@ fi
 setsid /usr/local/bin/boot-updates.sh </dev/null &
 
 # Launch WAN models download in a detached session (survives exec /start.sh)
+setsid /usr/local/bin/download-log-server.sh </dev/null &
 setsid /usr/local/bin/download-wan-models.sh </dev/null &
 
 # Execute original start.sh from template base — runs immediately, never
