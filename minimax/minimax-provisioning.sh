@@ -268,19 +268,6 @@ function provisioning_get_minimax_models() {
     dllog "✅ All models ready — ComfyUI can now use MiniMax H3 workflows"
 }
 
-function provisioning_configure_args() {
-    local args_file="${WORKSPACE:-/workspace}/ComfyUI/comfyui_args.txt"
-    if [ ! -f "$args_file" ]; then
-        mkdir -p "$(dirname "$args_file")"
-        cat > "$args_file" <<'EOF'
---disable-auto-launch --port 18188 --enable-cors-header --fast fp16_accumulation --use-sage-attention --cuda-malloc --async-offload
-EOF
-        echo "✅ Created $args_file with MiniMax H3 / QwenVL-Mod optimized args"
-    else
-        echo "ℹ️  $args_file already exists, leaving untouched"
-    fi
-}
-
 ### DO NOT EDIT BELOW HERE UNLESS YOU KNOW WHAT YOU ARE DOING ###
 
 function provisioning_start() {
@@ -345,9 +332,6 @@ function provisioning_start() {
     
     echo "🧬 Starting MiniMax H3 model download in background..."
     provisioning_get_minimax_models
-    
-    echo "🎛️ Configuring ComfyUI arguments..."
-    provisioning_configure_args
     
     provisioning_print_end
 }
