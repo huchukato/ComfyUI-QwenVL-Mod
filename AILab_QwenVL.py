@@ -23,7 +23,7 @@ import numpy as np
 import psutil
 import torch
 from PIL import Image
-from huggingface_hub import snapshot_download
+from huggingface_hub import snapshot_download, hf_hub_download
 from transformers import AutoProcessor, AutoTokenizer, BitsAndBytesConfig
 
 # SageAttention support
@@ -688,6 +688,34 @@ def ensure_model(model_name):
         local_dir=str(target),
         ignore_patterns=["*.md", ".git*"],
     )
+
+    # Some community uploads (e.g. heretic/abliterated variants) forget to include
+    # preprocessor_config.json even though the model is multimodal. Without it
+    # AutoProcessor fails with "Can't load image processor". Detect the missing
+    # file and fetch it from the official Qwen3.5 repo so VL inference works.
+    preproc_path = target / "preprocessor_config.json"
+    if not preproc_path.exists():
+        config_path = target / "config.json"
+        needs_vision = False
+        if config_path.exists():
+            try:
+                import json as _json
+                with open(config_path) as _f:
+                    _cfg = _json.load(_f)
+                needs_vision = "vision_config" in _cfg
+            except Exception:
+                pass
+        if needs_vision:
+            print("[QwenVL] preprocessor_config.json missing — downloading from Qwen/Qwen3.5-4B")
+            try:
+                hf_hub_download(
+                    repo_id="Qwen/Qwen3.5-4B",
+                    filename="preprocessor_config.json",
+                    local_dir=str(target),
+                )
+            except Exception as e:
+                print(f"[QwenVL] Could not fetch preprocessor_config.json: {e}")
+
     return str(target)
 
 def enforce_memory(model_name, quantization, device_info):
