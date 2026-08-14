@@ -13,6 +13,29 @@ TAG="cu13-ltx"
 DOCKERFILE="Dockerfile.CU13-LTX"
 PLATFORM="linux/amd64"
 
+# ComfyUI core version to bake into the image
+COMFYUI_VERSION="${COMFYUI_VERSION:-v0.32.0}"
+
+# Check for latest upstream ComfyUI release tag
+LATEST_COMFYUI_VERSION=$(curl -s "https://api.github.com/repos/comfyanonymous/ComfyUI/tags?per_page=1" | grep -o '"name": "[^"]*' | head -1 | cut -d'"' -f4)
+
+if [ -n "$LATEST_COMFYUI_VERSION" ]; then
+    echo "Current ComfyUI version in build: $COMFYUI_VERSION"
+    echo "Latest ComfyUI version available: $LATEST_COMFYUI_VERSION"
+    if [ -t 0 ]; then
+        read -p "Update to latest? [y/N]: " update
+        if [[ "$update" =~ ^[Yy]$ ]]; then
+            COMFYUI_VERSION="$LATEST_COMFYUI_VERSION"
+        fi
+    else
+        echo "Non-interactive shell detected, keeping $COMFYUI_VERSION"
+    fi
+else
+    echo "⚠️ Could not fetch latest ComfyUI tag, keeping $COMFYUI_VERSION"
+fi
+
+echo "📌 Baking ComfyUI version: $COMFYUI_VERSION"
+
 # Check Docker login
 echo "🔐 Checking Docker Hub login..."
 if ! docker login 2>&1 | grep -q "Login Succeeded\|Already logged in"; then
@@ -29,7 +52,7 @@ docker buildx use --global desktop-linux
 # --pull removed: was invalidating all cache layers on every build
 # Cache enabled: only changed layers are rebuilt (much faster)
 echo "📦 Building image: ${IMAGE_NAME}:${TAG} for platform: ${PLATFORM}"
-docker buildx build --builder desktop-linux --platform ${PLATFORM} --build-arg CACHEBUST=$(date +%s) -f ${DOCKERFILE} -t ${IMAGE_NAME}:${TAG} --load .
+docker buildx build --builder desktop-linux --platform ${PLATFORM} --build-arg COMFYUI_VERSION="$COMFYUI_VERSION" --build-arg CACHEBUST=$(date +%s) -f ${DOCKERFILE} -t ${IMAGE_NAME}:${TAG} --load .
 
 # Push to Docker Hub
 echo "🚀 Pushing to Docker Hub..."

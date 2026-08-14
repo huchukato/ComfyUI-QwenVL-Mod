@@ -7,12 +7,14 @@
 FROM runpod/comfyui:cuda13.0
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Ensure ComfyUI core is v0.32.0+ (LTX 2.3 requires ComfyUI 0.30.0+)
+# ComfyUI core version — override at build time with --build-arg COMFYUI_VERSION=v0.33.1
 # The base image may ship an older tag, so we force-checkout the release.
 # ──────────────────────────────────────────────────────────────────────────────
+ARG COMFYUI_VERSION=v0.32.0
+ENV COMFYUI_VERSION=${COMFYUI_VERSION}
 RUN cd /opt/comfyui-baked && \
     git fetch --tags --force origin && \
-    git -c advice.detachedHead=false checkout -f v0.32.0 && \
+    git -c advice.detachedHead=false checkout -f ${COMFYUI_VERSION} && \
     echo "ComfyUI checked out at:" && git rev-parse --short HEAD
 
 # Re-install / verify ComfyUI requirements after the version switch.
@@ -310,13 +312,13 @@ EOF
 RUN chmod +x /usr/local/bin/download-ltx-models.sh
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Custom entrypoint: force ComfyUI v0.32.0, pre-populate args,
+# Custom entrypoint: force baked ComfyUI to selected version, pre-populate args,
 # launch LTX model download in background, then exec /start.sh
 # ──────────────────────────────────────────────────────────────────────────────
 RUN cat > /usr/local/bin/custom-entrypoint.sh << 'EOF'
 #!/bin/bash
 COMFY_LOG="/var/log/comfyui-update.log"
-COMFY_TAG="v0.32.0"
+COMFY_TAG="${COMFYUI_VERSION:-v0.32.0}"
 
 force_comfyui_version() {
     local repo_dir="$1"
@@ -384,7 +386,7 @@ update_custom_nodes() {
     done
 }
 
-# Force baked ComfyUI core to v0.32.0
+# Force baked ComfyUI core to selected version
 force_comfyui_version /opt/comfyui-baked "ComfyUI (baked template)"
 
 # Force active install on /workspace if it already exists (affects restarts)
