@@ -83,12 +83,8 @@ RUN pip install --no-cache-dir sageattention && \
 
 # ──────────────────────────────────────────────────────────────────────────────
 # TensorRT CUDA 13 wheels (only if needed by MiniMax H3 workflow; keep minimal)
-# Remove any pre-existing TRT 10.9 from the base image to avoid .so conflicts.
 # ──────────────────────────────────────────────────────────────────────────────
-RUN pip uninstall -y tensorrt tensorrt-cu12 tensorrt-cu13 tensorrt-cu12-bindings tensorrt-cu13-bindings tensorrt-cu12-libs tensorrt-cu13-libs 2>/dev/null; \
-    rm -f /usr/lib/x86_64-linux-gnu/libnvinfer_builder_resource.so.10.9* 2>/dev/null; \
-    rm -f /usr/local/lib/libnvinfer_builder_resource.so.10.9* 2>/dev/null; \
-    pip install --no-cache-dir \
+RUN pip install --no-cache-dir \
         tensorrt-cu13==10.15.1.29 \
         tensorrt-cu13-bindings==10.15.1.29 \
         tensorrt-cu13-libs==10.15.1.29 && \
