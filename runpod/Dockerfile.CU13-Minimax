@@ -7,12 +7,14 @@
 FROM runpod/comfyui:cuda13.0
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Ensure ComfyUI core is v0.32.0+ (MiniMax H3 requires ComfyUI 0.30.0+)
+# ComfyUI core version — override at build time with --build-arg COMFYUI_VERSION=v0.33.1
 # The base image may ship an older tag, so we force-checkout the release.
 # ──────────────────────────────────────────────────────────────────────────────
+ARG COMFYUI_VERSION=v0.32.0
+ENV COMFYUI_VERSION=${COMFYUI_VERSION}
 RUN cd /opt/comfyui-baked && \
     git fetch --tags --force origin && \
-    git -c advice.detachedHead=false checkout -f v0.32.0 && \
+    git -c advice.detachedHead=false checkout -f ${COMFYUI_VERSION} && \
     echo "ComfyUI checked out at:" && git rev-parse --short HEAD
 
 # Re-install / verify ComfyUI requirements after the version switch.
@@ -287,32 +289,10 @@ download_model() {
         local resume_flag=""
         [ "$hf_cmd" = "huggingface-cli" ] && resume_flag="--resume-download"
 
-        # Progress monitor: log file size every 10s while downloading
-        local progress_pid=""
-        (
-            sleep 5  # wait for download to start
-            while true; do
-                local cur_size=0
-                # Check temp dir for partial downloads
-                if [ -d "$tmp_dir" ]; then
-                    cur_size=$(find "$tmp_dir" -type f -name "*.safetensors*" -exec stat -L -c%s {} + 2>/dev/null | awk '{s+=$1} END {print s+0}')
-                fi
-                if [ "$cur_size" -gt 0 ]; then
-                    local mb=$((cur_size / 1048576))
-                    local pct=$((cur_size * 100 / min_size))
-                    [ "$pct" -gt 100 ] && pct=100
-                    log "   📊 $name: ${mb}MB / $((min_size / 1048576))MB (${pct}%)"
-                fi
-                sleep 10
-            done
-        ) &
-        progress_pid=$!
-
         # Timeout: 15 min per file, prevents infinite stalls
         if timeout 900 $hf_cmd download "$repo_id" "$repo_path" \
                 --local-dir "$tmp_dir" \
-                $resume_flag >> "$LOG" 2>&1; then
-            kill "$progress_pid" 2>/dev/null || true
+                $resume_flag 2>&1 | tee -a "$LOG"; then
             local downloaded_path="$tmp_dir/$repo_path"
             if [ -f "$downloaded_path" ] || [ -L "$downloaded_path" ]; then
                 if [ -L "$downloaded_path" ]; then
@@ -334,7 +314,6 @@ download_model() {
                 rm -rf "$tmp_dir"
             fi
         else
-            kill "$progress_pid" 2>/dev/null || true
             log "⚠️  $hf_cmd failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
             rm -rf "$tmp_dir"
         fi
@@ -363,13 +342,13 @@ EOF
 RUN chmod +x /usr/local/bin/download-minimax-h3-models.sh
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Custom entrypoint: force ComfyUI v0.32.0, pre-populate args,
+# Custom entrypoint: force baked ComfyUI to selected version, pre-populate args,
 # launch MiniMax H3 model download in background, then exec /start.sh
 # ──────────────────────────────────────────────────────────────────────────────
 RUN cat > /usr/local/bin/custom-entrypoint.sh << 'EOF'
 #!/bin/bash
 COMFY_LOG="/var/log/comfyui-update.log"
-COMFY_TAG="v0.32.0"
+COMFY_TAG="${COMFYUI_VERSION:-v0.32.0}"
 
 force_comfyui_version() {
     local repo_dir="$1"
@@ -437,7 +416,7 @@ update_custom_nodes() {
     done
 }
 
-# Force baked ComfyUI core to v0.32.0
+# Force baked ComfyUI core to selected version
 force_comfyui_version /opt/comfyui-baked "ComfyUI (baked template)"
 
 # Force active install on /workspace if it already exists (affects restarts)

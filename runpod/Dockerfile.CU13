@@ -5,6 +5,10 @@
 
 FROM runpod/comfyui:cuda13.0
 
+# ComfyUI core version — override at build time with --build-arg COMFYUI_VERSION=v0.33.1
+ARG COMFYUI_VERSION=v0.32.0
+ENV COMFYUI_VERSION=${COMFYUI_VERSION}
+
 # ──────────────────────────────────────────────────────────────────────────────
 # Custom nodes — ALL repos cloned once (cached)
 # ──────────────────────────────────────────────────────────────────────────────
@@ -263,7 +267,7 @@ RUN cat > /usr/local/bin/boot-updates.sh << 'EOF'
 #!/bin/bash
 COMFY_LOG="/var/log/comfyui-update.log"
 WF_LOG="/var/log/workflow-update.log"
-COMFY_TAG="v0.32.0"
+COMFY_TAG="${COMFYUI_VERSION:-v0.32.0}"
 
 clog() { echo "$(date): $*" | tee -a "$COMFY_LOG"; }
 wlog() { echo "$(date): $*" | tee -a "$WF_LOG"; }
@@ -412,7 +416,7 @@ wlog "✅ /workspace ComfyUI ready"
 # Now safe to download active install workflows
 download_workflows "$WF_ACTIVE" "active"
 
-# Force baked ComfyUI core to v0.32.0
+# Force baked ComfyUI core to selected version
 force_comfyui_version /opt/comfyui-baked "ComfyUI (baked template)"
 
 # Force active install on /workspace if it already exists (affects restarts)
