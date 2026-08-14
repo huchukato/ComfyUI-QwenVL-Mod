@@ -447,16 +447,15 @@ if [ -d /workspace/runpod-slim/ComfyUI/.git ]; then
     update_custom_nodes /workspace/runpod-slim/ComfyUI/custom_nodes
 fi
 
-# Pre-populate comfyui_args.txt with MiniMax H3 / QwenVL-Mod args if it doesn't exist
+# Overwrite comfyui_args.txt with MiniMax H3 / QwenVL-Mod optimized args
+# The RunPod base image pre-populates this file with its own defaults.
 ARGS_FILE="/workspace/runpod-slim/comfyui_args.txt"
-if [ ! -f "$ARGS_FILE" ]; then
-    mkdir -p /workspace/runpod-slim
-    cat > "$ARGS_FILE" << 'INNER'
+mkdir -p /workspace/runpod-slim
+cat > "$ARGS_FILE" << 'INNER'
 # Custom ComfyUI arguments (one per line, # = comment)
 --disable-auto-launch --fast fp16_accumulation --use-sage-attention --cuda-malloc --async-offload
 INNER
-    echo "Created comfyui_args.txt with MiniMax H3 / QwenVL-Mod optimized args"
-fi
+echo "Overwrote comfyui_args.txt with MiniMax H3 / QwenVL-Mod optimized args"
 
 # Launch MiniMax H3 workflow download in background (always fetches latest from GitHub)
 setsid /usr/local/bin/download-minimax-workflows.sh </dev/null &
