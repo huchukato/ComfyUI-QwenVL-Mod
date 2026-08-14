@@ -277,9 +277,6 @@ function provisioning_start() {
     echo "📦 Installing APT packages..."
     provisioning_get_apt_packages
     
-    echo "🔧 Ensuring ComfyUI is on v0.30.0 (MiniMax H3 requirement)..."
-    provisioning_force_comfyui_version "${COMFYUI_DIR}" "ComfyUI"
-    
     echo "🔧 Installing custom nodes..."
     provisioning_get_nodes
     
