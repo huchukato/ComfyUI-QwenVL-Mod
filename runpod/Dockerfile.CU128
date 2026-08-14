@@ -446,16 +446,15 @@ RUN chmod +x /usr/local/bin/boot-updates.sh
 RUN cat > /usr/local/bin/custom-entrypoint.sh << 'EOF'
 #!/bin/bash
 
-# Pre-populate comfyui_args.txt with WAN2.2 args if it doesn't exist (local, instant)
+# Overwrite comfyui_args.txt with WAN2.2 optimized args
+# The RunPod base image pre-populates this file with its own defaults.
 ARGS_FILE="/workspace/runpod-slim/comfyui_args.txt"
-if [ ! -f "$ARGS_FILE" ]; then
-    mkdir -p /workspace/runpod-slim
-    cat > "$ARGS_FILE" << 'INNER'
+mkdir -p /workspace/runpod-slim
+cat > "$ARGS_FILE" << 'INNER'
 # Custom ComfyUI arguments (one per line, # = comment)
 --disable-auto-launch --fast fp16_accumulation --use-sage-attention --cuda-malloc --async-offload
 INNER
-    echo "Created comfyui_args.txt with WAN2.2 optimized args"
-fi
+echo "Overwrote comfyui_args.txt with WAN2.2 optimized args"
 
 # Launch boot updates (ComfyUI git pull + workflow refresh) in a detached
 # session. setsid creates a new session, so the process is fully independent
