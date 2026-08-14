@@ -65,9 +65,12 @@ CONTROLNET_MODELS=(
 )
 
 # LTX 2.3 models: subdir|name|url|min_size_bytes
-# Uncensored setup: 10Eros v1.5 checkpoint + Gemma abliterated LoRA + DMD hybrid v2 LoRA
+# Uncensored setup: 10Eros v1.5 + Sulphur 2 (native uncensored) + Gemma abliterated LoRA + DMD hybrid v2 LoRA
 LTX_MODELS=(
     "checkpoints|10Eros_v1.5_fp8mixed_experimental_learned.safetensors|https://huggingface.co/LokkenJP/10EROS_1.5_fp8_exp_learned/resolve/main/10Eros_v1.5_fp8mixed_experimental_learned.safetensors|28000000000"
+    # ── Sulphur 2 (native uncensored LTX 2.3 fine-tune) ──
+    "checkpoints|sulphur_dev_fp8mixed.safetensors|https://huggingface.co/SulphurAI/Sulphur-2-base/resolve/main/sulphur_dev_fp8mixed.safetensors|28000000000"
+    "loras|sulphur_lora_rank_768.safetensors|https://huggingface.co/SulphurAI/Sulphur-2-base/resolve/main/sulphur_lora_rank_768.safetensors|10000000000"
     "text_encoders|gemma_3_12B_it_fp4_mixed.safetensors|https://huggingface.co/Comfy-Org/ltx-2/resolve/main/split_files/text_encoders/gemma_3_12B_it_fp4_mixed.safetensors|9000000000"
     "loras|gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors|https://huggingface.co/Comfy-Org/ltx-2/resolve/main/split_files/loras/gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors|600000000"
     "loras|ltx23/LTX2.3_DMD_hybrid_v2.safetensors|https://huggingface.co/TenStrip/LTX2.3_DMD_Lora/resolve/main/LTX2.3_DMD_hybrid_v2.safetensors|600000000"
