@@ -1,13 +1,13 @@
-# ComfyUI-QwenVL-Mod RunPod Worker (CUDA 13.0) — LTX 2.3 edition
+# ComfyUI-QwenVL-Mod RunPod Worker (CUDA 13.0) — LTX 2.5 edition
 # Based on runpod/comfyui:cuda13.0 template (includes ComfyUI core, Manager legacy UI,
 # KJNodes, Civicomfy, RunpodDirect, FileBrowser, Jupyter, SSH, persistence on /workspace)
-# Adds: QwenVL-Mod + LTXVideo support nodes, all heavy LTX-2.3 models
-#       downloaded at boot in background (~40GB total, uncensored 10Eros setup).
+# Adds: QwenVL-Mod + LTXVideo support nodes, all heavy LTX-2.5 models
+#       downloaded at boot in background (~50GB total, native uncensored 2.5 setup).
 
 FROM runpod/comfyui:cuda13.0
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Ensure ComfyUI core is v0.32.0+ (LTX 2.3 requires ComfyUI 0.30.0+)
+# Ensure ComfyUI core is v0.32.0+ (LTX 2.5 requires ComfyUI 0.30.0+)
 # The base image may ship an older tag, so we force-checkout the release.
 # ──────────────────────────────────────────────────────────────────────────────
 RUN cd /opt/comfyui-baked && \
@@ -23,7 +23,7 @@ RUN cd /opt/comfyui-baked && \
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Custom nodes — ALL repos cloned once (cached)
-# LTX 2.3 core support is built into ComfyUI 0.30.0+; LTXVideo node adds workflow nodes.
+# LTX 2.5 core support is built into ComfyUI 0.30.0+; LTXVideo node adds workflow nodes.
 # ──────────────────────────────────────────────────────────────────────────────
 # Bump NODES_CACHE_BUSTER to force re-clone of all custom nodes
 ARG NODES_CACHE_BUSTER=2026-08-13-v2
@@ -99,7 +99,9 @@ RUN mkdir -p /opt/comfyui-baked/models/checkpoints && \
     mkdir -p /opt/comfyui-baked/models/text_encoders && \
     mkdir -p /opt/comfyui-baked/models/loras && \
     mkdir -p /opt/comfyui-baked/models/upscale_models && \
-    mkdir -p /opt/comfyui-baked/models/vae
+    mkdir -p /opt/comfyui-baked/models/vae && \
+    mkdir -p /opt/comfyui-baked/models/diffusion_models && \
+    mkdir -p /opt/comfyui-baked/models/model_patches
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Optional Hugging Face token (runtime env var) for gated/high-rate-limit
@@ -114,7 +116,7 @@ ENV HF_TOKEN=""
 ENV HF_HUB_ENABLE_HF_TRANSFER=1
 
 # ──────────────────────────────────────────────────────────────────────────────
-# LTX 2.3 workflow download script (small JSON, downloaded at boot)
+# LTX 2.5 workflow download script (small JSON, downloaded at boot)
 # Always fetches latest from GitHub into the active /workspace install.
 # Overwrites existing files at every boot.
 # ──────────────────────────────────────────────────────────────────────────────
@@ -125,7 +127,8 @@ BASE_DIR="/workspace/runpod-slim/ComfyUI/user/default/workflows"
 LTX_WF_URL="https://github.com/huchukato/ComfyUI-QwenVL-Mod/raw/main/ltx"
 READY_MARKER="/workspace/runpod-slim/ComfyUI/main.py"
 LTX_WORKFLOWS=(
-    "LTX23-I2VA-Qwen3VL.json"
+    "LTX25-I2VA-Qwen3VL.json"
+    "LTX25-FL2VA-Qwen3VL.json"
 )
 
 log() { echo "$(date): $*" | tee -a "$LOG"; }
@@ -156,7 +159,7 @@ if [ ! -f "$READY_MARKER" ]; then
 fi
 
 mkdir -p "$BASE_DIR"
-log "🔄 Downloading latest LTX 2.3 workflows..."
+log "🔄 Downloading latest LTX 2.5 workflows..."
 download_list "$LTX_WF_URL" "${LTX_WORKFLOWS[@]}"
 
 log "🏁 Workflow downloads done"
@@ -164,19 +167,19 @@ EOF
 RUN chmod +x /usr/local/bin/download-ltx-workflows.sh
 
 # ──────────────────────────────────────────────────────────────────────────────
-# NO models baked-in here — all LTX-2.3 models are huge:
+# NO models baked-in here — all LTX-2.5 models are huge:
 #   ~40GB total. Instead, a boot script downloads them to /workspace on first run.
 #   Only uncensored/required models are downloaded:
 #     - 10Eros v1.5 FP8 (checkpoint, ~30GB) — uncensored I2V merge of Sulphur 2
 #     - Gemma 3 12B IT FP4 (text encoder, ~9.4GB)
 #     - Gemma 3 12B abliterated LoRA (~628MB) — uncensors text encoder
-#     - LTX 2.3 DMD hybrid v2 LoRA (~662MB) — required by 10Eros v1.5
-#     - LTX 2.3 spatial upscaler (~996MB) — doubles resolution
-#     - LTX 2.3 temporal upscaler (~262MB) — doubles frame count
+#     - LTX 2.5 DMD hybrid v2 LoRA (~662MB) — required by 10Eros v1.5
+#     - LTX 2.5 spatial upscaler (~996MB) — doubles resolution
+#     - LTX 2.5 temporal upscaler (~262MB) — doubles frame count
 # ──────────────────────────────────────────────────────────────────────────────
 
 # ──────────────────────────────────────────────────────────────────────────────
-# LTX 2.3 model download script (~40GB, downloaded at boot in background)
+# LTX 2.5 model download script (~40GB, downloaded at boot in background)
 # Waits for /workspace/runpod-slim/ComfyUI to exist, then downloads if missing.
 # Robust: retries with backoff, resumes interrupted downloads, verifies size.
 # ──────────────────────────────────────────────────────────────────────────────
@@ -193,19 +196,20 @@ export HF_XET_HIGH_PERFORMANCE=1
 
 # Models: subdir|name|repo_id|repo_path|min_size_bytes (min_size = sanity check)
 MODELS=(
-    "checkpoints|10Eros_v1.5_fp8mixed_experimental_learned.safetensors|LokkenJP/10EROS_1.5_fp8_exp_learned|10Eros_v1.5_fp8mixed_experimental_learned.safetensors|28000000000"
-    "text_encoders|gemma_3_12B_it_fp4_mixed.safetensors|Comfy-Org/ltx-2|split_files/text_encoders/gemma_3_12B_it_fp4_mixed.safetensors|9000000000"
-    "loras|gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors|Comfy-Org/ltx-2|split_files/loras/gemma-3-12b-it-abliterated_lora_rank64_bf16.safetensors|600000000"
-    "loras|ltx23/LTX2.3_DMD_hybrid_v2.safetensors|TenStrip/LTX2.3_DMD_Lora|LTX2.3_DMD_hybrid_v2.safetensors|600000000"
-    "latent_upscale_models|ltx-2.3-spatial-upscaler-x2-1.1.safetensors|Lightricks/LTX-2.3|ltx-2.3-spatial-upscaler-x2-1.1.safetensors|900000000"
-    "latent_upscale_models|ltx-2.3-temporal-upscaler-x2-1.0.safetensors|Lightricks/LTX-2.3|ltx-2.3-temporal-upscaler-x2-1.0.safetensors|250000000"
-    # Pruna optimized VAE (faster decode than stock LTX VAE)
-    "vae|pruna_ltx2.3_vae_comfy_bf16.safetensors|Kijai/LTX2.3_comfy|vae/pruna_ltx2.3_vae_comfy_bf16.safetensors|500000000"
+    # ── LTX 2.5 (native uncensored, from huchukato/pimp-my-wan mirror) ──
+    "diffusion_models|ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors|huchukato/pimp-my-wan|LTX/diffusion_models/ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors|21000000000"
+    "text_encoders|gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors|huchukato/pimp-my-wan|LTX/text_encoders/gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors|15000000000"
+    "text_encoders|gemma4_e2b_it_bf16.safetensors|TrevorJS/gemma-4-E2B-it-uncensored|model.safetensors|10000000000"
+    "vae|ltx-2.5-video-vae-bf16.safetensors|huchukato/pimp-my-wan|LTX/vae/ltx-2.5-video-vae-bf16.safetensors|1400000000"
+    "vae|ltx-2.5-audio-vae-bf16.safetensors|huchukato/pimp-my-wan|LTX/vae/ltx-2.5-audio-vae-bf16.safetensors|350000000"
+    "latent_upscale_models|ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors|huchukato/pimp-my-wan|LTX/latent_upscale_models/ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors|990000000"
+    "latent_upscale_models|ltx-2.5-latent-temporal-upscaler-x2-bf16-1.0.safetensors|huchukato/pimp-my-wan|LTX/latent_upscale_models/ltx-2.5-latent-temporal-upscaler-x2-bf16-1.0.safetensors|250000000"
+    "model_patches|ltx-2.5-duration-head-bf16.safetensors|huchukato/pimp-my-wan|LTX/model_patches/ltx-2.5-duration-head-bf16.safetensors|3800000"
 )
 
 log() { echo "$(date): $*" | tee -a "$LOG"; }
 
-log "📥 === LTX 2.3 model download started (PID $$) ==="
+log "📥 === LTX 2.5 model download started (PID $$) ==="
 log "⏳ Waiting for /workspace mount and ComfyUI ready marker..."
 for i in $(seq 1 120); do
     [ -f "$READY_MARKER" ] && break
@@ -218,7 +222,7 @@ if [ ! -f "$READY_MARKER" ]; then
 fi
 
 log "✅ ComfyUI ready, base dir: $BASE_DIR"
-mkdir -p "$BASE_DIR"/{checkpoints,text_encoders,loras/ltx23,latent_upscale_models,vae}
+mkdir -p "$BASE_DIR"/{checkpoints,text_encoders,loras/ltx23,latent_upscale_models,vae,diffusion_models,model_patches}
 
 download_model() {
     local subdir="$1" name="$2" repo_id="$3" repo_path="$4" min_size="$5"
@@ -296,7 +300,7 @@ for entry in "${MODELS[@]}"; do
     download_model "$subdir" "$name" "$repo_id" "$repo_path" "$min_size" || failures=$((failures + 1))
 done
 
-log "📦 === LTX 2.3 model download finished ($failures failures) ==="
+log "📦 === LTX 2.5 model download finished ($failures failures) ==="
 EOF
 RUN chmod +x /usr/local/bin/download-ltx-models.sh
 
@@ -385,7 +389,7 @@ if [ -d /workspace/runpod-slim/ComfyUI/.git ]; then
     update_custom_nodes /workspace/runpod-slim/ComfyUI/custom_nodes
 fi
 
-# Pre-populate comfyui_args.txt with LTX 2.3 / QwenVL-Mod args if it doesn't exist
+# Pre-populate comfyui_args.txt with LTX 2.5 / QwenVL-Mod args if it doesn't exist
 ARGS_FILE="/workspace/runpod-slim/comfyui_args.txt"
 if [ ! -f "$ARGS_FILE" ]; then
     mkdir -p /workspace/runpod-slim
@@ -393,13 +397,13 @@ if [ ! -f "$ARGS_FILE" ]; then
 # Custom ComfyUI arguments (one per line, # = comment)
 --disable-auto-launch --fast fp16_accumulation --use-sage-attention --cuda-malloc --async-offload
 INNER
-    echo "Created comfyui_args.txt with LTX 2.3 / QwenVL-Mod optimized args"
+    echo "Created comfyui_args.txt with LTX 2.5 / QwenVL-Mod optimized args"
 fi
 
-# Launch LTX 2.3 workflow download in background (always fetches latest from GitHub)
+# Launch LTX 2.5 workflow download in background (always fetches latest from GitHub)
 setsid /usr/local/bin/download-ltx-workflows.sh </dev/null &
 
-# Launch LTX 2.3 model download in a detached session (survives exec /start.sh)
+# Launch LTX 2.5 model download in a detached session (survives exec /start.sh)
 # ~40GB, takes a long time on first boot; models persist on /workspace volume.
 setsid /usr/local/bin/download-ltx-models.sh </dev/null &
 
