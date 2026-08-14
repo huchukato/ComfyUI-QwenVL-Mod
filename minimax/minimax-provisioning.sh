@@ -135,13 +135,13 @@ function download_minimax_model() {
             local size
             size=$(stat -L -c%s "$dest" 2>/dev/null || stat -L -f%z "$dest" 2>/dev/null || echo 0)
             if [ "$size" -ge "$min_size" ]; then
-                echo "✅ $name already present ($size bytes >= $min_size), skipping"
+                dllog "✅ $name already present ($size bytes >= $min_size), skipping"
                 return 0
             else
-                echo "⚠️  $name incomplete ($size bytes < $min_size), retrying (attempt $attempt/$max_retries)"
+                dllog "⚠️  $name incomplete ($size bytes < $min_size), retrying (attempt $attempt/$max_retries)"
             fi
         else
-            echo "📥 Downloading $name (attempt $attempt/$max_retries)..."
+            dllog "📥 Downloading $name (attempt $attempt/$max_retries)..."
         fi
 
         # Download to a temp dir to avoid path nesting issues.
@@ -167,30 +167,35 @@ function download_minimax_model() {
                 local size
                 size=$(stat -L -c%s "$dest" 2>/dev/null || stat -L -f%z "$dest" 2>/dev/null || echo 0)
                 if [ "$size" -ge "$min_size" ]; then
-                    echo "✅ $name downloaded successfully ($size bytes)"
+                    dllog "✅ $name downloaded successfully ($size bytes)"
                     return 0
                 else
-                    echo "⚠️  $name downloaded but size $size < $min_size, will retry"
+                    dllog "⚠️  $name downloaded but size $size < $min_size, will retry"
                 fi
             else
-                echo "⚠️  $name not found at $downloaded_path after download, will retry"
+                dllog "⚠️  $name not found at $downloaded_path after download, will retry"
                 rm -rf "$tmp_dir"
             fi
         else
-            echo "⚠️  $hf_cmd failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
+            dllog "⚠️  $hf_cmd failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
             rm -rf "$tmp_dir"
         fi
 
         [ "$attempt" -lt "$max_retries" ] && sleep $((attempt * 10))
     done
 
-    echo "❌ FAILED: $name could not be downloaded after $max_retries attempts"
+    dllog "❌ FAILED: $name could not be downloaded after $max_retries attempts"
     return 1
 }
 
 function provisioning_get_minimax_models() {
     local base_dir="${WORKSPACE:-/workspace}/ComfyUI/models"
     local ready_marker="${WORKSPACE:-/workspace}/ComfyUI/main.py"
+    local log_file="/var/log/minimax-h3-models.log"
+    mkdir -p /var/log
+
+    # Log to both stdout and file (so /dlstatus endpoint in ComfyUI can serve it)
+    dllog() { echo "$(date): $*" | tee -a "$log_file"; }
 
     local all_complete=true
     for entry in "${MINIMAX_MODELS[@]}"; do
@@ -204,33 +209,40 @@ function provisioning_get_minimax_models() {
         fi
     done
     if [ "$all_complete" = true ]; then
-        echo "✅ All MiniMax H3 models already complete, no download needed"
+        dllog "✅ All MiniMax H3 models already complete, no download needed"
+        dllog "✅ All models ready — ComfyUI can now use MiniMax H3 workflows"
         return 0
     fi
 
     mkdir -p "$base_dir"/{vae,diffusion_models,text_encoders,loras}
 
-    echo "� === MiniMax H3 model download started (PID $$) ==="
-    echo "⏳ Waiting for ComfyUI ready marker..."
+    local total=${#MINIMAX_MODELS[@]}
+
+    dllog "📥 === MiniMax H3 model download started (PID $$) — $total models ==="
+    dllog "⏳ Waiting for ComfyUI ready marker..."
     for i in $(seq 1 120); do
         [ -f "$ready_marker" ] && break
         sleep 5
     done
 
     if [ ! -f "$ready_marker" ]; then
-        echo "❌ ERROR: ComfyUI ready marker not found after 600s, aborting"
+        dllog "❌ ERROR: ComfyUI ready marker not found after 600s, aborting"
         return 1
     fi
 
-    echo "✅ ComfyUI ready, base dir: $base_dir"
+    dllog "✅ ComfyUI ready, base dir: $base_dir"
 
     local failures=0
+    local idx=0
     for entry in "${MINIMAX_MODELS[@]}"; do
+        idx=$((idx + 1))
         IFS='|' read -r subdir name url min_size <<< "$entry"
+        dllog "━━━ [$idx/$total] ━━━"
         download_minimax_model "$base_dir" "$subdir" "$name" "$url" "$min_size" || failures=$((failures + 1))
     done
 
-    echo "📦 === MiniMax H3 model download finished ($failures failures) ==="
+    dllog "📦 === MiniMax H3 model download finished ($failures failures) ==="
+    dllog "✅ All models ready — ComfyUI can now use MiniMax H3 workflows"
 }
 
 function provisioning_configure_args() {
