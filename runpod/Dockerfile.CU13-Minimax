@@ -199,6 +199,25 @@ RUN pip install --no-cache-dir -U "huggingface_hub" "hf-transfer" && \
 ENV HF_HUB_ENABLE_HF_TRANSFER=1
 
 # ──────────────────────────────────────────────────────────────────────────────
+# Download log server: serves last 30 lines of download log on port 8189
+# ──────────────────────────────────────────────────────────────────────────────
+RUN cat > /usr/local/bin/download-log-server.sh << 'EOF'
+#!/bin/bash
+LOG="/var/log/minimax-h3-models.log"
+PORT=8189
+while true; do
+    if [ -f "$LOG" ]; then
+        body=$(tail -30 "$LOG")
+    else
+        body="Download log not yet available..."
+    fi
+    len=${#body}
+    printf 'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: %d\r\nAccess-Control-Allow-Origin: *\r\nConnection: close\r\n\r\n%s' "$len" "$body" | nc -l -p "$PORT" -w 1 >/dev/null 2>&1
+done
+EOF
+RUN chmod +x /usr/local/bin/download-log-server.sh
+
+# ──────────────────────────────────────────────────────────────────────────────
 # MiniMax H3 model download script (~50GB, downloaded at boot in background)
 # Waits for /workspace/runpod-slim/ComfyUI to exist, then downloads if missing.
 # Robust: retries with backoff, resumes interrupted downloads, verifies size.
@@ -231,7 +250,10 @@ MODELS=(
 
 log() { echo "$(date): $*" | tee -a "$LOG"; }
 
-log "📥 === MiniMax H3 model download started (PID $$) ==="
+TOTAL_MODELS=${#MODELS[@]}
+CURRENT=0
+
+log "📥 === MiniMax H3 model download started (PID $$) — $TOTAL_MODELS models ==="
 log "⏳ Waiting for /workspace mount and ComfyUI ready marker..."
 for i in $(seq 1 120); do
     [ -f "$READY_MARKER" ] && break
@@ -320,14 +342,18 @@ download_model() {
 }
 
 failures=0
+MODEL_IDX=0
 for entry in "${MODELS[@]}"; do
+    MODEL_IDX=$((MODEL_IDX + 1))
     IFS='|' read -r subdir name url min_size <<< "$entry"
+    log "━━━ [$MODEL_IDX/$TOTAL_MODELS] ━━━"
     download_model "$subdir" "$name" "$url" "$min_size" || failures=$((failures + 1))
     # Small delay between downloads to avoid HF rate limiting (429)
     sleep 5
 done
 
 log "📦 === MiniMax H3 model download finished ($failures failures) ==="
+log "✅ All models ready — ComfyUI can now use MiniMax H3 workflows"
 EOF
 RUN chmod +x /usr/local/bin/download-minimax-h3-models.sh
 
@@ -429,6 +455,9 @@ fi
 
 # Launch MiniMax H3 workflow download in background (always fetches latest from GitHub)
 setsid /usr/local/bin/download-minimax-workflows.sh </dev/null &
+
+# Launch download log server on port 8189 (serves last 30 lines of download log)
+setsid /usr/local/bin/download-log-server.sh </dev/null &
 
 # Launch MiniMax H3 model download in a detached session (survives exec /start.sh)
 # ~50GB, takes a long time on first boot; models persist on /workspace volume.
