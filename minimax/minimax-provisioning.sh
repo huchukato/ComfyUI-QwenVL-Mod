@@ -2,7 +2,6 @@
 
 source /venv/main/bin/activate
 COMFYUI_DIR=${WORKSPACE}/ComfyUI
-APT_INSTALL="${APT_INSTALL:-apt-get install -y}"
 
 APT_PACKAGES=(
     "aria2"
@@ -54,11 +53,9 @@ CHECKPOINT_MODELS=(
 )
 
 UNET_MODELS=(
-   
 )
 
 LORA_MODELS=(
-            
 )
 
 VAE_MODELS=(
@@ -70,6 +67,10 @@ ESRGAN_MODELS=(
 TEXT_ENCODERS=(
 )
 
+CONTROLNET_MODELS=(
+)
+
+# Large MiniMax H3 models downloaded via hf/huggingface-cli (format: subdir|name|url|min_size_bytes)
 MINIMAX_MODELS=(
     "vae|minimax_h3_video_vae_fp16.safetensors|https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors|5200000000"
     "vae|minimax_h3_audio_vae_fp32.safetensors|https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors|600000000"
@@ -77,277 +78,90 @@ MINIMAX_MODELS=(
     "diffusion_models|minimax_h3_ref2va_pruned_int8_convrot.safetensors|https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors|20970379616"
     "text_encoders|qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors|https://huggingface.co/ethanfel/Qwen3-VL-32B-Ultra-Heretic-H3-ComfyUI-INT8-ConvRot/resolve/main/qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors|26000000000"
     "loras|minimax_h3_turbo_v4_step600_ema.safetensors|https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora/resolve/main/minimax_h3_turbo_v4_step600_ema.safetensors|779849816"
-    # 10Eros-Max INT8 ConvRot HQ (~22GB) — only 32 QKV tensors modified, rest bit-identical to H3
-    # Better prompt adherence + audio than beta1, same VRAM as standard H3 int8
     "diffusion_models|10Eros_Max_H3_FL2VA-INT8-ConvRot-HQ.safetensors|https://huggingface.co/DmitryDB/MiniMax-H3-10Eros-Max-Quants/resolve/main/FL2VA/10Eros_Max_H3_FL2VA-INT8-ConvRot-HQ.safetensors|22000000000"
-    # Turbo LoRA 8-step for 10Eros-Max pruned (1.96GB) — compat full-width
     "loras|minimax_h3_fl2v_turbo_8step_v1.0_10ErosMax_beta1_pruned_compat_v001_T8.safetensors|https://huggingface.co/t8star/minimax_h3_turbo_4step_10ErosMax_test4_pruned_curveproj1025_T8/resolve/main/minimax_h3_fl2v_turbo_8step_v1.0_10ErosMax_beta1_pruned_compat_v001_T8.safetensors|1950000000"
 )
-
-CONTROLNET_MODELS=(
-)
-
-function provisioning_force_comfyui_version() {
-    local repo_dir="$1"
-    local label="$2"
-    local tag="v0.31.0"
-
-    if [ ! -d "$repo_dir/.git" ]; then
-        echo "⚠️  $label has no .git directory, skipping version force"
-        return 0
-    fi
-
-    echo "🔧 Ensuring $label is on v0.31.0 (MiniMax H3 requirement)..."
-    if timeout 60 git -C "$repo_dir" fetch --tags --force origin 2>/dev/null; then
-        local current_hash target_hash
-        current_hash=$(git -C "$repo_dir" rev-parse --short HEAD 2>/dev/null || echo "unknown")
-        if timeout 30 git -C "$repo_dir" -c advice.detachedHead=false checkout -f "$tag" 2>/dev/null; then
-            target_hash=$(git -C "$repo_dir" rev-parse --short HEAD 2>/dev/null || echo "unknown")
-            echo "✅ $label forced to $tag ($current_hash -> $target_hash)"
-            if [ -f "$repo_dir/requirements.txt" ]; then
-                echo "🔄 Re-installing ComfyUI requirements..."
-                pip install --root-user-action=ignore --no-cache-dir -r "$repo_dir/requirements.txt" 2>&1 | tail -n 20
-            fi
-        else
-            echo "❌ $label checkout $tag failed"
-        fi
-    else
-        echo "⚠️  $label fetch tags failed/timed out (offline?), leaving current version"
-    fi
-}
-
-function download_minimax_model() {
-    local base_dir="$1" subdir="$2" name="$3" url="$4" min_size="$5"
-    local dest="$base_dir/$subdir/$name"
-    local max_retries=5
-
-    # Parse Hugging Face repo_id and relative repo path from the URL.
-    local repo_id repo_path
-    repo_id=$(echo "$url" | awk -F/ '{print $4"/"$5}')
-    repo_path=$(echo "$url" | sed -E 's#https?://[^/]+/[^/]+/[^/]+/resolve/main/(.+)#\1#')
-
-    # Use 'hf' command (newer huggingface_hub) or fall back to 'huggingface-cli'
-    local hf_cmd="hf"
-    command -v hf >/dev/null 2>&1 || hf_cmd="huggingface-cli"
-
-    for attempt in $(seq 1 $max_retries); do
-        if [ -f "$dest" ] || [ -L "$dest" ]; then
-            local size
-            size=$(stat -L -c%s "$dest" 2>/dev/null || stat -L -f%z "$dest" 2>/dev/null || echo 0)
-            if [ "$size" -ge "$min_size" ]; then
-                dllog "✅ $name already present ($size bytes >= $min_size), skipping"
-                return 0
-            else
-                dllog "⚠️  $name incomplete ($size bytes < $min_size), retrying (attempt $attempt/$max_retries)"
-            fi
-        else
-            dllog "📥 Downloading $name (attempt $attempt/$max_retries)..."
-        fi
-
-        # Download to a temp dir to avoid path nesting issues.
-        local tmp_dir="$base_dir/.tmp_download_${name//\//_}"
-        rm -rf "$tmp_dir"
-        mkdir -p "$tmp_dir" "$(dirname "$dest")"
-        export HF_HUB_ENABLE_HF_TRANSFER=1
-        export HF_XET_HIGH_PERFORMANCE=1
-        # hf: resume is automatic; huggingface-cli: needs --resume-download
-        local resume_flag=""
-        [ "$hf_cmd" = "huggingface-cli" ] && resume_flag="--resume-download"
-
-        # Progress monitor: log file size every 10s while downloading
-        local progress_pid=""
-        (
-            sleep 5
-            while true; do
-                local cur_size=0
-                if [ -d "$tmp_dir" ]; then
-                    cur_size=$(find "$tmp_dir" -type f -name "*.safetensors*" -exec stat -L -c%s {} + 2>/dev/null | awk '{s+=$1} END {print s+0}')
-                fi
-                if [ "$cur_size" -gt 0 ]; then
-                    local mb=$((cur_size / 1048576))
-                    local pct=$((cur_size * 100 / min_size))
-                    [ "$pct" -gt 100 ] && pct=100
-                    dllog "   📊 $name: ${mb}MB / $((min_size / 1048576))MB (${pct}%)"
-                fi
-                sleep 10
-            done
-        ) &
-        progress_pid=$!
-
-        if $hf_cmd download "$repo_id" "$repo_path" \
-                --local-dir "$tmp_dir" \
-                $resume_flag >> /var/log/minimax-h3-models.log 2>&1; then
-            kill "$progress_pid" 2>/dev/null || true
-            local downloaded_path="$tmp_dir/$repo_path"
-            if [ -f "$downloaded_path" ] || [ -L "$downloaded_path" ]; then
-                if [ -L "$downloaded_path" ]; then
-                    ln -sf "$(readlink -f "$downloaded_path")" "$dest"
-                else
-                    mv -f "$downloaded_path" "$dest"
-                fi
-                rm -rf "$tmp_dir"
-                local size
-                size=$(stat -L -c%s "$dest" 2>/dev/null || stat -L -f%z "$dest" 2>/dev/null || echo 0)
-                if [ "$size" -ge "$min_size" ]; then
-                    dllog "✅ $name downloaded successfully ($size bytes)"
-                    return 0
-                else
-                    dllog "⚠️  $name downloaded but size $size < $min_size, will retry"
-                fi
-            else
-                dllog "⚠️  $name not found at $downloaded_path after download, will retry"
-                rm -rf "$tmp_dir"
-            fi
-        else
-            kill "$progress_pid" 2>/dev/null || true
-            dllog "⚠️  $hf_cmd failed for $name (attempt $attempt), retrying in $((attempt*10))s..."
-            rm -rf "$tmp_dir"
-        fi
-
-        [ "$attempt" -lt "$max_retries" ] && sleep $((attempt * 10))
-    done
-
-    dllog "❌ FAILED: $name could not be downloaded after $max_retries attempts"
-    return 1
-}
-
-function provisioning_get_minimax_models() {
-    local base_dir="${WORKSPACE:-/workspace}/ComfyUI/models"
-    local ready_marker="${WORKSPACE:-/workspace}/ComfyUI/main.py"
-    local log_file="/var/log/minimax-h3-models.log"
-    mkdir -p /var/log
-
-    # Log to both stdout and file (so /dlstatus endpoint in ComfyUI can serve it)
-    dllog() { echo "$(date): $*" | tee -a "$log_file"; }
-
-    local all_complete=true
-    for entry in "${MINIMAX_MODELS[@]}"; do
-        IFS='|' read -r subdir name url min_size <<< "$entry"
-        local dest="$base_dir/$subdir/$name"
-        local size
-        size=$(stat -c%s "$dest" 2>/dev/null || stat -f%z "$dest" 2>/dev/null || echo 0)
-        if [ "$size" -lt "$min_size" ]; then
-            all_complete=false
-            break
-        fi
-    done
-    if [ "$all_complete" = true ]; then
-        dllog "✅ All MiniMax H3 models already complete, no download needed"
-        dllog "✅ All models ready — ComfyUI can now use MiniMax H3 workflows"
-        return 0
-    fi
-
-    mkdir -p "$base_dir"/{vae,diffusion_models,text_encoders,loras}
-
-    local total=${#MINIMAX_MODELS[@]}
-
-    dllog "📥 === MiniMax H3 model download started (PID $$) — $total models ==="
-    dllog "⏳ Waiting for ComfyUI ready marker..."
-    for i in $(seq 1 120); do
-        [ -f "$ready_marker" ] && break
-        sleep 5
-    done
-
-    if [ ! -f "$ready_marker" ]; then
-        dllog "❌ ERROR: ComfyUI ready marker not found after 600s, aborting"
-        return 1
-    fi
-
-    dllog "✅ ComfyUI ready, base dir: $base_dir"
-
-    local failures=0
-    local idx=0
-    for entry in "${MINIMAX_MODELS[@]}"; do
-        idx=$((idx + 1))
-        IFS='|' read -r subdir name url min_size <<< "$entry"
-        dllog "━━━ [$idx/$total] ━━━"
-        download_minimax_model "$base_dir" "$subdir" "$name" "$url" "$min_size" || failures=$((failures + 1))
-    done
-
-    dllog "📦 === MiniMax H3 model download finished ($failures failures) ==="
-    dllog "✅ All models ready — ComfyUI can now use MiniMax H3 workflows"
-}
 
 ### DO NOT EDIT BELOW HERE UNLESS YOU KNOW WHAT YOU ARE DOING ###
 
 function provisioning_start() {
     provisioning_print_header
     echo "🚀 Starting provisioning process..."
-    
+
     echo "📦 Installing APT packages..."
     provisioning_get_apt_packages
-    
+
     echo "🔧 Installing custom nodes..."
     provisioning_get_nodes
-    
+
     echo "📦 Installing PIP packages..."
     provisioning_get_pip_packages
-    
+
     echo "📁 Downloading workflows..."
     mkdir -p "${COMFYUI_DIR}/user/default/workflows"
-    
+
     provisioning_get_files \
         "${COMFYUI_DIR}/user/default/workflows" \
         "${WORKFLOWS[@]}"
-        
+
     echo "✅ Workflows downloaded to: ${COMFYUI_DIR}/user/default/workflows"
-        
+
     echo "🎯 Downloading checkpoint models..."
     provisioning_get_files \
         "${COMFYUI_DIR}/models/checkpoints" \
         "${CHECKPOINT_MODELS[@]}"
-        
+
     echo "🧠 Downloading U-NET models..."
     provisioning_get_files \
         "${COMFYUI_DIR}/models/unet" \
         "${UNET_MODELS[@]}"
-        
+
     echo "🎨 Downloading LoRA models..."
     provisioning_get_files \
         "${COMFYUI_DIR}/models/lora" \
         "${LORA_MODELS[@]}"
-        
+
     echo "🎮 Downloading ControlNet models..."
     provisioning_get_files \
         "${COMFYUI_DIR}/models/controlnet" \
         "${CONTROLNET_MODELS[@]}"
-        
+
     echo "🔮 Downloading VAE models..."
     provisioning_get_files \
         "${COMFYUI_DIR}/models/vae" \
         "${VAE_MODELS[@]}"
-        
+
     echo "⚡ Downloading upscale models..."
     provisioning_get_files \
         "${COMFYUI_DIR}/models/upscale_models" \
         "${ESRGAN_MODELS[@]}"
-        
+
     echo "📝 Downloading text encoders..."
     provisioning_get_files \
         "${COMFYUI_DIR}/models/text_encoders" \
-        "${TEXT_ENCODERS[@]}"        
-    
-    echo "🧬 Starting MiniMax H3 model download in background..."
-    provisioning_get_minimax_models
-    
+        "${TEXT_ENCODERS[@]}"
+
+    echo "🎬 Downloading MiniMax H3 models (large files via hf)..."
+    download_minimax_models
+
     provisioning_print_end
 }
 
 function provisioning_get_apt_packages() {
     if [[ -n $APT_PACKAGES ]]; then
-            sudo $APT_INSTALL ${APT_PACKAGES[@]}
+        sudo $APT_INSTALL ${APT_PACKAGES[@]}
     fi
 }
 
 function provisioning_get_pip_packages() {
     if [[ -n $PIP_PACKAGES ]]; then
-           echo "Installing PIP packages..."
-           for package in "${PIP_PACKAGES[@]}"; do
-               echo "Installing: $package"
-               pip install --root-user-action=ignore --no-cache-dir $package
-               echo "✓ Completed: $package"
-           done
-           echo "All PIP packages installed successfully!"
+        echo "Installing PIP packages..."
+        for package in "${PIP_PACKAGES[@]}"; do
+            echo "Installing: $package"
+            pip install --root-user-action=ignore --no-cache-dir $package
+            echo "✓ Completed: $package"
+        done
+        echo "All PIP packages installed successfully!"
     fi
 }
 
@@ -359,16 +173,25 @@ function provisioning_get_nodes() {
         dir="${repo##*/}"
         path="${COMFYUI_DIR}/custom_nodes/${dir}"
         requirements="${path}/requirements.txt"
-        
+
         echo "[$count/${#NODES[@]}] Processing node: $dir"
-        
+
         if [[ -d $path ]]; then
             if [[ ${AUTO_UPDATE,,} != "false" ]]; then
                 echo "  → Updating existing node..."
-                ( cd "$path" && git pull )
+                local branch
+                branch=$(git -C "$path" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "main")
+                if git -C "$path" pull --ff-only origin "$branch" 2>/dev/null; then
+                    echo "  ✅ $dir updated"
+                else
+                    echo "  ⚠️  $dir pull failed, resetting to origin/$branch..."
+                    git -C "$path" fetch origin "$branch" 2>/dev/null && \
+                        git -C "$path" reset --hard "origin/$branch" 2>/dev/null || \
+                        echo "  ⚠️  $dir reset failed, leaving as-is"
+                fi
                 if [[ -e $requirements ]]; then
-                   echo "  → Installing requirements..."
-                   pip install --root-user-action=ignore --no-cache-dir -r "$requirements"
+                    echo "  → Installing requirements..."
+                    pip install --root-user-action=ignore --no-cache-dir -r "$requirements"
                 fi
             else
                 echo "  → Node exists, skipping (AUTO_UPDATE=false)"
@@ -381,14 +204,14 @@ function provisioning_get_nodes() {
                 pip install --root-user-action=ignore --no-cache-dir -r "${requirements}"
             fi
         fi
-        
+
     done
     echo "All nodes processed successfully!"
 }
 
 function provisioning_get_files() {
     if [[ -z $2 ]]; then return 1; fi
-    
+
     dir="$1"
     mkdir -p "$dir"
     shift
@@ -420,7 +243,6 @@ function provisioning_has_valid_hf_token() {
         -H "Authorization: Bearer $HF_TOKEN" \
         -H "Content-Type: application/json")
 
-    # Check if the token is valid
     if [ "$response" -eq 200 ]; then
         return 0
     else
@@ -436,7 +258,6 @@ function provisioning_has_valid_civitai_token() {
         -H "Authorization: Bearer $CIVITAI_TOKEN" \
         -H "Content-Type: application/json")
 
-    # Check if the token is valid
     if [ "$response" -eq 200 ]; then
         return 0
     else
@@ -444,12 +265,11 @@ function provisioning_has_valid_civitai_token() {
     fi
 }
 
-# Download from $1 URL to $2 file path
 function provisioning_download() {
-    if [[ -n $HF_TOKEN && $1 =~ ^https://([a-zA-Z0-9_-]+\\.)?huggingface\\.co(/|$|\\?) ]]; then
+    if [[ -n $HF_TOKEN && $1 =~ ^https://([a-zA-Z0-9_-]+\.)?huggingface\.co(/|$|\?) ]]; then
         auth_token="$HF_TOKEN"
-    elif 
-        [[ -n $CIVITAI_TOKEN && $1 =~ ^https://([a-zA-Z0-9_-]+\\.)?civitai\\.com(/|$|\\?) ]]; then
+    elif
+        [[ -n $CIVITAI_TOKEN && $1 =~ ^https://([a-zA-Z0-9_-]+\.)?civitai\.com(/|$|\?) ]]; then
         auth_token="$CIVITAI_TOKEN"
     fi
     if [[ -n $auth_token ]];then
@@ -459,7 +279,58 @@ function provisioning_download() {
     fi
 }
 
-# Allow user to disable provisioning if they started with a script they didn't want
+function download_minimax_models() {
+    local base_dir="${COMFYUI_DIR}/models"
+    mkdir -p "$base_dir"/{vae,diffusion_models,text_encoders,loras}
+
+    local hf_cmd="hf"
+    command -v hf >/dev/null 2>&1 || hf_cmd="huggingface-cli"
+
+    for entry in "${MINIMAX_MODELS[@]}"; do
+        IFS='|' read -r subdir name url min_size <<< "$entry"
+        local dest="$base_dir/$subdir/$name"
+
+        if [ -f "$dest" ] || [ -L "$dest" ]; then
+            local size
+            size=$(stat -L -c%s "$dest" 2>/dev/null || stat -L -f%z "$dest" 2>/dev/null || echo 0)
+            if [ "$size" -ge "$min_size" ]; then
+                echo "✅ $name already present ($size bytes >= $min_size), skipping"
+                continue
+            fi
+        fi
+
+        echo "📥 Downloading $name ..."
+        local repo_id repo_path tmp_dir
+        repo_id=$(echo "$url" | awk -F/ '{print $4"/"$5}')
+        repo_path=$(echo "$url" | sed -E 's#https?://[^/]+/[^/]+/[^/]+/resolve/main/(.+)#\1#')
+        tmp_dir="$base_dir/.tmp_download_${name//\//_}"
+        rm -rf "$tmp_dir"
+        mkdir -p "$tmp_dir"
+
+        export HF_HUB_ENABLE_HF_TRANSFER=1
+        export HF_XET_HIGH_PERFORMANCE=1
+        local resume_flag=""
+        [ "$hf_cmd" = "huggingface-cli" ] && resume_flag="--resume-download"
+
+        if $hf_cmd download "$repo_id" "$repo_path" --local-dir "$tmp_dir" $resume_flag; then
+            local downloaded_path="$tmp_dir/$repo_path"
+            if [ -f "$downloaded_path" ] || [ -L "$downloaded_path" ]; then
+                mv -f "$downloaded_path" "$dest"
+                rm -rf "$tmp_dir"
+                local size
+                size=$(stat -L -c%s "$dest" 2>/dev/null || stat -L -f%z "$dest" 2>/dev/null || echo 0)
+                echo "✅ $name downloaded successfully ($size bytes)"
+            else
+                echo "⚠️  $name not found after download"
+                rm -rf "$tmp_dir"
+            fi
+        else
+            echo "❌ $hf_cmd failed for $name"
+            rm -rf "$tmp_dir"
+        fi
+    done
+}
+
 if [[ ! -f /.noprovisioning ]]; then
     provisioning_start
 fi
