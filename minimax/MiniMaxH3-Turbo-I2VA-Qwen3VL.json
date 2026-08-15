@@ -2,7 +2,7 @@
   "id": "2e5fb033-7e4f-4e73-a580-590a2a38a074",
   "revision": 0,
   "last_node_id": 186,
-  "last_link_id": 358,
+  "last_link_id": 360,
   "nodes": [
     {
       "id": 118,
@@ -429,7 +429,7 @@
       ],
       "size": [
         1155.5330597730813,
-        986.7373461223583
+        334
       ],
       "flags": {},
       "order": 17,
@@ -767,7 +767,7 @@
       "type": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
       "pos": [
         -857.6282454676217,
-        4861.63609671711
+        4862.679608874164
       ],
       "size": [
         643.7447588082441,
@@ -1070,7 +1070,7 @@
         "state": {
           "lastGroupId": 12,
           "lastNodeId": 186,
-          "lastLinkId": 358,
+          "lastLinkId": 360,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -2129,7 +2129,7 @@
                 "localized_name": "model",
                 "name": "model",
                 "type": "MODEL",
-                "link": 324
+                "link": 359
               },
               {
                 "localized_name": "conditioning",
@@ -2174,7 +2174,7 @@
                 "localized_name": "model",
                 "name": "model",
                 "type": "MODEL",
-                "link": 325
+                "link": 360
               },
               {
                 "localized_name": "steps",
@@ -2219,7 +2219,7 @@
               106
             ],
             "flags": {},
-            "order": 18,
+            "order": 17,
             "mode": 0,
             "inputs": [
               {
@@ -2235,7 +2235,8 @@
                 "name": "MODEL",
                 "type": "MODEL",
                 "links": [
-                  320
+                  359,
+                  360
                 ]
               }
             ],
@@ -2262,7 +2263,7 @@
               58
             ],
             "flags": {},
-            "order": 19,
+            "order": 18,
             "mode": 0,
             "inputs": [
               {
@@ -2348,7 +2349,7 @@
               402.4929101562493
             ],
             "flags": {},
-            "order": 20,
+            "order": 19,
             "mode": 0,
             "inputs": [
               {
@@ -2446,51 +2447,6 @@
               1,
               false
             ]
-          },
-          {
-            "id": 168,
-            "type": "EasyCache",
-            "pos": [
-              -819.8265707662051,
-              4315.99752405146
-            ],
-            "size": [
-              328.39989453124986,
-              130
-            ],
-            "flags": {},
-            "order": 17,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "model",
-                "name": "model",
-                "type": "MODEL",
-                "link": 320
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "MODEL",
-                "name": "MODEL",
-                "type": "MODEL",
-                "links": [
-                  324,
-                  325
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfy-core",
-              "ver": "0.32.0",
-              "Node name for S&R": "EasyCache"
-            },
-            "widgets_values": [
-              0.2,
-              0.15,
-              0.95,
-              false
-            ]
           }
         ],
         "groups": [
@@ -2544,14 +2500,14 @@
           },
           {
             "id": 11,
-            "title": "OPTIMIZATION",
+            "title": "SOL-ATTN TURBO LORA",
             "bounding": [
               -1273.6210153359254,
               3964.9836691907217,
               815.0242610727671,
               535.4531981120263
             ],
-            "color": "#3f789e",
+            "color": "#b06634",
             "flags": {}
           }
         ],
@@ -2853,14 +2809,6 @@
             "type": "MODEL"
           },
           {
-            "id": 320,
-            "origin_id": 169,
-            "origin_slot": 0,
-            "target_id": 168,
-            "target_slot": 0,
-            "type": "MODEL"
-          },
-          {
             "id": 321,
             "origin_id": 170,
             "origin_slot": 0,
@@ -2885,28 +2833,28 @@
             "type": "MODEL"
           },
           {
-            "id": 324,
-            "origin_id": 168,
-            "origin_slot": 0,
-            "target_id": 16,
-            "target_slot": 0,
-            "type": "MODEL"
-          },
-          {
-            "id": 325,
-            "origin_id": 168,
-            "origin_slot": 0,
-            "target_id": 9,
-            "target_slot": 0,
-            "type": "MODEL"
-          },
-          {
             "id": 340,
             "origin_id": -10,
             "origin_slot": 14,
             "target_id": 155,
             "target_slot": 1,
             "type": "COMBO"
+          },
+          {
+            "id": 359,
+            "origin_id": 169,
+            "origin_slot": 0,
+            "target_id": 16,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 360,
+            "origin_id": 169,
+            "origin_slot": 0,
+            "target_id": 9,
+            "target_slot": 0,
+            "type": "MODEL"
           }
         ],
         "extra": {}
@@ -2923,8 +2871,8 @@
     "ds": {
       "scale": 0.8759481083385153,
       "offset": [
-        2116.7907233572787,
-        -4399.000667963383
+        2063.4556575522793,
+        -4203.319841247378
       ]
     }
   },
