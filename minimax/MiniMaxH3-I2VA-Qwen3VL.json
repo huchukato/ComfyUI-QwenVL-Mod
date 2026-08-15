@@ -416,7 +416,7 @@
       ],
       "size": [
         1155.5330597730813,
-        991.4687338714127
+        334
       ],
       "flags": {},
       "order": 17,
@@ -622,6 +622,147 @@
       "bgcolor": "#533"
     },
     {
+      "id": 177,
+      "type": "AutoRifeTensorrt",
+      "pos": [
+        -167.0362059699841,
+        5095.068328091564
+      ],
+      "size": [
+        327.0858377006316,
+        224
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "link": 333
+        },
+        {
+          "name": "rife_trt_model",
+          "type": "RIFE_TRT_MODEL",
+          "link": 332
+        },
+        {
+          "name": "interpolation_states",
+          "shape": 7,
+          "type": "INTERPOLATION_STATES",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            360
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+        "ver": "120f2ca1b1e226d7e3c23917647d78a6a3318b92",
+        "Node name for S&R": "AutoRifeTensorrt"
+      },
+      "widgets_values": [
+        100,
+        2,
+        false,
+        1,
+        ""
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 187,
+      "type": "UpscalerTensorrt",
+      "pos": [
+        -163.18835615501774,
+        5588.324263375397
+      ],
+      "size": [
+        311.232421875,
+        94
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 360
+        },
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "link": 359
+        }
+      ],
+      "outputs": [
+        {
+          "name": "upscaled_images",
+          "type": "IMAGE",
+          "links": [
+            361
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
+        "Node name for S&R": "UpscalerTensorrt"
+      },
+      "widgets_values": [
+        "1080p",
+        "2",
+        2048,
+        2048
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 186,
+      "type": "LoadUpscalerTensorrtModel",
+      "pos": [
+        -162.69396900836418,
+        5451.364182307425
+      ],
+      "size": [
+        306.05743379171565,
+        84.29572674551946
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "upscaler_trt_model",
+          "type": "UPSCALER_TRT_MODEL",
+          "links": [
+            359
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
+        "Node name for S&R": "LoadUpscalerTensorrtModel"
+      },
+      "widgets_values": [
+        "RealESRGAN_x2plus",
+        "fp16"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
       "id": 105,
       "type": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
       "pos": [
@@ -735,147 +876,6 @@
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
-    },
-    {
-      "id": 177,
-      "type": "AutoRifeTensorrt",
-      "pos": [
-        -167.0362059699841,
-        5095.068328091564
-      ],
-      "size": [
-        327.0858377006316,
-        224
-      ],
-      "flags": {},
-      "order": 14,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "frames",
-          "type": "IMAGE",
-          "link": 333
-        },
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "link": 332
-        },
-        {
-          "name": "interpolation_states",
-          "shape": 7,
-          "type": "INTERPOLATION_STATES",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            360
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "120f2ca1b1e226d7e3c23917647d78a6a3318b92",
-        "Node name for S&R": "AutoRifeTensorrt"
-      },
-      "widgets_values": [
-        100,
-        2,
-        false,
-        1,
-        ""
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 186,
-      "type": "LoadUpscalerTensorrtModel",
-      "pos": [
-        -162.69396900836418,
-        5451.364182307425
-      ],
-      "size": [
-        306.05743379171565,
-        84.29572674551946
-      ],
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "links": [
-            359
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
-        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
-        "Node name for S&R": "LoadUpscalerTensorrtModel"
-      },
-      "widgets_values": [
-        "2xLexicaRRDBNet_Sharp",
-        "fp16"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 187,
-      "type": "UpscalerTensorrt",
-      "pos": [
-        -163.18835615501774,
-        5588.324263375397
-      ],
-      "size": [
-        311.232421875,
-        94
-      ],
-      "flags": {},
-      "order": 16,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 360
-        },
-        {
-          "name": "upscaler_trt_model",
-          "type": "UPSCALER_TRT_MODEL",
-          "link": 359
-        }
-      ],
-      "outputs": [
-        {
-          "name": "upscaled_images",
-          "type": "IMAGE",
-          "links": [
-            361
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
-        "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687",
-        "Node name for S&R": "UpscalerTensorrt"
-      },
-      "widgets_values": [
-        "1080p",
-        "2",
-        2048,
-        2048
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
     }
   ],
   "links": [
@@ -2312,51 +2312,6 @@
             ]
           },
           {
-            "id": 168,
-            "type": "EasyCache",
-            "pos": [
-              -819.8265707662051,
-              4315.99752405146
-            ],
-            "size": [
-              328.39989453124986,
-              130
-            ],
-            "flags": {},
-            "order": 16,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "model",
-                "name": "model",
-                "type": "MODEL",
-                "link": 320
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "MODEL",
-                "name": "MODEL",
-                "type": "MODEL",
-                "links": [
-                  324,
-                  325
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfy-core",
-              "ver": "0.32.0",
-              "Node name for S&R": "EasyCache"
-            },
-            "widgets_values": [
-              0.2,
-              0.15,
-              0.95,
-              false
-            ]
-          },
-          {
             "id": 9,
             "type": "BasicScheduler",
             "pos": [
@@ -2441,6 +2396,51 @@
             "widgets_values": [
               "res_multistep"
             ]
+          },
+          {
+            "id": 168,
+            "type": "EasyCache",
+            "pos": [
+              -819.8265707662051,
+              4315.99752405146
+            ],
+            "size": [
+              328.39989453124986,
+              130
+            ],
+            "flags": {},
+            "order": 16,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 320
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "MODEL",
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  324,
+                  325
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.32.0",
+              "Node name for S&R": "EasyCache"
+            },
+            "widgets_values": [
+              0.1,
+              0.15,
+              0.95,
+              false
+            ]
           }
         ],
         "groups": [
@@ -2494,14 +2494,14 @@
           },
           {
             "id": 11,
-            "title": "OPTIMIZATION",
+            "title": "SOL-ATTN I2VA",
             "bounding": [
               -1273.6210153359254,
               3964.9836691907217,
               815.0242610727671,
               535.4531981120263
             ],
-            "color": "#3f789e",
+            "color": "#b06634",
             "flags": {}
           }
         ],
@@ -2857,8 +2857,8 @@
     "ds": {
       "scale": 0.7239240564781118,
       "offset": [
-        2088.4085410439584,
-        -4616.931989561527
+        2290.297596176384,
+        -4427.070482308028
       ]
     }
   },
