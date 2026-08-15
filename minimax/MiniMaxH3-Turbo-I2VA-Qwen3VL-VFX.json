@@ -1,8 +1,8 @@
 {
   "id": "d45e25ee-8e76-4890-ab38-b6dcaa6d9280",
   "revision": 0,
-  "last_node_id": 188,
-  "last_link_id": 365,
+  "last_node_id": 189,
+  "last_link_id": 368,
   "nodes": [
     {
       "id": 118,
@@ -112,7 +112,7 @@
         106
       ],
       "flags": {},
-      "order": 12,
+      "order": 11,
       "mode": 4,
       "inputs": [
         {
@@ -151,51 +151,6 @@
       "bgcolor": "#335"
     },
     {
-      "id": 176,
-      "type": "AutoLoadRifeTensorrtModel",
-      "pos": [
-        -150.73214969469612,
-        4906.96500483087
-      ],
-      "size": [
-        322.5669921875,
-        130
-      ],
-      "flags": {},
-      "order": 4,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "custom_config",
-          "shape": 7,
-          "type": "RIFE_RESOLUTION_CONFIG",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "links": [
-            332
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "120f2ca1b1e226d7e3c23917647d78a6a3318b92",
-        "Node name for S&R": "AutoLoadRifeTensorrtModel"
-      },
-      "widgets_values": [
-        "rife49_ensemble_True_scale_1_sim",
-        "fp16",
-        "large",
-        1
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
       "id": 175,
       "type": "PrimitiveInt",
       "pos": [
@@ -207,7 +162,7 @@
         82
       ],
       "flags": {},
-      "order": 5,
+      "order": 4,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -244,7 +199,7 @@
         82
       ],
       "flags": {},
-      "order": 6,
+      "order": 5,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -283,7 +238,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 10,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
@@ -373,10 +328,10 @@
       ],
       "size": [
         1155.5330597730813,
-        986.7373461223583
+        334
       ],
       "flags": {},
-      "order": 17,
+      "order": 16,
       "mode": 0,
       "inputs": [
         {
@@ -467,7 +422,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 9,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
@@ -513,7 +468,7 @@
         154
       ],
       "flags": {},
-      "order": 7,
+      "order": 6,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -540,21 +495,21 @@
       "id": 187,
       "type": "RTXVideoSuperResolution",
       "pos": [
-        -149.0336487559427,
-        5454.135247467132
+        -156.71206985586102,
+        5350.36594587014
       ],
       "size": [
         285.81015625,
         106
       ],
       "flags": {},
-      "order": 15,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 364
+          "link": 368
         }
       ],
       "outputs": [
@@ -591,7 +546,7 @@
         742.267682441865
       ],
       "flags": {},
-      "order": 8,
+      "order": 7,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -634,7 +589,7 @@
         334.35740569392055
       ],
       "flags": {},
-      "order": 14,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -665,74 +620,18 @@
       "bgcolor": "#355"
     },
     {
-      "id": 177,
-      "type": "AutoRifeTensorrt",
-      "pos": [
-        -151.12348395219416,
-        5102.971808898915
-      ],
-      "size": [
-        327.0858377006316,
-        224
-      ],
-      "flags": {},
-      "order": 13,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "frames",
-          "type": "IMAGE",
-          "link": 363
-        },
-        {
-          "name": "rife_trt_model",
-          "type": "RIFE_TRT_MODEL",
-          "link": 332
-        },
-        {
-          "name": "interpolation_states",
-          "shape": 7,
-          "type": "INTERPOLATION_STATES",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            364
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
-        "ver": "120f2ca1b1e226d7e3c23917647d78a6a3318b92",
-        "Node name for S&R": "AutoRifeTensorrt"
-      },
-      "widgets_values": [
-        100,
-        2,
-        false,
-        1,
-        ""
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
       "id": 188,
       "type": "ImageResizeKJv2",
       "pos": [
-        -139.03364875594266,
-        5624.135247467132
+        -143.5554455807716,
+        5510.178413166948
       ],
       "size": [
         270,
         336
       ],
       "flags": {},
-      "order": 16,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -790,6 +689,61 @@
       "bgcolor": "#335"
     },
     {
+      "id": 189,
+      "type": "RIFE VFI",
+      "pos": [
+        -157.0051158830183,
+        4912.827399084873
+      ],
+      "size": [
+        321.8046875,
+        270
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "link": 367
+        },
+        {
+          "name": "optional_interpolation_states",
+          "shape": 7,
+          "type": "INTERPOLATION_STATES",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            368
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-frame-interpolation",
+        "ver": "26545cc2dd95bc3d27f056016300673bdeee78f5",
+        "Node name for S&R": "RIFE VFI"
+      },
+      "widgets_values": [
+        "rife49.pth",
+        100,
+        2,
+        true,
+        true,
+        1,
+        "float32",
+        false,
+        1
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
       "id": 105,
       "type": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
       "pos": [
@@ -801,7 +755,7 @@
         488.1139551136903
       ],
       "flags": {},
-      "order": 11,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
@@ -857,7 +811,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            363
+            367
           ]
         },
         {
@@ -943,14 +897,6 @@
       "STRING"
     ],
     [
-      332,
-      176,
-      0,
-      177,
-      1,
-      "RIFE_TRT_MODEL"
-    ],
-    [
       341,
       114,
       0,
@@ -1015,43 +961,31 @@
       "IMAGE"
     ],
     [
-      363,
-      105,
-      1,
-      177,
-      0,
-      "IMAGE"
-    ],
-    [
-      364,
-      177,
-      0,
-      187,
-      0,
-      "IMAGE"
-    ],
-    [
       365,
       188,
       0,
       126,
       0,
       "IMAGE"
+    ],
+    [
+      367,
+      105,
+      1,
+      189,
+      0,
+      "IMAGE"
+    ],
+    [
+      368,
+      189,
+      0,
+      187,
+      0,
+      "IMAGE"
     ]
   ],
   "groups": [
-    {
-      "id": 7,
-      "title": "FRAME INTERPOLATION",
-      "bounding": [
-        -173.3523438240073,
-        4832.866161424692,
-        360.18135699195864,
-        506.4775823828222
-      ],
-      "color": "#a1309b",
-      "flags": {}
-    },
     {
       "id": 9,
       "title": "24FPS",
@@ -1080,10 +1014,22 @@
       "id": 13,
       "title": "UPSCALE",
       "bounding": [
-        -169.03364875594255,
-        5354.135247467132,
-        345.8411917625151,
-        593.9736601614086
+        -176.71206985586088,
+        5250.36594587014,
+        341.52983655602543,
+        647.5121662424972
+      ],
+      "color": "#a1309b",
+      "flags": {}
+    },
+    {
+      "id": 14,
+      "title": "FRAME INTERPOLATION",
+      "bounding": [
+        -181.4006778148391,
+        4836.229980527139,
+        357.9976851169588,
+        382.23185191407265
       ],
       "color": "#a1309b",
       "flags": {}
@@ -1095,9 +1041,9 @@
         "id": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
         "version": 1,
         "state": {
-          "lastGroupId": 13,
-          "lastNodeId": 188,
-          "lastLinkId": 365,
+          "lastGroupId": 14,
+          "lastNodeId": 189,
+          "lastLinkId": 368,
           "lastRerouteId": 0
         },
         "revision": 0,
