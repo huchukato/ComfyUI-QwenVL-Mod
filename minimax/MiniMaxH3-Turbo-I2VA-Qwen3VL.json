@@ -720,6 +720,49 @@
       "bgcolor": "#335"
     },
     {
+      "id": 114,
+      "type": "LoadImage",
+      "pos": [
+        -1657.3752735521248,
+        4831.901071660882
+      ],
+      "size": [
+        481.3900943312203,
+        742.267682441865
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            299,
+            341
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "LoadImage",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.1",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "MBDS2_Ep1_StripClub_033_preview.png",
+        "image"
+      ],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
       "id": 105,
       "type": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
       "pos": [
@@ -821,7 +864,7 @@
         "qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
         "minimax_h3_video_vae_fp16.safetensors",
         "minimax_h3_audio_vae_fp32.safetensors",
-        "Qwen3-VL-8B-Heretic-Stable",
+        "Qwen3.5-4B-heretic-v2",
         "🎬 MiniMax H3 NSFW (5s)",
         false,
         8,
@@ -829,49 +872,6 @@
       ],
       "color": "#2a363b",
       "bgcolor": "#3f5159"
-    },
-    {
-      "id": 114,
-      "type": "LoadImage",
-      "pos": [
-        -1657.3752735521248,
-        4831.901071660882
-      ],
-      "size": [
-        481.3900943312203,
-        742.267682441865
-      ],
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            299,
-            341
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "title": "LoadImage",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.30.1",
-        "Node name for S&R": "LoadImage"
-      },
-      "widgets_values": [
-        "MBDS2_Ep1_StripClub_033_preview.png",
-        "image"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
     }
   ],
   "links": [
@@ -2921,10 +2921,10 @@
     "VHS_MetadataImage": true,
     "VHS_KeepIntermediate": true,
     "ds": {
-      "scale": 0.796316462125923,
+      "scale": 0.8759481083385153,
       "offset": [
-        2248.0092554892985,
-        -4582.336835050502
+        2116.7907233572787,
+        -4399.000667963383
       ]
     }
   },
