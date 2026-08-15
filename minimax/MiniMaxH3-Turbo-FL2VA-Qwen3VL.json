@@ -1,8 +1,8 @@
 {
   "id": "c0033410-f90d-46e0-9e2a-7228d5a7b623",
   "revision": 0,
-  "last_node_id": 194,
-  "last_link_id": 396,
+  "last_node_id": 195,
+  "last_link_id": 402,
   "nodes": [
     {
       "id": 118,
@@ -151,95 +151,6 @@
       "bgcolor": "#335"
     },
     {
-      "id": 126,
-      "type": "VHS_VideoCombine",
-      "pos": [
-        215.7505126496001,
-        4919.9800956574445
-      ],
-      "size": [
-        1155.5330597730813,
-        986.7373461223583
-      ],
-      "flags": {},
-      "order": 19,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 396
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": 242
-        },
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        },
-        {
-          "name": "filename_prefix",
-          "type": "STRING",
-          "widget": {
-            "name": "filename_prefix"
-          },
-          "link": 297
-        }
-      ],
-      "outputs": [
-        {
-          "name": "Filenames",
-          "type": "VHS_FILENAMES",
-          "links": null
-        }
-      ],
-      "title": "48FPS",
-      "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "4ee72c065db22c9d96c2427954dc69e7b908444b",
-        "Node name for S&R": "VHS_VideoCombine",
-        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
-      },
-      "widgets_values": {
-        "frame_rate": 48,
-        "loop_count": 0,
-        "filename_prefix": "video/MiniMax_H3_48FPS",
-        "format": "video/webm",
-        "pix_fmt": "yuv420p",
-        "crf": 20,
-        "save_metadata": true,
-        "trim_to_audio": false,
-        "pingpong": false,
-        "save_output": true,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "08_RandallKissesLucia_1.jpg_00002-audio.webm",
-            "subfolder": "",
-            "type": "output",
-            "format": "video/webm",
-            "frame_rate": 48,
-            "workflow": "08_RandallKissesLucia_1.jpg_00002.png",
-            "fullpath": "/workspace/ComfyUI/output/08_RandallKissesLucia_1.jpg_00002-audio.webm"
-          }
-        }
-      },
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
       "id": 156,
       "type": "WidgetToString",
       "pos": [
@@ -322,7 +233,7 @@
         "aux_id": "yolain/ComfyUI-Easy-Use"
       },
       "widgets_values": [
-        "How the reference pictures align with the target video — Picture 1 (from [Shot 1]) aligns with the 0.00-second mark of the target video; Picture 2 (from [Shot 1]) aligns with the 5.00-second mark of the target video.\n\nintegrated_multimodal_description: [Shot 1] A dimly lit, moody living room at night, bathed in cool blue ambient light from a wall sconce and a faint glow from a large abstract aerial-map canvas hanging above the couch. A young woman with long, dark, wavy hair lies on her back on a plush, off-white sofa, wearing a black long-sleeve crop top covered in vibrant floral and butterfly prints, paired with dark denim jeans. Her body is relaxed, one arm bent with her hand resting near her hip, the other draped along her side. A young man with short brown hair leans back against the sofa’s armrest, dressed in a black t-shirt with a bold yellow sleeve and a glowing yellow geometric fox design on the chest. His posture is loose, one arm resting on his thigh, the other near his side. At the start, the camera frames them in a medium shot from a slightly low angle, capturing their upper torsos and faces. As the clip progresses, the woman’s eyes flutter open, revealing a soft, dazed expression; her lips part slightly as she inhales deeply, her chest rising visibly beneath the fabric of her top. Her hand shifts subtly, fingers curling inward as if reacting to a phantom touch or the warmth of the air around her. The man’s gaze drifts toward her, his brow furrowing slightly in quiet curiosity or concern. His head tilts a few degrees, and his mouth opens fractionally as if about to speak or whisper. The camera executes a slow, smooth push-in toward their faces, maintaining a shallow depth of field that keeps them sharply in focus while softly blurring the background wall and artwork. The lighting remains cool but intensifies slightly around their faces, casting gentle highlights on their skin and creating a subtle sheen that suggests intimacy and warmth. By the end, the woman’s hand moves closer to her midsection, her expression softening into something more vulnerable and receptive. The man’s posture relaxes further, his arm shifting slightly as he settles deeper into the couch, his gaze locked onto her with growing intensity. The final frame mirrors Picture 2: a tighter composition, their faces closer together, the woman’s eyes half-lidded and luminous, the man’s expression fixed in quiet attention, the blue light wrapping around them like a shared secret.\n\noverall_soundscape: The room is quiet, punctuated by the soft, rhythmic sound of the woman’s breathing as it deepens and slows into something more languid. A faint, almost imperceptible creak echoes as the man shifts his weight against the couch cushion. As the camera pushes in, a low, warm hum rises—the distant murmur of a city at night, barely audible beneath the intimacy of the moment. Then, as their gazes lock, a soft exhale escapes the woman, followed by a barely audible, wet click of her tongue against her lips. The man’s breath hitches slightly, and a faint, dry rustle follows as he adjusts his position. These sounds are intimate, close-mic’d, and layered with the subtle friction of skin against fabric, the soft thud of a body settling into plush upholstery, and the faint, rhythmic pulse of a heartbeat that seems to sync with the slow creep of the camera.\n\nnon_diegetic_music: N/A"
+        "How the reference pictures align with the target video — Picture 1 (from [Shot 1]) aligns with the 0.00-second mark of the target video; Picture 2 (from [Shot 1]) aligns with the 5.00-second mark of the target video.\n\nintegrated_multimodal_description: The scene opens in a dimly lit, intimate lounge with exposed brick walls, red leather furniture, and a neon pink lip sign casting a sensual glow over the subjects. A woman with brown hair in a bun, wearing blue thong panties, white lace stockings, and white heels sits on the edge of a red sofa, looking back over her shoulder with a confident, slightly flushed expression. Beside her, a man in a dark blue button-down shirt and jeans sits upright, watching her, while another man in a black polo shirt and jeans lounges slumped against the back of the sofa, looking down with a bored or intoxicated demeanor. The camera begins with a medium shot, capturing the group's relaxed but tense posture.\n\nAs the clip progresses, the camera executes a slow, smooth arc to the right and tilts down, shifting the focus from the group to the man in the black polo who is now losing consciousness. The woman, who was initially sitting upright, begins to lean forward, her movements becoming fluid and heavy with a mix of exhaustion and arousal. Her gaze drops from the other man to the slumped figure, her expression shifting from confidence to a soft, dazed smile. The man in the blue shirt remains relatively still but his head begins to droop slightly as he loses interest or succumbs to the atmosphere.\n\nThe transition intensifies as the man in the black polo collapses completely, his head falling back against the red leather cushion, his eyes rolling up into his head in a state of deep intoxication or sleep. The woman follows suit, her body weight shifting as she leans heavily forward, her head resting on the man's shoulder or near his face, her breathing becoming audible and labored. The camera movement continues its slow push-in, narrowing the frame to capture the intimacy of the moment and the fading awareness of the man in the blue shirt. The lighting remains low-key, with the neon sign providing the primary highlight on their skin, emphasizing the sweat and the sheen of the leather sofa.\n\nBy the 5.00-second mark, the final state mirrors Picture 2 perfectly: the man in the black polo is fully reclined, head back, eyes closed, appearing unconscious. The woman is leaning over him, her body angled towards the back of the sofa, her face partially obscured by her hair and the angle, looking down with a mix of affection and weariness. The man in the blue shirt is now seen in profile, his head tilted back slightly, eyes closed or half-lidded, looking upwards as if dozing off. The scene is still, heavy, and intimate, capturing a moment of collective collapse in a neon-lit room.\n\noverall_soundscape: The audio is dominated by the heavy, rhythmic breathing of the three characters, which intensifies as the man in the black polo slumps and the woman leans forward, suggesting a shared state of intoxication. There are soft, wet sounds of skin against the leather sofa as the woman shifts her weight and the man in the black polo settles into the cushions, accompanied by the faint creaking of the chair or sofa frame. The ambient hum of the neon sign and distant city noise fades into the background, replaced by the low, vibrating bass of the room's music and the soft, muffled gasps of the characters as they succumb to the atmosphere.\n\nnon_diegetic_music: N/A"
       ],
       "color": "#233",
       "bgcolor": "#355"
@@ -668,91 +579,6 @@
       "bgcolor": "#335"
     },
     {
-      "id": 114,
-      "type": "LoadImage",
-      "pos": [
-        -2238.7384211458884,
-        4878.667050439871
-      ],
-      "size": [
-        482.2566821236637,
-        717.2904207205629
-      ],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            296,
-            372
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "title": "FirstFrame",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.30.1",
-        "Node name for S&R": "LoadImage"
-      },
-      "widgets_values": [
-        "MBD_S2_EP1_Render_91.jpg",
-        "image"
-      ],
-      "color": "#223",
-      "bgcolor": "#335"
-    },
-    {
-      "id": 147,
-      "type": "LoadImage",
-      "pos": [
-        -1696.9854230175088,
-        4888.9677653444505
-      ],
-      "size": [
-        486.1266495255343,
-        715.9489903021231
-      ],
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            376
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "title": "LastFrame",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.30.1",
-        "Node name for S&R": "LoadImage"
-      },
-      "widgets_values": [
-        "MBD_S2_EP1_Render_92.jpg",
-        "image"
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
-    },
-    {
       "id": 194,
       "type": "LoadUpscalerTensorrtModel",
       "pos": [
@@ -764,7 +590,7 @@
         82
       ],
       "flags": {},
-      "order": 10,
+      "order": 8,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -894,6 +720,180 @@
       "bgcolor": "#335"
     },
     {
+      "id": 126,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        215.7505126496001,
+        4919.9800956574445
+      ],
+      "size": [
+        1155.5330597730813,
+        986.7373461223583
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 396
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 242
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        },
+        {
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": 297
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": null
+        }
+      ],
+      "title": "48FPS",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "4ee72c065db22c9d96c2427954dc69e7b908444b",
+        "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+      },
+      "widgets_values": {
+        "frame_rate": 48,
+        "loop_count": 0,
+        "filename_prefix": "video/MiniMax_H3_48FPS",
+        "format": "video/webm",
+        "pix_fmt": "yuv420p",
+        "crf": 20,
+        "save_metadata": false,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "MBD_S2_EP1_StripClub_55.png_00001-audio.webm",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/webm",
+            "frame_rate": 48,
+            "workflow": "MBD_S2_EP1_StripClub_55.png_00001.png",
+            "fullpath": "/workspace/runpod-slim/ComfyUI/output/MBD_S2_EP1_StripClub_55.png_00001-audio.webm"
+          }
+        }
+      },
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 114,
+      "type": "LoadImage",
+      "pos": [
+        -2238.7384211458884,
+        4878.667050439871
+      ],
+      "size": [
+        482.2566821236637,
+        717.2904207205629
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            296,
+            372
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "FirstFrame",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.1",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "MBD_S2_EP1_StripClub_55.png",
+        "image"
+      ],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 147,
+      "type": "LoadImage",
+      "pos": [
+        -1696.9854230175088,
+        4888.9677653444505
+      ],
+      "size": [
+        486.1266495255343,
+        715.9489903021231
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            376
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "LastFrame",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.1",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "MBD_S2_EP1_StripClub_56.png",
+        "image"
+      ],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
       "id": 105,
       "type": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
       "pos": [
@@ -996,7 +996,7 @@
         1344,
         768,
         5,
-        369221939492441,
+        549680976381220,
         "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
         "qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors",
         "minimax_h3_video_vae_fp16.safetensors",
@@ -1238,8 +1238,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 15,
-          "lastNodeId": 194,
-          "lastLinkId": 396,
+          "lastNodeId": 195,
+          "lastLinkId": 402,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -2252,7 +2252,7 @@
                 "localized_name": "model",
                 "name": "model",
                 "type": "MODEL",
-                "link": 339
+                "link": 398
               },
               {
                 "localized_name": "conditioning",
@@ -2297,7 +2297,7 @@
                 "localized_name": "model",
                 "name": "model",
                 "type": "MODEL",
-                "link": 340
+                "link": 399
               },
               {
                 "localized_name": "steps",
@@ -2328,193 +2328,6 @@
               "simple",
               20,
               1
-            ]
-          },
-          {
-            "id": 173,
-            "type": "MiniMaxH3ChunkFeedForward",
-            "pos": [
-              -846.4151507059993,
-              4168.4430890393205
-            ],
-            "size": [
-              316.38046875,
-              106
-            ],
-            "flags": {},
-            "order": 19,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "model",
-                "name": "model",
-                "type": "MODEL",
-                "link": 337
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "MODEL",
-                "name": "MODEL",
-                "type": "MODEL",
-                "links": [
-                  338
-                ]
-              }
-            ],
-            "properties": {
-              "aux_id": "Saganaki22/ComfyUI-sol-attn",
-              "ver": "e1d211026583064d33dc4326207c6502e2442208",
-              "Node name for S&R": "MiniMaxH3ChunkFeedForward"
-            },
-            "widgets_values": [
-              true,
-              2,
-              8192
-            ]
-          },
-          {
-            "id": 172,
-            "type": "MiniMaxH3FusedModulation",
-            "pos": [
-              -850.0132998466236,
-              4058.0008388830697
-            ],
-            "size": [
-              314.6481406249999,
-              58
-            ],
-            "flags": {},
-            "order": 18,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "model",
-                "name": "model",
-                "type": "MODEL",
-                "link": 336
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "MODEL",
-                "name": "MODEL",
-                "type": "MODEL",
-                "links": [
-                  337
-                ]
-              }
-            ],
-            "properties": {
-              "aux_id": "Saganaki22/ComfyUI-sol-attn",
-              "ver": "e1d211026583064d33dc4326207c6502e2442208",
-              "Node name for S&R": "MiniMaxH3FusedModulation"
-            },
-            "widgets_values": [
-              true
-            ]
-          },
-          {
-            "id": 174,
-            "type": "EasyCache",
-            "pos": [
-              -837.6113446513123,
-              4332.254433023696
-            ],
-            "size": [
-              328.39989453124986,
-              130
-            ],
-            "flags": {},
-            "order": 20,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "model",
-                "name": "model",
-                "type": "MODEL",
-                "link": 338
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "MODEL",
-                "name": "MODEL",
-                "type": "MODEL",
-                "links": [
-                  339,
-                  340
-                ]
-              }
-            ],
-            "properties": {
-              "cnr_id": "comfy-core",
-              "ver": "0.32.0",
-              "Node name for S&R": "EasyCache"
-            },
-            "widgets_values": [
-              0.2,
-              0.15,
-              0.95,
-              false
-            ]
-          },
-          {
-            "id": 171,
-            "type": "MiniMaxH3ScheduledSolAttentionPatch",
-            "pos": [
-              -1276.2953203250647,
-              4063.837600933046
-            ],
-            "size": [
-              395.69972265624995,
-              402.4929101562493
-            ],
-            "flags": {},
-            "order": 17,
-            "mode": 0,
-            "inputs": [
-              {
-                "localized_name": "model",
-                "name": "model",
-                "type": "MODEL",
-                "link": 391
-              }
-            ],
-            "outputs": [
-              {
-                "localized_name": "model",
-                "name": "model",
-                "type": "MODEL",
-                "links": [
-                  336
-                ]
-              },
-              {
-                "localized_name": "tau_graph",
-                "name": "tau_graph",
-                "type": "IMAGE",
-                "links": null
-              }
-            ],
-            "properties": {
-              "aux_id": "Saganaki22/ComfyUI-sol-attn",
-              "ver": "e1d211026583064d33dc4326207c6502e2442208",
-              "Node name for S&R": "MiniMaxH3ScheduledSolAttentionPatch"
-            },
-            "widgets_values": [
-              true,
-              1.3,
-              0.8,
-              "linear",
-              4096,
-              false,
-              0,
-              "diag",
-              false,
-              false,
-              "exact_kv",
-              ""
             ]
           },
           {
@@ -2614,7 +2427,7 @@
               1,
               1,
               false,
-              1664424541,
+              1763361133,
               "randomize",
               false
             ],
@@ -2625,8 +2438,8 @@
             "id": 154,
             "type": "MiniMaxH3TurboLoRA",
             "pos": [
-              -1666.7828153256794,
-              4384.649311340878
+              -1667.2647543146984,
+              4379.229611481927
             ],
             "size": [
               336.625,
@@ -2658,7 +2471,7 @@
                 "name": "MODEL",
                 "type": "MODEL",
                 "links": [
-                  390
+                  402
                 ]
               }
             ],
@@ -2675,25 +2488,83 @@
             ]
           },
           {
-            "id": 192,
-            "type": "PathchSageAttentionKJ",
+            "id": 171,
+            "type": "MiniMaxH3ScheduledSolAttentionPatch",
             "pos": [
-              -1242.7500587499883,
-              3864.259955453288
+              -1266.8171868744053,
+              4135.173026377505
             ],
             "size": [
-              270,
-              82
+              395.4502980917588,
+              346.30051505088977
             ],
             "flags": {},
-            "order": 21,
+            "order": 17,
             "mode": 0,
             "inputs": [
               {
                 "localized_name": "model",
                 "name": "model",
                 "type": "MODEL",
-                "link": 390
+                "link": 402
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "links": [
+                  336
+                ]
+              },
+              {
+                "localized_name": "tau_graph",
+                "name": "tau_graph",
+                "type": "IMAGE",
+                "links": null
+              }
+            ],
+            "properties": {
+              "aux_id": "Saganaki22/ComfyUI-sol-attn",
+              "ver": "e1d211026583064d33dc4326207c6502e2442208",
+              "Node name for S&R": "MiniMaxH3ScheduledSolAttentionPatch"
+            },
+            "widgets_values": [
+              true,
+              1.3,
+              0.8,
+              "linear",
+              4096,
+              false,
+              0,
+              "diag",
+              false,
+              false,
+              "exact_kv",
+              ""
+            ]
+          },
+          {
+            "id": 172,
+            "type": "MiniMaxH3FusedModulation",
+            "pos": [
+              -836.6246965289384,
+              4140.945075413847
+            ],
+            "size": [
+              314.6481406249999,
+              58
+            ],
+            "flags": {},
+            "order": 18,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 336
               }
             ],
             "outputs": [
@@ -2702,18 +2573,61 @@
                 "name": "MODEL",
                 "type": "MODEL",
                 "links": [
-                  391
+                  337
                 ]
               }
             ],
             "properties": {
-              "cnr_id": "comfyui-kjnodes",
-              "ver": "3f20054214fec9f9234fd3841ae6f1e4287948f6",
-              "Node name for S&R": "PathchSageAttentionKJ"
+              "aux_id": "Saganaki22/ComfyUI-sol-attn",
+              "ver": "e1d211026583064d33dc4326207c6502e2442208",
+              "Node name for S&R": "MiniMaxH3FusedModulation"
             },
             "widgets_values": [
-              "auto",
-              false
+              true
+            ]
+          },
+          {
+            "id": 173,
+            "type": "MiniMaxH3ChunkFeedForward",
+            "pos": [
+              -842.9485720130725,
+              4249.434204404083
+            ],
+            "size": [
+              316.38046875,
+              106
+            ],
+            "flags": {},
+            "order": 19,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 337
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "MODEL",
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  398,
+                  399
+                ]
+              }
+            ],
+            "properties": {
+              "aux_id": "Saganaki22/ComfyUI-sol-attn",
+              "ver": "e1d211026583064d33dc4326207c6502e2442208",
+              "Node name for S&R": "MiniMaxH3ChunkFeedForward"
+            },
+            "widgets_values": [
+              true,
+              2,
+              8192
             ]
           }
         ],
@@ -2768,14 +2682,14 @@
           },
           {
             "id": 11,
-            "title": "OPTIMIZATION",
+            "title": "SOL-ATTN TURBO LORA",
             "bounding": [
-              -1305.1162815053333,
-              3981.02568016477,
-              815.0242610727671,
-              535.4531981120263
+              -1296.0904942987474,
+              4054.584789014698,
+              787.2662663193973,
+              462.5113093708387
             ],
-            "color": "#3f789e",
+            "color": "#b58b2a",
             "flags": {}
           },
           {
@@ -3121,30 +3035,6 @@
             "type": "MODEL"
           },
           {
-            "id": 338,
-            "origin_id": 173,
-            "origin_slot": 0,
-            "target_id": 174,
-            "target_slot": 0,
-            "type": "MODEL"
-          },
-          {
-            "id": 339,
-            "origin_id": 174,
-            "origin_slot": 0,
-            "target_id": 16,
-            "target_slot": 0,
-            "type": "MODEL"
-          },
-          {
-            "id": 340,
-            "origin_id": 174,
-            "origin_slot": 0,
-            "target_id": 9,
-            "target_slot": 0,
-            "type": "MODEL"
-          },
-          {
             "id": 343,
             "origin_id": -10,
             "origin_slot": 15,
@@ -3153,16 +3043,24 @@
             "type": "COMBO"
           },
           {
-            "id": 390,
-            "origin_id": 154,
+            "id": 398,
+            "origin_id": 173,
             "origin_slot": 0,
-            "target_id": 192,
+            "target_id": 16,
             "target_slot": 0,
             "type": "MODEL"
           },
           {
-            "id": 391,
-            "origin_id": 192,
+            "id": 399,
+            "origin_id": 173,
+            "origin_slot": 0,
+            "target_id": 9,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 402,
+            "origin_id": 154,
             "origin_slot": 0,
             "target_id": 171,
             "target_slot": 0,
@@ -3181,10 +3079,10 @@
     "VHS_MetadataImage": true,
     "VHS_KeepIntermediate": true,
     "ds": {
-      "scale": 0.7513148009015777,
+      "scale": 0.6830134553650705,
       "offset": [
-        2209.590361753775,
-        -4487.324399722431
+        2934.4886118018653,
+        -4428.525313560341
       ]
     }
   },
