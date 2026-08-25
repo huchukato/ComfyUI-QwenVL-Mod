@@ -214,7 +214,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
             preset_prompt="🪄 Prompt Refine & Expand",
             custom_prompt=prompt,
             image=None,
-            video=None,
+            image2=None,
             frame_count=1,
             max_tokens=max_tokens,
             temperature=temperature,
