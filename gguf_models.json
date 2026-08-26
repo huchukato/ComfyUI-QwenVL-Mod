@@ -1,6 +1,20 @@
 {
   "base_dir": "LLM/GGUF",
   "Qwen_model": {
+    "tvall43-Qwen3.5-4B-heretic-v2-GGUF": {
+      "author": "mradermacher",
+      "repo_name": "tvall43-Qwen3.5-4B-heretic-v2-GGUF",
+      "repo_id": "mradermacher/tvall43-Qwen3.5-4B-heretic-v2-GGUF",
+      "model_files": [
+        "tvall43-Qwen3.5-4B-heretic-v2.Q4_K_M.gguf",
+        "tvall43-Qwen3.5-4B-heretic-v2.Q5_K_M.gguf",
+        "tvall43-Qwen3.5-4B-heretic-v2.Q6_K.gguf",
+        "tvall43-Qwen3.5-4B-heretic-v2.Q8_0.gguf"
+      ],
+      "defaults": {
+        "context_length": 32768
+      }
+    },
     "Qwen3-4B-abliterated-GGUF": {
       "author": "mradermacher",
       "repo_name": "Qwen3-4B-abliterated-GGUF",
@@ -45,6 +59,26 @@
     }
   },
   "qwenVL_model": {
+    "Qwen3.5-9B-ultra-uncensored-heretic-v2-GGUF": {
+      "author": "llmfan46",
+      "repo_name": "Qwen3.5-9B-ultra-uncensored-heretic-GGUF",
+      "repo_id": "llmfan46/Qwen3.5-9B-ultra-uncensored-heretic-GGUF",
+      "mmproj_file": "Qwen3.5-9B-mmproj-BF16.gguf",
+      "model_files": [
+        "Qwen3.5-9B-ultra-uncensored-heretic-v2-Q4_K_M.gguf",
+        "Qwen3.5-9B-ultra-uncensored-heretic-v2-Q5_K_M.gguf",
+        "Qwen3.5-9B-ultra-uncensored-heretic-v2-Q6_K.gguf",
+        "Qwen3.5-9B-ultra-uncensored-heretic-v2-Q8_0.gguf"
+      ],
+      "defaults": {
+        "context_length": 65536,
+        "image_max_tokens": 4096,
+        "n_batch": 512,
+        "gpu_layers": -1,
+        "top_k": 0,
+        "pool_size": 4194304
+      }
+    },
     "Qwen3-VL-8B-Heretic-Stable-GGUF": {
       "author": "prithivMLmods",
       "repo_name": "Qwen3-VL-8B-Heretic-Stable-GGUF",
