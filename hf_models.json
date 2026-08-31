@@ -77,6 +77,16 @@
         "8bit": 7.0,
         "4bit": 4.5
       }
+    },
+    "Qwen3.8-27B-Uncensored-Heretic-Abliterated": {
+      "repo_id": "alexander2323/Qwen3.8-27B-Uncensored-Heretic-Abliterated",
+      "default": false,
+      "quantized": false,
+      "vram_requirement": {
+        "full": 55.0,
+        "8bit": 29.0,
+        "4bit": 17.0
+      }
     }
   },
   "hf_text_models": {
@@ -103,6 +113,26 @@
         "full": 12.0,
         "8bit": 7.0,
         "4bit": 4.5
+      }
+    },
+    "Qwen3.8-4B-Distill-heretic": {
+      "repo_id": "valiolla/Qwen3.8-4B-Distill-heretic",
+      "default": false,
+      "quantized": false,
+      "vram_requirement": {
+        "full": 9.0,
+        "8bit": 5.0,
+        "4bit": 3.0
+      }
+    },
+    "Qwen3.8-9B-heretic-uncensored": {
+      "repo_id": "rohit267/Qwen3.8-9B-heretic-uncensored",
+      "default": false,
+      "quantized": false,
+      "vram_requirement": {
+        "full": 19.0,
+        "8bit": 10.0,
+        "4bit": 6.0
       }
     }
   }
