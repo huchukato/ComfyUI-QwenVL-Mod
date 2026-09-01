@@ -69,7 +69,7 @@ Major update adding complete MiniMax H3 video+audio generation support with all 
 
 🚀 **Local Model Discovery + Qwen3.5 Support + SageAttention**
 
-Major update porting the best features from the community fork (Deaquay/ComfyUI-Qwen3.5-Uncensored, 36 stars).
+Major update porting the best features from the community fork (Deaquay/ComfyUI-Qwen3.5-Uncensored, 36 stars). Local model discovery, Qwen3.5 architecture detection, VRAM headroom, and image-handling fixes ported from the fork. SageAttention restoration is our own work from v2.0.3–v2.0.4, not from the fork.
 
 ### 🔍 **Automatic Local Model Discovery**
 |- **GGUF**: Drop `.gguf` files in `models/LLM/GGUF` — they appear in the dropdown automatically with `[local]` prefix
