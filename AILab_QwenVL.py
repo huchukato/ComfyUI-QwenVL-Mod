@@ -1117,6 +1117,34 @@ class QwenVLBase:
             prompt = f"{custom_prompt.strip()}\n\n{prompt_template}"
         else:
             prompt = prompt_template
+
+        # ── Camera tag recency reinforcement ──────────────────────────────
+        # Qwen 9B has strong recency bias: tags at the start of a 10k-char
+        # prompt get diluted. Extract any camera tags from the user input and
+        # re-inject them as a FINAL reminder so the model sees them right
+        # before generation. This does NOT change semantics — it just makes
+        # the existing "HIGHEST PRIORITY" rule actually stick.
+        CAMERA_TAGS = [
+            "STATIC_CAMERA", "LOCKED_OFF",
+            "SLOW_ZOOM_IN", "SLOW_ZOOM_OUT",
+            "ORBIT", "HANDHELD",
+        ]
+        found_cam_tags = []
+        if custom_prompt and custom_prompt.strip():
+            upper = custom_prompt.upper()
+            for tag in CAMERA_TAGS:
+                if f"[{tag}]" in upper:
+                    found_cam_tags.append(tag)
+        if found_cam_tags:
+            tag_list = ", ".join(f"[{t}]" for t in found_cam_tags)
+            reminder = (
+                f"\n\n═══ FINAL CAMERA REMINDER (HIGHEST PRIORITY) ═══\n"
+                f"The user explicitly requested these camera tags: {tag_list}\n"
+                f"You MUST use this camera movement and NO other. "
+                f"Do NOT describe any other camera motion.\n"
+                f"═══ END REMINDER ═══"
+            )
+            prompt = prompt + reminder
             
         self.load_model(
             model_name,
