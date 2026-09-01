@@ -18,6 +18,8 @@ from AILab_OutputCleaner import OutputCleanConfig, clean_model_output, prompt_ou
 
 from AILab_QwenVL import (
     ATTENTION_MODES,
+    CAMERA_TAG_OPTIONS,
+    CAMERA_TAG_TOOLTIP,
     HF_TEXT_MODELS,
     HF_VL_MODELS,
     PROMPT_CACHE,
@@ -102,6 +104,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
                 "device": (["auto", "cuda", "cpu", "mps"], {"default": "auto", "tooltip": TOOLTIPS["device"]}),
                 "prompt_text": ("STRING", {"default": "", "multiline": True, "tooltip": "Prompt text to enhance. Leave blank to just emit the preset instruction."}),
                 "enhancement_style": (styles, {"default": default_style}),
+                "camera_tag": (CAMERA_TAG_OPTIONS, {"default": "None", "tooltip": CAMERA_TAG_TOOLTIP}),
                 "custom_system_prompt": ("STRING", {"default": "", "multiline": True}),
                 "max_tokens": ("INT", {"default": 1024, "min": 32, "max": 16384}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.1, "max": 1.0}),
@@ -122,6 +125,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         device,
         prompt_text,
         enhancement_style,
+        camera_tag,
         custom_system_prompt,
         max_tokens,
         temperature,
@@ -185,6 +189,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
                 repetition_penalty,
                 keep_model_loaded,
                 seed,
+                camera_tag=camera_tag,
             )
 
         # Save the generated prompt for future bypass mode
@@ -207,6 +212,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         repetition_penalty,
         keep_model_loaded,
         seed,
+        camera_tag="None",
     ):
         output = self.run(
             model_name=model_name,
@@ -226,6 +232,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
             attention_mode=attention_mode,
             use_torch_compile=use_torch_compile,
             device=device,
+            camera_tag=camera_tag,
         )
         return output[0]
 
