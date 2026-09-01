@@ -1149,6 +1149,13 @@ class QwenVLBase:
                 f"Camera: {tag_str} — {desc}\n"
                 f"You MUST use this camera movement and NO other. "
                 f"State it explicitly in the first sentence of [Shot 1].\n"
+                f"IMPORTANT: the camera tag controls ONLY the camera. "
+                f"The subject MUST still have natural, lively action and "
+                f"movement throughout the clip — breathing, gestures, "
+                f"expression changes, body motion, interaction with the "
+                f"environment. Do NOT freeze the subject just because the "
+                f"camera is moving. The subject is alive and active while "
+                f"the camera performs {tag_str}.\n"
                 f"═══ END DIRECTIVE ═══"
             )
             prompt = prefix + prompt + reminder
