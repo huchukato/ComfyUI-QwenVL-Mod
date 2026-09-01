@@ -1080,7 +1080,7 @@ class QwenVLBase:
         text = self.tokenizer.decode(outputs[0, input_len:], skip_special_tokens=True)
         return text.strip()
 
-    def run(self, model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt=False):
+    def run(self, model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt=False, camera_tag="None"):
         torch.manual_seed(seed)
         
         global LAST_SAVED_PROMPT
@@ -1118,25 +1118,34 @@ class QwenVLBase:
         else:
             prompt = prompt_template
 
-        # ── Camera tag recency reinforcement ──────────────────────────────
+        # ── Camera tag injection ───────────────────────────────────────────
         # Qwen 9B has strong recency bias: tags at the start of a 10k-char
-        # prompt get diluted. Extract any camera tags from the user input and
-        # re-inject them as a FINAL reminder so the model sees them right
-        # before generation. This does NOT change semantics — it just makes
-        # the existing "HIGHEST PRIORITY" rule actually stick.
+        # prompt get diluted. Two sources of camera tags:
+        #   1. The `camera_tag` dropdown (authoritative, takes priority)
+        #   2. Tags written manually in custom_prompt (fallback)
+        # The chosen tag is injected BOTH at the start (as a prefix) and as
+        # a FINAL reminder at the end so the model sees it right before
+        # generation.
         CAMERA_TAGS = [
             "STATIC_CAMERA", "LOCKED_OFF",
             "SLOW_ZOOM_IN", "SLOW_ZOOM_OUT",
             "ORBIT", "HANDHELD",
         ]
         found_cam_tags = []
-        if custom_prompt and custom_prompt.strip():
+        # Source 1: dropdown
+        if camera_tag and camera_tag.strip() and camera_tag.strip().upper() != "NONE":
+            tag_clean = camera_tag.strip().upper().strip("[]")
+            if tag_clean in CAMERA_TAGS:
+                found_cam_tags.append(tag_clean)
+        # Source 2: manual tags in custom_prompt (only if dropdown is None)
+        if not found_cam_tags and custom_prompt and custom_prompt.strip():
             upper = custom_prompt.upper()
             for tag in CAMERA_TAGS:
                 if f"[{tag}]" in upper:
                     found_cam_tags.append(tag)
         if found_cam_tags:
             tag_list = ", ".join(f"[{t}]" for t in found_cam_tags)
+            prefix = f"{tag_list}\n\n"
             reminder = (
                 f"\n\n═══ FINAL CAMERA REMINDER (HIGHEST PRIORITY) ═══\n"
                 f"The user explicitly requested these camera tags: {tag_list}\n"
@@ -1144,7 +1153,7 @@ class QwenVLBase:
                 f"Do NOT describe any other camera motion.\n"
                 f"═══ END REMINDER ═══"
             )
-            prompt = prompt + reminder
+            prompt = prefix + prompt + reminder
             
         self.load_model(
             model_name,
@@ -1205,6 +1214,7 @@ class AILab_QwenVL(QwenVLBase):
                 "quantization": (Quantization.get_values(), {"default": Quantization.FP16.value, "tooltip": TOOLTIPS["quantization"]}),
                 "attention_mode": (ATTENTION_MODES, {"default": "auto", "tooltip": TOOLTIPS["attention_mode"]}),
                 "preset_prompt": (prompts, {"default": default_prompt, "tooltip": TOOLTIPS["preset_prompt"]}),
+                "camera_tag": (CAMERA_TAG_OPTIONS, {"default": "None", "tooltip": CAMERA_TAG_TOOLTIP}),
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": TOOLTIPS["custom_prompt"]}),
                 "max_tokens": ("INT", {"default": 8192, "min": 64, "max": 8192, "tooltip": TOOLTIPS["max_tokens"]}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": TOOLTIPS["keep_model_loaded"]}),
@@ -1222,8 +1232,8 @@ class AILab_QwenVL(QwenVLBase):
     FUNCTION = "process"
     CATEGORY = "QwenVL-Mod/QwenVL"
 
-    def process(self, model_name, quantization, preset_prompt, custom_prompt, attention_mode, max_tokens, keep_model_loaded, seed, keep_last_prompt=False, image=None, image2=None):
-        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, image2, 16, max_tokens, 0.6, 0.9, 1, 1.2, seed, keep_model_loaded, attention_mode, False, "auto", keep_last_prompt)
+    def process(self, model_name, quantization, preset_prompt, camera_tag, custom_prompt, attention_mode, max_tokens, keep_model_loaded, seed, keep_last_prompt=False, image=None, image2=None):
+        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, image2, 16, max_tokens, 0.6, 0.9, 1, 1.2, seed, keep_model_loaded, attention_mode, False, "auto", keep_last_prompt, camera_tag)
 
 class AILab_QwenVL_Advanced(QwenVLBase):
     @classmethod
@@ -1246,6 +1256,7 @@ class AILab_QwenVL_Advanced(QwenVLBase):
                 "use_torch_compile": ("BOOLEAN", {"default": False, "tooltip": TOOLTIPS["use_torch_compile"]}),
                 "device": (device_options, {"default": "auto", "tooltip": TOOLTIPS["device"]}),
                 "preset_prompt": (prompts, {"default": default_prompt, "tooltip": TOOLTIPS["preset_prompt"]}),
+                "camera_tag": (CAMERA_TAG_OPTIONS, {"default": "None", "tooltip": CAMERA_TAG_TOOLTIP}),
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": TOOLTIPS["custom_prompt"]}),
                 "max_tokens": ("INT", {"default": 8192, "min": 64, "max": 8192, "tooltip": TOOLTIPS["max_tokens"]}),
                 "temperature": ("FLOAT", {"default": 0.6, "min": 0.1, "max": 1.0, "tooltip": TOOLTIPS["temperature"]}),
@@ -1268,13 +1279,33 @@ class AILab_QwenVL_Advanced(QwenVLBase):
     FUNCTION = "process"
     CATEGORY = "QwenVL-Mod/QwenVL"
 
-    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, custom_prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, frame_count, keep_model_loaded, seed, keep_last_prompt, image=None, image2=None):
-        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt)
+    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, camera_tag, custom_prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, frame_count, keep_model_loaded, seed, keep_last_prompt, image=None, image2=None):
+        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt, camera_tag)
 
 NODE_CLASS_MAPPINGS = {
     "AILab_QwenVL": AILab_QwenVL,
     "AILab_QwenVL_Advanced": AILab_QwenVL_Advanced,
 }
+
+# ── Camera tag dropdown options ───────────────────────────────────
+# "None" = let the preset decide (default behavior). Any other value
+# is injected as [TAG] at the start of the user prompt AND as a final
+# reminder at the end, overriding any other camera instruction.
+CAMERA_TAG_OPTIONS = [
+    "None",
+    "[STATIC_CAMERA]",
+    "[LOCKED_OFF]",
+    "[SLOW_ZOOM_IN]",
+    "[SLOW_ZOOM_OUT]",
+    "[ORBIT]",
+    "[HANDHELD]",
+]
+
+CAMERA_TAG_TOOLTIP = (
+    "Camera movement override for video presets (MiniMax H3, WAN, etc). "
+    "'None' lets the preset decide. Any other value is injected as a "
+    "[TAG] and reinforced at the end of the prompt so Qwen respects it."
+)
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "AILab_QwenVL": "QwenVL-Mod",
