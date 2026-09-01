@@ -29,7 +29,7 @@ from AILab_OutputCleaner import OutputCleanConfig, clean_model_output, prompt_ou
 # Import cache functions from main module
 import sys
 sys.path.append(str(Path(__file__).parent))
-from AILab_QwenVL import PROMPT_CACHE, ensure_cuda_vram_headroom, get_cache_key, get_alternative_cache_key, save_prompt_cache
+from AILab_QwenVL import PROMPT_CACHE, ensure_cuda_vram_headroom, get_cache_key, get_alternative_cache_key, save_prompt_cache, CAMERA_TAG_OPTIONS, CAMERA_TAG_TOOLTIP, CAMERA_TAG_DESCRIPTIONS
 from AILab_QwenVL_GGUF import read_gguf_architecture, find_in_llm_paths, _filter_kwargs_for_callable
 
 # Simple global variable to store last generated prompt
@@ -58,7 +58,6 @@ def load_prompt_config():
 
 PROMPT_CONFIG = load_prompt_config()
 STYLES = PROMPT_CONFIG.get("styles", {})
-CUSTOM_ONLY_STYLE = "✍️ Custom Only (no preset)"
 
 
 def _safe_dirname(value: str) -> str:
@@ -212,7 +211,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
 
     @classmethod
     def INPUT_TYPES(cls):
-        styles = [CUSTOM_ONLY_STYLE] + list(STYLES.keys())
+        styles = list(STYLES.keys())
         preferred_style = "📝 Enhance"
         default_style = preferred_style if preferred_style in styles else (styles[0] if styles else "📝 Enhance")
         temp = cls.load_gguf_models()
@@ -223,7 +222,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
                 "model_name": (model_keys, {"default": default_model, "tooltip": "GGUF model from config or auto-detected from models/LLM/GGUF directory. [local] prefix = found on disk."}),
                 "prompt_text": ("STRING", {"default": "", "multiline": True, "tooltip": "Prompt text to enhance. Leave blank to just emit the preset instruction."}),
                 "preset_system_prompt": (styles, {"default": default_style}),
-                "custom_system_prompt": ("STRING", {"default": "", "multiline": True}),
+                "camera_tag": (CAMERA_TAG_OPTIONS, {"default": "None", "tooltip": CAMERA_TAG_TOOLTIP}),
                 "max_tokens": ("INT", {"default": 1024, "min": 32, "max": 16384}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.1, "max": 1.0}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0}),
@@ -516,7 +515,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         model_name,
         prompt_text,
         preset_system_prompt,
-        custom_system_prompt,
+        camera_tag,
         max_tokens,
         temperature,
         top_p,
@@ -528,7 +527,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         keep_last_prompt,
     ):
         global LAST_SAVED_PROMPT
-        
+
         # Simple keep last prompt logic
         if keep_last_prompt:  # Keep last prompt enabled
             print(f"[QwenVL PromptEnhancer GGUF] Keep last prompt enabled - using last saved prompt")
@@ -538,15 +537,14 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
             else:
                 print(f"[QwenVL PromptEnhancer GGUF] No previous prompt found, returning empty")
                 return ("",)
-        
+
         # Always generate when keep last prompt is disabled
         print(f"[QwenVL PromptEnhancer GGUF] Keep last prompt disabled - generating new prompt")
-        
+
         # Generate cache key with all inputs including seed
         cache_prompt = "\n\n".join(
             part for part in (
                 prompt_text.strip(),
-                custom_system_prompt.strip(),
                 f"english_output={bool(english_output)}",
             ) if part
         )
@@ -559,17 +557,45 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
                 print(f"[QwenVL PromptEnhancer GGUF] Using cached prompt for seed {seed}: {cache_key[:8]}...")
                 return (cached_text.strip(),)
 
-        is_custom_only = preset_system_prompt == CUSTOM_ONLY_STYLE
-        style_entry = {} if is_custom_only else self.styles.get(preset_system_prompt, {})
+        style_entry = self.styles.get(preset_system_prompt, {})
         style_system_prompt = (style_entry.get("system_prompt") or "").strip()
-        custom_system_prompt = custom_system_prompt.strip()
-        system_prompt = "\n\n".join(part for part in (custom_system_prompt, style_system_prompt) if part).strip()
+        system_prompt = style_system_prompt
         if not system_prompt:
-            if is_custom_only:
-                raise ValueError("custom_system_prompt is required when using Custom Only (no preset).")
             raise ValueError("system_prompt is empty; check AILab_System_Prompts.json or preset selection.")
         system_prompt = f"{system_prompt}\n\n{prompt_output_guard()}"
         merged_prompt = prompt_text.strip() or "Describe a scene vividly."
+
+        # ── Camera tag injection ───────────────────────────────────────────
+        CAMERA_TAGS = list(CAMERA_TAG_DESCRIPTIONS.keys())
+        found_cam_tag = None
+        if camera_tag and camera_tag.strip() and camera_tag.strip().upper() != "NONE":
+            tag_clean = camera_tag.strip().upper().strip("[]")
+            if tag_clean in CAMERA_TAGS:
+                found_cam_tag = tag_clean
+        if not found_cam_tag and prompt_text and prompt_text.strip():
+            upper = prompt_text.upper()
+            for tag in CAMERA_TAGS:
+                if f"[{tag}]" in upper:
+                    found_cam_tag = tag
+                    break
+        if found_cam_tag:
+            desc = CAMERA_TAG_DESCRIPTIONS.get(found_cam_tag, "")
+            tag_str = f"[{found_cam_tag}]"
+            merged_prompt = f"{tag_str}\n\n{merged_prompt}"
+            merged_prompt += (
+                f"\n\n═══ FINAL CAMERA DIRECTIVE (HIGHEST PRIORITY) ═══\n"
+                f"Camera: {tag_str} — {desc}\n"
+                f"You MUST use this camera movement and NO other. "
+                f"State it explicitly in the first sentence of [Shot 1].\n"
+                f"IMPORTANT: the camera tag controls ONLY the camera. "
+                f"The subject MUST still have natural, lively action and "
+                f"movement throughout the clip — breathing, gestures, "
+                f"expression changes, body motion, interaction with the "
+                f"environment. Do NOT freeze the subject just because the "
+                f"camera is moving. The subject is alive and active while "
+                f"the camera performs {tag_str}.\n"
+                f"═══ END DIRECTIVE ═══"
+            )
         self._load_model(model_name, device)
         enhanced = self._invoke_llama(
             system_prompt=system_prompt,
