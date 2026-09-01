@@ -30,7 +30,7 @@ from PIL import Image
 
 # Import cache functions from main module
 sys.path.append(str(Path(__file__).parent))
-from AILab_QwenVL import PROMPT_CACHE, ensure_cuda_vram_headroom, get_cache_key, get_alternative_cache_key, get_image_hash, get_video_hash, save_prompt_cache
+from AILab_QwenVL import PROMPT_CACHE, ensure_cuda_vram_headroom, get_cache_key, get_alternative_cache_key, get_image_hash, get_video_hash, save_prompt_cache, CAMERA_TAG_OPTIONS, CAMERA_TAG_TOOLTIP, CAMERA_TAG_DESCRIPTIONS
 
 import folder_paths
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output
@@ -824,6 +824,7 @@ class QwenVLGGUFBase:
         top_k=None,
         pool_size=None,
         keep_last_prompt=False,
+        camera_tag="None",
     ):
         print(f"[QwenVL GGUF DEBUG] Starting run with seed={seed}, keep_last_prompt={keep_last_prompt}")
 
@@ -864,6 +865,39 @@ class QwenVLGGUFBase:
             prompt = f"{custom_prompt.strip()}\n\n{prompt_template}"
         else:
             prompt = prompt_template
+
+        # ── Camera tag injection (same logic as AILab_QwenVL) ─────────────
+        CAMERA_TAGS = list(CAMERA_TAG_DESCRIPTIONS.keys())
+        found_cam_tag = None
+        if camera_tag and camera_tag.strip() and camera_tag.strip().upper() != "NONE":
+            tag_clean = camera_tag.strip().upper().strip("[]")
+            if tag_clean in CAMERA_TAGS:
+                found_cam_tag = tag_clean
+        if not found_cam_tag and custom_prompt and custom_prompt.strip():
+            upper = custom_prompt.upper()
+            for tag in CAMERA_TAGS:
+                if f"[{tag}]" in upper:
+                    found_cam_tag = tag
+                    break
+        if found_cam_tag:
+            desc = CAMERA_TAG_DESCRIPTIONS.get(found_cam_tag, "")
+            tag_str = f"[{found_cam_tag}]"
+            prefix = f"{tag_str}\n\n"
+            reminder = (
+                f"\n\n═══ FINAL CAMERA DIRECTIVE (HIGHEST PRIORITY) ═══\n"
+                f"Camera: {tag_str} — {desc}\n"
+                f"You MUST use this camera movement and NO other. "
+                f"State it explicitly in the first sentence of [Shot 1].\n"
+                f"IMPORTANT: the camera tag controls ONLY the camera. "
+                f"The subject MUST still have natural, lively action and "
+                f"movement throughout the clip — breathing, gestures, "
+                f"expression changes, body motion, interaction with the "
+                f"environment. Do NOT freeze the subject just because the "
+                f"camera is moving. The subject is alive and active while "
+                f"the camera performs {tag_str}.\n"
+                f"═══ END DIRECTIVE ═══"
+            )
+            prompt = prefix + prompt + reminder
 
         print(f"[QwenVL GGUF DEBUG] Final prompt: {prompt[:100]}...")
 
@@ -1058,6 +1092,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
                 "model_name": (model_keys, {"default": default_model}),
                 "device": (device_options, {"default": "auto"}),
                 "preset_prompt": (prompts, {"default": default_prompt}),
+                "camera_tag": (CAMERA_TAG_OPTIONS, {"default": "None", "tooltip": CAMERA_TAG_TOOLTIP}),
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": "Additional user input that gets combined with the preset template. Leave empty to use only the template."}),
                 "max_tokens": ("INT", {"default": 8192, "min": 64, "max": 8192}),
                 "temperature": ("FLOAT", {"default": 0.6, "min": 0.0, "max": 2.0}),
@@ -1090,6 +1125,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
         model_name,
         device,
         preset_prompt,
+        camera_tag,
         custom_prompt,
         max_tokens,
         temperature,
@@ -1128,7 +1164,8 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
             image_max_tokens=image_max_tokens,
             top_k=top_k,
             pool_size=pool_size,
-            keep_last_prompt=keep_last_prompt
+            keep_last_prompt=keep_last_prompt,
+            camera_tag=camera_tag,
         )
 
 
