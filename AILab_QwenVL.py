@@ -1123,42 +1123,33 @@ class QwenVLBase:
         # prompt get diluted. Two sources of camera tags:
         #   1. The `camera_tag` dropdown (authoritative, takes priority)
         #   2. Tags written manually in custom_prompt (fallback)
-        # The chosen tag is injected BOTH at the start (as a prefix) and as
-        # a FINAL reminder at the end so the model sees it right before
-        # generation.
-        CAMERA_TAGS = [
-            "STATIC_CAMERA", "LOCKED_OFF",
-            "SLOW_ZOOM_IN", "SLOW_ZOOM_OUT",
-            "FAST_ZOOM_IN", "FAST_ZOOM_OUT",
-            "PAN_LEFT", "PAN_RIGHT",
-            "TILT_UP", "TILT_DOWN",
-            "DOLLY_IN", "DOLLY_OUT",
-            "TRACKING_LEFT", "TRACKING_RIGHT",
-            "CRANE_UP", "CRANE_DOWN",
-            "ORBIT", "HANDHELD",
-            "ROLL",
-        ]
-        found_cam_tags = []
+        # The chosen tag + its short description is injected BOTH at the
+        # start (as a prefix) and as a FINAL reminder at the end so the
+        # model sees it right before generation.
+        CAMERA_TAGS = list(CAMERA_TAG_DESCRIPTIONS.keys())
+        found_cam_tag = None
         # Source 1: dropdown
         if camera_tag and camera_tag.strip() and camera_tag.strip().upper() != "NONE":
             tag_clean = camera_tag.strip().upper().strip("[]")
             if tag_clean in CAMERA_TAGS:
-                found_cam_tags.append(tag_clean)
-        # Source 2: manual tags in custom_prompt (only if dropdown is None)
-        if not found_cam_tags and custom_prompt and custom_prompt.strip():
+                found_cam_tag = tag_clean
+        # Source 2: manual tag in custom_prompt (only if dropdown is None)
+        if not found_cam_tag and custom_prompt and custom_prompt.strip():
             upper = custom_prompt.upper()
             for tag in CAMERA_TAGS:
                 if f"[{tag}]" in upper:
-                    found_cam_tags.append(tag)
-        if found_cam_tags:
-            tag_list = ", ".join(f"[{t}]" for t in found_cam_tags)
-            prefix = f"{tag_list}\n\n"
+                    found_cam_tag = tag
+                    break
+        if found_cam_tag:
+            desc = CAMERA_TAG_DESCRIPTIONS.get(found_cam_tag, "")
+            tag_str = f"[{found_cam_tag}]"
+            prefix = f"{tag_str}\n\n"
             reminder = (
-                f"\n\n═══ FINAL CAMERA REMINDER (HIGHEST PRIORITY) ═══\n"
-                f"The user explicitly requested these camera tags: {tag_list}\n"
+                f"\n\n═══ FINAL CAMERA DIRECTIVE (HIGHEST PRIORITY) ═══\n"
+                f"Camera: {tag_str} — {desc}\n"
                 f"You MUST use this camera movement and NO other. "
-                f"Do NOT describe any other camera motion.\n"
-                f"═══ END REMINDER ═══"
+                f"State it explicitly in the first sentence of [Shot 1].\n"
+                f"═══ END DIRECTIVE ═══"
             )
             prompt = prefix + prompt + reminder
             
@@ -1320,6 +1311,31 @@ CAMERA_TAG_OPTIONS = [
     "[HANDHELD]",
     "[ROLL]",
 ]
+
+# Short per-tag descriptions injected into the prompt when the tag is
+# selected. Kept here instead of in the system prompts to keep presets
+# lean. Each description tells Qwen exactly what to write.
+CAMERA_TAG_DESCRIPTIONS = {
+    "STATIC_CAMERA":  "the camera MUST remain completely static. ABSOLUTELY NO zoom, pan, orbit, push-in, pull-out, tilt, tracking, or any motion whatsoever. You MUST explicitly state \"the camera remains locked-off, completely static throughout the entire clip\" and you MUST NOT describe any camera movement anywhere in the output.",
+    "LOCKED_OFF":     "the camera MUST remain completely static. ABSOLUTELY NO zoom, pan, orbit, push-in, pull-out, tilt, tracking, or any motion whatsoever. You MUST explicitly state \"the camera remains locked-off, completely static throughout the entire clip\" and you MUST NOT describe any camera movement anywhere in the output.",
+    "SLOW_ZOOM_IN":   "slow continuous push-in (dolly toward subject). The camera smoothly and continuously moves closer to the subject throughout the clip.",
+    "SLOW_ZOOM_OUT":  "slow continuous pull-back (dolly away from subject). The camera smoothly and continuously moves away from the subject throughout the clip.",
+    "FAST_ZOOM_IN":   "fast aggressive push-in, dramatic. The camera rapidly moves closer to the subject with energy.",
+    "FAST_ZOOM_OUT":  "fast pull-back, reveal context. The camera rapidly moves away from the subject to reveal the wider scene.",
+    "PAN_LEFT":       "smooth horizontal pan from right to left. The camera rotates smoothly on its axis, moving the framing from right to left.",
+    "PAN_RIGHT":      "smooth horizontal pan from left to right. The camera rotates smoothly on its axis, moving the framing from left to right.",
+    "TILT_UP":        "smooth vertical tilt from bottom to top, revealing the subject. The camera rotates upward on its axis.",
+    "TILT_DOWN":      "smooth vertical tilt from top to bottom. The camera rotates downward on its axis.",
+    "DOLLY_IN":       "physical dolly movement toward the subject (not optical zoom — the camera moves through space, creating parallax).",
+    "DOLLY_OUT":      "physical dolly movement away from the subject (not optical zoom — the camera moves through space, creating parallax).",
+    "TRACKING_LEFT":  "lateral tracking shot moving left, subject stays in frame. The camera physically moves left while keeping the subject centered.",
+    "TRACKING_RIGHT": "lateral tracking shot moving right, subject stays in frame. The camera physically moves right while keeping the subject centered.",
+    "CRANE_UP":       "crane/jib movement rising upward, revealing the scene from above. The camera physically rises.",
+    "CRANE_DOWN":     "crane/jib movement descending toward the subject. The camera physically descends.",
+    "ORBIT":          "smooth 360-degree orbit around the subject. The camera circles completely around the subject.",
+    "HANDHELD":       "subtle handheld sway with natural micro-movements. The camera feels held by a person, with gentle bob and sway.",
+    "ROLL":           "slow camera roll (rotation around the lens axis). The horizon slowly rotates.",
+}
 
 CAMERA_TAG_TOOLTIP = (
     "Camera movement override for video presets (MiniMax H3, WAN, etc). "
