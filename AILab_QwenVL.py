@@ -1129,7 +1129,14 @@ class QwenVLBase:
         CAMERA_TAGS = [
             "STATIC_CAMERA", "LOCKED_OFF",
             "SLOW_ZOOM_IN", "SLOW_ZOOM_OUT",
+            "FAST_ZOOM_IN", "FAST_ZOOM_OUT",
+            "PAN_LEFT", "PAN_RIGHT",
+            "TILT_UP", "TILT_DOWN",
+            "DOLLY_IN", "DOLLY_OUT",
+            "TRACKING_LEFT", "TRACKING_RIGHT",
+            "CRANE_UP", "CRANE_DOWN",
             "ORBIT", "HANDHELD",
+            "ROLL",
         ]
         found_cam_tags = []
         # Source 1: dropdown
@@ -1297,8 +1304,21 @@ CAMERA_TAG_OPTIONS = [
     "[LOCKED_OFF]",
     "[SLOW_ZOOM_IN]",
     "[SLOW_ZOOM_OUT]",
+    "[FAST_ZOOM_IN]",
+    "[FAST_ZOOM_OUT]",
+    "[PAN_LEFT]",
+    "[PAN_RIGHT]",
+    "[TILT_UP]",
+    "[TILT_DOWN]",
+    "[DOLLY_IN]",
+    "[DOLLY_OUT]",
+    "[TRACKING_LEFT]",
+    "[TRACKING_RIGHT]",
+    "[CRANE_UP]",
+    "[CRANE_DOWN]",
     "[ORBIT]",
     "[HANDHELD]",
+    "[ROLL]",
 ]
 
 CAMERA_TAG_TOOLTIP = (
