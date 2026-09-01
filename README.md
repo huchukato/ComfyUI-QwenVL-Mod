@@ -552,7 +552,8 @@ A woman in a red dress walks slowly through a sunlit garden, her hands gently br
 * **Qwen Team**: [Alibaba Cloud](https://github.com/QwenLM) - For development and open-source powerful Qwen-VL models.  
 * **ComfyUI**: [comfyanonymous](https://github.com/comfyanonymous/ComfyUI) - For incredible and extensible ComfyUI platform.  
 * **llama-cpp-python**: [JamePeng/llama-cpp-python](https://github.com/JamePeng/llama-cpp-python) - GGUF backend with vision support used by GGUF nodes.  
-* **GenorTG**: [GenorTG/ComfyUI-Genor-QwenVL-Mod](https://github.com/GenorTG/ComfyUI-Genor-QwenVL-Mod) - For innovative memory management improvements including `unload_after_run` parameter and prompt cache optimizations that prevent OOM errors in multi-node workflows.  
+* **GenorTG**: [GenorTG/ComfyUI-Genor-QwenVL-Mod](https://github.com/GenorTG/ComfyUI-Genor-QwenVL-Mod) - For innovative memory management improvements including `unload_after_run` parameter and prompt cache optimizations that prevent OOM errors in multi-node workflows.
+* **Deaquay**: [Deaquay/ComfyUI-Qwen3.5-Uncensored](https://github.com/Deaquay/ComfyUI-Qwen3.5-Uncensored) - For automatic local model discovery (GGUF and HF auto-scan with extra_model_paths.yaml support), Qwen3.5 architecture detection, and the VRAM headroom and image-handling fixes ported in v2.4.
 * **ComfyUI Integration**: [1038lab](https://github.com/1038lab) - Developer of this custom node.
 
 ## **👥 Author**
