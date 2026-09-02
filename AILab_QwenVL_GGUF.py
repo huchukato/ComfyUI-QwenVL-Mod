@@ -232,7 +232,7 @@ def _scan_local_gguf_models(base_dir: Path, existing_filenames: set[str]) -> dic
     # Walk all subdirectories and collect .gguf files grouped by parent directory
     dirs_with_gguf: dict[Path, list[Path]] = {}
     try:
-        for gguf_file in base_dir.rglob("*.gguf", recurse_symlinks=True):
+        for gguf_file in base_dir.rglob("*.gguf"):
             if gguf_file.is_file():
                 parent = gguf_file.parent
                 dirs_with_gguf.setdefault(parent, []).append(gguf_file)

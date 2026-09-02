@@ -107,7 +107,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         if not base_dir.exists() or not base_dir.is_dir():
             return local_models
         try:
-            for gguf_file in base_dir.rglob("*.gguf", recurse_symlinks=True):
+            for gguf_file in base_dir.rglob("*.gguf"):
                 if not gguf_file.is_file():
                     continue
                 # Skip mmproj files — they are vision projectors, not text models
