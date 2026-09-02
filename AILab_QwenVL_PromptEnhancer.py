@@ -20,6 +20,9 @@ from AILab_QwenVL import (
     ATTENTION_MODES,
     CAMERA_TAG_OPTIONS,
     CAMERA_TAG_TOOLTIP,
+    STYLE_TAG_OPTIONS,
+    STYLE_TAG_TOOLTIP,
+    STYLE_TAG_DESCRIPTIONS,
     HF_TEXT_MODELS,
     HF_VL_MODELS,
     PROMPT_CACHE,
@@ -103,6 +106,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
                 "prompt_text": ("STRING", {"default": "", "multiline": True, "tooltip": "Prompt text to enhance. Leave blank to just emit the preset instruction."}),
                 "enhancement_style": (styles, {"default": default_style}),
                 "camera_tag": (CAMERA_TAG_OPTIONS, {"default": "None", "tooltip": CAMERA_TAG_TOOLTIP}),
+                "style_tag": (STYLE_TAG_OPTIONS, {"default": "None", "tooltip": STYLE_TAG_TOOLTIP}),
                 "max_tokens": ("INT", {"default": 1024, "min": 32, "max": 16384}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.1, "max": 1.0}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0}),
@@ -123,6 +127,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         prompt_text,
         enhancement_style,
         camera_tag,
+        style_tag,
         max_tokens,
         temperature,
         top_p,
@@ -153,6 +158,34 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         base_instruction = "\n\n".join(part for part in (style_instruction, prompt_output_guard()) if part)
         user_prompt = prompt_text.strip() or "Describe a scene vividly."
         merged_prompt = f"{user_prompt}\n\n{base_instruction}".strip()
+
+        # ── Style tag injection ────────────────────────────────────────
+        # Only for T2V (no image): inject visual style as prefix + reminder
+        STYLE_TAGS = list(STYLE_TAG_DESCRIPTIONS.keys())
+        found_style_tag = None
+        if style_tag and style_tag.strip() and style_tag.strip().upper() != "NONE":
+            tag_clean = style_tag.strip().upper().strip("[]")
+            if tag_clean in STYLE_TAGS:
+                found_style_tag = tag_clean
+        if not found_style_tag and prompt_text and prompt_text.strip():
+            upper = prompt_text.upper()
+            for tag in STYLE_TAGS:
+                if f"[{tag}]" in upper:
+                    found_style_tag = tag
+                    break
+        if found_style_tag:
+            desc = STYLE_TAG_DESCRIPTIONS.get(found_style_tag, "")
+            tag_str = f"[{found_style_tag}]"
+            merged_prompt = (
+                f"{tag_str}\n\n{merged_prompt}\n\n"
+                f"═══ FINAL STYLE DIRECTIVE (HIGHEST PRIORITY) ═══\n"
+                f"Visual style: {tag_str} — {desc}\n"
+                f"You MUST use this visual style for the ENTIRE clip. "
+                f"State it explicitly in the first sentence and "
+                f"maintain it consistently.\n"
+                f"═══ END DIRECTIVE ═══"
+            )
+
         if model_name in HF_TEXT_MODELS:
             enhanced = self._invoke_text(
                 model_name,

@@ -1208,7 +1208,7 @@ class QwenVLBase:
                 f"═══ END DIRECTIVE ═══"
             )
             prompt = prefix + prompt + reminder
-            
+
         self.load_model(
             model_name,
             quantization,
@@ -1397,6 +1397,47 @@ CAMERA_TAG_TOOLTIP = (
     "Camera movement override for video presets (MiniMax H3, WAN, etc). "
     "'None' lets the preset decide. Any other value is injected as a "
     "[TAG] and reinforced at the end of the prompt so Qwen respects it."
+)
+
+# ── Style tag dropdown ────────────────────────────────────────────────
+# Replaces the vidstyle.txt wildcard for T2VA/T2V presets. Injected with
+# the same priority mechanism as camera_tag: prefix + final reminder.
+STYLE_TAG_OPTIONS = [
+    "None",
+    "[ANIME]",
+    "[PHOTOREALISTIC]",
+    "[3DCG]",
+    "[CARTOON]",
+    "[CLAYMATION]",
+    "[WATERCOLOR]",
+    "[VINTAGE]",
+    "[NOIR]",
+    "[CYBERPUNK]",
+    "[FANTASY]",
+    "[SOFTFOCUS]",
+    "[HENTAI]",
+]
+
+STYLE_TAG_DESCRIPTIONS = {
+    "ANIME":        "2D-animated, cel-shaded, vibrant anime color palette, clean lineart, anime-style lighting",
+    "PHOTOREALISTIC": "Live-action, cinematic photorealism, natural skin textures, realistic lighting, shallow depth of field",
+    "3DCG":         "3D CG rendered, subsurface scattering, physically based rendering, cinematic 3D animation",
+    "CARTOON":      "2D cartoon, bold outlines, flat colors, exaggerated expressions, cartoon-style animation",
+    "CLAYMATION":   "Claymation, stop-motion clay texture, handcrafted look, visible fingerprints, studio lighting",
+    "WATERCOLOR":   "Watercolor painting style, soft bleeding pigments, paper texture, hand-painted aesthetic",
+    "VINTAGE":      "Vintage film, 35mm grain, muted colors, halation, film scratches, analog warmth",
+    "NOIR":         "Film noir, high-contrast black and white, harsh shadows, venetian blind light, moody atmosphere",
+    "CYBERPUNK":    "Cyberpunk, neon-lit, holographic displays, rainy night, chrome reflections, magenta-cyan palette",
+    "FANTASY":      "Fantasy, ethereal lighting, magical particles, painterly atmosphere, mystical glow",
+    "SOFTFOCUS":    "Soft focus, dreamy diffusion, bloom, pastel palette, romantic atmosphere",
+    "HENTAI":       "2D-animated hentai, cel-shaded, explicit anime style, clean lineart, anime-style lighting",
+}
+
+STYLE_TAG_TOOLTIP = (
+    "Visual style override for video presets (MiniMax H3, WAN, etc). "
+    "'None' lets the preset decide. Any other value is injected as a "
+    "[TAG] and reinforced at the end of the prompt so Qwen respects it. "
+    "Replaces the vidstyle.txt wildcard."
 )
 
 NODE_DISPLAY_NAME_MAPPINGS = {
