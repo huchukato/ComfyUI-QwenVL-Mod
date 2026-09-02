@@ -898,6 +898,21 @@ class QwenVLBase:
                 "use_safetensors": True,
                 "low_cpu_mem_usage": True,
             }
+            # Patch: some Qwen3-VL configs have rope_scaling=None which crashes
+            # transformers. Set a default before loading.
+            try:
+                from transformers import AutoConfig
+                cfg = AutoConfig.from_pretrained(model_path, trust_remote_code=True)
+                if hasattr(cfg, "text_config") and getattr(cfg.text_config, "rope_scaling", "missing") is None:
+                    cfg.text_config.rope_scaling = {"mrope_section": [24, 20, 20], "mrope_type": "mrope"}
+                    load_kwargs["config"] = cfg
+                    print("[QwenVL] Patched rope_scaling=None in text_config")
+                elif getattr(cfg, "rope_scaling", "missing") is None:
+                    cfg.rope_scaling = {"mrope_section": [24, 20, 20], "mrope_type": "mrope"}
+                    load_kwargs["config"] = cfg
+                    print("[QwenVL] Patched rope_scaling=None in config")
+            except Exception as e:
+                print(f"[QwenVL] rope_scaling pre-check skipped: {e}")
             self.model = AutoModelForVision2Seq.from_pretrained(model_path, **load_kwargs).eval()
 
             if device != "cpu" and torch.cuda.is_available():
