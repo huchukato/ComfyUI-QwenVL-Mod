@@ -224,7 +224,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
                 "preset_system_prompt": (styles, {"default": default_style}),
                 "camera_tag": (CAMERA_TAG_OPTIONS, {"default": "None", "tooltip": CAMERA_TAG_TOOLTIP}),
                 "style_tag": (STYLE_TAG_OPTIONS, {"default": "None", "tooltip": STYLE_TAG_TOOLTIP}),
-                "max_tokens": ("INT", {"default": 1024, "min": 32, "max": 16384}),
+                "max_tokens": ("INT", {"default": 8192, "min": 32, "max": 16384}),
                 "temperature": ("FLOAT", {"default": 0.7, "min": 0.1, "max": 1.0}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0}),
                 "repetition_penalty": ("FLOAT", {"default": 1.1, "min": 0.5, "max": 2.0}),
