@@ -30,7 +30,7 @@ from PIL import Image
 
 # Import cache functions from main module
 sys.path.append(str(Path(__file__).parent))
-from AILab_QwenVL import PROMPT_CACHE, ensure_cuda_vram_headroom, get_cache_key, get_alternative_cache_key, get_image_hash, get_video_hash, save_prompt_cache, CAMERA_TAG_OPTIONS, CAMERA_TAG_TOOLTIP, CAMERA_TAG_DESCRIPTIONS
+from AILab_QwenVL import PROMPT_CACHE, ensure_cuda_vram_headroom, get_cache_key, get_alternative_cache_key, get_image_hash, get_video_hash, save_prompt_cache, CAMERA_TAG_OPTIONS, CAMERA_TAG_TOOLTIP, CAMERA_TAG_DESCRIPTIONS, add_danbooru_guidance, camera_directive_location
 
 import folder_paths
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output
@@ -860,6 +860,7 @@ class QwenVLGGUFBase:
 
         print(f"[QwenVL GGUF DEBUG] Cache disabled - proceeding with generation")
 
+        prompt_template = add_danbooru_guidance(prompt_template, preset_prompt)
         if custom_prompt and custom_prompt.strip():
             # Combine user input with template - custom prompt first for priority
             prompt = f"{custom_prompt.strip()}\n\n{prompt_template}"
@@ -887,7 +888,7 @@ class QwenVLGGUFBase:
                 f"\n\n═══ FINAL CAMERA DIRECTIVE (HIGHEST PRIORITY) ═══\n"
                 f"Camera: {tag_str} — {desc}\n"
                 f"You MUST use this camera movement and NO other. "
-                f"State it explicitly in the first sentence of [Shot 1].\n"
+                f"{camera_directive_location(preset_prompt, prompt)}\n"
                 f"IMPORTANT: the camera tag controls ONLY the camera. "
                 f"The subject MUST still have natural, lively action and "
                 f"movement throughout the clip — breathing, gestures, "

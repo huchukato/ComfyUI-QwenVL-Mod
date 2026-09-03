@@ -29,7 +29,7 @@ from AILab_OutputCleaner import OutputCleanConfig, clean_model_output, prompt_ou
 # Import cache functions from main module
 import sys
 sys.path.append(str(Path(__file__).parent))
-from AILab_QwenVL import PROMPT_CACHE, ensure_cuda_vram_headroom, get_cache_key, get_alternative_cache_key, save_prompt_cache, CAMERA_TAG_OPTIONS, CAMERA_TAG_TOOLTIP, CAMERA_TAG_DESCRIPTIONS, STYLE_TAG_OPTIONS, STYLE_TAG_TOOLTIP, STYLE_TAG_DESCRIPTIONS
+from AILab_QwenVL import PROMPT_CACHE, ensure_cuda_vram_headroom, get_cache_key, get_alternative_cache_key, save_prompt_cache, CAMERA_TAG_OPTIONS, CAMERA_TAG_TOOLTIP, CAMERA_TAG_DESCRIPTIONS, STYLE_TAG_OPTIONS, STYLE_TAG_TOOLTIP, STYLE_TAG_DESCRIPTIONS, add_danbooru_guidance, camera_directive_location, style_reference_guard
 from AILab_QwenVL_GGUF import read_gguf_architecture, find_in_llm_paths, _filter_kwargs_for_callable
 
 # Simple global variable to store last generated prompt
@@ -564,6 +564,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         system_prompt = style_system_prompt
         if not system_prompt:
             raise ValueError("system_prompt is empty; check AILab_System_Prompts.json or preset selection.")
+        system_prompt = add_danbooru_guidance(system_prompt, preset_system_prompt)
         system_prompt = f"{system_prompt}\n\n{prompt_output_guard()}"
         merged_prompt = prompt_text.strip() or "Describe a scene vividly."
 
@@ -588,7 +589,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
                 f"\n\n═══ FINAL CAMERA DIRECTIVE (HIGHEST PRIORITY) ═══\n"
                 f"Camera: {tag_str} — {desc}\n"
                 f"You MUST use this camera movement and NO other. "
-                f"State it explicitly in the first sentence of [Shot 1].\n"
+                f"{camera_directive_location(preset_system_prompt, system_prompt)}\n"
                 f"IMPORTANT: the camera tag controls ONLY the camera. "
                 f"The subject MUST still have natural, lively action and "
                 f"movement throughout the clip — breathing, gestures, "
@@ -622,7 +623,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
                 f"Visual style: {tag_str} — {desc}\n"
                 f"You MUST use this visual style for the ENTIRE clip. "
                 f"State it explicitly in the first sentence and "
-                f"maintain it consistently.\n"
+                f"maintain it consistently.{style_reference_guard(preset_system_prompt, system_prompt)}\n"
                 f"═══ END DIRECTIVE ═══"
             )
 
