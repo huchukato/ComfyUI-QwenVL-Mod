@@ -23,6 +23,8 @@ from AILab_QwenVL import (
     STYLE_TAG_OPTIONS,
     STYLE_TAG_TOOLTIP,
     STYLE_TAG_DESCRIPTIONS,
+    add_danbooru_guidance,
+    style_reference_guard,
     HF_TEXT_MODELS,
     HF_VL_MODELS,
     PROMPT_CACHE,
@@ -155,6 +157,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
             enhancement_style,
             next(iter(self.STYLES.values()), ""),
         ).strip()
+        style_instruction = add_danbooru_guidance(style_instruction, enhancement_style)
         base_instruction = "\n\n".join(part for part in (style_instruction, prompt_output_guard()) if part)
         user_prompt = prompt_text.strip() or "Describe a scene vividly."
         merged_prompt = f"{user_prompt}\n\n{base_instruction}".strip()
@@ -182,7 +185,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
                 f"Visual style: {tag_str} — {desc}\n"
                 f"You MUST use this visual style for the ENTIRE clip. "
                 f"State it explicitly in the first sentence and "
-                f"maintain it consistently.\n"
+                f"maintain it consistently.{style_reference_guard(enhancement_style, style_instruction)}\n"
                 f"═══ END DIRECTIVE ═══"
             )
 
