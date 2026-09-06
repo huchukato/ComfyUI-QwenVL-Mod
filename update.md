@@ -1,5 +1,88 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.6 (2026/09/03)
+
+🎬 **Camera & Style Tag Dropdowns + Pony Prompt Converters + Qwen 3.8 + LTX 2.3 FL2VA + MiniMax H3 Loop Mode**
+
+Major update introducing camera/style tag dropdowns across all nodes, Pony→Z-Image and Pony→Flux prompt converter presets, a rewritten Danbooru Tags preset, Qwen 3.8 uncensored models, LTX 2.3 FL2VA presets, and extensive MiniMax H3 improvements (loop mode, anatomical coherence, dialogue trigger, reference tags).
+
+### 🎥 **Camera Tag Dropdown**
+- **New `camera_tag` parameter** in all nodes: QwenVL, QwenVL (Advanced), QwenVL (GGUF), QwenVL (GGUF Advanced), QwenVL Prompt Enhancer, QwenVL Prompt Enhancer (GGUF)
+- **19 camera movement options**: `None`, `[STATIC_CAMERA]`, `[LOCKED_OFF]`, `[SLOW_ZOOM_IN]`, `[SLOW_ZOOM_OUT]`, `[FAST_ZOOM_IN]`, `[FAST_ZOOM_OUT]`, `[PAN_LEFT]`, `[PAN_RIGHT]`, `[TILT_UP]`, `[TILT_DOWN]`, `[DOLLY_IN]`, `[DOLLY_OUT]`, `[TRACKING_LEFT]`, `[TRACKING_RIGHT]`, `[CRANE_UP]`, `[CRANE_DOWN]`, `[ORBIT]`, `[HANDHELD]`, `[ROLL]`
+- **Recency bias injection**: tags injected as prefix AND re-injected at the end of the prompt so Qwen respects the camera directive
+- **STATIC_CAMERA / LOCKED_OFF override**: these tags override RICHNESS RULES and force a completely static camera with no motion whatsoever
+- **Subject kept alive**: during camera tag movements, the subject description is maintained (no disappearing characters)
+
+### 🎨 **Style Tag Dropdown (PromptEnhancer only)**
+- **New `style_tag` parameter** in QwenVL Prompt Enhancer and QwenVL Prompt Enhancer (GGUF) — T2V/T2VA presets only
+- **12 visual style options**: `None`, `[ANIME]`, `[PHOTOREALISTIC]`, `[3DCG]`, `[CARTOON]`, `[CLAYMATION]`, `[WATERCOLOR]`, `[VINTAGE]`, `[NOIR]`, `[CYBERPUNK]`, `[FANTASY]`, `[SOFTFOCUS]`, `[HENTAI]`
+- **Same injection mechanism** as camera_tag: prefix + final reminder for recency bias
+- For image-reference modes, identity and composition remain anchored to the references
+
+### 🐴 **Pony Prompt Converter Presets**
+- **🎨 Pony→Z-Image**: converts Pony/SDXL Danbooru-style tag prompts into optimized natural-language prompts for Z-Image-Turbo (6B S3-DiT from Alibaba). Removes score_ tags, converts tags to flowing sentences, adds precise photography vocabulary (Kodak Portra 400, lens specs), NSFW conversion rules, style detection, 6-part formula. CFG=0-1, no negative prompts, 8 steps, 1024×1024.
+- **🎨 Pony→Flux**: converts Pony/SDXL Danbooru-style tag prompts into natural-language prompts for Flux.1 (12B MMDiT from Black Forest Labs). Removes score_ tags, rich detail for photorealism (skin texture, pores, micro-details, film grain), 3-6 sentence flowing paragraph, up to 2MP resolution.
+- Both presets handle mixed input (tags + natural language) and multilingual input (Italian/English/any → English output)
+
+### 🏷️ **Rewritten Tags Preset (🖼️ Tags)**
+- Generates Pony/SDXL Danbooru-style tags with `score_9, score_8_up, score_7_up` quality prefix
+- 30-60 tags following structured order: quality → subject count → attributes → clothing → pose/action → environment → lighting → camera/composition → style
+- Explicit NSFW tag support (no censoring)
+- No meta tags ("masterpiece", "best quality") — uses score_ tags instead
+
+### 🧠 **Qwen 3.8 Uncensored Models**
+- **HF VL**: `Qwen3.8-27B-Uncensored-Heretic-Abliterated` (alexander2323)
+- **HF Text**: `Qwen3.8-4B-Distill-heretic` (valiolla), `Qwen3.8-9B-heretic-uncensored` (rohit267)
+- **GGUF**: two new GGUF models added at top of dropdown
+- Switched to **armand0e repaired Qwen3.5-9B-heretic** weights (fixed broken checkpoint)
+
+### 🎬 **LTX 2.3 FL2VA Presets**
+- New **LTX 2.3 NSFW FL2VA** presets (5s/10s/20s) for First-Last-Frame to video
+- Added **LTX 2.3 NSFW 10s** presets (I2V + T2V)
+- Added **LTX 2.3 NSFW 20s** presets (I2V + T2V)
+- Added missing **LTX 2.3 T2V (10s/20s)** styles to qwen_text.styles
+- **Dropdown reorder**: I2V → FL2VA → T2V for logical workflow progression
+- Removed LTX 2.3 T2V from QwenVL node dropdown (text-only belongs in PromptEnhancer)
+- **Danbooru tag support**: LTX 2.3 presets now expand comma-separated Danbooru tags into cinematic scenes
+- **Anatomical correctness rule** added to LTX I2V presets (5s + 10s)
+
+### 🎬 **MiniMax H3 Improvements**
+- **LOOP MODE** for FL2VA presets: seamless loop generation with pacing instructions (START IMMEDIATELY, 0.3s margin for continuity)
+- **Anatomical coherence instructions** in all MiniMax H3 NSFW presets
+- **[DIALOGUE] trigger**: explicit trigger for spoken content in MiniMax H3
+- **[P3]/[P4] manual reference tags** for R2VA presets
+- **R2VA prompt fixes** based on Civitai community feedback
+- **Camera control tags** added to all MiniMax H3 NSFW presets
+- **I2VA priority**: user text now takes priority over reference image
+- **Danbooru tag + style tag support** in MiniMax H3 T2VA presets
+- **Mandatory sexual sounds** in all H3 soundscape presets
+- **Forbidden output wrapping**: no triple quotes or markdown in output
+
+### ⚡ **PromptEnhancer Changes**
+- **max_tokens default raised to 8192** (was 1024) for longer, richer prompt generation
+- **Removed `custom_system_prompt`** parameter from PromptEnhancer and GGUF PE
+- **Removed `CUSTOM_ONLY_STYLE`** mode from PromptEnhancer
+
+### 🐛 **Bug Fixes**
+- **Python 3.12 compatibility**: fixed crash with `rope_scaling=None`
+- **PromptEnhancer TypeError**: fixed `run() has no 'video' kwarg`
+- **SageAttention import**: fixed for 2.x API (top-level vs `.core`)
+- **qwen3_5 → qwen3_vl config fallback** for unrecognized model types
+- **Model list cleanup**: removed censored + wrong abliterated versions, removed gated prithivMLmods models (require HF auth)
+
+### 🐳 **Docker / Provisioning**
+- **LTX 2.5 support** added (separate Docker/provisioning from LTX 2.3)
+- **Sulphur 2** (native uncensored LTX 2.3) + distill LoRA
+- **10Eros-Max Turbo LoRA** 8-step + 10Eros v1.5 fp8 + DMD hybrid v2 LoRA
+- **Pruna optimized VAE** for faster LTX decode
+- **gemma-4-E2B-it-uncensored** (abliterated) as LTX 2.5 prompt enhancer
+- **VFX workflows** for MiniMax H3 Turbo (FL2VA and I2VA) — RIFE before upscale for 2K output
+- **Download progress log** + `/dlstatus` endpoint served via ComfyUI
+- **Configurable ComfyUI version** in RunPod, simplified Vast.ai provisioning
+- **Workflows, provisioning and Docker infra moved to ComfyUI-Garage repo**
+
+---
+
 ## Version 2.5.1 (2026/08/11)
 
 🚀 **MiniMax-H3 Turbo LoRA Workflows + Official Diffusion + Uncensored Text Encoder + Explicit Tag Handling**
