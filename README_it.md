@@ -72,6 +72,16 @@ T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) �
 ---
 
 ## **📰 Notizie & Aggiornamenti**
+* **2026/09/03**: **v2.6** 🎬 **Dropdown Camera & Style Tag + Converter Pony + Qwen 3.8 + LTX 2.3 FL2VA + MiniMax H3 Loop Mode**. [[Aggiornamenti](update.md#version-26-20260903)]
+> 🎥 **Dropdown Camera Tag**: Nuovo parametro `camera_tag` in tutti i nodi con 19 movimenti camera (STATIC_CAMERA, SLOW/FAST ZOOM, PAN, TILT, DOLLY, TRACKING, CRANE, ORBIT, HANDHELD, ROLL). Tag iniettati come prefisso + re-iniettati alla fine per recency bias. STATIC_CAMERA sovrascrive RICHNESS RULES.
+> 🎨 **Dropdown Style Tag**: Nuovo parametro `style_tag` nel PromptEnhancer (solo T2V) con 12 stili visivi (ANIME, PHOTOREALISTIC, 3DCG, CARTOON, CLAYMATION, WATERCOLOR, VINTAGE, NOIR, CYBERPUNK, FANTASY, SOFTFOCUS, HENTAI).
+> 🐴 **Converter Pony**: Nuovi preset `🎨 Pony→Z-Image` e `🎨 Pony→Flux` convertono tag Danbooru in prompt natural-language per Z-Image-Turbo e Flux.1. Preset `🖼️ Tags` riscritto genera tag Pony/SDXL con prefisso `score_9`.
+> 🧠 **Modelli Qwen 3.8**: Aggiunti Qwen3.8-27B-Uncensored-Heretic-Abliterated (VL), Qwen3.8-4B-Distill-heretic e Qwen3.8-9B-heretic-uncensored (testo). Passati a pesi armand0e riparati Qwen3.5-9B-heretic.
+> 🎬 **LTX 2.3 FL2VA**: Nuovi preset FL2VA (5s/10s/20s) + preset 10s/20s I2V/T2V. Dropdown riordinato I2V → FL2VA → T2V. Supporto tag Danbooru in tutti i preset LTX 2.3.
+> 🎬 **MiniMax H3**: LOOP MODE per FL2VA, coerenza anatomica, trigger [DIALOGUE], tag riferimento [P3]/[P4] per R2VA, priorità testo utente in I2VA, suoni sessuali obbligatori, tag controllo camera.
+> ⚡ **PromptEnhancer**: max_tokens predefinito aumentato a 8192 (era 1024). Rimosso `custom_system_prompt`.
+> 🐛 **Fix**: Compatibilità Python 3.12 + crash rope_scaling=None, TypeError PromptEnhancer, import SageAttention 2.x, fallback config qwen3_5→qwen3_vl, pulizia lista modelli.
+
 * **2026/08/11**: **v2.5.1** 🚀 **MiniMax-H3 Turbo LoRA + Diffusion Ufficiale + Text Encoder Uncensored**. [[Aggiornamenti](update.md#version-251-20260811)]
 > ⚡ **Turbo LoRA**: Nuovi workflow 4–8 step (`MiniMaxH3-Turbo-*-Qwen3VL.json`) con `Larryvrh/ComfyUI-MiniMax-H3-Turbo` e `minimax_h3_turbo_v4_step600_ema.safetensors`.
 > 📦 **Modelli**: T2VA/I2VA/FL2VA usano il diffusion model ufficiale `minimax_h3_fl2va_pruned_int8_convrot.safetensors` (Comfy-Org). R2VA mantiene il ref2va ufficiale. Il text encoder rimane `qwen3vl_32b_h3_ultra_uncensored_heretic_int8_convrot.safetensors` (ethanfel).
