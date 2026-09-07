@@ -1,6 +1,6 @@
 [project]
 name = "ComfyUI-QwenVL-Mod"
-description = "Enhanced QwenVL node with WAN 2.2 workflows, multilingual support, visual style detection, smart prompt caching, and GGUF backend for professional video generation and multimodal AI."
+description = "Enhanced QwenVL node with MiniMax H3 loop mode and presets, multilingual prompt generation, camera & style tag dropdowns, Pony prompt converters, Qwen 3.8 uncensored models, GGUF backend, LTX 2.3 FL2VA presets, and local model discovery for professional multimodal video workflows."
 version = "2.6.1"
 license = {file = "LICENSE"}
 dependencies = ["transformers", "torch", "huggingface-hub", "hf_xet", "psutil", "numpy", "Pillow", "opencv-python", "bitsandbytes", "accelerate", "llama-cpp-python"]
