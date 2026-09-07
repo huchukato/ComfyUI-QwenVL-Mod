@@ -1,5 +1,9 @@
 # **QwenVL-Mod for ComfyUI**
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/huchukato/ComfyUI-QwenVL-Mod/main/banner.png" alt="QwenVL-Mod Banner" width="100%" />
+</p>
+
 [![ComfyUI](https://img.shields.io/badge/ComfyUI-Custom%20Node-blue?style=for-the-badge&logo=python)](https://github.com/comfyanonymous/ComfyUI)
 [![License](https://img.shields.io/badge/License-GPL--3.0-green?style=for-the-badge)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)](https://python.org)
@@ -13,7 +17,7 @@
 
 [![buy-me-coffees](https://i.imgur.com/3MDbAtw.png)](https://buymeacoffee.com/huchukato)
 
-[![Deploy ComfyUI-QwenVL-Mod on RunPod](https://raw.githubusercontent.com/huchukato/ComfyUI-Garage/master/img/b-mmh3-cu13-r.jpg)](https://console.runpod.io/deploy?template=1v8gfux2zd&ref=ioakclrv)
+[![Deploy ComfyUI-QwenVL-Mod on RunPod](https://raw.githubusercontent.com/huchukato/ComfyUI-Garage/master/img/b-mmh3-cu13-r.jpg)](https://console.runpod.io/hub/template/bii5d425kp?ref=ioakclrv)
 
 The ComfyUI-QwenVL custom node integrates powerful Qwen-VL series of vision-language models (LVLMs) from Alibaba Cloud, including latest Qwen3-VL, plus GGUF backends and text-only Qwen3 support. This advanced node enables seamless multimodal AI capabilities within your ComfyUI workflows, allowing for efficient text generation, image understanding, and video analysis.
 
