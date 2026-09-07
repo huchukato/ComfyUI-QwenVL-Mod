@@ -162,7 +162,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "VRAMCleanup": "VRAM Cleanup"
+    "VRAMCleanup": "🔷 QwenVL-Mod VRAM Cleanup"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

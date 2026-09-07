@@ -1176,6 +1176,6 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "AILab_QwenVL_GGUF": "QwenVL-Mod (GGUF)",
-    "AILab_QwenVL_GGUF_Advanced": "QwenVL-Mod Advanced (GGUF)",
+    "AILab_QwenVL_GGUF": "🔷 QwenVL-Mod (GGUF)",
+    "AILab_QwenVL_GGUF_Advanced": "🔷 QwenVL-Mod Advanced (GGUF)",
 }

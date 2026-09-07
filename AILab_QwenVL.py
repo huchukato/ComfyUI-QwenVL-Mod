@@ -1475,6 +1475,6 @@ def style_reference_guard(preset_name, prompt=""):
     return ""
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "AILab_QwenVL": "QwenVL-Mod",
-    "AILab_QwenVL_Advanced": "QwenVL-Mod (Advanced)",
+    "AILab_QwenVL": "🔷 QwenVL-Mod",
+    "AILab_QwenVL_Advanced": "🔷 QwenVL-Mod (Advanced)",
 }
