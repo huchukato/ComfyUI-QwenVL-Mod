@@ -1,5 +1,9 @@
 # **QwenVL-Mod per ComfyUI**
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/huchukato/ComfyUI-QwenVL-Mod/main/banner.png" alt="QwenVL-Mod Banner" width="100%" />
+</p>
+
 [![ComfyUI](https://img.shields.io/badge/ComfyUI-Custom%20Node-blue?style=for-the-badge&logo=python)](https://github.com/comfyanonymous/ComfyUI)
 [![License](https://img.shields.io/badge/License-GPL--3.0-green?style=for-the-badge)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)](https://python.org)
