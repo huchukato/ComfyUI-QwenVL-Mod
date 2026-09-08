@@ -1147,6 +1147,8 @@ class QwenVLBase:
         # Always generate when keep last prompt is disabled
         print(f"[QwenVL] Keep last prompt disabled - generating new prompt")
         print(f"[QwenVL] custom_prompt received: '{custom_prompt[:200] if custom_prompt else '(empty)'}'")
+        print(f"[QwenVL] image connected: {image is not None} (shape={image.shape if image is not None else 'N/A'})")
+        print(f"[QwenVL] image2 connected: {image2 is not None} (shape={image2.shape if image2 is not None else 'N/A'})")
         
         prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
         
