@@ -1146,6 +1146,7 @@ class QwenVLBase:
         
         # Always generate when keep last prompt is disabled
         print(f"[QwenVL] Keep last prompt disabled - generating new prompt")
+        print(f"[QwenVL] custom_prompt received: '{custom_prompt[:200] if custom_prompt else '(empty)'}'")
         
         prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
         
