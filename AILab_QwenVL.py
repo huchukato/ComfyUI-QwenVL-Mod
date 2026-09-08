@@ -706,10 +706,20 @@ def ensure_model(model_name):
             except Exception:
                 pass
         if needs_vision:
-            print("[QwenVL] preprocessor_config.json missing — downloading from Qwen/Qwen3.5-4B")
+            # Pick the right base model for preprocessor config
+            model_lower = model_name.lower() if model_name else ""
+            if "3.8" in model_lower or "qwen3.8" in model_lower:
+                base_repo = "Qwen/Qwen3.8-27B"
+            elif "27b" in model_lower or "qwen3.5-27b" in model_lower:
+                base_repo = "Qwen/Qwen3.5-27B"
+            elif "9b" in model_lower:
+                base_repo = "Qwen/Qwen3.5-9B"
+            else:
+                base_repo = "Qwen/Qwen3.5-4B"
+            print(f"[QwenVL] preprocessor_config.json missing — downloading from {base_repo}")
             try:
                 hf_hub_download(
-                    repo_id="Qwen/Qwen3.5-4B",
+                    repo_id=base_repo,
                     filename="preprocessor_config.json",
                     local_dir=str(target),
                 )
