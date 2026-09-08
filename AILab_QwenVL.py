@@ -1043,9 +1043,21 @@ class QwenVLBase:
         if image is not None:
             if image.dim() == 4 and image.shape[0] > 1:
                 print(f"[QwenVL] IMAGE input contains {image.shape[0]} items; using the first item only. Use the image2 input for multi-image analysis.")
-            conversation[0]["content"].append({"type": "image", "image": self.tensor_to_pil(image)})
+            # Check if image is all black/zero (placeholder from PerfectVideoResolution)
+            img_mean = image.mean().item()
+            print(f"[QwenVL] image pixel mean: {img_mean:.4f} (0.0 = black placeholder)")
+            if img_mean < 0.001:
+                print(f"[QwenVL] WARNING: image appears to be a black placeholder! Skipping.")
+            else:
+                conversation[0]["content"].append({"type": "image", "image": self.tensor_to_pil(image)})
         if image2 is not None:
-            frames = [self.tensor_to_pil(frame) for frame in image2]
+            # Check if image2 is all black/zero (placeholder from PerfectVideoResolution)
+            img2_mean = image2.mean().item()
+            print(f"[QwenVL] image2 pixel mean: {img2_mean:.4f} (0.0 = black placeholder)")
+            if img2_mean < 0.001:
+                print(f"[QwenVL] WARNING: image2 appears to be a black placeholder! Treating as not connected.")
+                image2 = None
+            frames = [self.tensor_to_pil(frame) for frame in image2] if image2 is not None else []
             if len(frames) > frame_count:
                 idx = np.linspace(0, len(frames) - 1, frame_count, dtype=int)
                 frames = [frames[i] for i in idx]
@@ -1056,6 +1068,8 @@ class QwenVLBase:
                 # instead of treating them as a single video sequence.
                 for frame in frames:
                     conversation[0]["content"].append({"type": "image", "image": frame})
+        num_images = sum(1 for item in conversation[0]["content"] if item.get("type") == "image")
+        print(f"[QwenVL] Total images passed to model: {num_images}")
         conversation[0]["content"].append({"type": "text", "text": ("/no_think\n" if getattr(self, "is_qwen35", False) else "") + prompt_text})
         
         # --- Qwen3.5 Heretic Logic: Template ---
