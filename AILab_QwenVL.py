@@ -1275,17 +1275,24 @@ class QwenVLBase:
                 video=video,
             )
             
-            # Cache the generated text
-            PROMPT_CACHE[cache_key] = {
-                "text": text,
-                "timestamp": torch.cuda.Event().record() if torch.cuda.is_available() else None,
-                "model": model_name,
-                "preset": preset_prompt,
-                "seed": seed,
-                "image_hash": image_hash,
-                "video_hash": combined_hash
-            }
-            save_prompt_cache()  # Save cache to file
+            # Validate output before caching — reject "ready/waiting" responses
+            # that occur when the model treats the system prompt as a conversation
+            _lower = text.strip().lower()[:50]
+            if any(phrase in _lower for phrase in ["ready.", "ready to", "please paste", "paste your"]):
+                print(f"[QwenVL] WARNING: Model returned a 'waiting' response instead of generating. NOT caching.")
+                print(f"[QwenVL] Response: {text[:100]}...")
+            else:
+                # Cache the generated text
+                PROMPT_CACHE[cache_key] = {
+                    "text": text,
+                    "timestamp": torch.cuda.Event().record() if torch.cuda.is_available() else None,
+                    "model": model_name,
+                    "preset": preset_prompt,
+                    "seed": seed,
+                    "image_hash": image_hash,
+                    "video_hash": combined_hash
+                }
+                save_prompt_cache()
             
             print(f"[QwenVL] Cached new prompt for seed {seed}: {cache_key[:8]}...")
             
