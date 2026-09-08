@@ -262,7 +262,7 @@ TOOLTIPS = {
     "top_p": "Nucleus sampling cutoff when num_beams == 1. Lower values keep only top tokens; 0.9–0.95 allows more variety.",
     "num_beams": "Beam-search width. Values >1 disable temperature/top_p and trade speed for more stable answers.",
     "repetition_penalty": "Values >1 (e.g., 1.1–1.3) penalize repeated phrases; 1.0 leaves logits untouched.",
-    "frame_count": "Number of images extracted from the image2 input. For FL2VA/R2VA, set to 1-9 depending on how many reference images you connect.",
+    "frame_count": "Number of frames to sample from the video input. Only applies to the video input, NOT to image/image2.",
 }
 
 class Quantization(str, Enum):
@@ -1035,39 +1035,50 @@ class QwenVLBase:
         num_beams,
         repetition_penalty,
         model_name="",
+        video=None,
     ):
         # Memory optimization: clear cache before generation
         ensure_cuda_vram_headroom("QwenVL", min_free_gb=1.0, min_free_ratio=0.08)
 
         conversation = [{"role": "user", "content": []}]
+
+        # --- Image 1: single reference image ---
         if image is not None:
             if image.dim() == 4 and image.shape[0] > 1:
-                print(f"[QwenVL] IMAGE input contains {image.shape[0]} items; using the first item only. Use the image2 input for multi-image analysis.")
-            # Check if image is all black/zero (placeholder from PerfectVideoResolution)
+                print(f"[QwenVL] IMAGE input contains {image.shape[0]} items; using the first item only.")
             img_mean = image.mean().item()
             print(f"[QwenVL] image pixel mean: {img_mean:.4f} (0.0 = black placeholder)")
             if img_mean < 0.001:
                 print(f"[QwenVL] WARNING: image appears to be a black placeholder! Skipping.")
             else:
                 conversation[0]["content"].append({"type": "image", "image": self.tensor_to_pil(image)})
+
+        # --- Image 2: single reference image (same as image, NOT video) ---
         if image2 is not None:
-            # Check if image2 is all black/zero (placeholder from PerfectVideoResolution)
             img2_mean = image2.mean().item()
             print(f"[QwenVL] image2 pixel mean: {img2_mean:.4f} (0.0 = black placeholder)")
             if img2_mean < 0.001:
-                print(f"[QwenVL] WARNING: image2 appears to be a black placeholder! Treating as not connected.")
-                image2 = None
-            frames = [self.tensor_to_pil(frame) for frame in image2] if image2 is not None else []
-            if len(frames) > frame_count:
-                idx = np.linspace(0, len(frames) - 1, frame_count, dtype=int)
-                frames = [frames[i] for i in idx]
-            if frames:
-                # Pass each frame as a separate image (not as a video).
-                # This allows Qwen3-VL to see multiple reference images
-                # (e.g. first+last frame for FL2VA, or multiple references for R2VA)
-                # instead of treating them as a single video sequence.
+                print(f"[QwenVL] WARNING: image2 appears to be a black placeholder! Skipping.")
+            else:
+                if image2.dim() == 4 and image2.shape[0] > 1:
+                    print(f"[QwenVL] IMAGE2 input contains {image2.shape[0]} items; using the first item only.")
+                conversation[0]["content"].append({"type": "image", "image": self.tensor_to_pil(image2)})
+
+        # --- Video: multi-frame input with frame_count sampling ---
+        if video is not None:
+            vid_mean = video.mean().item()
+            print(f"[QwenVL] video pixel mean: {vid_mean:.4f} (0.0 = black placeholder)")
+            if vid_mean < 0.001:
+                print(f"[QwenVL] WARNING: video appears to be a black placeholder! Skipping.")
+            else:
+                frames = [self.tensor_to_pil(frame) for frame in video]
+                if len(frames) > frame_count:
+                    idx = np.linspace(0, len(frames) - 1, frame_count, dtype=int)
+                    frames = [frames[i] for i in idx]
+                print(f"[QwenVL] Video: {video.shape[0]} total frames, sampled {len(frames)} frames (frame_count={frame_count})")
                 for frame in frames:
                     conversation[0]["content"].append({"type": "image", "image": frame})
+
         num_images = sum(1 for item in conversation[0]["content"] if item.get("type") == "image")
         print(f"[QwenVL] Total images passed to model: {num_images}")
         conversation[0]["content"].append({"type": "text", "text": ("/no_think\n" if getattr(self, "is_qwen35", False) else "") + prompt_text})
@@ -1153,7 +1164,7 @@ class QwenVLBase:
         text = self.tokenizer.decode(outputs[0, input_len:], skip_special_tokens=True)
         return text.strip()
 
-    def run(self, model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt=False, camera_tag="None"):
+    def run(self, model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt=False, camera_tag="None", video=None):
         torch.manual_seed(seed)
         
         global LAST_SAVED_PROMPT
@@ -1173,13 +1184,17 @@ class QwenVLBase:
         print(f"[QwenVL] custom_prompt received: '{custom_prompt[:200] if custom_prompt else '(empty)'}'")
         print(f"[QwenVL] image connected: {image is not None} (shape={image.shape if image is not None else 'N/A'})")
         print(f"[QwenVL] image2 connected: {image2 is not None} (shape={image2.shape if image2 is not None else 'N/A'})")
+        print(f"[QwenVL] video connected: {video is not None} (shape={video.shape if video is not None else 'N/A'})")
         
         prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
         
         # Generate cache key with all inputs including seed
         image_hash = get_image_hash(image)
-        video_hash = get_video_hash(image2)
-        cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, image_hash, video_hash, seed)
+        image2_hash = get_image_hash(image2)
+        video_hash = get_video_hash(video)
+        # Combine image2 and video hashes for backward-compatible cache key
+        combined_hash = f"{image2_hash or ''}/{video_hash or ''}" if (image2_hash or video_hash) else None
+        cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, image_hash, combined_hash, seed)
         
         # Check cache first (only for random mode)
         if cache_key in PROMPT_CACHE:
@@ -1257,6 +1272,7 @@ class QwenVLBase:
                 num_beams,
                 repetition_penalty,
                 model_name=model_name,
+                video=video,
             )
             
             # Cache the generated text
@@ -1267,7 +1283,7 @@ class QwenVLBase:
                 "preset": preset_prompt,
                 "seed": seed,
                 "image_hash": image_hash,
-                "video_hash": video_hash
+                "video_hash": combined_hash
             }
             save_prompt_cache()  # Save cache to file
             
@@ -1300,12 +1316,14 @@ class AILab_QwenVL(QwenVLBase):
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": TOOLTIPS["custom_prompt"]}),
                 "max_tokens": ("INT", {"default": 8192, "min": 64, "max": 8192, "tooltip": TOOLTIPS["max_tokens"]}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": TOOLTIPS["keep_model_loaded"]}),
-                "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1, "tooltip": TOOLTIPS["seed"] + "\n\n💡 Cache Info: Prompts are cached automatically. Use the same inputs (model, preset, custom prompt, image/image2) to reuse cached prompts and avoid regeneration.\n\n🔒 Fixed Seed Mode: Set seed = 1 to ignore image/image2 changes and only use text-based caching. Perfect for keeping the same prompt regardless of media input variations."}),
+                "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1, "tooltip": TOOLTIPS["seed"] + "\n\n💡 Cache Info: Prompts are cached automatically. Use the same inputs (model, preset, custom prompt, image/image2/video) to reuse cached prompts and avoid regeneration.\n\n🔒 Fixed Seed Mode: Set seed = 1 to ignore image/image2/video changes and only use text-based caching. Perfect for keeping the same prompt regardless of media input variations."}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
             },
             "optional": {
-                "image": ("IMAGE",),
-                "image2": ("IMAGE",),
+                "image": ("IMAGE", {"tooltip": "First reference image (single image). For R2VA this is Picture 1."}),
+                "image2": ("IMAGE", {"tooltip": "Second reference image (single image). For R2VA this is Picture 2."}),
+                "video": ("IMAGE", {"tooltip": "Video frames input. Use frame_count to control how many frames are sampled."}),
+                "frame_count": ("INT", {"default": 16, "min": 1, "max": 64, "tooltip": TOOLTIPS["frame_count"]}),
             },
         }
 
@@ -1314,8 +1332,8 @@ class AILab_QwenVL(QwenVLBase):
     FUNCTION = "process"
     CATEGORY = "QwenVL-Mod"
 
-    def process(self, model_name, quantization, preset_prompt, camera_tag, custom_prompt, attention_mode, max_tokens, keep_model_loaded, seed, keep_last_prompt=False, image=None, image2=None):
-        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, image2, 16, max_tokens, 0.6, 0.9, 1, 1.2, seed, keep_model_loaded, attention_mode, False, "auto", keep_last_prompt, camera_tag)
+    def process(self, model_name, quantization, preset_prompt, camera_tag, custom_prompt, attention_mode, max_tokens, keep_model_loaded, seed, keep_last_prompt=False, image=None, image2=None, video=None, frame_count=16):
+        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, 0.6, 0.9, 1, 1.2, seed, keep_model_loaded, attention_mode, False, "auto", keep_last_prompt, camera_tag, video=video)
 
 class AILab_QwenVL_Advanced(QwenVLBase):
     @classmethod
@@ -1345,14 +1363,15 @@ class AILab_QwenVL_Advanced(QwenVLBase):
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0, "tooltip": TOOLTIPS["top_p"]}),
                 "num_beams": ("INT", {"default": 1, "min": 1, "max": 8, "tooltip": TOOLTIPS["num_beams"]}),
                 "repetition_penalty": ("FLOAT", {"default": 1.0, "min": 0.5, "max": 2.0, "tooltip": TOOLTIPS["repetition_penalty"]}),
-                "frame_count": ("INT", {"default": 16, "min": 1, "max": 64, "tooltip": TOOLTIPS["frame_count"]}),
                 "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": TOOLTIPS["keep_model_loaded"]}),
-                "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1, "tooltip": TOOLTIPS["seed"] + "\n\n💡 Cache Info: Prompts are cached automatically. Use same inputs (model, preset, custom prompt, image/image2) to reuse cached prompts and avoid regeneration.\n\n🔒 Fixed Seed Mode: Set seed = 1 to ignore image/image2 changes and only use text-based caching. Perfect for keeping the same prompt regardless of media input variations."}),
+                "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1, "tooltip": TOOLTIPS["seed"] + "\n\n💡 Cache Info: Prompts are cached automatically. Use same inputs (model, preset, custom prompt, image/image2/video) to reuse cached prompts and avoid regeneration.\n\n🔒 Fixed Seed Mode: Set seed = 1 to ignore image/image2/video changes and only use text-based caching. Perfect for keeping the same prompt regardless of media input variations."}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep last generated prompt instead of creating a new one"}),
             },
             "optional": {
-                "image": ("IMAGE",),
-                "image2": ("IMAGE",),
+                "image": ("IMAGE", {"tooltip": "First reference image (single image). For R2VA this is Picture 1."}),
+                "image2": ("IMAGE", {"tooltip": "Second reference image (single image). For R2VA this is Picture 2."}),
+                "video": ("IMAGE", {"tooltip": "Video frames input. Use frame_count to control how many frames are sampled."}),
+                "frame_count": ("INT", {"default": 16, "min": 1, "max": 64, "tooltip": TOOLTIPS["frame_count"]}),
             },
         }
 
@@ -1361,8 +1380,8 @@ class AILab_QwenVL_Advanced(QwenVLBase):
     FUNCTION = "process"
     CATEGORY = "QwenVL-Mod"
 
-    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, camera_tag, custom_prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, frame_count, keep_model_loaded, seed, keep_last_prompt, image=None, image2=None):
-        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt, camera_tag)
+    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, camera_tag, custom_prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, keep_model_loaded, seed, keep_last_prompt, image=None, image2=None, video=None, frame_count=16):
+        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt, camera_tag, video=video)
 
 NODE_CLASS_MAPPINGS = {
     "AILab_QwenVL": AILab_QwenVL,
