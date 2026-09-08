@@ -35,7 +35,7 @@ class VRAMCleanup:
     RETURN_TYPES = ("*",)  # Pass through the input
     RETURN_NAMES = ("output",)
     FUNCTION = "cleanup_vram_memory"
-    CATEGORY = "🔷 QwenVL-Mod/Utils"
+    CATEGORY = "QwenVL-Mod/Utils"
     OUTPUT_NODE = True
     
     def cleanup_vram_memory(self, input, cleanup_mode):
