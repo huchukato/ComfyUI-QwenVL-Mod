@@ -1,0 +1,102 @@
+import json
+import sys
+import types
+import unittest
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parents[1]))
+
+from chat_service import ChatRuntime, build_prompt, parse_model_response, validate_actions, validate_graph, validate_messages
+
+
+class ChatProtocolTests(unittest.TestCase):
+    def test_validates_and_limits_messages(self):
+        messages = [{"role": "user", "content": f"message {index}"} for index in range(25)]
+        result = validate_messages(messages)
+        self.assertEqual(len(result), 20)
+        self.assertEqual(result[0]["content"], "message 5")
+
+    def test_rejects_invalid_message_role_and_content(self):
+        for messages in ([], [{"role": "system", "content": "x"}], [{"role": "user", "content": ""}]):
+            with self.subTest(messages=messages), self.assertRaises(ValueError):
+                validate_messages(messages)
+
+    def test_validates_graph_snapshot(self):
+        graph = {"nodes": [{"id": 1, "type": "KSampler", "title": "Sampler", "mode": 0, "widgets": [{"name": "steps", "value": 20}]}]}
+        result = validate_graph(graph)
+        self.assertEqual(result["nodes"][0]["id"], 1)
+        self.assertEqual(result["nodes"][0]["widgets"][0]["value"], 20)
+
+    def test_rejects_invalid_graph(self):
+        for graph in (None, {}, {"nodes": "bad"}, {"nodes": [{}]}):
+            with self.subTest(graph=graph), self.assertRaises(ValueError):
+                validate_graph(graph)
+
+    def test_accepts_only_protocol_actions(self):
+        actions = [
+            {"type": "set_widget_value", "node_id": 1, "widget": "steps", "value": 25},
+            {"type": "set_node_mode", "node_id": 2, "mode": "bypass"},
+            {"type": "queue_workflow"},
+            {"type": "delete_node", "node_id": 3},
+            {"type": "set_node_mode", "node_id": 2, "mode": "delete"},
+            {"type": "set_widget_value", "node_id": 1, "widget": "x", "value": {"unsafe": True}},
+        ]
+        self.assertEqual(len(validate_actions(actions)), 3)
+
+    def test_parses_json_and_fenced_json(self):
+        payload = {"message": "Done", "actions": [{"type": "queue_workflow"}]}
+        for text in (json.dumps(payload), f"```json\n{json.dumps(payload)}\n```"):
+            with self.subTest(text=text):
+                result = parse_model_response(text)
+                self.assertEqual(result, payload)
+
+    def test_plain_text_becomes_message_without_actions(self):
+        self.assertEqual(parse_model_response("I cannot do that"), {"message": "I cannot do that", "actions": []})
+
+    def test_prompt_contains_history_and_graph(self):
+        prompt = build_prompt([{"role": "user", "content": "Set steps"}], {"nodes": [{"id": 1}]})
+        self.assertIn("Set steps", prompt)
+        self.assertIn('"id":1', prompt)
+        self.assertIn("set_widget_value", prompt)
+
+    def test_hf_runtime_reuses_and_unloads_model(self):
+        class FakeQuantization:
+            Q8 = types.SimpleNamespace(value="q8")
+
+        class FakeBase:
+            def __init__(self):
+                self.loaded = 0
+                self.cleared = False
+
+            def load_model(self, *args):
+                self.loaded += 1
+
+            def generate(self, *args, **kwargs):
+                return '{"message":"ok","actions":[]}'
+
+            def clear(self):
+                self.cleared = True
+
+        previous = sys.modules.get("AILab_QwenVL")
+        sys.modules["AILab_QwenVL"] = types.SimpleNamespace(
+            HF_VL_MODELS={"test-model": {}},
+            Quantization=FakeQuantization,
+            QwenVLBase=FakeBase,
+        )
+        try:
+            runtime = ChatRuntime()
+            result = runtime.chat("hf", "test-model", [{"role": "user", "content": "hello"}], {"nodes": []}, {})
+            self.assertEqual(result["message"], "ok")
+            instance = runtime._instances["hf"]
+            self.assertEqual(instance.loaded, 1)
+            self.assertEqual(runtime.unload("hf"), ["hf"])
+            self.assertTrue(instance.cleared)
+        finally:
+            if previous is None:
+                sys.modules.pop("AILab_QwenVL", None)
+            else:
+                sys.modules["AILab_QwenVL"] = previous
+
+
+if __name__ == "__main__":
+    unittest.main()

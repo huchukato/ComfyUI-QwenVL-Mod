@@ -21,6 +21,18 @@
 
 The ComfyUI-QwenVL custom node integrates powerful Qwen-VL series of vision-language models (LVLMs) from Alibaba Cloud, including latest Qwen3-VL, plus GGUF backends and text-only Qwen3 support. This advanced node enables seamless multimodal AI capabilities within your ComfyUI workflows, allowing for efficient text generation, image understanding, and video analysis.
 
+## Qwen Workflow Chat
+
+Open **Qwen Chat** from the ComfyUI sidebar to talk to a local Qwen model while working on the current graph. The assistant can inspect existing nodes, change validated widget values, enable or bypass nodes, and queue the workflow when explicitly requested.
+
+- Select either the **GGUF** or **HF / Transformers** backend and one of the locally configured models.
+- Ask for changes such as `Set the KSampler to 25 steps and queue the workflow`.
+- Enable **Unload Qwen before running the workflow** to release chat model memory before heavy WAN, LTX, or MiniMax executions.
+- Chat history and preferences are stored only in the browser's local storage and can be cleared with **New chat**.
+- The first version cannot add, connect, or delete nodes and never executes arbitrary JavaScript, shell, filesystem, or network operations.
+
+The assistant applies only a restricted, validated action protocol. Model output that references an unknown node, widget, value, or operation is rejected and reported in the conversation. The Stop button stops waiting in the browser; an inference already running on the backend may continue until generation completes.
+
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
