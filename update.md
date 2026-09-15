@@ -1,5 +1,15 @@
 # ComfyUI-QwenVL Update Log
 
+## Unreleased (2026/09/16)
+
+**Qwen Workflow Chat**
+
+- Added a native ComfyUI sidebar chat powered by selectable local HF/Transformers or GGUF Qwen models.
+- Added structured workflow inspection, validated widget updates, node enable/bypass actions, and autonomous queue execution when requested.
+- Added optional chat-model unload before queueing memory-intensive workflows.
+- Added browser-local conversation/preferences persistence, bounded context, backend inference locking, and explicit unload API.
+- Restricted automation to an allowlisted action protocol; arbitrary code, filesystem, network, graph creation, connection, and deletion operations are not supported.
+
 ## Version 2.6 (2026/09/03)
 
 🎬 **Camera & Style Tag Dropdowns + Pony Prompt Converters + Qwen 3.8 + LTX 2.3 FL2VA + MiniMax H3 Loop Mode**

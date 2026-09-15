@@ -9,6 +9,7 @@
 }
 """
 
+import asyncio
 import importlib.util
 import os
 import sys
@@ -86,6 +87,51 @@ load_modules_from_directory(current_dir)
 nodes_dir = os.path.join(current_dir, "nodes")
 if os.path.exists(nodes_dir):
     load_modules_from_directory(nodes_dir)
+
+from chat_service import CHAT_RUNTIME
+
+
+@PromptServer.instance.routes.get("/qwenvl/chat/models")
+async def _chat_models(request):
+    return web.json_response(CHAT_RUNTIME.models())
+
+
+@PromptServer.instance.routes.post("/qwenvl/chat")
+async def _chat(request):
+    try:
+        data = await request.json()
+        if not isinstance(data, dict):
+            raise ValueError("request body must be an object")
+        options = data.get("options") or {}
+        if not isinstance(options, dict):
+            raise ValueError("options must be an object")
+        result = await asyncio.to_thread(
+            CHAT_RUNTIME.chat,
+            data.get("backend"),
+            data.get("model"),
+            data.get("messages"),
+            data.get("graph"),
+            options,
+        )
+        return web.json_response(result)
+    except ValueError as error:
+        return web.json_response({"error": str(error)}, status=400)
+    except Exception as error:
+        print(f"[QwenVL Chat] {error}")
+        return web.json_response({"error": "Chat generation failed. Check the ComfyUI console."}, status=500)
+
+
+@PromptServer.instance.routes.post("/qwenvl/chat/unload")
+async def _chat_unload(request):
+    try:
+        data = await request.json()
+        backend = data.get("backend", "all") if isinstance(data, dict) else "all"
+        unloaded = await asyncio.to_thread(CHAT_RUNTIME.unload, backend)
+        return web.json_response({"status": "success", "unloaded": unloaded})
+    except ValueError as error:
+        return web.json_response({"error": str(error)}, status=400)
+
+
 NODE_CLASS_MAPPINGS = dict(sorted(NODE_CLASS_MAPPINGS.items(), key=lambda x: NODE_DISPLAY_NAME_MAPPINGS.get(x[0], x[0])))
 NODE_DISPLAY_NAME_MAPPINGS = dict(sorted(NODE_DISPLAY_NAME_MAPPINGS.items(), key=lambda x: x[1]))
 
