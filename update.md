@@ -1,5 +1,11 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.7.11 (2026/09/16)
+
+- Added the `image2` input to `AILab_QwenVL_GGUF` and `AILab_QwenVL_GGUF_Advanced`, matching the HF nodes: `image` is Picture 1 and `image2` is Picture 2 for R2VA workflows.
+- The second image is encoded after the first and before sampled video frames, and its hash participates in the prompt cache key via the combined image2/video hash slot.
+- Added the same reference-image tooltips used by the HF nodes.
+
 ## Version 2.7.10 (2026/09/16)
 
 - Image-enhancer routing now keeps a valid English action directive written by the chat model instead of always overwriting it with the raw user message, so Qwen Chat translates and refines the request instead of copying it verbatim.
