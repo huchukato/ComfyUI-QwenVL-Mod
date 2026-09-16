@@ -910,17 +910,23 @@ class QwenVLBase:
             }
             # Patch: some Qwen3-VL configs have rope_scaling=None which crashes
             # transformers. Also handle qwen3_5 model_type not yet in CONFIG_MAPPING.
+            def _fix_rope_scaling(cfg_dict):
+                rs = cfg_dict.get("rope_scaling")
+                if rs is None:
+                    cfg_dict["rope_scaling"] = {"rope_type": "default", "mrope_section": [24, 20, 20], "mrope_interleaved": True}
+                elif isinstance(rs, dict) and not rs.get("rope_type"):
+                    rs["rope_type"] = "default"
             try:
                 import json
                 from pathlib import Path
                 from transformers import AutoConfig
                 cfg = AutoConfig.from_pretrained(model_path, trust_remote_code=True)
                 if hasattr(cfg, "text_config") and getattr(cfg.text_config, "rope_scaling", "missing") is None:
-                    cfg.text_config.rope_scaling = {"mrope_section": [24, 20, 20], "mrope_type": "mrope"}
+                    cfg.text_config.rope_scaling = {"rope_type": "default", "mrope_section": [24, 20, 20], "mrope_interleaved": True}
                     load_kwargs["config"] = cfg
                     print("[QwenVL] Patched rope_scaling=None in text_config")
                 elif getattr(cfg, "rope_scaling", "missing") is None:
-                    cfg.rope_scaling = {"mrope_section": [24, 20, 20], "mrope_type": "mrope"}
+                    cfg.rope_scaling = {"rope_type": "default", "mrope_section": [24, 20, 20], "mrope_interleaved": True}
                     load_kwargs["config"] = cfg
                     print("[QwenVL] Patched rope_scaling=None in config")
             except (ValueError, KeyError) as e:
@@ -941,10 +947,8 @@ class QwenVLBase:
                                 tc = cfg_dict["text_config"]
                                 if tc.get("model_type") in ("qwen3_5", "qwen3.5"):
                                     tc["model_type"] = "qwen3"
-                                if tc.get("rope_scaling") is None:
-                                    tc["rope_scaling"] = {"mrope_section": [24, 20, 20], "mrope_type": "mrope"}
-                            if cfg_dict.get("rope_scaling") is None:
-                                cfg_dict["rope_scaling"] = {"mrope_section": [24, 20, 20], "mrope_type": "mrope"}
+                                _fix_rope_scaling(tc)
+                            _fix_rope_scaling(cfg_dict)
                             # Write patched config
                             cfg_path.write_text(_json.dumps(cfg_dict, indent=2))
                             print(f"[QwenVL] Patched config.json: {original_type} -> qwen3_vl")
