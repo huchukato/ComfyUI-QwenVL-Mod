@@ -1041,44 +1041,54 @@ class QwenVLBase:
         # Memory optimization: clear cache before generation
         ensure_cuda_vram_headroom("QwenVL", min_free_gb=1.0, min_free_ratio=0.08)
 
+        def prepare_image(image, name="image"):
+            if isinstance(image, Image.Image):
+                print(f"[QwenVL] {name} provided as PIL image, size={image.size}")
+                return image
+            if hasattr(image, "dim"):
+                if image.dim() == 4 and image.shape[0] > 1:
+                    print(f"[QwenVL] {name.upper()} input contains {image.shape[0]} items; using the first item only.")
+                img_mean = image.mean().item()
+                print(f"[QwenVL] {name} pixel mean: {img_mean:.4f} (0.0 = black placeholder)")
+                if img_mean < 0.001:
+                    print(f"[QwenVL] WARNING: {name} appears to be a black placeholder! Skipping.")
+                    return None
+                return self.tensor_to_pil(image)
+            return None
+
         conversation = [{"role": "user", "content": []}]
 
         # --- Image 1: single reference image ---
-        if image is not None:
-            if image.dim() == 4 and image.shape[0] > 1:
-                print(f"[QwenVL] IMAGE input contains {image.shape[0]} items; using the first item only.")
-            img_mean = image.mean().item()
-            print(f"[QwenVL] image pixel mean: {img_mean:.4f} (0.0 = black placeholder)")
-            if img_mean < 0.001:
-                print(f"[QwenVL] WARNING: image appears to be a black placeholder! Skipping.")
-            else:
-                conversation[0]["content"].append({"type": "image", "image": self.tensor_to_pil(image)})
+        pil_image = prepare_image(image, "image")
+        if pil_image is not None:
+            conversation[0]["content"].append({"type": "image", "image": pil_image})
 
         # --- Image 2: single reference image (same as image, NOT video) ---
-        if image2 is not None:
-            img2_mean = image2.mean().item()
-            print(f"[QwenVL] image2 pixel mean: {img2_mean:.4f} (0.0 = black placeholder)")
-            if img2_mean < 0.001:
-                print(f"[QwenVL] WARNING: image2 appears to be a black placeholder! Skipping.")
-            else:
-                if image2.dim() == 4 and image2.shape[0] > 1:
-                    print(f"[QwenVL] IMAGE2 input contains {image2.shape[0]} items; using the first item only.")
-                conversation[0]["content"].append({"type": "image", "image": self.tensor_to_pil(image2)})
+        pil_image2 = prepare_image(image2, "image2")
+        if pil_image2 is not None:
+            conversation[0]["content"].append({"type": "image", "image": pil_image2})
 
         # --- Video: multi-frame input with frame_count sampling ---
         if video is not None:
-            vid_mean = video.mean().item()
-            print(f"[QwenVL] video pixel mean: {vid_mean:.4f} (0.0 = black placeholder)")
-            if vid_mean < 0.001:
-                print(f"[QwenVL] WARNING: video appears to be a black placeholder! Skipping.")
+            if isinstance(video, list) and all(isinstance(frame, Image.Image) for frame in video):
+                frames = video
+                print(f"[QwenVL] Video: {len(frames)} PIL frames provided")
+            elif hasattr(video, "mean"):
+                vid_mean = video.mean().item()
+                print(f"[QwenVL] video pixel mean: {vid_mean:.4f} (0.0 = black placeholder)")
+                if vid_mean < 0.001:
+                    print(f"[QwenVL] WARNING: video appears to be a black placeholder! Skipping.")
+                    frames = []
+                else:
+                    frames = [self.tensor_to_pil(frame) for frame in video]
+                    print(f"[QwenVL] Video: {video.shape[0]} total frames, sampled {len(frames)} frames (frame_count={frame_count})")
             else:
-                frames = [self.tensor_to_pil(frame) for frame in video]
-                if len(frames) > frame_count:
-                    idx = np.linspace(0, len(frames) - 1, frame_count, dtype=int)
-                    frames = [frames[i] for i in idx]
-                print(f"[QwenVL] Video: {video.shape[0]} total frames, sampled {len(frames)} frames (frame_count={frame_count})")
-                for frame in frames:
-                    conversation[0]["content"].append({"type": "image", "image": frame})
+                frames = []
+            if len(frames) > frame_count:
+                idx = np.linspace(0, len(frames) - 1, frame_count, dtype=int)
+                frames = [frames[i] for i in idx]
+            for frame in frames:
+                conversation[0]["content"].append({"type": "image", "image": frame})
 
         num_images = sum(1 for item in conversation[0]["content"] if item.get("type") == "image")
         print(f"[QwenVL] Total images passed to model: {num_images}")
