@@ -25,10 +25,10 @@ Return exactly one JSON object — no preamble, no text before or after it — w
 {"message":"short answer to the user","actions":[{"type":"set_widget_value","node_id":1,"widget":"steps","value":25},{"type":"set_node_mode","node_id":2,"mode":"bypass"},{"type":"queue_workflow"}],"choices":[{"label":"option A","send":"the user message sent when option A is clicked"}]}
 Allowed action types are set_widget_value, set_node_mode, and queue_workflow. set_node_mode accepts only bypass or enable. Never invent node IDs or widget names. Do not emit code, filesystem, shell, network, node creation, connection, deletion, or arbitrary JavaScript actions. If the request cannot be completed with the available actions, explain why in message and return an empty actions array.
 When the user asks to generate N images or a batch of N, look for a "batch_size" or "batch" widget on the main generation node (the node with seed/steps/cfg/sampler_name — typically the sampler or the all-in-one generation node). Do NOT set batch_size on upscaler nodes (UpscalerTensorrt, LoadUpscalerTensorrtModel, UltimateSDUpscale, etc.) — that controls the upscaling batch, not the image count. If no batch_size exists on the generation node, explain that the workflow generates one image per run and ask if they want to queue it multiple times.
-Final generated image and video prompts MUST be in English unless the user explicitly requests another prompt language. A short raw intent sent to an active inner preset enhancer may remain in the user's language because that enhancer translates and formats the final prompt. The surrounding assistant message must use the user's language.
+Final generated image and video prompts MUST be in English unless the user explicitly requests another prompt language. An instruction sent to an active inner preset enhancer must be a concise English action directive, because that enhancer analyzes the image and formats the final prompt. The surrounding assistant message must use the user's language.
 When you set a text or prompt widget, repeat the complete new value verbatim inside message so the user can read it.
 PROMPT ROUTING — inspect the widgets exposed on the SAME target node and apply the first matching case:
-1. IMAGE + PRESET ENHANCER: when image pixels are provided and the image-to-video target exposes both "preset_prompt" and "passthrough", write only the latest substantive motion/action request into its exposed prompt widget and set "passthrough" to false. Skip execution-only follow-ups such as "Execute the video" and preserve the preceding descriptive request. The inner QwenVL must analyze the actual workflow image, translate the request, and apply the selected preset. Do not pre-format the prompt, add Picture reference lines, or describe identity, appearance, clothing, environment, lighting, or framing.
+1. IMAGE + PRESET ENHANCER: when image pixels are provided and the image-to-video target exposes both "preset_prompt" and "passthrough", write into its exposed prompt widget a concise English action directive (1-3 sentences) that translates the latest substantive user request: state only the requested motion/action and duration, optionally ending with "Preserve the reference image exactly and change only this action." Never copy the user message verbatim — always translate it into a clear directive. Skip execution-only follow-ups such as "Execute the video" and use the preceding descriptive request. Set "passthrough" to false. The inner QwenVL analyzes the actual workflow image and applies the selected preset. Never describe identity, appearance, clothing, environment, lighting, or framing, never add Picture reference lines, and never pre-format the prompt.
 2. PASSTHROUGH WITHOUT IMAGE: when no image pixels are provided and the target exposes "passthrough", write the complete final English prompt into the actual exposed prompt widget ("prompt", "custom_prompt", or "prompt_text") and set "passthrough" to true. A promoted outer "prompt" may feed an inner "custom_prompt"; always use the exposed name.
 3. PRESET WITHOUT PASSTHROUGH: if the target exposes "preset_prompt" but not "passthrough", write a concise English intent into its exposed prompt widget so the inaccessible inner enhancer applies the preset.
 4. DIRECT PROMPT: otherwise write the complete final English prompt into the actual exposed generation widget.
@@ -229,28 +229,66 @@ def parse_model_response(text):
     return {"thinking": thinking, "message": message_fallback, "actions": [], "choices": [], "parsed": False}
 
 
+_COMMAND_FILLERS = {
+    "a", "adesso", "ahead", "avanti", "bene", "certo", "con", "coda", "di", "favore", "gia", "già",
+    "grazie", "i", "il", "in", "it", "la", "le", "lo", "now", "ok", "okay", "ora", "per", "perfetto",
+    "please", "precedente", "previous", "pure", "same", "si", "sì", "stesso", "subito", "sure",
+    "thanks", "the", "this", "un", "una", "va", "with", "yes",
+}
+_COMMAND_OBJECTS = {"generation", "generazione", "job", "prompt", "queue", "task", "video", "workflow"}
+_COMMAND_VERBS = {
+    "avvia", "avvialo", "avviare", "cambia", "change", "conferma", "confermo", "confirm", "crea",
+    "create", "do", "edit", "esegui", "eseguilo", "eseguire", "execute", "fallo", "genera",
+    "generalo", "generate", "go", "lancia", "lancialo", "launch", "metti", "mettilo", "modifica",
+    "modify", "procedi", "proceed", "queue", "run", "start", "vai",
+}
+_CONFIRM_ONLY = {"bene", "certo", "confermo", "grazie", "ok", "okay", "perfetto", "si", "sì", "sure", "va", "yes"}
+_PREFORMATTED_PROMPT_MARKERS = (
+    "integrated_multimodal_description", "overall_soundscape", "non_diegetic_music",
+    "<picture", "for the target video", "[shot",
+)
+
+
+def _normalize_command(text):
+    normalized = re.sub(r"[^\w\s]", "", (text or "").lower())
+    return re.sub(r"\s+", " ", normalized).strip()
+
+
+def _is_execution_only(text):
+    """True when the message is only a run/confirm command with no scene content."""
+    words = _normalize_command(text).split()
+    if not words or len(words) > 8:
+        return False
+    if all(word in _CONFIRM_ONLY for word in words):
+        return True
+    vocabulary = _COMMAND_FILLERS | _COMMAND_OBJECTS | _COMMAND_VERBS
+    return any(word in _COMMAND_VERBS for word in words[:2]) and all(word in vocabulary for word in words)
+
+
+def _is_enhancer_instruction(value):
+    """True when a model-written prompt action is a usable action directive —
+    not a bare confirmation and not a pre-formatted preset prompt."""
+    if not isinstance(value, str) or not value.strip() or len(value) > 1500:
+        return False
+    lowered = value.lower()
+    if any(marker in lowered for marker in _PREFORMATTED_PROMPT_MARKERS):
+        return False
+    return not _is_execution_only(value)
+
+
 def select_workflow_intent(messages):
-    execution_only = {
-        "esegui", "esegui il video", "esegui video", "avvia", "avvia il video", "avvia il workflow",
-        "genera il video", "genera video", "crea il video", "crea video", "metti in coda", "procedi",
-        "execute", "execute the video", "run", "run the video", "run workflow", "run the workflow",
-        "generate the video", "generate video", "queue", "queue the workflow", "proceed",
-    }
     intent = None
+    last_user = None
     for item in messages or []:
         if item.get("role") != "user" or not isinstance(item.get("content"), str):
             continue
         content = item["content"].strip()
-        normalized = re.sub(r"[^\w\s]", "", content.lower()).strip()
-        normalized = re.sub(r"\s+", " ", normalized)
-        if normalized in execution_only:
-            if intent is not None:
-                return intent
-            else:
-                return content
-        else:
+        if not content:
+            continue
+        last_user = content
+        if not _is_execution_only(content):
             intent = content
-    return intent if intent is not None else ""
+    return intent if intent is not None else (last_user or "")
 
 
 def enforce_image_enhancer_routing(result, graph, messages, has_images):
@@ -278,11 +316,13 @@ def enforce_image_enhancer_routing(result, graph, messages, has_images):
     intent = select_workflow_intent(messages)
     actions = result.get("actions", [])
     prompt_action = next((action for action in actions if str(action.get("node_id")) == str(node_id) and action.get("widget") in {"prompt", "custom_prompt", "prompt_text"}), None)
-    if prompt_action:
-        prompt_action.update({"widget": prompt_widget, "value": intent})
-    else:
+    if prompt_action is not None and _is_enhancer_instruction(prompt_action.get("value")):
+        intent = prompt_action["value"].strip()
+    if prompt_action is None:
         queue_index = next((index for index, action in enumerate(actions) if action.get("type") == "queue_workflow"), len(actions))
-        actions.insert(queue_index, {"type": "set_widget_value", "node_id": node_id, "widget": prompt_widget, "value": intent})
+        prompt_action = {"type": "set_widget_value", "node_id": node_id}
+        actions.insert(queue_index, prompt_action)
+    prompt_action.update({"widget": prompt_widget, "value": intent})
     passthrough_action = next((action for action in actions if str(action.get("node_id")) == str(node_id) and action.get("widget") == "passthrough"), None)
     if passthrough_action:
         passthrough_action["value"] = False
@@ -397,7 +437,7 @@ def _chat_guides_for(graph, has_images=False):
         if image_enhancer:
             parts.append(
                 f'### Exact image-enhancer target\nImage pixels are provided. Node {node.get("id")} exposes "{prompt_widget}", "preset_prompt", and "passthrough". '
-                f'For generation, set node {node.get("id")} widget "{prompt_widget}" to the latest substantive request, skipping execute-only confirmations, '
+                f'For generation, set node {node.get("id")} widget "{prompt_widget}" to a concise English action directive that translates the latest substantive request (skip execute-only confirmations; never copy it verbatim), '
                 f'set node {node.get("id")} widget "passthrough" to false, then queue. The inner QwenVL must create the final image-aware preset prompt.'
             )
         else:
