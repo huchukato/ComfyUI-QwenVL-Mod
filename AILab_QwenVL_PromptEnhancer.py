@@ -116,6 +116,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
+                "passthrough": ("BOOLEAN", {"default": False, "tooltip": "Skip Qwen model loading and return prompt_text directly. Use when the chat already generated the final prompt — saves VRAM and inference time."}),
             }
         }
 
@@ -137,8 +138,14 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         keep_model_loaded,
         seed,
         keep_last_prompt=False,
+        passthrough=False,
     ):
         global LAST_SAVED_PROMPT
+
+        # Passthrough mode: skip model loading entirely, return prompt_text as-is.
+        if passthrough:
+            print(f"[QwenVL PromptEnhancer] Passthrough mode ON — skipping model load, returning prompt_text directly ({len(prompt_text or '')} chars)")
+            return (prompt_text or "",)
 
         # Simple keep last prompt logic
         if keep_last_prompt:
