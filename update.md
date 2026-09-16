@@ -1,5 +1,10 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.7.6 (2026/09/16)
+
+- Added a secure recursive output-image endpoint for Qwen Chat Assets, including images saved in nested folders such as `output/PMP/...`.
+- Assets are sorted by modification time and limited to supported image formats and paths contained inside the ComfyUI output directory.
+
 ## Version 2.7.5 (2026/09/16)
 
 - Fixed the ComfyUI Assets gallery endpoint to use `/internal/files/output` without the `/api` prefix.

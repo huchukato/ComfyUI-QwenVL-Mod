@@ -1,12 +1,13 @@
 import json
 import sys
+import tempfile
 import types
 import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
 
-from chat_service import ChatRuntime, MINIMAX_I2VA_BINDING, THINK_CLOSE, THINK_OPEN, build_prompt, enforce_image_reference_bindings, parse_model_response, validate_actions, validate_graph, validate_images, validate_messages
+from chat_service import ChatRuntime, MINIMAX_I2VA_BINDING, THINK_CLOSE, THINK_OPEN, build_prompt, enforce_image_reference_bindings, list_output_images, parse_model_response, validate_actions, validate_graph, validate_images, validate_messages
 
 
 class ChatProtocolTests(unittest.TestCase):
@@ -111,6 +112,16 @@ class ChatProtocolTests(unittest.TestCase):
         valid = base64.b64encode(b"fake-image-data").decode("ascii")
         self.assertEqual(len(validate_images([valid, "not-valid", 123])), 1)
         self.assertEqual(len(validate_images([valid, valid, valid, valid])), 3)
+
+    def test_lists_nested_output_images(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "root.png").write_bytes(b"png")
+            (root / "PMP" / "2026-09-16").mkdir(parents=True)
+            (root / "PMP" / "2026-09-16" / "nested.webp").write_bytes(b"webp")
+            (root / "ignored.mp4").write_bytes(b"video")
+            assets = list_output_images(root)
+        self.assertEqual(set(assets), {"root.png [output]", "PMP/2026-09-16/nested.webp [output]"})
 
     def test_hf_runtime_reuses_and_unloads_model(self):
         class FakeQuantization:
