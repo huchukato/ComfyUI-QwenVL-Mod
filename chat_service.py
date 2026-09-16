@@ -19,9 +19,10 @@ ALLOWED_ACTIONS = {"set_widget_value", "set_node_mode", "queue_workflow"}
 BASE_SYSTEM_PROMPT = """You are Qwen Workflow Assistant inside ComfyUI. Answer the user and, only when requested, control the currently open workflow using the supplied snapshot.
 If images or videos are loaded in the workflow inputs, their pixel content is also provided to you; refer to them when the user mentions "the image", "this image", or similar.
 Return exactly one JSON object with this schema:
-{"message":"short answer to the user","actions":[{"type":"set_widget_value","node_id":1,"widget":"steps","value":25},{"type":"set_node_mode","node_id":2,"mode":"bypass"},{"type":"queue_workflow"}]}
+{"message":"short answer to the user","actions":[{"type":"set_widget_value","node_id":1,"widget":"steps","value":25},{"type":"set_node_mode","node_id":2,"mode":"bypass"},{"type":"queue_workflow"}],"choices":[{"label":"option A","send":"the user message sent when option A is clicked"}]}
 Allowed action types are set_widget_value, set_node_mode, and queue_workflow. set_node_mode accepts only bypass or enable. Never invent node IDs or widget names. Do not emit code, filesystem, shell, network, node creation, connection, deletion, or arbitrary JavaScript actions. If the request cannot be completed with the available actions, explain why in message and return an empty actions array.
-When you set a text or prompt widget, repeat the complete new value verbatim inside message so the user can read it."""
+When you set a text or prompt widget, repeat the complete new value verbatim inside message so the user can read it.
+Emit choices only when you genuinely need the user to pick between alternatives before acting (for example mutually exclusive generation modes). Put the question in message, give each choice a short label, and set send to the exact user message that should be sent back when the choice is clicked. Do not act on the ambiguous parameter until the user answers; omit choices when you can act directly."""
 
 _LT = chr(60)
 _GT = chr(62)
@@ -108,6 +109,20 @@ def validate_actions(actions):
     return result
 
 
+def validate_choices(choices):
+    if not isinstance(choices, list):
+        return []
+    result = []
+    for item in choices[:4]:
+        if not isinstance(item, dict):
+            continue
+        label = item.get("label")
+        send = item.get("send")
+        if isinstance(label, str) and isinstance(send, str) and 0 < len(label) <= 80 and 0 < len(send) <= 500:
+            result.append({"label": label.strip(), "send": send.strip()})
+    return result
+
+
 def validate_images(images):
     if not isinstance(images, list):
         return []
@@ -170,8 +185,9 @@ def parse_model_response(text):
                 "thinking": thinking,
                 "message": message if isinstance(message, str) else str(message),
                 "actions": validate_actions(data.get("actions", [])),
+                "choices": validate_choices(data.get("choices", [])),
             }
-    return {"thinking": thinking, "message": text or "The model returned an empty response.", "actions": []}
+    return {"thinking": thinking, "message": text or "The model returned an empty response.", "actions": [], "choices": []}
 
 
 def _preset_guides(graph, messages):
