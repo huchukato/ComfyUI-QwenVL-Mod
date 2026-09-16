@@ -28,9 +28,10 @@ When the user asks to generate N images or a batch of N, look for a "batch_size"
 All generated image and video prompt text written into workflow widgets MUST be in English, regardless of the conversation language, unless the user explicitly requests another prompt language. The surrounding assistant message may use the user's language.
 When you set a text or prompt widget, repeat the complete new value verbatim inside message so the user can read it.
 PROMPT ROUTING — inspect the widgets exposed on the SAME target node and apply the first matching case:
-1. PASSTHROUGH EXPOSED: if the target generation or subgraph node exposes a "passthrough" widget, write the complete final English prompt into the prompt widget that is actually exposed on that same node ("prompt", "custom_prompt", or "prompt_text") AND set that node's "passthrough" to true. A promoted outer widget named "prompt" may feed an inner Qwen node's "custom_prompt"; use the exposed outer name and never invent "custom_prompt" on the outer node. This case has priority even when the same node also exposes "preset_prompt". Apply the detected preset yourself before passthrough. For image-to-video the final prompt MUST include the preset's required image-reference binding, such as the MiniMax I2VA line "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.", so the sampler follows the reference image. Treat the reference pixels as authoritative: preserve the exact person, face, hair, body, clothing state, framing, environment, lighting, and visual style visible in Picture 1, changing only what the user requests. Never invent conflicting appearance or scene details.
-2. PRESET WITHOUT PASSTHROUGH: if the target node exposes "preset_prompt" but does not expose "passthrough", write a concise English description of the user's intent into its exposed "prompt" widget. The inaccessible inner enhancer will analyze the reference image and format the final prompt.
-3. DIRECT PROMPT: otherwise write the complete final English prompt into the actual exposed generation widget ("prompt", "custom_prompt", or "prompt_text").
+1. IMAGE + PRESET ENHANCER: when image pixels are provided and the image-to-video target exposes both "preset_prompt" and "passthrough", write only a concise English motion/action instruction into its exposed prompt widget and set "passthrough" to false. The inner QwenVL must analyze the actual workflow image and apply the selected preset. Do not pre-format the prompt, add Picture reference lines, or describe identity, appearance, clothing, environment, lighting, or framing. Include only the requested change plus an instruction to preserve the reference exactly.
+2. PASSTHROUGH WITHOUT IMAGE: when no image pixels are provided and the target exposes "passthrough", write the complete final English prompt into the actual exposed prompt widget ("prompt", "custom_prompt", or "prompt_text") and set "passthrough" to true. A promoted outer "prompt" may feed an inner "custom_prompt"; always use the exposed name.
+3. PRESET WITHOUT PASSTHROUGH: if the target exposes "preset_prompt" but not "passthrough", write a concise English intent into its exposed prompt widget so the inaccessible inner enhancer applies the preset.
+4. DIRECT PROMPT: otherwise write the complete final English prompt into the actual exposed generation widget.
 When the user asks you to draft or show a prompt without executing, write the fully formatted English preset prompt inside "message" for them to read and do not queue the workflow.
 When the user asks to generate, run, execute, or queue, apply every required widget update and include queue_workflow in the same response. If queue_workflow is present, state that execution was started; NEVER ask whether to execute now and NEVER offer an execute choice. If you set a prompt but do not include queue_workflow, do not claim execution started: ask whether to execute and provide an execute choice.
 Emit choices only when you genuinely need the user to pick between alternatives before acting (for example mutually exclusive generation modes). Put the question in message, give each choice a short label, and set send to the exact user message that should be sent back when the choice is clicked. Do not act on the ambiguous parameter until the user answers; omit choices when you can act directly. "choices" is a TOP-LEVEL field of the JSON object, a sibling of "message" and "actions" — never nest it inside an action object. Always close every bracket and brace.
@@ -301,7 +302,7 @@ def _load_chat_guides():
     return guides if isinstance(guides, dict) else {}
 
 
-def _chat_guides_for(graph):
+def _chat_guides_for(graph, has_images=False):
     """Inject workflow-knowledge guides whose trigger text appears in the
     snapshot's node types, titles, or widget values."""
     haystacks = []
@@ -323,9 +324,19 @@ def _chat_guides_for(graph):
         if isinstance(text, str) and any(str(t).lower() in hay for t in triggers):
             parts.append(f"### {name}\n{text}")
     for node in graph.get("nodes", []):
-        widget_names = {widget.get("name") for widget in node.get("widgets", []) if isinstance(widget, dict)}
-        prompt_widget = next((name for name in ("prompt", "custom_prompt", "prompt_text") if name in widget_names), None)
-        if prompt_widget and "passthrough" in widget_names:
+        widgets = {widget.get("name"): widget.get("value") for widget in node.get("widgets", []) if isinstance(widget, dict)}
+        prompt_widget = next((name for name in ("prompt", "custom_prompt", "prompt_text") if name in widgets), None)
+        if not prompt_widget or "passthrough" not in widgets:
+            continue
+        title = f'{node.get("title", "")} {node.get("type", "")}'.lower()
+        image_enhancer = has_images and "preset_prompt" in widgets and "image to video" in title
+        if image_enhancer:
+            parts.append(
+                f'### Exact image-enhancer target\nImage pixels are provided. Node {node.get("id")} exposes "{prompt_widget}", "preset_prompt", and "passthrough". '
+                f'For generation, set node {node.get("id")} widget "{prompt_widget}" to a short English action-only instruction, '
+                f'set node {node.get("id")} widget "passthrough" to false, then queue. The inner QwenVL must create the final image-aware preset prompt.'
+            )
+        else:
             parts.append(
                 f'### Exact passthrough target\nNode {node.get("id")} exposes both "{prompt_widget}" and "passthrough". '
                 f'For generation, set node {node.get("id")} widget "{prompt_widget}" to the complete final English prompt, '
@@ -339,10 +350,10 @@ def _chat_guides_for(graph):
     )
 
 
-def build_prompt(messages, graph, enable_thinking=False):
+def build_prompt(messages, graph, enable_thinking=False, has_images=False):
     history = "\n".join(f"{item['role'].upper()}: {item['content']}" for item in messages)
     snapshot = json.dumps(graph, ensure_ascii=False, separators=(",", ":"))
-    instruction = BASE_SYSTEM_PROMPT + _preset_guides(graph, messages) + _chat_guides_for(graph)
+    instruction = BASE_SYSTEM_PROMPT + _preset_guides(graph, messages) + _chat_guides_for(graph, has_images)
     instruction += THINKING_INSTRUCTION if enable_thinking else NO_THINKING_INSTRUCTION
     return f"{instruction}\n\nWORKFLOW SNAPSHOT:\n{snapshot}\n\nCONVERSATION:\n{history}\n\nJSON RESPONSE:"
 
@@ -379,7 +390,7 @@ class ChatRuntime:
             # Thinking consumes tokens before the JSON reply; a small budget
             # truncates the response after the reasoning and no JSON is emitted.
             options["max_tokens"] = max(int(options.get("max_tokens", 1024)), 4096)
-        prompt = build_prompt(messages, graph, enable_thinking)
+        prompt = build_prompt(messages, graph, enable_thinking, bool(images))
         with self._lock:
             text = self._generate(backend, model_name, prompt, options, enable_thinking, images)
         result = parse_model_response(text)
@@ -392,7 +403,7 @@ class ChatRuntime:
             {"role": "assistant", "content": (text or "")[:2000]},
             {"role": "user", "content": "Your reply was not a JSON object. Return ONLY the JSON object described in the system instructions — no preamble, no extra text."},
         ]
-        retry_prompt = build_prompt(retry_messages, graph, enable_thinking)
+        retry_prompt = build_prompt(retry_messages, graph, enable_thinking, bool(images))
         with self._lock:
             retry_text = self._generate(backend, model_name, retry_prompt, options, enable_thinking, images)
         retry_result = parse_model_response(retry_text)

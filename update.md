@@ -1,5 +1,11 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.7.8 (2026/09/16)
+
+- Image-to-video workflows with an exposed preset enhancer now receive a short action-only prompt from Qwen Chat and run the internal QwenVL with `passthrough=false`.
+- The internal workflow node analyzes the actual reference image and applies the full preset, avoiding visual details hallucinated by the chat model.
+- Passthrough remains available for workflows without image input.
+
 ## Version 2.7.7 (2026/09/16)
 
 - Moved backend, model, token, temperature, and thinking controls into a compact Settings panel opened with a gear button.
