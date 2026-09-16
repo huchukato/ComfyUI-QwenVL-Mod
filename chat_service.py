@@ -5,6 +5,7 @@ import json
 import re
 import sys
 import threading
+from pathlib import Path
 
 from PIL import Image
 
@@ -221,10 +222,51 @@ def _preset_guides(graph, messages):
     )
 
 
+CHAT_GUIDES_PATH = Path(__file__).resolve().parent / "AILab_System_Prompts.json"
+
+
+def _load_chat_guides():
+    try:
+        data = json.loads(CHAT_GUIDES_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    guides = data.get("_chat_guides")
+    return guides if isinstance(guides, dict) else {}
+
+
+def _chat_guides_for(graph):
+    """Inject workflow-knowledge guides whose trigger text appears in the
+    snapshot's node types, titles, or widget values."""
+    haystacks = []
+    for node in graph.get("nodes", []):
+        haystacks.append(str(node.get("type", "")))
+        haystacks.append(str(node.get("title", "")))
+        for widget in node.get("widgets", []):
+            if isinstance(widget, dict) and isinstance(widget.get("value"), str):
+                haystacks.append(widget["value"][:200])
+    hay = "\n".join(haystacks).lower()
+    parts = []
+    for name, entry in _load_chat_guides().items():
+        if not isinstance(entry, dict):
+            continue
+        triggers = entry.get("trigger") or []
+        if isinstance(triggers, str):
+            triggers = [triggers]
+        text = entry.get("text")
+        if isinstance(text, str) and any(str(t).lower() in hay for t in triggers):
+            parts.append(f"### {name}\n{text}")
+    if not parts:
+        return ""
+    return (
+        "\n\nWORKFLOW KNOWLEDGE - rules that apply to this workflow; follow them "
+        "when choosing actions and values:\n" + "\n\n".join(parts)
+    )
+
+
 def build_prompt(messages, graph, enable_thinking=False):
     history = "\n".join(f"{item['role'].upper()}: {item['content']}" for item in messages)
     snapshot = json.dumps(graph, ensure_ascii=False, separators=(",", ":"))
-    instruction = BASE_SYSTEM_PROMPT + _preset_guides(graph, messages)
+    instruction = BASE_SYSTEM_PROMPT + _preset_guides(graph, messages) + _chat_guides_for(graph)
     instruction += THINKING_INSTRUCTION if enable_thinking else NO_THINKING_INSTRUCTION
     return f"{instruction}\n\nWORKFLOW SNAPSHOT:\n{snapshot}\n\nCONVERSATION:\n{history}\n\nJSON RESPONSE:"
 
