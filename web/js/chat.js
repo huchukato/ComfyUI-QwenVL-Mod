@@ -53,6 +53,20 @@ function renderMessages() {
         const row = createElement("div", `qwen-chat-message ${message.role}`);
         row.append(createElement("div", "qwen-chat-role", message.role === "user" ? "Tu" : "Qwen"));
         row.append(createElement("div", "qwen-chat-content", message.content));
+        if (Array.isArray(message.choices) && message.choices.length) {
+            const choiceRow = createElement("div", "qwen-chat-choices");
+            for (const choice of message.choices) {
+                if (!choice || typeof choice.label !== "string" || typeof choice.send !== "string") continue;
+                const button = createElement("button", "qwen-chat-choice", choice.label);
+                button.addEventListener("click", () => {
+                    if (controller) return;
+                    elements.input.value = choice.send;
+                    sendMessage();
+                });
+                choiceRow.append(button);
+            }
+            if (choiceRow.childElementCount) row.append(choiceRow);
+        }
         if (message.thinking) {
             const details = createElement("details", "qwen-chat-thinking");
             details.append(createElement("summary", "", "Pensiero"));
@@ -313,7 +327,7 @@ async function sendMessage() {
         let answer = data.message || "Operazione completata.";
         if (result.applied.length) answer += `\n\nApplicato:\n- ${result.applied.join("\n- ")}`;
         if (result.rejected.length) answer += `\n\nRifiutato:\n- ${result.rejected.join("\n- ")}`;
-        state.messages.push({ role: "assistant", content: answer, thinking: data.thinking || "" });
+        state.messages.push({ role: "assistant", content: answer, thinking: data.thinking || "", choices: Array.isArray(data.choices) ? data.choices : [] });
         state.messages = state.messages.slice(-20);
         saveState();
         renderMessages();
@@ -367,6 +381,9 @@ function buildSidebar(container) {
         .qwen-chat-message.user { background:rgba(50,120,180,.22); }
         .qwen-chat-role { font-size:11px; font-weight:bold; opacity:.7; margin-bottom:4px; }
         .qwen-chat-content { user-select:text; }
+        .qwen-chat-choices { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+        .qwen-chat-choice { cursor:pointer; font-size:12px; padding:5px 10px; border-radius:6px; background:rgba(80,140,220,.18); border:1px solid rgba(80,140,220,.45); }
+        .qwen-chat-choice:hover { background:rgba(80,140,220,.35); }
         .qwen-chat-input { min-height:86px; resize:vertical; }
         .qwen-chat-actions { display:flex; gap:6px; }
         .qwen-chat-actions button { flex:1; cursor:pointer; }
