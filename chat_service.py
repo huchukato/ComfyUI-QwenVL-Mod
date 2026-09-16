@@ -1,16 +1,23 @@
+import base64
 import gc
+import io
 import json
 import re
 import sys
 import threading
 
+from PIL import Image
+
 
 MAX_MESSAGES = 20
 MAX_MESSAGE_CHARS = 12000
 MAX_GRAPH_NODES = 200
+MAX_CHAT_IMAGES = 3
+MAX_IMAGE_BYTES = 8 * 1024 * 1024
 ALLOWED_ACTIONS = {"set_widget_value", "set_node_mode", "queue_workflow"}
 
 BASE_SYSTEM_PROMPT = """You are Qwen Workflow Assistant inside ComfyUI. Answer the user and, only when requested, control the currently open workflow using the supplied snapshot.
+If images or videos are loaded in the workflow inputs, their pixel content is also provided to you; refer to them when the user mentions "the image", "this image", or similar.
 Return exactly one JSON object with this schema:
 {"message":"short answer to the user","actions":[{"type":"set_widget_value","node_id":1,"widget":"steps","value":25},{"type":"set_node_mode","node_id":2,"mode":"bypass"},{"type":"queue_workflow"}]}
 Allowed action types are set_widget_value, set_node_mode, and queue_workflow. set_node_mode accepts only bypass or enable. Never invent node IDs or widget names. Do not emit code, filesystem, shell, network, node creation, connection, deletion, or arbitrary JavaScript actions. If the request cannot be completed with the available actions, explain why in message and return an empty actions array."""
@@ -100,6 +107,36 @@ def validate_actions(actions):
     return result
 
 
+def validate_images(images):
+    if not isinstance(images, list):
+        return []
+    result = []
+    for item in images[:MAX_CHAT_IMAGES]:
+        if not isinstance(item, str):
+            continue
+        try:
+            data = base64.b64decode(item, validate=True)
+        except (ValueError, TypeError):
+            continue
+        if len(data) > MAX_IMAGE_BYTES:
+            continue
+        result.append(data)
+    return result
+
+
+def _decode_images(image_data_list):
+    result = []
+    for data in image_data_list:
+        try:
+            image = Image.open(io.BytesIO(data))
+            if image.mode != "RGB":
+                image = image.convert("RGB")
+            result.append(image)
+        except Exception:
+            continue
+    return result
+
+
 def extract_thinking(text):
     text = (text or "").strip()
     thinking = ""
@@ -155,9 +192,10 @@ class ChatRuntime:
         gguf_models = sorted(((getattr(gguf, "GGUF_VL_CATALOG", {}) or {}).get("models") or {}).keys()) if gguf else []
         return {"hf": hf_models, "gguf": gguf_models}
 
-    def chat(self, backend, model_name, messages, graph, options):
+    def chat(self, backend, model_name, messages, graph, options, images=None):
         messages = validate_messages(messages)
         graph = validate_graph(graph)
+        images = validate_images(images or [])
         available = self.models().get(backend)
         if available is None:
             raise ValueError("backend must be hf or gguf")
@@ -167,12 +205,12 @@ class ChatRuntime:
         prompt = build_prompt(messages, graph, enable_thinking)
         with self._lock:
             if backend == "hf":
-                text = self._chat_hf(model_name, prompt, options, enable_thinking)
+                text = self._chat_hf(model_name, prompt, options, enable_thinking, images)
             else:
-                text = self._chat_gguf(model_name, prompt, options, enable_thinking)
+                text = self._chat_gguf(model_name, prompt, options, enable_thinking, images)
         return parse_model_response(text)
 
-    def _chat_hf(self, model_name, prompt, options, enable_thinking=False):
+    def _chat_hf(self, model_name, prompt, options, enable_thinking=False, images=None):
         module = sys.modules["AILab_QwenVL"]
         instance = self._instances.get("hf")
         if instance is None:
@@ -186,8 +224,11 @@ class ChatRuntime:
             options.get("device", "auto"),
             True,
         )
+        pil_images = _decode_images(images or [])
+        image = pil_images[0] if len(pil_images) > 0 else None
+        image2 = pil_images[1] if len(pil_images) > 1 else None
         return instance.generate(
-            prompt, None, None, 1,
+            prompt, image, image2, 1,
             int(options.get("max_tokens", 1024)),
             float(options.get("temperature", 0.2)),
             float(options.get("top_p", 0.9)),
@@ -197,7 +238,7 @@ class ChatRuntime:
             enable_thinking=enable_thinking,
         )
 
-    def _chat_gguf(self, model_name, prompt, options, enable_thinking=False):
+    def _chat_gguf(self, model_name, prompt, options, enable_thinking=False, images=None):
         module = sys.modules["AILab_QwenVL_GGUF"]
         instance = self._instances.get("gguf")
         if instance is None:
@@ -213,10 +254,12 @@ class ChatRuntime:
             options.get("top_k"),
             options.get("pool_size"),
         )
+        valid = validate_images(images or [])
+        images_b64 = [base64.b64encode(data).decode("ascii") for data in valid]
         return instance._invoke(
             SYSTEM_PROMPT,
             prompt,
-            [],
+            images_b64,
             int(options.get("max_tokens", 1024)),
             float(options.get("temperature", 0.2)),
             float(options.get("top_p", 0.9)),

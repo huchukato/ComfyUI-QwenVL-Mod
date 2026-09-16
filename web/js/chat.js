@@ -92,6 +92,79 @@ function snapshotGraph() {
     return { nodes };
 }
 
+function collectImageInputs() {
+    const inputs = [];
+    for (const node of app.graph?._nodes || []) {
+        const type = node.type || node.comfyClass || "";
+        if (!type.toLowerCase().includes("load") && !type.toLowerCase().includes("image")) continue;
+        for (const widget of node.widgets || []) {
+            if (!widget?.name || typeof widget.value !== "string" || !widget.value) continue;
+            if ((widget.name === "image" || widget.name === "image_url") && !widget.value.startsWith("http")) {
+                inputs.push({ filename: widget.value, node_id: node.id, type: "input", subfolder: "" });
+            } else if (widget.name === "url" && widget.value.startsWith("http")) {
+                inputs.push({ url: widget.value, node_id: node.id, type: "url" });
+            }
+        }
+    }
+    return inputs.slice(0, 3);
+}
+
+async function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result.split(",")[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+    });
+}
+
+async function resizeImage(blob, maxSize = 1024, quality = 0.85) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+            const scale = Math.min(1, maxSize / Math.max(img.width, img.height));
+            const canvas = document.createElement("canvas");
+            canvas.width = Math.round(img.width * scale);
+            canvas.height = Math.round(img.height * scale);
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob((blob) => resolve(blob), "image/jpeg", quality);
+        };
+        img.onerror = reject;
+        img.src = URL.createObjectURL(blob);
+    });
+}
+
+async function fetchWorkflowImage(input) {
+    let blob;
+    if (input.type === "url") {
+        const response = await fetch(input.url);
+        if (!response.ok) throw new Error(`Failed to fetch image URL: ${input.url}`);
+        blob = await response.blob();
+    } else {
+        const params = new URLSearchParams({ filename: input.filename, type: input.type, subfolder: input.subfolder || "" });
+        const response = await api.fetchApi(`/view?${params.toString()}`);
+        if (!response.ok) throw new Error(`Failed to fetch image: ${input.filename}`);
+        blob = await response.blob();
+    }
+    const resized = await resizeImage(blob);
+    return blobToBase64(resized);
+}
+
+async function collectImagePayload() {
+    const inputs = collectImageInputs();
+    if (!inputs.length) return [];
+    const images = [];
+    for (const input of inputs) {
+        try {
+            images.push(await fetchWorkflowImage(input));
+        } catch (error) {
+            console.warn("[QwenChat] cannot load workflow image:", error.message);
+        }
+    }
+    return images;
+}
+
 function findNode(nodeId) {
     return app.graph?.getNodeById?.(nodeId) || (app.graph?._nodes || []).find((node) => String(node.id) === String(nodeId));
 }
@@ -198,7 +271,18 @@ async function sendMessage() {
     renderMessages();
     controller = new AbortController();
     setBusy(true);
-    setStatus("Qwen sta analizzando il workflow…");
+    setStatus("Caricamento immagini del workflow…");
+    let images = [];
+    try {
+        images = await collectImagePayload();
+    } catch (error) {
+        console.warn("[QwenChat] image collection failed:", error);
+    }
+    if (images.length) {
+        setStatus(`Caricate ${images.length} immagine/i. Qwen sta analizzando…`);
+    } else {
+        setStatus("Qwen sta analizzando il workflow…");
+    }
     try {
         const response = await api.fetchApi("/qwenvl/chat", {
             method: "POST",
@@ -209,6 +293,7 @@ async function sendMessage() {
                 model: state.model,
                 messages: state.messages,
                 graph: snapshotGraph(),
+                images,
                 options: {
                     max_tokens: state.maxTokens,
                     temperature: state.temperature,

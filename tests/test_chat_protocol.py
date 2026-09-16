@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
 
-from chat_service import ChatRuntime, THINK_CLOSE, THINK_OPEN, build_prompt, parse_model_response, validate_actions, validate_graph, validate_messages
+from chat_service import ChatRuntime, THINK_CLOSE, THINK_OPEN, build_prompt, parse_model_response, validate_actions, validate_graph, validate_images, validate_messages
 
 
 class ChatProtocolTests(unittest.TestCase):
@@ -69,6 +69,13 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertIn("Set steps", prompt)
         self.assertIn('"id":1', prompt)
         self.assertIn("set_widget_value", prompt)
+        self.assertIn("images", prompt)
+
+    def test_validates_images(self):
+        import base64
+        valid = base64.b64encode(b"fake-image-data").decode("ascii")
+        self.assertEqual(len(validate_images([valid, "not-valid", 123])), 1)
+        self.assertEqual(len(validate_images([valid, valid, valid, valid])), 3)
 
     def test_hf_runtime_reuses_and_unloads_model(self):
         class FakeQuantization:
