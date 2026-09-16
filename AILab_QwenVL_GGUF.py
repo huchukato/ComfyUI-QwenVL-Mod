@@ -826,10 +826,16 @@ class QwenVLGGUFBase:
         pool_size=None,
         keep_last_prompt=False,
         camera_tag="None",
+        passthrough=False,
     ):
         print(f"[QwenVL GGUF DEBUG] Starting run with seed={seed}, keep_last_prompt={keep_last_prompt}")
 
         global LAST_SAVED_PROMPT
+
+        # Passthrough mode: skip model loading entirely, return custom_prompt as-is.
+        if passthrough:
+            print(f"[QwenVL GGUF] Passthrough mode ON — skipping model load, returning custom_prompt directly ({len(custom_prompt or '')} chars)")
+            return (custom_prompt or "",)
 
         # Simple keep last prompt logic
         if keep_last_prompt:
@@ -1026,6 +1032,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
+                "passthrough": ("BOOLEAN", {"default": False, "tooltip": "Skip Qwen model loading and return custom_prompt directly. Use when the chat already generated the final prompt — saves VRAM and inference time."}),
                             },
             "optional": {
                 "image": ("IMAGE",),
@@ -1047,6 +1054,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
         keep_model_loaded,
         seed,
         keep_last_prompt,
+        passthrough=False,
         image=None,
         video=None,
     ):
@@ -1071,6 +1079,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
             top_k=None,
             pool_size=None,
             keep_last_prompt=keep_last_prompt,
+            passthrough=passthrough,
         )
 
 
@@ -1110,6 +1119,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
                 "keep_model_loaded": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
+                "passthrough": ("BOOLEAN", {"default": False, "tooltip": "Skip Qwen model loading and return custom_prompt directly. Use when the chat already generated the final prompt — saves VRAM and inference time."}),
                             },
             "optional": {
                 "image": ("IMAGE",),
@@ -1143,6 +1153,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
         keep_model_loaded,
         seed,
         keep_last_prompt,
+        passthrough=False,
         image=None,
         video=None,
     ):
@@ -1168,6 +1179,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
             pool_size=pool_size,
             keep_last_prompt=keep_last_prompt,
             camera_tag=camera_tag,
+            passthrough=passthrough,
         )
 
 
