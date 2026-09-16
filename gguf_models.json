@@ -14,20 +14,6 @@
       "defaults": {
         "context_length": 32768
       }
-    },
-    "Qwen3-4B-abliterated-GGUF": {
-      "author": "mradermacher",
-      "repo_name": "Qwen3-4B-abliterated-GGUF",
-      "repo_id": "mradermacher/Qwen3-4B-abliterated-GGUF",
-      "model_files": [
-        "Qwen3-4B-abliterated.Q4_K_M.gguf",
-        "Qwen3-4B-abliterated.Q5_K_M.gguf",
-        "Qwen3-4B-abliterated.Q6_K.gguf",
-        "Qwen3-4B-abliterated.Q8_0.gguf"
-      ],
-      "defaults": {
-        "context_length": 32768
-      }
     }
   },
   "qwenVL_model": {
