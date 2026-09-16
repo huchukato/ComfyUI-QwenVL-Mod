@@ -73,7 +73,7 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertIn("images", prompt)
         self.assertIn("MUST be in English", prompt)
         self.assertIn("MUST use the same language as the latest user message", prompt)
-        self.assertIn("This case has priority even when the same node also exposes \"preset_prompt\"", prompt)
+        self.assertIn("IMAGE + PRESET ENHANCER", prompt)
         self.assertIn("If queue_workflow is present, state that execution was started", prompt)
 
     def test_prompt_identifies_exact_promoted_passthrough_target(self):
@@ -86,6 +86,18 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertIn('Node 105 exposes both "prompt" and "passthrough"', prompt)
         self.assertIn('set node 105 widget "prompt"', prompt)
         self.assertIn('set node 105 widget "passthrough" to true', prompt)
+
+    def test_prompt_uses_inner_enhancer_when_image_is_provided(self):
+        graph = {"nodes": [{"id": 105, "title": "Image to Video (MiniMax H3)", "widgets": [
+            {"name": "prompt", "value": ""},
+            {"name": "preset_prompt", "value": "MiniMax H3 NSFW (5s)"},
+            {"name": "passthrough", "value": True},
+        ]}]}
+        prompt = build_prompt([{"role": "user", "content": "Generate the video"}], graph, has_images=True)
+        self.assertIn("Image pixels are provided", prompt)
+        self.assertIn('set node 105 widget "prompt" to a short English action-only instruction', prompt)
+        self.assertIn('set node 105 widget "passthrough" to false', prompt)
+        self.assertIn("inner QwenVL must create the final image-aware preset prompt", prompt)
 
     def test_enforces_minimax_i2va_binding_for_image_passthrough(self):
         result = {
