@@ -60,11 +60,6 @@
     }
   },
   "hf_text_models": {
-    "qwen3-4b-Z-Image-Engineer": {
-      "repo_id": "BennyDaBall/qwen3-4b-Z-Image-Engineer",
-      "default": false,
-      "quantized": false
-    },
     "Qwen3.5-4B-Unredacted-MAX": {
       "repo_id": "prithivMLmods/Qwen3.5-4B-Unredacted-MAX",
       "default": true,
