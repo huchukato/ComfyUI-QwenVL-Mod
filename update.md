@@ -1,5 +1,14 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.7.1 (2026/09/16)
+
+**Qwen Chat MiniMax H3 Routing Fix**
+
+- Generated image and video prompts are now written in English unless another prompt language is explicitly requested.
+- Nodes exposing both `preset_prompt` and `passthrough` now use the passthrough route first: the final preset-formatted prompt is written to the node's actual exposed prompt widget and `passthrough` is enabled.
+- Added graph-specific routing guidance with the exact node ID and exposed prompt widget, preventing omission of the prompt or passthrough actions on promoted subgraph inputs.
+- Queue responses no longer ask for execution confirmation after already adding `queue_workflow`.
+
 ## Version 2.7.0 (2026/09/16)
 
 **Qwen Workflow Chat, Image Attachments, Guided Workflow Actions, and Qwen 3.8 Models**
