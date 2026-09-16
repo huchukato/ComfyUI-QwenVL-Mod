@@ -7,7 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
 
-from chat_service import ChatRuntime, MINIMAX_I2VA_BINDING, THINK_CLOSE, THINK_OPEN, build_prompt, enforce_image_enhancer_routing, enforce_image_reference_bindings, list_output_images, parse_model_response, validate_actions, validate_graph, validate_images, validate_messages
+from chat_service import ChatRuntime, MINIMAX_I2VA_BINDING, THINK_CLOSE, THINK_OPEN, build_prompt, enforce_image_enhancer_routing, enforce_image_reference_bindings, list_output_images, parse_model_response, select_workflow_intent, validate_actions, validate_graph, validate_images, validate_messages
 
 
 class ChatProtocolTests(unittest.TestCase):
@@ -95,9 +95,17 @@ class ChatProtocolTests(unittest.TestCase):
         ]}]}
         prompt = build_prompt([{"role": "user", "content": "Generate the video"}], graph, has_images=True)
         self.assertIn("Image pixels are provided", prompt)
-        self.assertIn('set node 105 widget "prompt" to the latest user request without pre-formatting it', prompt)
+        self.assertIn('set node 105 widget "prompt" to the latest substantive request, skipping execute-only confirmations', prompt)
         self.assertIn('set node 105 widget "passthrough" to false', prompt)
         self.assertIn("inner QwenVL must create the final image-aware preset prompt", prompt)
+
+    def test_selects_previous_intent_after_execution_confirmation(self):
+        messages = [
+            {"role": "user", "content": "Create a five-second video where she opens the dress"},
+            {"role": "assistant", "content": "Ready."},
+            {"role": "user", "content": "Generate the video"},
+        ]
+        self.assertEqual(select_workflow_intent(messages), messages[0]["content"])
 
     def test_enforces_image_enhancer_prompt_and_disables_passthrough(self):
         graph = {"nodes": [{"id": 105, "title": "Image to Video (MiniMax H3)", "widgets": [
@@ -105,7 +113,11 @@ class ChatProtocolTests(unittest.TestCase):
             {"name": "preset_prompt", "value": "🎬 MiniMax H3 NSFW (5s)"},
             {"name": "passthrough", "value": True},
         ]}]}
-        messages = [{"role": "user", "content": "La ragazza apre il vestito"}]
+        messages = [
+            {"role": "user", "content": "La ragazza apre il vestito"},
+            {"role": "assistant", "content": "Vuoi che lo esegua?"},
+            {"role": "user", "content": "Esegui il video"},
+        ]
         for prompt_action in ([], [{"type": "set_widget_value", "node_id": 105, "widget": "prompt", "value": "fully formatted hallucinated prompt"}]):
             result = {
                 "message": "Done",
@@ -119,7 +131,7 @@ class ChatProtocolTests(unittest.TestCase):
             enforced = enforce_image_enhancer_routing(result, graph, messages, True)
             prompt_actions = [action for action in enforced["actions"] if action.get("widget") == "prompt"]
             self.assertEqual(len(prompt_actions), 1)
-            self.assertEqual(prompt_actions[0]["value"], messages[-1]["content"])
+            self.assertEqual(prompt_actions[0]["value"], messages[0]["content"])
             self.assertFalse(next(action for action in enforced["actions"] if action.get("widget") == "passthrough")["value"])
 
     def test_enforces_minimax_i2va_binding_for_image_passthrough(self):
