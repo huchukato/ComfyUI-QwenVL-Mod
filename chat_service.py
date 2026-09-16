@@ -25,10 +25,10 @@ Return exactly one JSON object — no preamble, no text before or after it — w
 {"message":"short answer to the user","actions":[{"type":"set_widget_value","node_id":1,"widget":"steps","value":25},{"type":"set_node_mode","node_id":2,"mode":"bypass"},{"type":"queue_workflow"}],"choices":[{"label":"option A","send":"the user message sent when option A is clicked"}]}
 Allowed action types are set_widget_value, set_node_mode, and queue_workflow. set_node_mode accepts only bypass or enable. Never invent node IDs or widget names. Do not emit code, filesystem, shell, network, node creation, connection, deletion, or arbitrary JavaScript actions. If the request cannot be completed with the available actions, explain why in message and return an empty actions array.
 When the user asks to generate N images or a batch of N, look for a "batch_size" or "batch" widget on the main generation node (the node with seed/steps/cfg/sampler_name — typically the sampler or the all-in-one generation node). Do NOT set batch_size on upscaler nodes (UpscalerTensorrt, LoadUpscalerTensorrtModel, UltimateSDUpscale, etc.) — that controls the upscaling batch, not the image count. If no batch_size exists on the generation node, explain that the workflow generates one image per run and ask if they want to queue it multiple times.
-All generated image and video prompt text written into workflow widgets MUST be in English, regardless of the conversation language, unless the user explicitly requests another prompt language. The surrounding assistant message may use the user's language.
+Final generated image and video prompts MUST be in English unless the user explicitly requests another prompt language. A short raw intent sent to an active inner preset enhancer may remain in the user's language because that enhancer translates and formats the final prompt. The surrounding assistant message must use the user's language.
 When you set a text or prompt widget, repeat the complete new value verbatim inside message so the user can read it.
 PROMPT ROUTING — inspect the widgets exposed on the SAME target node and apply the first matching case:
-1. IMAGE + PRESET ENHANCER: when image pixels are provided and the image-to-video target exposes both "preset_prompt" and "passthrough", write only a concise English motion/action instruction into its exposed prompt widget and set "passthrough" to false. The inner QwenVL must analyze the actual workflow image and apply the selected preset. Do not pre-format the prompt, add Picture reference lines, or describe identity, appearance, clothing, environment, lighting, or framing. Include only the requested change plus an instruction to preserve the reference exactly.
+1. IMAGE + PRESET ENHANCER: when image pixels are provided and the image-to-video target exposes both "preset_prompt" and "passthrough", write only the latest user's concise motion/action request into its exposed prompt widget and set "passthrough" to false. The inner QwenVL must analyze the actual workflow image, translate the request, and apply the selected preset. Do not pre-format the prompt, add Picture reference lines, or describe identity, appearance, clothing, environment, lighting, or framing.
 2. PASSTHROUGH WITHOUT IMAGE: when no image pixels are provided and the target exposes "passthrough", write the complete final English prompt into the actual exposed prompt widget ("prompt", "custom_prompt", or "prompt_text") and set "passthrough" to true. A promoted outer "prompt" may feed an inner "custom_prompt"; always use the exposed name.
 3. PRESET WITHOUT PASSTHROUGH: if the target exposes "preset_prompt" but not "passthrough", write a concise English intent into its exposed prompt widget so the inaccessible inner enhancer applies the preset.
 4. DIRECT PROMPT: otherwise write the complete final English prompt into the actual exposed generation widget.
@@ -229,6 +229,46 @@ def parse_model_response(text):
     return {"thinking": thinking, "message": message_fallback, "actions": [], "choices": [], "parsed": False}
 
 
+def enforce_image_enhancer_routing(result, graph, messages, has_images):
+    if not has_images or not any(action.get("type") == "queue_workflow" for action in result.get("actions", [])):
+        return result
+    candidates = []
+    for node in graph.get("nodes", []):
+        widgets = {widget.get("name") for widget in node.get("widgets", []) if isinstance(widget, dict)}
+        prompt_widget = next((name for name in ("prompt", "custom_prompt", "prompt_text") if name in widgets), None)
+        title = f'{node.get("title", "")} {node.get("type", "")}'.lower()
+        if prompt_widget and {"preset_prompt", "passthrough"}.issubset(widgets) and "image to video" in title:
+            candidates.append((node, prompt_widget))
+    targeted = {
+        str(action.get("node_id"))
+        for action in result.get("actions", [])
+        if action.get("type") == "set_widget_value" and action.get("widget") in {"prompt", "custom_prompt", "prompt_text", "preset_prompt", "passthrough"}
+    }
+    selected = [(node, widget) for node, widget in candidates if str(node.get("id")) in targeted]
+    if len(selected) != 1:
+        if len(candidates) != 1:
+            return result
+        selected = candidates
+    node, prompt_widget = selected[0]
+    node_id = node.get("id")
+    intent = messages[-1]["content"] if messages else ""
+    actions = result.get("actions", [])
+    prompt_action = next((action for action in actions if str(action.get("node_id")) == str(node_id) and action.get("widget") in {"prompt", "custom_prompt", "prompt_text"}), None)
+    if prompt_action:
+        prompt_action.update({"widget": prompt_widget, "value": intent})
+    else:
+        queue_index = next((index for index, action in enumerate(actions) if action.get("type") == "queue_workflow"), len(actions))
+        actions.insert(queue_index, {"type": "set_widget_value", "node_id": node_id, "widget": prompt_widget, "value": intent})
+    passthrough_action = next((action for action in actions if str(action.get("node_id")) == str(node_id) and action.get("widget") == "passthrough"), None)
+    if passthrough_action:
+        passthrough_action["value"] = False
+    else:
+        queue_index = next((index for index, action in enumerate(actions) if action.get("type") == "queue_workflow"), len(actions))
+        actions.insert(queue_index, {"type": "set_widget_value", "node_id": node_id, "widget": "passthrough", "value": False})
+    result["message"] = f'{result.get("message", "").rstrip()}\n\nWorkflow enhancer instruction:\n{intent}'.strip()
+    return result
+
+
 def enforce_image_reference_bindings(result, graph, has_images):
     if not has_images:
         return result
@@ -333,7 +373,7 @@ def _chat_guides_for(graph, has_images=False):
         if image_enhancer:
             parts.append(
                 f'### Exact image-enhancer target\nImage pixels are provided. Node {node.get("id")} exposes "{prompt_widget}", "preset_prompt", and "passthrough". '
-                f'For generation, set node {node.get("id")} widget "{prompt_widget}" to a short English action-only instruction, '
+                f'For generation, set node {node.get("id")} widget "{prompt_widget}" to the latest user request without pre-formatting it, '
                 f'set node {node.get("id")} widget "passthrough" to false, then queue. The inner QwenVL must create the final image-aware preset prompt.'
             )
         else:
@@ -395,6 +435,7 @@ class ChatRuntime:
             text = self._generate(backend, model_name, prompt, options, enable_thinking, images)
         result = parse_model_response(text)
         if result.pop("parsed"):
+            result = enforce_image_enhancer_routing(result, graph, messages, bool(images))
             return enforce_image_reference_bindings(result, graph, bool(images))
         # The model ignored the JSON protocol (e.g. a conversational preamble
         # like "Generating the prompt…" and then stopped). Retry once, echoing
@@ -408,6 +449,7 @@ class ChatRuntime:
             retry_text = self._generate(backend, model_name, retry_prompt, options, enable_thinking, images)
         retry_result = parse_model_response(retry_text)
         if retry_result.pop("parsed"):
+            retry_result = enforce_image_enhancer_routing(retry_result, graph, messages, bool(images))
             return enforce_image_reference_bindings(retry_result, graph, bool(images))
         return result
 

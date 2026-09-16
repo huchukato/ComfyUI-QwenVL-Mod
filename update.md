@@ -1,5 +1,10 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.7.9 (2026/09/16)
+
+- Added deterministic I2VA action normalization before queueing: the latest user request is always written to the active inner enhancer's prompt widget and `passthrough` is always forced to false.
+- Missing prompt actions are inserted automatically, while hallucinated pre-formatted chat prompts are replaced with the raw user intent.
+
 ## Version 2.7.8 (2026/09/16)
 
 - Image-to-video workflows with an exposed preset enhancer now receive a short action-only prompt from Qwen Chat and run the internal QwenVL with `passthrough=false`.
