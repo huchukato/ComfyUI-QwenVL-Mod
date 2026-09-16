@@ -23,7 +23,11 @@ const TRANSLATIONS = {
         missingNode: "node {node} does not exist", missingWidget: "widget {widget} does not exist on node {node}",
         nodeValue: "node {node}: {widget} = {value}", nodeMode: "node {node}: {mode}",
         unsupportedAction: "action {action} is not allowed", unknown: "unknown",
-        generateVideo: "Generate video", generateVideoSend: "Generate the video",
+        generateVideo: "Generate video", generateVideoSend: "Generate the video", assets: "ComfyUI Assets",
+        assetsTitle: "Select a ComfyUI output", assetsLoading: "Loading output images…", assetsEmpty: "No output images found.",
+        assetsError: "Unable to load ComfyUI Assets: {error}", close: "Close", selectTarget: "Select the Load Image (from Outputs) node",
+        assetChatOnly: "Asset selected for Qwen. Add a Load Image (from Outputs) node to sync it with the workflow.",
+        assetSynced: "Asset selected for Qwen and loaded into node {node}.",
     },
     it: {
         empty: "Chiedimi di analizzare o modificare i parametri del workflow aperto.", user: "Tu", thinking: "Pensiero",
@@ -44,7 +48,11 @@ const TRANSLATIONS = {
         missingNode: "nodo {node} inesistente", missingWidget: "widget {widget} inesistente nel nodo {node}",
         nodeValue: "nodo {node}: {widget} = {value}", nodeMode: "nodo {node}: {mode}",
         unsupportedAction: "azione {action} non consentita", unknown: "sconosciuta",
-        generateVideo: "Genera video", generateVideoSend: "Genera il video",
+        generateVideo: "Genera video", generateVideoSend: "Genera il video", assets: "Risorse ComfyUI",
+        assetsTitle: "Seleziona un output ComfyUI", assetsLoading: "Caricamento immagini di output…", assetsEmpty: "Nessuna immagine di output trovata.",
+        assetsError: "Impossibile caricare le Risorse ComfyUI: {error}", close: "Chiudi", selectTarget: "Seleziona il nodo Carica Immagine da Output",
+        assetChatOnly: "Risorsa selezionata per Qwen. Aggiungi un nodo Carica Immagine da Output per sincronizzarla con il workflow.",
+        assetSynced: "Risorsa selezionata per Qwen e caricata nel nodo {node}.",
     },
 };
 const DEFAULT_STATE = {
@@ -166,7 +174,12 @@ function collectImageInputs() {
         for (const widget of node.widgets || []) {
             if (!widget?.name || typeof widget.value !== "string" || !widget.value) continue;
             if ((widget.name === "image" || widget.name === "image_url") && !widget.value.startsWith("http")) {
-                inputs.push({ filename: widget.value, node_id: node.id, type: "input", subfolder: "" });
+                if (type === "LoadImageOutput" || /\s+\[output\]$/.test(widget.value)) {
+                    const asset = parseOutputAsset(widget.value);
+                    inputs.push({ filename: asset.filename, node_id: node.id, type: "output", subfolder: asset.subfolder });
+                } else {
+                    inputs.push({ filename: widget.value, node_id: node.id, type: "input", subfolder: "" });
+                }
             } else if (widget.name === "url" && widget.value.startsWith("http")) {
                 inputs.push({ url: widget.value, node_id: node.id, type: "url" });
             }
@@ -272,6 +285,102 @@ async function attachImage(file) {
     renderAttachment();
 }
 
+function parseOutputAsset(value) {
+    const path = String(value).replace(/\s+\[output\]$/, "");
+    const slash = path.lastIndexOf("/");
+    const filename = slash >= 0 ? path.slice(slash + 1) : path;
+    const subfolder = slash >= 0 ? path.slice(0, slash) : "";
+    const params = new URLSearchParams({ filename, subfolder, type: "output" });
+    const route = `/view?${params.toString()}`;
+    return { value, filename, subfolder, route, url: api.apiURL ? api.apiURL(route) : `/api${route}` };
+}
+
+function loadImageOutputNodes() {
+    return (app.graph?._nodes || []).filter((node) => {
+        const type = node.type || node.comfyClass || "";
+        return type === "LoadImageOutput" && (node.widgets || []).some((widget) => widget.name === "image");
+    });
+}
+
+function closeAssets() {
+    elements.assetModal?.classList.remove("visible");
+}
+
+async function useOutputAsset(asset, node = null) {
+    const response = await api.fetchApi(asset.route);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const resized = await resizeImage(await response.blob());
+    if (!resized) throw new Error(t("imageError"));
+    if (attachedImage?.previewUrl) URL.revokeObjectURL(attachedImage.previewUrl);
+    attachedImage = {
+        base64: await blobToBase64(resized),
+        previewUrl: URL.createObjectURL(resized),
+        name: asset.filename,
+    };
+    if (node) {
+        const widget = (node.widgets || []).find((item) => item.name === "image");
+        const previousValue = widget.value;
+        widget.value = asset.value;
+        widget.callback?.(asset.value, app.canvas, node);
+        node.onWidgetChanged?.(widget.name, asset.value, previousValue, widget);
+        node.setDirtyCanvas?.(true, true);
+        app.graph?.setDirtyCanvas?.(true, true);
+    }
+    renderAttachment();
+    closeAssets();
+    setStatus(node ? t("assetSynced", { node: node.id }) : t("assetChatOnly"));
+}
+
+function renderAssetTargets(asset, nodes) {
+    elements.assetGrid.replaceChildren(createElement("div", "qwen-chat-assets-heading", t("selectTarget")));
+    for (const node of nodes) {
+        const label = node.title && node.title !== node.type ? `${node.title} (${node.id})` : `${node.type} (${node.id})`;
+        const button = createElement("button", "qwen-chat-asset-target", label);
+        button.addEventListener("click", () => useOutputAsset(asset, node).catch((error) => setStatus(error.message || String(error), true)));
+        elements.assetGrid.append(button);
+    }
+}
+
+async function chooseOutputAsset(asset) {
+    const nodes = loadImageOutputNodes();
+    if (nodes.length > 1) {
+        renderAssetTargets(asset, nodes);
+        return;
+    }
+    await useOutputAsset(asset, nodes[0] || null);
+}
+
+async function openAssets() {
+    elements.assetModal.classList.add("visible");
+    elements.assetGrid.replaceChildren(createElement("div", "qwen-chat-assets-heading", t("assetsLoading")));
+    try {
+        const response = await api.fetchApi("/internal/files/output");
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const values = await response.json();
+        const assets = (Array.isArray(values) ? values : [])
+            .filter((value) => /\.(png|jpe?g|webp)\s+\[output\]$/i.test(String(value)))
+            .slice(0, 100)
+            .map(parseOutputAsset);
+        elements.assetGrid.replaceChildren();
+        if (!assets.length) {
+            elements.assetGrid.append(createElement("div", "qwen-chat-assets-heading", t("assetsEmpty")));
+            return;
+        }
+        for (const asset of assets) {
+            const button = createElement("button", "qwen-chat-asset");
+            const image = createElement("img");
+            image.src = asset.url;
+            image.loading = "lazy";
+            image.alt = asset.filename;
+            button.append(image, createElement("span", "", asset.filename));
+            button.addEventListener("click", () => chooseOutputAsset(asset).catch((error) => setStatus(error.message || String(error), true)));
+            elements.assetGrid.append(button);
+        }
+    } catch (error) {
+        elements.assetGrid.replaceChildren(createElement("div", "qwen-chat-assets-heading", t("assetsError", { error: error.message })));
+    }
+}
+
 function findNode(nodeId) {
     return app.graph?.getNodeById?.(nodeId) || (app.graph?._nodes || []).find((node) => String(node.id) === String(nodeId));
 }
@@ -362,6 +471,7 @@ function setBusy(busy) {
     elements.temperature.disabled = busy;
     elements.thinking.disabled = busy;
     elements.attach.disabled = busy;
+    elements.assetsButton.disabled = busy;
     for (const button of elements.languageButtons || []) button.disabled = busy;
     if (elements.removeAttachment) elements.removeAttachment.disabled = busy;
     elements.status?.classList.toggle("busy", busy);
@@ -508,9 +618,19 @@ function buildSidebar(container) {
         .qwen-chat-attachment-details strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; }
         .qwen-chat-attachment-details span { font-size:10px; opacity:.62; }
         .qwen-chat-attachment-remove { flex:0 0 auto; padding:6px 8px!important; font-size:11px; }
-        .qwen-chat-composer-tools { display:flex; justify-content:flex-start; }
-        .qwen-chat-attach { cursor:pointer; font-size:12px; }
+        .qwen-chat-composer-tools { display:flex; justify-content:flex-start; gap:7px; }
+        .qwen-chat-attach,.qwen-chat-assets-button { cursor:pointer; font-size:12px; }
         .qwen-chat-file { display:none; }
+        .qwen-chat-assets-modal { display:none; position:fixed; inset:0; z-index:100000; align-items:center; justify-content:center; padding:24px; background:rgba(0,0,0,.72); backdrop-filter:blur(4px); }
+        .qwen-chat-assets-modal.visible { display:flex; }
+        .qwen-chat-assets-panel { width:min(760px,92vw); max-height:82vh; display:flex; flex-direction:column; gap:10px; padding:14px; border:1px solid var(--border-color,#4b4d55); border-radius:14px; background:var(--comfy-menu-bg,#202124); box-shadow:0 20px 60px rgba(0,0,0,.45); }
+        .qwen-chat-assets-header { display:flex; align-items:center; justify-content:space-between; gap:12px; font-weight:650; }
+        .qwen-chat-assets-grid { min-height:120px; overflow:auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:9px; padding:2px; }
+        .qwen-chat-assets-heading { grid-column:1/-1; padding:18px; text-align:center; opacity:.7; }
+        .qwen-chat-asset { min-width:0; display:flex; flex-direction:column; gap:6px; padding:6px!important; cursor:pointer; text-align:left; }
+        .qwen-chat-asset img { width:100%; aspect-ratio:1; object-fit:cover; border-radius:6px; background:#111; }
+        .qwen-chat-asset span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:10px; }
+        .qwen-chat-asset-target { grid-column:1/-1; cursor:pointer; text-align:left; }
         .qwen-chat-actions { display:grid; grid-template-columns:1.35fr 1fr 1fr 1fr; gap:7px; }
         .qwen-chat-actions button { min-width:0; cursor:pointer; font-size:12px; }
         .qwen-chat-actions button:first-child { border-color:rgba(109,124,255,.58); background:rgba(109,124,255,.2); font-weight:650; }
@@ -579,7 +699,9 @@ function buildSidebar(container) {
     elements.fileInput.accept = "image/*";
     elements.attach = createElement("button", "qwen-chat-attach", t("attach"));
     elements.attach.type = "button";
-    composerTools.append(elements.fileInput, elements.attach);
+    elements.assetsButton = createElement("button", "qwen-chat-assets-button", t("assets"));
+    elements.assetsButton.type = "button";
+    composerTools.append(elements.fileInput, elements.attach, elements.assetsButton);
     const actions = createElement("div", "qwen-chat-actions");
     elements.send = createElement("button", "", t("send"));
     elements.repeat = createElement("button", "", t("repeat"));
@@ -589,7 +711,15 @@ function buildSidebar(container) {
     elements.clear = createElement("button", "", t("newChat"));
     actions.append(elements.send, elements.repeat, elements.stop, elements.clear);
     elements.status = createElement("div", "qwen-chat-status", t("initializing"));
-    root.append(language, controls, elements.messages, elements.input, elements.attachment, composerTools, actions, elements.status);
+    elements.assetModal = createElement("div", "qwen-chat-assets-modal");
+    const assetPanel = createElement("div", "qwen-chat-assets-panel");
+    const assetHeader = createElement("div", "qwen-chat-assets-header");
+    const assetClose = createElement("button", "", t("close"));
+    elements.assetGrid = createElement("div", "qwen-chat-assets-grid");
+    assetHeader.append(createElement("span", "", t("assetsTitle")), assetClose);
+    assetPanel.append(assetHeader, elements.assetGrid);
+    elements.assetModal.append(assetPanel);
+    root.append(language, controls, elements.messages, elements.input, elements.attachment, composerTools, actions, elements.status, elements.assetModal);
     container.append(root);
     renderAttachment();
     elements.backend.addEventListener("change", () => {
@@ -616,6 +746,11 @@ function buildSidebar(container) {
         saveState();
     });
     elements.attach.addEventListener("click", () => elements.fileInput.click());
+    elements.assetsButton.addEventListener("click", openAssets);
+    assetClose.addEventListener("click", closeAssets);
+    elements.assetModal.addEventListener("click", (event) => {
+        if (event.target === elements.assetModal) closeAssets();
+    });
     elements.fileInput.addEventListener("change", async () => {
         const file = elements.fileInput.files?.[0];
         if (!file) return;

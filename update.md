@@ -1,5 +1,14 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.7.4 (2026/09/16)
+
+**ComfyUI Assets Picker**
+
+- Added a localized ComfyUI Assets gallery for selecting recent images directly from the ComfyUI output folder.
+- Selected assets are sent to Qwen as the priority reference and synchronized with the workflow when a `LoadImageOutput` node is available.
+- Workflows with multiple `LoadImageOutput` nodes show an explicit target-node choice instead of guessing.
+- Output images selected by `LoadImageOutput` are now recognized correctly during automatic workflow image collection.
+
 ## Version 2.7.3 (2026/09/16)
 
 **Deterministic MiniMax I2VA Reference Binding**
