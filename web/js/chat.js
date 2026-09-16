@@ -8,6 +8,7 @@ const DEFAULT_STATE = {
     unloadBeforeQueue: true,
     maxTokens: 1024,
     temperature: 0.2,
+    thinking: false,
     messages: [],
 };
 
@@ -52,6 +53,13 @@ function renderMessages() {
         const row = createElement("div", `qwen-chat-message ${message.role}`);
         row.append(createElement("div", "qwen-chat-role", message.role === "user" ? "Tu" : "Qwen"));
         row.append(createElement("div", "qwen-chat-content", message.content));
+        if (message.thinking) {
+            const details = createElement("details", "qwen-chat-thinking");
+            details.append(createElement("summary", "", "Pensiero"));
+            const pre = createElement("pre", "", message.thinking);
+            details.append(pre);
+            row.append(details);
+        }
         elements.messages.append(row);
     }
     elements.messages.scrollTop = elements.messages.scrollHeight;
@@ -173,6 +181,7 @@ function setBusy(busy) {
     elements.model.disabled = busy;
     elements.maxTokens.disabled = busy;
     elements.temperature.disabled = busy;
+    elements.thinking.disabled = busy;
 }
 
 async function sendMessage() {
@@ -209,6 +218,7 @@ async function sendMessage() {
                     attention_mode: "auto",
                     device: "auto",
                     seed: Math.floor(Math.random() * 4294967294) + 1,
+                    thinking: state.thinking,
                 },
             }),
         });
@@ -218,7 +228,7 @@ async function sendMessage() {
         let answer = data.message || "Operazione completata.";
         if (result.applied.length) answer += `\n\nApplicato:\n- ${result.applied.join("\n- ")}`;
         if (result.rejected.length) answer += `\n\nRifiutato:\n- ${result.rejected.join("\n- ")}`;
-        state.messages.push({ role: "assistant", content: answer });
+        state.messages.push({ role: "assistant", content: answer, thinking: data.thinking || "" });
         state.messages = state.messages.slice(-20);
         saveState();
         renderMessages();
@@ -263,7 +273,9 @@ function buildSidebar(container) {
     const style = createElement("style");
     style.textContent = `
         .qwen-chat { height:100%; display:flex; flex-direction:column; gap:8px; padding:10px; box-sizing:border-box; color:var(--fg-color); }
-        .qwen-chat-controls { display:grid; grid-template-columns:1fr 2fr; gap:6px; }
+        .qwen-chat-controls { display:grid; grid-template-columns:auto 1fr; gap:6px 8px; align-items:center; }
+        .qwen-chat-controls label { font-size:12px; white-space:nowrap; }
+        .qwen-chat-controls input[type="checkbox"] { margin-right:6px; width:auto; }
         .qwen-chat select,.qwen-chat textarea,.qwen-chat input,.qwen-chat button { background:var(--comfy-input-bg,#222); color:inherit; border:1px solid var(--border-color,#555); border-radius:6px; padding:7px; }
         .qwen-chat-messages { flex:1; min-height:120px; overflow:auto; display:flex; flex-direction:column; gap:8px; }
         .qwen-chat-message { padding:8px; border-radius:8px; white-space:pre-wrap; overflow-wrap:anywhere; background:rgba(127,127,127,.12); }
@@ -303,7 +315,17 @@ function buildSidebar(container) {
     elements.temperature.step = "0.1";
     elements.temperature.value = String(state.temperature);
     elements.temperature.title = "Temperature";
-    controls.append(elements.backend, elements.model, elements.maxTokens, elements.temperature);
+    elements.thinking = createElement("input");
+    elements.thinking.type = "checkbox";
+    elements.thinking.checked = state.thinking;
+    elements.thinking.title = "Show model reasoning before the answer";
+    controls.append(
+        createElement("label", "", "Backend"), elements.backend,
+        createElement("label", "", "Modello"), elements.model,
+        createElement("label", "", "Max tokens"), elements.maxTokens,
+        createElement("label", "", "Temperature"), elements.temperature,
+        createElement("label", "", "Thinking"), elements.thinking,
+    );
     elements.messages = createElement("div", "qwen-chat-messages");
     elements.input = createElement("textarea", "qwen-chat-input");
     elements.input.placeholder = "Es: imposta 25 step nel KSampler e avvia il workflow";
@@ -342,6 +364,10 @@ function buildSidebar(container) {
     });
     elements.unload.addEventListener("change", () => {
         state.unloadBeforeQueue = elements.unload.checked;
+        saveState();
+    });
+    elements.thinking.addEventListener("change", () => {
+        state.thinking = elements.thinking.checked;
         saveState();
     });
     elements.send.addEventListener("click", sendMessage);
