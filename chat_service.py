@@ -188,13 +188,20 @@ def _preset_guides(graph, messages):
                 wanted.add(widget["value"])
     last_user = next((m["content"] for m in reversed(messages) if m["role"] == "user"), "")
     wanted.update(name for name in guides if name in last_user)
+    # A duration mention (e.g. "10 seconds", "10s", "10 secondi") selects the
+    # preset variants for that length, e.g. "MiniMax H3 NSFW (10s)".
+    for match in re.finditer(r"(\d+)\s*(?:s|sec|secondi|seconds)\b", last_user, re.IGNORECASE):
+        wanted.update(name for name in guides if f"({match.group(1)}s)" in name)
     if not wanted:
         return ""
     parts = "\n\n".join(f"### {name}\n{guides[name]}" for name in sorted(wanted))
     return (
         "\n\nPROMPT WRITING GUIDES - when writing or editing a prompt for a node "
         "associated with one of these presets, follow the corresponding guide "
-        "exactly, including its required output format:\n" + parts
+        "exactly, including its required output format. If the user asks for a "
+        "different clip duration than the one the workflow is set to, also set "
+        "the preset widget to the matching duration variant (if one exists) and "
+        "update the workflow's duration/frame-count widgets accordingly:\n" + parts
     )
 
 
