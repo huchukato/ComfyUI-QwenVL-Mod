@@ -99,6 +99,16 @@
         "8bit": 10.0,
         "4bit": 6.0
       }
+    },
+    "Qwen3.5-9B-HighIQ-THINKING-HERETIC": {
+      "repo_id": "DavidAU/Qwen3.5-9B-Claude-4.6-HighIQ-THINKING-HERETIC-UNCENSORED",
+      "default": false,
+      "quantized": false,
+      "vram_requirement": {
+        "full": 12.0,
+        "8bit": 7.0,
+        "4bit": 4.5
+      }
     }
   }
 }
