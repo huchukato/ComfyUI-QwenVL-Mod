@@ -23,6 +23,7 @@ const TRANSLATIONS = {
         missingNode: "node {node} does not exist", missingWidget: "widget {widget} does not exist on node {node}",
         nodeValue: "node {node}: {widget} = {value}", nodeMode: "node {node}: {mode}",
         unsupportedAction: "action {action} is not allowed", unknown: "unknown",
+        generateVideo: "Generate video", generateVideoSend: "Generate the video",
     },
     it: {
         empty: "Chiedimi di analizzare o modificare i parametri del workflow aperto.", user: "Tu", thinking: "Pensiero",
@@ -43,6 +44,7 @@ const TRANSLATIONS = {
         missingNode: "nodo {node} inesistente", missingWidget: "widget {widget} inesistente nel nodo {node}",
         nodeValue: "nodo {node}: {widget} = {value}", nodeMode: "nodo {node}: {mode}",
         unsupportedAction: "azione {action} non consentita", unknown: "sconosciuta",
+        generateVideo: "Genera video", generateVideoSend: "Genera il video",
     },
 };
 const DEFAULT_STATE = {
@@ -423,7 +425,14 @@ async function sendMessage() {
         let answer = data.message || t("completed");
         if (result.applied.length) answer += `\n\n${t("applied")}:\n- ${result.applied.join("\n- ")}`;
         if (result.rejected.length) answer += `\n\n${t("rejected")}:\n- ${result.rejected.join("\n- ")}`;
-        state.messages.push({ role: "assistant", content: answer, thinking: data.thinking || "", choices: Array.isArray(data.choices) ? data.choices : [] });
+        const responseActions = Array.isArray(data.actions) ? data.actions : [];
+        const promptWasSet = responseActions.some((action) => action.type === "set_widget_value" && ["prompt", "custom_prompt", "prompt_text"].includes(action.widget));
+        const workflowWasQueued = responseActions.some((action) => action.type === "queue_workflow");
+        let choices = Array.isArray(data.choices) ? data.choices : [];
+        if (!choices.length && promptWasSet && !workflowWasQueued) {
+            choices = [{ label: t("generateVideo"), send: t("generateVideoSend") }];
+        }
+        state.messages.push({ role: "assistant", content: answer, thinking: data.thinking || "", choices });
         state.messages = state.messages.slice(-20);
         saveState();
         renderMessages();

@@ -1,5 +1,13 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.7.2 (2026/09/16)
+
+**Qwen Chat Execution Follow-up Fix**
+
+- Added a localized `Generate video` fallback choice when Qwen updates a prompt but omits `queue_workflow`.
+- Assistant messages and choice labels now follow the language of the latest user message, while generated workflow prompts remain in English.
+- Prevented responses from claiming that execution started when no queue action was emitted.
+
 ## Version 2.7.1 (2026/09/16)
 
 **Qwen Chat MiniMax H3 Routing Fix**
