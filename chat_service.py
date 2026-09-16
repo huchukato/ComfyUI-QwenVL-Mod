@@ -199,8 +199,12 @@ class ChatRuntime:
         available = self.models().get(backend)
         if available is None:
             raise ValueError("backend must be hf or gguf")
-        if model_name not in available:
-            raise ValueError("unknown model")
+        if not available:
+            raise ValueError(f"no models available for backend '{backend}'")
+        if not model_name:
+            model_name = available[0]
+        elif model_name not in available:
+            raise ValueError(f"unknown model '{model_name}'")
         enable_thinking = bool(options.get("thinking", False))
         prompt = build_prompt(messages, graph, enable_thinking)
         with self._lock:
