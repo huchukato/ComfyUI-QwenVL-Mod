@@ -7,7 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
 
-from chat_service import ChatRuntime, MINIMAX_I2VA_BINDING, THINK_CLOSE, THINK_OPEN, build_prompt, enforce_image_reference_bindings, list_output_images, parse_model_response, validate_actions, validate_graph, validate_images, validate_messages
+from chat_service import ChatRuntime, MINIMAX_I2VA_BINDING, THINK_CLOSE, THINK_OPEN, build_prompt, enforce_image_enhancer_routing, enforce_image_reference_bindings, list_output_images, parse_model_response, validate_actions, validate_graph, validate_images, validate_messages
 
 
 class ChatProtocolTests(unittest.TestCase):
@@ -71,7 +71,7 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertIn('"id":1', prompt)
         self.assertIn("set_widget_value", prompt)
         self.assertIn("images", prompt)
-        self.assertIn("MUST be in English", prompt)
+        self.assertIn("Final generated image and video prompts MUST be in English", prompt)
         self.assertIn("MUST use the same language as the latest user message", prompt)
         self.assertIn("IMAGE + PRESET ENHANCER", prompt)
         self.assertIn("If queue_workflow is present, state that execution was started", prompt)
@@ -95,9 +95,32 @@ class ChatProtocolTests(unittest.TestCase):
         ]}]}
         prompt = build_prompt([{"role": "user", "content": "Generate the video"}], graph, has_images=True)
         self.assertIn("Image pixels are provided", prompt)
-        self.assertIn('set node 105 widget "prompt" to a short English action-only instruction', prompt)
+        self.assertIn('set node 105 widget "prompt" to the latest user request without pre-formatting it', prompt)
         self.assertIn('set node 105 widget "passthrough" to false', prompt)
         self.assertIn("inner QwenVL must create the final image-aware preset prompt", prompt)
+
+    def test_enforces_image_enhancer_prompt_and_disables_passthrough(self):
+        graph = {"nodes": [{"id": 105, "title": "Image to Video (MiniMax H3)", "widgets": [
+            {"name": "prompt", "value": "old prompt"},
+            {"name": "preset_prompt", "value": "🎬 MiniMax H3 NSFW (5s)"},
+            {"name": "passthrough", "value": True},
+        ]}]}
+        messages = [{"role": "user", "content": "La ragazza apre il vestito"}]
+        for prompt_action in ([], [{"type": "set_widget_value", "node_id": 105, "widget": "prompt", "value": "fully formatted hallucinated prompt"}]):
+            result = {
+                "message": "Done",
+                "actions": [
+                    {"type": "set_widget_value", "node_id": 105, "widget": "preset_prompt", "value": "🎬 MiniMax H3 NSFW (5s)"},
+                    *prompt_action,
+                    {"type": "set_widget_value", "node_id": 105, "widget": "passthrough", "value": True},
+                    {"type": "queue_workflow"},
+                ],
+            }
+            enforced = enforce_image_enhancer_routing(result, graph, messages, True)
+            prompt_actions = [action for action in enforced["actions"] if action.get("widget") == "prompt"]
+            self.assertEqual(len(prompt_actions), 1)
+            self.assertEqual(prompt_actions[0]["value"], messages[-1]["content"])
+            self.assertFalse(next(action for action in enforced["actions"] if action.get("widget") == "passthrough")["value"])
 
     def test_enforces_minimax_i2va_binding_for_image_passthrough(self):
         result = {
