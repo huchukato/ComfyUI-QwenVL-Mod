@@ -36,6 +36,13 @@ The assistant applies only a restricted, validated action protocol. Model output
 <img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
 
 ## **📰 News & Updates**
+* **2026/09/16**: **v2.7.0 — Qwen Workflow Chat, Image Attachments, Guided Actions, and Qwen 3.8 Models**. [[Update](update.md#version-270-20260916)]
+> **Qwen Workflow Chat**: Native ComfyUI sidebar assistant with validated workflow actions, clickable choices, malformed-JSON recovery, preset-aware prompt routing, and autonomous queue execution.
+> **Image-aware chat**: Analyze workflow images automatically or attach a priority reference image directly in chat with preview, resizing, and removal controls.
+> **Refined interface**: Repeat-last-message control, busy spinner, improved message layout, and persistent English/Italian interface switch.
+> **Models and memory**: Qwen3.8 9B Q8 GGUF is the default chat model, thinking receives a larger token budget, and the chat model unloads before workflow execution.
+> **Diagnostics**: Reduced repeated cache lookup output while preserving useful model loading, image processing, generation, and failure logs.
+
 * **2026/09/03**: **v2.6** 🎬 **Camera & Style Tag Dropdowns + Pony Converters + Qwen 3.8 + LTX 2.3 FL2VA + MiniMax H3 Loop Mode**. [[Update](update.md#version-26-20260903)]
 > 🎥 **Camera Tag Dropdown**: New `camera_tag` parameter in all nodes with 19 camera movements (STATIC_CAMERA, SLOW/FAST ZOOM, PAN, TILT, DOLLY, TRACKING, CRANE, ORBIT, HANDHELD, ROLL). Tags injected as prefix + re-injected at end for recency bias. STATIC_CAMERA overrides RICHNESS RULES.
 > 🎨 **Style Tag Dropdown**: New `style_tag` parameter in PromptEnhancer (T2V only) with 12 visual styles (ANIME, PHOTOREALISTIC, 3DCG, CARTOON, CLAYMATION, WATERCOLOR, VINTAGE, NOIR, CYBERPUNK, FANTASY, SOFTFOCUS, HENTAI).

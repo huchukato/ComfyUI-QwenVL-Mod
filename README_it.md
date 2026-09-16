@@ -88,6 +88,13 @@ T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) �
 ---
 
 ## **📰 Notizie & Aggiornamenti**
+* **2026/09/16**: **v2.7.0 — Qwen Workflow Chat, allegati immagine, azioni guidate e modelli Qwen 3.8**. [[Aggiornamenti](update.md#version-270-20260916)]
+> **Qwen Workflow Chat**: Assistente nativo nella sidebar ComfyUI con azioni validate sul workflow, choices cliccabili, recupero del JSON malformato, routing basato sui preset ed esecuzione autonoma della coda.
+> **Chat con immagini**: Analisi automatica delle immagini del workflow oppure allegato prioritario direttamente in chat, con anteprima, ridimensionamento e rimozione.
+> **Interfaccia rifinita**: Ripetizione dell’ultimo messaggio, indicatore di attività, layout dei messaggi migliorato e selettore persistente inglese/italiano.
+> **Modelli e memoria**: Qwen3.8 9B Q8 GGUF è il modello chat predefinito, il thinking riceve un budget token maggiore e il modello chat viene scaricato dalla memoria prima del workflow.
+> **Diagnostica**: Ridotto lo spam delle ricerche in cache mantenendo visibili caricamento modelli, elaborazione immagini, generazione ed errori.
+
 * **2026/09/03**: **v2.6** 🎬 **Dropdown Camera & Style Tag + Converter Pony + Qwen 3.8 + LTX 2.3 FL2VA + MiniMax H3 Loop Mode**. [[Aggiornamenti](update.md#version-26-20260903)]
 > 🎥 **Dropdown Camera Tag**: Nuovo parametro `camera_tag` in tutti i nodi con 19 movimenti camera (STATIC_CAMERA, SLOW/FAST ZOOM, PAN, TILT, DOLLY, TRACKING, CRANE, ORBIT, HANDHELD, ROLL). Tag iniettati come prefisso + re-iniettati alla fine per recency bias. STATIC_CAMERA sovrascrive RICHNESS RULES.
 > 🎨 **Dropdown Style Tag**: Nuovo parametro `style_tag` nel PromptEnhancer (solo T2V) con 12 stili visivi (ANIME, PHOTOREALISTIC, 3DCG, CARTOON, CLAYMATION, WATERCOLOR, VINTAGE, NOIR, CYBERPUNK, FANTASY, SOFTFOCUS, HENTAI).
