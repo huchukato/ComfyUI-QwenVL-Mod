@@ -354,7 +354,7 @@ async function openAssets() {
     elements.assetModal.classList.add("visible");
     elements.assetGrid.replaceChildren(createElement("div", "qwen-chat-assets-heading", t("assetsLoading")));
     try {
-        const response = await api.fetchApi("/internal/files/output");
+        const response = await fetch("/internal/files/output");
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const values = await response.json();
         const assets = (Array.isArray(values) ? values : [])

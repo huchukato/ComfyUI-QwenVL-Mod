@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.7.5 (2026/09/16)
+
+- Fixed the ComfyUI Assets gallery endpoint to use `/internal/files/output` without the `/api` prefix.
+
 ## Version 2.7.4 (2026/09/16)
 
 **ComfyUI Assets Picker**
