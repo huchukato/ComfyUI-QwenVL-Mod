@@ -33,7 +33,9 @@ Open **Qwen Chat** from the ComfyUI sidebar to talk to a local Qwen model while 
 
 The assistant applies only a restricted, validated action protocol. Model output that references an unknown node, widget, value, or operation is rejected and reported in the conversation. The Stop button stops waiting in the browser; an inference already running on the backend may continue until generation completes.
 
-<img width="749" height="513" alt="Qwen3-VL-Mod" src="https://github.com/user-attachments/assets/0f10b887-1953-4923-b813-37ccacb8a9aa" />
+<img width="690" height="652" alt="qwen-chat-1" src="https://github.com/user-attachments/assets/4456833b-4c8d-4484-b141-7e2eaa9ba255" /> <img width="710" height="900" alt="qwen-chat-2" src="https://github.com/user-attachments/assets/14e825a5-8c0c-48fb-9417-0c6e7cf7841f" />
+
+
 
 ## **📰 News & Updates**
 * **2026/09/16**: **v2.7.0 — Qwen Workflow Chat, Image Attachments, Guided Actions, and Qwen 3.8 Models**. [[Update](update.md#version-270-20260916)]
