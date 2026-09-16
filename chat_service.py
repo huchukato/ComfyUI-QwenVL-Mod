@@ -279,7 +279,8 @@ class ChatRuntime:
     def models(self):
         hf = sys.modules.get("AILab_QwenVL")
         gguf = sys.modules.get("AILab_QwenVL_GGUF")
-        hf_models = sorted((getattr(hf, "HF_VL_MODELS", {}) or {}).keys()) if hf else []
+        # HF_ALL_MODELS includes both VL and text-only models (Qwen3.5/3.8).
+        hf_models = sorted((getattr(hf, "HF_ALL_MODELS", {}) or {}).keys()) if hf else []
         gguf_models = sorted(((getattr(gguf, "GGUF_VL_CATALOG", {}) or {}).get("models") or {}).keys()) if gguf else []
         return {"hf": hf_models, "gguf": gguf_models}
 
