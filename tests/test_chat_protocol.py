@@ -70,6 +70,20 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertIn('"id":1', prompt)
         self.assertIn("set_widget_value", prompt)
         self.assertIn("images", prompt)
+        self.assertIn("MUST be in English", prompt)
+        self.assertIn("This case has priority even when the same node also exposes \"preset_prompt\"", prompt)
+        self.assertIn("If queue_workflow is present, state that execution was started", prompt)
+
+    def test_prompt_identifies_exact_promoted_passthrough_target(self):
+        graph = {"nodes": [{"id": 105, "widgets": [
+            {"name": "prompt", "value": ""},
+            {"name": "preset_prompt", "value": "MiniMax H3 NSFW (5s)"},
+            {"name": "passthrough", "value": False},
+        ]}]}
+        prompt = build_prompt([{"role": "user", "content": "Generate the video"}], graph)
+        self.assertIn('Node 105 exposes both "prompt" and "passthrough"', prompt)
+        self.assertIn('set node 105 widget "prompt"', prompt)
+        self.assertIn('set node 105 widget "passthrough" to true', prompt)
 
     def test_validates_images(self):
         import base64

@@ -23,11 +23,14 @@ Return exactly one JSON object — no preamble, no text before or after it — w
 {"message":"short answer to the user","actions":[{"type":"set_widget_value","node_id":1,"widget":"steps","value":25},{"type":"set_node_mode","node_id":2,"mode":"bypass"},{"type":"queue_workflow"}],"choices":[{"label":"option A","send":"the user message sent when option A is clicked"}]}
 Allowed action types are set_widget_value, set_node_mode, and queue_workflow. set_node_mode accepts only bypass or enable. Never invent node IDs or widget names. Do not emit code, filesystem, shell, network, node creation, connection, deletion, or arbitrary JavaScript actions. If the request cannot be completed with the available actions, explain why in message and return an empty actions array.
 When the user asks to generate N images or a batch of N, look for a "batch_size" or "batch" widget on the main generation node (the node with seed/steps/cfg/sampler_name — typically the sampler or the all-in-one generation node). Do NOT set batch_size on upscaler nodes (UpscalerTensorrt, LoadUpscalerTensorrtModel, UltimateSDUpscale, etc.) — that controls the upscaling batch, not the image count. If no batch_size exists on the generation node, explain that the workflow generates one image per run and ask if they want to queue it multiple times.
+All generated image and video prompt text written into workflow widgets MUST be in English, regardless of the conversation language, unless the user explicitly requests another prompt language. The surrounding assistant message may use the user's language.
 When you set a text or prompt widget, repeat the complete new value verbatim inside message so the user can read it.
-PROMPT ROUTING — two cases, check the snapshot for which applies:
-1. If the generation node has a "preset_prompt" widget (a QwenVL enhancer runs INSIDE the workflow, e.g. "Image to Video (MiniMax H3)" subgraph nodes): write the user's intent as a concise scene description into the "prompt" widget — do NOT write a fully formatted preset prompt there. The inner enhancer analyzes the reference image and produces the required format, including the I2VA reference line that binds the first frame. Feeding it an already-formatted prompt makes it echo the text and lose the image binding, so the sampler ignores the reference image.
-2. If the workflow has a top-level AILab_QwenVL / AILab_QwenVL_PromptEnhancer node exposing a "passthrough" widget: write the complete final prompt into "custom_prompt" (or "prompt_text" for PromptEnhancer) AND set "passthrough" to true — the node forwards it to the sampler unchanged. For image-to-video the prompt MUST start with the preset's I2VA reference line (e.g. "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced."), otherwise the sampler ignores the reference image.
-When the user asks you to draft or show a prompt without executing, write the fully formatted preset prompt inside "message" for them to read.
+PROMPT ROUTING — inspect the widgets exposed on the SAME target node and apply the first matching case:
+1. PASSTHROUGH EXPOSED: if the target generation or subgraph node exposes a "passthrough" widget, write the complete final English prompt into the prompt widget that is actually exposed on that same node ("prompt", "custom_prompt", or "prompt_text") AND set that node's "passthrough" to true. A promoted outer widget named "prompt" may feed an inner Qwen node's "custom_prompt"; use the exposed outer name and never invent "custom_prompt" on the outer node. This case has priority even when the same node also exposes "preset_prompt". Apply the detected preset yourself before passthrough. For image-to-video the final prompt MUST include the preset's required image-reference binding, such as the MiniMax I2VA line "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.", so the sampler follows the reference image.
+2. PRESET WITHOUT PASSTHROUGH: if the target node exposes "preset_prompt" but does not expose "passthrough", write a concise English description of the user's intent into its exposed "prompt" widget. The inaccessible inner enhancer will analyze the reference image and format the final prompt.
+3. DIRECT PROMPT: otherwise write the complete final English prompt into the actual exposed generation widget ("prompt", "custom_prompt", or "prompt_text").
+When the user asks you to draft or show a prompt without executing, write the fully formatted English preset prompt inside "message" for them to read and do not queue the workflow.
+When the user asks to generate, run, execute, or queue, apply every required widget update and include queue_workflow in the same response. If queue_workflow is present, state that execution was started; NEVER ask whether to execute now and NEVER offer an execute choice. If you ask for confirmation or offer an execute choice, do not include queue_workflow.
 Emit choices only when you genuinely need the user to pick between alternatives before acting (for example mutually exclusive generation modes). Put the question in message, give each choice a short label, and set send to the exact user message that should be sent back when the choice is clicked. Do not act on the ambiguous parameter until the user answers; omit choices when you can act directly. "choices" is a TOP-LEVEL field of the JSON object, a sibling of "message" and "actions" — never nest it inside an action object. Always close every bracket and brace.
 When writing a prompt into a workflow, target the widget that actually feeds generation: the promoted "prompt" (or "custom_prompt"/"prompt_text") widget on the generation/subgraph node. NEVER write prompts into display/viewer nodes such as easy showAnything, ShowText, or MarkdownNote — they only preview text and change nothing."""
 
@@ -270,6 +273,15 @@ def _chat_guides_for(graph):
         text = entry.get("text")
         if isinstance(text, str) and any(str(t).lower() in hay for t in triggers):
             parts.append(f"### {name}\n{text}")
+    for node in graph.get("nodes", []):
+        widget_names = {widget.get("name") for widget in node.get("widgets", []) if isinstance(widget, dict)}
+        prompt_widget = next((name for name in ("prompt", "custom_prompt", "prompt_text") if name in widget_names), None)
+        if prompt_widget and "passthrough" in widget_names:
+            parts.append(
+                f'### Exact passthrough target\nNode {node.get("id")} exposes both "{prompt_widget}" and "passthrough". '
+                f'For generation, set node {node.get("id")} widget "{prompt_widget}" to the complete final English prompt, '
+                f'set node {node.get("id")} widget "passthrough" to true, then queue. Do not omit either widget action.'
+            )
     if not parts:
         return ""
     return (
