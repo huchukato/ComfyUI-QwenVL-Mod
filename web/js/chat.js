@@ -27,7 +27,7 @@ const TRANSLATIONS = {
         assetsTitle: "Select a ComfyUI output", assetsLoading: "Loading output images…", assetsEmpty: "No output images found.",
         assetsError: "Unable to load ComfyUI Assets: {error}", close: "Close", selectTarget: "Select the Load Image (from Outputs) node",
         assetChatOnly: "Asset selected for Qwen. Add a Load Image (from Outputs) node to sync it with the workflow.",
-        assetSynced: "Asset selected for Qwen and loaded into node {node}.",
+        assetSynced: "Asset selected for Qwen and loaded into node {node}.", settings: "Settings", showSettings: "Show settings", hideSettings: "Hide settings",
     },
     it: {
         empty: "Chiedimi di analizzare o modificare i parametri del workflow aperto.", user: "Tu", thinking: "Pensiero",
@@ -52,11 +52,12 @@ const TRANSLATIONS = {
         assetsTitle: "Seleziona un output ComfyUI", assetsLoading: "Caricamento immagini di output…", assetsEmpty: "Nessuna immagine di output trovata.",
         assetsError: "Impossibile caricare le Risorse ComfyUI: {error}", close: "Chiudi", selectTarget: "Seleziona il nodo Carica Immagine da Output",
         assetChatOnly: "Risorsa selezionata per Qwen. Aggiungi un nodo Carica Immagine da Output per sincronizzarla con il workflow.",
-        assetSynced: "Risorsa selezionata per Qwen e caricata nel nodo {node}.",
+        assetSynced: "Risorsa selezionata per Qwen e caricata nel nodo {node}.", settings: "Impostazioni", showSettings: "Mostra impostazioni", hideSettings: "Nascondi impostazioni",
     },
 };
 const DEFAULT_STATE = {
     language: "en",
+    settingsOpen: false,
     backend: "gguf",
     model: "",
     maxTokens: 1024,
@@ -472,6 +473,7 @@ function setBusy(busy) {
     elements.thinking.disabled = busy;
     elements.attach.disabled = busy;
     elements.assetsButton.disabled = busy;
+    elements.settingsToggle.disabled = busy;
     for (const button of elements.languageButtons || []) button.disabled = busy;
     if (elements.removeAttachment) elements.removeAttachment.disabled = busy;
     elements.status?.classList.toggle("busy", busy);
@@ -589,10 +591,14 @@ function buildSidebar(container) {
     const style = createElement("style");
     style.textContent = `
         .qwen-chat { --qwen-accent:#6d7cff; height:100%; display:flex; flex-direction:column; gap:10px; padding:12px; box-sizing:border-box; color:var(--fg-color); background:linear-gradient(180deg,rgba(109,124,255,.04),transparent 180px); }
-        .qwen-chat-language { align-self:flex-end; display:flex; padding:2px; border:1px solid var(--border-color,#444); border-radius:8px; background:rgba(127,127,127,.06); }
+        .qwen-chat-topbar { display:flex; align-items:center; justify-content:flex-end; gap:7px; }
+        .qwen-chat-language { display:flex; padding:2px; border:1px solid var(--border-color,#444); border-radius:8px; background:rgba(127,127,127,.06); }
         .qwen-chat-language button { min-width:34px; padding:4px 7px; border:0; border-radius:6px; background:transparent; font-size:10px; cursor:pointer; opacity:.55; }
         .qwen-chat-language button.active { color:#fff; background:var(--qwen-accent); opacity:1; }
-        .qwen-chat-controls { display:grid; grid-template-columns:auto minmax(0,1fr); gap:7px 10px; align-items:center; padding:10px; border:1px solid var(--border-color,#444); border-radius:12px; background:rgba(127,127,127,.06); }
+        .qwen-chat-settings-toggle { width:32px; height:32px; display:grid; place-items:center; padding:0!important; cursor:pointer; }
+        .qwen-chat-settings-toggle.active { color:#fff; border-color:var(--qwen-accent); background:rgba(109,124,255,.2); }
+        .qwen-chat-controls { display:none; grid-template-columns:auto minmax(0,1fr); gap:7px 10px; align-items:center; padding:10px; border:1px solid var(--border-color,#444); border-radius:12px; background:rgba(127,127,127,.06); }
+        .qwen-chat-controls.open { display:grid; }
         .qwen-chat-controls label { font-size:11px; font-weight:600; letter-spacing:.02em; opacity:.72; white-space:nowrap; }
         .qwen-chat-controls input[type="checkbox"] { margin:0; width:auto; justify-self:start; accent-color:var(--qwen-accent); }
         .qwen-chat select,.qwen-chat textarea,.qwen-chat input,.qwen-chat button { box-sizing:border-box; background:var(--comfy-input-bg,#202124); color:inherit; border:1px solid var(--border-color,#4b4d55); border-radius:9px; padding:8px 10px; outline:none; transition:border-color .15s,background .15s,opacity .15s,transform .15s; }
@@ -656,7 +662,15 @@ function buildSidebar(container) {
         elements.languageButtons.push(button);
         language.append(button);
     }
-    const controls = createElement("div", "qwen-chat-controls");
+    const topbar = createElement("div", "qwen-chat-topbar");
+    elements.settingsToggle = createElement("button", `qwen-chat-settings-toggle${state.settingsOpen ? " active" : ""}`);
+    elements.settingsToggle.type = "button";
+    elements.settingsToggle.title = t(state.settingsOpen ? "hideSettings" : "showSettings");
+    elements.settingsToggle.setAttribute("aria-label", t("settings"));
+    elements.settingsToggle.setAttribute("aria-expanded", String(state.settingsOpen));
+    elements.settingsToggle.append(createElement("i", "pi pi-cog"));
+    topbar.append(language, elements.settingsToggle);
+    const controls = createElement("div", `qwen-chat-controls${state.settingsOpen ? " open" : ""}`);
     elements.backend = createElement("select");
     for (const [value, label] of [["gguf", "GGUF"], ["hf", "HF / Transformers"]]) {
         const option = createElement("option", "", label);
@@ -719,9 +733,17 @@ function buildSidebar(container) {
     assetHeader.append(createElement("span", "", t("assetsTitle")), assetClose);
     assetPanel.append(assetHeader, elements.assetGrid);
     elements.assetModal.append(assetPanel);
-    root.append(language, controls, elements.messages, elements.input, elements.attachment, composerTools, actions, elements.status, elements.assetModal);
+    root.append(topbar, controls, elements.messages, elements.input, elements.attachment, composerTools, actions, elements.status, elements.assetModal);
     container.append(root);
     renderAttachment();
+    elements.settingsToggle.addEventListener("click", () => {
+        state.settingsOpen = !state.settingsOpen;
+        controls.classList.toggle("open", state.settingsOpen);
+        elements.settingsToggle.classList.toggle("active", state.settingsOpen);
+        elements.settingsToggle.title = t(state.settingsOpen ? "hideSettings" : "showSettings");
+        elements.settingsToggle.setAttribute("aria-expanded", String(state.settingsOpen));
+        saveState();
+    });
     elements.backend.addEventListener("change", () => {
         state.backend = elements.backend.value;
         state.model = "";
