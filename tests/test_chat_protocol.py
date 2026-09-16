@@ -62,7 +62,7 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertEqual(len(result["actions"]), 1)
 
     def test_plain_text_becomes_message_without_actions(self):
-        self.assertEqual(parse_model_response("I cannot do that"), {"message": "I cannot do that", "actions": [], "thinking": ""})
+        self.assertEqual(parse_model_response("I cannot do that"), {"message": "I cannot do that", "actions": [], "choices": [], "thinking": "", "parsed": False})
 
     def test_prompt_contains_history_and_graph(self):
         prompt = build_prompt([{"role": "user", "content": "Set steps"}], {"nodes": [{"id": 1}]})
@@ -97,7 +97,7 @@ class ChatProtocolTests(unittest.TestCase):
 
         previous = sys.modules.get("AILab_QwenVL")
         sys.modules["AILab_QwenVL"] = types.SimpleNamespace(
-            HF_VL_MODELS={"test-model": {}},
+            HF_ALL_MODELS={"test-model": {}},
             Quantization=FakeQuantization,
             QwenVLBase=FakeBase,
         )

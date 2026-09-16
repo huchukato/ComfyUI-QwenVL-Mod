@@ -19,7 +19,7 @@ ALLOWED_ACTIONS = {"set_widget_value", "set_node_mode", "queue_workflow"}
 
 BASE_SYSTEM_PROMPT = """You are Qwen Workflow Assistant inside ComfyUI. Answer the user and, only when requested, control the currently open workflow using the supplied snapshot.
 If images or videos are loaded in the workflow inputs, their pixel content is also provided to you; refer to them when the user mentions "the image", "this image", or similar.
-Return exactly one JSON object with this schema:
+Return exactly one JSON object — no preamble, no text before or after it — with this schema:
 {"message":"short answer to the user","actions":[{"type":"set_widget_value","node_id":1,"widget":"steps","value":25},{"type":"set_node_mode","node_id":2,"mode":"bypass"},{"type":"queue_workflow"}],"choices":[{"label":"option A","send":"the user message sent when option A is clicked"}]}
 Allowed action types are set_widget_value, set_node_mode, and queue_workflow. set_node_mode accepts only bypass or enable. Never invent node IDs or widget names. Do not emit code, filesystem, shell, network, node creation, connection, deletion, or arbitrary JavaScript actions. If the request cannot be completed with the available actions, explain why in message and return an empty actions array.
 When the user asks to generate N images or a batch of N, look for a "batch_size" or "batch" widget on the main generation node (the node with seed/steps/cfg/sampler_name — typically the sampler or the all-in-one generation node). Do NOT set batch_size on upscaler nodes (UpscalerTensorrt, LoadUpscalerTensorrtModel, UltimateSDUpscale, etc.) — that controls the upscaling batch, not the image count. If no batch_size exists on the generation node, explain that the workflow generates one image per run and ask if they want to queue it multiple times.
@@ -190,8 +190,9 @@ def parse_model_response(text):
                 "message": message if isinstance(message, str) else str(message),
                 "actions": validate_actions(data.get("actions", [])),
                 "choices": validate_choices(data.get("choices", [])),
+                "parsed": True,
             }
-    return {"thinking": thinking, "message": text or "The model returned an empty response.", "actions": [], "choices": []}
+    return {"thinking": thinking, "message": text or "The model returned an empty response.", "actions": [], "choices": [], "parsed": False}
 
 
 def _preset_guides(graph, messages):
@@ -301,13 +302,36 @@ class ChatRuntime:
         elif model_name not in available:
             raise ValueError(f"unknown model '{model_name}'")
         enable_thinking = bool(options.get("thinking", False))
+        options = dict(options)
+        if enable_thinking:
+            # Thinking consumes tokens before the JSON reply; a small budget
+            # truncates the response after the reasoning and no JSON is emitted.
+            options["max_tokens"] = max(int(options.get("max_tokens", 1024)), 4096)
         prompt = build_prompt(messages, graph, enable_thinking)
         with self._lock:
-            if backend == "hf":
-                text = self._chat_hf(model_name, prompt, options, enable_thinking, images)
-            else:
-                text = self._chat_gguf(model_name, prompt, options, enable_thinking, images)
-        return parse_model_response(text)
+            text = self._generate(backend, model_name, prompt, options, enable_thinking, images)
+        result = parse_model_response(text)
+        if result.pop("parsed"):
+            return result
+        # The model ignored the JSON protocol (e.g. a conversational preamble
+        # like "Generating the prompt…" and then stopped). Retry once, echoing
+        # the bad reply back with a strict reminder.
+        retry_messages = messages + [
+            {"role": "assistant", "content": (text or "")[:2000]},
+            {"role": "user", "content": "Your reply was not a JSON object. Return ONLY the JSON object described in the system instructions — no preamble, no extra text."},
+        ]
+        retry_prompt = build_prompt(retry_messages, graph, enable_thinking)
+        with self._lock:
+            retry_text = self._generate(backend, model_name, retry_prompt, options, enable_thinking, images)
+        retry_result = parse_model_response(retry_text)
+        if retry_result.pop("parsed"):
+            return retry_result
+        return result
+
+    def _generate(self, backend, model_name, prompt, options, enable_thinking, images):
+        if backend == "hf":
+            return self._chat_hf(model_name, prompt, options, enable_thinking, images)
+        return self._chat_gguf(model_name, prompt, options, enable_thinking, images)
 
     def _chat_hf(self, model_name, prompt, options, enable_thinking=False, images=None):
         module = sys.modules["AILab_QwenVL"]
