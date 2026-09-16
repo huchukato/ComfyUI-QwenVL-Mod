@@ -15,6 +15,7 @@ import os
 import sys
 
 from aiohttp import web
+import folder_paths
 from server import PromptServer
 
 # Get the directory of the current script
@@ -88,12 +89,17 @@ nodes_dir = os.path.join(current_dir, "nodes")
 if os.path.exists(nodes_dir):
     load_modules_from_directory(nodes_dir)
 
-from chat_service import CHAT_RUNTIME
+from chat_service import CHAT_RUNTIME, list_output_images
 
 
 @PromptServer.instance.routes.get("/qwenvl/chat/models")
 async def _chat_models(request):
     return web.json_response(CHAT_RUNTIME.models())
+
+
+@PromptServer.instance.routes.get("/qwenvl/chat/assets")
+async def _chat_assets(request):
+    return web.json_response(await asyncio.to_thread(list_output_images, folder_paths.get_output_directory()))
 
 
 @PromptServer.instance.routes.post("/qwenvl/chat")

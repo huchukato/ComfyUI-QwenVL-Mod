@@ -135,6 +135,23 @@ def validate_choices(choices):
     return result
 
 
+def list_output_images(output_dir, limit=500):
+    root = Path(output_dir).resolve()
+    if not root.is_dir():
+        return []
+    images = []
+    for path in root.rglob("*"):
+        try:
+            resolved = path.resolve()
+            if not resolved.is_relative_to(root) or not resolved.is_file() or resolved.suffix.lower() not in {".png", ".jpg", ".jpeg", ".webp"}:
+                continue
+            images.append((resolved.stat().st_mtime, resolved.relative_to(root).as_posix()))
+        except (OSError, ValueError):
+            continue
+    images.sort(key=lambda item: item[0], reverse=True)
+    return [f"{relative} [output]" for _, relative in images[:max(1, min(int(limit), 2000))]]
+
+
 def validate_images(images):
     if not isinstance(images, list):
         return []
