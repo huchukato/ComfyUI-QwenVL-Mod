@@ -1180,10 +1180,17 @@ class QwenVLBase:
         text = self.tokenizer.decode(outputs[0, input_len:], skip_special_tokens=True)
         return text.strip()
 
-    def run(self, model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt=False, camera_tag="None", video=None):
+    def run(self, model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt=False, camera_tag="None", video=None, passthrough=False):
         torch.manual_seed(seed)
         
         global LAST_SAVED_PROMPT
+        
+        # Passthrough mode: skip model loading entirely, return custom_prompt as-is.
+        # Used when the chat (or an external tool) already generated the final
+        # prompt in the target format — avoids redundant Qwen inference.
+        if passthrough:
+            print(f"[QwenVL] Passthrough mode ON — skipping model load, returning custom_prompt directly ({len(custom_prompt or '')} chars)")
+            return (custom_prompt or "",)
         
         # Simple keep last prompt logic
         if keep_last_prompt:
@@ -1341,6 +1348,7 @@ class AILab_QwenVL(QwenVLBase):
                 "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": TOOLTIPS["keep_model_loaded"]}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1, "tooltip": TOOLTIPS["seed"] + "\n\n💡 Cache Info: Prompts are cached automatically. Use the same inputs (model, preset, custom prompt, image/image2/video) to reuse cached prompts and avoid regeneration.\n\n🔒 Fixed Seed Mode: Set seed = 1 to ignore image/image2/video changes and only use text-based caching. Perfect for keeping the same prompt regardless of media input variations."}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
+                "passthrough": ("BOOLEAN", {"default": False, "tooltip": "Skip Qwen model loading and return custom_prompt directly. Use when the chat already generated the final prompt — saves VRAM and inference time."}),
             },
             "optional": {
                 "image": ("IMAGE", {"tooltip": "First reference image (single image). For R2VA this is Picture 1."}),
@@ -1355,8 +1363,8 @@ class AILab_QwenVL(QwenVLBase):
     FUNCTION = "process"
     CATEGORY = "QwenVL-Mod"
 
-    def process(self, model_name, quantization, preset_prompt, camera_tag, custom_prompt, attention_mode, max_tokens, keep_model_loaded, seed, keep_last_prompt=False, image=None, image2=None, video=None, frame_count=16):
-        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, 0.6, 0.9, 1, 1.2, seed, keep_model_loaded, attention_mode, False, "auto", keep_last_prompt, camera_tag, video=video)
+    def process(self, model_name, quantization, preset_prompt, camera_tag, custom_prompt, attention_mode, max_tokens, keep_model_loaded, seed, keep_last_prompt=False, passthrough=False, image=None, image2=None, video=None, frame_count=16):
+        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, 0.6, 0.9, 1, 1.2, seed, keep_model_loaded, attention_mode, False, "auto", keep_last_prompt, camera_tag, video=video, passthrough=passthrough)
 
 class AILab_QwenVL_Advanced(QwenVLBase):
     @classmethod
@@ -1389,6 +1397,7 @@ class AILab_QwenVL_Advanced(QwenVLBase):
                 "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": TOOLTIPS["keep_model_loaded"]}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1, "tooltip": TOOLTIPS["seed"] + "\n\n💡 Cache Info: Prompts are cached automatically. Use same inputs (model, preset, custom prompt, image/image2/video) to reuse cached prompts and avoid regeneration.\n\n🔒 Fixed Seed Mode: Set seed = 1 to ignore image/image2/video changes and only use text-based caching. Perfect for keeping the same prompt regardless of media input variations."}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep last generated prompt instead of creating a new one"}),
+                "passthrough": ("BOOLEAN", {"default": False, "tooltip": "Skip Qwen model loading and return custom_prompt directly. Use when the chat already generated the final prompt — saves VRAM and inference time."}),
             },
             "optional": {
                 "image": ("IMAGE", {"tooltip": "First reference image (single image). For R2VA this is Picture 1."}),
@@ -1403,8 +1412,8 @@ class AILab_QwenVL_Advanced(QwenVLBase):
     FUNCTION = "process"
     CATEGORY = "QwenVL-Mod"
 
-    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, camera_tag, custom_prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, keep_model_loaded, seed, keep_last_prompt, image=None, image2=None, video=None, frame_count=16):
-        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt, camera_tag, video=video)
+    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, camera_tag, custom_prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, keep_model_loaded, seed, keep_last_prompt, passthrough=False, image=None, image2=None, video=None, frame_count=16):
+        return self.run(model_name, quantization, preset_prompt, custom_prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt, camera_tag, video=video, passthrough=passthrough)
 
 NODE_CLASS_MAPPINGS = {
     "AILab_QwenVL": AILab_QwenVL,
