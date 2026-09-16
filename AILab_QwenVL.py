@@ -888,20 +888,30 @@ class QwenVLBase:
             quant = Quantization.FP16
 
         # Patch: some Qwen3-VL configs have rope_scaling=None which crashes
-        # transformers, and heretic qwen3_5 configs ship a rope_scaling dict
-        # without "rope_type". Also handle qwen3_5 model_type not yet in
-        # CONFIG_MAPPING. Applies to both BnB and FP16/FP32 paths.
-        def _fix_rope_scaling(cfg_dict):
-            rs = cfg_dict.get("rope_scaling")
-            if rs is None:
-                cfg_dict["rope_scaling"] = {"rope_type": "default", "mrope_section": [24, 20, 20], "mrope_interleaved": True}
-            elif isinstance(rs, dict) and not rs.get("rope_type"):
-                rs["rope_type"] = "default"
+        # transformers. Applies to both BnB and FP16/FP32 paths.
+        # NOTE: qwen3_5 is a NEW hybrid architecture (linear+full attention)
+        # supported natively only by transformers>=5.2.0. It must NOT be
+        # aliased to qwen3_vl: the architectures are different and the load
+        # fails or produces a broken model.
+        import json
+        from pathlib import Path
+
+        cfg_path = Path(model_path) / "config.json"
+        try:
+            # Repair configs corrupted by an earlier qwen3_5->qwen3_vl
+            # aliasing attempt written to disk.
+            if cfg_path.exists():
+                cfg_dict = json.loads(cfg_path.read_text())
+                archs = " ".join(str(a) for a in cfg_dict.get("architectures", []))
+                if cfg_dict.get("model_type") == "qwen3_vl" and "Qwen3_5" in archs:
+                    cfg_dict["model_type"] = "qwen3_5_moe" if "Moe" in archs else "qwen3_5"
+                    cfg_path.write_text(json.dumps(cfg_dict, indent=2))
+                    print(f"[QwenVL] Restored config.json model_type -> {cfg_dict['model_type']}")
+        except Exception as e:
+            print(f"[QwenVL] config.json repair check skipped: {e}")
 
         config_patch = {}
         try:
-            import json
-            from pathlib import Path
             from transformers import AutoConfig
             cfg = AutoConfig.from_pretrained(model_path, trust_remote_code=True)
             if hasattr(cfg, "text_config") and getattr(cfg.text_config, "rope_scaling", "missing") is None:
@@ -913,33 +923,19 @@ class QwenVLBase:
                 config_patch["config"] = cfg
                 print("[QwenVL] Patched rope_scaling=None in config")
         except (ValueError, KeyError) as e:
-            # Fallback: if model_type (e.g. qwen3_5) is not recognized, try
-            # patching the config.json to use qwen3_vl which is architecturally
-            # compatible for VL models in the Qwen3 family.
-            print(f"[QwenVL] AutoConfig failed ({e}), trying config.json patch...")
+            model_type = ""
             try:
-                cfg_path = Path(model_path) / "config.json"
                 if cfg_path.exists():
-                    cfg_dict = json.loads(cfg_path.read_text())
-                    original_type = cfg_dict.get("model_type", "")
-                    if original_type in ("qwen3_5", "qwen3.5"):
-                        cfg_dict["model_type"] = "qwen3_vl"
-                        # Also patch text_config if present
-                        if "text_config" in cfg_dict and isinstance(cfg_dict["text_config"], dict):
-                            tc = cfg_dict["text_config"]
-                            if tc.get("model_type") in ("qwen3_5", "qwen3.5"):
-                                tc["model_type"] = "qwen3"
-                            _fix_rope_scaling(tc)
-                        _fix_rope_scaling(cfg_dict)
-                        # Write patched config
-                        cfg_path.write_text(json.dumps(cfg_dict, indent=2))
-                        print(f"[QwenVL] Patched config.json: {original_type} -> qwen3_vl")
-                        # Reload config
-                        cfg = AutoConfig.from_pretrained(model_path, trust_remote_code=True)
-                        config_patch["config"] = cfg
-                        config_patch["trust_remote_code"] = True
-            except Exception as e2:
-                print(f"[QwenVL] config.json patch also failed: {e2}")
+                    model_type = json.loads(cfg_path.read_text()).get("model_type", "")
+            except Exception:
+                pass
+            if model_type.startswith(("qwen3_5", "qwen3.5")):
+                raise ValueError(
+                    f"Model '{model_name}' uses the '{model_type}' architecture, which "
+                    "requires transformers>=5.2.0 (this environment has an older "
+                    "release). Upgrade transformers or use the GGUF variant of this model."
+                ) from e
+            print(f"[QwenVL] rope_scaling pre-check skipped: {e}")
         except Exception as e:
             print(f"[QwenVL] rope_scaling pre-check skipped: {e}")
 
