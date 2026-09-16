@@ -1,14 +1,28 @@
 # ComfyUI-QwenVL Update Log
 
-## Unreleased (2026/09/16)
+## Version 2.7.0 (2026/09/16)
 
-**Qwen Workflow Chat**
+**Qwen Workflow Chat, Image Attachments, Guided Workflow Actions, and Qwen 3.8 Models**
+
+### Qwen Workflow Chat
 
 - Added a native ComfyUI sidebar chat powered by selectable local HF/Transformers or GGUF Qwen models.
 - Added structured workflow inspection, validated widget updates, node enable/bypass actions, and autonomous queue execution when requested.
-- Added optional chat-model unload before queueing memory-intensive workflows.
+- Added clickable response choices, retry recovery for malformed model JSON, and clean message extraction when a response cannot be fully parsed.
+- Added preset-aware prompt routing: enhancer subgraphs receive raw user intent, while accessible top-level Qwen nodes can receive final prompts through passthrough.
+- Added workflow image analysis and a direct image attachment control with preview, removal, resizing, and priority over workflow images.
+- Added a repeat-last-message button, busy spinner, refined message layout, and persistent English/Italian interface switch.
+- Set `Qwen3.8-9B-heretic-uncensored.Q8_0.gguf` as the default GGUF chat model, with automatic fallback when unavailable.
+- Chat inference defaults to 1024 max tokens and temperature 0.2; thinking mode automatically raises the token budget to at least 4096.
+- Chat models are now always unloaded from memory before queueing memory-intensive workflows.
 - Added browser-local conversation/preferences persistence, bounded context, backend inference locking, and explicit unload API.
 - Restricted automation to an allowlisted action protocol; arbitrary code, filesystem, network, graph creation, connection, and deletion operations are not supported.
+
+### Models and Diagnostics
+
+- Added Qwen 3.5 and Qwen 3.8 heretic, uncensored, and thinking model options for HF and GGUF backends.
+- Replaced an unavailable private Qwen 3.8 repository with the public `petruhonk/Qwen3.8-9B-Distill-uncensored-heretic` checkpoint.
+- Reduced repeated cache lookup debug output so generation, image processing, model loading, and failure events remain visible in ComfyUI logs.
 
 ## Version 2.6 (2026/09/03)
 
