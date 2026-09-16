@@ -1,5 +1,10 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.7.7 (2026/09/16)
+
+- Moved backend, model, token, temperature, and thinking controls into a compact Settings panel opened with a gear button.
+- The Settings panel is collapsed by default, remembers its state, and is disabled during inference.
+
 ## Version 2.7.6 (2026/09/16)
 
 - Added a secure recursive output-image endpoint for Qwen Chat Assets, including images saved in nested folders such as `output/PMP/...`.
