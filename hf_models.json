@@ -90,8 +90,8 @@
         "4bit": 3.0
       }
     },
-    "Qwen3.8-9B-heretic-uncensored": {
-      "repo_id": "rohit267/Qwen3.8-9B-heretic-uncensored",
+    "Qwen3.8-9B-Distill-heretic": {
+      "repo_id": "petruhonk/Qwen3.8-9B-Distill-uncensored-heretic",
       "default": false,
       "quantized": false,
       "vram_requirement": {
