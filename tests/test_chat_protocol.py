@@ -71,6 +71,7 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertIn("set_widget_value", prompt)
         self.assertIn("images", prompt)
         self.assertIn("MUST be in English", prompt)
+        self.assertIn("MUST use the same language as the latest user message", prompt)
         self.assertIn("This case has priority even when the same node also exposes \"preset_prompt\"", prompt)
         self.assertIn("If queue_workflow is present, state that execution was started", prompt)
 
