@@ -95,17 +95,33 @@ class ChatProtocolTests(unittest.TestCase):
         ]}]}
         prompt = build_prompt([{"role": "user", "content": "Generate the video"}], graph, has_images=True)
         self.assertIn("Image pixels are provided", prompt)
-        self.assertIn('set node 105 widget "prompt" to the latest substantive request, skipping execute-only confirmations', prompt)
+        self.assertIn('set node 105 widget "prompt" to a concise English action directive that translates the latest substantive request', prompt)
         self.assertIn('set node 105 widget "passthrough" to false', prompt)
         self.assertIn("inner QwenVL must create the final image-aware preset prompt", prompt)
 
     def test_selects_previous_intent_after_execution_confirmation(self):
-        messages = [
-            {"role": "user", "content": "Create a five-second video where she opens the dress"},
-            {"role": "assistant", "content": "Ready."},
-            {"role": "user", "content": "Generate the video"},
-        ]
-        self.assertEqual(select_workflow_intent(messages), messages[0]["content"])
+        descriptive = "Create a five-second video where she opens the dress"
+        for confirmation in (
+            "Generate the video", "Esegui il video", "Run it", "Genera", "Ok",
+            "Sì", "Avvia", "Esegui il video con il prompt precedente", "Go ahead",
+        ):
+            messages = [
+                {"role": "user", "content": descriptive},
+                {"role": "assistant", "content": "Ready."},
+                {"role": "user", "content": confirmation},
+            ]
+            with self.subTest(confirmation=confirmation):
+                self.assertEqual(select_workflow_intent(messages), descriptive)
+
+    def test_execution_only_detection_keeps_descriptive_requests(self):
+        for content in (
+            "genera un video in cui la ragazza balla",
+            "crea un video di 5 secondi dall'immagine allegata",
+            "la ragazza sposta la mano e si afferra il seno",
+            "modifica il prompt per dire che lei sorride",
+        ):
+            with self.subTest(content=content):
+                self.assertEqual(select_workflow_intent([{"role": "user", "content": content}]), content)
 
     def test_enforces_image_enhancer_prompt_and_disables_passthrough(self):
         graph = {"nodes": [{"id": 105, "title": "Image to Video (MiniMax H3)", "widgets": [
@@ -118,21 +134,49 @@ class ChatProtocolTests(unittest.TestCase):
             {"role": "assistant", "content": "Vuoi che lo esegua?"},
             {"role": "user", "content": "Esegui il video"},
         ]
-        for prompt_action in ([], [{"type": "set_widget_value", "node_id": 105, "widget": "prompt", "value": "fully formatted hallucinated prompt"}]):
-            result = {
-                "message": "Done",
-                "actions": [
-                    {"type": "set_widget_value", "node_id": 105, "widget": "preset_prompt", "value": "🎬 MiniMax H3 NSFW (5s)"},
-                    *prompt_action,
-                    {"type": "set_widget_value", "node_id": 105, "widget": "passthrough", "value": True},
-                    {"type": "queue_workflow"},
-                ],
-            }
-            enforced = enforce_image_enhancer_routing(result, graph, messages, True)
-            prompt_actions = [action for action in enforced["actions"] if action.get("widget") == "prompt"]
-            self.assertEqual(len(prompt_actions), 1)
-            self.assertEqual(prompt_actions[0]["value"], messages[0]["content"])
-            self.assertFalse(next(action for action in enforced["actions"] if action.get("widget") == "passthrough")["value"])
+        cases = [
+            ([], messages[0]["content"]),
+            ([{"type": "set_widget_value", "node_id": 105, "widget": "prompt", "value": "integrated_multimodal_description: [Shot 1] hallucinated scene"}], messages[0]["content"]),
+            ([{"type": "set_widget_value", "node_id": 105, "widget": "prompt", "value": "Esegui il video"}], messages[0]["content"]),
+        ]
+        for prompt_action, expected in cases:
+            with self.subTest(prompt_action=prompt_action):
+                result = {
+                    "message": "Done",
+                    "actions": [
+                        {"type": "set_widget_value", "node_id": 105, "widget": "preset_prompt", "value": "🎬 MiniMax H3 NSFW (5s)"},
+                        *prompt_action,
+                        {"type": "set_widget_value", "node_id": 105, "widget": "passthrough", "value": True},
+                        {"type": "queue_workflow"},
+                    ],
+                }
+                enforced = enforce_image_enhancer_routing(result, graph, messages, True)
+                prompt_actions = [action for action in enforced["actions"] if action.get("widget") == "prompt"]
+                self.assertEqual(len(prompt_actions), 1)
+                self.assertEqual(prompt_actions[0]["value"], expected)
+                self.assertFalse(next(action for action in enforced["actions"] if action.get("widget") == "passthrough")["value"])
+
+    def test_keeps_model_directive_for_image_enhancer(self):
+        graph = {"nodes": [{"id": 105, "title": "Image to Video (MiniMax H3)", "widgets": [
+            {"name": "prompt", "value": "old prompt"},
+            {"name": "preset_prompt", "value": "🎬 MiniMax H3 NSFW (5s)"},
+            {"name": "passthrough", "value": True},
+        ]}]}
+        messages = [{"role": "user", "content": "la ragazza sposta la mano e si afferra il seno"}]
+        directive = "The woman moves her hand and grabs her breast. Preserve the reference image exactly and change only this action."
+        result = {
+            "message": "Done",
+            "actions": [
+                {"type": "set_widget_value", "node_id": 105, "widget": "prompt", "value": directive},
+                {"type": "set_widget_value", "node_id": 105, "widget": "passthrough", "value": True},
+                {"type": "queue_workflow"},
+            ],
+        }
+        enforced = enforce_image_enhancer_routing(result, graph, messages, True)
+        prompt_action = next(action for action in enforced["actions"] if action.get("widget") == "prompt")
+        self.assertEqual(prompt_action["value"], directive)
+        self.assertIn(directive, enforced["message"])
+        self.assertFalse(next(action for action in enforced["actions"] if action.get("widget") == "passthrough")["value"])
 
     def test_enforces_minimax_i2va_binding_for_image_passthrough(self):
         result = {

@@ -1,5 +1,11 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.7.10 (2026/09/16)
+
+- Image-enhancer routing now keeps a valid English action directive written by the chat model instead of always overwriting it with the raw user message, so Qwen Chat translates and refines the request instead of copying it verbatim.
+- Execution-only confirmations are detected with a bilingual command vocabulary (verbs, objects, fillers) instead of a fixed phrase list, covering variants such as "Run it", "Genera", "Ok", and "Esegui il video con il prompt precedente".
+- Bare confirmations and pre-formatted preset prompts emitted by the model are still replaced with the last descriptive user request, and `passthrough` remains forced to false for image-enhancer workflows.
+
 ## Version 2.7.9 (2026/09/16)
 
 - Added deterministic I2VA action normalization before queueing: the latest user request is always written to the active inner enhancer's prompt widget and `passthrough` is always forced to false.
