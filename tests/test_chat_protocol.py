@@ -95,9 +95,12 @@ class ChatProtocolTests(unittest.TestCase):
         ]}]}
         prompt = build_prompt([{"role": "user", "content": "Generate the video"}], graph, has_images=True)
         self.assertIn("Image pixels are provided", prompt)
-        self.assertIn('set node 105 widget "prompt" to a concise English action directive that translates the latest substantive request', prompt)
+        self.assertIn("Inspect the provided image pixels to understand how the requested action applies", prompt)
+        self.assertIn('currently selects preset "MiniMax H3 NSFW (5s)"', prompt)
+        self.assertIn("follow that preset's supplied PROMPT WRITING GUIDE", prompt)
+        self.assertIn('You MUST set node 105 widget "prompt" to a concise English action directive', prompt)
         self.assertIn('set node 105 widget "passthrough" to false', prompt)
-        self.assertIn("inner QwenVL must create the final image-aware preset prompt", prompt)
+        self.assertIn("inner QwenVL must analyze the image and create it", prompt)
 
     def test_selects_previous_intent_after_execution_confirmation(self):
         descriptive = "Create a five-second video where she opens the dress"

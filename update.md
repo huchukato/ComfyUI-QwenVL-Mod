@@ -1,5 +1,11 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.7.12 (2026/09/16)
+
+- Strengthened image-enhancer chat instructions: Qwen Chat must inspect the provided image pixels to understand how the requested action applies and read the target node's current `preset_prompt` value and supplied prompt-writing guide.
+- The chat must emit an English `set_widget_value` enhancer directive for the target prompt instead of copying the user's message, while the inner QwenVL remains responsible for full image analysis and final preset formatting.
+- Pixel inspection by the chat is explicitly limited to interpreting the requested action, preventing it from inventing or duplicating visual scene details.
+
 ## Version 2.7.11 (2026/09/16)
 
 - Added the `image2` input to `AILab_QwenVL_GGUF` and `AILab_QwenVL_GGUF_Advanced`, matching the HF nodes: `image` is Picture 1 and `image2` is Picture 2 for R2VA workflows.
