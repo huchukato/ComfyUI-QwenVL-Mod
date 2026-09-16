@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
 
-from chat_service import ChatRuntime, build_prompt, parse_model_response, validate_actions, validate_graph, validate_messages
+from chat_service import ChatRuntime, THINK_CLOSE, THINK_OPEN, build_prompt, parse_model_response, validate_actions, validate_graph, validate_messages
 
 
 class ChatProtocolTests(unittest.TestCase):
@@ -48,10 +48,21 @@ class ChatProtocolTests(unittest.TestCase):
         for text in (json.dumps(payload), f"```json\n{json.dumps(payload)}\n```"):
             with self.subTest(text=text):
                 result = parse_model_response(text)
-                self.assertEqual(result, payload)
+                self.assertEqual(result["message"], payload["message"])
+                self.assertEqual(result["actions"], payload["actions"])
+                self.assertEqual(result["thinking"], "")
+
+    def test_extracts_thinking_from_response(self):
+        text = THINK_OPEN + "I should queue the workflow." + THINK_CLOSE + "\n" + json.dumps(
+            {"message": "Done", "actions": [{"type": "queue_workflow"}]}
+        )
+        result = parse_model_response(text)
+        self.assertEqual(result["thinking"], "I should queue the workflow.")
+        self.assertEqual(result["message"], "Done")
+        self.assertEqual(len(result["actions"]), 1)
 
     def test_plain_text_becomes_message_without_actions(self):
-        self.assertEqual(parse_model_response("I cannot do that"), {"message": "I cannot do that", "actions": []})
+        self.assertEqual(parse_model_response("I cannot do that"), {"message": "I cannot do that", "actions": [], "thinking": ""})
 
     def test_prompt_contains_history_and_graph(self):
         prompt = build_prompt([{"role": "user", "content": "Set steps"}], {"nodes": [{"id": 1}]})

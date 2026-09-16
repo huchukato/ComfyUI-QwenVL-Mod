@@ -10,10 +10,19 @@ MAX_MESSAGE_CHARS = 12000
 MAX_GRAPH_NODES = 200
 ALLOWED_ACTIONS = {"set_widget_value", "set_node_mode", "queue_workflow"}
 
-SYSTEM_PROMPT = """You are Qwen Workflow Assistant inside ComfyUI. Answer the user and, only when requested, control the currently open workflow using the supplied snapshot.
+BASE_SYSTEM_PROMPT = """You are Qwen Workflow Assistant inside ComfyUI. Answer the user and, only when requested, control the currently open workflow using the supplied snapshot.
 Return exactly one JSON object with this schema:
 {"message":"short answer to the user","actions":[{"type":"set_widget_value","node_id":1,"widget":"steps","value":25},{"type":"set_node_mode","node_id":2,"mode":"bypass"},{"type":"queue_workflow"}]}
-Allowed action types are set_widget_value, set_node_mode, and queue_workflow. set_node_mode accepts only bypass or enable. Never invent node IDs or widget names. Do not emit code, filesystem, shell, network, node creation, connection, deletion, or arbitrary JavaScript actions. If the request cannot be completed with the available actions, explain why in message and return an empty actions array. Return JSON only."""
+Allowed action types are set_widget_value, set_node_mode, and queue_workflow. set_node_mode accepts only bypass or enable. Never invent node IDs or widget names. Do not emit code, filesystem, shell, network, node creation, connection, deletion, or arbitrary JavaScript actions. If the request cannot be completed with the available actions, explain why in message and return an empty actions array."""
+
+_LT = chr(60)
+_GT = chr(62)
+THINK_OPEN = _LT + "think" + _GT
+THINK_CLOSE = _LT + "/think" + _GT
+THINKING_INSTRUCTION = " Put your step-by-step reasoning inside " + THINK_OPEN + "..." + THINK_CLOSE + " tags, then return the JSON object after the closing " + THINK_CLOSE + " tag."
+NO_THINKING_INSTRUCTION = " Do not output reasoning tags; return only the JSON object."
+
+SYSTEM_PROMPT = BASE_SYSTEM_PROMPT + NO_THINKING_INSTRUCTION
 
 
 def validate_messages(messages):
@@ -91,8 +100,19 @@ def validate_actions(actions):
     return result
 
 
-def parse_model_response(text):
+def extract_thinking(text):
     text = (text or "").strip()
+    thinking = ""
+    pattern = re.escape(THINK_OPEN) + r"(.*?)" + re.escape(THINK_CLOSE)
+    match = re.search(pattern, text, re.DOTALL)
+    if match:
+        thinking = match.group(1).strip()
+        text = re.sub(pattern, "", text, count=1, flags=re.DOTALL).strip()
+    return thinking, text
+
+
+def parse_model_response(text):
+    thinking, text = extract_thinking(text)
     candidates = [text]
     fenced = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", text, re.DOTALL | re.IGNORECASE)
     if fenced:
@@ -109,16 +129,18 @@ def parse_model_response(text):
         if isinstance(data, dict):
             message = data.get("message", "")
             return {
+                "thinking": thinking,
                 "message": message if isinstance(message, str) else str(message),
                 "actions": validate_actions(data.get("actions", [])),
             }
-    return {"message": text or "The model returned an empty response.", "actions": []}
+    return {"thinking": thinking, "message": text or "The model returned an empty response.", "actions": []}
 
 
-def build_prompt(messages, graph):
+def build_prompt(messages, graph, enable_thinking=False):
     history = "\n".join(f"{item['role'].upper()}: {item['content']}" for item in messages)
     snapshot = json.dumps(graph, ensure_ascii=False, separators=(",", ":"))
-    return f"{SYSTEM_PROMPT}\n\nWORKFLOW SNAPSHOT:\n{snapshot}\n\nCONVERSATION:\n{history}\n\nJSON RESPONSE:"
+    instruction = BASE_SYSTEM_PROMPT + (THINKING_INSTRUCTION if enable_thinking else NO_THINKING_INSTRUCTION)
+    return f"{instruction}\n\nWORKFLOW SNAPSHOT:\n{snapshot}\n\nCONVERSATION:\n{history}\n\nJSON RESPONSE:"
 
 
 class ChatRuntime:
@@ -141,15 +163,16 @@ class ChatRuntime:
             raise ValueError("backend must be hf or gguf")
         if model_name not in available:
             raise ValueError("unknown model")
-        prompt = build_prompt(messages, graph)
+        enable_thinking = bool(options.get("thinking", False))
+        prompt = build_prompt(messages, graph, enable_thinking)
         with self._lock:
             if backend == "hf":
-                text = self._chat_hf(model_name, prompt, options)
+                text = self._chat_hf(model_name, prompt, options, enable_thinking)
             else:
-                text = self._chat_gguf(model_name, prompt, options)
+                text = self._chat_gguf(model_name, prompt, options, enable_thinking)
         return parse_model_response(text)
 
-    def _chat_hf(self, model_name, prompt, options):
+    def _chat_hf(self, model_name, prompt, options, enable_thinking=False):
         module = sys.modules["AILab_QwenVL"]
         instance = self._instances.get("hf")
         if instance is None:
@@ -171,9 +194,10 @@ class ChatRuntime:
             1,
             float(options.get("repetition_penalty", 1.05)),
             model_name=model_name,
+            enable_thinking=enable_thinking,
         )
 
-    def _chat_gguf(self, model_name, prompt, options):
+    def _chat_gguf(self, model_name, prompt, options, enable_thinking=False):
         module = sys.modules["AILab_QwenVL_GGUF"]
         instance = self._instances.get("gguf")
         if instance is None:
@@ -199,6 +223,7 @@ class ChatRuntime:
             float(options.get("repetition_penalty", 1.05)),
             int(options.get("seed", 1)),
             model_name,
+            enable_thinking=enable_thinking,
         )
 
     def unload(self, backend="all"):

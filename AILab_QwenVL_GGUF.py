@@ -743,6 +743,7 @@ class QwenVLGGUFBase:
         repetition_penalty: float,
         seed: int,
         model_name: str = "",
+        enable_thinking: bool = False,
     ) -> str:
         ensure_cuda_vram_headroom("QwenVL GGUF", min_free_gb=1.0, min_free_ratio=0.08)
         if self.llm is not None and hasattr(self.llm, "reset"):
@@ -770,8 +771,8 @@ class QwenVLGGUFBase:
         start = time.perf_counter()
         extra_kwargs = {}
         if getattr(self, "is_qwen35", False):
-            extra_kwargs["chat_template_kwargs"] = {"enable_thinking": False}
-            extra_kwargs["reasoning"] = False
+            extra_kwargs["chat_template_kwargs"] = {"enable_thinking": bool(enable_thinking)}
+            extra_kwargs["reasoning"] = bool(enable_thinking)
             extra_kwargs = _filter_kwargs_for_callable(self.llm.create_chat_completion, extra_kwargs)
         result = self.llm.create_chat_completion(
             messages=messages,

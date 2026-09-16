@@ -1036,6 +1036,7 @@ class QwenVLBase:
         repetition_penalty,
         model_name="",
         video=None,
+        enable_thinking=False,
     ):
         # Memory optimization: clear cache before generation
         ensure_cuda_vram_headroom("QwenVL", min_free_gb=1.0, min_free_ratio=0.08)
@@ -1081,13 +1082,13 @@ class QwenVLBase:
 
         num_images = sum(1 for item in conversation[0]["content"] if item.get("type") == "image")
         print(f"[QwenVL] Total images passed to model: {num_images}")
-        conversation[0]["content"].append({"type": "text", "text": ("/no_think\n" if getattr(self, "is_qwen35", False) else "") + prompt_text})
-        
+        conversation[0]["content"].append({"type": "text", "text": ("/no_think\n" if getattr(self, "is_qwen35", False) and not enable_thinking else "") + prompt_text})
+
         # --- Qwen3.5 Heretic Logic: Template ---
         is_qwen35 = getattr(self, "is_qwen35", False)
         chat_kwargs = {}
         if is_qwen35:
-            chat_kwargs["enable_thinking"] = False
+            chat_kwargs["enable_thinking"] = bool(enable_thinking)
 
         # Optimize chat template for memory efficiency
         chat = self.processor.apply_chat_template(
