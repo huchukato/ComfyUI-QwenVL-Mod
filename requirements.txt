@@ -2,7 +2,7 @@
 # Note: Qwen3-VL models require transformers >= 4.57.0
 #       Qwen3.5 (hybrid linear+full attention) requires transformers >= 5.2.0
 
-transformers>=4.57.0
+transformers>=5.2.0
 torch
 huggingface-hub
 hf_xet
