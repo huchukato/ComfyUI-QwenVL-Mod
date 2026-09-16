@@ -887,6 +887,62 @@ class QwenVLBase:
             quant_config = None
             quant = Quantization.FP16
 
+        # Patch: some Qwen3-VL configs have rope_scaling=None which crashes
+        # transformers, and heretic qwen3_5 configs ship a rope_scaling dict
+        # without "rope_type". Also handle qwen3_5 model_type not yet in
+        # CONFIG_MAPPING. Applies to both BnB and FP16/FP32 paths.
+        def _fix_rope_scaling(cfg_dict):
+            rs = cfg_dict.get("rope_scaling")
+            if rs is None:
+                cfg_dict["rope_scaling"] = {"rope_type": "default", "mrope_section": [24, 20, 20], "mrope_interleaved": True}
+            elif isinstance(rs, dict) and not rs.get("rope_type"):
+                rs["rope_type"] = "default"
+
+        config_patch = {}
+        try:
+            import json
+            from pathlib import Path
+            from transformers import AutoConfig
+            cfg = AutoConfig.from_pretrained(model_path, trust_remote_code=True)
+            if hasattr(cfg, "text_config") and getattr(cfg.text_config, "rope_scaling", "missing") is None:
+                cfg.text_config.rope_scaling = {"rope_type": "default", "mrope_section": [24, 20, 20], "mrope_interleaved": True}
+                config_patch["config"] = cfg
+                print("[QwenVL] Patched rope_scaling=None in text_config")
+            elif getattr(cfg, "rope_scaling", "missing") is None:
+                cfg.rope_scaling = {"rope_type": "default", "mrope_section": [24, 20, 20], "mrope_interleaved": True}
+                config_patch["config"] = cfg
+                print("[QwenVL] Patched rope_scaling=None in config")
+        except (ValueError, KeyError) as e:
+            # Fallback: if model_type (e.g. qwen3_5) is not recognized, try
+            # patching the config.json to use qwen3_vl which is architecturally
+            # compatible for VL models in the Qwen3 family.
+            print(f"[QwenVL] AutoConfig failed ({e}), trying config.json patch...")
+            try:
+                cfg_path = Path(model_path) / "config.json"
+                if cfg_path.exists():
+                    cfg_dict = json.loads(cfg_path.read_text())
+                    original_type = cfg_dict.get("model_type", "")
+                    if original_type in ("qwen3_5", "qwen3.5"):
+                        cfg_dict["model_type"] = "qwen3_vl"
+                        # Also patch text_config if present
+                        if "text_config" in cfg_dict and isinstance(cfg_dict["text_config"], dict):
+                            tc = cfg_dict["text_config"]
+                            if tc.get("model_type") in ("qwen3_5", "qwen3.5"):
+                                tc["model_type"] = "qwen3"
+                            _fix_rope_scaling(tc)
+                        _fix_rope_scaling(cfg_dict)
+                        # Write patched config
+                        cfg_path.write_text(json.dumps(cfg_dict, indent=2))
+                        print(f"[QwenVL] Patched config.json: {original_type} -> qwen3_vl")
+                        # Reload config
+                        cfg = AutoConfig.from_pretrained(model_path, trust_remote_code=True)
+                        config_patch["config"] = cfg
+                        config_patch["trust_remote_code"] = True
+            except Exception as e2:
+                print(f"[QwenVL] config.json patch also failed: {e2}")
+        except Exception as e:
+            print(f"[QwenVL] rope_scaling pre-check skipped: {e}")
+
         if quant_config is not None:
             # Bnb path: hand the model directly to the target device.
             bnb_device_map = device if device.startswith("cuda") else "auto"
@@ -896,6 +952,7 @@ class QwenVLBase:
                 "attn_implementation": actual_attn_impl,
                 "use_safetensors": True,
                 "low_cpu_mem_usage": True,
+                **config_patch,
             }
             print(f"[QwenVL] 🔧 BnB load_kwargs device_map={bnb_device_map}")
             self.model = AutoModelForVision2Seq.from_pretrained(model_path, **load_kwargs).eval()
@@ -907,60 +964,8 @@ class QwenVLBase:
                 "attn_implementation": actual_attn_impl,
                 "use_safetensors": True,
                 "low_cpu_mem_usage": True,
+                **config_patch,
             }
-            # Patch: some Qwen3-VL configs have rope_scaling=None which crashes
-            # transformers. Also handle qwen3_5 model_type not yet in CONFIG_MAPPING.
-            def _fix_rope_scaling(cfg_dict):
-                rs = cfg_dict.get("rope_scaling")
-                if rs is None:
-                    cfg_dict["rope_scaling"] = {"rope_type": "default", "mrope_section": [24, 20, 20], "mrope_interleaved": True}
-                elif isinstance(rs, dict) and not rs.get("rope_type"):
-                    rs["rope_type"] = "default"
-            try:
-                import json
-                from pathlib import Path
-                from transformers import AutoConfig
-                cfg = AutoConfig.from_pretrained(model_path, trust_remote_code=True)
-                if hasattr(cfg, "text_config") and getattr(cfg.text_config, "rope_scaling", "missing") is None:
-                    cfg.text_config.rope_scaling = {"rope_type": "default", "mrope_section": [24, 20, 20], "mrope_interleaved": True}
-                    load_kwargs["config"] = cfg
-                    print("[QwenVL] Patched rope_scaling=None in text_config")
-                elif getattr(cfg, "rope_scaling", "missing") is None:
-                    cfg.rope_scaling = {"rope_type": "default", "mrope_section": [24, 20, 20], "mrope_interleaved": True}
-                    load_kwargs["config"] = cfg
-                    print("[QwenVL] Patched rope_scaling=None in config")
-            except (ValueError, KeyError) as e:
-                # Fallback: if model_type (e.g. qwen3_5) is not recognized, try
-                # patching the config.json to use qwen3_vl which is architecturally
-                # compatible for VL models in the Qwen3 family.
-                print(f"[QwenVL] AutoConfig failed ({e}), trying config.json patch...")
-                try:
-                    cfg_path = Path(model_path) / "config.json"
-                    if cfg_path.exists():
-                        import json as _json
-                        cfg_dict = _json.loads(cfg_path.read_text())
-                        original_type = cfg_dict.get("model_type", "")
-                        if original_type in ("qwen3_5", "qwen3.5"):
-                            cfg_dict["model_type"] = "qwen3_vl"
-                            # Also patch text_config if present
-                            if "text_config" in cfg_dict and isinstance(cfg_dict["text_config"], dict):
-                                tc = cfg_dict["text_config"]
-                                if tc.get("model_type") in ("qwen3_5", "qwen3.5"):
-                                    tc["model_type"] = "qwen3"
-                                _fix_rope_scaling(tc)
-                            _fix_rope_scaling(cfg_dict)
-                            # Write patched config
-                            cfg_path.write_text(_json.dumps(cfg_dict, indent=2))
-                            print(f"[QwenVL] Patched config.json: {original_type} -> qwen3_vl")
-                            # Reload config
-                            from transformers import AutoConfig
-                            cfg = AutoConfig.from_pretrained(model_path, trust_remote_code=True)
-                            load_kwargs["config"] = cfg
-                            load_kwargs["trust_remote_code"] = True
-                except Exception as e2:
-                    print(f"[QwenVL] config.json patch also failed: {e2}")
-            except Exception as e:
-                print(f"[QwenVL] rope_scaling pre-check skipped: {e}")
             self.model = AutoModelForVision2Seq.from_pretrained(model_path, **load_kwargs).eval()
 
             if device != "cpu" and torch.cuda.is_available():
