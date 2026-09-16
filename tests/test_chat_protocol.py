@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
 
-from chat_service import ChatRuntime, THINK_CLOSE, THINK_OPEN, build_prompt, parse_model_response, validate_actions, validate_graph, validate_images, validate_messages
+from chat_service import ChatRuntime, MINIMAX_I2VA_BINDING, THINK_CLOSE, THINK_OPEN, build_prompt, enforce_image_reference_bindings, parse_model_response, validate_actions, validate_graph, validate_images, validate_messages
 
 
 class ChatProtocolTests(unittest.TestCase):
@@ -85,6 +85,26 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertIn('Node 105 exposes both "prompt" and "passthrough"', prompt)
         self.assertIn('set node 105 widget "prompt"', prompt)
         self.assertIn('set node 105 widget "passthrough" to true', prompt)
+
+    def test_enforces_minimax_i2va_binding_for_image_passthrough(self):
+        result = {
+            "message": "Prompt generated.",
+            "actions": [
+                {"type": "set_widget_value", "node_id": 105, "widget": "prompt", "value": "integrated_multimodal_description: [Shot 1] action"},
+                {"type": "set_widget_value", "node_id": 105, "widget": "passthrough", "value": True},
+                {"type": "queue_workflow"},
+            ],
+            "choices": [],
+            "thinking": "",
+        }
+        graph = {"nodes": [{"id": 105, "title": "Image to Video (MiniMax H3)", "widgets": [
+            {"name": "prompt", "value": ""},
+            {"name": "preset_prompt", "value": "🎬 MiniMax H3 NSFW (5s)"},
+            {"name": "passthrough", "value": False},
+        ]}]}
+        enforced = enforce_image_reference_bindings(result, graph, True)
+        self.assertTrue(enforced["actions"][0]["value"].startswith(MINIMAX_I2VA_BINDING))
+        self.assertIn(MINIMAX_I2VA_BINDING, enforced["message"])
 
     def test_validates_images(self):
         import base64

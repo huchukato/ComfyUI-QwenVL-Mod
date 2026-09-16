@@ -1,5 +1,13 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.7.3 (2026/09/16)
+
+**Deterministic MiniMax I2VA Reference Binding**
+
+- MiniMax H3 image-to-video prompts using passthrough now receive the mandatory `<Picture 1>` binding automatically when images are present, even if the chat model omits it.
+- The exact final prompt sent to the workflow is echoed back after an automatic correction.
+- Prompt guidance now treats reference pixels as authoritative and forbids invented identity, appearance, clothing, framing, environment, lighting, or style details that conflict with the source image.
+
 ## Version 2.7.2 (2026/09/16)
 
 **Qwen Chat Execution Follow-up Fix**
