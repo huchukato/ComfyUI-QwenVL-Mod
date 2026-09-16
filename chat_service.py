@@ -20,7 +20,8 @@ BASE_SYSTEM_PROMPT = """You are Qwen Workflow Assistant inside ComfyUI. Answer t
 If images or videos are loaded in the workflow inputs, their pixel content is also provided to you; refer to them when the user mentions "the image", "this image", or similar.
 Return exactly one JSON object with this schema:
 {"message":"short answer to the user","actions":[{"type":"set_widget_value","node_id":1,"widget":"steps","value":25},{"type":"set_node_mode","node_id":2,"mode":"bypass"},{"type":"queue_workflow"}]}
-Allowed action types are set_widget_value, set_node_mode, and queue_workflow. set_node_mode accepts only bypass or enable. Never invent node IDs or widget names. Do not emit code, filesystem, shell, network, node creation, connection, deletion, or arbitrary JavaScript actions. If the request cannot be completed with the available actions, explain why in message and return an empty actions array."""
+Allowed action types are set_widget_value, set_node_mode, and queue_workflow. set_node_mode accepts only bypass or enable. Never invent node IDs or widget names. Do not emit code, filesystem, shell, network, node creation, connection, deletion, or arbitrary JavaScript actions. If the request cannot be completed with the available actions, explain why in message and return an empty actions array.
+When you set a text or prompt widget, repeat the complete new value verbatim inside message so the user can read it."""
 
 _LT = chr(60)
 _GT = chr(62)
@@ -173,10 +174,35 @@ def parse_model_response(text):
     return {"thinking": thinking, "message": text or "The model returned an empty response.", "actions": []}
 
 
+def _preset_guides(graph, messages):
+    """Collect prompt-writing guides for presets selected in the workflow's
+    widgets or named in the last user message."""
+    module = sys.modules.get("AILab_QwenVL")
+    guides = getattr(module, "SYSTEM_PROMPTS", None) or {}
+    if not guides:
+        return ""
+    wanted = set()
+    for node in graph.get("nodes", []):
+        for widget in node.get("widgets", []):
+            if isinstance(widget, dict) and widget.get("value") in guides:
+                wanted.add(widget["value"])
+    last_user = next((m["content"] for m in reversed(messages) if m["role"] == "user"), "")
+    wanted.update(name for name in guides if name in last_user)
+    if not wanted:
+        return ""
+    parts = "\n\n".join(f"### {name}\n{guides[name]}" for name in sorted(wanted))
+    return (
+        "\n\nPROMPT WRITING GUIDES - when writing or editing a prompt for a node "
+        "associated with one of these presets, follow the corresponding guide "
+        "exactly, including its required output format:\n" + parts
+    )
+
+
 def build_prompt(messages, graph, enable_thinking=False):
     history = "\n".join(f"{item['role'].upper()}: {item['content']}" for item in messages)
     snapshot = json.dumps(graph, ensure_ascii=False, separators=(",", ":"))
-    instruction = BASE_SYSTEM_PROMPT + (THINKING_INSTRUCTION if enable_thinking else NO_THINKING_INSTRUCTION)
+    instruction = BASE_SYSTEM_PROMPT + _preset_guides(graph, messages)
+    instruction += THINKING_INSTRUCTION if enable_thinking else NO_THINKING_INSTRUCTION
     return f"{instruction}\n\nWORKFLOW SNAPSHOT:\n{snapshot}\n\nCONVERSATION:\n{history}\n\nJSON RESPONSE:"
 
 
