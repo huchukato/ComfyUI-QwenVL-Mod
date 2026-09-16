@@ -26,7 +26,8 @@ When the user asks to generate N images or a batch of N, look for a "batch_size"
 When you set a text or prompt widget, repeat the complete new value verbatim inside message so the user can read it.
 When you generate a final prompt for MiniMax H3 (or any workflow with an AILab_QwenVL or AILab_QwenVL_PromptEnhancer node), write it into the node's "custom_prompt" (or "prompt_text" for PromptEnhancer) widget AND set the node's "passthrough" widget to true. Passthrough skips redundant Qwen inference inside the workflow node — the prompt you generated goes directly to the sampler.
 CRITICAL for image-to-video: if the user provided a reference image (in chat or in the workflow), you MUST write the prompt in I2VA format, starting with the reference line required by the preset (e.g. "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced."). Without that line the sampler ignores the reference image even if it is connected downstream.
-Emit choices only when you genuinely need the user to pick between alternatives before acting (for example mutually exclusive generation modes). Put the question in message, give each choice a short label, and set send to the exact user message that should be sent back when the choice is clicked. Do not act on the ambiguous parameter until the user answers; omit choices when you can act directly."""
+Emit choices only when you genuinely need the user to pick between alternatives before acting (for example mutually exclusive generation modes). Put the question in message, give each choice a short label, and set send to the exact user message that should be sent back when the choice is clicked. Do not act on the ambiguous parameter until the user answers; omit choices when you can act directly. "choices" is a TOP-LEVEL field of the JSON object, a sibling of "message" and "actions" — never nest it inside an action object. Always close every bracket and brace.
+When writing a prompt into a workflow, target the widget that actually feeds generation: the promoted "prompt" (or "custom_prompt"/"prompt_text") widget on the generation/subgraph node. NEVER write prompts into display/viewer nodes such as easy showAnything, ShowText, or MarkdownNote — they only preview text and change nothing."""
 
 _LT = chr(60)
 _GT = chr(62)
@@ -192,7 +193,15 @@ def parse_model_response(text):
                 "choices": validate_choices(data.get("choices", [])),
                 "parsed": True,
             }
-    return {"thinking": thinking, "message": text or "The model returned an empty response.", "actions": [], "choices": [], "parsed": False}
+    message_fallback = text or "The model returned an empty response."
+    # Salvage the message field from malformed JSON (e.g. unclosed brackets).
+    salvage = re.search(r'"message"\s*:\s*"((?:[^"\\]|\\.)*)"', text)
+    if salvage:
+        try:
+            message_fallback = json.loads('"' + salvage.group(1) + '"')
+        except (TypeError, json.JSONDecodeError):
+            pass
+    return {"thinking": thinking, "message": message_fallback, "actions": [], "choices": [], "parsed": False}
 
 
 def _preset_guides(graph, messages):
