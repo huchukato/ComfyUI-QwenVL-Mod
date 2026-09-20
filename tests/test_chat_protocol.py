@@ -71,10 +71,10 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertIn('"id":1', prompt)
         self.assertIn("set_widget_value", prompt)
         self.assertIn("images", prompt)
-        self.assertIn("Final generated image and video prompts MUST be in English", prompt)
-        self.assertIn("MUST use the same language as the LATEST user message", prompt)
-        self.assertIn("IMAGE + PRESET ENHANCER", prompt)
-        self.assertIn("If queue_workflow is present, state that execution was started", prompt)
+        self.assertIn("Workflow prompt text must be English", prompt)
+        self.assertIn("mirror the LATEST user message language", prompt)
+        self.assertIn("MiniMax H3 video sampler", prompt)
+        self.assertIn("include queue_workflow in the same response", prompt)
 
     def test_prompt_identifies_exact_promoted_passthrough_target(self):
         graph = {"nodes": [{"id": 105, "widgets": [
