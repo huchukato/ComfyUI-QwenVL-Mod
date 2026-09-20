@@ -103,7 +103,12 @@ def _mcp_call(tool, arguments, api_key="", endpoint=MCP_ENDPOINT, timeout=120):
     result = envelope.get("result") or {}
     if result.get("isError"):
         sc = result.get("structuredContent") or {}
-        msg = (sc.get("error") or {}).get("message") or "".join(
+        err = sc.get("error")
+        if isinstance(err, dict):
+            msg = err.get("message")
+        else:
+            msg = err
+        msg = msg or "".join(
             c.get("text", "") for c in result.get("content", [])
         ) or "unknown tool error"
         raise RuntimeError(f"Livepeer tool '{tool}' failed: {msg}")
@@ -261,6 +266,17 @@ class QwenVL_LivepeerRender:
                     inputs.update(extra)
             except ValueError as e:
                 raise ValueError(f"extra_params is not valid JSON: {e}")
+
+        # Image capabilities reject video params (duration etc.) — ask the
+        # network what this capability outputs and drop video-only inputs.
+        try:
+            desc = _mcp_call("describe_capability", {"name": cap}, api_key, timeout=60)
+            out_kind = desc.get("output_kind") or (desc.get("output") or {}).get("kind") or ""
+            if out_kind and out_kind != "video":
+                keep = set((desc.get("inputs") or {}).keys()) - {"prompt"}
+                inputs = {k: v for k, v in inputs.items() if k in keep}
+        except Exception:
+            pass
 
         args = {"capability": cap, "prompt": prompt, "inputs": inputs, "async": True}
         if source_url:
