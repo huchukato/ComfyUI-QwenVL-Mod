@@ -76,7 +76,7 @@ class QwenVL_LoadMedia:
     RETURN_TYPES = ("IMAGE", "VIDEO", "STRING")
     RETURN_NAMES = ("image", "video", "path")
     FUNCTION = "load"
-    CATEGORY = "QwenVL-Mod"
+    CATEGORY = "utils"
 
     @classmethod
     def IS_CHANGED(cls, media, frame_index=0):
