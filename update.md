@@ -1,5 +1,11 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.7.13 (2026/09/16)
+
+- Fixed `enforce_image_reference_bindings` to use the `passthrough` value from the action set instead of the stale workflow snapshot, so I2VA workflows with `passthrough=false` no longer receive the `For the target video...` binding line in the chat-managed prompt.
+- Suppressed full-format video prompt-writing guides (MiniMax H3, LTX, Wan) from the chat prompt when an image-enhancer target is active, preventing the chat from outputting a complete `integrated_multimodal_description`/`overall_soundscape` prompt.
+- Strengthened the exact-target instruction: the chat must write only a concise English action directive and let the inner QwenVL node build the final preset prompt.
+
 ## Version 2.7.12 (2026/09/16)
 
 - Strengthened image-enhancer chat instructions: Qwen Chat must inspect the provided image pixels to understand how the requested action applies and read the target node's current `preset_prompt` value and supplied prompt-writing guide.

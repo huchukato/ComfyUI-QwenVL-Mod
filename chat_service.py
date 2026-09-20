@@ -337,10 +337,12 @@ def enforce_image_reference_bindings(result, graph, has_images):
     if not has_images:
         return result
     nodes = {str(node.get("id")): node for node in graph.get("nodes", [])}
-    passthrough_actions = {
-        str(action.get("node_id"))
+    # Use the passthrough value that the action set will write, not the snapshot's
+    # old widget value, so a fresh passthrough=false does not get a binding line.
+    passthrough_values = {
+        str(action.get("node_id")): action.get("value")
         for action in result.get("actions", [])
-        if action.get("type") == "set_widget_value" and action.get("widget") == "passthrough" and action.get("value") is True
+        if action.get("type") == "set_widget_value" and action.get("widget") == "passthrough"
     }
     amended = []
     for action in result.get("actions", []):
@@ -353,7 +355,7 @@ def enforce_image_reference_bindings(result, graph, has_images):
         widgets = {widget.get("name"): widget.get("value") for widget in node.get("widgets", []) if isinstance(widget, dict)}
         preset = str(widgets.get("preset_prompt", ""))
         title = f'{node.get("title", "")} {node.get("type", "")}'.lower()
-        passthrough = str(action.get("node_id")) in passthrough_actions or widgets.get("passthrough") is True
+        passthrough = passthrough_values.get(str(action.get("node_id")), widgets.get("passthrough") is True)
         if "minimax h3 nsfw (" not in preset.lower() or "image to video" not in title or not passthrough:
             continue
         action["value"] = f"{MINIMAX_I2VA_BINDING}\n\n{value.lstrip()}"
@@ -363,9 +365,30 @@ def enforce_image_reference_bindings(result, graph, has_images):
     return result
 
 
-def _preset_guides(graph, messages):
+def _has_image_enhancer_target(graph):
+    """True if the workflow exposes an image-to-video node that has a preset
+    enhancer (preset_prompt + passthrough + a prompt widget). In that case the
+    chat must not write a fully formatted video prompt itself."""
+    for node in graph.get("nodes", []):
+        widgets = {widget.get("name"): widget.get("value") for widget in node.get("widgets", []) if isinstance(widget, dict)}
+        prompt_widget = next((name for name in ("prompt", "custom_prompt", "prompt_text") if name in widgets), None)
+        if not prompt_widget or "preset_prompt" not in widgets or "passthrough" not in widgets:
+            continue
+        title = f'{node.get("title", "")} {node.get("type", "")}'.lower()
+        if "image to video" in title:
+            return True
+    return False
+
+
+def _preset_guides(graph, messages, has_images=False):
     """Collect prompt-writing guides for presets selected in the workflow's
-    widgets or named in the last user message."""
+    widgets or named in the last user message.
+
+    When an image-enhancer target exists, the chat is only the first stage of a
+    two-stage pipeline: it must write a concise action directive, while the
+    inner QwenVL node applies the preset and formats the final prompt. Full
+    format guides for video presets are therefore suppressed to avoid confusing
+    the chat into outputting a complete MiniMax/LTX/Wan prompt."""
     module = sys.modules.get("AILab_QwenVL")
     guides = getattr(module, "SYSTEM_PROMPTS", None) or {}
     if not guides:
@@ -383,6 +406,12 @@ def _preset_guides(graph, messages):
         wanted.update(name for name in guides if f"({match.group(1)}s)" in name)
     if not wanted:
         return ""
+    # Suppress full-format video guides when the chat must only feed the enhancer.
+    if has_images and _has_image_enhancer_target(graph):
+        video_prefixes = ("🎬 MiniMax", "🎞️ MiniMax", "🔄 MiniMax", "🎥 LTX", "🔀 LTX", "🎵 LTX", "📹 Wan", "🔄 Wan", "📖 Wan")
+        wanted = {name for name in wanted if not any(name.startswith(prefix) for prefix in video_prefixes)}
+        if not wanted:
+            return ""
     parts = "\n\n".join(f"### {name}\n{guides[name]}" for name in sorted(wanted))
     return (
         "\n\nPROMPT WRITING GUIDES - when writing or editing a prompt for a node "
@@ -437,9 +466,10 @@ def _chat_guides_for(graph, has_images=False):
         if image_enhancer:
             parts.append(
                 f'### Exact image-enhancer target\nImage pixels are provided. Node {node.get("id")} exposes "{prompt_widget}", "preset_prompt", and "passthrough". '
-                f'Inspect the provided image pixels to understand how the requested action applies. The node currently selects preset "{widgets.get("preset_prompt", "")}"; follow that preset\'s supplied PROMPT WRITING GUIDE. '
-                f'You MUST set node {node.get("id")} widget "{prompt_widget}" to a concise English action directive derived from the latest substantive request (skip execute-only confirmations; never copy it verbatim), '
-                f'set node {node.get("id")} widget "passthrough" to false, then queue. Do not write the final preset prompt: the inner QwenVL must analyze the image and create it.'
+                f'Inspect the provided image pixels to understand how the requested action applies. The node currently selects preset "{widgets.get("preset_prompt", "")}". '
+                f'IGNORE any full prompt-writing guide for that preset above: the inner QwenVL node will use it to build the final prompt. '
+                f'You MUST set node {node.get("id")} widget "{prompt_widget}" to a concise English action directive derived from the latest substantive request (skip execute-only confirmations; never copy it verbatim; never add the "For the target video..." binding line; never write integrated_multimodal_description/sections). '
+                f'set node {node.get("id")} widget "passthrough" to false, then queue. The inner QwenVL must analyze the image and create the final preset prompt.'
             )
         else:
             parts.append(
@@ -458,7 +488,7 @@ def _chat_guides_for(graph, has_images=False):
 def build_prompt(messages, graph, enable_thinking=False, has_images=False):
     history = "\n".join(f"{item['role'].upper()}: {item['content']}" for item in messages)
     snapshot = json.dumps(graph, ensure_ascii=False, separators=(",", ":"))
-    instruction = BASE_SYSTEM_PROMPT + _preset_guides(graph, messages) + _chat_guides_for(graph, has_images)
+    instruction = BASE_SYSTEM_PROMPT + _preset_guides(graph, messages, has_images) + _chat_guides_for(graph, has_images)
     instruction += THINKING_INSTRUCTION if enable_thinking else NO_THINKING_INSTRUCTION
     return f"{instruction}\n\nWORKFLOW SNAPSHOT:\n{snapshot}\n\nCONVERSATION:\n{history}\n\nJSON RESPONSE:"
 
