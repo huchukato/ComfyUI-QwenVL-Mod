@@ -97,10 +97,14 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertIn("Image pixels are provided", prompt)
         self.assertIn("Inspect the provided image pixels to understand how the requested action applies", prompt)
         self.assertIn('currently selects preset "MiniMax H3 NSFW (5s)"', prompt)
-        self.assertIn("follow that preset's supplied PROMPT WRITING GUIDE", prompt)
+        self.assertIn("IGNORE any full prompt-writing guide for that preset", prompt)
+        self.assertIn("the inner QwenVL node will use it to build the final prompt", prompt)
         self.assertIn('You MUST set node 105 widget "prompt" to a concise English action directive', prompt)
         self.assertIn('set node 105 widget "passthrough" to false', prompt)
-        self.assertIn("inner QwenVL must analyze the image and create it", prompt)
+        self.assertIn("inner QwenVL must analyze the image and create the final preset prompt", prompt)
+        # The full MiniMax format guide must not leak into the chat prompt for an image enhancer.
+        self.assertNotIn("integrated_multimodal_description:", prompt)
+        self.assertNotIn("overall_soundscape:", prompt)
 
     def test_selects_previous_intent_after_execution_confirmation(self):
         descriptive = "Create a five-second video where she opens the dress"
@@ -200,6 +204,28 @@ class ChatProtocolTests(unittest.TestCase):
         enforced = enforce_image_reference_bindings(result, graph, True)
         self.assertTrue(enforced["actions"][0]["value"].startswith(MINIMAX_I2VA_BINDING))
         self.assertIn(MINIMAX_I2VA_BINDING, enforced["message"])
+
+    def test_skips_minimax_binding_when_passthrough_set_false(self):
+        """When the action set flips passthrough to false, do not prepend the I2VA binding
+        even if the workflow snapshot still has passthrough=true."""
+        result = {
+            "message": "Prompt generated.",
+            "actions": [
+                {"type": "set_widget_value", "node_id": 105, "widget": "prompt", "value": "the woman touches her nipple"},
+                {"type": "set_widget_value", "node_id": 105, "widget": "passthrough", "value": False},
+                {"type": "queue_workflow"},
+            ],
+            "choices": [],
+            "thinking": "",
+        }
+        graph = {"nodes": [{"id": 105, "title": "Image to Video (MiniMax H3)", "widgets": [
+            {"name": "prompt", "value": ""},
+            {"name": "preset_prompt", "value": "🎬 MiniMax H3 NSFW (5s)"},
+            {"name": "passthrough", "value": True},
+        ]}]}
+        enforced = enforce_image_reference_bindings(result, graph, True)
+        self.assertNotIn(MINIMAX_I2VA_BINDING, enforced["actions"][0]["value"])
+        self.assertNotIn(MINIMAX_I2VA_BINDING, enforced["message"])
 
     def test_validates_images(self):
         import base64
