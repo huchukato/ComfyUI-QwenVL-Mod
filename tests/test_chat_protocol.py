@@ -325,8 +325,9 @@ class ChatProtocolTests(unittest.TestCase):
             (root / "PMP" / "2026-09-16").mkdir(parents=True)
             (root / "PMP" / "2026-09-16" / "nested.webp").write_bytes(b"webp")
             (root / "ignored.mp4").write_bytes(b"video")
+            (root / "ignored.txt").write_text("text")
             assets = list_output_images(root)
-        self.assertEqual(set(assets), {"root.png [output]", "PMP/2026-09-16/nested.webp [output]"})
+        self.assertEqual(set(assets), {"root.png [output]", "PMP/2026-09-16/nested.webp [output]", "ignored.mp4 [output]"})
 
     def test_hf_runtime_reuses_and_unloads_model(self):
         class FakeQuantization:
