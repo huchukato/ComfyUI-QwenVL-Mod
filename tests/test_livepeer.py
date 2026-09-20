@@ -109,8 +109,8 @@ class RenderNodeTests(unittest.TestCase):
             )
 
         tools = [c[0] for c in calls]
-        self.assertEqual(tools, ["upload", "run_capability", "get_create_media"])
-        rc = calls[1][1]
+        self.assertEqual(tools, ["upload", "describe_capability", "run_capability", "get_create_media"])
+        rc = calls[2][1]
         self.assertEqual(rc["capability"], "minimax-h3-i2v")
         self.assertEqual(rc["source_url"], "https://cdn/frame.jpg")
         self.assertEqual(rc["inputs"]["duration"], 5)
@@ -142,13 +142,42 @@ class RenderNodeTests(unittest.TestCase):
                 timeout_s=120, filename_prefix="Livepeer/",
             )
 
-        self.assertEqual([c[0] for c in calls], ["run_capability"])
-        rc = calls[0][1]
+        self.assertEqual([c[0] for c in calls], ["describe_capability", "run_capability"])
+        rc = calls[1][1]
         self.assertEqual(rc["capability"], "minimax-h3-t2v")
         self.assertNotIn("source_url", rc)
         self.assertEqual(rc["inputs"]["resolution"], "768P")
         self.assertEqual(rc["inputs"]["seed"], 42)
         self.assertEqual(out["result"][1], "https://cdn/v.mp4")
+
+    def test_image_capability_drops_video_inputs(self):
+        calls = []
+
+        def fake_call(tool, args, api_key="", **kw):
+            calls.append((tool, args))
+            if tool == "describe_capability":
+                return {"output_kind": "image", "inputs": {"prompt": {"type": "string"}}}
+            if tool == "run_capability":
+                return {"job_id": "j1", "status": "done", "url": "https://cdn/out.png"}
+            return {}
+
+        buf = io.BytesIO()
+        from PIL import Image
+        Image.new("RGB", (4, 4)).save(buf, "PNG")
+        with mock.patch.object(lp, "_mcp_call", side_effect=fake_call), \
+             mock.patch("urllib.request.urlopen", return_value=_Resp(buf.getvalue())), \
+             mock.patch("time.sleep"):
+            node = lp.QwenVL_LivepeerRender()
+            out = node.run(
+                prompt="anime girl", capability="auto", custom_capability="flux-schnell",
+                duration=5, resolution="768P", aspect_ratio="16:9", seed=-1,
+                timeout_s=120, filename_prefix="Livepeer/",
+            )
+
+        rc = next(c[1] for c in calls if c[0] == "run_capability")
+        self.assertEqual(rc["capability"], "flux-schnell")
+        self.assertEqual(rc["inputs"], {})
+        self.assertEqual(out["result"][1], "https://cdn/out.png")
 
     def test_failed_job_raises(self):
         def fake_call(tool, args, api_key="", **kw):
