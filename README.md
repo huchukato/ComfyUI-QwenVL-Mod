@@ -35,6 +35,8 @@ The assistant applies only a restricted, validated action protocol. Model output
 
 <img width="690" height="652" alt="qwen-chat-1" src="https://github.com/user-attachments/assets/4456833b-4c8d-4484-b141-7e2eaa9ba255" /> <img width="710" height="900" alt="qwen-chat-2" src="https://github.com/user-attachments/assets/14e825a5-8c0c-48fb-9417-0c6e7cf7841f" />
 
+<img width="1024" alt="Livepeer Agent Render — Qwen Chat orchestrating decentralized media generation" src="img/livepeer-agent.png" />
+
 ## 🌐 Livepeer Agent Render
 
 Two nodes connect ComfyUI to the [Livepeer Agent](https://agent.livepeer.org) network through its raw MCP endpoint — no extra dependencies, keyless by default (a Livepeer/Daydream API key can be entered in the node's `api_key` widget).
