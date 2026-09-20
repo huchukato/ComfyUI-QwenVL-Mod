@@ -227,10 +227,12 @@ class LoadMediaTests(unittest.TestCase):
     def test_loads_image_as_tensor(self):
         from PIL import Image
         Image.new("RGB", (4, 4)).save(Path(_tmp, "pic.png"))
-        image, video, path = lm.QwenVL_LoadMedia().load("pic.png [output]")
+        out = lm.QwenVL_LoadMedia().load("pic.png [output]")
+        image, video, path = out["result"]
         self.assertEqual(tuple(image.shape), (1, 4, 4, 3))
         self.assertIsNone(video)
         self.assertTrue(path.endswith("pic.png"))
+        self.assertEqual(out["ui"]["images"][0]["filename"], "pic.png")
 
 
 if __name__ == "__main__":
