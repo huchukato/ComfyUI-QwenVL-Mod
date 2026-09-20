@@ -220,6 +220,9 @@ class LoadMediaTests(unittest.TestCase):
         self.assertEqual(tag, "output")
         self.assertTrue(path.endswith("frame.png"))
         self.assertEqual(lm._resolve("missing.png [output]"), (None, None))
+        # Untagged names (set by the upload widget) resolve via input/output dirs
+        path2, tag2 = lm._resolve("frame.png")
+        self.assertEqual(tag2, "input")
 
     def test_loads_image_as_tensor(self):
         from PIL import Image

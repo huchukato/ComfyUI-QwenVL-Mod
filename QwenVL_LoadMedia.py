@@ -46,13 +46,19 @@ def _media_files():
 
 
 def _resolve(name):
-    """'clip.mp4 [output]' -> (abs path, 'output') or (None, None)."""
+    """'clip.mp4 [output]' or uploaded 'clip.mp4' -> (abs path, tag)."""
     for tag, get_dir in _SOURCES:
         suffix = f" [{tag}]"
         if name.endswith(suffix):
             path = os.path.join(get_dir(), name[: -len(suffix)])
             if os.path.isfile(path):
                 return path, tag
+            return None, None
+    # Untagged name (e.g. set by the upload widget): input/ wins, then output/
+    for tag, get_dir in _SOURCES:
+        path = os.path.join(get_dir(), name)
+        if os.path.isfile(path):
+            return path, tag
     return None, None
 
 
@@ -68,7 +74,7 @@ class QwenVL_LoadMedia:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "media": (_media_files() or ["<no media found>"],),
+                "media": (_media_files() or ["<no media found>"], {"image_upload": True, "video_upload": True}),
                 "frame_index": ("INT", {"default": 0, "min": -1, "max": 10000, "tooltip": "For videos: which frame to emit on the IMAGE output. 0 = first, -1 = last."}),
             },
         }
