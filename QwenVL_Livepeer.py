@@ -68,6 +68,17 @@ CAPABILITY_OPTIONS = [
     "cosmos-3-i2v",
     "grok-imagine-video-t2v",
     "animatediff-t2v",
+    # Text-to-image capabilities (return an IMAGE instead of a VIDEO).
+    "flux-schnell",
+    "flux-dev",
+    "flux-pro",
+    "flux-flex",
+    "qwen-image-3-t2i",
+    "gemini-image",
+    "gpt-image",
+    "grok-image-2",
+    "mai-image-2.5",
+    "cosmos-3-image",
 ]
 
 
@@ -196,7 +207,7 @@ class QwenVL_LivepeerRender:
         return {
             "required": {
                 "prompt": ("STRING", {"default": "", "multiline": True, "tooltip": "Shot-native English video prompt: camera movement, framing, subject action, lighting, pacing. The chat writes this automatically."}),
-                "capability": (CAPABILITY_OPTIONS, {"default": "auto", "tooltip": "Model on the Livepeer network. 'auto' picks minimax-h3-i2v with an image input, minimax-h3-t2v without."}),
+                "capability": (CAPABILITY_OPTIONS, {"default": "auto", "tooltip": "Model on the Livepeer network. Video models return a clip; image models (flux-*, *-t2i, *-image) return a still on the image output. 'auto' picks minimax-h3-i2v with an image input, minimax-h3-t2v without."}),
                 "custom_capability": ("STRING", {"default": "", "tooltip": "Optional exact capability name overriding the dropdown (from list_capabilities)."}),
                 "duration": ("INT", {"default": 5, "min": 3, "max": 15, "tooltip": "Video duration in seconds. Billed per second."}),
                 "resolution": (["default", "768P", "2K", "1080p", "720p"], {"default": "default", "tooltip": "Resolution tier when the model supports it (MiniMax H3: 768P/2K)."}),
