@@ -14,6 +14,7 @@ MAX_MESSAGES = 20
 MAX_MESSAGE_CHARS = 12000
 MAX_GRAPH_NODES = 200
 MAX_CHAT_IMAGES = 3
+MAX_VIDEO_FRAMES = 4
 MAX_IMAGE_BYTES = 8 * 1024 * 1024
 ALLOWED_ACTIONS = {"set_widget_value", "set_node_mode", "queue_workflow"}
 MINIMAX_I2VA_BINDING = "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced."
@@ -154,11 +155,11 @@ def list_output_images(output_dir, limit=500):
     return [f"{relative} [output]" for _, relative in images[:max(1, min(int(limit), 2000))]]
 
 
-def validate_images(images):
+def validate_images(images, limit=MAX_CHAT_IMAGES):
     if not isinstance(images, list):
         return []
     result = []
-    for item in images[:MAX_CHAT_IMAGES]:
+    for item in images[:limit]:
         if not isinstance(item, str):
             continue
         try:
@@ -486,11 +487,13 @@ def _chat_guides_for(graph, has_images=False):
     )
 
 
-def build_prompt(messages, graph, enable_thinking=False, has_images=False):
+def build_prompt(messages, graph, enable_thinking=False, has_images=False, has_video=False):
     history = "\n".join(f"{item['role'].upper()}: {item['content']}" for item in messages)
     snapshot = json.dumps(graph, ensure_ascii=False, separators=(",", ":"))
     instruction = BASE_SYSTEM_PROMPT + _preset_guides(graph, messages, has_images) + _chat_guides_for(graph, has_images)
     instruction += THINKING_INSTRUCTION if enable_thinking else NO_THINKING_INSTRUCTION
+    if has_video:
+        instruction += "\nVIDEO INPUT: sampled frames from a video clip are attached to the latest user message. Treat them as the clip itself when the user asks to review, critique, or refine a generated video."
     return f"{instruction}\n\nWORKFLOW SNAPSHOT:\n{snapshot}\n\nCONVERSATION:\n{history}\n\nJSON RESPONSE:"
 
 
@@ -507,10 +510,11 @@ class ChatRuntime:
         gguf_models = sorted(((getattr(gguf, "GGUF_VL_CATALOG", {}) or {}).get("models") or {}).keys()) if gguf else []
         return {"hf": hf_models, "gguf": gguf_models}
 
-    def chat(self, backend, model_name, messages, graph, options, images=None):
+    def chat(self, backend, model_name, messages, graph, options, images=None, video=None):
         messages = validate_messages(messages)
         graph = validate_graph(graph)
         images = validate_images(images or [])
+        video = validate_images(video or [], MAX_VIDEO_FRAMES)
         available = self.models().get(backend)
         if available is None:
             raise ValueError("backend must be hf or gguf")
@@ -526,9 +530,9 @@ class ChatRuntime:
             # Thinking consumes tokens before the JSON reply; a small budget
             # truncates the response after the reasoning and no JSON is emitted.
             options["max_tokens"] = max(int(options.get("max_tokens", 1024)), 4096)
-        prompt = build_prompt(messages, graph, enable_thinking, bool(images))
+        prompt = build_prompt(messages, graph, enable_thinking, bool(images), bool(video))
         with self._lock:
-            text = self._generate(backend, model_name, prompt, options, enable_thinking, images)
+            text = self._generate(backend, model_name, prompt, options, enable_thinking, images, video)
         result = parse_model_response(text)
         if result.pop("parsed"):
             result = enforce_image_enhancer_routing(result, graph, messages, bool(images))
@@ -540,21 +544,21 @@ class ChatRuntime:
             {"role": "assistant", "content": (text or "")[:2000]},
             {"role": "user", "content": "Your reply was not a JSON object. Return ONLY the JSON object described in the system instructions — no preamble, no extra text."},
         ]
-        retry_prompt = build_prompt(retry_messages, graph, enable_thinking, bool(images))
+        retry_prompt = build_prompt(retry_messages, graph, enable_thinking, bool(images), bool(video))
         with self._lock:
-            retry_text = self._generate(backend, model_name, retry_prompt, options, enable_thinking, images)
+            retry_text = self._generate(backend, model_name, retry_prompt, options, enable_thinking, images, video)
         retry_result = parse_model_response(retry_text)
         if retry_result.pop("parsed"):
             retry_result = enforce_image_enhancer_routing(retry_result, graph, messages, bool(images))
             return enforce_image_reference_bindings(retry_result, graph, bool(images))
         return result
 
-    def _generate(self, backend, model_name, prompt, options, enable_thinking, images):
+    def _generate(self, backend, model_name, prompt, options, enable_thinking, images, video=None):
         if backend == "hf":
-            return self._chat_hf(model_name, prompt, options, enable_thinking, images)
-        return self._chat_gguf(model_name, prompt, options, enable_thinking, images)
+            return self._chat_hf(model_name, prompt, options, enable_thinking, images, video)
+        return self._chat_gguf(model_name, prompt, options, enable_thinking, images, video)
 
-    def _chat_hf(self, model_name, prompt, options, enable_thinking=False, images=None):
+    def _chat_hf(self, model_name, prompt, options, enable_thinking=False, images=None, video=None):
         module = sys.modules["AILab_QwenVL"]
         instance = self._instances.get("hf")
         if instance is None:
@@ -571,18 +575,20 @@ class ChatRuntime:
         pil_images = _decode_images(images or [])
         image = pil_images[0] if len(pil_images) > 0 else None
         image2 = pil_images[1] if len(pil_images) > 1 else None
+        pil_frames = _decode_images(video or [])
         return instance.generate(
-            prompt, image, image2, 1,
+            prompt, image, image2, len(pil_frames) or 1,
             int(options.get("max_tokens", 1024)),
             float(options.get("temperature", 0.2)),
             float(options.get("top_p", 0.9)),
             1,
             float(options.get("repetition_penalty", 1.05)),
             model_name=model_name,
+            video=pil_frames or None,
             enable_thinking=enable_thinking,
         )
 
-    def _chat_gguf(self, model_name, prompt, options, enable_thinking=False, images=None):
+    def _chat_gguf(self, model_name, prompt, options, enable_thinking=False, images=None, video=None):
         module = sys.modules["AILab_QwenVL_GGUF"]
         instance = self._instances.get("gguf")
         if instance is None:
@@ -598,8 +604,8 @@ class ChatRuntime:
             options.get("top_k"),
             options.get("pool_size"),
         )
-        valid = validate_images(images or [])
-        images_b64 = [base64.b64encode(data).decode("ascii") for data in valid]
+        # `images`/`video` arrive already validated to bytes by chat()
+        images_b64 = [base64.b64encode(data).decode("ascii") for data in (images or []) + (video or [])]
         return instance._invoke(
             SYSTEM_PROMPT,
             prompt,

@@ -233,6 +233,91 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertEqual(len(validate_images([valid, "not-valid", 123])), 1)
         self.assertEqual(len(validate_images([valid, valid, valid, valid])), 3)
 
+    def test_video_frames_use_higher_limit(self):
+        import base64
+        frame = base64.b64encode(b"frame").decode("ascii")
+        self.assertEqual(len(validate_images([frame] * 5, 4)), 4)
+        self.assertEqual(len(validate_images([frame] * 5)), 3)
+
+    def test_prompt_mentions_video_frames(self):
+        prompt = build_prompt([{"role": "user", "content": "make it faster"}], {"nodes": []}, has_video=True)
+        self.assertIn("VIDEO INPUT", prompt)
+        prompt_no_video = build_prompt([{"role": "user", "content": "hi"}], {"nodes": []})
+        self.assertNotIn("VIDEO INPUT", prompt_no_video)
+
+    def _jpeg_b64(self):
+        import base64
+        import io
+        from PIL import Image
+        buffer = io.BytesIO()
+        Image.new("RGB", (8, 8), (128, 64, 32)).save(buffer, "JPEG")
+        return base64.b64encode(buffer.getvalue()).decode("ascii")
+
+    def test_hf_chat_forwards_video_frames(self):
+        class FakeQuantization:
+            Q8 = types.SimpleNamespace(value="q8")
+
+        class FakeBase:
+            def load_model(self, *args):
+                pass
+
+            def generate(self, *args, **kwargs):
+                self.kwargs = kwargs
+                self.frame_count = args[3]
+                return '{"message":"ok","actions":[]}'
+
+        previous = sys.modules.get("AILab_QwenVL")
+        sys.modules["AILab_QwenVL"] = types.SimpleNamespace(
+            HF_ALL_MODELS={"test-model": {}},
+            Quantization=FakeQuantization,
+            QwenVLBase=FakeBase,
+        )
+        try:
+            runtime = ChatRuntime()
+            frames = [self._jpeg_b64() for _ in range(4)]
+            result = runtime.chat("hf", "test-model", [{"role": "user", "content": "make it faster"}], {"nodes": []}, {}, video=frames)
+            self.assertEqual(result["message"], "ok")
+            instance = runtime._instances["hf"]
+            self.assertEqual(len(instance.kwargs["video"]), 4)
+            self.assertEqual(instance.frame_count, 4)
+        finally:
+            if previous is None:
+                sys.modules.pop("AILab_QwenVL", None)
+            else:
+                sys.modules["AILab_QwenVL"] = previous
+
+    def test_gguf_chat_reencodes_video_frames_as_images(self):
+        class FakeBase:
+            def _load_model(self, *args):
+                pass
+
+            def _invoke(self, system, prompt, images_b64, *args, **kwargs):
+                self.images_b64 = images_b64
+                return '{"message":"ok","actions":[]}'
+
+        previous = sys.modules.get("AILab_QwenVL_GGUF")
+        sys.modules["AILab_QwenVL_GGUF"] = types.SimpleNamespace(
+            GGUF_VL_CATALOG={"models": {"test-gguf": {}}},
+            QwenVLGGUFBase=FakeBase,
+        )
+        try:
+            runtime = ChatRuntime()
+            frames = [self._jpeg_b64() for _ in range(4)]
+            result = runtime.chat("gguf", "test-gguf", [{"role": "user", "content": "make it faster"}], {"nodes": []}, {}, video=frames)
+            self.assertEqual(result["message"], "ok")
+            instance = runtime._instances["gguf"]
+            self.assertEqual(len(instance.images_b64), 4)
+            # Frames must round-trip as valid base64 strings (not raw bytes)
+            import base64
+            for item in instance.images_b64:
+                self.assertIsInstance(item, str)
+                base64.b64decode(item, validate=True)
+        finally:
+            if previous is None:
+                sys.modules.pop("AILab_QwenVL_GGUF", None)
+            else:
+                sys.modules["AILab_QwenVL_GGUF"] = previous
+
     def test_lists_nested_output_images(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
