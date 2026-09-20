@@ -72,7 +72,7 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertIn("set_widget_value", prompt)
         self.assertIn("images", prompt)
         self.assertIn("Final generated image and video prompts MUST be in English", prompt)
-        self.assertIn("MUST use the same language as the latest user message", prompt)
+        self.assertIn("MUST use the same language as the LATEST user message", prompt)
         self.assertIn("IMAGE + PRESET ENHANCER", prompt)
         self.assertIn("If queue_workflow is present, state that execution was started", prompt)
 
