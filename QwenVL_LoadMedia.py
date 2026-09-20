@@ -83,6 +83,7 @@ class QwenVL_LoadMedia:
     RETURN_NAMES = ("image", "video", "path")
     FUNCTION = "load"
     CATEGORY = "utils"
+    OUTPUT_NODE = True
 
     @classmethod
     def IS_CHANGED(cls, media, frame_index=0):
@@ -96,7 +97,15 @@ class QwenVL_LoadMedia:
         lower = path.lower()
 
         if lower.endswith(_IMAGE_EXT):
-            return (_pil_to_tensor(Image.open(path)), None, path)
+            root = dict(input=folder_paths.get_input_directory(), output=folder_paths.get_output_directory())[tag]
+            return {
+                "ui": {"images": [{
+                    "filename": os.path.basename(path),
+                    "subfolder": os.path.dirname(os.path.relpath(path, root)),
+                    "type": tag,
+                }]},
+                "result": (_pil_to_tensor(Image.open(path)), None, path),
+            }
 
         if lower.endswith(_VIDEO_EXT):
             if _VIDEO_FROM_FILE is None:
