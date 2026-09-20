@@ -13,10 +13,12 @@ sys.path.insert(0, str(Path(__file__).parents[1]))
 _tmp = tempfile.mkdtemp()
 _folder_paths = types.ModuleType("folder_paths")
 _folder_paths.get_output_directory = lambda: _tmp
+_folder_paths.get_input_directory = lambda: _tmp
 _folder_paths.get_save_image_path = lambda prefix, out, w, h: (_tmp, prefix.rstrip("/"), 1, "", prefix)
 sys.modules["folder_paths"] = _folder_paths
 
 import QwenVL_Livepeer as lp
+import QwenVL_LoadMedia as lm
 
 
 def _envelope(result):
@@ -173,6 +175,30 @@ class RenderNodeTests(unittest.TestCase):
                 duration=5, resolution="default", aspect_ratio="auto",
                 seed=-1, timeout_s=120, filename_prefix="Livepeer/",
             )
+
+
+class LoadMediaTests(unittest.TestCase):
+    def test_lists_tagged_media_files(self):
+        Path(_tmp, "clip.mp4").write_bytes(b"x")
+        Path(_tmp, "skip.txt").write_text("x")
+        files = lm._media_files()
+        self.assertIn("clip.mp4 [output]", files)
+        self.assertNotIn("skip.txt", files)
+
+    def test_resolves_tagged_name(self):
+        Path(_tmp, "frame.png").write_bytes(b"x")
+        path, tag = lm._resolve("frame.png [output]")
+        self.assertEqual(tag, "output")
+        self.assertTrue(path.endswith("frame.png"))
+        self.assertEqual(lm._resolve("missing.png [output]"), (None, None))
+
+    def test_loads_image_as_tensor(self):
+        from PIL import Image
+        Image.new("RGB", (4, 4)).save(Path(_tmp, "pic.png"))
+        image, video, path = lm.QwenVL_LoadMedia().load("pic.png [output]")
+        self.assertEqual(tuple(image.shape), (1, 4, 4, 3))
+        self.assertIsNone(video)
+        self.assertTrue(path.endswith("pic.png"))
 
 
 if __name__ == "__main__":
