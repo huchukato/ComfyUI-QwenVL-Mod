@@ -16,7 +16,7 @@ _folder_paths.get_output_directory = lambda: _tmp
 _folder_paths.get_save_image_path = lambda prefix, out, w, h: (_tmp, prefix.rstrip("/"), 1, "", prefix)
 sys.modules["folder_paths"] = _folder_paths
 
-import AILab_Livepeer as lp
+import QwenVL_Livepeer as lp
 
 
 def _envelope(result):
@@ -97,7 +97,7 @@ class RenderNodeTests(unittest.TestCase):
         with mock.patch.object(lp, "_mcp_call", side_effect=fake_call), \
              mock.patch("urllib.request.urlopen", side_effect=fake_dl), \
              mock.patch("time.sleep"):
-            node = lp.AILab_LivepeerRender()
+            node = lp.QwenVL_LivepeerRender()
             out = node.run(
                 prompt="slow dolly-in, she turns to camera",
                 capability="auto", custom_capability="", duration=5,
@@ -132,7 +132,7 @@ class RenderNodeTests(unittest.TestCase):
         with mock.patch.object(lp, "_mcp_call", side_effect=fake_call), \
              mock.patch("urllib.request.urlopen", return_value=_Resp(b"mp4")), \
              mock.patch("time.sleep"):
-            node = lp.AILab_LivepeerRender()
+            node = lp.QwenVL_LivepeerRender()
             out = node.run(
                 prompt="a lantern drifting over dark water",
                 capability="auto", custom_capability="", duration=8,
@@ -158,7 +158,7 @@ class RenderNodeTests(unittest.TestCase):
 
         with mock.patch.object(lp, "_mcp_call", side_effect=fake_call), \
              mock.patch("time.sleep"):
-            node = lp.AILab_LivepeerRender()
+            node = lp.QwenVL_LivepeerRender()
             with self.assertRaises(RuntimeError):
                 node.run(
                     prompt="x", capability="pixverse-i2v", custom_capability="",
@@ -168,7 +168,7 @@ class RenderNodeTests(unittest.TestCase):
 
     def test_empty_prompt_rejected(self):
         with self.assertRaises(ValueError):
-            lp.AILab_LivepeerRender().run(
+            lp.QwenVL_LivepeerRender().run(
                 prompt="   ", capability="auto", custom_capability="",
                 duration=5, resolution="default", aspect_ratio="auto",
                 seed=-1, timeout_s=120, filename_prefix="Livepeer/",
