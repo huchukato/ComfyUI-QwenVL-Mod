@@ -348,8 +348,11 @@ class QwenVL_LivepeerRender:
             pil = Image.open(path).convert("RGB")
             import numpy as np
             image_out = torch.from_numpy(np.asarray(pil).astype("float32") / 255.0).unsqueeze(0)
+        ui = {"images": [{"filename": file_name, "subfolder": subfolder, "type": "output"}]}
+        if ext in (".mp4", ".webm", ".mov"):
+            ui["animated"] = (True,)
         return {
-            "ui": {"images": [{"filename": file_name, "subfolder": subfolder, "type": "output"}], "animated": (True,)},
+            "ui": ui,
             "result": (video_out, url, json.dumps(report, indent=2), image_out),
         }
 
