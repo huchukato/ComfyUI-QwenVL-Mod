@@ -146,7 +146,7 @@ def list_output_images(output_dir, limit=500):
     for path in root.rglob("*"):
         try:
             resolved = path.resolve()
-            if not resolved.is_relative_to(root) or not resolved.is_file() or resolved.suffix.lower() not in {".png", ".jpg", ".jpeg", ".webp"}:
+            if not resolved.is_relative_to(root) or not resolved.is_file() or resolved.suffix.lower() not in {".png", ".jpg", ".jpeg", ".webp", ".mp4", ".webm", ".mov"}:
                 continue
             images.append((resolved.stat().st_mtime, resolved.relative_to(root).as_posix()))
         except (OSError, ValueError):

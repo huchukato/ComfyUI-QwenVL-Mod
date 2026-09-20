@@ -25,7 +25,7 @@ const TRANSLATIONS = {
         unsupportedAction: "action {action} is not allowed", unknown: "unknown",
         generateVideo: "Generate video", generateVideoSend: "Generate the video", assets: "ComfyUI Assets",
         assetsTitle: "Select a ComfyUI output", assetsLoading: "Loading output images…", assetsEmpty: "No output images found.",
-        assetsError: "Unable to load ComfyUI Assets: {error}", close: "Close", selectTarget: "Select the Load Image (from Outputs) node",
+        assetsError: "Unable to load ComfyUI Assets: {error}", close: "Close", selectTarget: "Select the Load Media / Load Image (from Outputs) node",
         assetChatOnly: "Asset selected for Qwen. Add a Load Image (from Outputs) node to sync it with the workflow.",
         assetSynced: "Asset selected for Qwen and loaded into node {node}.", settings: "Settings", showSettings: "Show settings", hideSettings: "Hide settings",
     },
@@ -50,7 +50,7 @@ const TRANSLATIONS = {
         unsupportedAction: "azione {action} non consentita", unknown: "sconosciuta",
         generateVideo: "Genera video", generateVideoSend: "Genera il video", assets: "Risorse ComfyUI",
         assetsTitle: "Seleziona un output ComfyUI", assetsLoading: "Caricamento immagini di output…", assetsEmpty: "Nessuna immagine di output trovata.",
-        assetsError: "Impossibile caricare le Risorse ComfyUI: {error}", close: "Chiudi", selectTarget: "Seleziona il nodo Carica Immagine da Output",
+        assetsError: "Impossibile caricare le Risorse ComfyUI: {error}", close: "Chiudi", selectTarget: "Seleziona il nodo Load Media / Carica Immagine da Output",
         assetChatOnly: "Risorsa selezionata per Qwen. Aggiungi un nodo Carica Immagine da Output per sincronizzarla con il workflow.",
         assetSynced: "Risorsa selezionata per Qwen e caricata nel nodo {node}.", settings: "Impostazioni", showSettings: "Mostra impostazioni", hideSettings: "Nascondi impostazioni",
     },
@@ -367,8 +367,21 @@ function parseOutputAsset(value) {
 function loadImageOutputNodes() {
     return (app.graph?._nodes || []).filter((node) => {
         const type = node.type || node.comfyClass || "";
-        return type === "LoadImageOutput" && (node.widgets || []).some((widget) => widget.name === "image");
+        const names = (node.widgets || []).map((widget) => widget.name);
+        return (type === "LoadImageOutput" && names.includes("image"))
+            || (type === "QwenVL_LoadMedia" && names.includes("media"));
     });
+}
+
+function syncAssetNode(node, value) {
+    const widget = (node.widgets || []).find((item) => item.name === "media" || item.name === "image");
+    if (!widget) return;
+    const previousValue = widget.value;
+    widget.value = value;
+    widget.callback?.(value, app.canvas, node);
+    node.onWidgetChanged?.(widget.name, value, previousValue, widget);
+    node.setDirtyCanvas?.(true, true);
+    app.graph?.setDirtyCanvas?.(true, true);
 }
 
 function closeAssets() {
@@ -379,6 +392,7 @@ async function useOutputAsset(asset, node = null) {
     const response = await api.fetchApi(asset.route);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const blob = await response.blob();
+    if (node) syncAssetNode(node, asset.value);
     if (/\.(mp4|webm|mov)$/i.test(asset.filename)) {
         attachedVideo = {
             frames: await extractVideoFrames(blob),
@@ -389,7 +403,7 @@ async function useOutputAsset(asset, node = null) {
         attachedImage = null;
         renderAttachment();
         closeAssets();
-        setStatus(t("videoAttached"));
+        setStatus(node ? t("assetSynced", { node: node.id }) : t("videoAttached"));
         return;
     }
     const resized = await resizeImage(blob);
@@ -400,15 +414,6 @@ async function useOutputAsset(asset, node = null) {
         previewUrl: URL.createObjectURL(resized),
         name: asset.filename,
     };
-    if (node) {
-        const widget = (node.widgets || []).find((item) => item.name === "image");
-        const previousValue = widget.value;
-        widget.value = asset.value;
-        widget.callback?.(asset.value, app.canvas, node);
-        node.onWidgetChanged?.(widget.name, asset.value, previousValue, widget);
-        node.setDirtyCanvas?.(true, true);
-        app.graph?.setDirtyCanvas?.(true, true);
-    }
     renderAttachment();
     closeAssets();
     setStatus(node ? t("assetSynced", { node: node.id }) : t("assetChatOnly"));
