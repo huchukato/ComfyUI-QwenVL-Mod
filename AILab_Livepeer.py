@@ -157,6 +157,20 @@ def _extract_url(payload):
     return match.group(0).rstrip(').,]"\'') if match else None
 
 
+def _video_first_frame(video, frame_index=0):
+    """ComfyUI VIDEO input -> IMAGE tensor (1,H,W,C) of one frame, or None."""
+    try:
+        components = video.get_components()
+        frames = getattr(components, "images", None)
+        if frames is None or frames.shape[0] == 0:
+            return None
+        index = frame_index if frame_index >= 0 else frames.shape[0] - 1
+        index = min(index, frames.shape[0] - 1)
+        return frames[index].unsqueeze(0)
+    except Exception:
+        return None
+
+
 def _resolve_capability(capability, custom, has_image):
     if custom and custom.strip():
         return custom.strip()
@@ -184,9 +198,11 @@ class AILab_LivepeerRender:
             },
             "optional": {
                 "image": ("IMAGE", {"tooltip": "Reference/first frame. Enables i2v (animate). Uploaded to Livepeer storage first."}),
+                "source_video": ("VIDEO", {"tooltip": "Video clip whose frame becomes the i2v reference (see source_frame). Takes precedence over image."}),
                 "end_image": ("IMAGE", {"tooltip": "Optional last keyframe for transition-capable models."}),
                 "api_key": ("STRING", {"default": "", "tooltip": "Optional Daydream sk_... key. Empty uses the hackathon demo balance."}),
                 "extra_params": ("STRING", {"default": "", "multiline": True, "tooltip": "Optional JSON object merged into the capability inputs (e.g. {\"guidance_scale\": 7})."}),
+                "source_frame": ("INT", {"default": 0, "min": -1, "max": 10000, "tooltip": "Which frame of source_video to use as the reference: 0 = first, -1 = last. Only used when source_video is connected."}),
             },
         }
 
@@ -196,10 +212,15 @@ class AILab_LivepeerRender:
     CATEGORY = "QwenVL-Mod"
     OUTPUT_NODE = True
 
-    def run(self, prompt, capability, custom_capability, duration, resolution, aspect_ratio, seed, timeout_s, filename_prefix, image=None, end_image=None, api_key="", extra_params=""):
+    def run(self, prompt, capability, custom_capability, duration, resolution, aspect_ratio, seed, timeout_s, filename_prefix, source_frame=0, image=None, source_video=None, end_image=None, api_key="", extra_params=""):
         prompt = (prompt or "").strip()
         if not prompt:
             raise ValueError("Livepeer render needs a non-empty prompt")
+
+        if source_video is not None:
+            frame = _video_first_frame(source_video, int(source_frame))
+            if frame is not None:
+                image = frame
 
         cap = _resolve_capability(capability, custom_capability, image is not None)
         t0 = time.time()
