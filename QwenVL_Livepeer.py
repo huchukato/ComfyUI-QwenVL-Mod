@@ -1,4 +1,4 @@
-# ComfyUI-QwenVL — Livepeer Agent render node (hackathon branch)
+# ComfyUI-QwenVL-Mod — Livepeer Agent render node
 # Calls the Livepeer Agent MCP raw profile (deterministic dispatch) via
 # stateless JSON-RPC over HTTP. No extra dependencies required.
 
@@ -179,8 +179,12 @@ def _resolve_capability(capability, custom, has_image):
     return "minimax-h3-i2v" if has_image else "minimax-h3-t2v"
 
 
-class AILab_LivepeerRender:
-    """Send a shot prompt to the Livepeer Agent network and get a video back."""
+class QwenVL_LivepeerRender:
+    """Send a shot prompt to the Livepeer Agent network and get media back.
+
+    Video capabilities return a VIDEO clip; image capabilities (e.g. flux)
+    return an IMAGE usable as the i2v reference for the next render.
+    """
 
     @classmethod
     def INPUT_TYPES(cls):
@@ -206,8 +210,8 @@ class AILab_LivepeerRender:
             },
         }
 
-    RETURN_TYPES = ("VIDEO", "STRING", "STRING")
-    RETURN_NAMES = ("video", "url", "report")
+    RETURN_TYPES = ("VIDEO", "STRING", "STRING", "IMAGE")
+    RETURN_NAMES = ("video", "url", "report", "image")
     FUNCTION = "run"
     CATEGORY = "QwenVL-Mod"
     OUTPUT_NODE = True
@@ -312,16 +316,24 @@ class AILab_LivepeerRender:
             "model_note": submit.get("model_note"),
         }
         video_out = _VIDEO_FROM_FILE(path) if _VIDEO_FROM_FILE and ext in (".mp4", ".webm", ".mov") else None
+        image_out = None
+        if ext in (".png", ".jpg", ".webp"):
+            pil = Image.open(path).convert("RGB")
+            import numpy as np
+            image_out = torch.from_numpy(np.asarray(pil).astype("float32") / 255.0).unsqueeze(0)
         return {
             "ui": {"images": [{"filename": file_name, "subfolder": subfolder, "type": "output"}], "animated": (True,)},
-            "result": (video_out, url, json.dumps(report, indent=2)),
+            "result": (video_out, url, json.dumps(report, indent=2), image_out),
         }
 
 
 NODE_CLASS_MAPPINGS = {
-    "AILab_LivepeerRender": AILab_LivepeerRender,
+    "QwenVL_LivepeerRender": QwenVL_LivepeerRender,
+    # Legacy alias: workflows saved on the hackathon branch still resolve.
+    "AILab_LivepeerRender": QwenVL_LivepeerRender,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
+    "QwenVL_LivepeerRender": "🌐 Livepeer Agent Render",
     "AILab_LivepeerRender": "🌐 Livepeer Agent Render",
 }
