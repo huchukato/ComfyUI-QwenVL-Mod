@@ -119,6 +119,7 @@ async def _chat(request):
             data.get("graph"),
             options,
             data.get("images"),
+            data.get("video"),
         )
         return web.json_response(result)
     except ValueError as error:
