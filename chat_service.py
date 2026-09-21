@@ -330,9 +330,9 @@ def _clean_action_directive(text):
     string when nothing but meta remains."""
     if not isinstance(text, str):
         return ""
-    cleaned = _CONFIG_PHRASE.sub("", text).strip(" ,;:-")
-    cleaned = _GENERATION_PREFIX.sub("", cleaned, count=1).strip(" ,;:-")
-    cleaned = _GENERATION_PREFIX.sub("", cleaned, count=1)
+    cleaned = _CONFIG_PHRASE.sub("", text).strip(" ,;:-").lstrip(".")
+    cleaned = _GENERATION_PREFIX.sub("", cleaned, count=1).strip(" ,;:-").lstrip(".")
+    cleaned = _GENERATION_PREFIX.sub("", cleaned, count=1).strip(" ,;:-").lstrip(".")
     cleaned = _DURATION_MENTION.sub("", cleaned)
     cleaned = _MEDIA_WORD.sub("", cleaned)
     cleaned = re.sub(r"\s*[,;:]\s*", ", ", cleaned)
