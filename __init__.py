@@ -10,6 +10,7 @@
 """
 
 import asyncio
+import html
 import importlib.util
 import os
 import sys
@@ -48,17 +49,25 @@ async def _dlstatus(request):
                 pass
     return web.Response(text="Download log not yet available...", content_type="text/plain")
 
+_DLSTATUS_PAGE = """<!DOCTYPE html>
+<html>
+<head><meta http-equiv="refresh" content="3"></head>
+<body><pre style="font-family:monospace;font-size:12px;white-space:pre-wrap;">%s</pre></body>
+</html>"""
+
+
 @PromptServer.instance.routes.get("/dlstatus.html")
 async def _dlstatus_html(request):
     for log_path in _DL_LOGS:
-        if os.path.exists(log_path):
-            try:
-                with open(log_path, "r") as f:
-                    lines = f.readlines()[-30:]
-                body = "<!DOCTYPE html><html><head><meta http-equiv='refresh' content='3'></head><body><pre style='font-family:monospace;font-size:12px;white-space:pre-wrap;'>" + "".join(lines).replace("<", "&lt;").replace(">", "&gt;") + "</pre></body></html>"
-                return web.Response(text=body, content_type="text/html")
-            except Exception:
-                pass
+        if not os.path.exists(log_path):
+            continue
+        try:
+            with open(log_path, "r") as f:
+                tail = f.readlines()[-30:]
+        except Exception:
+            continue
+        escaped = html.escape("".join(tail))
+        return web.Response(text=_DLSTATUS_PAGE % escaped, content_type="text/html")
     return web.Response(text="Download log not yet available...", content_type="text/plain")
 
 def load_modules_from_directory(directory):
