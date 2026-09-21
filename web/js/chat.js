@@ -604,17 +604,18 @@ function refreshCapabilitySelector() {
 }
 
 async function sendMessage() {
-    let content = elements.input.value.trim();
+    const rawText = elements.input.value.trim();
     refreshCapabilitySelector();
     const capability = elements.capability?.value || "auto";
     const config = elements.config?.value || "auto";
-    if (controller || (!content && capability === "auto" && config === "auto")) return;
-    if (capability !== "auto") content = `use ${capability}. ${content}`.trim();
-    else if (config !== "auto") content = `use ${config}. ${content}`.trim();
-    if (!state.model && capability === "auto" && config === "auto") {
+    const hasDirective = capability !== "auto" || config !== "auto";
+    if (controller || (!rawText && !hasDirective)) return;
+    if (!state.model && !hasDirective) {
         setStatus(t("selectModel"), true);
         return;
     }
+    const configLabels = { native: "Native", "10eros": "10Eros", turbo: "Turbo LoRA" };
+    const content = rawText || `⚙️ ${capability !== "auto" ? capability : configLabels[config] || config}`;
     state.messages.push({ role: "user", content });
     state.messages = state.messages.slice(-20);
     elements.input.value = "";
@@ -648,6 +649,7 @@ async function sendMessage() {
                 graph: snapshotGraph(),
                 images,
                 video: attachedVideo?.frames || [],
+                directives: { capability, config, text: rawText },
                 options: {
                     max_tokens: state.maxTokens,
                     temperature: state.temperature,

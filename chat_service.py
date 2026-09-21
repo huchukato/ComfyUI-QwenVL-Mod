@@ -29,7 +29,7 @@ Choices are top-level, only when truly ambiguous. Always close braces.
 ---
 WORKFLOW TARGETS (pick the FIRST matching case for the node you are controlling):
 1. MiniMax H3 video sampler (exposes unet_name + preset_prompt + passthrough):
-   - If the request says "use Native", "Config C", "use 10Eros", "Config A" etc., FIRST update the sampler widgets, then write only the action into preset_prompt.
+   - If the request says "use Native", "Config C", "use 10Eros", "Config A" etc., FIRST update the sampler widgets, then write only the action into the "prompt" widget.
    - Config mapping:
      * Native / Config C → unet_name="minimax_h3_fl2va_pruned_nvfp4_convrot_int8.safetensors", steps=20, sampler_name="res_multistep", scheduler="simple", shift_video=12, shift_audio=3
      * 10Eros / Config A → unet_name="10Eros_Max_h3_TURBO-hybrid_beta3_int8_convrot_skip_edges.safetensors", steps=8, sampler_name="euler", scheduler="simple", shift_video=6, shift_audio=3
@@ -37,10 +37,10 @@ WORKFLOW TARGETS (pick the FIRST matching case for the node you are controlling)
    - If a different duration is requested, set "value_1" to that number of seconds.
    - For the prompt: remove config words and duration. Write only a short English action description.
    - EXAMPLE: user says "generate a 5s video, use Native: rhythmic hip sway, subtle back and forth"
-     Actions: value_1=5; unet_name=minimax...; steps=20; sampler_name=res_multistep; shift_video=12; shift_audio=3; preset_prompt="rhythmic hip sway, subtle back and forth"; passthrough=false; queue_workflow.
+     Actions: value_1=5; unet_name=minimax...; steps=20; sampler_name=res_multistep; shift_video=12; shift_audio=3; prompt="rhythmic hip sway, subtle back and forth"; passthrough=false; queue_workflow.
    - EXAMPLE: user says "use 10Eros: slow caressing on thigh, static camera"
-     Actions: unet_name=10Eros...; steps=8; sampler_name=euler; shift_video=6; preset_prompt="slow caressing on thigh, static camera"; passthrough=false; queue_workflow.
-   - NEVER copy "use Native", "use 10Eros", "generate", "5s video" into preset_prompt.
+     Actions: unet_name=10Eros...; steps=8; sampler_name=euler; shift_video=6; prompt="slow caressing on thigh, static camera"; passthrough=false; queue_workflow.
+   - NEVER copy "use Native", "use 10Eros", "generate", "5s video" into the prompt widget.
    - NEVER describe the image yourself (clothes, face, room, light); the inner QwenVL model will see the image and describe it. You only provide the action.
 2. Livepeer Render node (type contains "Livepeer", exposes capability + duration):
    - Write one English shot-native prompt into its "prompt" widget. Update capability, duration, aspect_ratio to match the request.
@@ -314,7 +314,7 @@ _CONFIG_PHRASE = re.compile(
 _GENERATION_PREFIX = re.compile(
     r"^\s*(?:please\s+)?(?:generate|creates?|makes?|render|animate|produce|do|genera|crea|fai)\s+"
     r"(?:a\s+|an\s+|the\s+|this\s+|me\s+|one\s+|un\s+|una\s+|il\s+)?\s*"
-    r"\d*\s*(?:s|sec(?:ond)?s?)?\s*"
+    r"\d*\s*(?:sec(?:ond)?s?|s)?\s*"
     r"(?:second\s+|new\s+)?(?:video|clip|animation|scene)?\s*"
     r"(?:of|with|showing|where|di|con)?[:,]?\s*",
     re.IGNORECASE,
@@ -554,21 +554,10 @@ def build_prompt(messages, graph, enable_thinking=False, has_images=False, has_v
 _EXPLICIT_USE = re.compile(r"^\s*(?:use|usa)\s+([a-z0-9][\w.\-]*)[.:,;\s]\s*(.*)$", re.IGNORECASE | re.DOTALL)
 
 
-def _explicit_capability_request(messages, graph):
-    """Deterministic `use <capability> <prompt>` shortcut: when the workflow has
-    a Livepeer render node, apply capability + prompt + queue locally without
-    calling the chat model. Returns None when the name is not a Livepeer
-    capability (e.g. "use native" is a MiniMax config) or no render node exists."""
-    last_user = ""
-    for item in reversed(messages or []):
-        if item.get("role") == "user" and isinstance(item.get("content"), str) and item["content"].strip():
-            last_user = item["content"].strip()
-            break
-    match = _EXPLICIT_USE.match(last_user)
-    if not match:
-        return None
-    capability = match.group(1).rstrip(".:,;")
-    prompt = (match.group(2) or "").strip()
+def _capability_result(graph, capability, prompt, text):
+    """Apply capability + prompt + duration/aspect-ratio + queue on the Livepeer
+    render node. `prompt` is the scene text to write; `text` is the full user
+    message used for duration/ratio/language detection."""
     for node in graph.get("nodes", []):
         title = f'{node.get("title", "")} {node.get("type", "")}'.lower()
         if "livepeer" not in title:
@@ -589,19 +578,33 @@ def _explicit_capability_request(messages, graph):
             return None
         if prompt:
             actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "prompt", "value": prompt[:4000]})
-        duration = re.search(r"\b(\d{1,2})\s*s\b", last_user, re.IGNORECASE)
+        duration = re.search(r"\b(\d{1,2})\s*(?:sec(?:ond)?s?|s|secondi?)\b", text, re.IGNORECASE)
         if duration and "duration" in widgets:
             actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "duration", "value": max(3, min(15, int(duration.group(1))))})
-        ratio = re.search(r"\b(16:9|9:16|1:1|3:2|2:3|4:3|3:4|2\.35:1)\b", last_user)
+        ratio = re.search(r"\b(16:9|9:16|1:1|3:2|2:3|4:3|3:4|2\.35:1)\b", text)
         if ratio and "aspect_ratio" in widgets:
             actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "aspect_ratio", "value": ratio.group(1)})
         actions.append({"type": "queue_workflow"})
-        if last_user.lower().startswith("usa"):
+        if re.match(r"^\s*(usa|passa|metti|fai|genera|crea)\b", text, re.IGNORECASE):
             message = f"⚙️ {capability} — workflow in coda."
         else:
             message = f"⚙️ {capability} — workflow queued."
         return {"message": message, "actions": actions, "choices": []}
     return None
+
+
+def _explicit_capability_request(messages, graph):
+    """Deterministic `use <capability> <prompt>` shortcut: when the workflow has
+    a Livepeer render node, apply capability + prompt + queue locally without
+    calling the chat model. Returns None when the name is not a Livepeer
+    capability (e.g. "use native" is a MiniMax config) or no render node exists."""
+    last_user = _last_user_message(messages)
+    match = _EXPLICIT_USE.match(last_user)
+    if not match:
+        return None
+    capability = match.group(1).rstrip(".:,;")
+    prompt = (match.group(2) or "").strip()
+    return _capability_result(graph, capability, prompt, last_user)
 
 
 _CONFIG_TRIGGER = re.compile(
@@ -647,22 +650,10 @@ def _match_option(widget, needle):
     return None
 
 
-def _explicit_minimax_request(messages, graph):
-    """Deterministic MiniMax config switch ("use native/10Eros/turbo", "config A/B/C"):
-    applies sampler widgets + duration + cleaned action locally, no LLM call."""
-    last_user = _last_user_message(messages)
-    trigger = _CONFIG_TRIGGER.search(last_user)
-    if not trigger:
-        return None
-    raw = trigger.group(1).lower()
-    if "native" in raw or raw.rstrip() == "config c":
-        config_key = "native"
-    elif "eros" in raw or raw.rstrip() == "config a":
-        config_key = "10eros"
-    elif "turbo" in raw or raw.rstrip() == "config b":
-        config_key = "turbo"
-    else:
-        return None
+def _minimax_result(graph, config_key, text):
+    """Apply a MiniMax H3 sampler config + optional cleaned scene directive +
+    queue on the enhancer node. `text` is the raw user message (duration is
+    parsed from it, the cleaned remainder becomes the prompt directive)."""
     for node in graph.get("nodes", []):
         widgets = {w.get("name"): w for w in node.get("widgets", []) if isinstance(w, dict)}
         if not {"unet_name", "preset_prompt", "passthrough"}.issubset(widgets):
@@ -684,7 +675,7 @@ def _explicit_minimax_request(messages, graph):
                     continue
                 value = match
             actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": name, "value": value})
-        duration = re.search(r"\b(\d{1,2})\s*(?:s|sec(?:ond)?s?|secondi?)\b", last_user, re.IGNORECASE)
+        duration = re.search(r"\b(\d{1,2})\s*(?:sec(?:ond)?s?|s|secondi?)\b", text, re.IGNORECASE)
         if duration:
             seconds = int(duration.group(1))
             if "value_1" in widgets:
@@ -692,18 +683,37 @@ def _explicit_minimax_request(messages, graph):
             preset_match = _match_option(widgets["preset_prompt"], f"({seconds}s)")
             if preset_match:
                 actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "preset_prompt", "value": preset_match})
-        directive = _clean_action_directive(last_user)
+        directive = _clean_action_directive(text)
         if directive and "prompt" in widgets:
             actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "prompt", "value": directive})
         actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "passthrough", "value": False})
         actions.append({"type": "queue_workflow"})
         label = {"native": "Native", "10eros": "10Eros", "turbo": "Turbo LoRA"}[config_key]
-        if re.match(r"^\s*(usa|passa|metti|fai|genera|crea)\b", last_user, re.IGNORECASE):
+        if re.match(r"^\s*(usa|passa|metti|fai|genera|crea)\b", text, re.IGNORECASE):
             message = f"⚙️ MiniMax H3 → {label}. Workflow in coda."
         else:
             message = f"⚙️ MiniMax H3 → {label}. Workflow queued."
         return {"message": message, "actions": actions, "choices": []}
     return None
+
+
+def _explicit_minimax_request(messages, graph):
+    """Deterministic MiniMax config switch ("use native/10Eros/turbo", "config A/B/C"):
+    applies sampler widgets + duration + cleaned action locally, no LLM call."""
+    last_user = _last_user_message(messages)
+    trigger = _CONFIG_TRIGGER.search(last_user)
+    if not trigger:
+        return None
+    raw = trigger.group(1).lower()
+    if "native" in raw or raw.rstrip() == "config c":
+        config_key = "native"
+    elif "eros" in raw or raw.rstrip() == "config a":
+        config_key = "10eros"
+    elif "turbo" in raw or raw.rstrip() == "config b":
+        config_key = "turbo"
+    else:
+        return None
+    return _minimax_result(graph, config_key, last_user)
 
 
 class ChatRuntime:
@@ -719,12 +729,22 @@ class ChatRuntime:
         gguf_models = sorted(((getattr(gguf, "GGUF_VL_CATALOG", {}) or {}).get("models") or {}).keys()) if gguf else []
         return {"hf": hf_models, "gguf": gguf_models}
 
-    def chat(self, backend, model_name, messages, graph, options, images=None, video=None):
+    def chat(self, backend, model_name, messages, graph, options, images=None, video=None, directives=None):
         messages = validate_messages(messages)
         graph = validate_graph(graph)
         images = validate_images(images or [])
         video = validate_images(video or [], MAX_VIDEO_FRAMES)
-        explicit = _explicit_capability_request(messages, graph) or _explicit_minimax_request(messages, graph)
+        directives = directives if isinstance(directives, dict) else {}
+        sel_capability = str(directives.get("capability") or "auto")
+        sel_config = str(directives.get("config") or "auto")
+        sel_text = str(directives.get("text") or "")
+        explicit = None
+        if sel_capability != "auto":
+            explicit = _capability_result(graph, sel_capability, sel_text, sel_text)
+        if explicit is None and sel_config in _MINIMAX_CONFIGS:
+            explicit = _minimax_result(graph, sel_config, sel_text)
+        if explicit is None:
+            explicit = _explicit_capability_request(messages, graph) or _explicit_minimax_request(messages, graph)
         if explicit is not None:
             return explicit
         available = self.models().get(backend)
