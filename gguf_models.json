@@ -17,6 +17,26 @@
     }
   },
   "qwenVL_model": {
+    "Qwen3.5-9B-Defiant-Fable-Heretic-GGUF": {
+      "author": "DavidAU",
+      "repo_name": "Qwen3.5-9B-The-Defiant-Fable-Uncensored-Heretic-NEO-IMATRIX-MAX-MTP-GGUF",
+      "repo_id": "DavidAU/Qwen3.5-9B-The-Defiant-Fable-Uncensored-Heretic-NEO-IMATRIX-MAX-MTP-GGUF",
+      "mmproj_file": "mmproj-BF16.gguf",
+      "model_files": [
+        "Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q4_K_M.gguf",
+        "Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q5_K_M.gguf",
+        "Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
+        "Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q8_0.gguf"
+      ],
+      "defaults": {
+        "context_length": 65536,
+        "image_max_tokens": 4096,
+        "n_batch": 512,
+        "gpu_layers": -1,
+        "top_k": 0,
+        "pool_size": 4194304
+      }
+    },
     "Qwen3.5-9B-ultra-uncensored-heretic-v2-GGUF": {
       "author": "llmfan46",
       "repo_name": "Qwen3.5-9B-ultra-uncensored-heretic-GGUF",
