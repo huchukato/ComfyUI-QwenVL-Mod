@@ -1,5 +1,15 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.8.0 (2026/09/21)
+
+- Added `QwenVL_LivepeerRender`: a self-contained node that renders images and videos through the Livepeer Agent network over MCP, with a capability dropdown (image and video models), IMAGE output for still results, static preview for images and animated preview for video, and a `source_video` input that picks a frame from a clip as the i2v reference.
+- Added `QwenVL_LoadMedia` (utils category): a single picker for images and videos in input/output folders with built-in preview, an upload button for videos, and resolution of untagged input-directory names.
+- Qwen Chat now drives the Livepeer render node directly: it routes generation requests through the node (never bypassing it), clears stale `custom_capability` values, bypasses mismatched saver nodes and re-enables the matching one, and supports video attachments with browser-side frame sampling for the refine loop.
+- The chat assets panel lists videos too and syncs the selection with `QwenVL_LoadMedia`; the capability dropdown now includes image-generation models, and a MiniMax H3 config switch (10Eros/Native/Turbo) runs before prompt routing.
+- Added unified HF/GGUF QwenVL nodes with a backend dropdown.
+- Rewrote the chat system prompt: shorter, with concrete examples and MiniMax configuration handled first.
+- Fixed MCP error handling and stopped sending video parameters to image-only capabilities; the chat mirrors the latest user message language and no longer pre-formats enhancer prompts.
+
 ## Version 2.7.13 (2026/09/16)
 
 - Fixed `enforce_image_reference_bindings` to use the `passthrough` value from the action set instead of the stale workflow snapshot, so I2VA workflows with `passthrough=false` no longer receive the `For the target video...` binding line in the chat-managed prompt.

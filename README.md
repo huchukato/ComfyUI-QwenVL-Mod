@@ -58,6 +58,12 @@ Qwen Chat treats the render node as its generation target: it reads your request
 Demo workflow: [`workflows/livepeer/Livepeer-Agent-Demo.json`](https://github.com/huchukato/ComfyUI-Garage/blob/master/workflows/livepeer/Livepeer-Agent-Demo.json) in the ComfyUI-Garage repo — just `Load Media → Livepeer Render`.
 
 ## **📰 News & Updates**
+* **2026/09/21**: **v2.8.0 — Livepeer Agent Render Node, Unified Media Loader, and Chat-Driven Generation**. [[Update](update.md#version-280-20260921)]
+> 🌐 **Livepeer Agent Render**: New `QwenVL_LivepeerRender` node generates images and videos through the Livepeer Agent network via MCP — capability dropdown with image and video models, IMAGE output for stills, `source_video` frame picker for i2v references.
+> 🗂️ **Unified media loader**: New `QwenVL_LoadMedia` node picks images or videos from input/output folders with preview and an upload button.
+> 💬 **Chat-driven generation**: Qwen Chat routes requests through the render node, accepts video attachments with browser frame sampling, syncs selections with LoadMedia, and switches MiniMax H3 configs (10Eros/Native/Turbo) on demand.
+> 🧠 **Unified HF/GGUF nodes** with backend dropdown, rewritten system prompt, and MCP error handling fixes.
+
 * **2026/09/16**: **v2.7.0 — Qwen Workflow Chat, Image Attachments, Guided Actions, and Qwen 3.8 Models**. [[Update](update.md#version-270-20260916)]
 > **Qwen Workflow Chat**: Native ComfyUI sidebar assistant with validated workflow actions, clickable choices, malformed-JSON recovery, preset-aware prompt routing, and autonomous queue execution.
 > **Image-aware chat**: Analyze workflow images automatically or attach a priority reference image directly in chat with preview, resizing, and removal controls.
