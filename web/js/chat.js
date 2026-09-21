@@ -151,9 +151,10 @@ function serializeValue(value) {
     return String(value ?? "").slice(0, 1000);
 }
 
-function snapshotGraph() {
-    const nodes = (app.graph?._nodes || []).slice(0, 200).map((node) => ({
-        id: node.id,
+function serializeGraphNode(node, prefix) {
+    const id = prefix ? `${prefix}:${node.id}` : node.id;
+    const result = [{
+        id,
         type: node.type || node.comfyClass || "",
         title: node.title || "",
         mode: node.mode ?? 0,
@@ -168,8 +169,19 @@ function snapshotGraph() {
                 values: Array.isArray(widget.options.values) ? widget.options.values.slice(0, 200).map(serializeValue) : undefined,
             } : undefined,
         })),
-    }));
-    return { nodes };
+    }];
+    for (const inner of (node.subgraph?._nodes || []).slice(0, 200)) {
+        result.push(...serializeGraphNode(inner, String(id)));
+    }
+    return result;
+}
+
+function snapshotGraph() {
+    const nodes = [];
+    for (const node of (app.graph?._nodes || []).slice(0, 200)) {
+        nodes.push(...serializeGraphNode(node, ""));
+    }
+    return { nodes: nodes.slice(0, 400) };
 }
 
 function collectImageInputs() {
@@ -476,7 +488,14 @@ async function openAssets() {
 }
 
 function findNode(nodeId) {
-    return app.graph?.getNodeById?.(nodeId) || (app.graph?._nodes || []).find((node) => String(node.id) === String(nodeId));
+    let graph = app.graph;
+    let node = null;
+    for (const part of String(nodeId).split(":")) {
+        node = graph?.getNodeById?.(part) || (graph?._nodes || []).find((item) => String(item.id) === part);
+        if (!node) return null;
+        graph = node.subgraph;
+    }
+    return node;
 }
 
 function normalizeWidgetValue(widget, value) {

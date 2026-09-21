@@ -625,11 +625,14 @@ _MINIMAX_CONFIGS = {
         "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
     },
     "turbo": {
-        "unet_needle": None,
-        "unet_fallback": None,
+        "unet_needle": "fl2va_pruned",
+        "unet_fallback": "minimax_h3_fl2va_pruned_nvfp4_convrot_int8.safetensors",
         "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
+        "lora_mode": "enable",
     },
 }
+# Turbo LoRA must be bypassed for Native/10Eros (fused in the 10Eros checkpoint)
+_MINIMAX_LORA_MODE = {"native": "bypass", "10eros": "bypass", "turbo": "enable"}
 
 
 def _last_user_message(messages):
@@ -686,6 +689,16 @@ def _minimax_result(graph, config_key, text):
         directive = _clean_action_directive(text)
         if directive and "prompt" in widgets:
             actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "prompt", "value": directive})
+        lora_mode = config.get("lora_mode") or _MINIMAX_LORA_MODE.get(config_key)
+        prefix = f'{node["id"]}:'
+        if lora_mode:
+            target_mode = 0 if lora_mode == "enable" else 4
+            for inner in graph.get("nodes", []):
+                inner_id = str(inner.get("id", ""))
+                if not inner_id.startswith(prefix) or "lora" not in str(inner.get("type", "")).lower():
+                    continue
+                if inner.get("mode", 0) != target_mode:
+                    actions.append({"type": "set_node_mode", "node_id": inner["id"], "mode": lora_mode})
         actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "passthrough", "value": False})
         actions.append({"type": "queue_workflow"})
         label = {"native": "Native", "10eros": "10Eros", "turbo": "Turbo LoRA"}[config_key]
