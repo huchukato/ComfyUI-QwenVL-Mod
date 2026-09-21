@@ -305,6 +305,41 @@ def select_workflow_intent(messages):
     return intent if intent is not None else (last_user or "")
 
 
+_CONFIG_PHRASE = re.compile(
+    r"\b(?:use|using|with|in|switch(?:ing)?\s+to|usa|metti|passa\s+a)\s+"
+    r"(?:the\s+)?(?:native|10\s*eros(?:-max)?|eros|turbo(?:\s*lora)?|config\s*[abc]|sol[-\s]?attn)"
+    r"(?:\s+(?:mode|config|preset|model|version))?",
+    re.IGNORECASE,
+)
+_GENERATION_PREFIX = re.compile(
+    r"^\s*(?:please\s+)?(?:generate|creates?|makes?|render|animate|produce|do|genera|crea|fai)\s+"
+    r"(?:a\s+|an\s+|the\s+|this\s+|me\s+|one\s+|un\s+|una\s+|il\s+)?\s*"
+    r"\d*\s*(?:s|sec(?:ond)?s?)?\s*"
+    r"(?:second\s+|new\s+)?(?:video|clip|animation|scene)?\s*"
+    r"(?:of|with|showing|where|di|con)?[:,]?\s*",
+    re.IGNORECASE,
+)
+_DURATION_MENTION = re.compile(r"\b\d+\s*(?:s|sec(?:ond)?s?|secondi?)\b(?:\s*(?:video|clip|animation))?", re.IGNORECASE)
+_MEDIA_WORD = re.compile(r"\b(?:video|clip|animation|scene)\b", re.IGNORECASE)
+
+
+def _clean_action_directive(text):
+    """Strip routing keywords and generation meta from a directive so the
+    enhancer only receives the scene action (e.g. 'use native' and
+    'generate a 5s video' never reach the prompt widget). Returns an empty
+    string when nothing but meta remains."""
+    if not isinstance(text, str):
+        return ""
+    cleaned = _GENERATION_PREFIX.sub("", text, count=1)
+    cleaned = _CONFIG_PHRASE.sub("", cleaned)
+    cleaned = _DURATION_MENTION.sub("", cleaned)
+    cleaned = _MEDIA_WORD.sub("", cleaned)
+    cleaned = re.sub(r"\s*[,;:]\s*", ", ", cleaned)
+    cleaned = re.sub(r"(?:,\s*){2,}", ", ", cleaned)
+    cleaned = re.sub(r"\s{2,}", " ", cleaned).strip(" ,;:-")
+    return cleaned
+
+
 def enforce_image_enhancer_routing(result, graph, messages, has_images):
     if not has_images or not any(action.get("type") == "queue_workflow" for action in result.get("actions", [])):
         return result
@@ -327,23 +362,29 @@ def enforce_image_enhancer_routing(result, graph, messages, has_images):
         selected = candidates
     node, prompt_widget = selected[0]
     node_id = node.get("id")
-    intent = select_workflow_intent(messages)
+    intent = _clean_action_directive(select_workflow_intent(messages))
     actions = result.get("actions", [])
     prompt_action = next((action for action in actions if str(action.get("node_id")) == str(node_id) and action.get("widget") in {"prompt", "custom_prompt", "prompt_text"}), None)
     if prompt_action is not None and _is_enhancer_instruction(prompt_action.get("value")):
-        intent = prompt_action["value"].strip()
-    if prompt_action is None:
-        queue_index = next((index for index, action in enumerate(actions) if action.get("type") == "queue_workflow"), len(actions))
-        prompt_action = {"type": "set_widget_value", "node_id": node_id}
-        actions.insert(queue_index, prompt_action)
-    prompt_action.update({"widget": prompt_widget, "value": intent})
+        intent = _clean_action_directive(prompt_action["value"].strip())
+    if not intent:
+        # Only config keywords (e.g. "use native") — leave the existing prompt
+        if prompt_action is not None:
+            actions.remove(prompt_action)
+    else:
+        if prompt_action is None:
+            queue_index = next((index for index, action in enumerate(actions) if action.get("type") == "queue_workflow"), len(actions))
+            prompt_action = {"type": "set_widget_value", "node_id": node_id}
+            actions.insert(queue_index, prompt_action)
+        prompt_action.update({"widget": prompt_widget, "value": intent})
     passthrough_action = next((action for action in actions if str(action.get("node_id")) == str(node_id) and action.get("widget") == "passthrough"), None)
     if passthrough_action:
         passthrough_action["value"] = False
     else:
         queue_index = next((index for index, action in enumerate(actions) if action.get("type") == "queue_workflow"), len(actions))
         actions.insert(queue_index, {"type": "set_widget_value", "node_id": node_id, "widget": "passthrough", "value": False})
-    result["message"] = f'{result.get("message", "").rstrip()}\n\nWorkflow enhancer instruction:\n{intent}'.strip()
+    if intent:
+        result["message"] = f'{result.get("message", "").rstrip()}\n\nWorkflow enhancer instruction:\n{intent}'.strip()
     return result
 
 
