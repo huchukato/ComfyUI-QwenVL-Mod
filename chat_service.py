@@ -550,6 +550,59 @@ def build_prompt(messages, graph, enable_thinking=False, has_images=False, has_v
     return f"{instruction}\n\nWORKFLOW SNAPSHOT:\n{snapshot}\n\nCONVERSATION:\n{history}\n\nJSON RESPONSE:"
 
 
+_EXPLICIT_USE = re.compile(r"^\s*(?:use|usa)\s+([a-z0-9][\w.\-]*)[.:,;\s]\s*(.*)$", re.IGNORECASE | re.DOTALL)
+
+
+def _explicit_capability_request(messages, graph):
+    """Deterministic `use <capability> <prompt>` shortcut: when the workflow has
+    a Livepeer render node, apply capability + prompt + queue locally without
+    calling the chat model. Returns None when the name is not a Livepeer
+    capability (e.g. "use native" is a MiniMax config) or no render node exists."""
+    last_user = ""
+    for item in reversed(messages or []):
+        if item.get("role") == "user" and isinstance(item.get("content"), str) and item["content"].strip():
+            last_user = item["content"].strip()
+            break
+    match = _EXPLICIT_USE.match(last_user)
+    if not match:
+        return None
+    capability = match.group(1)
+    prompt = (match.group(2) or "").strip()
+    for node in graph.get("nodes", []):
+        title = f'{node.get("title", "")} {node.get("type", "")}'.lower()
+        if "livepeer" not in title:
+            continue
+        widgets = {w.get("name"): w for w in node.get("widgets", []) if isinstance(w, dict)}
+        if "capability" not in widgets or "prompt" not in widgets:
+            continue
+        options = (widgets["capability"].get("options") or {}).get("values") or []
+        lookup = {str(o).lower(): o for o in options}
+        actions = []
+        if capability.lower() in lookup:
+            actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "capability", "value": lookup[capability.lower()]})
+            if widgets.get("custom_capability", {}).get("value"):
+                actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "custom_capability", "value": ""})
+        elif "-" in capability and capability.lower() != "auto" and "custom_capability" in widgets:
+            actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "custom_capability", "value": capability})
+        else:
+            return None
+        if prompt:
+            actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "prompt", "value": prompt[:4000]})
+        duration = re.search(r"\b(\d{1,2})\s*s\b", last_user, re.IGNORECASE)
+        if duration and "duration" in widgets:
+            actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "duration", "value": max(3, min(15, int(duration.group(1))))})
+        ratio = re.search(r"\b(16:9|9:16|1:1|3:2|2:3|4:3|3:4|2\.35:1)\b", last_user)
+        if ratio and "aspect_ratio" in widgets:
+            actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "aspect_ratio", "value": ratio.group(1)})
+        actions.append({"type": "queue_workflow"})
+        if last_user.lower().startswith("usa"):
+            message = f"⚙️ {capability} — workflow in coda."
+        else:
+            message = f"⚙️ {capability} — workflow queued."
+        return {"message": message, "actions": actions, "choices": []}
+    return None
+
+
 class ChatRuntime:
     def __init__(self):
         self._instances = {}
@@ -568,6 +621,9 @@ class ChatRuntime:
         graph = validate_graph(graph)
         images = validate_images(images or [])
         video = validate_images(video or [], MAX_VIDEO_FRAMES)
+        explicit = _explicit_capability_request(messages, graph)
+        if explicit is not None:
+            return explicit
         available = self.models().get(backend)
         if available is None:
             raise ValueError("backend must be hf or gguf")
