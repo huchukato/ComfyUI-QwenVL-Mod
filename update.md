@@ -1,5 +1,10 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.8.7 (2026/09/21)
+
+- Selector dropdowns no longer inject "use &lt;config&gt;" into the chat text: the Config / Livepeer pickers are sent as a separate `directives` field and applied deterministically server-side, so the user message (and the prompt widget) stays clean.
+- Fixed duration regex matching "s" before "seconds" ("5 seconds" left "econds" in the prompt); also widened the capability-path duration parser to seconds/secondi.
+- System prompt: MiniMax action now targets the "prompt" widget (was preset_prompt, inconsistent with the deterministic path).
 ## Version 2.8.6 (2026/09/21)
 
 - Fixed directive cleaning when the config command is separated by a period ("use native. generate a 5s video, ..."): the leftover leading dot blocked the generation-prefix stripper, leaving "generate a," fragments in the prompt. Leading dots are now stripped after each cleaning stage; legitimate trailing periods are preserved.
