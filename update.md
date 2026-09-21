@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.8.4 (2026/09/21)
+
+- Fixed directive cleaning when a config keyword precedes the request ("usa 10Eros: genera un video di…"): the generation prefix is now stripped after config removal too, so no "genera un di" fragments reach the prompt widget.
+
 ## Version 2.8.3 (2026/09/21)
 
 - Added deterministic chat shortcuts that skip the LLM entirely: `use <capability> <prompt>` drives the Livepeer render node directly (dropdown or `custom_capability`, with duration and aspect-ratio parsing), and `use native` / `use 10Eros` / `use turbo` / `config A-B-C` apply the full MiniMax H3 sampler config on the enhancer node — correct widgets every time, instant, and immune to malformed local-model JSON.
