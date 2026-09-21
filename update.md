@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.8.6 (2026/09/21)
+
+- Fixed directive cleaning when the config command is separated by a period ("use native. generate a 5s video, ..."): the leftover leading dot blocked the generation-prefix stripper, leaving "generate a," fragments in the prompt. Leading dots are now stripped after each cleaning stage; legitimate trailing periods are preserved.
+
 ## Version 2.8.5 (2026/09/21)
 
 - Added selector dropdowns under the chat composer: a **Config** picker (Auto / Native / 10Eros / Turbo LoRA) injects the deterministic MiniMax command, and a **Livepeer** picker is auto-populated from the render node's capability widget — no more typing `use <name>` by hand. Both selectors persist, work with empty prompts (config-only switch), and skip the model check since routing is deterministic.
