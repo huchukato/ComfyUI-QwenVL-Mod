@@ -1,5 +1,10 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.8.5 (2026/09/21)
+
+- Added selector dropdowns under the chat composer: a **Config** picker (Auto / Native / 10Eros / Turbo LoRA) injects the deterministic MiniMax command, and a **Livepeer** picker is auto-populated from the render node's capability widget — no more typing `use <name>` by hand. Both selectors persist, work with empty prompts (config-only switch), and skip the model check since routing is deterministic.
+- Fixed the explicit `use` parser swallowing the trailing separator ("use nano-banana. <prompt>" kept the dot in the capability name) and directive cleaning stripping legitimate trailing periods.
+
 ## Version 2.8.4 (2026/09/21)
 
 - Fixed directive cleaning when a config keyword precedes the request ("usa 10Eros: genera un video di…"): the generation prefix is now stripped after config removal too, so no "genera un di" fragments reach the prompt widget.
