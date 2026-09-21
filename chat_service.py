@@ -337,7 +337,7 @@ def _clean_action_directive(text):
     cleaned = _MEDIA_WORD.sub("", cleaned)
     cleaned = re.sub(r"\s*[,;:]\s*", ", ", cleaned)
     cleaned = re.sub(r"(?:,\s*){2,}", ", ", cleaned)
-    cleaned = re.sub(r"\s{2,}", " ", cleaned).strip(" ,;:-")
+    cleaned = re.sub(r"\s{2,}", " ", cleaned).lstrip(" ,;:.-").rstrip(" ,;:-")
     return cleaned
 
 
@@ -567,7 +567,7 @@ def _explicit_capability_request(messages, graph):
     match = _EXPLICIT_USE.match(last_user)
     if not match:
         return None
-    capability = match.group(1)
+    capability = match.group(1).rstrip(".:,;")
     prompt = (match.group(2) or "").strip()
     for node in graph.get("nodes", []):
         title = f'{node.get("title", "")} {node.get("type", "")}'.lower()

@@ -28,6 +28,7 @@ const TRANSLATIONS = {
         assetsError: "Unable to load ComfyUI Assets: {error}", close: "Close", selectTarget: "Select the Load Media / Load Image (from Outputs) node",
         assetChatOnly: "Asset selected for Qwen. Add a Load Image (from Outputs) node to sync it with the workflow.",
         assetSynced: "Asset selected for Qwen and loaded into node {node}.", settings: "Settings", showSettings: "Show settings", hideSettings: "Hide settings",
+        config: "Config", configAuto: "Auto (chat decides)", capability: "Livepeer", capabilityAuto: "Any capability",
     },
     it: {
         empty: "Chiedimi di analizzare o modificare i parametri del workflow aperto.", user: "Tu", thinking: "Pensiero",
@@ -53,6 +54,7 @@ const TRANSLATIONS = {
         assetsError: "Impossibile caricare le Risorse ComfyUI: {error}", close: "Chiudi", selectTarget: "Seleziona il nodo Load Media / Carica Immagine da Output",
         assetChatOnly: "Risorsa selezionata per Qwen. Aggiungi un nodo Carica Immagine da Output per sincronizzarla con il workflow.",
         assetSynced: "Risorsa selezionata per Qwen e caricata nel nodo {node}.", settings: "Impostazioni", showSettings: "Mostra impostazioni", hideSettings: "Nascondi impostazioni",
+        config: "Config", configAuto: "Auto (decide la chat)", capability: "Livepeer", capabilityAuto: "Qualsiasi capability",
     },
 };
 const DEFAULT_STATE = {
@@ -63,6 +65,8 @@ const DEFAULT_STATE = {
     maxTokens: 1024,
     temperature: 0.2,
     thinking: false,
+    config: "auto",
+    capability: "auto",
     messages: [],
 };
 
@@ -568,10 +572,46 @@ function setBusy(busy) {
     elements.status?.classList.toggle("busy", busy);
 }
 
+function livepeerCapabilities() {
+    try {
+        for (const node of snapshotGraph().nodes) {
+            const widgets = node.widgets || [];
+            const capability = widgets.find((w) => w.name === "capability");
+            if (!capability) continue;
+            const custom = widgets.find((w) => w.name === "custom_capability");
+            if (!custom) continue;
+            return (capability.options?.values || []).filter((v) => v !== "auto");
+        }
+    } catch {}
+    return [];
+}
+
+function refreshCapabilitySelector() {
+    if (!elements.capability) return;
+    const caps = livepeerCapabilities();
+    elements.capability.parentElement.style.display = caps.length ? "" : "none";
+    const current = elements.capability.value || state.capability;
+    elements.capability.replaceChildren();
+    const auto = createElement("option", "", t("capabilityAuto"));
+    auto.value = "auto";
+    elements.capability.append(auto);
+    for (const cap of caps) {
+        const option = createElement("option", "", cap);
+        option.value = cap;
+        elements.capability.append(option);
+    }
+    elements.capability.value = caps.includes(current) ? current : "auto";
+}
+
 async function sendMessage() {
-    const content = elements.input.value.trim();
-    if (!content || controller) return;
-    if (!state.model) {
+    let content = elements.input.value.trim();
+    refreshCapabilitySelector();
+    const capability = elements.capability?.value || "auto";
+    const config = elements.config?.value || "auto";
+    if (controller || (!content && capability === "auto" && config === "auto")) return;
+    if (capability !== "auto") content = `use ${capability}. ${content}`.trim();
+    else if (config !== "auto") content = `use ${config}. ${content}`.trim();
+    if (!state.model && capability === "auto" && config === "auto") {
         setStatus(t("selectModel"), true);
         return;
     }
@@ -707,6 +747,9 @@ function buildSidebar(container) {
         .qwen-chat-thinking summary { cursor:pointer; font-size:11px; user-select:none; }
         .qwen-chat-thinking pre { max-height:220px; overflow:auto; margin:8px 0 0; padding:9px; border-radius:8px; white-space:pre-wrap; background:rgba(0,0,0,.16); }
         .qwen-chat-input { width:100%; min-height:92px; resize:vertical; line-height:1.4; }
+        .qwen-chat-selectors { display:flex; gap:7px; }
+        .qwen-chat-selectors label { display:flex; align-items:center; gap:6px; flex:1; min-width:0; font-size:11px; opacity:.78; }
+        .qwen-chat-selectors select { flex:1; min-width:0; font-size:12px; padding:5px 7px; }
         .qwen-chat-attachment { display:none; align-items:center; gap:10px; padding:8px; border:1px solid rgba(109,124,255,.32); border-radius:11px; background:rgba(109,124,255,.08); }
         .qwen-chat-attachment.visible { display:flex; }
         .qwen-chat-attachment-preview { width:52px; height:52px; flex:0 0 52px; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,.12); }
@@ -797,6 +840,22 @@ function buildSidebar(container) {
     elements.input = createElement("textarea", "qwen-chat-input");
     elements.input.placeholder = t("placeholder");
     elements.attachment = createElement("div", "qwen-chat-attachment");
+    const selectors = createElement("div", "qwen-chat-selectors");
+    elements.config = createElement("select");
+    for (const [value, label] of [["auto", t("configAuto")], ["native", "Native"], ["10eros", "10Eros"], ["turbo", "Turbo LoRA"]]) {
+        const option = createElement("option", "", label);
+        option.value = value;
+        elements.config.append(option);
+    }
+    elements.config.value = state.config;
+    elements.config.title = "MiniMax H3 sampler config";
+    elements.capability = createElement("select");
+    elements.capability.title = "Livepeer capability";
+    const configLabel = createElement("label");
+    configLabel.append(createElement("span", "", t("config")), elements.config);
+    const capabilityLabel = createElement("label");
+    capabilityLabel.append(createElement("span", "", t("capability")), elements.capability);
+    selectors.append(configLabel, capabilityLabel);
     const composerTools = createElement("div", "qwen-chat-composer-tools");
     elements.fileInput = createElement("input", "qwen-chat-file");
     elements.fileInput.type = "file";
@@ -823,15 +882,24 @@ function buildSidebar(container) {
     assetHeader.append(createElement("span", "", t("assetsTitle")), assetClose);
     assetPanel.append(assetHeader, elements.assetGrid);
     elements.assetModal.append(assetPanel);
-    root.append(topbar, controls, elements.messages, elements.input, elements.attachment, composerTools, actions, elements.status, elements.assetModal);
+    root.append(topbar, controls, elements.messages, elements.input, elements.attachment, selectors, composerTools, actions, elements.status, elements.assetModal);
     container.append(root);
     renderAttachment();
+    refreshCapabilitySelector();
     elements.settingsToggle.addEventListener("click", () => {
         state.settingsOpen = !state.settingsOpen;
         controls.classList.toggle("open", state.settingsOpen);
         elements.settingsToggle.classList.toggle("active", state.settingsOpen);
         elements.settingsToggle.title = t(state.settingsOpen ? "hideSettings" : "showSettings");
         elements.settingsToggle.setAttribute("aria-expanded", String(state.settingsOpen));
+        saveState();
+    });
+    elements.config.addEventListener("change", () => {
+        state.config = elements.config.value;
+        saveState();
+    });
+    elements.capability.addEventListener("change", () => {
+        state.capability = elements.capability.value;
         saveState();
     });
     elements.backend.addEventListener("change", () => {
