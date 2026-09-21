@@ -1,5 +1,10 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.8.2 (2026/09/21)
+
+- Image-enhancer directives are now cleaned deterministically: routing keywords ("use native", "use 10Eros", "usa turbo"), generation prefixes ("generate a 5s video", "fai un video") and duration mentions are stripped before the action text reaches the prompt widget, so the inner enhancer receives only the scene action.
+- When the request contains only config keywords, the prompt widget is left untouched instead of receiving the meta text.
+
 ## Version 2.8.1 (2026/09/21)
 
 - Rewrote the `/dlstatus.html` download-log page with a multi-line HTML template and `html.escape`, removing the long single-line string that the registry security scanner flagged as minified code.
