@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.8.1 (2026/09/21)
+
+- Rewrote the `/dlstatus.html` download-log page with a multi-line HTML template and `html.escape`, removing the long single-line string that the registry security scanner flagged as minified code.
+
 ## Version 2.8.0 (2026/09/21)
 
 - Added `QwenVL_LivepeerRender`: a self-contained node that renders images and videos through the Livepeer Agent network over MCP, with a capability dropdown (image and video models), IMAGE output for still results, static preview for images and animated preview for video, and a `source_video` input that picks a frame from a clip as the i2v reference.
