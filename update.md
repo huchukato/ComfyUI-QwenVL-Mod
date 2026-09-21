@@ -1,5 +1,10 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.8.3 (2026/09/21)
+
+- Added deterministic chat shortcuts that skip the LLM entirely: `use <capability> <prompt>` drives the Livepeer render node directly (dropdown or `custom_capability`, with duration and aspect-ratio parsing), and `use native` / `use 10Eros` / `use turbo` / `config A-B-C` apply the full MiniMax H3 sampler config on the enhancer node — correct widgets every time, instant, and immune to malformed local-model JSON.
+- Config-only requests leave the prompt widget untouched; a cleaned scene directive is written when the message carries one.
+
 ## Version 2.8.2 (2026/09/21)
 
 - Image-enhancer directives are now cleaned deterministically: routing keywords ("use native", "use 10Eros", "usa turbo"), generation prefixes ("generate a 5s video", "fai un video") and duration mentions are stripped before the action text reaches the prompt widget, so the inner enhancer receives only the scene action.

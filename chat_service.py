@@ -603,6 +603,108 @@ def _explicit_capability_request(messages, graph):
     return None
 
 
+_CONFIG_TRIGGER = re.compile(
+    r"\b(?:use|usa|switch\s+to|passa\s+a|metti|set|con)\s+(?:the\s+|il\s+|la\s+)?"
+    r"(native|10\s*eros(?:[-\s]?max)?|turbo(?:\s*lora)?|config\s*[abc])\b",
+    re.IGNORECASE,
+)
+
+_MINIMAX_CONFIGS = {
+    "native": {
+        "unet_needle": "fl2va_pruned",
+        "unet_fallback": "minimax_h3_fl2va_pruned_nvfp4_convrot_int8.safetensors",
+        "values": {"steps": 20, "sampler_name": "res_multistep", "scheduler": "simple", "shift_video": 12, "shift_audio": 3},
+    },
+    "10eros": {
+        "unet_needle": "10eros",
+        "unet_fallback": "10Eros_Max_h3_TURBO-hybrid_beta3_int8_convrot_skip_edges.safetensors",
+        "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
+    },
+    "turbo": {
+        "unet_needle": None,
+        "unet_fallback": None,
+        "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
+    },
+}
+
+
+def _last_user_message(messages):
+    for item in reversed(messages or []):
+        if item.get("role") == "user" and isinstance(item.get("content"), str) and item["content"].strip():
+            return item["content"].strip()
+    return ""
+
+
+def _widget_options(widget):
+    return (widget.get("options") or {}).get("values") or []
+
+
+def _match_option(widget, needle):
+    for option in _widget_options(widget):
+        if needle in str(option).lower():
+            return option
+    return None
+
+
+def _explicit_minimax_request(messages, graph):
+    """Deterministic MiniMax config switch ("use native/10Eros/turbo", "config A/B/C"):
+    applies sampler widgets + duration + cleaned action locally, no LLM call."""
+    last_user = _last_user_message(messages)
+    trigger = _CONFIG_TRIGGER.search(last_user)
+    if not trigger:
+        return None
+    raw = trigger.group(1).lower()
+    if "native" in raw or raw.rstrip() == "config c":
+        config_key = "native"
+    elif "eros" in raw or raw.rstrip() == "config a":
+        config_key = "10eros"
+    elif "turbo" in raw or raw.rstrip() == "config b":
+        config_key = "turbo"
+    else:
+        return None
+    for node in graph.get("nodes", []):
+        widgets = {w.get("name"): w for w in node.get("widgets", []) if isinstance(w, dict)}
+        if not {"unet_name", "preset_prompt", "passthrough"}.issubset(widgets):
+            continue
+        config = _MINIMAX_CONFIGS[config_key]
+        actions = []
+        unet_widget = widgets["unet_name"]
+        if config["unet_needle"]:
+            unet = _match_option(unet_widget, config["unet_needle"]) or config["unet_fallback"]
+            actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "unet_name", "value": unet})
+        for name, value in config["values"].items():
+            widget = widgets.get(name)
+            if widget is None:
+                continue
+            options = _widget_options(widget)
+            if options and str(value) not in [str(o) for o in options]:
+                match = _match_option(widget, str(value).lower())
+                if match is None:
+                    continue
+                value = match
+            actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": name, "value": value})
+        duration = re.search(r"\b(\d{1,2})\s*(?:s|sec(?:ond)?s?|secondi?)\b", last_user, re.IGNORECASE)
+        if duration:
+            seconds = int(duration.group(1))
+            if "value_1" in widgets:
+                actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "value_1", "value": seconds})
+            preset_match = _match_option(widgets["preset_prompt"], f"({seconds}s)")
+            if preset_match:
+                actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "preset_prompt", "value": preset_match})
+        directive = _clean_action_directive(last_user)
+        if directive and "prompt" in widgets:
+            actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "prompt", "value": directive})
+        actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "passthrough", "value": False})
+        actions.append({"type": "queue_workflow"})
+        label = {"native": "Native", "10eros": "10Eros", "turbo": "Turbo LoRA"}[config_key]
+        if re.match(r"^\s*(usa|passa|metti|fai|genera|crea)\b", last_user, re.IGNORECASE):
+            message = f"⚙️ MiniMax H3 → {label}. Workflow in coda."
+        else:
+            message = f"⚙️ MiniMax H3 → {label}. Workflow queued."
+        return {"message": message, "actions": actions, "choices": []}
+    return None
+
+
 class ChatRuntime:
     def __init__(self):
         self._instances = {}
@@ -621,7 +723,7 @@ class ChatRuntime:
         graph = validate_graph(graph)
         images = validate_images(images or [])
         video = validate_images(video or [], MAX_VIDEO_FRAMES)
-        explicit = _explicit_capability_request(messages, graph)
+        explicit = _explicit_capability_request(messages, graph) or _explicit_minimax_request(messages, graph)
         if explicit is not None:
             return explicit
         available = self.models().get(backend)
