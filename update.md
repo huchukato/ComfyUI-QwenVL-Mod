@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.8.8 (2026/09/21)
+
+- Turbo config now actually toggles the Turbo LoRA: the graph snapshot includes subgraph inner nodes (qualified ids like "105:213"), findNode resolves them, and the MiniMax configs emit set_node_mode on LoraLoader nodes inside the enhancer subgraph — Turbo enables it, Native/10Eros bypass it (10Eros has TURBO fused).
+- Turbo also resets unet_name to the NVFP4 checkpoint — 10Eros + Turbo LoRA stacking is forbidden.
 ## Version 2.8.7 (2026/09/21)
 
 - Selector dropdowns no longer inject "use &lt;config&gt;" into the chat text: the Config / Livepeer pickers are sent as a separate `directives` field and applied deterministically server-side, so the user message (and the prompt widget) stays clean.
