@@ -1,0 +1,367 @@
+/* ═════════════════════════════════════════════════════════════════════════════
+   QwenVL-Mod shared frontend styles
+   Scoped to .qwen-chat-* elements so we never stomp on ComfyUI core UI.
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --qwen-accent: #f97316;
+  --qwen-accent-hover: #ea580c;
+  --qwen-bg-1: #1f2937;
+  --qwen-bg-2: #111827;
+  --qwen-border: #374151;
+  --qwen-text: #e5e7eb;
+  --qwen-text-dim: #9ca3af;
+  --qwen-radius: 6px;
+  --qwen-gap: 8px;
+}
+
+/* ── Chat container ───────────────────────────────────────────────────────── */
+.qwen-chat {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--qwen-bg-2);
+  color: var(--qwen-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+}
+
+.qwen-chat .qwen-chat-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--qwen-gap);
+  padding: 8px 10px;
+  background: var(--qwen-bg-1);
+  border-bottom: 1px solid var(--qwen-border);
+  flex-shrink: 0;
+}
+
+.qwen-chat .qwen-chat-language {
+  display: flex;
+  gap: 4px;
+}
+
+.qwen-chat .qwen-chat-language button {
+  background: transparent;
+  border: 1px solid var(--qwen-border);
+  color: var(--qwen-text-dim);
+  border-radius: var(--qwen-radius);
+  padding: 3px 8px;
+  cursor: pointer;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.qwen-chat .qwen-chat-language button.active,
+.qwen-chat .qwen-chat-language button:hover {
+  background: var(--qwen-accent);
+  border-color: var(--qwen-accent);
+  color: #fff;
+}
+
+.qwen-chat .qwen-chat-settings-toggle {
+  background: transparent;
+  border: 1px solid var(--qwen-border);
+  color: var(--qwen-text-dim);
+  border-radius: var(--qwen-radius);
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.qwen-chat .qwen-chat-settings-toggle.active,
+.qwen-chat .qwen-chat-settings-toggle:hover {
+  color: var(--qwen-accent);
+  border-color: var(--qwen-accent);
+}
+
+/* ── Settings panel ────────────────────────────────────────────────────────── */
+.qwen-chat .qwen-chat-controls {
+  display: none;
+  flex-direction: column;
+  gap: var(--qwen-gap);
+  padding: 10px;
+  background: var(--qwen-bg-1);
+  border-bottom: 1px solid var(--qwen-border);
+  flex-shrink: 0;
+}
+
+.qwen-chat .qwen-chat-controls.open {
+  display: flex;
+}
+
+.qwen-chat .qwen-chat-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  color: var(--qwen-text-dim);
+}
+
+.qwen-chat .qwen-chat-controls select,
+.qwen-chat .qwen-chat-controls input {
+  background: var(--qwen-bg-2);
+  border: 1px solid var(--qwen-border);
+  border-radius: var(--qwen-radius);
+  color: var(--qwen-text);
+  padding: 4px 6px;
+  font-size: 12px;
+}
+
+/* ── Messages area ─────────────────────────────────────────────────────────── */
+.qwen-chat .qwen-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.qwen-chat .qwen-chat-empty {
+  color: var(--qwen-text-dim);
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+.qwen-chat .qwen-chat-message {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.qwen-chat .qwen-chat-message.user {
+  align-items: flex-end;
+}
+
+.qwen-chat .qwen-chat-message.assistant {
+  align-items: flex-start;
+}
+
+.qwen-chat .qwen-chat-role {
+  font-size: 10px;
+  color: var(--qwen-text-dim);
+  text-transform: uppercase;
+}
+
+.qwen-chat .qwen-chat-content {
+  max-width: 92%;
+  padding: 8px 10px;
+  border-radius: var(--qwen-radius);
+  background: var(--qwen-bg-1);
+  border: 1px solid var(--qwen-border);
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.qwen-chat .qwen-chat-message.user .qwen-chat-content {
+  background: rgba(249, 115, 22, 0.15);
+  border-color: rgba(249, 115, 22, 0.4);
+}
+
+.qwen-chat .qwen-chat-choice {
+  background: var(--qwen-bg-1);
+  border: 1px solid var(--qwen-border);
+  color: var(--qwen-text);
+  border-radius: var(--qwen-radius);
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  margin: 3px 0;
+}
+
+.qwen-chat .qwen-chat-choice:hover {
+  border-color: var(--qwen-accent);
+  color: var(--qwen-accent);
+}
+
+/* ── Composer ─────────────────────────────────────────────────────────────── */
+.qwen-chat .qwen-chat-composer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--qwen-gap);
+  padding: 10px;
+  background: var(--qwen-bg-1);
+  border-top: 1px solid var(--qwen-border);
+  flex-shrink: 0;
+}
+
+.qwen-chat .qwen-chat-input {
+  min-height: 56px;
+  max-height: 160px;
+  resize: vertical;
+  background: var(--qwen-bg-2);
+  border: 1px solid var(--qwen-border);
+  border-radius: var(--qwen-radius);
+  color: var(--qwen-text);
+  padding: 8px;
+  font-size: 13px;
+  line-height: 1.35;
+  font-family: inherit;
+}
+
+.qwen-chat .qwen-chat-input:focus {
+  outline: none;
+  border-color: var(--qwen-accent);
+}
+
+.qwen-chat .qwen-chat-selectors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--qwen-gap);
+}
+
+.qwen-chat .qwen-chat-selectors label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex: 1 1 120px;
+  font-size: 11px;
+  color: var(--qwen-text-dim);
+}
+
+.qwen-chat .qwen-chat-selectors select {
+  flex: 1;
+  min-width: 80px;
+  background: var(--qwen-bg-2);
+  border: 1px solid var(--qwen-border);
+  border-radius: var(--qwen-radius);
+  color: var(--qwen-text);
+  padding: 3px 5px;
+  font-size: 12px;
+}
+
+.qwen-chat .qwen-chat-composer-tools {
+  display: flex;
+  gap: var(--qwen-gap);
+}
+
+.qwen-chat .qwen-chat-attach,
+.qwen-chat .qwen-chat-assets-button {
+  background: var(--qwen-bg-2);
+  border: 1px solid var(--qwen-border);
+  color: var(--qwen-text);
+  border-radius: var(--qwen-radius);
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.qwen-chat .qwen-chat-attach:hover,
+.qwen-chat .qwen-chat-assets-button:hover {
+  border-color: var(--qwen-accent);
+  color: var(--qwen-accent);
+}
+
+.qwen-chat .qwen-chat-actions {
+  display: flex;
+  gap: var(--qwen-gap);
+  justify-content: flex-end;
+}
+
+.qwen-chat .qwen-chat-actions button {
+  background: var(--qwen-bg-2);
+  border: 1px solid var(--qwen-border);
+  color: var(--qwen-text);
+  border-radius: var(--qwen-radius);
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.qwen-chat .qwen-chat-actions button:hover {
+  border-color: var(--qwen-accent);
+  color: var(--qwen-accent);
+}
+
+.qwen-chat .qwen-chat-actions button:first-child {
+  background: var(--qwen-accent);
+  border-color: var(--qwen-accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.qwen-chat .qwen-chat-actions button:first-child:hover {
+  background: var(--qwen-accent-hover);
+  border-color: var(--qwen-accent-hover);
+}
+
+/* ── Attachment / asset previews ───────────────────────────────────────────── */
+.qwen-chat .qwen-chat-attachment {
+  display: flex;
+  align-items: center;
+  gap: var(--qwen-gap);
+  padding: 6px;
+  background: var(--qwen-bg-2);
+  border: 1px solid var(--qwen-border);
+  border-radius: var(--qwen-radius);
+}
+
+.qwen-chat .qwen-chat-attachment-preview {
+  max-width: 48px;
+  max-height: 48px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.qwen-chat .qwen-chat-attachment-remove {
+  background: transparent;
+  border: 1px solid var(--qwen-border);
+  color: var(--qwen-text-dim);
+  border-radius: var(--qwen-radius);
+  padding: 3px 8px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.qwen-chat .qwen-chat-attachment-remove:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.qwen-chat .qwen-chat-asset-modal.visible,
+.qwen-chat .qwen-chat-assets-modal.visible {
+  display: flex !important;
+}
+
+.qwen-chat .qwen-chat-assets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: var(--qwen-gap);
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.qwen-chat .qwen-chat-asset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: var(--qwen-bg-1);
+  border: 1px solid var(--qwen-border);
+  border-radius: var(--qwen-radius);
+  padding: 6px;
+  cursor: pointer;
+}
+
+.qwen-chat .qwen-chat-asset:hover {
+  border-color: var(--qwen-accent);
+}
+
+.qwen-chat .qwen-chat-asset img,
+.qwen-chat .qwen-chat-asset video {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.qwen-chat .qwen-chat-asset span {
+  font-size: 10px;
+  color: var(--qwen-text-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}

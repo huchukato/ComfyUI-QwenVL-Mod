@@ -58,6 +58,10 @@ Qwen Chat treats the render node as its generation target: it reads your request
 Demo workflow: [`workflows/livepeer/Livepeer-Agent-Demo.json`](https://github.com/huchukato/ComfyUI-Garage/blob/master/workflows/livepeer/Livepeer-Agent-Demo.json) in the ComfyUI-Garage repo — just `Load Media → Livepeer Render`.
 
 ## **📰 News & Updates**
+* **2026/09/22**: **v2.8.13 — Pixaroma-Style Node Branding & Chat Styling**. [[Update](update.md#version-2813-20260922)]
+> 🎨 **Node colours**: each QwenVL-Mod family (Vision, Vision GGUF, Prompt Enhancer, Livepeer, Utils) now has distinct title/body colours, with user colour choices always preserved.
+> 💬 **Chat sidebar**: wrapped composer in a styled panel and added a shared stylesheet for a cleaner, more modern look.
+
 * **2026/09/22**: **v2.8.12 — Pony→Natural Language in QwenVL Presets Too**. [[Update](update.md#version-2812-20260922)]
 > 🐴 **Pony→Natural Language**: now available both as a **PromptEnhancer style** (text-only) and as a **QwenVL preset** (with image input). Converts Danbooru/Pony tags into clean natural-language prompts for Flux, Krea, Qwen-Image 2.1, and other image models.
 
