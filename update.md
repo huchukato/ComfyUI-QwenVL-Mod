@@ -1,5 +1,11 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.8.10 (2026/09/22)
+
+- Moved the new `🎨 Pony→Natural Language` preset from the QwenVL `preset_prompt` dropdown into the **PromptEnhancer** `enhancement_style` dropdown (`qwen_text.styles`).
+- Removed the old `🎨 Pony→Z-Image` and `🎨 Pony→Flux` PromptEnhancer styles.
+- The Pony tag converter is now selected as a **style** in the PromptEnhancer node (HF and GGUF), keeping the QwenVL preset list focused on vision/analysis/video tasks.
+
 ## Version 2.8.9 (2026/09/22)
 
 - Replaced the model-specific `🎨 Pony→Z-Image` and `🎨 Pony→Flux` presets with a single generic `🎨 Pony→Natural Language` preset in `AILab_System_Prompts.json`.

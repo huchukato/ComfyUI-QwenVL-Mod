@@ -58,8 +58,11 @@ Qwen Chat treats the render node as its generation target: it reads your request
 Demo workflow: [`workflows/livepeer/Livepeer-Agent-Demo.json`](https://github.com/huchukato/ComfyUI-Garage/blob/master/workflows/livepeer/Livepeer-Agent-Demo.json) in the ComfyUI-Garage repo — just `Load Media → Livepeer Render`.
 
 ## **📰 News & Updates**
+* **2026/09/22**: **v2.8.10 — Pony→Natural Language Preset Moved to PromptEnhancer**. [[Update](update.md#version-2810-20260922)]
+> 🐴 **Pony→Natural Language**: The generic Danbooru/Pony tag-to-natural-language converter is now a **PromptEnhancer style** (HF + GGUF), replacing the old `Pony→Z-Image` and `Pony→Flux` styles. Use it to turn tag soups into clean prompts for Flux, Krea, Qwen-Image 2.1, and other image models.
+
 * **2026/09/22**: **v2.8.9 — Single Pony→Natural Language Preset**. [[Update](update.md#version-289-20260922)]
-> 🐴 **Pony→Natural Language**: Replaced the model-specific `Pony→Z-Image` and `Pony→Flux` presets with a single generic converter that turns Danbooru/Pony tags into clean natural-language prompts for Flux, Krea, Qwen-Image 2.1, and other image models.
+> 🐴 **Pony→Natural Language**: Replaced the model-specific `Pony→Z-Image` and `Pony→Flux` presets with a single generic converter.
 
 * **2026/09/21**: **v2.8.0 — Livepeer Agent Render Node, Unified Media Loader, and Chat-Driven Generation**. [[Update](update.md#version-280-20260921)]
 > 🌐 **Livepeer Agent Render**: New `QwenVL_LivepeerRender` node generates images and videos through the Livepeer Agent network via MCP — capability dropdown with image and video models, IMAGE output for stills, `source_video` frame picker for i2v references.
