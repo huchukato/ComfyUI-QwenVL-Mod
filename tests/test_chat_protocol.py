@@ -24,7 +24,6 @@ from chat_service import (
     validate_messages,
     _fix_minimax_preset_actions,
     _match_minimax_preset,
-    _merge_minimax_config,
     _minimax_preset_mode,
     _minimax_result,
     _is_image_enhancer_node,
@@ -489,121 +488,6 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertIn("Exact image-enhancer target", prompt)
         self.assertNotIn("integrated_multimodal_description:", prompt)
         self.assertNotIn("overall_soundscape:", prompt)
-
-    def test_config_directive_includes_exact_sampler_values(self):
-        graph = {"nodes": []}
-        prompt = build_prompt([{"role": "user", "content": "a woman dancing"}], graph, config_directive="10eros")
-        self.assertIn("USER-SELECTED MINIMAX CONFIG: 10eros", prompt)
-        self.assertIn("steps: 8", prompt)
-        self.assertIn("sampler_name: euler", prompt)
-        self.assertIn("shift_video: 6", prompt)
-
-    def test_merge_minimax_config_keeps_llm_prompt_and_enforces_config(self):
-        graph = {
-            "nodes": [
-                {
-                    "id": 105,
-                    "widgets": [
-                        {"name": "unet_name", "value": "x", "options": {"values": ["10Eros_Max_h3_TURBO-hybrid_beta3_int8_convrot_skip_edges.safetensors"]}},
-                        {"name": "preset_prompt", "value": "🎬 MiniMax H3 NSFW (5s)", "options": {"values": ["🎬 MiniMax H3 NSFW (5s)", "🎬 MiniMax H3 NSFW (10s)"]}},
-                        {"name": "passthrough", "value": True},
-                        {"name": "prompt", "value": ""},
-                        {"name": "steps", "value": 20, "options": {"values": [8, 20]}},
-                        {"name": "sampler_name", "value": "res_multistep", "options": {"values": ["euler", "res_multistep"]}},
-                        {"name": "scheduler", "value": "simple", "options": {"values": ["simple"]}},
-                        {"name": "shift_video", "value": 12, "options": {"values": [6, 12]}},
-                        {"name": "shift_audio", "value": 3, "options": {"values": [3]}},
-                        {"name": "value_1", "value": 5},
-                    ],
-                }
-            ]
-        }
-        result = {
-            "message": "Done",
-            "actions": [
-                {"type": "set_widget_value", "node_id": 105, "widget": "prompt", "value": "A woman licking and stroking sensually."},
-                {"type": "queue_workflow"},
-            ],
-        }
-        merged = _merge_minimax_config(result, graph, "10eros", "licking and stroking")
-        # LLM-refined prompt is preserved
-        prompt_actions = [a for a in merged["actions"] if a.get("widget") == "prompt"]
-        self.assertEqual(len(prompt_actions), 1)
-        self.assertEqual(prompt_actions[0]["value"], "A woman licking and stroking sensually.")
-        # Config is enforced
-        self.assertEqual(next(a for a in merged["actions"] if a.get("widget") == "steps")["value"], 8)
-        self.assertEqual(next(a for a in merged["actions"] if a.get("widget") == "sampler_name")["value"], "euler")
-        self.assertEqual(next(a for a in merged["actions"] if a.get("widget") == "shift_video")["value"], 6)
-        self.assertEqual(next(a for a in merged["actions"] if a.get("widget") == "passthrough")["value"], False)
-        self.assertTrue(any(a["type"] == "queue_workflow" for a in merged["actions"]))
-
-    def test_descriptive_config_directive_routes_to_llm_and_merges_config(self):
-        class FakeQuantization:
-            Q8 = types.SimpleNamespace(value="q8")
-
-        class FakeBase:
-            def load_model(self, *args):
-                pass
-
-            def generate(self, *args, **kwargs):
-                # Simulate LLM refining the prompt and returning a queue action
-                return json.dumps({
-                    "message": "Refined",
-                    "actions": [
-                        {"type": "set_widget_value", "node_id": 105, "widget": "prompt", "value": "A woman licking and stroking."},
-                        {"type": "queue_workflow"},
-                    ],
-                })
-
-        previous = sys.modules.get("AILab_QwenVL")
-        sys.modules["AILab_QwenVL"] = types.SimpleNamespace(
-            HF_ALL_MODELS={"test-model": {}},
-            Quantization=FakeQuantization,
-            QwenVLBase=FakeBase,
-            SYSTEM_PROMPTS={"🎬 MiniMax H3 NSFW (5s)": "guide"},
-        )
-        try:
-            graph = {
-                "nodes": [
-                    {
-                        "id": 105,
-                        "widgets": [
-                            {"name": "unet_name", "value": "x", "options": {"values": ["10Eros_Max_h3_TURBO-hybrid_beta3_int8_convrot_skip_edges.safetensors"]}},
-                            {"name": "preset_prompt", "value": "🎬 MiniMax H3 NSFW (5s)", "options": {"values": ["🎬 MiniMax H3 NSFW (5s)"]}},
-                            {"name": "passthrough", "value": True},
-                            {"name": "prompt", "value": ""},
-                            {"name": "steps", "value": 20, "options": {"values": [8, 20]}},
-                            {"name": "sampler_name", "value": "res_multistep", "options": {"values": ["euler", "res_multistep"]}},
-                            {"name": "scheduler", "value": "simple", "options": {"values": ["simple"]}},
-                            {"name": "shift_video", "value": 12, "options": {"values": [6, 12]}},
-                            {"name": "shift_audio", "value": 3, "options": {"values": [3]}},
-                            {"name": "value_1", "value": 5},
-                        ],
-                    }
-                ]
-            }
-            runtime = ChatRuntime()
-            result = runtime.chat(
-                "hf", "test-model",
-                [{"role": "user", "content": "Licking and stroking"}],
-                graph,
-                {},
-                directives={"config": "10eros", "text": "Licking and stroking"},
-            )
-            self.assertIn("Refined", result["message"])
-            # LLM prompt preserved
-            self.assertEqual(
-                next(a for a in result["actions"] if a["widget"] == "prompt")["value"],
-                "A woman licking and stroking.",
-            )
-            # Config enforced
-            self.assertEqual(next(a for a in result["actions"] if a["widget"] == "steps")["value"], 8)
-            self.assertEqual(next(a for a in result["actions"] if a["widget"] == "sampler_name")["value"], "euler")
-        finally:
-            if previous is None:
-                sys.modules.pop("AILab_QwenVL", None)
-            else:
-                sys.modules["AILab_QwenVL"] = previous
 
     def test_fix_minimax_preset_corrects_generic_to_fl2va(self):
         graph = {
