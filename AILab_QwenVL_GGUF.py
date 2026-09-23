@@ -34,6 +34,7 @@ from AILab_QwenVL import PROMPT_CACHE, ensure_cuda_vram_headroom, get_cache_key,
 
 import folder_paths
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output
+from chat_service import normalize_minimax_output
 
 # Simple global variable to store last generated prompt
 LAST_SAVED_PROMPT = None
@@ -991,6 +992,8 @@ class QwenVLGGUFBase:
                 seed=seed,
                 model_name=model_name,
             )
+
+            text = normalize_minimax_output(text, preset_prompt, has_image=image is not None)
 
             print(f"[QwenVL GGUF DEBUG] Generation completed. Text length: {len(text) if text else 0}")
             print(f"[QwenVL GGUF DEBUG] Generated text: {text[:100] if text else 'EMPTY'}...")
