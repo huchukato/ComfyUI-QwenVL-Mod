@@ -88,8 +88,11 @@ T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) �
 ---
 
 ## **📰 Notizie & Aggiornamenti**
+* **2026/09/22**: **v2.8.10 — Pony→Natural Language spostato su PromptEnhancer**. [[Aggiornamenti](update.md#version-2810-20260922)]
+> 🐴 **Pony→Natural Language**: Il converter generico da tag Danbooru/Pony a natural-language è ora uno **stile del PromptEnhancer** (HF + GGUF), sostituendo i vecchi stili `Pony→Z-Image` e `Pony→Flux`. Per Flux, Krea, Qwen-Image 2.1 e altri modelli d'immagine.
+
 * **2026/09/22**: **v2.8.9 — Preset unico Pony→Natural Language**. [[Aggiornamenti](update.md#version-289-20260922)]
-> 🐴 **Pony→Natural Language**: Sostituiti i preset model-specifici `Pony→Z-Image` e `Pony→Flux` con un unico converter generico che trasforma tag Danbooru/Pony in prompt natural-language per Flux, Krea, Qwen-Image 2.1 e altri modelli.
+> 🐴 **Pony→Natural Language**: Sostituiti i preset model-specifici `Pony→Z-Image` e `Pony→Flux` con un unico converter generico.
 
 * **2026/09/16**: **v2.7.0 — Qwen Workflow Chat, allegati immagine, azioni guidate e modelli Qwen 3.8**. [[Aggiornamenti](update.md#version-270-20260916)]
 > **Qwen Workflow Chat**: Assistente nativo nella sidebar ComfyUI con azioni validate sul workflow, choices cliccabili, recupero del JSON malformato, routing basato sui preset ed esecuzione autonoma della coda.
