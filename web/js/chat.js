@@ -887,13 +887,15 @@ function buildSidebar(container) {
     elements.assetsButton.type = "button";
     composerTools.append(elements.fileInput, elements.attach, elements.assetsButton);
     const actions = createElement("div", "qwen-chat-actions");
-    elements.send = createElement("button", "", t("send"));
-    elements.repeat = createElement("button", "", t("repeat"));
+    elements.send = createElement("button", "qwen-chat-send", t("send"));
+    elements.repeat = createElement("button", "qwen-chat-repeat", t("repeat"));
     elements.repeat.title = t("repeatTitle");
-    elements.stop = createElement("button", "", t("stop"));
+    elements.stop = createElement("button", "qwen-chat-stop", t("stop"));
     elements.stop.disabled = true;
-    elements.clear = createElement("button", "", t("newChat"));
+    elements.clear = createElement("button", "qwen-chat-clear", t("newChat"));
     actions.append(elements.send, elements.repeat, elements.stop, elements.clear);
+    const composer = createElement("div", "qwen-chat-composer");
+    composer.append(elements.input, elements.attachment, selectors, composerTools, actions);
     elements.status = createElement("div", "qwen-chat-status", t("initializing"));
     elements.assetModal = createElement("div", "qwen-chat-assets-modal");
     const assetPanel = createElement("div", "qwen-chat-assets-panel");
@@ -903,7 +905,7 @@ function buildSidebar(container) {
     assetHeader.append(createElement("span", "", t("assetsTitle")), assetClose);
     assetPanel.append(assetHeader, elements.assetGrid);
     elements.assetModal.append(assetPanel);
-    root.append(topbar, controls, elements.messages, elements.input, elements.attachment, selectors, composerTools, actions, elements.status, elements.assetModal);
+    root.append(topbar, controls, elements.messages, composer, elements.status, elements.assetModal);
     container.append(root);
     renderAttachment();
     refreshCapabilitySelector();

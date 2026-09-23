@@ -88,6 +88,10 @@ T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) �
 ---
 
 ## **📰 Notizie & Aggiornamenti**
+* **2026/09/22**: **v2.8.13 — Branding nodi in stile Pixaroma e chat styling**. [[Aggiornamenti](update.md#version-2813-20260922)]
+> 🎨 **Colori nodi**: ogni famiglia QwenVL-Mod (Vision, Vision GGUF, Prompt Enhancer, Livepeer, Utils) ha ora colori distinti per titolo/corpo, preservando sempre le scelte dell’utente.
+> 💬 **Chat sidebar**: composer racchiuso in un pannello stilizzato con un foglio di stile condiviso per un aspetto più pulito e moderno.
+
 * **2026/09/22**: **v2.8.12 — Pony→Natural Language anche nei preset QwenVL**. [[Aggiornamenti](update.md#version-2812-20260922)]
 > 🐴 **Pony→Natural Language**: ora disponibile sia come **stile PromptEnhancer** (solo testo) che come **preset QwenVL** (con immagine). Converte tag Danbooru/Pony in prompt natural-language puliti per Flux, Krea, Qwen-Image 2.1 e altri modelli.
 

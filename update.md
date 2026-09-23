@@ -1,5 +1,12 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.8.13 (2026/09/22)
+
+- Refreshed node branding with a Pixaroma-style colour scheme: each QwenVL-Mod family now has recognisable title/body colours (Vision, Vision GGUF, Enhancer, Livepeer, Utils).
+- Updated `web/js/appearance.js` to apply colours in `beforeRegisterNodeDef`, preserving user/workflow colour choices and covering all current nodes (Unified, Livepeer, LoadMedia, VRAM cleanup, story split).
+- Added shared stylesheet `web/css/qwen_nodes.css` and wrapped the chat composer in a dedicated panel for cleaner spacing and styling.
+- Standardised `QwenVL_LoadMedia` category to `QwenVL-Mod/Utils`.
+
 ## Version 2.8.12 (2026/09/22)
 
 - Added `🎨 Pony→Natural Language` back to the QwenVL `preset_prompt` dropdown (`_preset_prompts` + `qwenvl`), in addition to the PromptEnhancer style.

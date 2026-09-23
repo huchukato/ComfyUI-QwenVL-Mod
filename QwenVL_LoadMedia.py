@@ -82,7 +82,7 @@ class QwenVL_LoadMedia:
     RETURN_TYPES = ("IMAGE", "VIDEO", "STRING")
     RETURN_NAMES = ("image", "video", "path")
     FUNCTION = "load"
-    CATEGORY = "utils"
+    CATEGORY = "QwenVL-Mod/Utils"
     OUTPUT_NODE = True
 
     @classmethod
