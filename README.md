@@ -58,6 +58,9 @@ Qwen Chat treats the render node as its generation target: it reads your request
 Demo workflow: [`workflows/livepeer/Livepeer-Agent-Demo.json`](https://github.com/huchukato/ComfyUI-Garage/blob/master/workflows/livepeer/Livepeer-Agent-Demo.json) in the ComfyUI-Garage repo — just `Load Media → Livepeer Render`.
 
 ## **📰 News & Updates**
+* **2026/09/22**: **v2.8.12 — Pony→Natural Language in QwenVL Presets Too**. [[Update](update.md#version-2812-20260922)]
+> 🐴 **Pony→Natural Language**: now available both as a **PromptEnhancer style** (text-only) and as a **QwenVL preset** (with image input). Converts Danbooru/Pony tags into clean natural-language prompts for Flux, Krea, Qwen-Image 2.1, and other image models.
+
 * **2026/09/22**: **v2.8.11 — Removed Redundant MiniMax Chat Guide**. [[Update](update.md#version-2811-20260922)]
 > 🧹 Removed the `mmh3_acceleration` `_chat_guides` entry: acceleration-mode switching is handled deterministically by Qwen Chat selectors and `use native/10eros/turbo` shortcuts, so the extra system-prompt guidance was no longer needed.
 
