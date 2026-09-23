@@ -88,6 +88,9 @@ T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) �
 ---
 
 ## **📰 Notizie & Aggiornamenti**
+* **2026/09/22**: **v2.8.14 — Rimosso nodo Livepeer duplicato**. [[Aggiornamenti](update.md#version-2814-20260922)]
+> 🌐 `AILab_LivepeerRender` non compare più nel menu; i vecchi workflow si caricano comunque tramite `legacy_aliases.js`.
+
 * **2026/09/22**: **v2.8.13 — Branding nodi in stile Pixaroma e chat styling**. [[Aggiornamenti](update.md#version-2813-20260922)]
 > 🎨 **Colori nodi**: ogni famiglia QwenVL-Mod (Vision, Vision GGUF, Prompt Enhancer, Livepeer, Utils) ha ora colori distinti per titolo/corpo, preservando sempre le scelte dell’utente.
 > 💬 **Chat sidebar**: composer racchiuso in un pannello stilizzato con un foglio di stile condiviso per un aspetto più pulito e moderno.

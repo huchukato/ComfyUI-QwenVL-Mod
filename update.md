@@ -1,5 +1,11 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.8.14 (2026/09/22)
+
+- Removed the duplicate `AILab_LivepeerRender` node from the Add Node menu.
+- Added `web/js/legacy_aliases.js` to rewrite old `AILab_LivepeerRender` nodes to `QwenVL_LivepeerRender` on workflow load, keeping old workflows compatible.
+- Updated `QwenVL_Livepeer.py` `NODE_CLASS_MAPPINGS` / `NODE_DISPLAY_NAME_MAPPINGS` to expose only the canonical node name.
+
 ## Version 2.8.13 (2026/09/22)
 
 - Refreshed node branding with a Pixaroma-style colour scheme: each QwenVL-Mod family now has recognisable title/body colours (Vision, Vision GGUF, Enhancer, Livepeer, Utils).
