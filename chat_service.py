@@ -41,7 +41,8 @@ WORKFLOW TARGETS (pick the FIRST matching case for the node you are controlling)
    - EXAMPLE: user says "use 10Eros: slow caressing on thigh, static camera"
      Actions: unet_name=10Eros...; steps=8; sampler_name=euler; shift_video=6; prompt="slow caressing on thigh, static camera"; passthrough=false; queue_workflow.
    - NEVER copy "use Native", "use 10Eros", "generate", "5s video" into the prompt widget.
-   - NEVER describe the image yourself (clothes, face, room, light); the inner QwenVL model will see the image and describe it. You only provide the action.
+   - For preset-enhancer nodes (preset_prompt + passthrough + image input), write a concise, fluent English action directive. You MAY lightly refine the user's wording — add a clear subject if missing, fix grammar, turn telegraphic text into a natural phrase — but do NOT invent scene details and do NOT write a full multi-section preset prompt.
+   - NEVER describe the reference image yourself (clothes, face, room, light); the inner QwenVL model will see the image and describe it. You only provide the action.
 2. Livepeer Render node (type contains "Livepeer", exposes capability + duration):
    - Write one English shot-native prompt into its "prompt" widget. Update capability, duration, aspect_ratio to match the request.
    - For images select an image capability from the dropdown (flux-schnell, flux-dev, etc.); for video select a video capability. Keep custom_capability empty unless the user names a model not in the dropdown.
@@ -560,7 +561,10 @@ def _chat_guides_for(graph, has_images=False):
                 f'### Exact image-enhancer target\nImage pixels are provided. Node {node.get("id")} exposes "{prompt_widget}", "preset_prompt", and "passthrough". '
                 f'Inspect the provided image pixels to understand how the requested action applies. The node currently selects preset "{widgets.get("preset_prompt", "")}". '
                 f'IGNORE any full prompt-writing guide for that preset above: the inner QwenVL node will use it to build the final prompt. '
-                f'You MUST set node {node.get("id")} widget "{prompt_widget}" to a concise English action directive derived from the latest substantive request (skip execute-only confirmations; never copy it verbatim; never add the "For the target video..." binding line; never write integrated_multimodal_description/sections). '
+                f'You MUST set node {node.get("id")} widget "{prompt_widget}" to a concise, fluent English action directive derived from the latest substantive request. '
+                f'You MAY lightly refine the wording: add a clear subject if missing, fix grammar, and turn telegraphic text into a natural action phrase, but keep it short and do NOT invent scene details not implied by the request or reference images. '
+                f'Example: "sucking penis" → "A woman sucking a penis, blowjob." Example: "she dance" → "The woman dances gracefully." '
+                f'Never copy the raw user text verbatim; never add the "For the target video..." binding line; never write integrated_multimodal_description/sections. '
                 f'Do NOT change node {node.get("id")} widget "preset_prompt" unless the user explicitly asks to switch mode (e.g., "switch to I2VA"). '
                 f'If the user only changes duration, keep the same preset family and update the duration widgets (value_1 or seconds), not the preset_prompt. '
                 f'set node {node.get("id")} widget "passthrough" to false, then queue. The inner QwenVL must analyze the image and create the final preset prompt.'
