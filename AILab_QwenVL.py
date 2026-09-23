@@ -26,6 +26,8 @@ from PIL import Image
 from huggingface_hub import snapshot_download, hf_hub_download
 from transformers import AutoProcessor, AutoTokenizer, BitsAndBytesConfig
 
+from chat_service import ensure_i2va_binding
+
 # SageAttention support
 # SageAttention 2.x exposes functions at top-level; 1.x had them in .core
 try:
@@ -1289,6 +1291,8 @@ class QwenVLBase:
                 video=video,
             )
             
+            text = _ensure_i2va_binding(text, preset_prompt, has_image=image is not None)
+
             # Validate output before caching — reject "ready/waiting" responses
             # that occur when the model treats the system prompt as a conversation
             _lower = text.strip().lower()[:50]

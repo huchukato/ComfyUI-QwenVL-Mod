@@ -19,6 +19,19 @@ MAX_IMAGE_BYTES = 8 * 1024 * 1024
 ALLOWED_ACTIONS = {"set_widget_value", "set_node_mode", "queue_workflow"}
 MINIMAX_I2VA_BINDING = "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced."
 
+
+def ensure_i2va_binding(text, preset_name, has_image=False):
+    """Ensure MiniMax H3 I2VA outputs include the required reference binding
+    line. FL2VA/R2VA presets use their own alignment format and are excluded."""
+    if not has_image or not preset_name or "MiniMax H3" not in preset_name:
+        return text
+    if "FL2VA" in preset_name or "R2VA" in preset_name:
+        return text
+    if MINIMAX_I2VA_BINDING in text:
+        return text
+    return f"{MINIMAX_I2VA_BINDING}\n\n{text.lstrip()}"
+
+
 BASE_SYSTEM_PROMPT = """You are Qwen Workflow Assistant inside ComfyUI. Answer the user and, only when requested, control the open workflow using the supplied snapshot.
 LANGUAGE: "message" and choice labels must mirror the LATEST user message language. Workflow prompt text must be English.
 OUTPUT: return exactly one JSON object, no text outside it:
