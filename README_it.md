@@ -88,6 +88,9 @@ T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) �
 ---
 
 ## **📰 Notizie & Aggiornamenti**
+* **2026/09/22**: **v2.8.11 — Rimossa guida chat MiniMax ridondante**. [[Aggiornamenti](update.md#version-2811-20260922)]
+> 🧹 Rimossa la guida `_chat_guides.mmh3_acceleration`: lo switching delle modalità di accelerazione MiniMax è gestito deterministicamente dai selettori di Qwen Chat e dagli shortcut `use native/10eros/turbo`, quindi la guida aggiuntiva non serviva più.
+
 * **2026/09/22**: **v2.8.10 — Pony→Natural Language spostato su PromptEnhancer**. [[Aggiornamenti](update.md#version-2810-20260922)]
 > 🐴 **Pony→Natural Language**: Il converter generico da tag Danbooru/Pony a natural-language è ora uno **stile del PromptEnhancer** (HF + GGUF), sostituendo i vecchi stili `Pony→Z-Image` e `Pony→Flux`. Per Flux, Krea, Qwen-Image 2.1 e altri modelli d'immagine.
 
