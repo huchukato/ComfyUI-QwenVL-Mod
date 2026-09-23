@@ -90,3 +90,7 @@ vastai/build-and-push-*.sh
 vastai/READMECivitai.md
 vastai/READMEVast4090.md
 vastai/READMEVast5090.md
+
+# Local caches / Devin local config
+.ruff_cache/
+.devin/
