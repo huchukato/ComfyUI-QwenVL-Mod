@@ -18,7 +18,30 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+      - name: Extract changelog
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, subprocess, tomllib
+          version = tomllib.loads(pathlib.Path("pyproject.toml").read_text())["project"]["version"]
+          section = ""
+          for fname in ("update.md", "UPDATE.md", "CHANGELOG.md"):
+              p = pathlib.Path(fname)
+              if not p.exists():
+                  continue
+              text = p.read_text(encoding="utf-8")
+              m = re.search(
+                  rf"^##\s+[^\n]*?{re.escape(version)}(?![\d.])[^\n]*\n(.*?)(?=^##\s|\Z)",
+                  text, re.M | re.S,
+              )
+              if m and m.group(1).strip():
+                  section = m.group(1).strip()
+                  break
+          if not section:
+              section = subprocess.check_output(["git", "log", "-1", "--pretty=%B"]).decode().strip()
+          pathlib.Path("changelog.txt").write_text(section[:4000] or f"v{version}\n", encoding="utf-8")
+          PY
       - name: Publish Custom Node
-        uses: Comfy-Org/publish-node-action@v1
-        with:
-          personal_access_token: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
+        run: |
+          pip install comfy-cli
+          comfy --skip-prompt --no-enable-telemetry env
+          comfy node publish --token "${{ secrets.REGISTRY_ACCESS_TOKEN }}" --changelog-file changelog.txt
