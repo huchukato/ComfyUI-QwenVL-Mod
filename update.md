@@ -1,5 +1,11 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.8.9 (2026/09/22)
+
+- Replaced the model-specific `🎨 Pony→Z-Image` and `🎨 Pony→Flux` presets with a single generic `🎨 Pony→Natural Language` preset in `AILab_System_Prompts.json`.
+- The new preset converts Danbooru/Pony tag prompts into a clean, model-agnostic natural-language paragraph suitable for Flux, Krea, Qwen-Image 2.1, and other image generation models.
+- Removes `score_*` quality tags and Pony meta tags (`source_pony`, `rating_*`, etc.), preserves optional `[style]` tags, and handles NSFW content without censoring.
+
 ## Version 2.8.8 (2026/09/21)
 
 - Turbo config now actually toggles the Turbo LoRA: the graph snapshot includes subgraph inner nodes (qualified ids like "105:213"), findNode resolves them, and the MiniMax configs emit set_node_mode on LoraLoader nodes inside the enhancer subgraph — Turbo enables it, Native/10Eros bypass it (10Eros has TURBO fused).
