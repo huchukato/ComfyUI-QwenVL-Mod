@@ -107,12 +107,22 @@ def validate_graph(graph):
                     "values": [str(item)[:500] for item in values[:200]] if isinstance(values, list) else None,
                 },
             })
+        safe_inputs = []
+        for inp in node.get("inputs", []):
+            if not isinstance(inp, dict) or not isinstance(inp.get("name"), str):
+                continue
+            safe_inputs.append({
+                "name": inp["name"][:200],
+                "type": str(inp.get("type", ""))[:100],
+                "link": inp.get("link"),
+            })
         result.append({
             "id": node["id"],
             "type": str(node.get("type", ""))[:200],
             "title": str(node.get("title", ""))[:200],
             "mode": node.get("mode", 0),
             "widgets": safe_widgets,
+            "inputs": safe_inputs,
         })
     return {"nodes": result}
 
@@ -348,8 +358,7 @@ def enforce_image_enhancer_routing(result, graph, messages, has_images):
     for node in graph.get("nodes", []):
         widgets = {widget.get("name") for widget in node.get("widgets", []) if isinstance(widget, dict)}
         prompt_widget = next((name for name in ("prompt", "custom_prompt", "prompt_text") if name in widgets), None)
-        title = f'{node.get("title", "")} {node.get("type", "")}'.lower()
-        if prompt_widget and {"preset_prompt", "passthrough"}.issubset(widgets) and "image to video" in title:
+        if prompt_widget and {"preset_prompt", "passthrough"}.issubset(widgets) and _is_image_enhancer_node(node):
             candidates.append((node, prompt_widget))
     targeted = {
         str(action.get("node_id"))
@@ -421,17 +430,27 @@ def enforce_image_reference_bindings(result, graph, has_images):
     return result
 
 
+def _node_input_names(node):
+    return {str(inp.get("name", "")).lower() for inp in node.get("inputs", []) if isinstance(inp, dict)}
+
+
+def _is_image_enhancer_node(node):
+    """True if the node exposes a preset enhancer with an image/video input."""
+    widgets = {widget.get("name"): widget for widget in node.get("widgets", []) if isinstance(widget, dict)}
+    prompt_widget = next((name for name in ("prompt", "custom_prompt", "prompt_text") if name in widgets), None)
+    if not prompt_widget or "preset_prompt" not in widgets or "passthrough" not in widgets:
+        return False
+    title = f'{node.get("title", "")} {node.get("type", "")}'.lower()
+    input_names = _node_input_names(node)
+    return "image to video" in title or bool({"image", "image2", "video"} & input_names)
+
+
 def _has_image_enhancer_target(graph):
     """True if the workflow exposes an image-to-video node that has a preset
     enhancer (preset_prompt + passthrough + a prompt widget). In that case the
     chat must not write a fully formatted video prompt itself."""
     for node in graph.get("nodes", []):
-        widgets = {widget.get("name"): widget.get("value") for widget in node.get("widgets", []) if isinstance(widget, dict)}
-        prompt_widget = next((name for name in ("prompt", "custom_prompt", "prompt_text") if name in widgets), None)
-        if not prompt_widget or "preset_prompt" not in widgets or "passthrough" not in widgets:
-            continue
-        title = f'{node.get("title", "")} {node.get("type", "")}'.lower()
-        if "image to video" in title:
+        if _is_image_enhancer_node(node):
             return True
     return False
 
@@ -517,14 +536,15 @@ def _chat_guides_for(graph, has_images=False):
         prompt_widget = next((name for name in ("prompt", "custom_prompt", "prompt_text") if name in widgets), None)
         if not prompt_widget or "passthrough" not in widgets:
             continue
-        title = f'{node.get("title", "")} {node.get("type", "")}'.lower()
-        image_enhancer = has_images and "preset_prompt" in widgets and "image to video" in title
-        if image_enhancer:
+        is_enhancer = has_images and "preset_prompt" in widgets and _is_image_enhancer_node(node)
+        if is_enhancer:
             parts.append(
                 f'### Exact image-enhancer target\nImage pixels are provided. Node {node.get("id")} exposes "{prompt_widget}", "preset_prompt", and "passthrough". '
                 f'Inspect the provided image pixels to understand how the requested action applies. The node currently selects preset "{widgets.get("preset_prompt", "")}". '
                 f'IGNORE any full prompt-writing guide for that preset above: the inner QwenVL node will use it to build the final prompt. '
                 f'You MUST set node {node.get("id")} widget "{prompt_widget}" to a concise English action directive derived from the latest substantive request (skip execute-only confirmations; never copy it verbatim; never add the "For the target video..." binding line; never write integrated_multimodal_description/sections). '
+                f'Do NOT change node {node.get("id")} widget "preset_prompt" unless the user explicitly asks to switch mode (e.g., "switch to I2VA"). '
+                f'If the user only changes duration, keep the same preset family and update the duration widgets (value_1 or seconds), not the preset_prompt. '
                 f'set node {node.get("id")} widget "passthrough" to false, then queue. The inner QwenVL must analyze the image and create the final preset prompt.'
             )
         else:
@@ -653,6 +673,31 @@ def _match_option(widget, needle):
     return None
 
 
+def _minimax_preset_mode(preset_name):
+    preset_name = str(preset_name or "").lower()
+    if "fl2va" in preset_name:
+        return "FL2VA"
+    if "r2va" in preset_name:
+        return "R2VA"
+    return None
+
+
+def _match_minimax_preset(widget, seconds, current_preset):
+    """Pick a duration variant that stays in the same MiniMax mode as the
+    currently selected preset (FL2VA/R2VA). Falls back to any duration match."""
+    options = _widget_options(widget)
+    suffix = f"({seconds}s)"
+    mode = _minimax_preset_mode(current_preset)
+    if mode:
+        for option in options:
+            if suffix in str(option) and mode.lower() in str(option).lower():
+                return option
+    for option in options:
+        if suffix in str(option):
+            return option
+    return None
+
+
 def _minimax_result(graph, config_key, text):
     """Apply a MiniMax H3 sampler config + optional cleaned scene directive +
     queue on the enhancer node. `text` is the raw user message (duration is
@@ -683,7 +728,8 @@ def _minimax_result(graph, config_key, text):
             seconds = int(duration.group(1))
             if "value_1" in widgets:
                 actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "value_1", "value": seconds})
-            preset_match = _match_option(widgets["preset_prompt"], f"({seconds}s)")
+            current_preset = widgets["preset_prompt"].get("value", "")
+            preset_match = _match_minimax_preset(widgets["preset_prompt"], seconds, current_preset)
             if preset_match:
                 actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "preset_prompt", "value": preset_match})
         directive = _clean_action_directive(text)
@@ -708,6 +754,42 @@ def _minimax_result(graph, config_key, text):
             message = f"⚙️ MiniMax H3 → {label}. Workflow queued."
         return {"message": message, "actions": actions, "choices": []}
     return None
+
+
+def _fix_minimax_preset_actions(result, graph):
+    """After LLM routing, correct preset_prompt actions on MiniMax H3 nodes so
+    the duration variant matches the currently selected mode (FL2VA/R2VA).
+    This prevents the model from accidentally switching a FL2VA workflow to the
+    generic I2VA preset when the user only mentions a duration."""
+    nodes_by_id = {str(node.get("id")): node for node in graph.get("nodes", [])}
+    for action in result.get("actions", []):
+        if action.get("type") != "set_widget_value" or action.get("widget") != "preset_prompt":
+            continue
+        node_id = str(action.get("node_id"))
+        node = nodes_by_id.get(node_id)
+        if not node:
+            continue
+        widgets = {w.get("name"): w for w in node.get("widgets", []) if isinstance(w, dict)}
+        if not {"unet_name", "preset_prompt", "passthrough"}.issubset(widgets):
+            continue
+        current_preset = str(widgets["preset_prompt"].get("value") or "")
+        current_mode = _minimax_preset_mode(current_preset)
+        if not current_mode:
+            # Current preset is the generic one; don't second-guess explicit mode switches.
+            continue
+        new_value = str(action.get("value") or "")
+        new_mode = _minimax_preset_mode(new_value)
+        if new_mode == current_mode:
+            continue
+        duration_match = re.search(r"\((\d+)s\)", new_value)
+        if not duration_match:
+            # No duration in the new value; revert to the current preset to stay safe.
+            action["value"] = current_preset
+            continue
+        fixed = _match_minimax_preset(widgets["preset_prompt"], int(duration_match.group(1)), current_preset)
+        if fixed:
+            action["value"] = fixed
+    return result
 
 
 def _explicit_minimax_request(messages, graph):
@@ -781,6 +863,7 @@ class ChatRuntime:
         result = parse_model_response(text)
         if result.pop("parsed"):
             result = enforce_image_enhancer_routing(result, graph, messages, bool(images))
+            result = _fix_minimax_preset_actions(result, graph)
             return enforce_image_reference_bindings(result, graph, bool(images))
         # The model ignored the JSON protocol (e.g. a conversational preamble
         # like "Generating the prompt…" and then stopped). Retry once, echoing
@@ -795,6 +878,7 @@ class ChatRuntime:
         retry_result = parse_model_response(retry_text)
         if retry_result.pop("parsed"):
             retry_result = enforce_image_enhancer_routing(retry_result, graph, messages, bool(images))
+            retry_result = _fix_minimax_preset_actions(retry_result, graph)
             return enforce_image_reference_bindings(retry_result, graph, bool(images))
         return result
 
