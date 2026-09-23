@@ -7,7 +7,28 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
 
-from chat_service import ChatRuntime, MINIMAX_I2VA_BINDING, THINK_CLOSE, THINK_OPEN, build_prompt, enforce_image_enhancer_routing, enforce_image_reference_bindings, list_output_images, parse_model_response, select_workflow_intent, validate_actions, validate_graph, validate_images, validate_messages
+from chat_service import (
+    ChatRuntime,
+    MINIMAX_I2VA_BINDING,
+    THINK_CLOSE,
+    THINK_OPEN,
+    build_prompt,
+    enforce_image_enhancer_routing,
+    enforce_image_reference_bindings,
+    list_output_images,
+    parse_model_response,
+    select_workflow_intent,
+    validate_actions,
+    validate_graph,
+    validate_images,
+    validate_messages,
+    _fix_minimax_preset_actions,
+    _match_minimax_preset,
+    _minimax_preset_mode,
+    _minimax_result,
+    _is_image_enhancer_node,
+    _has_image_enhancer_target,
+)
 
 
 class ChatProtocolTests(unittest.TestCase):
@@ -366,6 +387,135 @@ class ChatProtocolTests(unittest.TestCase):
                 sys.modules.pop("AILab_QwenVL", None)
             else:
                 sys.modules["AILab_QwenVL"] = previous
+
+    def test_minimax_preset_mode_detection(self):
+        self.assertEqual(_minimax_preset_mode("🔄 MiniMax H3 NSFW FL2VA (10s)"), "FL2VA")
+        self.assertEqual(_minimax_preset_mode("🎞️ MiniMax H3 NSFW R2VA (5s)"), "R2VA")
+        self.assertIsNone(_minimax_preset_mode("🎬 MiniMax H3 NSFW (5s)"))
+
+    def test_match_minimax_preset_prefers_same_mode(self):
+        preset_widget = {
+            "options": {
+                "values": [
+                    "🎬 MiniMax H3 NSFW (5s)",
+                    "🎬 MiniMax H3 NSFW (10s)",
+                    "🔄 MiniMax H3 NSFW FL2VA (5s)",
+                    "🔄 MiniMax H3 NSFW FL2VA (10s)",
+                    "🎞️ MiniMax H3 NSFW R2VA (5s)",
+                ]
+            }
+        }
+        self.assertEqual(
+            _match_minimax_preset(preset_widget, 10, "🔄 MiniMax H3 NSFW FL2VA (5s)"),
+            "🔄 MiniMax H3 NSFW FL2VA (10s)",
+        )
+        self.assertEqual(
+            _match_minimax_preset(preset_widget, 10, "🎬 MiniMax H3 NSFW (5s)"),
+            "🎬 MiniMax H3 NSFW (10s)",
+        )
+
+    def test_minimax_result_keeps_fl2va_preset_family(self):
+        graph = {
+            "nodes": [
+                {
+                    "id": 105,
+                    "widgets": [
+                        {"name": "unet_name", "value": "x", "options": {"values": ["minimax_h3_fl2va_pruned_nvfp4_convrot_int8.safetensors"]}},
+                        {
+                            "name": "preset_prompt",
+                            "value": "🔄 MiniMax H3 NSFW FL2VA (5s)",
+                            "options": {
+                                "values": [
+                                    "🎬 MiniMax H3 NSFW (5s)",
+                                    "🎬 MiniMax H3 NSFW (10s)",
+                                    "🔄 MiniMax H3 NSFW FL2VA (5s)",
+                                    "🔄 MiniMax H3 NSFW FL2VA (10s)",
+                                ]
+                            },
+                        },
+                        {"name": "passthrough", "value": True},
+                        {"name": "prompt", "value": ""},
+                        {"name": "steps", "value": 8, "options": {"values": ["res_multistep", "euler"]}},
+                        {"name": "sampler_name", "value": "euler", "options": {"values": ["euler", "res_multistep"]}},
+                        {"name": "scheduler", "value": "simple", "options": {"values": ["simple"]}},
+                        {"name": "shift_video", "value": 6, "options": {"values": [6, 12]}},
+                        {"name": "shift_audio", "value": 3, "options": {"values": [3]}},
+                        {"name": "value_1", "value": 5},
+                    ],
+                }
+            ]
+        }
+        result = _minimax_result(graph, "native", "use native 10 seconds")
+        self.assertIsNotNone(result)
+        preset_action = next(a for a in result["actions"] if a["widget"] == "preset_prompt")
+        self.assertEqual(preset_action["value"], "🔄 MiniMax H3 NSFW FL2VA (10s)")
+        value_action = next(a for a in result["actions"] if a["widget"] == "value_1")
+        self.assertEqual(value_action["value"], 10)
+
+    def test_image_enhancer_detected_by_image_input(self):
+        node = {
+            "id": 105,
+            "type": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
+            "title": None,
+            "widgets": [
+                {"name": "prompt", "value": ""},
+                {"name": "preset_prompt", "value": "🔄 MiniMax H3 NSFW FL2VA (5s)"},
+                {"name": "passthrough", "value": True},
+            ],
+            "inputs": [{"name": "image", "type": "IMAGE", "link": 1}],
+        }
+        self.assertTrue(_is_image_enhancer_node(node))
+        self.assertTrue(_has_image_enhancer_target({"nodes": [node]}))
+
+    def test_prompt_suppresses_video_guides_for_uuid_image_enhancer(self):
+        graph = {
+            "nodes": [
+                {
+                    "id": 105,
+                    "type": "4c314f31-ecda-4b08-ae98-faaba1bf613f",
+                    "title": None,
+                    "widgets": [
+                        {"name": "prompt", "value": ""},
+                        {"name": "preset_prompt", "value": "🔄 MiniMax H3 NSFW FL2VA (5s)"},
+                        {"name": "passthrough", "value": True},
+                    ],
+                    "inputs": [{"name": "image", "type": "IMAGE", "link": 1}],
+                }
+            ]
+        }
+        prompt = build_prompt([{"role": "user", "content": "10 seconds video"}], graph, has_images=True)
+        self.assertIn("Exact image-enhancer target", prompt)
+        self.assertNotIn("integrated_multimodal_description:", prompt)
+        self.assertNotIn("overall_soundscape:", prompt)
+
+    def test_fix_minimax_preset_corrects_generic_to_fl2va(self):
+        graph = {
+            "nodes": [
+                {
+                    "id": 105,
+                    "widgets": [
+                        {"name": "unet_name", "value": "x"},
+                        {"name": "preset_prompt", "value": "🔄 MiniMax H3 NSFW FL2VA (5s)", "options": {"values": [
+                            "🎬 MiniMax H3 NSFW (5s)",
+                            "🎬 MiniMax H3 NSFW (10s)",
+                            "🔄 MiniMax H3 NSFW FL2VA (5s)",
+                            "🔄 MiniMax H3 NSFW FL2VA (10s)",
+                        ]}},
+                        {"name": "passthrough", "value": True},
+                    ],
+                }
+            ]
+        }
+        result = {
+            "message": "Done",
+            "actions": [
+                {"type": "set_widget_value", "node_id": 105, "widget": "preset_prompt", "value": "🎬 MiniMax H3 NSFW (10s)"},
+                {"type": "queue_workflow"},
+            ],
+        }
+        fixed = _fix_minimax_preset_actions(result, graph)
+        preset_action = next(a for a in fixed["actions"] if a["widget"] == "preset_prompt")
+        self.assertEqual(preset_action["value"], "🔄 MiniMax H3 NSFW FL2VA (10s)")
 
 
 if __name__ == "__main__":
