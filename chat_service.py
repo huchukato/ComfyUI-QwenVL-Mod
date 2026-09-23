@@ -583,10 +583,24 @@ def _chat_guides_for(graph, has_images=False):
     )
 
 
-def build_prompt(messages, graph, enable_thinking=False, has_images=False, has_video=False):
+def _minimax_config_instruction(config_key):
+    config = _MINIMAX_CONFIGS[config_key]
+    lines = [f"\nUSER-SELECTED MINIMAX CONFIG: {config_key}. Apply these exact sampler widget values when updating a MiniMax H3 video sampler node:"]
+    lines.append(f'- unet_name: contains "{config["unet_needle"]}" (fallback: {config["unet_fallback"]})')
+    for name, value in config["values"].items():
+        lines.append(f"- {name}: {value}")
+    if config.get("lora_mode"):
+        lines.append(f'- Set any LoRA node under the same sampler to mode "{config["lora_mode"]}" (bypass/enable).')
+    return "\n".join(lines) + "\n"
+
+
+def build_prompt(messages, graph, enable_thinking=False, has_images=False, has_video=False, config_directive=None):
     history = "\n".join(f"{item['role'].upper()}: {item['content']}" for item in messages)
     snapshot = json.dumps(graph, ensure_ascii=False, separators=(",", ":"))
-    instruction = BASE_SYSTEM_PROMPT + _preset_guides(graph, messages, has_images) + _chat_guides_for(graph, has_images)
+    instruction = BASE_SYSTEM_PROMPT
+    if config_directive in _MINIMAX_CONFIGS:
+        instruction += _minimax_config_instruction(config_directive)
+    instruction += _preset_guides(graph, messages, has_images) + _chat_guides_for(graph, has_images)
     instruction += THINKING_INSTRUCTION if enable_thinking else NO_THINKING_INSTRUCTION
     if has_video:
         instruction += "\nVIDEO INPUT: sampled frames from a video clip are attached to the latest user message. Treat them as the clip itself when the user asks to review, critique, or refine a generated video."
@@ -787,6 +801,36 @@ def _minimax_result(graph, config_key, text):
     return None
 
 
+def _duration_phrase(text):
+    match = re.search(r"\b(\d{1,2})\s*(?:sec(?:ond)?s?|s|secondi?)\b", text or "", re.IGNORECASE)
+    return f"{match.group(1)} seconds" if match else ""
+
+
+def _merge_minimax_config(result, graph, config_key, text):
+    """Combine deterministic MiniMax sampler config actions (unet, steps,
+    scheduler, shifts, LoRA modes, duration) with an LLM-refined prompt action.
+    Returns result unchanged if no MiniMax sampler node is found."""
+    synthetic_text = _duration_phrase(text)
+    config_result = _minimax_result(graph, config_key, synthetic_text)
+    if not config_result:
+        return result
+    node_id = next((a["node_id"] for a in config_result.get("actions", []) if a.get("widget") == "unet_name"), None)
+    if node_id is None:
+        return result
+
+    # Keep the LLM-refined prompt and any non-conflicting actions.
+    config_widgets = {"unet_name", "steps", "sampler_name", "scheduler", "shift_video", "shift_audio", "value_1", "preset_prompt", "passthrough"}
+    kept = [a for a in result.get("actions", []) if not (
+        a.get("type") == "set_widget_value"
+        and str(a.get("node_id")) == str(node_id)
+        and a.get("widget") in config_widgets
+    )]
+    kept = [a for a in kept if a.get("type") != "queue_workflow"]
+    kept.extend(config_result.get("actions", []))
+    result["actions"] = kept
+    return result
+
+
 def _fix_minimax_preset_actions(result, graph):
     """After LLM routing, correct preset_prompt actions on MiniMax H3 nodes so
     the duration variant matches the currently selected mode (FL2VA/R2VA).
@@ -864,13 +908,38 @@ class ChatRuntime:
         sel_capability = str(directives.get("capability") or "auto")
         sel_config = str(directives.get("config") or "auto")
         sel_text = str(directives.get("text") or "")
+        config_directive = None
         explicit = None
         if sel_capability != "auto":
             explicit = _capability_result(graph, sel_capability, sel_text, sel_text)
         if explicit is None and sel_config in _MINIMAX_CONFIGS:
-            explicit = _minimax_result(graph, sel_config, sel_text)
+            # If the user wrote a descriptive scene, let the LLM refine the
+            # prompt while we enforce the selected config afterwards. Otherwise
+            # bypass the LLM for a fast deterministic execution.
+            if not sel_text or _is_execution_only(sel_text):
+                explicit = _minimax_result(graph, sel_config, sel_text)
+            else:
+                config_directive = sel_config
         if explicit is None:
-            explicit = _explicit_capability_request(messages, graph) or _explicit_minimax_request(messages, graph)
+            explicit = _explicit_capability_request(messages, graph)
+        if explicit is None:
+            last_user = _last_user_message(messages)
+            trigger = _CONFIG_TRIGGER.search(last_user)
+            if trigger:
+                raw = trigger.group(1).lower()
+                if "native" in raw or raw.rstrip() == "config c":
+                    msg_config = "native"
+                elif "eros" in raw or raw.rstrip() == "config a":
+                    msg_config = "10eros"
+                elif "turbo" in raw or raw.rstrip() == "config b":
+                    msg_config = "turbo"
+                else:
+                    msg_config = None
+                rest = _CONFIG_TRIGGER.sub("", last_user).strip()
+                if msg_config and (not rest or _is_execution_only(rest)):
+                    explicit = _minimax_result(graph, msg_config, last_user)
+                elif msg_config:
+                    config_directive = msg_config
         if explicit is not None:
             return explicit
         available = self.models().get(backend)
@@ -888,12 +957,14 @@ class ChatRuntime:
             # Thinking consumes tokens before the JSON reply; a small budget
             # truncates the response after the reasoning and no JSON is emitted.
             options["max_tokens"] = max(int(options.get("max_tokens", 1024)), 4096)
-        prompt = build_prompt(messages, graph, enable_thinking, bool(images), bool(video))
+        prompt = build_prompt(messages, graph, enable_thinking, bool(images), bool(video), config_directive)
         with self._lock:
             text = self._generate(backend, model_name, prompt, options, enable_thinking, images, video)
         result = parse_model_response(text)
         if result.pop("parsed"):
             result = enforce_image_enhancer_routing(result, graph, messages, bool(images))
+            if config_directive in _MINIMAX_CONFIGS:
+                result = _merge_minimax_config(result, graph, config_directive, sel_text)
             result = _fix_minimax_preset_actions(result, graph)
             return enforce_image_reference_bindings(result, graph, bool(images))
         # The model ignored the JSON protocol (e.g. a conversational preamble
@@ -903,12 +974,14 @@ class ChatRuntime:
             {"role": "assistant", "content": (text or "")[:2000]},
             {"role": "user", "content": "Your reply was not a JSON object. Return ONLY the JSON object described in the system instructions — no preamble, no extra text."},
         ]
-        retry_prompt = build_prompt(retry_messages, graph, enable_thinking, bool(images), bool(video))
+        retry_prompt = build_prompt(retry_messages, graph, enable_thinking, bool(images), bool(video), config_directive)
         with self._lock:
             retry_text = self._generate(backend, model_name, retry_prompt, options, enable_thinking, images, video)
         retry_result = parse_model_response(retry_text)
         if retry_result.pop("parsed"):
             retry_result = enforce_image_enhancer_routing(retry_result, graph, messages, bool(images))
+            if config_directive in _MINIMAX_CONFIGS:
+                retry_result = _merge_minimax_config(retry_result, graph, config_directive, sel_text)
             retry_result = _fix_minimax_preset_actions(retry_result, graph)
             return enforce_image_reference_bindings(retry_result, graph, bool(images))
         return result
