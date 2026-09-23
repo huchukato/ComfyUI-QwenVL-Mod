@@ -26,7 +26,7 @@ from PIL import Image
 from huggingface_hub import snapshot_download, hf_hub_download
 from transformers import AutoProcessor, AutoTokenizer, BitsAndBytesConfig
 
-from chat_service import ensure_i2va_binding
+from chat_service import normalize_minimax_output
 
 # SageAttention support
 # SageAttention 2.x exposes functions at top-level; 1.x had them in .core
@@ -1291,7 +1291,7 @@ class QwenVLBase:
                 video=video,
             )
             
-            text = _ensure_i2va_binding(text, preset_prompt, has_image=image is not None)
+            text = normalize_minimax_output(text, preset_prompt, has_image=image is not None)
 
             # Validate output before caching — reject "ready/waiting" responses
             # that occur when the model treats the system prompt as a conversation
