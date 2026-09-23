@@ -1,5 +1,10 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.8.12 (2026/09/22)
+
+- Added `🎨 Pony→Natural Language` back to the QwenVL `preset_prompt` dropdown (`_preset_prompts` + `qwenvl`), in addition to the PromptEnhancer style.
+- The same converter is now available both as a vision preset (when an image is attached) and as a text-only style enhancement.
+
 ## Version 2.8.11 (2026/09/22)
 
 - Removed the redundant `mmh3_acceleration` chat guide from `_chat_guides`. MiniMax H3 acceleration modes are already handled deterministically by Qwen Chat selectors and `use native/10eros/turbo` commands, so the extra system-prompt text was no longer useful.
