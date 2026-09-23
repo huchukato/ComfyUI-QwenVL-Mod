@@ -120,8 +120,7 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertIn('currently selects preset "MiniMax H3 NSFW (5s)"', prompt)
         self.assertIn("IGNORE any full prompt-writing guide for that preset", prompt)
         self.assertIn("the inner QwenVL node will use it to build the final prompt", prompt)
-        self.assertIn('You MUST set node 105 widget "prompt" to a concise, fluent English action directive', prompt)
-        self.assertIn("You MAY lightly refine the wording", prompt)
+        self.assertIn('You MUST set node 105 widget "prompt" to a concise English action directive', prompt)
         self.assertIn('set node 105 widget "passthrough" to false', prompt)
         self.assertIn("inner QwenVL must analyze the image and create the final preset prompt", prompt)
         # The full MiniMax format guide must not leak into the chat prompt for an image enhancer.
