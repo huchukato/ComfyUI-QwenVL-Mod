@@ -35,6 +35,10 @@ ENV/
 *.swo
 *~
 
+# Kilo Code agent worktrees/state
+.kilo/
+.kilocode/
+
 # OS
 .DS_Store
 .DS_Store?
