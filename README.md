@@ -58,6 +58,9 @@ Qwen Chat treats the render node as its generation target: it reads your request
 Demo workflow: [`workflows/livepeer/Livepeer-Agent-Demo.json`](https://github.com/huchukato/ComfyUI-Garage/blob/master/workflows/livepeer/Livepeer-Agent-Demo.json) in the ComfyUI-Garage repo — just `Load Media → Livepeer Render`.
 
 ## **📰 News & Updates**
+* **2026/09/22**: **v2.8.14 — Removed Duplicate Livepeer Node**. [[Update](update.md#version-2814-20260922)]
+> 🌐 `AILab_LivepeerRender` is no longer shown in the node menu; old workflows still load via `legacy_aliases.js`.
+
 * **2026/09/22**: **v2.8.13 — Pixaroma-Style Node Branding & Chat Styling**. [[Update](update.md#version-2813-20260922)]
 > 🎨 **Node colours**: each QwenVL-Mod family (Vision, Vision GGUF, Prompt Enhancer, Livepeer, Utils) now has distinct title/body colours, with user colour choices always preserved.
 > 💬 **Chat sidebar**: wrapped composer in a styled panel and added a shared stylesheet for a cleaner, more modern look.

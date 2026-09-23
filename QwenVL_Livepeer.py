@@ -359,11 +359,8 @@ class QwenVL_LivepeerRender:
 
 NODE_CLASS_MAPPINGS = {
     "QwenVL_LivepeerRender": QwenVL_LivepeerRender,
-    # Legacy alias: workflows saved on the hackathon branch still resolve.
-    "AILab_LivepeerRender": QwenVL_LivepeerRender,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "QwenVL_LivepeerRender": "🌐 Livepeer Agent Render",
-    "AILab_LivepeerRender": "🌐 Livepeer Agent Render",
 }
