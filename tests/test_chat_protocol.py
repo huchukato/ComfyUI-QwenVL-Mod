@@ -28,6 +28,7 @@ from chat_service import (
     _minimax_result,
     _is_image_enhancer_node,
     _has_image_enhancer_target,
+    ensure_i2va_binding,
 )
 
 
@@ -516,6 +517,26 @@ class ChatProtocolTests(unittest.TestCase):
         fixed = _fix_minimax_preset_actions(result, graph)
         preset_action = next(a for a in fixed["actions"] if a["widget"] == "preset_prompt")
         self.assertEqual(preset_action["value"], "🔄 MiniMax H3 NSFW FL2VA (10s)")
+
+
+    def test_ensure_i2va_binding_prepends_missing_line(self):
+        binding = "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced."
+        body = "integrated_multimodal_description: [Shot 1] A woman smiles."
+        result = ensure_i2va_binding(body, "🎬 MiniMax H3 NSFW (5s)", has_image=True)
+        self.assertTrue(result.startswith(binding))
+        self.assertIn(body, result)
+
+    def test_ensure_i2va_binding_keeps_existing_line(self):
+        binding = "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced."
+        original = f"{binding}\n\nintegrated_multimodal_description: [Shot 1] A woman smiles."
+        self.assertEqual(ensure_i2va_binding(original, "🎬 MiniMax H3 NSFW (5s)", has_image=True), original)
+
+    def test_ensure_i2va_binding_skips_fl2va(self):
+        body = "How the reference pictures align with the target video ..."
+        self.assertEqual(
+            ensure_i2va_binding(body, "🔄 MiniMax H3 NSFW FL2VA (5s)", has_image=True),
+            body,
+        )
 
 
 if __name__ == "__main__":
