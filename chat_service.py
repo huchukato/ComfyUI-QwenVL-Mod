@@ -476,9 +476,27 @@ def _preset_guides(graph, messages, has_images=False):
     last_user = next((m["content"] for m in reversed(messages) if m["role"] == "user"), "")
     wanted.update(name for name in guides if name in last_user)
     # A duration mention (e.g. "10 seconds", "10s", "10 secondi") selects the
-    # preset variants for that length, e.g. "MiniMax H3 NSFW (10s)".
+    # preset variants for that length, e.g. "MiniMax H3 NSFW (10s)". Keep the
+    # same MiniMax mode as the currently selected preset (FL2VA / R2VA / generic).
+    current_mode = None
+    for node in graph.get("nodes", []):
+        for widget in node.get("widgets", []):
+            if isinstance(widget, dict) and widget.get("name") == "preset_prompt":
+                current_mode = _minimax_preset_mode(widget.get("value"))
     for match in re.finditer(r"(\d+)\s*(?:s|sec|secondi|seconds)\b", last_user, re.IGNORECASE):
-        wanted.update(name for name in guides if f"({match.group(1)}s)" in name)
+        suffix = f"({match.group(1)}s)"
+        for name in guides:
+            if suffix not in name:
+                continue
+            mode = _minimax_preset_mode(name)
+            # If we know the current mode, only add duration variants from the
+            # same mode; otherwise keep only generic variants to avoid confusing
+            # the LLM with multiple matching presets.
+            if current_mode is None:
+                if mode is None:
+                    wanted.add(name)
+            elif mode == current_mode:
+                wanted.add(name)
     if not wanted:
         return ""
     # Suppress full-format video guides when the chat must only feed the enhancer.
@@ -684,7 +702,8 @@ def _minimax_preset_mode(preset_name):
 
 def _match_minimax_preset(widget, seconds, current_preset):
     """Pick a duration variant that stays in the same MiniMax mode as the
-    currently selected preset (FL2VA/R2VA). Falls back to any duration match."""
+    currently selected preset (FL2VA/R2VA/generic). Falls back to the generic
+    duration variant when the current preset is generic."""
     options = _widget_options(widget)
     suffix = f"({seconds}s)"
     mode = _minimax_preset_mode(current_preset)
@@ -692,6 +711,14 @@ def _match_minimax_preset(widget, seconds, current_preset):
         for option in options:
             if suffix in str(option) and mode.lower() in str(option).lower():
                 return option
+        # If no same-mode variant exists, don't fall back to a different mode.
+        return None
+    # Current preset is generic (T2VA/I2VA): prefer a generic variant without
+    # an FL2VA/R2VA marker.
+    for option in options:
+        if suffix in str(option) and _minimax_preset_mode(option) is None:
+            return option
+    # Last resort: any duration match.
     for option in options:
         if suffix in str(option):
             return option
