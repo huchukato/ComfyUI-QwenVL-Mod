@@ -2,7 +2,7 @@ import { app } from "/scripts/app.js";
 import { api } from "/scripts/api.js";
 
 const STORAGE_KEY = "qwenvl.chat.v1";
-const DEFAULT_GGUF_MODEL = "Qwen3.8-9B-heretic-uncensored.Q8_0.gguf";
+const DEFAULT_GGUF_MODEL = "Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q8_0.gguf";
 const TRANSLATIONS = {
     en: {
         empty: "Ask me to analyze or modify the parameters of the open workflow.", user: "You", thinking: "Thinking",
