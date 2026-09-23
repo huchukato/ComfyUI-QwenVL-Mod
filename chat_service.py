@@ -32,6 +32,37 @@ def ensure_i2va_binding(text, preset_name, has_image=False):
     return f"{MINIMAX_I2VA_BINDING}\n\n{text.lstrip()}"
 
 
+def normalize_minimax_output(text, preset_name, has_image=False):
+    """Remove stray preface / duplicated shot blocks before the real prompt body
+    and ensure the required reference alignment line is present.
+
+    MiniMax H3 presets expect the output to start directly with the mode's
+    header (I2VA binding / FL2VA alignment line / nothing for T2VA), followed
+    by `integrated_multimodal_description:`, `overall_soundscape:` and
+    `non_diegetic_music:`. Anything else before the first body label is noise."""
+    if not preset_name or "MiniMax H3" not in preset_name:
+        return text
+    label = "integrated_multimodal_description:"
+    idx = text.find(label)
+    if idx < 0:
+        return ensure_i2va_binding(text, preset_name, has_image)
+
+    head, tail = text[:idx], text[idx:]
+    marker = None
+    if "FL2VA" in preset_name or "R2VA" in preset_name:
+        marker = "How the reference pictures align"
+    elif has_image:
+        marker = "For the target video"
+
+    prefix = ""
+    if marker:
+        for line in head.splitlines():
+            if marker in line:
+                prefix = line.strip() + "\n\n"
+                break
+    return ensure_i2va_binding(prefix + tail.lstrip(), preset_name, has_image)
+
+
 BASE_SYSTEM_PROMPT = """You are Qwen Workflow Assistant inside ComfyUI. Answer the user and, only when requested, control the open workflow using the supplied snapshot.
 LANGUAGE: "message" and choice labels must mirror the LATEST user message language. Workflow prompt text must be English.
 OUTPUT: return exactly one JSON object, no text outside it:

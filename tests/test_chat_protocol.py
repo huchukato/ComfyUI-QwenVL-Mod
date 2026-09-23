@@ -29,6 +29,7 @@ from chat_service import (
     _is_image_enhancer_node,
     _has_image_enhancer_target,
     ensure_i2va_binding,
+    normalize_minimax_output,
 )
 
 
@@ -537,6 +538,29 @@ class ChatProtocolTests(unittest.TestCase):
             ensure_i2va_binding(body, "🔄 MiniMax H3 NSFW FL2VA (5s)", has_image=True),
             body,
         )
+
+    def test_normalize_minimax_removes_duplicate_shot_blocks(self):
+        binding = "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced."
+        body = "integrated_multimodal_description: [Shot 1] ...\noverall_soundscape: ...\nnon_diegetic_music: N/A"
+        duplicate = f"[Shot 1] A woman smiles.\n[Shot 2] She turns.\n\n{binding}\n\n{body}"
+        result = normalize_minimax_output(duplicate, "🎬 MiniMax H3 NSFW (5s)", has_image=True)
+        self.assertTrue(result.startswith(binding))
+        self.assertNotIn("[Shot 2] She turns.", result.split("integrated_multimodal_description:")[0])
+        self.assertIn("integrated_multimodal_description:", result)
+
+    def test_normalize_minimax_adds_missing_i2va_binding(self):
+        body = "integrated_multimodal_description: [Shot 1] A woman smiles.\noverall_soundscape: ...\nnon_diegetic_music: N/A"
+        result = normalize_minimax_output(body, "🎬 MiniMax H3 NSFW (5s)", has_image=True)
+        self.assertIn("For the target video", result)
+        self.assertIn("integrated_multimodal_description:", result)
+
+    def test_normalize_minimax_keeps_fl2va_alignment(self):
+        alignment = "How the reference pictures align with the target video — Picture 1 (from [Shot 1]) aligns with the 0.00-second mark; Picture 2 aligns with the 5.00-second mark."
+        body = "integrated_multimodal_description: [Shot 1] ...\noverall_soundscape: ...\nnon_diegetic_music: N/A"
+        text = f"{alignment}\n\n{body}"
+        result = normalize_minimax_output(text, "🔄 MiniMax H3 NSFW FL2VA (5s)", has_image=True)
+        self.assertTrue(result.startswith(alignment))
+        self.assertIn("integrated_multimodal_description:", result)
 
 
 if __name__ == "__main__":
