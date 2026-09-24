@@ -28,27 +28,6 @@ from transformers import AutoProcessor, AutoTokenizer, BitsAndBytesConfig
 
 from chat_service import normalize_minimax_output
 
-# SageAttention support
-# SageAttention 2.x exposes functions at top-level; 1.x had them in .core
-try:
-    from sageattention import (
-        sageattn_qk_int8_pv_fp16_cuda,
-        sageattn_qk_int8_pv_fp8_cuda,
-        sageattn_qk_int8_pv_fp8_cuda_sm90,
-    )
-    SAGE_ATTENTION_AVAILABLE = True
-except ImportError:
-    try:
-        from sageattention.core import (
-            sageattn_qk_int8_pv_fp16_cuda,
-            sageattn_qk_int8_pv_fp8_cuda,
-            sageattn_qk_int8_pv_fp8_cuda_sm90,
-        )
-        SAGE_ATTENTION_AVAILABLE = True
-    except ImportError as _sage_err:
-        SAGE_ATTENTION_AVAILABLE = False
-        print(f"[QwenVL] SageAttention import failed: {_sage_err}")
-
 # Global cache for generated prompts
 PROMPT_CACHE = {}
 CACHE_FILE = Path(__file__).parent / "prompt_cache.json"
@@ -243,7 +222,7 @@ PRESET_PROMPTS: list[str] = ["Describe this image in detail."]
 TOOLTIPS = {
     "model_name": "Pick the Qwen-VL checkpoint. First run downloads weights into models/LLM/Qwen-VL, so leave disk space.",
     "quantization": "Precision vs VRAM. FP16 gives the best quality if memory allows; 8-bit suits 8–16 GB GPUs; 4-bit fits 6 GB or lower but is slower.",
-    "attention_mode": "auto tries SageAttention → FlashAttention 2 → SDPA in order. SDPA is stable and recommended. Only override when debugging attention backends.",
+    "attention_mode": "auto tries FlashAttention 2 → SDPA in order. SDPA is stable and recommended. Only override when debugging attention backends.",
     "preset_prompt": "Built-in instruction describing how Qwen-VL should analyze the media input.",
     "custom_prompt": "Additional user input that gets combined with the preset template. Leave empty to use only the template.",
     "max_tokens": "Maximum number of new tokens to decode. Larger values yield longer answers but consume more time and memory.",
@@ -560,51 +539,6 @@ def flash_attn_available():
 
     return True
 
-def sage_attn_available():
-    """Check if SageAttention is available and GPU supports it."""
-    if not SAGE_ATTENTION_AVAILABLE:
-        return False
-    if not torch.cuda.is_available():
-        return False
-    major, _ = torch.cuda.get_device_capability()
-    if major < 8:
-        return False
-    return True
-
-
-def get_sage_attention_config():
-    """Get the appropriate SageAttention kernel based on GPU architecture."""
-    if not sage_attn_available():
-        return None, None, None
-
-    major, minor = torch.cuda.get_device_capability()
-    arch_code = major * 10 + minor
-
-    attn_func = None
-    pv_accum_dtype = "fp32"
-
-    if arch_code >= 120:  # Blackwell
-        pv_accum_dtype = "fp32+fp32"
-        attn_func = sageattn_qk_int8_pv_fp8_cuda
-        print(f"[QwenVL] SageAttention: Using SM120 (Blackwell) FP8 kernel")
-    elif arch_code >= 90:  # Hopper
-        pv_accum_dtype = "fp32+fp32"
-        attn_func = sageattn_qk_int8_pv_fp8_cuda_sm90
-        print(f"[QwenVL] SageAttention: Using SM90 (Hopper) FP8 kernel")
-    elif arch_code == 89:  # Ada Lovelace
-        pv_accum_dtype = "fp32+fp32"
-        attn_func = sageattn_qk_int8_pv_fp8_cuda
-        print(f"[QwenVL] SageAttention: Using SM89 (Ada) FP8 kernel")
-    elif arch_code >= 80:  # Ampere
-        pv_accum_dtype = "fp32"
-        attn_func = sageattn_qk_int8_pv_fp16_cuda
-        print(f"[QwenVL] SageAttention: Using SM80+ (Ampere) FP16 kernel")
-    else:
-        print(f"[QwenVL] SageAttention not supported on SM{arch_code}")
-        return None, None, None
-
-    return attn_func, "per_warp", pv_accum_dtype
-
 def is_fp8_model(model_name: str) -> bool:
     """Check if model name indicates it's a pre-quantized FP8 model."""
     fp8_indicators = ["-fp8", "_fp8", "-FP8", "_FP8"]
@@ -623,9 +557,7 @@ def resolve_attention_mode(mode, force_sdpa=False):
     if mode == "sdpa":
         return "sdpa"
     if mode == "sage":
-        if sage_attn_available():
-            return "sage"
-        print("[QwenVL] SageAttention forced but unavailable, falling back to SDPA")
+        print("[QwenVL] SageAttention support was removed (monkey-patch incompatible with transformers >= 5.x), falling back to SDPA")
         return "sdpa"
     if mode == "flash_attention_2":
         if flash_attn_available():
@@ -633,10 +565,7 @@ def resolve_attention_mode(mode, force_sdpa=False):
         print("[QwenVL] Flash-Attn forced but unavailable, falling back to SDPA")
         return "sdpa"
 
-    # Auto mode: try sage → flash → sdpa
-    if sage_attn_available():
-        print("[QwenVL] Auto mode: Using SageAttention")
-        return "sage"
+    # Auto mode: try flash → sdpa
     if flash_attn_available():
         print("[QwenVL] Auto mode: Using Flash Attention 2")
         return "flash_attention_2"
@@ -845,11 +774,7 @@ class QwenVLBase:
         model_path = ensure_model(model_name)
         quant_config, dtype = quantization_config(model_name, quant)
         
-        # Handle attention mode for loading
-        # SageAttention requires loading with SDPA first, then patching
         actual_attn_impl = attn_impl
-        if attn_impl == "sage":
-            actual_attn_impl = "sdpa"
         
         # MEMORY DEBUGGING: Check memory before loading
         if torch.cuda.is_available():
@@ -965,17 +890,6 @@ class QwenVLBase:
                 except Exception as e:
                     print(f"[QwenVL] ❌ Failed to move to GPU: {e}")
                     print("[QwenVL] Keeping model on CPU (will be very slow)")
-        
-        # Apply SageAttention patching if needed
-        if attn_impl == "sage":
-            try:
-                from sageattention_patch import set_sage_attention
-                set_sage_attention(self.model)
-                print("[QwenVL] SageAttention patching applied successfully")
-            except Exception as e:
-                print(f"[QwenVL] SageAttention patching failed: {e}")
-                print("[QwenVL] Falling back to SDPA attention")
-                # Model is already loaded with SDPA, so we can continue
         
         # MEMORY CLEANUP: Clear cache after model loading
         if torch.cuda.is_available():
