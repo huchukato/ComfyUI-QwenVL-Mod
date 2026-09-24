@@ -1,5 +1,14 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.9.0 (2026/09/25)
+
+- MiniMax model matrix in Qwen Workflow Chat: `Native`, `Native Turbo`, `10Eros` and `10Eros Turbo` configs now drive the whole sampler setup — UNet selection (nvfp4 / 10Eros beta5 int8), step count (20 quality / 8 turbo), LoRA enable/bypass and the correct LoRA file per mode (lightx2v fl2v/ref2v vs TenStrip combined fusion).
+- `BlockSparseAttention` `tau` is set per config (1.0 quality, 1.3 turbo).
+- New unified HF/GGUF prompt enhancer node; `custom_prompt` widget renamed to `prompt`; backend dropdowns removed (model prefix is the single selector); `keep_model_loaded` defaults to False; duration becomes a widget.
+- Presets split into per-family files; style-tag presets now lead the output with an explicit style declaration; denser Pony→Natural and Detailed caption outputs.
+- MiniMax output normalization applied to the GGUF backend; legacy `AILab_*` nodes hidden from the add-node menu (superseded by Unified); refreshed node icons.
+- Publish workflow: changelog extraction rewritten in plain shell (registry scanner false positive on embedded Python).
+
 ## Version 2.8.14 (2026/09/22)
 
 - Removed the duplicate `AILab_LivepeerRender` node from the Add Node menu.
