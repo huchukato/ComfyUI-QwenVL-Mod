@@ -15,26 +15,22 @@ jobs:
         uses: actions/checkout@v4
       - name: Extract changelog
         run: |
-          python3 - <<'PY'
-          import pathlib, re, subprocess, tomllib
-          version = tomllib.loads(pathlib.Path("pyproject.toml").read_text())["project"]["version"]
-          section = ""
-          for fname in ("update.md", "UPDATE.md", "CHANGELOG.md"):
-              p = pathlib.Path(fname)
-              if not p.exists():
-                  continue
-              text = p.read_text(encoding="utf-8")
-              m = re.search(
-                  rf"^##\s+[^\n]*?{re.escape(version)}(?![\d.])[^\n]*\n(.*?)(?=^##\s|\Z)",
-                  text, re.M | re.S,
-              )
-              if m and m.group(1).strip():
-                  section = m.group(1).strip()
-                  break
-          if not section:
-              section = subprocess.check_output(["git", "log", "-1", "--pretty=%B"]).decode().strip()
-          pathlib.Path("changelog.txt").write_text(section[:4000] or f"v{version}\n", encoding="utf-8")
-          PY
+          VERSION=$(sed -n 's/^version = "\([^"]*\)"/\1/p' pyproject.toml | head -1)
+          ESCAPED=$(printf '%s' "$VERSION" | sed 's/\./\\./g')
+          for f in update.md UPDATE.md CHANGELOG.md; do
+            [ -f "$f" ] || continue
+            awk -v ver="$ESCAPED" '
+              /^## / {
+                if (found) exit
+                if ($0 ~ ("(^|[^0-9.])" ver "([^0-9.]|$)")) { found = 1 }
+                next
+              }
+              found { print }
+            ' "$f" > changelog.txt
+            [ -s changelog.txt ] && break
+          done
+          [ -s changelog.txt ] || git log -1 --pretty=%B > changelog.txt
+          head -c 4000 changelog.txt > changelog.tmp && mv changelog.tmp changelog.txt
       - name: Publish Custom Node
         run: |
           pip install comfy-cli
