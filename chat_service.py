@@ -75,16 +75,18 @@ Choices are top-level, only when truly ambiguous. Always close braces.
 ---
 WORKFLOW TARGETS (pick the FIRST matching case for the node you are controlling):
 1. MiniMax H3 video sampler (exposes unet_name + preset_prompt + passthrough):
-   - If the request says "use Native", "Config C", "use 10Eros", "Config A" etc., FIRST update the sampler widgets, then write only the action into the "prompt" widget.
+   - If the request says "use Native", "use 10Eros Turbo", "Config A" etc., FIRST update the sampler widgets, then write only the action into the "prompt" widget.
    - Config mapping:
      * Native / Config C → unet_name="minimax_h3_fl2va_pruned_nvfp4_convrot_int8.safetensors", steps=20, sampler_name="res_multistep", scheduler="simple", shift_video=12, shift_audio=3
-     * 10Eros / Config A → unet_name="10Eros_Max_h3_TURBO-hybrid_beta3_int8_convrot_skip_edges.safetensors", steps=8, sampler_name="euler", scheduler="simple", shift_video=6, shift_audio=3
-     * Turbo LoRA / Config B → steps=8, sampler_name="euler", scheduler="simple", shift_video=6, shift_audio=3 (LoRA toggle is manual)
+     * Native Turbo / Config B → same unet_name, steps=8, sampler_name="euler", scheduler="simple", shift_video=6, shift_audio=3
+     * 10Eros / Config D → unet_name="10Eros_Max_h3_hybrid_beta5_int8.safetensors", steps=20, sampler_name="res_multistep", scheduler="simple", shift_video=12, shift_audio=3
+     * 10Eros Turbo / Config A → same 10Eros unet_name, steps=8, sampler_name="euler", scheduler="simple", shift_video=6, shift_audio=3
+   - Turbo variants run with the turbo LoRA enabled; the LoRA node toggle is handled automatically, do not mention it.
    - If a different duration is requested, set "value_1" to that number of seconds.
    - For the prompt: remove config words and duration. Write only a short English action description.
    - EXAMPLE: user says "generate a 5s video, use Native: rhythmic hip sway, subtle back and forth"
      Actions: value_1=5; unet_name=minimax...; steps=20; sampler_name=res_multistep; shift_video=12; shift_audio=3; prompt="rhythmic hip sway, subtle back and forth"; passthrough=false; queue_workflow.
-   - EXAMPLE: user says "use 10Eros: slow caressing on thigh, static camera"
+   - EXAMPLE: user says "use 10Eros Turbo: slow caressing on thigh, static camera"
      Actions: unet_name=10Eros...; steps=8; sampler_name=euler; shift_video=6; prompt="slow caressing on thigh, static camera"; passthrough=false; queue_workflow.
    - NEVER copy "use Native", "use 10Eros", "generate", "5s video" into the prompt widget.
    - NEVER describe the image yourself (clothes, face, room, light); the inner QwenVL model will see the image and describe it. You only provide the action.
@@ -709,30 +711,41 @@ def _explicit_capability_request(messages, graph):
 
 _CONFIG_TRIGGER = re.compile(
     r"\b(?:use|usa|switch\s+to|passa\s+a|metti|set|con)\s+(?:the\s+|il\s+|la\s+)?"
-    r"(native|10\s*eros(?:[-\s]?max)?|turbo(?:\s*lora)?|config\s*[abc])\b",
+    r"(native(?:\s+turbo)?|10\s*eros(?:[-\s]?max)?(?:\s+turbo)?|"
+    r"turbo(?:\s*lora)?(?:\s+(?:native|10\s*eros(?:[-\s]?max)?))?|config\s*[abcd])\b",
     re.IGNORECASE,
 )
 
+_NATIVE_UNET = "minimax_h3_fl2va_pruned_nvfp4_convrot_int8.safetensors"
+_EROS_UNET = "10Eros_Max_h3_hybrid_beta5_int8.safetensors"
+# Needle "h3_hybrid" matches the non-turbo beta5 only; the fused file is
+# named "h3_TURBO-hybrid_beta5" so it never collides.
 _MINIMAX_CONFIGS = {
     "native": {
         "unet_needle": "fl2va_pruned",
-        "unet_fallback": "minimax_h3_fl2va_pruned_nvfp4_convrot_int8.safetensors",
+        "unet_fallback": _NATIVE_UNET,
         "values": {"steps": 20, "sampler_name": "res_multistep", "scheduler": "simple", "shift_video": 12, "shift_audio": 3},
+        "lora_mode": "bypass",
+    },
+    "native_turbo": {
+        "unet_needle": "fl2va_pruned",
+        "unet_fallback": _NATIVE_UNET,
+        "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
+        "lora_mode": "enable",
     },
     "10eros": {
-        "unet_needle": "10eros",
-        "unet_fallback": "10Eros_Max_h3_TURBO-hybrid_beta3_int8_convrot_skip_edges.safetensors",
-        "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
+        "unet_needle": "h3_hybrid_beta5",
+        "unet_fallback": _EROS_UNET,
+        "values": {"steps": 20, "sampler_name": "res_multistep", "scheduler": "simple", "shift_video": 12, "shift_audio": 3},
+        "lora_mode": "bypass",
     },
-    "turbo": {
-        "unet_needle": "fl2va_pruned",
-        "unet_fallback": "minimax_h3_fl2va_pruned_nvfp4_convrot_int8.safetensors",
+    "10eros_turbo": {
+        "unet_needle": "h3_hybrid_beta5",
+        "unet_fallback": _EROS_UNET,
         "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
         "lora_mode": "enable",
     },
 }
-# Turbo LoRA must be bypassed for Native/10Eros (fused in the 10Eros checkpoint)
-_MINIMAX_LORA_MODE = {"native": "bypass", "10eros": "bypass", "turbo": "enable"}
 
 
 def _last_user_message(messages):
@@ -832,7 +845,7 @@ def _minimax_result(graph, config_key, text):
         directive = _clean_action_directive(text)
         if directive and "prompt" in widgets:
             actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "prompt", "value": directive})
-        lora_mode = config.get("lora_mode") or _MINIMAX_LORA_MODE.get(config_key)
+        lora_mode = config.get("lora_mode")
         prefix = f'{node["id"]}:'
         if lora_mode:
             target_mode = 0 if lora_mode == "enable" else 4
@@ -844,7 +857,8 @@ def _minimax_result(graph, config_key, text):
                     actions.append({"type": "set_node_mode", "node_id": inner["id"], "mode": lora_mode})
         actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "passthrough", "value": False})
         actions.append({"type": "queue_workflow"})
-        label = {"native": "Native", "10eros": "10Eros", "turbo": "Turbo LoRA"}[config_key]
+        label = {"native": "Native", "native_turbo": "Native Turbo",
+                 "10eros": "10Eros", "10eros_turbo": "10Eros Turbo"}[config_key]
         if re.match(r"^\s*(usa|passa|metti|fai|genera|crea)\b", text, re.IGNORECASE):
             message = f"⚙️ MiniMax H3 → {label}. Workflow in coda."
         else:
@@ -917,13 +931,19 @@ def _explicit_minimax_request(messages, graph):
     trigger = _CONFIG_TRIGGER.search(last_user)
     if not trigger:
         return None
-    raw = trigger.group(1).lower()
-    if "native" in raw or raw.rstrip() == "config c":
-        config_key = "native"
-    elif "eros" in raw or raw.rstrip() == "config a":
-        config_key = "10eros"
-    elif "turbo" in raw or raw.rstrip() == "config b":
-        config_key = "turbo"
+    raw = re.sub(r"\s+", " ", trigger.group(1).lower()).strip()
+    if "config" in raw:
+        config_key = {"config a": "10eros_turbo", "config b": "native_turbo",
+                      "config c": "native", "config d": "10eros"}.get(raw)
+        if config_key is None:
+            return None
+    elif "eros" in raw:
+        config_key = "10eros_turbo" if "turbo" in raw else "10eros"
+    elif "native" in raw:
+        config_key = "native_turbo" if "turbo" in raw else "native"
+    elif "turbo" in raw:
+        # Bare "turbo" keeps the legacy meaning: native model + turbo LoRA.
+        config_key = "native_turbo"
     else:
         return None
     return _minimax_result(graph, config_key, last_user)
