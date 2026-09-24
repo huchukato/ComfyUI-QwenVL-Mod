@@ -39,8 +39,8 @@ def _gguf_model_list():
 
 
 def _combined_model_list():
-    models = [f"{HF_PREFIX}{m}" for m in _hf_model_list()]
-    models.extend(f"{GGUF_PREFIX}{m}" for m in _gguf_model_list())
+    models = [f"{GGUF_PREFIX}{m}" for m in _gguf_model_list()]
+    models.extend(f"{HF_PREFIX}{m}" for m in _hf_model_list())
     return models or ["(no models found)"]
 
 
@@ -72,8 +72,7 @@ class QwenVL_Unified_PromptEnhancer:
         gguf_note = "" if _gguf else " (GGUF models hidden — llama-cpp-python not installed)"
         return {
             "required": {
-                "backend": (["HF Transformers", "GGUF llama.cpp"], {"default": "GGUF llama.cpp", "tooltip": "Backend engine. The model_name prefix determines actual routing; keep them aligned."}),
-                "model_name": (_combined_model_list(), {"default": _default_model(), "tooltip": f"HF models are prefixed with 'HF: ', GGUF models with 'GGUF: '.{gguf_note}"}),
+                "model_name": (_combined_model_list(), {"default": _default_model(), "tooltip": f"HF models are prefixed with 'HF: ', GGUF models with 'GGUF: '. The prefix selects the backend.{gguf_note}"}),
                 "prompt_text": ("STRING", {"default": "", "multiline": True, "tooltip": "Prompt text to enhance. Leave blank to just emit the preset instruction."}),
                 "enhancement_style": (styles, {"default": default_style}),
                 "camera_tag": (CAMERA_TAG_OPTIONS, {"default": "None", "tooltip": CAMERA_TAG_TOOLTIP}),
@@ -96,7 +95,6 @@ class QwenVL_Unified_PromptEnhancer:
 
     def process(
         self,
-        backend,
         model_name,
         prompt_text,
         enhancement_style,
