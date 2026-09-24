@@ -815,7 +815,7 @@ class QwenVLGGUFBase:
         self,
         model_name: str,
         preset_prompt: str,
-        custom_prompt: str,
+        prompt: str,
         image,
         video,
         frame_count,
@@ -841,10 +841,10 @@ class QwenVLGGUFBase:
 
         global LAST_SAVED_PROMPT
 
-        # Passthrough mode: skip model loading entirely, return custom_prompt as-is.
+        # Passthrough mode: skip model loading entirely, return prompt as-is.
         if passthrough:
-            print(f"[QwenVL GGUF] Passthrough mode ON — skipping model load, returning custom_prompt directly ({len(custom_prompt or '')} chars)")
-            return (custom_prompt or "",)
+            print(f"[QwenVL GGUF] Passthrough mode ON — skipping model load, returning prompt directly ({len(prompt or '')} chars)")
+            return (prompt or "",)
 
         # Simple keep last prompt logic
         if keep_last_prompt:
@@ -867,7 +867,7 @@ class QwenVLGGUFBase:
         video_hash = get_video_hash(video)
         # Combine image2 and video hashes for backward-compatible cache key
         combined_hash = f"{image2_hash or ''}/{video_hash or ''}" if (image2_hash or video_hash) else None
-        cache_key = get_cache_key(model_name, preset_prompt, custom_prompt, image_hash, combined_hash, int(seed))
+        cache_key = get_cache_key(model_name, preset_prompt, prompt, image_hash, combined_hash, int(seed))
 
         # TEMPORARILY DISABLED CACHE FOR DEBUGGING
         # Check cache first (only for random mode)
@@ -880,11 +880,11 @@ class QwenVLGGUFBase:
         print(f"[QwenVL GGUF DEBUG] Cache disabled - proceeding with generation")
 
         prompt_template = add_danbooru_guidance(prompt_template, preset_prompt)
-        if custom_prompt and custom_prompt.strip():
-            # Combine user input with template - custom prompt first for priority
-            prompt = f"{custom_prompt.strip()}\n\n{prompt_template}"
+        if prompt and prompt.strip():
+            # Combine user input with template - user prompt first for priority
+            full_prompt = f"{prompt.strip()}\n\n{prompt_template}"
         else:
-            prompt = prompt_template
+            full_prompt = prompt_template
 
         # ── Camera tag injection (same logic as AILab_QwenVL) ─────────────
         CAMERA_TAGS = list(CAMERA_TAG_DESCRIPTIONS.keys())
@@ -893,8 +893,8 @@ class QwenVLGGUFBase:
             tag_clean = camera_tag.strip().upper().strip("[]")
             if tag_clean in CAMERA_TAGS:
                 found_cam_tag = tag_clean
-        if not found_cam_tag and custom_prompt and custom_prompt.strip():
-            upper = custom_prompt.upper()
+        if not found_cam_tag and prompt and prompt.strip():
+            upper = prompt.upper()
             for tag in CAMERA_TAGS:
                 if f"[{tag}]" in upper:
                     found_cam_tag = tag
@@ -907,7 +907,7 @@ class QwenVLGGUFBase:
                 f"\n\n═══ FINAL CAMERA DIRECTIVE (HIGHEST PRIORITY) ═══\n"
                 f"Camera: {tag_str} — {desc}\n"
                 f"You MUST use this camera movement and NO other. "
-                f"{camera_directive_location(preset_prompt, prompt)}\n"
+                f"{camera_directive_location(preset_prompt, full_prompt)}\n"
                 f"IMPORTANT: the camera tag controls ONLY the camera. "
                 f"The subject MUST still have natural, lively action and "
                 f"movement throughout the clip — breathing, gestures, "
@@ -917,9 +917,9 @@ class QwenVLGGUFBase:
                 f"the camera performs {tag_str}.\n"
                 f"═══ END DIRECTIVE ═══"
             )
-            prompt = prefix + prompt + reminder
+            full_prompt = prefix + full_prompt + reminder
 
-        print(f"[QwenVL GGUF DEBUG] Final prompt: {prompt[:100]}...")
+        print(f"[QwenVL GGUF DEBUG] Final prompt: {full_prompt[:100]}...")
 
         images_b64: list[str] = []
         if image is not None:
@@ -984,7 +984,7 @@ class QwenVLGGUFBase:
                 print("[QwenVL] Warning: images provided but this model entry has no mmproj_file; images will be ignored")
             print(f"[QwenVL GGUF DEBUG] Starting generation...")
             # Prepend /no_think for Qwen3.5 models (enable_thinking is deprecated in recent llama.cpp)
-            effective_prompt = ("/no_think\n" + prompt) if getattr(self, "is_qwen35", False) else prompt
+            effective_prompt = ("/no_think\n" + full_prompt) if getattr(self, "is_qwen35", False) else full_prompt
             text = self._invoke(
                 system_prompt=(
                     "You are a helpful vision-language assistant. "
@@ -1047,12 +1047,12 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
             "required": {
                 "model_name": (model_keys, {"default": default_model}),
                 "preset_prompt": (prompts, {"default": default_prompt}),
-                "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": "Additional user input that gets combined with the preset template. Leave empty to use only the template."}),
+                "prompt": ("STRING", {"default": "", "multiline": True, "tooltip": "Additional user input that gets combined with the preset template. Leave empty to use only the template."}),
                 "max_tokens": ("INT", {"default": 8192, "min": 64, "max": 8192}),
                 "keep_model_loaded": ("BOOLEAN", {"default": False}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
-                "passthrough": ("BOOLEAN", {"default": False, "tooltip": "Skip Qwen model loading and return custom_prompt directly. Use when the chat already generated the final prompt — saves VRAM and inference time."}),
+                "passthrough": ("BOOLEAN", {"default": False, "tooltip": "Skip Qwen model loading and return prompt directly. Use when the chat already generated the final prompt — saves VRAM and inference time."}),
                             },
             "optional": {
                 "image": ("IMAGE", {"tooltip": "First reference image (single image). For R2VA this is Picture 1."}),
@@ -1070,7 +1070,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
         self,
         model_name,
         preset_prompt,
-        custom_prompt,
+        prompt,
         max_tokens,
         keep_model_loaded,
         seed,
@@ -1083,7 +1083,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
         return self.run(
             model_name=model_name,
             preset_prompt=preset_prompt,
-            custom_prompt=custom_prompt,
+            prompt=prompt,
             image=image,
             image2=image2,
             video=video,
@@ -1127,7 +1127,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
                 "device": (device_options, {"default": "auto"}),
                 "preset_prompt": (prompts, {"default": default_prompt}),
                 "camera_tag": (CAMERA_TAG_OPTIONS, {"default": "None", "tooltip": CAMERA_TAG_TOOLTIP}),
-                "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": "Additional user input that gets combined with the preset template. Leave empty to use only the template."}),
+                "prompt": ("STRING", {"default": "", "multiline": True, "tooltip": "Additional user input that gets combined with the preset template. Leave empty to use only the template."}),
                 "max_tokens": ("INT", {"default": 8192, "min": 64, "max": 8192}),
                 "temperature": ("FLOAT", {"default": 0.6, "min": 0.0, "max": 2.0}),
                 "top_p": ("FLOAT", {"default": 0.9, "min": 0.0, "max": 1.0}),
@@ -1142,7 +1142,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
                 "keep_model_loaded": ("BOOLEAN", {"default": False}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
-                "passthrough": ("BOOLEAN", {"default": False, "tooltip": "Skip Qwen model loading and return custom_prompt directly. Use when the chat already generated the final prompt — saves VRAM and inference time."}),
+                "passthrough": ("BOOLEAN", {"default": False, "tooltip": "Skip Qwen model loading and return prompt directly. Use when the chat already generated the final prompt — saves VRAM and inference time."}),
                             },
             "optional": {
                 "image": ("IMAGE", {"tooltip": "First reference image (single image). For R2VA this is Picture 1."}),
@@ -1162,7 +1162,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
         device,
         preset_prompt,
         camera_tag,
-        custom_prompt,
+        prompt,
         max_tokens,
         temperature,
         top_p,
@@ -1185,7 +1185,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
         return self.run(
             model_name=model_name,
             preset_prompt=preset_prompt,
-            custom_prompt=custom_prompt,
+            prompt=prompt,
             image=image,
             image2=image2,
             video=video,

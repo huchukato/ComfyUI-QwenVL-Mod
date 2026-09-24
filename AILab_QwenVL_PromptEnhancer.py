@@ -252,7 +252,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
             model_name=model_name,
             quantization=quantization,
             preset_prompt="🪄 Prompt Refine & Expand",
-            custom_prompt=prompt,
+            prompt=prompt,
             image=None,
             image2=None,
             frame_count=1,
