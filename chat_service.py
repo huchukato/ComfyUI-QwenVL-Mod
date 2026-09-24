@@ -726,24 +726,28 @@ _MINIMAX_CONFIGS = {
         "unet_fallback": _NATIVE_UNET,
         "values": {"steps": 20, "sampler_name": "res_multistep", "scheduler": "simple", "shift_video": 12, "shift_audio": 3},
         "lora_mode": "bypass",
+        "sparse_tau": 1.0,
     },
     "native_turbo": {
         "unet_needle": "fl2va_pruned",
         "unet_fallback": _NATIVE_UNET,
         "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
         "lora_mode": "enable",
+        "sparse_tau": 1.3,
     },
     "10eros": {
         "unet_needle": "h3_hybrid_beta5",
         "unet_fallback": _EROS_UNET,
         "values": {"steps": 20, "sampler_name": "res_multistep", "scheduler": "simple", "shift_video": 12, "shift_audio": 3},
         "lora_mode": "bypass",
+        "sparse_tau": 1.0,
     },
     "10eros_turbo": {
         "unet_needle": "h3_hybrid_beta5",
         "unet_fallback": _EROS_UNET,
         "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
         "lora_mode": "enable",
+        "sparse_tau": 1.3,
     },
 }
 
@@ -855,6 +859,17 @@ def _minimax_result(graph, config_key, text):
                     continue
                 if inner.get("mode", 0) != target_mode:
                     actions.append({"type": "set_node_mode", "node_id": inner["id"], "mode": lora_mode})
+        sparse_tau = config.get("sparse_tau")
+        if sparse_tau is not None:
+            for inner in graph.get("nodes", []):
+                inner_id = str(inner.get("id", ""))
+                if not inner_id.startswith(prefix) or "blocksparse" not in str(inner.get("type", "")).lower().replace("_", ""):
+                    continue
+                inner_widgets = {w.get("name") for w in inner.get("widgets", []) if isinstance(w, dict)}
+                for wname in ("selection.tau", "tau"):
+                    if wname in inner_widgets:
+                        actions.append({"type": "set_widget_value", "node_id": inner["id"], "widget": wname, "value": sparse_tau})
+                        break
         actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "passthrough", "value": False})
         actions.append({"type": "queue_workflow"})
         label = {"native": "Native", "native_turbo": "Native Turbo",
