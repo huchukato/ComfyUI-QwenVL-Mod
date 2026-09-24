@@ -81,5 +81,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "StorySplitNode": "🔷 QwenVL-Mod Story Split"
+    "StorySplitNode": "✂️ QwenVL-Mod Story Split"
 }
