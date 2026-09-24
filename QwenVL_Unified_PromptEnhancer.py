@@ -170,5 +170,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "QwenVL_Unified_PromptEnhancer": "🔷 QwenVL Unified Prompt Enhancer (HF / GGUF)",
+    "QwenVL_Unified_PromptEnhancer": "✍🏻 QwenVL Unified Prompt Enhancer (HF / GGUF)",
 }

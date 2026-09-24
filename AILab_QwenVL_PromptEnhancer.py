@@ -430,5 +430,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "AILab_QwenVL_PromptEnhancer": "🔷 QwenVL-Mod Prompt Enhancer",
+    "AILab_QwenVL_PromptEnhancer": "✍🏻 QwenVL-Mod Prompt Enhancer",
 }
