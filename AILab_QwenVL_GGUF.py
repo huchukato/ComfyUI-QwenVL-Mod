@@ -25,7 +25,14 @@ from pathlib import Path
 import numpy as np
 import torch
 from huggingface_hub import hf_hub_download, snapshot_download
-from llama_cpp import Llama
+try:
+    from llama_cpp import Llama
+except ImportError as exc:
+    raise ImportError(
+        "llama-cpp-python is not installed — GGUF nodes require a vision-capable "
+        "build. Local install: `pip install llama-cpp-python`; for CUDA/vision "
+        "wheels see github.com/abetlen/llama-cpp-python"
+    ) from exc
 from PIL import Image
 
 # Import cache functions from main module
@@ -561,7 +568,7 @@ class QwenVLGGUFBase:
             from llama_cpp import Llama  # noqa: F401
         except Exception as exc:
             raise RuntimeError(
-                "[QwenVL] llama_cpp is not available. Install the GGUF vision dependency first. See docs/GGUF_MANUAL_INSTALL.md"
+                "[QwenVL] llama_cpp is not available. Install the GGUF vision dependency first. See github.com/abetlen/llama-cpp-python"
             ) from exc
 
     def _load_model(
@@ -678,7 +685,7 @@ class QwenVLGGUFBase:
                     handler_cls = Qwen25VLChatHandler
                 except ImportError:
                     raise RuntimeError(
-                        "[QwenVL] Missing Qwen VL chat handler in llama_cpp. Install the correct fork/wheel. See docs/GGUF_MANUAL_INSTALL.md"
+                        "[QwenVL] Missing Qwen VL chat handler in llama_cpp. Install the correct fork/wheel. See github.com/abetlen/llama-cpp-python"
                     )
 
             mmproj_kwargs = {
