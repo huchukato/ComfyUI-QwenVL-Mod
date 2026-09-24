@@ -3,6 +3,10 @@ import { api } from "/scripts/api.js";
 
 const STORAGE_KEY = "qwenvl.chat.v1";
 const DEFAULT_GGUF_MODEL = "Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q8_0.gguf";
+const GGUF_PREFIX = "GGUF: ";
+const HF_PREFIX = "HF: ";
+const modelBackend = () => (state.model || "").startsWith(HF_PREFIX) ? "hf" : "gguf";
+const bareModel = () => (state.model || "").replace(/^(GGUF|HF): /, "");
 const TRANSLATIONS = {
     en: {
         empty: "Ask me to analyze or modify the parameters of the open workflow.", user: "You", thinking: "Thinking",
@@ -12,7 +16,7 @@ const TRANSLATIONS = {
         analyzingWorkflowImages: "Loaded {count} workflow image(s). Qwen is analyzing…", analyzingWorkflow: "Qwen is analyzing the workflow…",
         completed: "Operation completed.", applied: "Applied", rejected: "Rejected", ready: "Ready",
         aborted: "Request stopped. Backend inference may still be running.", loadingModels: "Loading models…",
-        modelsUnavailable: "Models unavailable: {error}", backend: "Backend", model: "Model", maxTokens: "Max tokens",
+        modelsUnavailable: "Models unavailable: {error}", model: "Model", maxTokens: "Max tokens",
         temperature: "Temperature", attach: "Attach image or video", send: "Send", repeat: "Repeat", repeatTitle: "Resend the latest user message",
         stop: "Stop", newChat: "New chat", initializing: "Initializing…", preparingImage: "Preparing image…", preparingVideo: "Extracting video frames…",
         imageAttached: "Image attached: it will be used instead of workflow images", videoAttached: "Video attached: sampled frames will be sent to Qwen", attachedVideo: "Attached video", nothingToRepeat: "No message to repeat",
@@ -38,7 +42,7 @@ const TRANSLATIONS = {
         analyzingWorkflowImages: "Caricate {count} immagine/i dal workflow. Qwen sta analizzando…", analyzingWorkflow: "Qwen sta analizzando il workflow…",
         completed: "Operazione completata.", applied: "Applicato", rejected: "Rifiutato", ready: "Pronto",
         aborted: "Attesa interrotta. L’inferenza backend potrebbe essere ancora in corso.", loadingModels: "Caricamento modelli…",
-        modelsUnavailable: "Modelli non disponibili: {error}", backend: "Backend", model: "Modello", maxTokens: "Max tokens",
+        modelsUnavailable: "Modelli non disponibili: {error}", model: "Modello", maxTokens: "Max tokens",
         temperature: "Temperatura", attach: "Allega immagine o video", send: "Invia", repeat: "Ripeti", repeatTitle: "Reinvia l'ultimo messaggio utente",
         stop: "Stop", newChat: "Nuova chat", initializing: "Inizializzazione…", preparingImage: "Preparazione dell’immagine…", preparingVideo: "Estrazione frame del video…",
         imageAttached: "Immagine allegata: sarà usata al posto di quelle del workflow", videoAttached: "Video allegato: i frame campionati saranno inviati a Qwen", attachedVideo: "Video allegato", nothingToRepeat: "Nessun messaggio da ripetere",
@@ -60,7 +64,6 @@ const TRANSLATIONS = {
 const DEFAULT_STATE = {
     language: "en",
     settingsOpen: false,
-    backend: "gguf",
     model: "",
     maxTokens: 1024,
     temperature: 0.2,
@@ -564,7 +567,7 @@ async function applyActions(actions) {
         const response = await api.fetchApi("/qwenvl/chat/unload", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ backend: state.backend }),
+            body: JSON.stringify({ backend: modelBackend() }),
         });
         if (!response.ok) throw new Error(t("unloadError"));
         await app.queuePrompt();
@@ -578,7 +581,6 @@ function setBusy(busy) {
     elements.repeat.disabled = busy;
     elements.stop.disabled = !busy;
     elements.input.disabled = busy;
-    elements.backend.disabled = busy;
     elements.model.disabled = busy;
     elements.maxTokens.disabled = busy;
     elements.temperature.disabled = busy;
@@ -662,8 +664,8 @@ async function sendMessage() {
             headers: { "Content-Type": "application/json" },
             signal: controller.signal,
             body: JSON.stringify({
-                backend: state.backend,
-                model: state.model,
+                backend: modelBackend(),
+                model: bareModel(),
                 messages: state.messages,
                 graph: snapshotGraph(),
                 images,
@@ -723,15 +725,18 @@ async function loadModels() {
 }
 
 function populateModels() {
-    const models = state.availableModels?.[state.backend] || [];
+    const gguf = (state.availableModels?.gguf || []).map((m) => GGUF_PREFIX + m);
+    const hf = (state.availableModels?.hf || []).map((m) => HF_PREFIX + m);
+    const models = [...gguf, ...hf];
     elements.model.replaceChildren();
     for (const model of models) {
         const option = createElement("option", "", model);
         option.value = model;
         elements.model.append(option);
     }
+    const preferred = GGUF_PREFIX + DEFAULT_GGUF_MODEL;
     if (!models.includes(state.model)) {
-        state.model = state.backend === "gguf" && models.includes(DEFAULT_GGUF_MODEL) ? DEFAULT_GGUF_MODEL : models[0] || "";
+        state.model = models.includes(preferred) ? preferred : models[0] || "";
     }
     elements.model.value = state.model;
     saveState();
@@ -825,13 +830,6 @@ function buildSidebar(container) {
     elements.settingsToggle.append(createElement("i", "pi pi-cog"));
     topbar.append(language, elements.settingsToggle);
     const controls = createElement("div", `qwen-chat-controls${state.settingsOpen ? " open" : ""}`);
-    elements.backend = createElement("select");
-    for (const [value, label] of [["gguf", "GGUF"], ["hf", "HF / Transformers"]]) {
-        const option = createElement("option", "", label);
-        option.value = value;
-        elements.backend.append(option);
-    }
-    elements.backend.value = state.backend;
     elements.model = createElement("select");
     elements.maxTokens = createElement("input");
     elements.maxTokens.type = "number";
@@ -851,7 +849,6 @@ function buildSidebar(container) {
     elements.thinking.checked = state.thinking;
     elements.thinking.title = "Show model reasoning before the answer";
     controls.append(
-        createElement("label", "", t("backend")), elements.backend,
         createElement("label", "", t("model")), elements.model,
         createElement("label", "", t("maxTokens")), elements.maxTokens,
         createElement("label", "", t("temperature")), elements.temperature,
@@ -924,11 +921,6 @@ function buildSidebar(container) {
     elements.capability.addEventListener("change", () => {
         state.capability = elements.capability.value;
         saveState();
-    });
-    elements.backend.addEventListener("change", () => {
-        state.backend = elements.backend.value;
-        state.model = "";
-        populateModels();
     });
     elements.model.addEventListener("change", () => {
         state.model = elements.model.value;

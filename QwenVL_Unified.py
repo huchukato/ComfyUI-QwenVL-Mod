@@ -28,10 +28,10 @@ def _combined_model_list():
     gguf_all = GGUF_VL_CATALOG.get("models") or {}
     gguf_models = sorted([k for k, e in gguf_all.items() if (e or {}).get("mmproj_filename")])
     models = []
-    if hf_models:
-        models.extend([f"{HF_PREFIX}{m}" for m in hf_models])
     if gguf_models:
         models.extend([f"{GGUF_PREFIX}{m}" for m in gguf_models])
+    if hf_models:
+        models.extend([f"{HF_PREFIX}{m}" for m in hf_models])
     if not models:
         models = ["(no models found)"]
     return models
@@ -59,8 +59,7 @@ class QwenVL_Unified:
         default_prompt = preferred if preferred in prompts else prompts[0]
         return {
             "required": {
-                "backend": (["HF Transformers", "GGUF llama.cpp"], {"default": "GGUF llama.cpp", "tooltip": "Backend engine. The model_name prefix determines actual routing; keep them aligned."}),
-                "model_name": (_combined_model_list(), {"default": _default_model(), "tooltip": "HF models are prefixed with 'HF: ', GGUF models with 'GGUF: '."}),
+                "model_name": (_combined_model_list(), {"default": _default_model(), "tooltip": "HF models are prefixed with 'HF: ', GGUF models with 'GGUF: '. The prefix selects the backend."}),
                 "preset_prompt": (prompts, {"default": default_prompt, "tooltip": TOOLTIPS.get("preset_prompt", "")}),
                 "camera_tag": (CAMERA_TAG_OPTIONS, {"default": "None", "tooltip": CAMERA_TAG_TOOLTIP}),
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": TOOLTIPS.get("custom_prompt", "")}),
@@ -85,7 +84,6 @@ class QwenVL_Unified:
 
     def process(
         self,
-        backend,
         model_name,
         preset_prompt,
         camera_tag,
@@ -170,8 +168,7 @@ class QwenVL_Unified_Advanced(QwenVL_Unified):
         device_options = ["auto", "cpu", "mps"] + gpu_list
         return {
             "required": {
-                "backend": (["HF Transformers", "GGUF llama.cpp"], {"default": "GGUF llama.cpp"}),
-                "model_name": (_combined_model_list(), {"default": _default_model(), "tooltip": "HF models are prefixed with 'HF: ', GGUF models with 'GGUF: '."}),
+                "model_name": (_combined_model_list(), {"default": _default_model(), "tooltip": "HF models are prefixed with 'HF: ', GGUF models with 'GGUF: '. The prefix selects the backend."}),
                 "preset_prompt": (prompts, {"default": default_prompt, "tooltip": TOOLTIPS.get("preset_prompt", "")}),
                 "camera_tag": (CAMERA_TAG_OPTIONS, {"default": "None", "tooltip": CAMERA_TAG_TOOLTIP}),
                 "custom_prompt": ("STRING", {"default": "", "multiline": True, "tooltip": TOOLTIPS.get("custom_prompt", "")}),
@@ -207,7 +204,6 @@ class QwenVL_Unified_Advanced(QwenVL_Unified):
 
     def process(
         self,
-        backend,
         model_name,
         preset_prompt,
         camera_tag,
