@@ -29,6 +29,7 @@ const NODE_COLORS = {
     // Prompt enhancers
     "AILab_QwenVL_PromptEnhancer": "Enhancer",
     "AILab_QwenVL_GGUF_PromptEnhancer": "Enhancer",
+    "QwenVL_Unified_PromptEnhancer": "Enhancer",
 
     // Livepeer agent render
     "QwenVL_LivepeerRender": "Livepeer",
