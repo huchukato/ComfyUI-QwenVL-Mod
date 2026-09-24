@@ -378,7 +378,7 @@ Questo repository include nodi **GGUF** powered by `llama-cpp-python` (separati 
   - `hf_vl_models`: modelli vision-linguaggio (usati da nodi QwenVL).  
   - `hf_text_models`: modelli solo testo (usati da Prompt Enhancer).  
 - **Modelli GGUF**: `gguf_models.json`  
-- **Prompt di sistema**: `AILab_System_Prompts.json` (include sia prompt VL che stili prompt-enhancer).  
+- **Prompt di sistema**: `presets/*.json` — un file per famiglia (preset VL + stili prompt-enhancer); un `AILab_System_Prompts.json` creato dall'utente resta supportato come overlay.  
 
 ## **📥 Download Modelli**
 

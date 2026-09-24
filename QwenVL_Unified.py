@@ -7,6 +7,7 @@ import torch
 
 import AILab_QwenVL as _hf
 import AILab_QwenVL_GGUF as _gguf
+from qwenvl_presets import DURATION_OPTIONS, DEFAULT_DURATION
 
 
 HF_VL_MODELS = getattr(_hf, "HF_VL_MODELS", {})
@@ -54,8 +55,8 @@ class QwenVL_Unified:
 
     @classmethod
     def INPUT_TYPES(cls):
-        prompts = PRESET_PROMPTS or ["Describe this image in detail."]
-        preferred = "🖼️ Detailed Description"
+        prompts = PRESET_PROMPTS or ["IMG › Detailed"]
+        preferred = "IMG › Detailed"
         default_prompt = preferred if preferred in prompts else prompts[0]
         return {
             "required": {
@@ -74,6 +75,7 @@ class QwenVL_Unified:
                 "image2": ("IMAGE", {"tooltip": "Second reference image (single image). For R2VA this is Picture 2."}),
                 "video": ("IMAGE", {"tooltip": "Video frames input. Use frame_count to control how many frames are sampled."}),
                 "frame_count": ("INT", {"default": 16, "min": 1, "max": 64, "tooltip": TOOLTIPS.get("frame_count", "")}),
+                "duration": (DURATION_OPTIONS, {"default": DEFAULT_DURATION, "tooltip": "Clip length for duration-aware presets (MiniMax/LTX/Wan). Ignored by image presets."}),
             },
         }
 
@@ -97,6 +99,7 @@ class QwenVL_Unified:
         image2=None,
         video=None,
         frame_count=16,
+        duration=DEFAULT_DURATION,
     ):
         if model_name.startswith(GGUF_PREFIX):
             m = model_name[len(GGUF_PREFIX):]
@@ -124,6 +127,7 @@ class QwenVL_Unified:
                 image=image,
                 image2=image2,
                 video=video,
+                duration=duration,
             )
 
         if model_name.startswith(HF_PREFIX):
@@ -152,6 +156,7 @@ class QwenVL_Unified:
             image2=image2,
             video=video,
             frame_count=frame_count,
+            duration=duration,
         )
 
 
@@ -160,8 +165,8 @@ class QwenVL_Unified_Advanced(QwenVL_Unified):
 
     @classmethod
     def INPUT_TYPES(cls):
-        prompts = PRESET_PROMPTS or ["Describe this image in detail."]
-        preferred = "🖼️ Detailed Description"
+        prompts = PRESET_PROMPTS or ["IMG › Detailed"]
+        preferred = "IMG › Detailed"
         default_prompt = preferred if preferred in prompts else prompts[0]
         num_gpus = torch.cuda.device_count()
         gpu_list = [f"cuda:{i}" for i in range(num_gpus)]
@@ -199,6 +204,7 @@ class QwenVL_Unified_Advanced(QwenVL_Unified):
                 "image": ("IMAGE", {"tooltip": "First reference image (single image). For R2VA this is Picture 1."}),
                 "image2": ("IMAGE", {"tooltip": "Second reference image (single image). For R2VA this is Picture 2."}),
                 "video": ("IMAGE", {"tooltip": "Video frames input. Use frame_count to control how many frames are sampled."}),
+                "duration": (DURATION_OPTIONS, {"default": DEFAULT_DURATION, "tooltip": "Clip length for duration-aware presets (MiniMax/LTX/Wan). Ignored by image presets."}),
             },
         }
 
@@ -231,6 +237,7 @@ class QwenVL_Unified_Advanced(QwenVL_Unified):
         image=None,
         image2=None,
         video=None,
+        duration=DEFAULT_DURATION,
     ):
         if model_name.startswith(GGUF_PREFIX):
             m = model_name[len(GGUF_PREFIX):]
@@ -258,6 +265,7 @@ class QwenVL_Unified_Advanced(QwenVL_Unified):
                 image=image,
                 image2=image2,
                 video=video,
+                duration=duration,
             )
 
         if model_name.startswith(HF_PREFIX):
@@ -286,6 +294,7 @@ class QwenVL_Unified_Advanced(QwenVL_Unified):
             image2=image2,
             video=video,
             frame_count=frame_count,
+            duration=duration,
         )
 
 

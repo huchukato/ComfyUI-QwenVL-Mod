@@ -27,6 +27,10 @@ from huggingface_hub import snapshot_download, hf_hub_download
 from transformers import AutoProcessor, AutoTokenizer, BitsAndBytesConfig
 
 from chat_service import normalize_minimax_output
+from qwenvl_presets import (
+    VL_PRESET_NAMES, VL_PROMPTS, VL_DURATIONS,
+    DURATION_OPTIONS, DEFAULT_DURATION, resolve_vl_preset,
+)
 
 # Global cache for generated prompts
 PROMPT_CACHE = {}
@@ -216,8 +220,8 @@ SYSTEM_PROMPTS_PATH = NODE_DIR / "AILab_System_Prompts.json"
 HF_VL_MODELS: dict[str, dict] = {}
 HF_TEXT_MODELS: dict[str, dict] = {}
 HF_ALL_MODELS: dict[str, dict] = {}
-SYSTEM_PROMPTS = {}
-PRESET_PROMPTS: list[str] = ["Describe this image in detail."]
+SYSTEM_PROMPTS = dict(VL_PROMPTS)
+PRESET_PROMPTS: list[str] = list(VL_PRESET_NAMES) or ["Describe this image in detail."]
 
 TOOLTIPS = {
     "model_name": "Pick the Qwen-VL checkpoint. First run downloads weights into models/LLM/Qwen-VL, so leave disk space.",
@@ -264,21 +268,20 @@ def load_model_configs():
         else:
             HF_VL_MODELS = {k: v for k, v in data.items() if not k.startswith("_")}
             HF_TEXT_MODELS = {}
-        SYSTEM_PROMPTS = data.get("_system_prompts", {})
+        SYSTEM_PROMPTS.update(data.get("_system_prompts") or {})
         PRESET_PROMPTS = data.get("_preset_prompts", PRESET_PROMPTS)
     except Exception as exc:
         print(f"[QwenVL] Config load failed: {exc}")
         HF_VL_MODELS = {}
         HF_TEXT_MODELS = {}
         HF_ALL_MODELS = {}
-        SYSTEM_PROMPTS = {}
     try:
         with open(SYSTEM_PROMPTS_PATH, "r", encoding="utf-8") as fh:
             data = json.load(fh) or {}
         qwenvl_prompts = data.get("qwenvl") or {}
         preset_override = data.get("_preset_prompts") or []
         if isinstance(qwenvl_prompts, dict) and qwenvl_prompts:
-            SYSTEM_PROMPTS = qwenvl_prompts
+            SYSTEM_PROMPTS.update(qwenvl_prompts)
         if isinstance(preset_override, list) and preset_override:
             PRESET_PROMPTS = preset_override
     except FileNotFoundError:
@@ -1087,7 +1090,7 @@ class QwenVLBase:
         text = self.tokenizer.decode(outputs[0, input_len:], skip_special_tokens=True)
         return text.strip()
 
-    def run(self, model_name, quantization, preset_prompt, prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt=False, camera_tag="None", video=None, passthrough=False):
+    def run(self, model_name, quantization, preset_prompt, prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt=False, camera_tag="None", video=None, passthrough=False, duration=DEFAULT_DURATION):
         torch.manual_seed(seed)
         
         global LAST_SAVED_PROMPT
@@ -1116,7 +1119,10 @@ class QwenVLBase:
         print(f"[QwenVL] image2 connected: {image2 is not None} (shape={image2.shape if image2 is not None else 'N/A'})")
         print(f"[QwenVL] video connected: {video is not None} (shape={video.shape if video is not None else 'N/A'})")
         
-        prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
+        # Resolve preset aliases (legacy dropdown names) and the duration
+        # widget to a flat prompt key like "MiniMax › NSFW (10s)".
+        preset_prompt, preset_key = resolve_vl_preset(preset_prompt, duration)
+        prompt_template = SYSTEM_PROMPTS.get(preset_key, preset_key)
         
         # Generate cache key with all inputs including seed
         image_hash = get_image_hash(image)
@@ -1124,7 +1130,7 @@ class QwenVLBase:
         video_hash = get_video_hash(video)
         # Combine image2 and video hashes for backward-compatible cache key
         combined_hash = f"{image2_hash or ''}/{video_hash or ''}" if (image2_hash or video_hash) else None
-        cache_key = get_cache_key(model_name, preset_prompt, prompt, image_hash, combined_hash, seed)
+        cache_key = get_cache_key(model_name, preset_key, prompt, image_hash, combined_hash, seed)
         
         # Check cache first (only for random mode)
         if cache_key in PROMPT_CACHE:
@@ -1243,7 +1249,7 @@ class AILab_QwenVL(QwenVLBase):
         models = list(HF_VL_MODELS.keys())
         default_model = models[0] if models else "Qwen3-VL-4B-Instruct"
         prompts = PRESET_PROMPTS or ["Describe this image in detail."]
-        preferred_prompt = "🖼️ Detailed Description"
+        preferred_prompt = "IMG › Detailed"
         default_prompt = preferred_prompt if preferred_prompt in prompts else prompts[0]
         return {
             "required": {
@@ -1264,6 +1270,7 @@ class AILab_QwenVL(QwenVLBase):
                 "image2": ("IMAGE", {"tooltip": "Second reference image (single image). For R2VA this is Picture 2."}),
                 "video": ("IMAGE", {"tooltip": "Video frames input. Use frame_count to control how many frames are sampled."}),
                 "frame_count": ("INT", {"default": 16, "min": 1, "max": 64, "tooltip": TOOLTIPS["frame_count"]}),
+                "duration": (DURATION_OPTIONS, {"default": DEFAULT_DURATION, "tooltip": "Clip length for duration-aware presets (MiniMax/LTX/Wan). Ignored by image presets."}),
             },
         }
 
@@ -1272,8 +1279,8 @@ class AILab_QwenVL(QwenVLBase):
     FUNCTION = "process"
     CATEGORY = "QwenVL-Mod"
 
-    def process(self, model_name, quantization, preset_prompt, camera_tag, prompt, attention_mode, max_tokens, keep_model_loaded, seed, keep_last_prompt=False, passthrough=False, image=None, image2=None, video=None, frame_count=16):
-        return self.run(model_name, quantization, preset_prompt, prompt, image, image2, frame_count, max_tokens, 0.6, 0.9, 1, 1.2, seed, keep_model_loaded, attention_mode, False, "auto", keep_last_prompt, camera_tag, video=video, passthrough=passthrough)
+    def process(self, model_name, quantization, preset_prompt, camera_tag, prompt, attention_mode, max_tokens, keep_model_loaded, seed, keep_last_prompt=False, passthrough=False, image=None, image2=None, video=None, frame_count=16, duration=DEFAULT_DURATION):
+        return self.run(model_name, quantization, preset_prompt, prompt, image, image2, frame_count, max_tokens, 0.6, 0.9, 1, 1.2, seed, keep_model_loaded, attention_mode, False, "auto", keep_last_prompt, camera_tag, video=video, passthrough=passthrough, duration=duration)
 
 class AILab_QwenVL_Advanced(QwenVLBase):
     @classmethod
@@ -1281,7 +1288,7 @@ class AILab_QwenVL_Advanced(QwenVLBase):
         models = list(HF_VL_MODELS.keys())
         default_model = models[0] if models else "Qwen3-VL-4B-Instruct"
         prompts = PRESET_PROMPTS or ["Describe this image in detail."]
-        preferred_prompt = "🖼️ Detailed Description"
+        preferred_prompt = "IMG › Detailed"
         default_prompt = preferred_prompt if preferred_prompt in prompts else prompts[0]
 
         num_gpus = torch.cuda.device_count()
@@ -1313,6 +1320,7 @@ class AILab_QwenVL_Advanced(QwenVLBase):
                 "image2": ("IMAGE", {"tooltip": "Second reference image (single image). For R2VA this is Picture 2."}),
                 "video": ("IMAGE", {"tooltip": "Video frames input. Use frame_count to control how many frames are sampled."}),
                 "frame_count": ("INT", {"default": 16, "min": 1, "max": 64, "tooltip": TOOLTIPS["frame_count"]}),
+                "duration": (DURATION_OPTIONS, {"default": DEFAULT_DURATION, "tooltip": "Clip length for duration-aware presets (MiniMax/LTX/Wan). Ignored by image presets."}),
             },
         }
 
@@ -1321,8 +1329,8 @@ class AILab_QwenVL_Advanced(QwenVLBase):
     FUNCTION = "process"
     CATEGORY = "QwenVL-Mod"
 
-    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, camera_tag, prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, keep_model_loaded, seed, keep_last_prompt, passthrough=False, image=None, image2=None, video=None, frame_count=16):
-        return self.run(model_name, quantization, preset_prompt, prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt, camera_tag, video=video, passthrough=passthrough)
+    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, camera_tag, prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, keep_model_loaded, seed, keep_last_prompt, passthrough=False, image=None, image2=None, video=None, frame_count=16, duration=DEFAULT_DURATION):
+        return self.run(model_name, quantization, preset_prompt, prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt, camera_tag, video=video, passthrough=passthrough, duration=duration)
 
 NODE_CLASS_MAPPINGS = {
     "AILab_QwenVL": AILab_QwenVL,
@@ -1439,7 +1447,7 @@ DANBOORU_INPUT_GUIDANCE = """INPUT TAG SUPPORT:
 
 def add_danbooru_guidance(prompt, preset_name):
     name = preset_name or ""
-    if "LTX 2.3" not in name and not ("MiniMax H3" in name and ("R2VA" in name or "FL2VA" in name)) and not ("Wan" in name and "T2V" in name):
+    if "LTX" not in name and not ("MiniMax" in name and ("R2VA" in name or "FL2VA" in name)) and not ("Wan" in name and "T2V" in name):
         return prompt
     if "INPUT TAG SUPPORT:" in prompt or "Danbooru-style tags" in prompt:
         return prompt
@@ -1448,9 +1456,9 @@ def add_danbooru_guidance(prompt, preset_name):
 
 def camera_directive_location(preset_name, prompt=""):
     context = f"{preset_name or ''}\n{prompt or ''}"
-    if "LTX 2.3" in context:
+    if "LTX" in context:
         return "State it explicitly in the first sentence of the video description; do not introduce a [Shot 1] label unless the selected preset already requires one."
-    if "MiniMax H3" in context:
+    if "MiniMax" in context:
         return "State it explicitly in the first sentence of [Shot 1]."
     return "State it explicitly in the first sentence of the generated video prompt."
 

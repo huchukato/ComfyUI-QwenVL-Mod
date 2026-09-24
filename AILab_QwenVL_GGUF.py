@@ -38,6 +38,10 @@ from PIL import Image
 # Import cache functions from main module
 sys.path.append(str(Path(__file__).parent))
 from AILab_QwenVL import PROMPT_CACHE, ensure_cuda_vram_headroom, get_cache_key, get_alternative_cache_key, get_image_hash, get_video_hash, save_prompt_cache, CAMERA_TAG_OPTIONS, CAMERA_TAG_TOOLTIP, CAMERA_TAG_DESCRIPTIONS, add_danbooru_guidance, camera_directive_location
+from qwenvl_presets import (
+    VL_PRESET_NAMES, VL_PROMPTS, VL_DURATIONS,
+    DURATION_OPTIONS, DEFAULT_DURATION, resolve_vl_preset,
+)
 
 import folder_paths
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output
@@ -112,14 +116,14 @@ GGUF_CONFIG_PATH = NODE_DIR / "gguf_models.json"
 
 
 def _load_prompt_config():
-    preset_prompts = ["🖼️ Detailed Description"]
-    system_prompts: dict[str, str] = {}
+    preset_prompts = list(VL_PRESET_NAMES) or ["IMG › Detailed"]
+    system_prompts: dict[str, str] = dict(VL_PROMPTS)
 
     try:
         with open(CONFIG_PATH, "r", encoding="utf-8") as fh:
             data = json.load(fh) or {}
         preset_prompts = data.get("_preset_prompts") or preset_prompts
-        system_prompts = data.get("_system_prompts") or system_prompts
+        system_prompts.update(data.get("_system_prompts") or {})
     except Exception as exc:
         print(f"[QwenVL] Config load failed: {exc}")
 
@@ -129,7 +133,7 @@ def _load_prompt_config():
         qwenvl_prompts = data.get("qwenvl") or {}
         preset_override = data.get("_preset_prompts") or []
         if isinstance(qwenvl_prompts, dict) and qwenvl_prompts:
-            system_prompts = qwenvl_prompts
+            system_prompts.update(qwenvl_prompts)
         if isinstance(preset_override, list) and preset_override:
             preset_prompts = preset_override
     except FileNotFoundError:
@@ -836,6 +840,7 @@ class QwenVLGGUFBase:
         camera_tag="None",
         passthrough=False,
         image2=None,
+        duration=DEFAULT_DURATION,
     ):
         print(f"[QwenVL GGUF DEBUG] Starting run with seed={seed}, keep_last_prompt={keep_last_prompt}")
 
@@ -859,7 +864,10 @@ class QwenVLGGUFBase:
         # Always generate when keep last prompt is disabled
         print(f"[QwenVL GGUF] Keep last prompt disabled - generating new prompt")
 
-        prompt_template = SYSTEM_PROMPTS.get(preset_prompt, preset_prompt)
+        # Resolve preset aliases (legacy dropdown names) and the duration
+        # widget to a flat prompt key like "MiniMax › NSFW (10s)".
+        preset_prompt, preset_key = resolve_vl_preset(preset_prompt, duration)
+        prompt_template = SYSTEM_PROMPTS.get(preset_key, preset_key)
 
         # Generate cache key with all inputs including seed
         image_hash = get_image_hash(image)
@@ -867,7 +875,7 @@ class QwenVLGGUFBase:
         video_hash = get_video_hash(video)
         # Combine image2 and video hashes for backward-compatible cache key
         combined_hash = f"{image2_hash or ''}/{video_hash or ''}" if (image2_hash or video_hash) else None
-        cache_key = get_cache_key(model_name, preset_prompt, prompt, image_hash, combined_hash, int(seed))
+        cache_key = get_cache_key(model_name, preset_key, prompt, image_hash, combined_hash, int(seed))
 
         # TEMPORARILY DISABLED CACHE FOR DEBUGGING
         # Check cache first (only for random mode)
@@ -1039,8 +1047,8 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
         model_keys = sorted([key for key, entry in all_models.items() if (entry or {}).get("mmproj_filename")]) or ["(no GGUF VL models found)"]
         default_model = model_keys[0]
 
-        prompts = PRESET_PROMPTS or ["🖼️ Detailed Description"]
-        preferred_prompt = "🖼️ Detailed Description"
+        prompts = PRESET_PROMPTS or ["IMG › Detailed"]
+        preferred_prompt = "IMG › Detailed"
         default_prompt = preferred_prompt if preferred_prompt in prompts else prompts[0]
 
         return {
@@ -1058,6 +1066,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
                 "image": ("IMAGE", {"tooltip": "First reference image (single image). For R2VA this is Picture 1."}),
                 "image2": ("IMAGE", {"tooltip": "Second reference image (single image). For R2VA this is Picture 2."}),
                 "video": ("IMAGE", {"tooltip": "Video frames input. Use frame_count to control how many frames are sampled."}),
+                "duration": (DURATION_OPTIONS, {"default": DEFAULT_DURATION, "tooltip": "Clip length for duration-aware presets (MiniMax/LTX/Wan). Ignored by image presets."}),
             },
         }
 
@@ -1079,6 +1088,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
         image=None,
         image2=None,
         video=None,
+        duration=DEFAULT_DURATION,
     ):
         return self.run(
             model_name=model_name,
@@ -1088,6 +1098,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
             image2=image2,
             video=video,
             frame_count=16,
+            duration=duration,
             max_tokens=max_tokens,
             temperature=0.6,
             top_p=0.9,
@@ -1113,8 +1124,8 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
         model_keys = sorted([key for key, entry in all_models.items() if (entry or {}).get("mmproj_filename")]) or ["(no GGUF VL models found)"]
         default_model = model_keys[0]
 
-        prompts = PRESET_PROMPTS or ["🖼️ Detailed Description"]
-        preferred_prompt = "🖼️ Detailed Description"
+        prompts = PRESET_PROMPTS or ["IMG › Detailed"]
+        preferred_prompt = "IMG › Detailed"
         default_prompt = preferred_prompt if preferred_prompt in prompts else prompts[0]
 
         num_gpus = torch.cuda.device_count()
@@ -1148,6 +1159,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
                 "image": ("IMAGE", {"tooltip": "First reference image (single image). For R2VA this is Picture 1."}),
                 "image2": ("IMAGE", {"tooltip": "Second reference image (single image). For R2VA this is Picture 2."}),
                 "video": ("IMAGE", {"tooltip": "Video frames input. Use frame_count to control how many frames are sampled."}),
+                "duration": (DURATION_OPTIONS, {"default": DEFAULT_DURATION, "tooltip": "Clip length for duration-aware presets (MiniMax/LTX/Wan). Ignored by image presets."}),
             },
         }
 
@@ -1181,6 +1193,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
         image=None,
         image2=None,
         video=None,
+        duration=DEFAULT_DURATION,
     ):
         return self.run(
             model_name=model_name,
@@ -1190,6 +1203,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
             image2=image2,
             video=video,
             frame_count=frame_count,
+            duration=duration,
             max_tokens=max_tokens,
             temperature=temperature,
             top_p=top_p,
