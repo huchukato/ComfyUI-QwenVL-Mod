@@ -237,7 +237,7 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
                 "repetition_penalty": ("FLOAT", {"default": 1.1, "min": 0.5, "max": 2.0}),
                 "english_output": ("BOOLEAN", {"default": False, "tooltip": "Force final output in English using translation prompt."}),
                 "device": (["auto", "cuda", "cpu", "mps"], {"default": "auto", "tooltip": "Select device; auto prefers GPU when available."}),
-                "keep_model_loaded": ("BOOLEAN", {"default": True, "tooltip": "Keep model loaded in memory for faster repeated inference (uses more VRAM)."}),
+                "keep_model_loaded": ("BOOLEAN", {"default": False, "tooltip": "Keep model loaded in memory for faster repeated inference (uses more VRAM)."}),
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
                 "passthrough": ("BOOLEAN", {"default": False, "tooltip": "Skip Qwen model loading and return prompt_text directly. Use when the chat already generated the final prompt — saves VRAM and inference time."}),
