@@ -733,6 +733,7 @@ _MINIMAX_CONFIGS = {
         "unet_fallback": _NATIVE_UNET,
         "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
         "lora_mode": "enable",
+        "lora_needles": ["fl2v_turbo", "ref2v_turbo"],
         "sparse_tau": 1.3,
     },
     "10eros": {
@@ -747,6 +748,7 @@ _MINIMAX_CONFIGS = {
         "unet_fallback": _EROS_UNET,
         "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
         "lora_mode": "enable",
+        "lora_needles": ["fusion_turbo"],
         "sparse_tau": 1.3,
     },
 }
@@ -859,6 +861,30 @@ def _minimax_result(graph, config_key, text):
                     continue
                 if inner.get("mode", 0) != target_mode:
                     actions.append({"type": "set_node_mode", "node_id": inner["id"], "mode": lora_mode})
+        # Turbo configs also pick the right LoRA file: the lightx2v per-mode
+        # LoRA for Native (matched to the FL2VA/R2VA preset family), the
+        # TenStrip combined fusion LoRA for 10Eros.
+        lora_needles = config.get("lora_needles")
+        if lora_needles:
+            needles = list(lora_needles)
+            preset_mode = _minimax_preset_mode(widgets["preset_prompt"].get("value"))
+            if preset_mode == "R2VA":
+                needles.sort(key=lambda n: "ref2v" not in n)
+            elif preset_mode == "FL2VA":
+                needles.sort(key=lambda n: "fl2v" not in n)
+            for inner in graph.get("nodes", []):
+                inner_id = str(inner.get("id", ""))
+                if not inner_id.startswith(prefix) or "lora" not in str(inner.get("type", "")).lower():
+                    continue
+                for w in inner.get("widgets", []):
+                    if not isinstance(w, dict) or w.get("name") != "lora_name":
+                        continue
+                    for needle in needles:
+                        match = _match_option(w, needle)
+                        if match:
+                            if w.get("value") != match:
+                                actions.append({"type": "set_widget_value", "node_id": inner["id"], "widget": "lora_name", "value": match})
+                            break
         sparse_tau = config.get("sparse_tau")
         if sparse_tau is not None:
             for inner in graph.get("nodes", []):
