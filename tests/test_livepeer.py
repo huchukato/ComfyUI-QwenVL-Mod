@@ -9,6 +9,7 @@ from pathlib import Path
 from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
+sys.path.insert(0, str(Path(__file__).parents[1] / "nodes"))
 
 _tmp = tempfile.mkdtemp()
 _folder_paths = types.ModuleType("folder_paths")
