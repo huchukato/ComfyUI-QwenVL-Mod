@@ -54,12 +54,27 @@ function applyTheme(node, theme) {
     }
 }
 
+// Legacy nodes stay registered so saved workflows keep loading, but are
+// hidden from the add-node menu/search — the Unified nodes supersede them.
+const LEGACY_NODES = new Set([
+    "AILab_QwenVL",
+    "AILab_QwenVL_Advanced",
+    "AILab_QwenVL_GGUF",
+    "AILab_QwenVL_GGUF_Advanced",
+    "AILab_QwenVL_PromptEnhancer",
+    "AILab_QwenVL_GGUF_PromptEnhancer",
+]);
+
 app.registerExtension({
     name: "QwenVL.BrandColors",
 
     beforeRegisterNodeDef(nodeType, nodeData) {
         const cls = nodeData?.name;
-        if (!cls || !NODE_COLORS.hasOwnProperty(cls)) return;
+        if (!cls) return;
+        if (LEGACY_NODES.has(cls)) {
+            nodeData.hidden = true;
+        }
+        if (!NODE_COLORS.hasOwnProperty(cls)) return;
         const themeKey = NODE_COLORS[cls];
         const theme = COLOR_THEMES[themeKey];
 
