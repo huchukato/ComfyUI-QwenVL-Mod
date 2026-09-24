@@ -21,7 +21,14 @@ from dataclasses import dataclass
 from pathlib import Path
 import torch
 from huggingface_hub import hf_hub_download, snapshot_download
-from llama_cpp import Llama
+try:
+    from llama_cpp import Llama
+except ImportError as exc:
+    raise ImportError(
+        "llama-cpp-python is not installed — GGUF nodes require a vision-capable "
+        "build. Local install: `pip install llama-cpp-python`; for CUDA/vision "
+        "wheels see github.com/abetlen/llama-cpp-python"
+    ) from exc
 
 import folder_paths
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output, prompt_output_guard

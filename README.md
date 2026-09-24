@@ -240,7 +240,7 @@ Demo workflow: [`workflows/livepeer/Livepeer-Agent-Demo.json`](https://github.co
 > 
 * **2025/12/22**: **v2.0.0** Added GGUF supported nodes and Prompt Enhancer nodes. [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-200-20251222)]
 > [!IMPORTANT]  
-> Install llama-cpp-python before running GGUF nodes [instruction](docs/LLAMA_CPP_PYTHON_VISION_INSTALL.md)
+> Install llama-cpp-python before running GGUF nodes [instructions](https://github.com/abetlen/llama-cpp-python)
 > 
 ![600346260_122188475918461193_3763807942053883496_n](https://github.com/user-attachments/assets/bc9450d9-1695-452d-9e46-f05a4bf315de)
 * **2025/11/10**: **v1.1.0** Runtime overhaul with attention-mode selector, flash-attn auto detection, smarter caching, and quantization/torch.compile controls in both nodes. [[Update](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-110-20251110)]
@@ -346,7 +346,7 @@ This repo includes **GGUF** nodes powered by `llama-cpp-python` (separate from t
 - **Nodes**: `QwenVL (GGUF)`, `QwenVL (GGUF Advanced)`, `QwenVL Prompt Enhancer (GGUF)`
 - **Model folder** (default): `ComfyUI/models/llm/GGUF/` (configurable via `gguf_models.json`)
 - **Vision requirement**: install a vision-capable `llama-cpp-python` wheel that provides `Qwen3VLChatHandler` / `Qwen25VLChatHandler`  
-  See [docs/LLAMA_CPP_PYTHON_VISION_INSTALL.md](docs/LLAMA_CPP_PYTHON_VISION_INSTALL.md)
+  See [llama-cpp-python install guide](https://github.com/abetlen/llama-cpp-python)
 
 ## **🗂️ Config Files**
 

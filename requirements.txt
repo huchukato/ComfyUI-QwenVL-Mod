@@ -13,9 +13,13 @@ opencv-python
 bitsandbytes
 accelerate
 
-# For running GGUF models with vision support
-# The [server] extra installs necessary components for multimodal models
-# llama-cpp-python[server]
+# For running GGUF models with vision support:
+#   pip install llama-cpp-python
+# Kept commented on purpose: llama-cpp-python often builds from source
+# (needs cmake/compiler) and a failed build would break the whole node
+# install via ComfyUI Manager. Pods ship a CUDA wheel in the base image;
+# local users should install it manually or follow docs/GGUF_MANUAL_INSTALL.md
+# llama-cpp-python
 
 # Optional: Flash Attention 2 for 2-3x performance boost (RTX 20+)
 # flash-attn>=2.0.0  # Uncomment for Flash Attention 2 support

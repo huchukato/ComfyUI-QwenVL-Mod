@@ -264,7 +264,7 @@ T2V → VRAM Cleanup (Full Cleanup) → I2V-1 → VRAM Cleanup (Full Cleanup) �
 
 * **2025/12/22**: **v2.0.0** Aggiunti nodi supportati GGUF e nodi Prompt Enhancer. [[Aggiornamenti](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-200-20251222)]
 > [!IMPORTANT]  
-> Installa llama-cpp-python prima di eseguire nodi GGUF [istruzioni](docs/LLAMA_CPP_PYTHON_VISION_INSTALL.md)
+> Installa llama-cpp-python prima di eseguire nodi GGUF [istruzioni](https://github.com/abetlen/llama-cpp-python)
 
 ![600346260_122188475918461193_3763807942053883496_n](https://github.com/user-attachments/assets/bc9450d9-1695-452d-9e46-f05a4bf315de)
 * **2025/11/10**: **v1.1.0** Revisione runtime con selettore modalità attention, rilevamento automatico flash-attn, cache più intelligente, e controlli quantizzazione/torch.compile in entrambi i nodi. [[Aggiornamenti](https://github.com/1038lab/ComfyUI-QwenVL/blob/main/update.md#version-110-20251110)]
@@ -370,7 +370,7 @@ Questo repository include nodi **GGUF** powered by `llama-cpp-python` (separati 
 - **Nodi**: `QwenVL (GGUF)`, `QwenVL (GGUF Avanzato)`, `QwenVL Prompt Enhancer (GGUF)`
 - **Cartella modelli** (predefinito): `ComfyUI/models/llm/GGUF/` (configurabile via `gguf_models.json`)
 - **Requisito vision**: installa wheel `llama-cpp-python` con capacità vision che fornisce `Qwen3VLChatHandler` / `Qwen25VLChatHandler`  
-  Vedi [docs/LLAMA_CPP_PYTHON_VISION_INSTALL.md](docs/LLAMA_CPP_PYTHON_VISION_INSTALL.md)
+  Vedi [llama-cpp-python install guide](https://github.com/abetlen/llama-cpp-python)
 
 ## **🗂️ File Configurazione**
 
