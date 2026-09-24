@@ -15,6 +15,10 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output, prompt_output_guard
+from qwenvl_presets import (
+    TEXT_STYLE_NAMES, TEXT_PROMPTS, TEXT_DURATIONS,
+    DURATION_OPTIONS, DEFAULT_DURATION, resolve_text_style,
+)
 
 from AILab_QwenVL import (
     ATTENTION_MODES,
@@ -54,24 +58,24 @@ DEFAULT_STYLES = {
 
 
 def _load_prompt_styles() -> dict[str, str]:
+    styles = dict(TEXT_PROMPTS)
     try:
         with open(SYSTEM_PROMPTS_PATH, "r", encoding="utf-8") as fh:
             data = json.load(fh) or {}
         qwen_text = data.get("qwen_text") or {}
-        styles = qwen_text.get("styles") or {}
-        if isinstance(styles, dict) and styles:
-            resolved = {
+        legacy_styles = qwen_text.get("styles") or {}
+        if isinstance(legacy_styles, dict) and legacy_styles:
+            styles.update({
                 name: entry.get("system_prompt", "")
-                for name, entry in styles.items()
+                for name, entry in legacy_styles.items()
                 if isinstance(entry, dict) and entry.get("system_prompt")
-            }
-            if resolved:
-                return resolved
+            })
+            return styles
     except FileNotFoundError:
         pass
     except Exception as exc:
         print(f"[QwenVL] Prompt style load failed: {exc}")
-    return DEFAULT_STYLES
+    return styles or DEFAULT_STYLES
 
 
 PROMPT_STYLES = _load_prompt_styles()
@@ -95,9 +99,9 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
     def INPUT_TYPES(cls):
         models = list(HF_TEXT_MODELS.keys()) + [name for name in HF_VL_MODELS.keys() if name not in HF_TEXT_MODELS]
         default_model = models[0] if models else "Qwen3-VL-4B-Instruct"
-        styles = list(cls.STYLES.keys())
-        preferred_style = "📝 Enhance"
-        default_style = preferred_style if preferred_style in styles else (styles[0] if styles else "📝 Enhance")
+        styles = list(TEXT_STYLE_NAMES) or list(cls.STYLES.keys())
+        preferred_style = "Enhance"
+        default_style = preferred_style if preferred_style in styles else (styles[0] if styles else "Enhance")
         return {
             "required": {
                 "model_name": (models, {"default": default_model, "tooltip": TOOLTIPS["model_name"]}),
@@ -117,6 +121,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
                 "passthrough": ("BOOLEAN", {"default": False, "tooltip": "Skip Qwen model loading and return prompt_text directly. Use when the chat already generated the final prompt — saves VRAM and inference time."}),
+                "duration": (DURATION_OPTIONS, {"default": DEFAULT_DURATION, "tooltip": "Clip length for duration-aware styles (MiniMax/LTX/Wan). Ignored by generic styles."}),
             }
         }
 
@@ -139,6 +144,7 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         seed,
         keep_last_prompt=False,
         passthrough=False,
+        duration=DEFAULT_DURATION,
     ):
         global LAST_SAVED_PROMPT
 
@@ -160,9 +166,10 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         # Always generate when keep last prompt is disabled
         print(f"[QwenVL PromptEnhancer HF] Keep last prompt disabled - generating new prompt")
 
+        enhancement_style, style_key = resolve_text_style(enhancement_style, duration)
         style_instruction = self.STYLES.get(
-            enhancement_style,
-            next(iter(self.STYLES.values()), ""),
+            style_key,
+            self.STYLES.get(enhancement_style, next(iter(self.STYLES.values()), "")),
         ).strip()
         style_instruction = add_danbooru_guidance(style_instruction, enhancement_style)
         base_instruction = "\n\n".join(part for part in (style_instruction, prompt_output_guard()) if part)

@@ -9,6 +9,8 @@ from pathlib import Path
 
 from PIL import Image
 
+from qwenvl_presets import VL_ALIASES, resolve_preset, resolve_vl_preset
+
 
 MAX_MESSAGES = 20
 MAX_MESSAGE_CHARS = 12000
@@ -23,7 +25,7 @@ MINIMAX_I2VA_BINDING = "For the target video, at 0.00 seconds into the target vi
 def ensure_i2va_binding(text, preset_name, has_image=False):
     """Ensure MiniMax H3 I2VA outputs include the required reference binding
     line. FL2VA/R2VA presets use their own alignment format and are excluded."""
-    if not has_image or not preset_name or "MiniMax H3" not in preset_name:
+    if not has_image or not preset_name or "MiniMax" not in preset_name:
         return text
     if "FL2VA" in preset_name or "R2VA" in preset_name:
         return text
@@ -40,7 +42,7 @@ def normalize_minimax_output(text, preset_name, has_image=False):
     header (I2VA binding / FL2VA alignment line / nothing for T2VA), followed
     by `integrated_multimodal_description:`, `overall_soundscape:` and
     `non_diegetic_music:`. Anything else before the first body label is noise."""
-    if not preset_name or "MiniMax H3" not in preset_name:
+    if not preset_name or "MiniMax" not in preset_name:
         return text
     label = "integrated_multimodal_description:"
     idx = text.find(label)
@@ -463,9 +465,15 @@ def enforce_image_reference_bindings(result, graph, has_images):
             continue
         widgets = {widget.get("name"): widget.get("value") for widget in node.get("widgets", []) if isinstance(widget, dict)}
         preset = str(widgets.get("preset_prompt", ""))
+        resolved_preset, _ = resolve_preset(preset, VL_ALIASES)
+        is_minimax_i2va = (
+            "minimax" in resolved_preset.lower()
+            and "r2va" not in resolved_preset.lower()
+            and "fl2va" not in resolved_preset.lower()
+        )
         title = f'{node.get("title", "")} {node.get("type", "")}'.lower()
         passthrough = passthrough_values.get(str(action.get("node_id")), widgets.get("passthrough") is True)
-        if "minimax h3 nsfw (" not in preset.lower() or "image to video" not in title or not passthrough:
+        if not is_minimax_i2va or "image to video" not in title or not passthrough:
             continue
         action["value"] = f"{MINIMAX_I2VA_BINDING}\n\n{value.lstrip()}"
         amended.append(action["value"])
@@ -514,13 +522,23 @@ def _preset_guides(graph, messages, has_images=False):
         return ""
     wanted = set()
     for node in graph.get("nodes", []):
+        widgets = {w.get("name"): w.get("value") for w in node.get("widgets", []) if isinstance(w, dict)}
         for widget in node.get("widgets", []):
-            if isinstance(widget, dict) and widget.get("value") in guides:
-                wanted.add(widget["value"])
+            if not isinstance(widget, dict):
+                continue
+            value = widget.get("value")
+            if value in guides:
+                wanted.add(value)
+            elif isinstance(value, str):
+                # Widget values are base preset names; resolve to the flat
+                # "Name (Ns)" guide key using the node's duration widget.
+                _, key = resolve_vl_preset(value, widgets.get("duration"))
+                if key in guides:
+                    wanted.add(key)
     last_user = next((m["content"] for m in reversed(messages) if m["role"] == "user"), "")
     wanted.update(name for name in guides if name in last_user)
     # A duration mention (e.g. "10 seconds", "10s", "10 secondi") selects the
-    # preset variants for that length, e.g. "MiniMax H3 NSFW (10s)". Keep the
+    # flat guide for that length, e.g. "MiniMax › NSFW (10s)". Keep the
     # same MiniMax mode as the currently selected preset (FL2VA / R2VA / generic).
     current_mode = None
     for node in graph.get("nodes", []):
@@ -545,7 +563,7 @@ def _preset_guides(graph, messages, has_images=False):
         return ""
     # Suppress full-format video guides when the chat must only feed the enhancer.
     if has_images and _has_image_enhancer_target(graph):
-        video_prefixes = ("🎬 MiniMax", "🎞️ MiniMax", "🔄 MiniMax", "🎥 LTX", "🔀 LTX", "🎵 LTX", "📹 Wan", "🔄 Wan", "📖 Wan")
+        video_prefixes = ("MiniMax", "LTX", "Wan", "🎬 MiniMax", "🎞️ MiniMax", "🔄 MiniMax", "🎥 LTX", "🔀 LTX", "🎵 LTX", "📹 Wan", "🔄 Wan", "📖 Wan")
         wanted = {name for name in wanted if not any(name.startswith(prefix) for prefix in video_prefixes)}
         if not wanted:
             return ""
@@ -554,8 +572,8 @@ def _preset_guides(graph, messages, has_images=False):
         "\n\nPROMPT WRITING GUIDES - when writing or editing a prompt for a node "
         "associated with one of these presets, follow the corresponding guide "
         "exactly, including its required output format. If the user asks for a "
-        "different clip duration than the one the workflow is set to, also set "
-        "the preset widget to the matching duration variant (if one exists) and "
+        "different clip duration than the one the workflow is set to, set the "
+        "node's \"duration\" widget (e.g. \"10s\") when it exists and "
         "update the workflow's duration/frame-count widgets accordingly:\n" + parts
     )
 
@@ -606,7 +624,7 @@ def _chat_guides_for(graph, has_images=False):
                 f'IGNORE any full prompt-writing guide for that preset above: the inner QwenVL node will use it to build the final prompt. '
                 f'You MUST set node {node.get("id")} widget "{prompt_widget}" to a concise English action directive derived from the latest substantive request (skip execute-only confirmations; never copy it verbatim; never add the "For the target video..." binding line; never write integrated_multimodal_description/sections). '
                 f'Do NOT change node {node.get("id")} widget "preset_prompt" unless the user explicitly asks to switch mode (e.g., "switch to I2VA"). '
-                f'If the user only changes duration, keep the same preset family and update the duration widgets (value_1 or seconds), not the preset_prompt. '
+                f'If the user only changes duration, keep the same preset family and update the duration widgets (the node\'s "duration" widget, plus value_1 or seconds on the sampler), not the preset_prompt. '
                 f'set node {node.get("id")} widget "passthrough" to false, then queue. The inner QwenVL must analyze the image and create the final preset prompt.'
             )
         else:
@@ -799,10 +817,18 @@ def _minimax_result(graph, config_key, text):
             seconds = int(duration.group(1))
             if "value_1" in widgets:
                 actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "value_1", "value": seconds})
-            current_preset = widgets["preset_prompt"].get("value", "")
-            preset_match = _match_minimax_preset(widgets["preset_prompt"], seconds, current_preset)
-            if preset_match:
-                actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "preset_prompt", "value": preset_match})
+            if "duration" in widgets:
+                # New-style node: duration is its own widget; the preset stays
+                # on the same family name regardless of clip length.
+                dur_value = f"{seconds}s"
+                dur_options = [str(o) for o in _widget_options(widgets["duration"])]
+                if not dur_options or dur_value in dur_options:
+                    actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "duration", "value": dur_value})
+            else:
+                current_preset = widgets["preset_prompt"].get("value", "")
+                preset_match = _match_minimax_preset(widgets["preset_prompt"], seconds, current_preset)
+                if preset_match:
+                    actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "preset_prompt", "value": preset_match})
         directive = _clean_action_directive(text)
         if directive and "prompt" in widgets:
             actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "prompt", "value": directive})
@@ -849,12 +875,33 @@ def _fix_minimax_preset_actions(result, graph):
             # Current preset is the generic one; don't second-guess explicit mode switches.
             continue
         new_value = str(action.get("value") or "")
-        new_mode = _minimax_preset_mode(new_value)
+        # Normalize legacy dropdown names to the canonical preset so mode
+        # comparison and widget options work with the new naming.
+        resolved_new, resolved_dur = resolve_preset(new_value, VL_ALIASES)
+        new_mode = _minimax_preset_mode(resolved_new)
+        if resolved_new in [str(o) for o in _widget_options(widgets["preset_prompt"])]:
+            action["value"] = resolved_new
+        def _emit_duration(dur):
+            if not dur or "duration" not in widgets:
+                return
+            dur_options = [str(o) for o in _widget_options(widgets["duration"])]
+            if not dur_options or dur in dur_options:
+                result["actions"].append({"type": "set_widget_value", "node_id": action.get("node_id"), "widget": "duration", "value": dur})
+
         if new_mode == current_mode:
+            # Same family — duration is expressed via the "duration" widget.
+            _emit_duration(resolved_dur)
+            continue
+        if "duration" in widgets:
+            # New-style node: keep the current preset family, duration lives in
+            # its own widget.
+            action["value"] = current_preset
+            _emit_duration(resolved_dur)
             continue
         duration_match = re.search(r"\((\d+)s\)", new_value)
         if not duration_match:
-            # No duration in the new value; revert to the current preset to stay safe.
+            # Legacy node without a duration suffix; revert to the current
+            # preset to stay safe.
             action["value"] = current_preset
             continue
         fixed = _match_minimax_preset(widgets["preset_prompt"], int(duration_match.group(1)), current_preset)

@@ -5,6 +5,7 @@
 
 import AILab_QwenVL as _hf_base
 import AILab_QwenVL_PromptEnhancer as _hf
+from qwenvl_presets import TEXT_STYLE_NAMES, DURATION_OPTIONS, DEFAULT_DURATION
 
 try:
     import AILab_QwenVL_GGUF_PromptEnhancer as _gguf
@@ -66,9 +67,9 @@ class QwenVL_Unified_PromptEnhancer:
 
     @classmethod
     def INPUT_TYPES(cls):
-        styles = list(PROMPT_STYLES.keys())
-        preferred_style = "📝 Enhance"
-        default_style = preferred_style if preferred_style in styles else (styles[0] if styles else "📝 Enhance")
+        styles = list(TEXT_STYLE_NAMES) or list(PROMPT_STYLES.keys())
+        preferred_style = "Enhance"
+        default_style = preferred_style if preferred_style in styles else (styles[0] if styles else "Enhance")
         gguf_note = "" if _gguf else " (GGUF models hidden — llama-cpp-python not installed)"
         return {
             "required": {
@@ -90,6 +91,7 @@ class QwenVL_Unified_PromptEnhancer:
                 "seed": ("INT", {"default": 1, "min": 1, "max": 2**32 - 1}),
                 "keep_last_prompt": ("BOOLEAN", {"default": False, "tooltip": "Keep the last generated prompt instead of creating a new one"}),
                 "passthrough": ("BOOLEAN", {"default": False, "tooltip": "Skip Qwen model loading and return prompt_text directly. Use when the chat already generated the final prompt — saves VRAM and inference time."}),
+                "duration": (DURATION_OPTIONS, {"default": DEFAULT_DURATION, "tooltip": "Clip length for duration-aware styles (MiniMax/LTX/Wan). Ignored by generic styles."}),
             }
         }
 
@@ -113,6 +115,7 @@ class QwenVL_Unified_PromptEnhancer:
         seed,
         keep_last_prompt=False,
         passthrough=False,
+        duration=DEFAULT_DURATION,
     ):
         if model_name.startswith(GGUF_PREFIX):
             if self._gguf is None:
@@ -136,6 +139,7 @@ class QwenVL_Unified_PromptEnhancer:
                 seed=seed,
                 keep_last_prompt=keep_last_prompt,
                 passthrough=passthrough,
+                duration=duration,
             )
 
         if model_name.startswith(HF_PREFIX):
@@ -160,6 +164,7 @@ class QwenVL_Unified_PromptEnhancer:
             seed=seed,
             keep_last_prompt=keep_last_prompt,
             passthrough=passthrough,
+            duration=duration,
         )
 
 
