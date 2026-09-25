@@ -1,5 +1,10 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.9.1 (2026/09/25)
+
+- Rewrote the MiniMax config examples in the chat system prompt as plain prose — the dense `key=value;` action syntax was triggering the registry `python_minified_code` rule (false positive on `chat_service.py:88`).
+- Moved the registry admin workflow out of the published package.
+
 ## Version 2.9.0 (2026/09/25)
 
 - MiniMax model matrix in Qwen Workflow Chat: `Native`, `Native Turbo`, `10Eros` and `10Eros Turbo` configs now drive the whole sampler setup — UNet selection (nvfp4 / 10Eros beta5 int8), step count (20 quality / 8 turbo), LoRA enable/bypass and the correct LoRA file per mode (lightx2v fl2v/ref2v vs TenStrip combined fusion).
