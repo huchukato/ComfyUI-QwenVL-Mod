@@ -22,22 +22,41 @@ ALLOWED_ACTIONS = {"set_widget_value", "set_node_mode", "queue_workflow"}
 MINIMAX_I2VA_BINDING = "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced."
 
 
+def _wildcard_loader():
+    """Find TagForge's WildcardLoader regardless of the install dir name."""
+    try:
+        for mod in list(sys.modules.values()):
+            mod_name = (getattr(mod, "__name__", "") or "").lower()
+            if mod is not None and "tagforge" in mod_name and mod_name.endswith("wildcards") and hasattr(mod, "WildcardLoader"):
+                return mod.WildcardLoader
+    except Exception:
+        pass
+    try:
+        import importlib
+        for name in ("ComfyUI-TagForge.py.wildcards", "ComfyUI_TagForge.py.wildcards", "comfyui_tagforge.py.wildcards"):
+            try:
+                module = importlib.import_module(name)
+                if hasattr(module, "WildcardLoader"):
+                    return module.WildcardLoader
+            except Exception:
+                continue
+    except Exception:
+        pass
+    return None
+
+
 def _expand_wildcard_tokens(text):
     """Expand TagForge __wildcard__ tokens when the node pack is installed."""
     if not text or "__" not in text:
         return text
-    try:
-        import importlib
-        for name in ("ComfyUI-TagForge.py.wildcards", "ComfyUI_TagForge.py.wildcards"):
-            try:
-                module = importlib.import_module(name)
-                expanded = module.WildcardLoader.process(text)
-                if expanded:
-                    return expanded
-            except (ImportError, AttributeError):
-                continue
-    except Exception:
-        pass
+    loader = _wildcard_loader()
+    if loader is not None:
+        try:
+            expanded = loader.process(text)
+            if expanded:
+                return expanded
+        except Exception:
+            pass
     return text
 
 
@@ -209,6 +228,8 @@ def validate_actions(actions):
         elif action_type == "set_widget_value" and isinstance(action.get("node_id"), (int, str)) and isinstance(action.get("widget"), str) and len(action["widget"]) <= 200:
             value = action.get("value")
             if value is None or isinstance(value, (str, int, float, bool)):
+                if isinstance(value, str):
+                    value = _expand_wildcard_tokens(value)
                 result.append({"type": action_type, "node_id": action["node_id"], "widget": action["widget"], "value": value})
     return result
 
