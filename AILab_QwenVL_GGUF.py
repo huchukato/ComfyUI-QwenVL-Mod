@@ -46,6 +46,7 @@ from qwenvl_presets import (
 import folder_paths
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output
 from chat_service import normalize_minimax_output
+from wildcard_util import expand_wildcard_tokens
 
 # Simple global variable to store last generated prompt
 LAST_SAVED_PROMPT = None
@@ -845,6 +846,10 @@ class QwenVLGGUFBase:
         print(f"[QwenVL GGUF DEBUG] Starting run with seed={seed}, keep_last_prompt={keep_last_prompt}")
 
         global LAST_SAVED_PROMPT
+
+        # Expand TagForge __wildcard__ tokens first — also in passthrough mode,
+        # so raw tokens never reach the downstream prompt.
+        prompt = expand_wildcard_tokens(prompt or "")
 
         # Passthrough mode: skip model loading entirely, return prompt as-is.
         if passthrough:

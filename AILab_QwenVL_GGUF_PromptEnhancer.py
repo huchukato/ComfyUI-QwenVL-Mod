@@ -32,6 +32,7 @@ except ImportError as exc:
 
 import folder_paths
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output, prompt_output_guard
+from wildcard_util import expand_wildcard_tokens
 
 # Import cache functions from main module
 import sys
@@ -556,6 +557,10 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         duration=DEFAULT_DURATION,
     ):
         global LAST_SAVED_PROMPT
+
+        # Expand TagForge __wildcard__ tokens before anything else — also in
+        # passthrough mode, so raw tokens never reach the downstream prompt.
+        prompt_text = expand_wildcard_tokens(prompt_text or "")
 
         # Passthrough mode: skip model loading entirely, return prompt_text as-is.
         if passthrough:
