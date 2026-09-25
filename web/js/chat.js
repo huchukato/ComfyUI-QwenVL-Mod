@@ -17,7 +17,7 @@ const TRANSLATIONS = {
         completed: "Operation completed.", applied: "Applied", rejected: "Rejected", ready: "Ready",
         aborted: "Request stopped. Backend inference may still be running.", loadingModels: "Loading models…",
         modelsUnavailable: "Models unavailable: {error}", model: "Model", maxTokens: "Max tokens",
-        temperature: "Temperature", attach: "Attach image or video", send: "Send", repeat: "Repeat", repeatTitle: "Resend the latest user message",
+        temperature: "Temperature", attach: "Attach image or video", send: "Send", repeat: "Repeat", repeatTitle: "Load the latest user message into the input",
         stop: "Stop", newChat: "New chat", initializing: "Initializing…", preparingImage: "Preparing image…", preparingVideo: "Extracting video frames…",
         imageAttached: "Image attached: it will be used instead of workflow images", videoAttached: "Video attached: sampled frames will be sent to Qwen", attachedVideo: "Attached video", nothingToRepeat: "No message to repeat",
         newConversation: "New conversation", placeholder: "Example: set 25 steps in KSampler and run the workflow",
@@ -32,7 +32,7 @@ const TRANSLATIONS = {
         assetsError: "Unable to load ComfyUI Assets: {error}", close: "Close", selectTarget: "Select the Load Media / Load Image (from Outputs) node",
         assetChatOnly: "Asset selected for Qwen. Add a Load Image (from Outputs) node to sync it with the workflow.",
         assetSynced: "Asset selected for Qwen and loaded into node {node}.", settings: "Settings", showSettings: "Show settings", hideSettings: "Hide settings",
-        config: "Config", configAuto: "Auto (chat decides)", capability: "Livepeer", capabilityAuto: "Any capability",
+        config: "Config MMH3", configAuto: "Auto (chat decides)", capability: "Livepeer", capabilityAuto: "Any capability",
     },
     it: {
         empty: "Chiedimi di analizzare o modificare i parametri del workflow aperto.", user: "Tu", thinking: "Pensiero",
@@ -43,7 +43,7 @@ const TRANSLATIONS = {
         completed: "Operazione completata.", applied: "Applicato", rejected: "Rifiutato", ready: "Pronto",
         aborted: "Attesa interrotta. L’inferenza backend potrebbe essere ancora in corso.", loadingModels: "Caricamento modelli…",
         modelsUnavailable: "Modelli non disponibili: {error}", model: "Modello", maxTokens: "Max tokens",
-        temperature: "Temperatura", attach: "Allega immagine o video", send: "Invia", repeat: "Ripeti", repeatTitle: "Reinvia l'ultimo messaggio utente",
+        temperature: "Temperatura", attach: "Allega immagine o video", send: "Invia", repeat: "Ripeti", repeatTitle: "Ricarica l'ultimo messaggio utente nell'input",
         stop: "Stop", newChat: "Nuova chat", initializing: "Inizializzazione…", preparingImage: "Preparazione dell’immagine…", preparingVideo: "Estrazione frame del video…",
         imageAttached: "Immagine allegata: sarà usata al posto di quelle del workflow", videoAttached: "Video allegato: i frame campionati saranno inviati a Qwen", attachedVideo: "Video allegato", nothingToRepeat: "Nessun messaggio da ripetere",
         newConversation: "Nuova conversazione", placeholder: "Es: imposta 25 step nel KSampler e avvia il workflow",
@@ -58,7 +58,7 @@ const TRANSLATIONS = {
         assetsError: "Impossibile caricare le Risorse ComfyUI: {error}", close: "Chiudi", selectTarget: "Seleziona il nodo Load Media / Carica Immagine da Output",
         assetChatOnly: "Risorsa selezionata per Qwen. Aggiungi un nodo Carica Immagine da Output per sincronizzarla con il workflow.",
         assetSynced: "Risorsa selezionata per Qwen e caricata nel nodo {node}.", settings: "Impostazioni", showSettings: "Mostra impostazioni", hideSettings: "Nascondi impostazioni",
-        config: "Config", configAuto: "Auto (decide la chat)", capability: "Livepeer", capabilityAuto: "Qualsiasi capability",
+        config: "Config MMH3", configAuto: "Auto (decide la chat)", capability: "Livepeer", capabilityAuto: "Qualsiasi capability",
     },
 };
 const DEFAULT_STATE = {
@@ -971,7 +971,7 @@ function buildSidebar(container) {
             return;
         }
         elements.input.value = lastUser.content;
-        sendMessage();
+        elements.input.focus();
     });
     elements.stop.addEventListener("click", () => controller?.abort());
     elements.clear.addEventListener("click", () => {
