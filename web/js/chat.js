@@ -700,7 +700,7 @@ async function sendMessage() {
         setStatus(t("selectModel"), true);
         return;
     }
-    const configLabels = { native: "Native", native_turbo: "Native Turbo", "10eros": "10Eros", "10eros_turbo": "10Eros Turbo" };
+    const configLabels = { native: "Native", native_turbo: "Native Turbo", "10eros": "10Eros", "10eros_turbo": "10Eros Turbo", r2va_native: "R2VA Native", r2va_native_turbo: "R2VA Native Turbo" };
     const content = rawText || `⚙️ ${capability !== "auto" ? capability : configLabels[config] || config}`;
     state.messages.push({ role: "user", content });
     state.messages = state.messages.slice(-20);
@@ -931,7 +931,7 @@ function buildSidebar(container) {
     elements.attachment = createElement("div", "qwen-chat-attachment");
     const selectors = createElement("div", "qwen-chat-selectors");
     elements.config = createElement("select");
-    for (const [value, label] of [["auto", t("configAuto")], ["native", "Native"], ["native_turbo", "Native Turbo"], ["10eros", "10Eros"], ["10eros_turbo", "10Eros Turbo"]]) {
+    for (const [value, label] of [["auto", t("configAuto")], ["native", "Native"], ["native_turbo", "Native Turbo"], ["10eros", "10Eros"], ["10eros_turbo", "10Eros Turbo"], ["r2va_native", "R2VA Native"], ["r2va_native_turbo", "R2VA Native Turbo"]]) {
         const option = createElement("option", "", label);
         option.value = value;
         elements.config.append(option);
