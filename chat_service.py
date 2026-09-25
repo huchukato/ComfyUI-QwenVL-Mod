@@ -756,11 +756,13 @@ def _explicit_capability_request(messages, graph):
 _CONFIG_TRIGGER = re.compile(
     r"\b(?:use|usa|switch\s+to|passa\s+a|metti|set|con)\s+(?:the\s+|il\s+|la\s+)?"
     r"(native(?:\s+turbo)?|10\s*eros(?:[-\s]?max)?(?:\s+turbo)?|"
-    r"turbo(?:\s*lora)?(?:\s+(?:native|10\s*eros(?:[-\s]?max)?))?|config\s*[abcd])\b",
+    r"r2va(?:\s+native)?(?:\s+turbo)?|"
+    r"turbo(?:\s*lora)?(?:\s+(?:native|r2va(?:\s+native)?|10\s*eros(?:[-\s]?max)?))?|config\s*[abcd])\b",
     re.IGNORECASE,
 )
 
 _NATIVE_UNET = "minimax_h3_fl2va_pruned_nvfp4_convrot_int8.safetensors"
+_R2VA_UNET = "minimax_h3_ref2va_pruned_nvfp4_convrot_int8.safetensors"
 _EROS_UNET = "10Eros_Max_h3_hybrid_beta5_int8.safetensors"
 # Needle "h3_hybrid" matches the non-turbo beta5 only; the fused file is
 # named "h3_TURBO-hybrid_beta5" so it never collides.
@@ -793,6 +795,25 @@ _MINIMAX_CONFIGS = {
         "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
         "lora_mode": "enable",
         "lora_needles": ["fusion_turbo"],
+        "sparse_tau": 1.3,
+    },
+    # R2VA variants: same sampler configs, but the ref2va unet (image-ref
+    # conditioned) and the ref2v turbo LoRA for the turbo step.
+    "r2va_native": {
+        "unet_needle": "ref2va_pruned",
+        "unet_fallback": _R2VA_UNET,
+        "preset_mode": "R2VA",
+        "values": {"steps": 20, "sampler_name": "res_multistep", "scheduler": "simple", "shift_video": 12, "shift_audio": 3},
+        "lora_mode": "bypass",
+        "sparse_tau": 1.0,
+    },
+    "r2va_native_turbo": {
+        "unet_needle": "ref2va_pruned",
+        "unet_fallback": _R2VA_UNET,
+        "preset_mode": "R2VA",
+        "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
+        "lora_mode": "enable",
+        "lora_needles": ["ref2v_turbo", "fl2v_turbo"],
         "sparse_tau": 1.3,
     },
 }
@@ -864,6 +885,20 @@ def _minimax_result(graph, config_key, text):
         if config["unet_needle"]:
             unet = _match_option(unet_widget, config["unet_needle"]) or config["unet_fallback"]
             actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "unet_name", "value": unet})
+        target_mode = config.get("preset_mode")
+        if target_mode:
+            # R2VA configs must also switch the enhancer preset to an R2VA
+            # variant — an FL2VA-style prompt would carry the wrong bindings
+            # for the ref-conditioned unet. Preserve the "(Ns)" duration.
+            current_preset = str(widgets["preset_prompt"].get("value", ""))
+            if _minimax_preset_mode(current_preset) != target_mode:
+                dur_match = re.search(r"\((\d+s)\)\s*$", current_preset)
+                dur_suffix = dur_match.group(1) if dur_match else None
+                for opt in _widget_options(widgets["preset_prompt"]):
+                    opt_str = str(opt)
+                    if _minimax_preset_mode(opt_str) == target_mode and (dur_suffix is None or f"({dur_suffix})" in opt_str):
+                        actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "preset_prompt", "value": opt_str})
+                        break
         for name, value in config["values"].items():
             widget = widgets.get(name)
             if widget is None:
@@ -942,7 +977,8 @@ def _minimax_result(graph, config_key, text):
         actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "passthrough", "value": False})
         actions.append({"type": "queue_workflow"})
         label = {"native": "Native", "native_turbo": "Native Turbo",
-                 "10eros": "10Eros", "10eros_turbo": "10Eros Turbo"}[config_key]
+                 "10eros": "10Eros", "10eros_turbo": "10Eros Turbo",
+                 "r2va_native": "R2VA Native", "r2va_native_turbo": "R2VA Native Turbo"}[config_key]
         if re.match(r"^\s*(usa|passa|metti|fai|genera|crea)\b", text, re.IGNORECASE):
             message = f"⚙️ MiniMax H3 → {label}. Workflow in coda."
         else:
@@ -1023,6 +1059,8 @@ def _explicit_minimax_request(messages, graph):
             return None
     elif "eros" in raw:
         config_key = "10eros_turbo" if "turbo" in raw else "10eros"
+    elif "r2va" in raw:
+        config_key = "r2va_native_turbo" if "turbo" in raw else "r2va_native"
     elif "native" in raw:
         config_key = "native_turbo" if "turbo" in raw else "native"
     elif "turbo" in raw:

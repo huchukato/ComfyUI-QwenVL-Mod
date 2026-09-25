@@ -1,5 +1,10 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.9.9 (2026/09/25)
+
+- Chat Config MMH3: added **R2VA Native** and **R2VA Native Turbo** — select the ref2va unet (image-ref conditioned) instead of fl2va, enable the ref2v turbo LoRA in turbo mode, and auto-switch the enhancer preset to an R2VA variant preserving the selected duration. Chat phrases like "usa r2va turbo" trigger them too.
+- New VL preset **VID › Camera Change**: feed video frames (Load Video → video input) plus an optional camera instruction; the node rewrites the scene keeping subject/action/lighting and swaps only the camera move. Honors the camera_tag dropdown.
+
 ## Version 2.9.8 (2026/09/25)
 
 - New preset **IMG › Qwen Edit** on the QwenVL nodes (and **Qwen Image Edit** on the Prompt Enhancer): rewrites any input as a Qwen Image 2.1-style edit instruction — imperative edit clause, explicit keep-unchanged list, `<imageN>` placeholders preserved, reference-transfer and lighting-consistency clauses. Complements the `__qwen21/*__` wildcards for free-form edits.
