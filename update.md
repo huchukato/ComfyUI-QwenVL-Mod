@@ -4,6 +4,8 @@
 
 - New preset **IMG › Qwen Edit** on the QwenVL nodes (and **Qwen Image Edit** on the Prompt Enhancer): rewrites any input as a Qwen Image 2.1-style edit instruction — imperative edit clause, explicit keep-unchanged list, `<imageN>` placeholders preserved, reference-transfer and lighting-consistency clauses. Complements the `__qwen21/*__` wildcards for free-form edits.
 
+- Node menu category now shows as `🔮 QwenVL-Mod`; new banner and icon.
+
 ## Version 2.9.7 (2026/09/25)
 
 - Republish of the consolidated 2.9.5 content — registry tombstoned 2.9.5/2.9.6 after deletion, so the same feature set ships under a new version number.
