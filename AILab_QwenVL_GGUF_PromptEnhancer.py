@@ -176,10 +176,13 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
                 if isinstance(entry, dict):
                     models[name] = entry
 
-        # Text-only catalog (use Qwen_model; do not use qwenVL_model here)
-        qwen_repos = data.get("Qwen_model") or {}
-        if isinstance(qwen_repos, dict):
-            seen_display_names: set[str] = set()
+        # Text catalog: Qwen_model first, then qwenVL_model — the 3.x VL models
+        # are multimodal but work fine text-only, so they belong here too.
+        seen_display_names: set[str] = set()
+        for section in ("Qwen_model", "qwenVL_model"):
+            qwen_repos = data.get(section) or {}
+            if not isinstance(qwen_repos, dict):
+                continue
             for repo_key, repo in qwen_repos.items():
                 if not isinstance(repo, dict):
                     continue

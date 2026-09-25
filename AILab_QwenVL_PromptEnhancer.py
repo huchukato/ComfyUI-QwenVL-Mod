@@ -8,6 +8,7 @@ import gc
 import hashlib
 import json
 import platform
+import re
 from enum import Enum
 from pathlib import Path
 
@@ -384,7 +385,6 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
             # Fallback to raw prompt if the tokenizer lacks a chat template
             formatted_prompt = prompt
 
-        inputs = self.text_tokenizer(formatted_prompt, return_tensors="pt").to(device_choice)
         kwargs = {
             "max_new_tokens": max_tokens,
             "repetition_penalty": repetition_penalty,
@@ -395,19 +395,57 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
             "pad_token_id": self.text_tokenizer.eos_token_id,
         }
 
-        # Optional: Apply seed for generation reproducibility
-        if seed is not None:
-            torch.manual_seed(seed)
-            if torch.cuda.is_available():
-                torch.cuda.manual_seed_all(seed)
+        def _looks_like_planning(text: str) -> bool:
+            if not text:
+                return False
+            return bool(
+                re.search(
+                    r"(?im)^\s*(?:[-*]\s*)?(?:\*\*)?\s*(okay[,.:]?|first[,.:]?|next[,.:]?|then[,.:]?|wait[,.:]?|final\s+plan|final\s+check)\b",
+                    text,
+                )
+                or re.search(r"(?i)\b(i\s+(should|need|must|will|am\s+going\s+to|have\s+to))\b", text)
+            )
 
-        outputs = self.text_model.generate(**inputs, **kwargs)
+        def _generate(user_prompt, temp):
+            if seed is not None:
+                torch.manual_seed(seed)
+                if torch.cuda.is_available():
+                    torch.cuda.manual_seed_all(seed)
+            gen_inputs = self.text_tokenizer(user_prompt, return_tensors="pt").to(device_choice)
+            gen_kwargs = dict(kwargs)
+            gen_kwargs["temperature"] = temp
+            out = self.text_model.generate(**gen_inputs, **gen_kwargs)
+            gen_tokens = out[0][gen_inputs["input_ids"].shape[1]:]
+            return self.text_tokenizer.decode(gen_tokens, skip_special_tokens=True).strip()
 
-        # Strip out the input tokens to get just the generated response
-        input_length = inputs["input_ids"].shape[1]
-        generated_tokens = outputs[0][input_length:]
-        result = self.text_tokenizer.decode(generated_tokens, skip_special_tokens=True).strip()
-        result = clean_model_output(result, OutputCleanConfig(mode="prompt")) or result
+        raw = _generate(formatted_prompt, temperature)
+        result = clean_model_output(raw, OutputCleanConfig(mode="prompt")) or raw
+
+        # Some Qwen3.x instruct models emit <think> blocks regardless of the
+        # /no_think hint — if the output is only planning, do one constrained
+        # retry asking for the final prompt text only (same as GGUF path).
+        if "<think" in raw.lower() or _looks_like_planning(result):
+            tail = re.split(r"</think>", raw, flags=re.IGNORECASE)[-1].strip()
+            tail = clean_model_output(tail, OutputCleanConfig(mode="prompt"))
+            if tail and not _looks_like_planning(tail):
+                result = tail
+            else:
+                retry_system = (
+                    "You are a professional photography prompt writer.\n"
+                    "Output ONLY ONE final photography prompt paragraph.\n"
+                    "No analysis, no planning steps, no first-person, and no <think>.\n"
+                    "No bullet points, no headings, no JSON, no markdown, no quotes."
+                )
+                retry_msgs = [{"role": "system", "content": retry_system},
+                              {"role": "user", "content": f"Rewrite the following into the final prompt paragraph:\n\n{raw}\n"}]
+                try:
+                    retry_prompt = self.text_tokenizer.apply_chat_template(retry_msgs, tokenize=False, add_generation_prompt=True)
+                except Exception:
+                    retry_prompt = retry_msgs[1]["content"]
+                raw_retry = _generate(retry_prompt, 0.4)
+                cleaned_retry = clean_model_output(raw_retry, OutputCleanConfig(mode="prompt"))
+                if cleaned_retry and not _looks_like_planning(cleaned_retry):
+                    result = cleaned_retry
 
         # Cache the generated text
         # PROMPT_CACHE[cache_key] = {
