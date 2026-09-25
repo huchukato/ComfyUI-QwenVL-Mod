@@ -16,6 +16,7 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output, prompt_output_guard
+from wildcard_util import expand_wildcard_tokens
 from qwenvl_presets import (
     TEXT_STYLE_NAMES, TEXT_PROMPTS, TEXT_DURATIONS,
     DURATION_OPTIONS, DEFAULT_DURATION, resolve_text_style,
@@ -148,6 +149,10 @@ class AILab_QwenVL_PromptEnhancer(QwenVLBase):
         duration=DEFAULT_DURATION,
     ):
         global LAST_SAVED_PROMPT
+
+        # Expand TagForge __wildcard__ tokens before anything else — also in
+        # passthrough mode, so raw tokens never reach the downstream prompt.
+        prompt_text = expand_wildcard_tokens(prompt_text or "")
 
         # Passthrough mode: skip model loading entirely, return prompt_text as-is.
         if passthrough:
