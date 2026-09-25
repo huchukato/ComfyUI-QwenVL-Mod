@@ -22,6 +22,25 @@ ALLOWED_ACTIONS = {"set_widget_value", "set_node_mode", "queue_workflow"}
 MINIMAX_I2VA_BINDING = "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced."
 
 
+def _expand_wildcard_tokens(text):
+    """Expand TagForge __wildcard__ tokens when the node pack is installed."""
+    if not text or "__" not in text:
+        return text
+    try:
+        import importlib
+        for name in ("ComfyUI-TagForge.py.wildcards", "ComfyUI_TagForge.py.wildcards"):
+            try:
+                module = importlib.import_module(name)
+                expanded = module.WildcardLoader.process(text)
+                if expanded:
+                    return expanded
+            except (ImportError, AttributeError):
+                continue
+    except Exception:
+        pass
+    return text
+
+
 def ensure_i2va_binding(text, preset_name, has_image=False):
     """Ensure MiniMax H3 I2VA outputs include the required reference binding
     line. FL2VA/R2VA presets use their own alignment format and are excluded."""
@@ -1005,6 +1024,12 @@ class ChatRuntime:
 
     def chat(self, backend, model_name, messages, graph, options, images=None, video=None, directives=None):
         messages = validate_messages(messages)
+        for i in range(len(messages) - 1, -1, -1):
+            if messages[i].get("role") == "user":
+                expanded = _expand_wildcard_tokens(messages[i].get("content", ""))
+                if expanded != messages[i].get("content"):
+                    messages[i] = {**messages[i], "content": expanded}
+                break
         graph = validate_graph(graph)
         images = validate_images(images or [])
         video = validate_images(video or [], MAX_VIDEO_FRAMES)

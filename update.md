@@ -1,5 +1,11 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.9.3 (2026/09/25)
+
+- Workflow Chat: **wildcard support** — `__wildcard__` tokens in your message are expanded via ComfyUI-TagForge (when installed) before the request reaches the LLM, so action wildcards work inside chat prompts.
+- Repeat button now loads the last user message into the input for editing instead of resending it immediately.
+- Config selector label renamed to "Config MMH3" (the presets are MiniMax H3 specific).
+
 ## Version 2.9.2 (2026/09/25)
 
 - Removed the bogus `requires-comfyui >=1.0.0` constraint — ComfyUI versions are 0.x, and the mismatch was disabling the node pack in ComfyUI Manager.
