@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.9.8 (2026/09/25)
+
+- New prompt-enhancer preset **Qwen Image Edit**: rewrites any input as a Qwen Image 2.1-style edit instruction — imperative edit clause, explicit keep-unchanged list, `<imageN>` placeholders preserved, reference-transfer and lighting-consistency clauses. Complements the `__qwen21/*__` wildcards for free-form edits.
+
 ## Version 2.9.7 (2026/09/25)
 
 - Republish of the consolidated 2.9.5 content — registry tombstoned 2.9.5/2.9.6 after deletion, so the same feature set ships under a new version number.
