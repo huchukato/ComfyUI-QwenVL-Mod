@@ -1,12 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
-## Version 2.9.6 (2026/09/25)
-
-- Workflow Chat: media words (video/clip/scene) are stripped only when they open the directive ("a video of...", "video, ..."), never mid-sentence — "lasts for all the video" now reaches the prompt intact.
-
 ## Version 2.9.5 (2026/09/25)
 
 - Workflow Chat: wildcard autocomplete — typing `__` in the input lists TagForge wildcards (fuzzy-matched as you type); arrows/Enter/Tab to pick, Esc to dismiss. Silent when TagForge is not installed.
+- Workflow Chat: media words (video/clip/scene) are stripped only when they open the directive ("a video of...", "video, ..."), never mid-sentence — "lasts for all the video" now reaches the prompt intact.
 
 ## Version 2.9.4 (2026/09/25)
 
