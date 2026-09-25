@@ -396,8 +396,29 @@ _GENERATION_PREFIX = re.compile(
     r"(?:of|with|showing|where|di|con)?[:,]?\s*",
     re.IGNORECASE,
 )
-_DURATION_MENTION = re.compile(r"\b\d+\s*(?:s|sec(?:ond)?s?|secondi?)\b(?:\s*(?:video|clip|animation))?", re.IGNORECASE)
+_DURATION_MENTION = re.compile(
+    r"\b\d+\s*(?:s|sec(?:ond)?s?|secondi?)\s*(?:video|clip|animation)\b"
+    r"|\b(?:video|clip|animation)\s+(?:of|di|da)\s+\d+\s*(?:s|sec(?:ond)?s?|secondi?)\b"
+    r"|\b\d+s\b",
+    re.IGNORECASE,
+)
 _MEDIA_WORD = re.compile(r"\b(?:video|clip|animation|scene)\b", re.IGNORECASE)
+
+
+_ACTION_DURATION = re.compile(r"(?:lasts?|lasting|at least|almeno|dura)\b\s*$", re.IGNORECASE)
+
+
+def _clip_duration_seconds(text):
+    """First duration mention that reads as a clip-length spec. Durations that
+    describe the action itself ('the kiss lasts 5 seconds', 'at least 3
+    seconds') are skipped so they never set the sampler's length widget."""
+    if not isinstance(text, str):
+        return None
+    for match in re.finditer(r"\b(\d{1,2})\s*(?:sec(?:ond)?s?|s|secondi?)\b", text, re.IGNORECASE):
+        if _ACTION_DURATION.search(text[max(0, match.start() - 30):match.start()]):
+            continue
+        return int(match.group(1))
+    return None
 
 
 def _clean_action_directive(text):
@@ -415,6 +436,7 @@ def _clean_action_directive(text):
     cleaned = re.sub(r"\s*[,;:]\s*", ", ", cleaned)
     cleaned = re.sub(r"(?:,\s*){2,}", ", ", cleaned)
     cleaned = re.sub(r"\s{2,}", " ", cleaned).lstrip(" ,;:.-").rstrip(" ,;:-")
+    cleaned = re.sub(r"^(?:(?:a|an|the)\s+)?(?:of|di|da|con|with|showing)\s+", "", cleaned, flags=re.IGNORECASE)
     return cleaned
 
 
@@ -850,9 +872,8 @@ def _minimax_result(graph, config_key, text):
                     continue
                 value = match
             actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": name, "value": value})
-        duration = re.search(r"\b(\d{1,2})\s*(?:sec(?:ond)?s?|s|secondi?)\b", text, re.IGNORECASE)
-        if duration:
-            seconds = int(duration.group(1))
+        seconds = _clip_duration_seconds(text)
+        if seconds is not None:
             if "value_1" in widgets:
                 actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "value_1", "value": seconds})
             if "duration" in widgets:
