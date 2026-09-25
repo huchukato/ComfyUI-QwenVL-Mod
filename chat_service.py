@@ -402,7 +402,10 @@ _DURATION_MENTION = re.compile(
     r"|\b\d+s\b",
     re.IGNORECASE,
 )
-_MEDIA_WORD = re.compile(r"\b(?:video|clip|animation|scene)\b", re.IGNORECASE)
+_LEADING_MEDIA = re.compile(
+    r"^(?:(?:a|an|the|this|new|un|una|il|l)\s+)?(?:video|clip|animation|scene)\b[\s,;:.-]*",
+    re.IGNORECASE,
+)
 
 
 _ACTION_DURATION = re.compile(r"(?:lasts?|lasting|at least|almeno|dura)\b\s*$", re.IGNORECASE)
@@ -432,10 +435,10 @@ def _clean_action_directive(text):
     cleaned = _GENERATION_PREFIX.sub("", cleaned, count=1).strip(" ,;:-").lstrip(".")
     cleaned = _GENERATION_PREFIX.sub("", cleaned, count=1).strip(" ,;:-").lstrip(".")
     cleaned = _DURATION_MENTION.sub("", cleaned)
-    cleaned = _MEDIA_WORD.sub("", cleaned)
     cleaned = re.sub(r"\s*[,;:]\s*", ", ", cleaned)
     cleaned = re.sub(r"(?:,\s*){2,}", ", ", cleaned)
     cleaned = re.sub(r"\s{2,}", " ", cleaned).lstrip(" ,;:.-").rstrip(" ,;:-")
+    cleaned = _LEADING_MEDIA.sub("", cleaned)
     cleaned = re.sub(r"^(?:(?:a|an|the)\s+)?(?:of|di|da|con|with|showing)\s+", "", cleaned, flags=re.IGNORECASE)
     return cleaned
 
