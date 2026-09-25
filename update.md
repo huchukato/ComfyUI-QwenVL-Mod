@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.9.5 (2026/09/25)
+
+- Workflow Chat: wildcard autocomplete — typing `__` in the input lists TagForge wildcards (fuzzy-matched as you type); arrows/Enter/Tab to pick, Esc to dismiss. Silent when TagForge is not installed.
+
 ## Version 2.9.4 (2026/09/25)
 
 - Workflow Chat: action text no longer loses duration phrases that belong to the action itself (e.g. "the kiss lasts 5 seconds"); clip-length specs still set the duration widget only when they read as meta ("10s video", "video of 8 seconds").

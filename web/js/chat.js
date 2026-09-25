@@ -79,6 +79,71 @@ let elements = {};
 let attachedImage = null;
 let attachedVideo = null;
 
+// ---- Wildcard autocomplete (ComfyUI-TagForge) ----
+const WILDCARD_LIST_URL = "/jupo/TagForge/tagcomplete/wildcards/list";
+let wildcardsCache = null;
+const wildMenu = { items: [], index: 0, token: null };
+
+async function loadWildcardNames() {
+    if (wildcardsCache !== null) return wildcardsCache;
+    try {
+        const res = await fetch(api.apiURL(WILDCARD_LIST_URL));
+        const data = res.ok ? await res.json() : [];
+        wildcardsCache = Array.isArray(data) ? data : [];
+    } catch {
+        wildcardsCache = [];
+    }
+    return wildcardsCache;
+}
+
+function wildcardTokenAtCaret() {
+    const el = elements.input;
+    const caret = el.selectionStart ?? el.value.length;
+    const match = el.value.slice(0, caret).match(/(?:^|\s)__([\w\-/]*)$/);
+    if (!match) return null;
+    return { start: caret - match[1].length - 2, prefix: match[1] };
+}
+
+function hideWildcardMenu() {
+    elements.wildMenu?.classList.remove("visible");
+    wildMenu.items = [];
+    wildMenu.token = null;
+}
+
+function updateWildcardMenu() {
+    const menu = elements.wildMenu;
+    if (!menu) return;
+    const token = wildcardTokenAtCaret();
+    const prefix = (token?.prefix || "").toLowerCase();
+    const items = token ? (wildcardsCache || []).filter((n) => n.toLowerCase().includes(prefix)).slice(0, 30) : [];
+    wildMenu.items = items;
+    wildMenu.token = token;
+    wildMenu.index = 0;
+    if (!items.length) return hideWildcardMenu();
+    menu.replaceChildren(...items.map((name, i) => {
+        const item = createElement("div", "qwen-chat-wild-item" + (i === 0 ? " active" : ""), name);
+        item.addEventListener("mousedown", (event) => {
+            event.preventDefault();
+            acceptWildcard(name);
+        });
+        return item;
+    }));
+    menu.classList.add("visible");
+}
+
+function acceptWildcard(name) {
+    const el = elements.input;
+    const token = wildMenu.token || wildcardTokenAtCaret();
+    if (!token) return;
+    const before = el.value.slice(0, token.start);
+    const after = el.value.slice(el.selectionStart ?? token.start);
+    const insert = name + (name.endsWith("__") ? " " : "__ ");
+    el.value = before + insert + after;
+    el.selectionStart = el.selectionEnd = (before + insert).length;
+    updateWildcardMenu();
+    el.focus();
+}
+
 function t(key, values = {}) {
     let text = TRANSLATIONS[state.language]?.[key] ?? TRANSLATIONS.en[key] ?? key;
     for (const [name, value] of Object.entries(values)) text = text.replaceAll(`{${name}}`, String(value));
@@ -773,6 +838,11 @@ function buildSidebar(container) {
         .qwen-chat-thinking summary { cursor:pointer; font-size:11px; user-select:none; }
         .qwen-chat-thinking pre { max-height:220px; overflow:auto; margin:8px 0 0; padding:9px; border-radius:8px; white-space:pre-wrap; background:rgba(0,0,0,.16); }
         .qwen-chat-input { width:100%; min-height:92px; resize:vertical; line-height:1.4; }
+        .qwen-chat-composer { position:relative; }
+        .qwen-chat-wild-menu { display:none; position:absolute; left:0; right:0; bottom:100%; margin-bottom:6px; max-height:200px; overflow:auto; background:var(--comfy-menu-bg,#202124); border:1px solid var(--border-color,#4b4d55); border-radius:9px; box-shadow:0 -6px 20px rgba(0,0,0,.4); z-index:30; }
+        .qwen-chat-wild-menu.visible { display:block; }
+        .qwen-chat-wild-item { padding:6px 10px; cursor:pointer; font-family:monospace; font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        .qwen-chat-wild-item.active { background:rgba(109,124,255,.2); }
         .qwen-chat-selectors { display:flex; gap:7px; }
         .qwen-chat-selectors label { display:flex; align-items:center; gap:6px; flex:1; min-width:0; font-size:11px; opacity:.78; }
         .qwen-chat-selectors select { flex:1; min-width:0; font-size:12px; padding:5px 7px; }
@@ -857,6 +927,7 @@ function buildSidebar(container) {
     elements.messages = createElement("div", "qwen-chat-messages");
     elements.input = createElement("textarea", "qwen-chat-input");
     elements.input.placeholder = t("placeholder");
+    elements.wildMenu = createElement("div", "qwen-chat-wild-menu");
     elements.attachment = createElement("div", "qwen-chat-attachment");
     const selectors = createElement("div", "qwen-chat-selectors");
     elements.config = createElement("select");
@@ -892,7 +963,7 @@ function buildSidebar(container) {
     elements.clear = createElement("button", "qwen-chat-clear", t("newChat"));
     actions.append(elements.send, elements.repeat, elements.stop, elements.clear);
     const composer = createElement("div", "qwen-chat-composer");
-    composer.append(elements.input, elements.attachment, selectors, composerTools, actions);
+    composer.append(elements.wildMenu, elements.input, elements.attachment, selectors, composerTools, actions);
     elements.status = createElement("div", "qwen-chat-status", t("initializing"));
     elements.assetModal = createElement("div", "qwen-chat-assets-modal");
     const assetPanel = createElement("div", "qwen-chat-assets-panel");
@@ -982,11 +1053,40 @@ function buildSidebar(container) {
         setStatus(t("newConversation"));
     });
     elements.input.addEventListener("keydown", (event) => {
+        if (elements.wildMenu?.classList.contains("visible")) {
+            const rows = elements.wildMenu.children;
+            if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                event.preventDefault();
+                wildMenu.index = (wildMenu.index + (event.key === "ArrowDown" ? 1 : -1) + wildMenu.items.length) % wildMenu.items.length;
+                [...rows].forEach((row, i) => row.classList.toggle("active", i === wildMenu.index));
+                rows[wildMenu.index]?.scrollIntoView({ block: "nearest" });
+                return;
+            }
+            if (event.key === "Enter" || event.key === "Tab") {
+                event.preventDefault();
+                acceptWildcard(wildMenu.items[wildMenu.index]);
+                return;
+            }
+            if (event.key === "Escape") {
+                event.preventDefault();
+                hideWildcardMenu();
+                return;
+            }
+        }
         if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
             sendMessage();
         }
     });
+    elements.input.addEventListener("input", () => {
+        if (elements.input.value.includes("__")) {
+            loadWildcardNames().then(updateWildcardMenu);
+        } else {
+            updateWildcardMenu();
+        }
+    });
+    elements.input.addEventListener("click", updateWildcardMenu);
+    elements.input.addEventListener("blur", () => setTimeout(hideWildcardMenu, 150));
     renderMessages();
     loadModels();
 }
