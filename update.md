@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.9.7 (2026/09/25)
+
+- Republish of the consolidated 2.9.5 content — registry tombstoned 2.9.5/2.9.6 after deletion, so the same feature set ships under a new version number.
+
 ## Version 2.9.5 (2026/09/25)
 
 - Workflow Chat: wildcard autocomplete — typing `__` in the input lists TagForge wildcards (fuzzy-matched as you type); arrows/Enter/Tab to pick, Esc to dismiss. Silent when TagForge is not installed.
