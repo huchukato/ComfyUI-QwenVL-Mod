@@ -886,18 +886,19 @@ def _minimax_result(graph, config_key, text):
             unet = _match_option(unet_widget, config["unet_needle"]) or config["unet_fallback"]
             actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "unet_name", "value": unet})
         target_mode = config.get("preset_mode")
+        effective_preset = str(widgets["preset_prompt"].get("value", ""))
         if target_mode:
             # R2VA configs must also switch the enhancer preset to an R2VA
             # variant — an FL2VA-style prompt would carry the wrong bindings
             # for the ref-conditioned unet. Preserve the "(Ns)" duration.
-            current_preset = str(widgets["preset_prompt"].get("value", ""))
-            if _minimax_preset_mode(current_preset) != target_mode:
-                dur_match = re.search(r"\((\d+s)\)\s*$", current_preset)
+            if _minimax_preset_mode(effective_preset) != target_mode:
+                dur_match = re.search(r"\((\d+s)\)\s*$", effective_preset)
                 dur_suffix = dur_match.group(1) if dur_match else None
                 for opt in _widget_options(widgets["preset_prompt"]):
                     opt_str = str(opt)
                     if _minimax_preset_mode(opt_str) == target_mode and (dur_suffix is None or f"({dur_suffix})" in opt_str):
                         actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "preset_prompt", "value": opt_str})
+                        effective_preset = opt_str
                         break
         for name, value in config["values"].items():
             widget = widgets.get(name)
@@ -922,8 +923,11 @@ def _minimax_result(graph, config_key, text):
                 if not dur_options or dur_value in dur_options:
                     actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "duration", "value": dur_value})
             else:
-                current_preset = widgets["preset_prompt"].get("value", "")
-                preset_match = _match_minimax_preset(widgets["preset_prompt"], seconds, current_preset)
+                # Match duration inside the same mode family of the preset the
+                # config just selected (effective_preset), not the stale widget
+                # value — otherwise an FL2VA current preset would flip an R2VA
+                # config back to FL2VA.
+                preset_match = _match_minimax_preset(widgets["preset_prompt"], seconds, effective_preset)
                 if preset_match:
                     actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "preset_prompt", "value": preset_match})
         directive = _clean_action_directive(text)
