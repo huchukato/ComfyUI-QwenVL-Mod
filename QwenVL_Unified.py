@@ -82,7 +82,7 @@ class QwenVL_Unified:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("RESPONSE",)
     FUNCTION = "process"
-    CATEGORY = "QwenVL-Mod"
+    CATEGORY = "🔮 QwenVL-Mod"
 
     def process(
         self,

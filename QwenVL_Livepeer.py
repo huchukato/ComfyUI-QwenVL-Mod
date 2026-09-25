@@ -229,7 +229,7 @@ class QwenVL_LivepeerRender:
     RETURN_TYPES = ("VIDEO", "STRING", "STRING", "IMAGE")
     RETURN_NAMES = ("video", "url", "report", "image")
     FUNCTION = "run"
-    CATEGORY = "QwenVL-Mod"
+    CATEGORY = "🔮 QwenVL-Mod"
     OUTPUT_NODE = True
 
     def run(self, prompt, capability, custom_capability, duration, resolution, aspect_ratio, seed, timeout_s, filename_prefix, source_frame=0, image=None, source_video=None, end_image=None, api_key="", extra_params=""):
