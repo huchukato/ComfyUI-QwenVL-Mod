@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.9.2 (2026/09/25)
+
+- Removed the bogus `requires-comfyui >=1.0.0` constraint — ComfyUI versions are 0.x, and the mismatch was disabling the node pack in ComfyUI Manager.
+
 ## Version 2.9.1 (2026/09/25)
 
 - Rewrote the MiniMax config examples in the chat system prompt as plain prose — the dense `key=value;` action syntax was triggering the registry `python_minified_code` rule (false positive on `chat_service.py:88`).
