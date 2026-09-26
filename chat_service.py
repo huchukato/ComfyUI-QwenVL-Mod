@@ -41,7 +41,27 @@ def ensure_i2va_binding(text, preset_name, has_image=False):
     return f"{MINIMAX_I2VA_BINDING}\n\n{text.lstrip()}"
 
 
-def normalize_minimax_output(text, preset_name, has_image=False):
+def _fl2va_alignment_line(text, duration):
+    """Synthesize the FL2VA reference-alignment header when the model dropped it."""
+    seconds = None
+    if duration:
+        match = re.search(r"(\d+(?:\.\d+)?)", str(duration))
+        if match:
+            seconds = float(match.group(1))
+    if seconds is None:
+        marks = [float(v) for v in re.findall(r"(\d+(?:\.\d+)?)\s*-?\s*second mark", text)]
+        if marks:
+            seconds = max(marks)
+    if seconds is None:
+        return None
+    return (
+        "How the reference pictures align with the target video — "
+        "Picture 1 (from [Shot 1]) aligns with the 0.00-second mark of the target video; "
+        f"Picture 2 (from [Shot 1]) aligns with the {seconds:.2f}-second mark of the target video."
+    )
+
+
+def normalize_minimax_output(text, preset_name, has_image=False, duration=None):
     """Remove stray preface / duplicated shot blocks before the real prompt body
     and ensure the required reference alignment line is present.
 
@@ -59,16 +79,20 @@ def normalize_minimax_output(text, preset_name, has_image=False):
     head, tail = text[:idx], text[idx:]
     marker = None
     if "FL2VA" in preset_name or "R2VA" in preset_name:
-        marker = "How the reference pictures align"
+        marker = "reference pictures"
     elif has_image:
         marker = "For the target video"
 
     prefix = ""
     if marker:
         for line in head.splitlines():
-            if marker in line:
+            if marker.lower() in line.lower():
                 prefix = line.strip() + "\n\n"
                 break
+    if not prefix and "FL2VA" in preset_name:
+        synthesized = _fl2va_alignment_line(text, duration)
+        if synthesized:
+            prefix = synthesized + "\n\n"
     return ensure_i2va_binding(prefix + tail.lstrip(), preset_name, has_image)
 
 
