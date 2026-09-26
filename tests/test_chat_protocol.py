@@ -562,6 +562,13 @@ class ChatProtocolTests(unittest.TestCase):
         self.assertTrue(result.startswith(alignment))
         self.assertIn("integrated_multimodal_description:", result)
 
+    def test_normalize_minimax_synthesizes_missing_fl2va_alignment(self):
+        body = "integrated_multimodal_description: [Shot 1] ...\noverall_soundscape: ...\nnon_diegetic_music: N/A"
+        result = normalize_minimax_output(body, "🔄 MiniMax H3 NSFW FL2VA (5s)", has_image=True, duration="10s")
+        self.assertTrue(result.startswith("How the reference pictures align"))
+        self.assertIn("10.00-second mark", result)
+        self.assertIn("integrated_multimodal_description:", result)
+
 
 if __name__ == "__main__":
     unittest.main()

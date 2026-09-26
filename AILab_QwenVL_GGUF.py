@@ -1013,7 +1013,7 @@ class QwenVLGGUFBase:
                 model_name=model_name,
             )
 
-            text = normalize_minimax_output(text, preset_prompt, has_image=image is not None)
+            text = normalize_minimax_output(text, preset_prompt, has_image=image is not None, duration=duration)
 
             print(f"[QwenVL GGUF DEBUG] Generation completed. Text length: {len(text) if text else 0}")
             print(f"[QwenVL GGUF DEBUG] Generated text: {text[:100] if text else 'EMPTY'}...")

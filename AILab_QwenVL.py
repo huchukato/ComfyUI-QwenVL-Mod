@@ -1216,7 +1216,7 @@ class QwenVLBase:
                 video=video,
             )
             
-            text = normalize_minimax_output(text, preset_prompt, has_image=image is not None)
+            text = normalize_minimax_output(text, preset_prompt, has_image=image is not None, duration=duration)
 
             # Validate output before caching — reject "ready/waiting" responses
             # that occur when the model treats the system prompt as a conversation
