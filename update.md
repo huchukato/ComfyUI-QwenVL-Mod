@@ -1,5 +1,10 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.10.1 (2026/09/26)
+
+- New preset **MiniMax › NSFW FL2VA Loop** (5s/10s/15s): dedicated seamless-loop enhancer — feed the same image as first AND last frame; the prompt forces periodic-motion vocabulary, locked/oscillating camera, stable lighting, full-duration pacing and a cyclic soundscape so the clip closes perfectly on its opening frame.
+- The base **MiniMax › NSFW FL2VA** preset is now transition-only: LOOP MODE removed, end state correctly targets Picture 2 instead of the first frame when the two references differ.
+
 ## Version 2.9.9 (2026/09/25)
 
 - Chat Config MMH3: added **R2VA Native** and **R2VA Native Turbo** — select the ref2va unet (image-ref conditioned) instead of fl2va, enable the ref2v turbo LoRA in turbo mode, and auto-switch the enhancer preset to an R2VA variant preserving the selected duration. Chat phrases like "usa r2va turbo" trigger them too.
