@@ -1,5 +1,10 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.10.2 (2026/10/01)
+
+- Removed the Livepeer Agent render node and its external MCP/network integration after the Livepeer Agent Hackathon ended.
+- Removed the associated Qwen Chat capability selector, deterministic capability routing, legacy alias, test, and promotional assets to keep the package focused and Registry-compatible.
+
 ## Version 2.10.1 (2026/09/26)
 
 - New preset **MiniMax › NSFW FL2VA Loop** (5s/10s/15s): dedicated seamless-loop enhancer — feed the same image as first AND last frame; the prompt forces periodic-motion vocabulary, locked/oscillating camera, stable lighting, full-duration pacing and a cyclic soundscape so the clip closes perfectly on its opening frame.

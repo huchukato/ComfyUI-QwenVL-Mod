@@ -32,7 +32,7 @@ const TRANSLATIONS = {
         assetsError: "Unable to load ComfyUI Assets: {error}", close: "Close", selectTarget: "Select the Load Media / Load Image (from Outputs) node",
         assetChatOnly: "Asset selected for Qwen. Add a Load Image (from Outputs) node to sync it with the workflow.",
         assetSynced: "Asset selected for Qwen and loaded into node {node}.", settings: "Settings", showSettings: "Show settings", hideSettings: "Hide settings",
-        config: "Config MMH3", configAuto: "Auto (chat decides)", capability: "Livepeer", capabilityAuto: "Any capability",
+        config: "Config MMH3", configAuto: "Auto (chat decides)",
     },
     it: {
         empty: "Chiedimi di analizzare o modificare i parametri del workflow aperto.", user: "Tu", thinking: "Pensiero",
@@ -58,7 +58,7 @@ const TRANSLATIONS = {
         assetsError: "Impossibile caricare le Risorse ComfyUI: {error}", close: "Chiudi", selectTarget: "Seleziona il nodo Load Media / Carica Immagine da Output",
         assetChatOnly: "Risorsa selezionata per Qwen. Aggiungi un nodo Carica Immagine da Output per sincronizzarla con il workflow.",
         assetSynced: "Risorsa selezionata per Qwen e caricata nel nodo {node}.", settings: "Impostazioni", showSettings: "Mostra impostazioni", hideSettings: "Nascondi impostazioni",
-        config: "Config MMH3", configAuto: "Auto (decide la chat)", capability: "Livepeer", capabilityAuto: "Qualsiasi capability",
+        config: "Config MMH3", configAuto: "Auto (decide la chat)",
     },
 };
 const DEFAULT_STATE = {
@@ -69,7 +69,6 @@ const DEFAULT_STATE = {
     temperature: 0.2,
     thinking: false,
     config: "auto",
-    capability: "auto",
     messages: [],
 };
 
@@ -658,50 +657,17 @@ function setBusy(busy) {
     elements.status?.classList.toggle("busy", busy);
 }
 
-function livepeerCapabilities() {
-    try {
-        for (const node of snapshotGraph().nodes) {
-            const widgets = node.widgets || [];
-            const capability = widgets.find((w) => w.name === "capability");
-            if (!capability) continue;
-            const custom = widgets.find((w) => w.name === "custom_capability");
-            if (!custom) continue;
-            return (capability.options?.values || []).filter((v) => v !== "auto");
-        }
-    } catch {}
-    return [];
-}
-
-function refreshCapabilitySelector() {
-    if (!elements.capability) return;
-    const caps = livepeerCapabilities();
-    elements.capability.parentElement.style.display = caps.length ? "" : "none";
-    const current = elements.capability.value || state.capability;
-    elements.capability.replaceChildren();
-    const auto = createElement("option", "", t("capabilityAuto"));
-    auto.value = "auto";
-    elements.capability.append(auto);
-    for (const cap of caps) {
-        const option = createElement("option", "", cap);
-        option.value = cap;
-        elements.capability.append(option);
-    }
-    elements.capability.value = caps.includes(current) ? current : "auto";
-}
-
 async function sendMessage() {
     const rawText = elements.input.value.trim();
-    refreshCapabilitySelector();
-    const capability = elements.capability?.value || "auto";
     const config = elements.config?.value || "auto";
-    const hasDirective = capability !== "auto" || config !== "auto";
+    const hasDirective = config !== "auto";
     if (controller || (!rawText && !hasDirective)) return;
     if (!state.model && !hasDirective) {
         setStatus(t("selectModel"), true);
         return;
     }
     const configLabels = { native: "Native", native_turbo: "Native Turbo", "10eros": "10Eros", "10eros_turbo": "10Eros Turbo", r2va_native: "R2VA Native", r2va_native_turbo: "R2VA Native Turbo" };
-    const content = rawText || `⚙️ ${capability !== "auto" ? capability : configLabels[config] || config}`;
+    const content = rawText || `⚙️ ${configLabels[config] || config}`;
     state.messages.push({ role: "user", content });
     state.messages = state.messages.slice(-20);
     elements.input.value = "";
@@ -735,7 +701,7 @@ async function sendMessage() {
                 graph: snapshotGraph(),
                 images,
                 video: attachedVideo?.frames || [],
-                directives: { capability, config, text: rawText },
+                directives: { config, text: rawText },
                 options: {
                     max_tokens: state.maxTokens,
                     temperature: state.temperature,
@@ -938,13 +904,9 @@ function buildSidebar(container) {
     }
     elements.config.value = state.config;
     elements.config.title = "MiniMax H3 sampler config";
-    elements.capability = createElement("select");
-    elements.capability.title = "Livepeer capability";
     const configLabel = createElement("label");
     configLabel.append(createElement("span", "", t("config")), elements.config);
-    const capabilityLabel = createElement("label");
-    capabilityLabel.append(createElement("span", "", t("capability")), elements.capability);
-    selectors.append(configLabel, capabilityLabel);
+    selectors.append(configLabel);
     const composerTools = createElement("div", "qwen-chat-composer-tools");
     elements.fileInput = createElement("input", "qwen-chat-file");
     elements.fileInput.type = "file";
@@ -976,7 +938,6 @@ function buildSidebar(container) {
     root.append(topbar, controls, elements.messages, composer, elements.status, elements.assetModal);
     container.append(root);
     renderAttachment();
-    refreshCapabilitySelector();
     elements.settingsToggle.addEventListener("click", () => {
         state.settingsOpen = !state.settingsOpen;
         controls.classList.toggle("open", state.settingsOpen);
@@ -987,10 +948,6 @@ function buildSidebar(container) {
     });
     elements.config.addEventListener("change", () => {
         state.config = elements.config.value;
-        saveState();
-    });
-    elements.capability.addEventListener("change", () => {
-        state.capability = elements.capability.value;
         saveState();
     });
     elements.model.addEventListener("change", () => {

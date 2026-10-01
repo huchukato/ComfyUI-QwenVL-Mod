@@ -11,7 +11,6 @@ const COLOR_THEMES = {
     Vision:       { nodeColor: "#6d28d9", nodeBgColor: "#2e1065", width: 360 }, // HF vision
     VisionGGUF:   { nodeColor: "#0d9489", nodeBgColor: "#134e4a", width: 360 }, // GGUF / unified
     Enhancer:     { nodeColor: "#d97706", nodeBgColor: "#451a03", width: 360 }, // prompt enhancer
-    Livepeer:     { nodeColor: "#2563eb", nodeBgColor: "#1e3a8a", width: 340 }, // agent render
     Utils:        { nodeColor: "#475569", nodeBgColor: "#1e293b", width: 300 }, // load media, tools
 };
 
@@ -30,9 +29,6 @@ const NODE_COLORS = {
     "AILab_QwenVL_PromptEnhancer": "Enhancer",
     "AILab_QwenVL_GGUF_PromptEnhancer": "Enhancer",
     "QwenVL_Unified_PromptEnhancer": "Enhancer",
-
-    // Livepeer agent render
-    "QwenVL_LivepeerRender": "Livepeer",
 
     // Utils / media
     "QwenVL_LoadMedia": "Utils",

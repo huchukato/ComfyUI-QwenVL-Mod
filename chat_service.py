@@ -121,12 +121,8 @@ WORKFLOW TARGETS (pick the FIRST matching case for the node you are controlling)
      You select the 10Eros unet, set 8 steps with euler, set shift_video 6, write "slow caressing on thigh, static camera" into the prompt widget, set passthrough to false, and queue the workflow.
    - NEVER copy "use Native", "use 10Eros", "generate", "5s video" into the prompt widget.
    - NEVER describe the image yourself (clothes, face, room, light); the inner QwenVL model will see the image and describe it. You only provide the action.
-2. Livepeer Render node (type contains "Livepeer", exposes capability + duration):
-   - Write one English shot-native prompt into its "prompt" widget. Update capability, duration, aspect_ratio to match the request.
-   - For images select an image capability from the dropdown (flux-schnell, flux-dev, etc.); for video select a video capability. Keep custom_capability empty unless the user names a model not in the dropdown.
-   - NEVER bypass the Livepeer render node or the media loader.
-3. Passthrough node (has passthrough but NO image pixels): write the complete final English prompt into the actual prompt widget and set passthrough=true.
-4. Direct prompt: write the complete final English prompt into the generation widget.
+2. Passthrough node (has passthrough but NO image pixels): write the complete final English prompt into the actual prompt widget and set passthrough=true.
+3. Direct prompt: write the complete final English prompt into the generation widget. Use attached images as context when present.
 When you set a text/prompt widget, repeat the new value verbatim in "message" so the user sees it.
 Only write prompts into real generation widgets (prompt/custom_prompt/prompt_text). NEVER write into display nodes like ShowText, easy showAnything, or MarkdownNote."""
 
@@ -711,62 +707,6 @@ def build_prompt(messages, graph, enable_thinking=False, has_images=False, has_v
     return f"{instruction}\n\nWORKFLOW SNAPSHOT:\n{snapshot}\n\nCONVERSATION:\n{history}\n\nJSON RESPONSE:"
 
 
-_EXPLICIT_USE = re.compile(r"^\s*(?:use|usa)\s+([a-z0-9][\w.\-]*)[.:,;\s]\s*(.*)$", re.IGNORECASE | re.DOTALL)
-
-
-def _capability_result(graph, capability, prompt, text):
-    """Apply capability + prompt + duration/aspect-ratio + queue on the Livepeer
-    render node. `prompt` is the scene text to write; `text` is the full user
-    message used for duration/ratio/language detection."""
-    for node in graph.get("nodes", []):
-        title = f'{node.get("title", "")} {node.get("type", "")}'.lower()
-        if "livepeer" not in title:
-            continue
-        widgets = {w.get("name"): w for w in node.get("widgets", []) if isinstance(w, dict)}
-        if "capability" not in widgets or "prompt" not in widgets:
-            continue
-        options = (widgets["capability"].get("options") or {}).get("values") or []
-        lookup = {str(o).lower(): o for o in options}
-        actions = []
-        if capability.lower() in lookup:
-            actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "capability", "value": lookup[capability.lower()]})
-            if widgets.get("custom_capability", {}).get("value"):
-                actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "custom_capability", "value": ""})
-        elif "-" in capability and capability.lower() != "auto" and "custom_capability" in widgets:
-            actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "custom_capability", "value": capability})
-        else:
-            return None
-        if prompt:
-            actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "prompt", "value": prompt[:4000]})
-        duration = re.search(r"\b(\d{1,2})\s*(?:sec(?:ond)?s?|s|secondi?)\b", text, re.IGNORECASE)
-        if duration and "duration" in widgets:
-            actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "duration", "value": max(3, min(15, int(duration.group(1))))})
-        ratio = re.search(r"\b(16:9|9:16|1:1|3:2|2:3|4:3|3:4|2\.35:1)\b", text)
-        if ratio and "aspect_ratio" in widgets:
-            actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "aspect_ratio", "value": ratio.group(1)})
-        actions.append({"type": "queue_workflow"})
-        if re.match(r"^\s*(usa|passa|metti|fai|genera|crea)\b", text, re.IGNORECASE):
-            message = f"⚙️ {capability} — workflow in coda."
-        else:
-            message = f"⚙️ {capability} — workflow queued."
-        return {"message": message, "actions": actions, "choices": []}
-    return None
-
-
-def _explicit_capability_request(messages, graph):
-    """Deterministic `use <capability> <prompt>` shortcut: when the workflow has
-    a Livepeer render node, apply capability + prompt + queue locally without
-    calling the chat model. Returns None when the name is not a Livepeer
-    capability (e.g. "use native" is a MiniMax config) or no render node exists."""
-    last_user = _last_user_message(messages)
-    match = _EXPLICIT_USE.match(last_user)
-    if not match:
-        return None
-    capability = match.group(1).rstrip(".:,;")
-    prompt = (match.group(2) or "").strip()
-    return _capability_result(graph, capability, prompt, last_user)
-
-
 _CONFIG_TRIGGER = re.compile(
     r"\b(?:use|usa|switch\s+to|passa\s+a|metti|set|con)\s+(?:the\s+|il\s+|la\s+)?"
     r"(native(?:\s+turbo)?|10\s*eros(?:[-\s]?max)?(?:\s+turbo)?|"
@@ -1114,16 +1054,13 @@ class ChatRuntime:
         images = validate_images(images or [])
         video = validate_images(video or [], MAX_VIDEO_FRAMES)
         directives = directives if isinstance(directives, dict) else {}
-        sel_capability = str(directives.get("capability") or "auto")
         sel_config = str(directives.get("config") or "auto")
         sel_text = str(directives.get("text") or "")
         explicit = None
-        if sel_capability != "auto":
-            explicit = _capability_result(graph, sel_capability, sel_text, sel_text)
-        if explicit is None and sel_config in _MINIMAX_CONFIGS:
+        if sel_config in _MINIMAX_CONFIGS:
             explicit = _minimax_result(graph, sel_config, sel_text)
         if explicit is None:
-            explicit = _explicit_capability_request(messages, graph) or _explicit_minimax_request(messages, graph)
+            explicit = _explicit_minimax_request(messages, graph)
         if explicit is not None:
             return explicit
         available = self.models().get(backend)

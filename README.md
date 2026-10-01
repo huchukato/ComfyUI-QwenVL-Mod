@@ -35,29 +35,9 @@ The assistant applies only a restricted, validated action protocol. Model output
 
 <img width="690" height="652" alt="qwen-chat-1" src="https://github.com/user-attachments/assets/4456833b-4c8d-4484-b141-7e2eaa9ba255" /> <img width="710" height="900" alt="qwen-chat-2" src="https://github.com/user-attachments/assets/14e825a5-8c0c-48fb-9417-0c6e7cf7841f" />
 
-<img width="1024" alt="Livepeer Agent Render — Qwen Chat orchestrating decentralized media generation" src="img/livepeer-agent.png" />
-
-## 🌐 Livepeer Agent Render
-
-Two nodes connect ComfyUI to the [Livepeer Agent](https://agent.livepeer.org) network through its raw MCP endpoint — no extra dependencies, keyless by default (a Livepeer/Daydream API key can be entered in the node's `api_key` widget).
-
-**QwenVL Livepeer Render** (`QwenVL_LivepeerRender`) submits a prompt to a network capability, polls the async job, downloads the result into `output/` and previews it in-node:
-
-- `capability` dropdown lists verified video models (minimax, kling, seedance, ltx, veo, pixverse, …) **and** text-to-image models (flux-*, qwen-image-3-t2i, gpt-image, gemini-image, …); `auto` picks minimax-h3-i2v when a reference image is connected, minimax-h3-t2v otherwise.
-- `custom_capability` accepts any name from `list_capabilities` and overrides the dropdown.
-- Optional `image` / `source_video` inputs feed i2v models (`source_frame`: 0 = first frame, -1 = last).
-- Returns `video`, `url`, `report` (JSON with job id, cost, elapsed time) and `image` for still-image capabilities.
-- The node is an output node — no Save nodes required.
-
-**QwenVL Load Media** (`QwenVL_LoadMedia`) is a hybrid picker listing images **and** videos from `input/` and `output/` (tagged `[input]`/`[output]`). Images emit an IMAGE tensor; videos emit a VIDEO object plus one extracted frame (`frame_index`) on the IMAGE output — handy for chaining a generated clip into the next i2v render.
-
-### Directed by Qwen Chat
-
-Qwen Chat treats the render node as its generation target: it reads your request (and any attached image or sampled frames of an attached clip), writes a shot-native English prompt into the node, picks the right capability, sets duration/aspect ratio and queues the workflow. Ask for a photo and it selects an image model; ask to "animate this, camera pans left" and it switches to an i2v model using the rendered frame — then you can attach the generated clip back to chat to refine the next shot.
-
-Demo workflow: [`workflows/livepeer/Livepeer-Agent-Demo.json`](https://github.com/huchukato/ComfyUI-Garage/blob/master/workflows/livepeer/Livepeer-Agent-Demo.json) in the ComfyUI-Garage repo — just `Load Media → Livepeer Render`.
-
 ## **📰 News & Updates**
+* **2026/10/01**: **v2.10.2 — Livepeer Agent Integration Removed**. [[Update](update.md#version-2102-20261001)]
+> Removed the hackathon-specific render node and external Agent integration after the event ended.
 * **2026/09/22**: **v2.8.14 — Removed Duplicate Livepeer Node**. [[Update](update.md#version-2814-20260922)]
 > 🌐 `AILab_LivepeerRender` is no longer shown in the node menu; old workflows still load via `legacy_aliases.js`.
 
