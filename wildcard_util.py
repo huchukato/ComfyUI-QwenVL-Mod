@@ -37,6 +37,9 @@ def expand_wildcard_tokens(text):
         try:
             expanded = loader.process(text)
             if expanded:
+                if expanded != text:
+                    preview = expanded if len(expanded) <= 500 else expanded[:500] + "…"
+                    print(f"[QwenVL] Wildcard expanded: {preview}")
                 return expanded
         except Exception:
             pass
