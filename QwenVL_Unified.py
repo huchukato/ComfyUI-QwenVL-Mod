@@ -38,8 +38,14 @@ def _combined_model_list():
     return models
 
 
+PREFERRED_GGUF_DEFAULT = "Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K"
+
+
 def _default_model():
     models = _combined_model_list()
+    for m in models:
+        if m.startswith(GGUF_PREFIX) and PREFERRED_GGUF_DEFAULT in m:
+            return m
     for m in models:
         if m.startswith(GGUF_PREFIX):
             return m
