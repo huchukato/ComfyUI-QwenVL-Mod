@@ -1407,6 +1407,7 @@ STYLE_TAG_OPTIONS = [
     "None",
     "[ANIME]",
     "[PHOTOREALISTIC]",
+    "[SEMIREALANIME]",
     "[3DCG]",
     "[CARTOON]",
     "[CLAYMATION]",
@@ -1422,6 +1423,7 @@ STYLE_TAG_OPTIONS = [
 STYLE_TAG_DESCRIPTIONS = {
     "ANIME":        "2D-animated, cel-shaded, vibrant anime color palette, clean lineart, anime-style lighting",
     "PHOTOREALISTIC": "Live-action, cinematic photorealism, natural skin textures, realistic lighting, shallow depth of field",
+    "SEMIREALANIME": "Semi-realistic anime digital painting, soft painterly shading, detailed anime features with realistic lighting and textures, illustration style",
     "3DCG":         "3D CG rendered, subsurface scattering, physically based rendering, cinematic 3D animation",
     "CARTOON":      "2D cartoon, bold outlines, flat colors, exaggerated expressions, cartoon-style animation",
     "CLAYMATION":   "Claymation, stop-motion clay texture, handcrafted look, visible fingerprints, studio lighting",
