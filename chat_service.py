@@ -29,16 +29,41 @@ except Exception:
         return text
 
 
+def _is_minimax_i2va(preset_name, has_image=False):
+    name = str(preset_name or "").lower()
+    return has_image and "minimax" in name and "r2va" not in name and "fl2va" not in name
+
+
 def ensure_i2va_binding(text, preset_name, has_image=False):
     """Ensure MiniMax H3 I2VA outputs include the required reference binding
     line. FL2VA/R2VA presets use their own alignment format and are excluded."""
-    if not has_image or not preset_name or "MiniMax" not in preset_name:
-        return text
-    if "FL2VA" in preset_name or "R2VA" in preset_name:
+    if not _is_minimax_i2va(preset_name, has_image):
         return text
     if MINIMAX_I2VA_BINDING in text:
         return text
     return f"{MINIMAX_I2VA_BINDING}\n\n{text.lstrip()}"
+
+
+def ensure_minimax_dialogue(text, prompt, preset_name, has_image=False):
+    if not _is_minimax_i2va(preset_name, has_image) or not prompt:
+        return text
+    matches = [
+        (match.group(1), match.group(2).strip())
+        for match in re.finditer(r"\[SBJ(\d+)\]\s+says\s+\[D\](.*?)\[/D\]", prompt, re.IGNORECASE | re.DOTALL)
+    ]
+    if not matches:
+        matches = [("1", match.group(1).strip()) for match in re.finditer(
+            r"\[DIALOGUE\](.*?)\[/DIALOGUE\]", prompt, re.IGNORECASE | re.DOTALL)]
+    missing = [(speaker, dialogue) for speaker, dialogue in matches if dialogue and dialogue not in text]
+    if not missing:
+        return text
+    lines = [f"(S{speaker}) says in a clear natural voice: <d>[English] {dialogue}</d>." for speaker, dialogue in missing]
+    insertion = " ".join(lines)
+    marker = "overall_soundscape:"
+    idx = text.find(marker)
+    if idx < 0:
+        return f"{text.rstrip()}\n{insertion}"
+    return f"{text[:idx].rstrip()} {insertion}\n\n{text[idx:]}"
 
 
 def _fl2va_alignment_line(text, duration):
@@ -84,7 +109,9 @@ def normalize_minimax_output(text, preset_name, has_image=False, duration=None):
         marker = "For the target video"
 
     prefix = ""
-    if marker:
+    if _is_minimax_i2va(preset_name, has_image):
+        prefix = MINIMAX_I2VA_BINDING + "\n\n"
+    elif marker:
         for line in head.splitlines():
             if marker.lower() in line.lower():
                 prefix = line.strip() + "\n\n"

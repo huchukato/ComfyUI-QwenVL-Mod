@@ -32,9 +32,14 @@ DEFAULT_DURATION = "5s"
 # Legacy dropdown names -> new base preset. Duration suffixes (Ns) are parsed
 # separately, so keys omit them.
 VL_ALIASES = {
-    "MiniMax H3 NSFW": "MiniMax › NSFW",
+    "MiniMax H3 NSFW": "MiniMax › NSFW I2VA",
+    "MiniMax › NSFW": "MiniMax › NSFW I2VA",
     "MiniMax H3 NSFW R2VA": "MiniMax › NSFW R2VA",
     "MiniMax H3 NSFW FL2VA": "MiniMax › NSFW FL2VA",
+    "MiniMax › SFW": "MiniMax › SFW I2VA",
+    "MiniMax H3 SFW": "MiniMax › SFW I2VA",
+    "MiniMax H3 SFW R2VA": "MiniMax › SFW R2VA",
+    "MiniMax H3 SFW FL2VA": "MiniMax › SFW FL2VA",
     "Wan 2.2 NSFW I2V": "Wan22 › NSFW I2V",
     "Wan 2.2 NSFW I2V (20s)": "Wan22 › NSFW I2V Long",
     "Wan 2.2 NSFW FL2V": "Wan22 › NSFW FL2V",
@@ -53,8 +58,13 @@ VL_ALIASES = {
 
 TEXT_ALIASES = {
     "MiniMax H3 NSFW": "MiniMax › NSFW T2V",
+    "MiniMax › NSFW": "MiniMax › NSFW T2V",
     "MiniMax H3 NSFW R2VA": "MiniMax › NSFW R2VA T2V",
     "MiniMax H3 NSFW FL2VA": "MiniMax › NSFW FL2VA T2V",
+    "MiniMax › SFW": "MiniMax › SFW T2V",
+    "MiniMax H3 SFW": "MiniMax › SFW T2V",
+    "MiniMax H3 SFW R2VA": "MiniMax › SFW R2VA T2V",
+    "MiniMax H3 SFW FL2VA": "MiniMax › SFW FL2VA T2V",
     "Wan 2.2 NSFW T2V": "Wan22 › NSFW T2V",
     "Wan 2.2 NSFW T2V (20s)": "Wan22 › NSFW T2V Long",
     "LTX 2.3 NSFW T2V": "LTX › NSFW T2V",

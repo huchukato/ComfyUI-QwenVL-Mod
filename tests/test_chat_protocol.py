@@ -29,6 +29,7 @@ from chat_service import (
     _is_image_enhancer_node,
     _has_image_enhancer_target,
     ensure_i2va_binding,
+    ensure_minimax_dialogue,
     normalize_minimax_output,
 )
 
@@ -553,6 +554,28 @@ class ChatProtocolTests(unittest.TestCase):
         result = normalize_minimax_output(body, "🎬 MiniMax H3 NSFW (5s)", has_image=True)
         self.assertIn("For the target video", result)
         self.assertIn("integrated_multimodal_description:", result)
+
+    def test_normalize_minimax_replaces_noncanonical_i2va_binding(self):
+        malformed = "For the target video, at 0.00 seconds into the target video, Picture 1 (from [Shot 1]) is fully referenced."
+        body = "integrated_multimodal_description: [Shot 1] A woman smiles.\noverall_soundscape: ...\nnon_diegetic_music: N/A"
+        result = normalize_minimax_output(f"{malformed}\n\n{body}", "MiniMax › NSFW", has_image=True)
+        self.assertEqual(result.count("For the target video"), 1)
+        self.assertTrue(result.startswith(MINIMAX_I2VA_BINDING))
+        self.assertNotIn(malformed, result)
+
+    def test_ensure_minimax_dialogue_injects_missing_i2va_dialogue(self):
+        body = f"{MINIMAX_I2VA_BINDING}\n\nintegrated_multimodal_description: [Shot 1] A woman smiles.\noverall_soundscape: Quiet room.\nnon_diegetic_music: N/A"
+        prompt = "[SBJ1] says [D]Today we are gonna explore the world of AI video generation[/D]"
+        result = ensure_minimax_dialogue(body, prompt, "MiniMax › NSFW", has_image=True)
+        self.assertIn("(S1) says", result)
+        self.assertIn("<d>[English] Today we are gonna explore the world of AI video generation</d>", result)
+        self.assertEqual(result.count("Today we are gonna explore the world of AI video generation"), 1)
+
+    def test_ensure_minimax_dialogue_does_not_touch_t2va_or_r2va(self):
+        body = "integrated_multimodal_description: [Shot 1] A woman smiles.\noverall_soundscape: Quiet room."
+        prompt = "[SBJ1] says [D]Hello[/D]"
+        self.assertEqual(ensure_minimax_dialogue(body, prompt, "MiniMax › NSFW", has_image=False), body)
+        self.assertEqual(ensure_minimax_dialogue(body, prompt, "MiniMax › NSFW R2VA", has_image=True), body)
 
     def test_normalize_minimax_keeps_fl2va_alignment(self):
         alignment = "How the reference pictures align with the target video — Picture 1 (from [Shot 1]) aligns with the 0.00-second mark; Picture 2 aligns with the 5.00-second mark."
