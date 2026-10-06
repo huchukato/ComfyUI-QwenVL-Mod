@@ -1,15 +1,5 @@
 {
   "hf_vl_models": {
-    "Qwen3.5-4B-Deckard-Heretic-Thinking": {
-      "repo_id": "DavidAU/Qwen3.5-4B-Deckard-HERETIC-UNCENSORED-Thinking",
-      "default": false,
-      "quantized": false,
-      "vram_requirement": {
-        "full": 9.0,
-        "8bit": 5.0,
-        "4bit": 3.0
-      }
-    },
     "Qwen3.5-9B-Defiant-Fable-Heretic": {
       "repo_id": "DavidAU/Qwen3.5-9B-The-Defiant-Fable-DARK-ROAST-Uncensored-Heretic-NEO-IMATRIX-MAX-MTP",
       "default": true,
@@ -18,6 +8,16 @@
         "full": 19.0,
         "8bit": 10.0,
         "4bit": 6.0
+      }
+    },
+    "Qwen3.5-4B-Deckard-Heretic-Thinking": {
+      "repo_id": "DavidAU/Qwen3.5-4B-Deckard-HERETIC-UNCENSORED-Thinking",
+      "default": false,
+      "quantized": false,
+      "vram_requirement": {
+        "full": 9.0,
+        "8bit": 5.0,
+        "4bit": 3.0
       }
     },
     "Qwen3.6-27B-Fable-Fusion-711-Heretic": {
