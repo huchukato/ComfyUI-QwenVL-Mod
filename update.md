@@ -1,5 +1,11 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.11.1 (2026/10/06)
+
+- Cleaned the GGUF and HF model catalogs: three VL-capable DavidAU heretic models per backend (4B / 9B / 27B) — all verified `image-text-to-text` with working mmproj files; dropped text-only duplicates and the mislabeled "3.8-9B" entry. VL models cover text-only enhance too, so the separate text section is gone.
+- MiniMax R2VA presets (NSFW + SFW): fixed the reference-image semantics — a reference supplies subject identity only, it is never treated as a keyframe to reproduce. Character sheets and multi-view refs now produce a new scene instead of animating the sheet itself.
+- MiniMax presets (all durations): completed dialogue handling across R2VA/FL2VA/T2V — `[DIALOGUE]…[/DIALOGUE]` and `[SBJn] says [D]…[/D]` are preserved verbatim as `<d>[English] …</d>`, no invented lines; restored the truncated SFW FL2VA Loop tail.
+
 ## Version 2.11.0 (2026/10/06)
 
 - New **MiniMax SFW preset family**: `MiniMax › SFW I2VA/R2VA/FL2VA/FL2VA Loop` on the VL nodes and `MiniMax › SFW T2V/R2VA T2V/FL2VA T2V` on the Prompt Enhancer — same structure, dialogue handling and mode-specific alignment as the NSFW presets, without the explicit-content directives.
