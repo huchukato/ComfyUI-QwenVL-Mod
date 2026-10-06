@@ -21,26 +21,6 @@
         "pool_size": 4194304
       }
     },
-    "Qwen3.8-4B-Distill-heretic-GGUF": {
-      "author": "mradermacher",
-      "repo_name": "Qwen3.8-4B-Distill-heretic-GGUF",
-      "repo_id": "mradermacher/Qwen3.8-4B-Distill-heretic-GGUF",
-      "mmproj_file": "Qwen3.8-4B-Distill-heretic.mmproj-f16.gguf",
-      "model_files": [
-        "Qwen3.8-4B-Distill-heretic.Q4_K_M.gguf",
-        "Qwen3.8-4B-Distill-heretic.Q5_K_M.gguf",
-        "Qwen3.8-4B-Distill-heretic.Q6_K.gguf",
-        "Qwen3.8-4B-Distill-heretic.Q8_0.gguf"
-      ],
-      "defaults": {
-        "context_length": 65536,
-        "image_max_tokens": 4096,
-        "n_batch": 512,
-        "gpu_layers": -1,
-        "top_k": 0,
-        "pool_size": 4194304
-      }
-    },
     "Qwen3.6-27B-Fable-Fusion-711-GGUF": {
       "author": "DavidAU",
       "repo_name": "Qwen3.6-27B-Fable-Fusion-711-Uncensored-Heretic-NM-DAU-NEO-MAX-MTP-GGUF",
@@ -51,6 +31,26 @@
         "Qwen3.6-27B-Fable-Fus-711-UnHeretic-NM-DAU-NEO-MAX-NEO-Q5_K_M.gguf",
         "Qwen3.6-27B-Fable-Fus-711-UnHeretic-NM-DAU-NEO-MAX-NEO-Q6_K.gguf",
         "Qwen3.6-27B-Fable-Fus-711-UnHeretic-NM-DAU-NEO-MAX-NEO-Q8_0.gguf"
+      ],
+      "defaults": {
+        "context_length": 65536,
+        "image_max_tokens": 4096,
+        "n_batch": 512,
+        "gpu_layers": -1,
+        "top_k": 0,
+        "pool_size": 4194304
+      }
+    },
+    "Qwen3.5-4B-Claude-OS-HERETIC-GGUF": {
+      "author": "mradermacher",
+      "repo_name": "Qwen3.5-4B-Claude-4.6-OS-Auto-Variable-HERETIC-UNCENSORED-THINKING-GGUF",
+      "repo_id": "mradermacher/Qwen3.5-4B-Claude-4.6-OS-Auto-Variable-HERETIC-UNCENSORED-THINKING-GGUF",
+      "mmproj_file": "Qwen3.5-4B-Claude-4.6-OS-Auto-Variable-HERETIC-UNCENSORED-THINKING.mmproj-f16.gguf",
+      "model_files": [
+        "Qwen3.5-4B-Claude-4.6-OS-Auto-Variable-HERETIC-UNCENSORED-THINKING.Q4_K_M.gguf",
+        "Qwen3.5-4B-Claude-4.6-OS-Auto-Variable-HERETIC-UNCENSORED-THINKING.Q5_K_M.gguf",
+        "Qwen3.5-4B-Claude-4.6-OS-Auto-Variable-HERETIC-UNCENSORED-THINKING.Q6_K.gguf",
+        "Qwen3.5-4B-Claude-4.6-OS-Auto-Variable-HERETIC-UNCENSORED-THINKING.Q8_0.gguf"
       ],
       "defaults": {
         "context_length": 65536,
