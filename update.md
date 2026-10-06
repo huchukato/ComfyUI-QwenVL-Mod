@@ -1,5 +1,11 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.11.0 (2026/10/06)
+
+- New **MiniMax SFW preset family**: `MiniMax › SFW I2VA/R2VA/FL2VA/FL2VA Loop` on the VL nodes and `MiniMax › SFW T2V/R2VA T2V/FL2VA T2V` on the Prompt Enhancer — same structure, dialogue handling and mode-specific alignment as the NSFW presets, without the explicit-content directives.
+- Renamed the ambiguous `MiniMax › NSFW` VL preset to **MiniMax › NSFW I2VA** (legacy names keep working as aliases); added text-context aliases so `MiniMax › NSFW`/`MiniMax › SFW` resolve to the T2V variants instead of being used as raw templates.
+- I2VA output normalization: a single canonical `<Picture 1>` reference-binding line is enforced and malformed duplicate prefaces are stripped; `[SBJn] says [D]…[/D]` dialogue lost by the model is re-injected verbatim before `overall_soundscape`.
+
 ## Version 2.10.2 (2026/10/01)
 
 - Removed the Livepeer Agent render node and its external MCP/network integration after the Livepeer Agent Hackathon ended.
