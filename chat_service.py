@@ -737,6 +737,7 @@ def build_prompt(messages, graph, enable_thinking=False, has_images=False, has_v
 _CONFIG_TRIGGER = re.compile(
     r"\b(?:use|usa|switch\s+to|passa\s+a|metti|set|con)\s+(?:the\s+|il\s+|la\s+)?"
     r"(native(?:\s+turbo)?|10\s*eros(?:[-\s]?max)?(?:\s+turbo)?|"
+    r"singularity(?:\s+turbo)?|"
     r"r2va(?:\s+native)?(?:\s+turbo)?|"
     r"turbo(?:\s*lora)?(?:\s+(?:native|r2va(?:\s+native)?|10\s*eros(?:[-\s]?max)?))?|config\s*[abcd])\b",
     re.IGNORECASE,
@@ -744,6 +745,7 @@ _CONFIG_TRIGGER = re.compile(
 
 _NATIVE_UNET = "minimax_h3_fl2va_pruned_nvfp4_convrot_int8.safetensors"
 _R2VA_UNET = "minimax_h3_ref2va_pruned_nvfp4_convrot_int8.safetensors"
+_SINGULARITY_UNET = "Minimax-h3_Singularity_ref2va_Pruned_v1.3_int8.safetensors"
 _EROS_UNET = "10Eros_Max_h3_hybrid_beta5_int8.safetensors"
 # Needle "h3_hybrid" matches the non-turbo beta5 only; the fused file is
 # named "h3_TURBO-hybrid_beta5" so it never collides.
@@ -795,6 +797,25 @@ _MINIMAX_CONFIGS = {
         "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
         "lora_mode": "enable",
         "lora_needles": ["ref2v_turbo", "fl2v_turbo"],
+        "sparse_tau": 1.3,
+    },
+    # Singularity fused ref2va: ref-conditioning is baked in — no rank-256 LoRA,
+    # ref2v turbo LoRA only for the turbo preset.
+    "r2va_singularity": {
+        "unet_needle": "singularity",
+        "unet_fallback": _SINGULARITY_UNET,
+        "preset_mode": "R2VA",
+        "values": {"steps": 20, "sampler_name": "res_multistep", "scheduler": "simple", "shift_video": 4, "shift_audio": 3},
+        "lora_mode": "bypass",
+        "sparse_tau": 1.0,
+    },
+    "r2va_singularity_turbo": {
+        "unet_needle": "singularity",
+        "unet_fallback": _SINGULARITY_UNET,
+        "preset_mode": "R2VA",
+        "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
+        "lora_mode": "enable",
+        "lora_needles": ["ref2v_turbo"],
         "sparse_tau": 1.3,
     },
 }
@@ -916,11 +937,21 @@ def _minimax_result(graph, config_key, text):
             actions.append({"type": "set_widget_value", "node_id": node["id"], "widget": "prompt", "value": directive})
         lora_mode = config.get("lora_mode")
         prefix = f'{node["id"]}:'
+        # Style LoRA slots (realism / char-swap on Singularity) are user
+        # choices — config switches must not rename or bypass them.
+        def _style_lora(inner):
+            for w in inner.get("widgets", []):
+                if isinstance(w, dict) and w.get("name") == "lora_name":
+                    v = str(w.get("value") or "").lower()
+                    return "realism" in v or "character_swap" in v
+            return False
         if lora_mode:
             target_mode = 0 if lora_mode == "enable" else 4
             for inner in graph.get("nodes", []):
                 inner_id = str(inner.get("id", ""))
                 if not inner_id.startswith(prefix) or "lora" not in str(inner.get("type", "")).lower():
+                    continue
+                if _style_lora(inner):
                     continue
                 if inner.get("mode", 0) != target_mode:
                     actions.append({"type": "set_node_mode", "node_id": inner["id"], "mode": lora_mode})
@@ -938,6 +969,8 @@ def _minimax_result(graph, config_key, text):
             for inner in graph.get("nodes", []):
                 inner_id = str(inner.get("id", ""))
                 if not inner_id.startswith(prefix) or "lora" not in str(inner.get("type", "")).lower():
+                    continue
+                if _style_lora(inner):
                     continue
                 for w in inner.get("widgets", []):
                     if not isinstance(w, dict) or w.get("name") != "lora_name":
@@ -963,7 +996,8 @@ def _minimax_result(graph, config_key, text):
         actions.append({"type": "queue_workflow"})
         label = {"native": "Native", "native_turbo": "Native Turbo",
                  "10eros": "10Eros", "10eros_turbo": "10Eros Turbo",
-                 "r2va_native": "R2VA Native", "r2va_native_turbo": "R2VA Native Turbo"}[config_key]
+                 "r2va_native": "R2VA Native", "r2va_native_turbo": "R2VA Native Turbo",
+                 "r2va_singularity": "R2VA Singularity", "r2va_singularity_turbo": "R2VA Singularity Turbo"}[config_key]
         if re.match(r"^\s*(usa|passa|metti|fai|genera|crea)\b", text, re.IGNORECASE):
             message = f"⚙️ MiniMax H3 → {label}. Workflow in coda."
         else:
@@ -1044,8 +1078,10 @@ def _explicit_minimax_request(messages, graph):
             return None
     elif "eros" in raw:
         config_key = "10eros_turbo" if "turbo" in raw else "10eros"
-    elif "r2va" in raw:
-        config_key = "r2va_native_turbo" if "turbo" in raw else "r2va_native"
+    elif "singularity" in raw or "r2va" in raw:
+        # R2VA in production = Singularity fused checkpoint; the legacy ref2va
+        # + rank-256 configs stay selectable via directives only.
+        config_key = "r2va_singularity_turbo" if "turbo" in raw else "r2va_singularity"
     elif "native" in raw:
         config_key = "native_turbo" if "turbo" in raw else "native"
     elif "turbo" in raw:
