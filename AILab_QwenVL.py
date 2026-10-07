@@ -944,6 +944,7 @@ class QwenVLBase:
         prompt_text,
         image,
         image2,
+        image3,
         frame_count,
         max_tokens,
         temperature,
@@ -983,6 +984,11 @@ class QwenVLBase:
         pil_image2 = prepare_image(image2, "image2")
         if pil_image2 is not None:
             conversation[0]["content"].append({"type": "image", "image": pil_image2})
+
+        # --- Image 3: single reference image ---
+        pil_image3 = prepare_image(image3, "image3")
+        if pil_image3 is not None:
+            conversation[0]["content"].append({"type": "image", "image": pil_image3})
 
         # --- Video: multi-frame input with frame_count sampling ---
         if video is not None:
@@ -1091,7 +1097,7 @@ class QwenVLBase:
         text = self.tokenizer.decode(outputs[0, input_len:], skip_special_tokens=True)
         return text.strip()
 
-    def run(self, model_name, quantization, preset_prompt, prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt=False, camera_tag="None", video=None, passthrough=False, duration=DEFAULT_DURATION):
+    def run(self, model_name, quantization, preset_prompt, prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt=False, camera_tag="None", video=None, passthrough=False, duration=DEFAULT_DURATION, image3=None):
         torch.manual_seed(seed)
 
         global LAST_SAVED_PROMPT
@@ -1122,6 +1128,7 @@ class QwenVLBase:
         print(f"[QwenVL] prompt received: '{prompt[:200] if prompt else '(empty)'}'")
         print(f"[QwenVL] image connected: {image is not None} (shape={image.shape if image is not None else 'N/A'})")
         print(f"[QwenVL] image2 connected: {image2 is not None} (shape={image2.shape if image2 is not None else 'N/A'})")
+        print(f"[QwenVL] image3 connected: {image3 is not None} (shape={image3.shape if image3 is not None else 'N/A'})")
         print(f"[QwenVL] video connected: {video is not None} (shape={video.shape if video is not None else 'N/A'})")
         
         # Resolve preset aliases (legacy dropdown names) and the duration
@@ -1132,9 +1139,10 @@ class QwenVLBase:
         # Generate cache key with all inputs including seed
         image_hash = get_image_hash(image)
         image2_hash = get_image_hash(image2)
+        image3_hash = get_image_hash(image3)
         video_hash = get_video_hash(video)
-        # Combine image2 and video hashes for backward-compatible cache key
-        combined_hash = f"{image2_hash or ''}/{video_hash or ''}" if (image2_hash or video_hash) else None
+        # Combine image2/image3 and video hashes for backward-compatible cache key
+        combined_hash = f"{image2_hash or ''}/{image3_hash or ''}/{video_hash or ''}" if (image2_hash or image3_hash or video_hash) else None
         cache_key = get_cache_key(model_name, preset_key, prompt, image_hash, combined_hash, seed)
         
         # Check cache first (only for random mode)
@@ -1206,6 +1214,7 @@ class QwenVLBase:
                 full_prompt,
                 image,
                 image2,
+                image3,
                 frame_count,
                 max_tokens,
                 temperature,
@@ -1274,6 +1283,7 @@ class AILab_QwenVL(QwenVLBase):
             "optional": {
                 "image": ("IMAGE", {"tooltip": "First reference image (single image). For R2VA this is Picture 1."}),
                 "image2": ("IMAGE", {"tooltip": "Second reference image (single image). For R2VA this is Picture 2."}),
+                "image3": ("IMAGE", {"tooltip": "Third reference image (single image). For R2VA this is Picture 3."}),
                 "video": ("IMAGE", {"tooltip": "Video frames input. Use frame_count to control how many frames are sampled."}),
                 "frame_count": ("INT", {"default": 16, "min": 1, "max": 64, "tooltip": TOOLTIPS["frame_count"]}),
                 "duration": (DURATION_OPTIONS, {"default": DEFAULT_DURATION, "tooltip": "Clip length for duration-aware presets (MiniMax/LTX/Wan). Ignored by image presets."}),
@@ -1285,8 +1295,8 @@ class AILab_QwenVL(QwenVLBase):
     FUNCTION = "process"
     CATEGORY = "🔮 QwenVL-Mod"
 
-    def process(self, model_name, quantization, preset_prompt, camera_tag, prompt, attention_mode, max_tokens, keep_model_loaded, seed, keep_last_prompt=False, passthrough=False, image=None, image2=None, video=None, frame_count=16, duration=DEFAULT_DURATION):
-        return self.run(model_name, quantization, preset_prompt, prompt, image, image2, frame_count, max_tokens, 0.6, 0.9, 1, 1.2, seed, keep_model_loaded, attention_mode, False, "auto", keep_last_prompt, camera_tag, video=video, passthrough=passthrough, duration=duration)
+    def process(self, model_name, quantization, preset_prompt, camera_tag, prompt, attention_mode, max_tokens, keep_model_loaded, seed, keep_last_prompt=False, passthrough=False, image=None, image2=None, image3=None, video=None, frame_count=16, duration=DEFAULT_DURATION):
+        return self.run(model_name, quantization, preset_prompt, prompt, image, image2, frame_count, max_tokens, 0.6, 0.9, 1, 1.2, seed, keep_model_loaded, attention_mode, False, "auto", keep_last_prompt, camera_tag, video=video, passthrough=passthrough, duration=duration, image3=image3)
 
 class AILab_QwenVL_Advanced(QwenVLBase):
     @classmethod
@@ -1324,6 +1334,7 @@ class AILab_QwenVL_Advanced(QwenVLBase):
             "optional": {
                 "image": ("IMAGE", {"tooltip": "First reference image (single image). For R2VA this is Picture 1."}),
                 "image2": ("IMAGE", {"tooltip": "Second reference image (single image). For R2VA this is Picture 2."}),
+                "image3": ("IMAGE", {"tooltip": "Third reference image (single image). For R2VA this is Picture 3."}),
                 "video": ("IMAGE", {"tooltip": "Video frames input. Use frame_count to control how many frames are sampled."}),
                 "frame_count": ("INT", {"default": 16, "min": 1, "max": 64, "tooltip": TOOLTIPS["frame_count"]}),
                 "duration": (DURATION_OPTIONS, {"default": DEFAULT_DURATION, "tooltip": "Clip length for duration-aware presets (MiniMax/LTX/Wan). Ignored by image presets."}),
@@ -1335,8 +1346,8 @@ class AILab_QwenVL_Advanced(QwenVLBase):
     FUNCTION = "process"
     CATEGORY = "🔮 QwenVL-Mod"
 
-    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, camera_tag, prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, keep_model_loaded, seed, keep_last_prompt, passthrough=False, image=None, image2=None, video=None, frame_count=16, duration=DEFAULT_DURATION):
-        return self.run(model_name, quantization, preset_prompt, prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt, camera_tag, video=video, passthrough=passthrough, duration=duration)
+    def process(self, model_name, quantization, attention_mode, use_torch_compile, device, preset_prompt, camera_tag, prompt, max_tokens, temperature, top_p, num_beams, repetition_penalty, keep_model_loaded, seed, keep_last_prompt, passthrough=False, image=None, image2=None, image3=None, video=None, frame_count=16, duration=DEFAULT_DURATION):
+        return self.run(model_name, quantization, preset_prompt, prompt, image, image2, frame_count, max_tokens, temperature, top_p, num_beams, repetition_penalty, seed, keep_model_loaded, attention_mode, use_torch_compile, device, keep_last_prompt, camera_tag, video=video, passthrough=passthrough, duration=duration, image3=image3)
 
 NODE_CLASS_MAPPINGS = {
     "AILab_QwenVL": AILab_QwenVL,

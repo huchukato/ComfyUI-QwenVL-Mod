@@ -45,19 +45,36 @@ def ensure_i2va_binding(text, preset_name, has_image=False):
 
 
 def ensure_minimax_dialogue(text, prompt, preset_name, has_image=False):
-    if not _is_minimax_i2va(preset_name, has_image) or not prompt:
+    if "minimax" not in str(preset_name or "").lower() or not prompt:
         return text
     matches = [
         (match.group(1), match.group(2).strip())
         for match in re.finditer(r"\[SBJ(\d+)\]\s+says\s+\[D\](.*?)\[/D\]", prompt, re.IGNORECASE | re.DOTALL)
     ]
+    # Natural Singularity syntax: `(S1) speaks: "..."`, `(S2) replies off-screen: "..."`
+    matches += [
+        (match.group(1), match.group(2).strip())
+        for match in re.finditer(
+            r"\(S(\d+)\)\s+(?:speaks|says|replies|asks|answers|responds|whispers|shouts|yells|screams|calls(?:\s+out)?|mutters|exclaims|adds|continues|narrates)(?:\s+[^\n:\"]{0,40})?:\s*[\"“]([^\"”\n]+)[\"”]",
+            prompt, re.IGNORECASE)
+    ]
+    # Bare [D]...[/D] (no speaker tag) = off-screen voice
+    sbj_spans = [m.span() for m in re.finditer(r"\[SBJ\d+\]\s+says\s+\[D\]", prompt, re.IGNORECASE)]
+    for m in re.finditer(r"\[D\](.*?)\[/D\]", prompt, re.IGNORECASE | re.DOTALL):
+        if any(s[0] <= m.start() < s[1] for s in sbj_spans):
+            continue
+        matches.append((None, m.group(1).strip()))
     if not matches:
         matches = [("1", match.group(1).strip()) for match in re.finditer(
             r"\[DIALOGUE\](.*?)\[/DIALOGUE\]", prompt, re.IGNORECASE | re.DOTALL)]
     missing = [(speaker, dialogue) for speaker, dialogue in matches if dialogue and dialogue not in text]
     if not missing:
         return text
-    lines = [f"(S{speaker}) says in a clear natural voice: <d>[English] {dialogue}</d>." for speaker, dialogue in missing]
+    lines = [
+        f'An off-screen voice says: "{dialogue}"' if speaker is None
+        else f'(S{speaker}) speaks: "{dialogue}"'
+        for speaker, dialogue in missing
+    ]
     insertion = " ".join(lines)
     marker = "overall_soundscape:"
     idx = text.find(marker)
@@ -799,23 +816,26 @@ _MINIMAX_CONFIGS = {
         "lora_needles": ["ref2v_turbo", "fl2v_turbo"],
         "sparse_tau": 1.3,
     },
-    # Singularity fused ref2va: ref-conditioning is baked in — no rank-256 LoRA,
-    # ref2v turbo LoRA only for the turbo preset.
+    # Singularity fused ref2va: ref-conditioning is baked in — no rank-256 LoRA.
+    # Sigma node stays bypassed in the wf (native schedule wins on this DiT);
+    # turbo = ref2v 4-step LoRA at 6 steps euler/beta.
     "r2va_singularity": {
         "unet_needle": "singularity",
         "unet_fallback": _SINGULARITY_UNET,
         "preset_mode": "R2VA",
-        "values": {"steps": 20, "sampler_name": "res_multistep", "scheduler": "simple", "shift_video": 4, "shift_audio": 3},
+        "values": {"steps": 20, "sampler_name": "res_multistep", "scheduler": "simple"},
         "lora_mode": "bypass",
+        "sigma_mode": "bypass",
         "sparse_tau": 1.0,
     },
     "r2va_singularity_turbo": {
         "unet_needle": "singularity",
         "unet_fallback": _SINGULARITY_UNET,
         "preset_mode": "R2VA",
-        "values": {"steps": 8, "sampler_name": "euler", "scheduler": "simple", "shift_video": 6, "shift_audio": 3},
+        "values": {"steps": 6, "sampler_name": "euler", "scheduler": "beta"},
         "lora_mode": "enable",
-        "lora_needles": ["ref2v_turbo"],
+        "lora_needles": ["ref2v_turbo_4step"],
+        "sigma_mode": "bypass",
         "sparse_tau": 1.3,
     },
 }
@@ -981,6 +1001,15 @@ def _minimax_result(graph, config_key, text):
                             if w.get("value") != match:
                                 actions.append({"type": "set_widget_value", "node_id": inner["id"], "widget": "lora_name", "value": match})
                             break
+        sigma_mode = config.get("sigma_mode")
+        if sigma_mode:
+            target_mode = 0 if sigma_mode == "enable" else 4
+            for inner in graph.get("nodes", []):
+                inner_id = str(inner.get("id", ""))
+                if not inner_id.startswith(prefix) or "sigmashift" not in str(inner.get("type", "")).lower().replace("_", ""):
+                    continue
+                if inner.get("mode", 0) != target_mode:
+                    actions.append({"type": "set_node_mode", "node_id": inner["id"], "mode": sigma_mode})
         sparse_tau = config.get("sparse_tau")
         if sparse_tau is not None:
             for inner in graph.get("nodes", []):
@@ -1188,9 +1217,10 @@ class ChatRuntime:
         pil_images = _decode_images(images or [])
         image = pil_images[0] if len(pil_images) > 0 else None
         image2 = pil_images[1] if len(pil_images) > 1 else None
+        image3 = pil_images[2] if len(pil_images) > 2 else None
         pil_frames = _decode_images(video or [])
         return instance.generate(
-            prompt, image, image2, len(pil_frames) or 1,
+            prompt, image, image2, image3, len(pil_frames) or 1,
             int(options.get("max_tokens", 1024)),
             float(options.get("temperature", 0.2)),
             float(options.get("top_p", 0.9)),

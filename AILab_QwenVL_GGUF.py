@@ -841,6 +841,7 @@ class QwenVLGGUFBase:
         camera_tag="None",
         passthrough=False,
         image2=None,
+        image3=None,
         duration=DEFAULT_DURATION,
     ):
         print(f"[QwenVL GGUF DEBUG] Starting run with seed={seed}, keep_last_prompt={keep_last_prompt}")
@@ -877,9 +878,10 @@ class QwenVLGGUFBase:
         # Generate cache key with all inputs including seed
         image_hash = get_image_hash(image)
         image2_hash = get_image_hash(image2)
+        image3_hash = get_image_hash(image3)
         video_hash = get_video_hash(video)
-        # Combine image2 and video hashes for backward-compatible cache key
-        combined_hash = f"{image2_hash or ''}/{video_hash or ''}" if (image2_hash or video_hash) else None
+        # Combine image2/image3 and video hashes for backward-compatible cache key
+        combined_hash = f"{image2_hash or ''}/{image3_hash or ''}/{video_hash or ''}" if (image2_hash or image3_hash or video_hash) else None
         cache_key = get_cache_key(model_name, preset_key, prompt, image_hash, combined_hash, int(seed))
 
         # TEMPORARILY DISABLED CACHE FOR DEBUGGING
@@ -959,6 +961,11 @@ class QwenVLGGUFBase:
             img = _tensor_to_base64_png(frame_img)
             if img:
                 images_b64.append(img)
+        if image3 is not None:
+            frame_img = image3[0] if len(image3.shape) == 4 else image3
+            img = _tensor_to_base64_png(frame_img)
+            if img:
+                images_b64.append(img)
         if video is not None:
             for frame in _sample_video_frames(video, int(frame_count)):
                 img = _tensor_to_base64_png(frame)
@@ -1028,6 +1035,7 @@ class QwenVLGGUFBase:
                 "seed": int(seed),
                 "image_hash": image_hash,
                 "image2_hash": image2_hash,
+                "image3_hash": image3_hash,
                 "video_hash": video_hash
             }
             save_prompt_cache()  # Save cache to file
@@ -1071,6 +1079,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
             "optional": {
                 "image": ("IMAGE", {"tooltip": "First reference image (single image). For R2VA this is Picture 1."}),
                 "image2": ("IMAGE", {"tooltip": "Second reference image (single image). For R2VA this is Picture 2."}),
+                "image3": ("IMAGE", {"tooltip": "Third reference image (single image). For R2VA this is Picture 3."}),
                 "video": ("IMAGE", {"tooltip": "Video frames input. Use frame_count to control how many frames are sampled."}),
                 "duration": (DURATION_OPTIONS, {"default": DEFAULT_DURATION, "tooltip": "Clip length for duration-aware presets (MiniMax/LTX/Wan). Ignored by image presets."}),
             },
@@ -1093,6 +1102,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
         passthrough=False,
         image=None,
         image2=None,
+        image3=None,
         video=None,
         duration=DEFAULT_DURATION,
     ):
@@ -1102,6 +1112,7 @@ class AILab_QwenVL_GGUF(QwenVLGGUFBase):
             prompt=prompt,
             image=image,
             image2=image2,
+            image3=image3,
             video=video,
             frame_count=16,
             duration=duration,
@@ -1164,6 +1175,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
             "optional": {
                 "image": ("IMAGE", {"tooltip": "First reference image (single image). For R2VA this is Picture 1."}),
                 "image2": ("IMAGE", {"tooltip": "Second reference image (single image). For R2VA this is Picture 2."}),
+                "image3": ("IMAGE", {"tooltip": "Third reference image (single image). For R2VA this is Picture 3."}),
                 "video": ("IMAGE", {"tooltip": "Video frames input. Use frame_count to control how many frames are sampled."}),
                 "duration": (DURATION_OPTIONS, {"default": DEFAULT_DURATION, "tooltip": "Clip length for duration-aware presets (MiniMax/LTX/Wan). Ignored by image presets."}),
             },
@@ -1198,6 +1210,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
         passthrough=False,
         image=None,
         image2=None,
+        image3=None,
         video=None,
         duration=DEFAULT_DURATION,
     ):
@@ -1207,6 +1220,7 @@ class AILab_QwenVL_GGUF_Advanced(QwenVLGGUFBase):
             prompt=prompt,
             image=image,
             image2=image2,
+            image3=image3,
             video=video,
             frame_count=frame_count,
             duration=duration,
