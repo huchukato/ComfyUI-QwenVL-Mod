@@ -565,17 +565,33 @@ class ChatProtocolTests(unittest.TestCase):
 
     def test_ensure_minimax_dialogue_injects_missing_i2va_dialogue(self):
         body = f"{MINIMAX_I2VA_BINDING}\n\nintegrated_multimodal_description: [Shot 1] A woman smiles.\noverall_soundscape: Quiet room.\nnon_diegetic_music: N/A"
-        prompt = "[SBJ1] says [D]Today we are gonna explore the world of AI video generation[/D]"
+        prompt = '(S1) says "Today we are gonna explore the world of AI video generation"'
         result = ensure_minimax_dialogue(body, prompt, "MiniMax › NSFW", has_image=True)
-        self.assertIn("(S1) says", result)
+        self.assertIn("(S1) speaks:", result)
         self.assertIn("<d>[English] Today we are gonna explore the world of AI video generation</d>", result)
         self.assertEqual(result.count("Today we are gonna explore the world of AI video generation"), 1)
 
-    def test_ensure_minimax_dialogue_does_not_touch_t2va_or_r2va(self):
+    def test_ensure_minimax_dialogue_injects_language_tag(self):
         body = "integrated_multimodal_description: [Shot 1] A woman smiles.\noverall_soundscape: Quiet room."
-        prompt = "[SBJ1] says [D]Hello[/D]"
-        self.assertEqual(ensure_minimax_dialogue(body, prompt, "MiniMax › NSFW", has_image=False), body)
+        prompt = '(S1) dice [IT] "Ciao a tutti"'
+        result = ensure_minimax_dialogue(body, prompt, "MiniMax › NSFW R2VA", has_image=True)
+        self.assertIn('(S1) speaks: <d>[Italian] Ciao a tutti</d>', result)
+
+    def test_ensure_minimax_dialogue_injects_offscreen_voice(self):
+        body = "integrated_multimodal_description: [Shot 1] A woman smiles.\noverall_soundscape: Quiet room."
+        prompt = '(VO) dice "Narratore misterioso"'
+        result = ensure_minimax_dialogue(body, prompt, "MiniMax › NSFW R2VA", has_image=True)
+        self.assertIn('says in an off-screen voiceover: <d>[English] Narratore misterioso</d>', result)
+
+    def test_ensure_minimax_dialogue_skips_already_present(self):
+        body = 'integrated_multimodal_description: [Shot 1] (S1) speaks: <d>[Italian] Ciao</d>\noverall_soundscape: Quiet room.'
+        prompt = '(S1) dice [IT] "Ciao"'
         self.assertEqual(ensure_minimax_dialogue(body, prompt, "MiniMax › NSFW R2VA", has_image=True), body)
+
+    def test_ensure_minimax_dialogue_ignores_non_minimax(self):
+        body = "integrated_multimodal_description: [Shot 1] A woman smiles.\noverall_soundscape: Quiet room."
+        prompt = '(S1) says "Hello"'
+        self.assertEqual(ensure_minimax_dialogue(body, prompt, "Other preset", has_image=True), body)
 
     def test_normalize_minimax_keeps_fl2va_alignment(self):
         alignment = "How the reference pictures align with the target video — Picture 1 (from [Shot 1]) aligns with the 0.00-second mark; Picture 2 aligns with the 5.00-second mark."

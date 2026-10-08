@@ -20,6 +20,7 @@ MAX_VIDEO_FRAMES = 4
 MAX_IMAGE_BYTES = 8 * 1024 * 1024
 ALLOWED_ACTIONS = {"set_widget_value", "set_node_mode", "queue_workflow"}
 MINIMAX_I2VA_BINDING = "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced."
+MINIMAX_LANG_NAMES = {"EN": "English", "IT": "Italian", "FR": "French", "DE": "German", "ES": "Spanish", "PT": "Portuguese", "RU": "Russian", "ZH": "Chinese", "JA": "Japanese", "KO": "Korean", "AR": "Arabic"}
 
 
 try:
@@ -47,33 +48,22 @@ def ensure_i2va_binding(text, preset_name, has_image=False):
 def ensure_minimax_dialogue(text, prompt, preset_name, has_image=False):
     if "minimax" not in str(preset_name or "").lower() or not prompt:
         return text
+    # Comfy syntax: `(S1) <verb> [XX]? :? "text"` — any speech verb, any language;
+    # optional 2-letter language tag right after the verb. `(VO)` = off-screen voice.
     matches = [
-        (match.group(1), match.group(2).strip())
-        for match in re.finditer(r"\[SBJ(\d+)\]\s+says\s+\[D\](.*?)\[/D\]", prompt, re.IGNORECASE | re.DOTALL)
-    ]
-    # Natural Singularity syntax: `(S1) speaks: "..."`, `(S2) replies off-screen: "..."`
-    matches += [
-        (match.group(1), match.group(2).strip())
+        (match.group(1).upper(), (match.group(2) or "").upper(), match.group(3).strip())
         for match in re.finditer(
-            r"\(S(\d+)\)\s+(?:speaks|says|replies|asks|answers|responds|whispers|shouts|yells|screams|calls(?:\s+out)?|mutters|exclaims|adds|continues|narrates)(?:\s+[^\n:\"]{0,40})?:\s*[\"“]([^\"”\n]+)[\"”]",
-            prompt, re.IGNORECASE)
+            r"\((S\d+|VO)\)\s+[^\"\n:]{1,60}?\s*(?:\[([A-Za-z]{2})\])?\s*:?\s*[\"“]([^\"”\n]+)[\"”]",
+            prompt)
     ]
-    # Bare [D]...[/D] (no speaker tag) = off-screen voice
-    sbj_spans = [m.span() for m in re.finditer(r"\[SBJ\d+\]\s+says\s+\[D\]", prompt, re.IGNORECASE)]
-    for m in re.finditer(r"\[D\](.*?)\[/D\]", prompt, re.IGNORECASE | re.DOTALL):
-        if any(s[0] <= m.start() < s[1] for s in sbj_spans):
-            continue
-        matches.append((None, m.group(1).strip()))
-    if not matches:
-        matches = [("1", match.group(1).strip()) for match in re.finditer(
-            r"\[DIALOGUE\](.*?)\[/DIALOGUE\]", prompt, re.IGNORECASE | re.DOTALL)]
-    missing = [(speaker, dialogue) for speaker, dialogue in matches if dialogue and dialogue not in text]
+    missing = [(speaker, lang, dialogue) for speaker, lang, dialogue in matches if dialogue and dialogue not in text]
     if not missing:
         return text
     lines = [
-        f'An off-screen voice says: "{dialogue}"' if speaker is None
-        else f'(S{speaker}) speaks: "{dialogue}"'
-        for speaker, dialogue in missing
+        f'says in an off-screen voiceover: <d>[{MINIMAX_LANG_NAMES.get(lang, "English")}] {dialogue}</d>'
+        if speaker == "VO"
+        else f'({speaker}) speaks: <d>[{MINIMAX_LANG_NAMES.get(lang, "English")}] {dialogue}</d>'
+        for speaker, lang, dialogue in missing
     ]
     insertion = " ".join(lines)
     marker = "overall_soundscape:"
