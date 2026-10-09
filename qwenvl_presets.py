@@ -20,11 +20,21 @@ wins over the bundled presets.
 
 import json
 import re
+import urllib.request
 from pathlib import Path
 
 NODE_DIR = Path(__file__).resolve().parent
 PRESETS_DIR = NODE_DIR / "presets"
 LEGACY_PATH = NODE_DIR / "AILab_System_Prompts.json"
+
+# Garage (huchukato/ComfyUI-Garage) is the source of truth for preset text —
+# synced into presets_remote/ at import so edits ship on ComfyUI restart
+# without waiting for a node release or image rebuild. Bundled presets stay
+# as offline fallback; remote files win per-key.
+_GARAGE_RAW_URL = "https://github.com/huchukato/ComfyUI-Garage/raw/master/presets"
+_GARAGE_TREE_URL = "https://api.github.com/repos/huchukato/ComfyUI-Garage/git/trees/master?recursive=1"
+_REMOTE_DIR = NODE_DIR / "presets_remote"
+_MANIFEST = _REMOTE_DIR / ".garage-manifest"
 
 DURATION_OPTIONS = ["5s", "10s", "15s", "20s"]
 DEFAULT_DURATION = "5s"
@@ -85,13 +95,69 @@ def _strip_emoji(name):
     return _EMOJI_PREFIX.sub("", str(name or "")).strip()
 
 
+def _garage_preset_list():
+    """Map of presets/*.json blobs (path -> sha) in the Garage repo.
+    None on failure — caller keeps bundled presets."""
+    try:
+        req = urllib.request.Request(
+            _GARAGE_TREE_URL, headers={"User-Agent": "ComfyUI-QwenVL-Mod"})
+        tree = json.loads(urllib.request.urlopen(req, timeout=10).read())
+        return {
+            blob["path"][len("presets/"):]: blob.get("sha", "")
+            for blob in tree.get("tree", [])
+            if blob.get("type") == "blob"
+            and blob["path"].startswith("presets/")
+            and blob["path"].endswith(".json")
+        }
+    except Exception as exc:
+        print(f"[QwenVL] Garage preset listing failed, using bundled presets: {exc}")
+        return None
+
+
+def _sync_garage_presets():
+    """Blocking mirror of Garage presets/ into presets_remote/ (sha-skipped)."""
+    remote = _garage_preset_list()
+    if remote is None:
+        return
+    _REMOTE_DIR.mkdir(exist_ok=True)
+    try:
+        prev = dict(line.split(" ", 1) for line in
+                    _MANIFEST.read_text().splitlines() if " " in line)
+    except Exception:
+        prev = {}
+    for rel, sha in remote.items():
+        dest = _REMOTE_DIR / rel
+        if prev.get(rel) == sha and dest.is_file():
+            continue
+        try:
+            data = urllib.request.urlopen(f"{_GARAGE_RAW_URL}/{rel}", timeout=10).read()
+            if dest.exists() and dest.read_bytes() == data:
+                continue
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_bytes(data)
+            print(f"[QwenVL] preset updated from Garage: {rel}")
+        except Exception as exc:
+            print(f"[QwenVL] preset sync skipped {rel}: {exc}")
+    for p in _REMOTE_DIR.rglob("*.json"):
+        if p.relative_to(_REMOTE_DIR).as_posix() not in remote:
+            p.unlink()
+            print(f"[QwenVL] preset removed (gone from Garage): {p.name}")
+    try:
+        _MANIFEST.write_text("\n".join(f"{rel} {sha}" for rel, sha in sorted(remote.items())))
+    except Exception:
+        pass
+
+
 def _load_sections():
-    """Merge presets/*.json sections in deterministic file order."""
+    """Merge presets/*.json sections in deterministic file order.
+    Bundled files load first; Garage-synced presets_remote/ wins per-key."""
     vl_entries, text_entries = {}, {}
     translation_prompt = ""
     order = ["minimax.json", "wan.json", "ltx.json", "image.json", "text.json"]
-    files = [PRESETS_DIR / name for name in order]
-    files += sorted(p for p in PRESETS_DIR.glob("*.json") if p.name not in order)
+    files = []
+    for root in (PRESETS_DIR, _REMOTE_DIR):
+        files += [root / name for name in order]
+        files += sorted(p for p in root.glob("*.json") if p.name not in order)
     for path in files:
         if not path.exists():
             continue
@@ -153,6 +219,7 @@ def _apply_legacy_overlay(vl_entries, text_entries, translation_prompt):
 
 
 def _load_all():
+    _sync_garage_presets()
     vl_entries, text_entries, translation_prompt = _load_sections()
     vl_entries, text_entries, translation_prompt = _apply_legacy_overlay(
         vl_entries, text_entries, translation_prompt)
