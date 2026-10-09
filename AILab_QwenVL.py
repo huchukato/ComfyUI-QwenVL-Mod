@@ -26,7 +26,7 @@ from PIL import Image
 from huggingface_hub import snapshot_download, hf_hub_download
 from transformers import AutoProcessor, AutoTokenizer, BitsAndBytesConfig
 
-from chat_service import ensure_minimax_dialogue, normalize_minimax_output
+from chat_service import ensure_minimax_dialogue, ensure_minimax_music, normalize_minimax_output
 from wildcard_util import expand_wildcard_tokens
 from qwenvl_presets import (
     VL_PRESET_NAMES, VL_PROMPTS, VL_DURATIONS,
@@ -1227,6 +1227,7 @@ class QwenVLBase:
             
             text = normalize_minimax_output(text, preset_prompt, has_image=image is not None, duration=duration)
             text = ensure_minimax_dialogue(text, prompt, preset_prompt, has_image=image is not None)
+            text = ensure_minimax_music(text, prompt, preset_prompt)
 
             # Validate output before caching — reject "ready/waiting" responses
             # that occur when the model treats the system prompt as a conversation

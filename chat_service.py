@@ -87,6 +87,22 @@ def ensure_minimax_dialogue(text, prompt, preset_name, has_image=False):
     return f"{text[:idx].rstrip()} {insertion}\n\n{text[idx:]}"
 
 
+def ensure_minimax_music(text, prompt, preset_name):
+    """When the user tagged music ([MUSIC] inline or a `MUSIC:` line) but the
+    model left `non_diegetic_music` at N/A, fill the field with the tagged
+    content — the tag/prefix is routing syntax, never emitted verbatim."""
+    if "minimax" not in str(preset_name or "").lower() or not prompt:
+        return text
+    m = re.search(r"\[MUSIC\]\s*([^.\n]+)", prompt) or re.search(r"(?im)^\s*MUSIC:\s*(.+?)\s*$", prompt)
+    if not m:
+        return text
+    music = m.group(1).strip().rstrip(",;")
+    return re.sub(
+        r"(non_diegetic_music:\s*\n?\s*)N/?A\b",
+        lambda mo: f"{mo.group(1)}{music}",
+        text, count=1)
+
+
 def _fl2va_alignment_line(text, duration):
     """Synthesize the FL2VA reference-alignment header when the model dropped it."""
     seconds = None

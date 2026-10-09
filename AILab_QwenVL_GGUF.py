@@ -45,7 +45,7 @@ from qwenvl_presets import (
 
 import folder_paths
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output
-from chat_service import ensure_minimax_dialogue, normalize_minimax_output
+from chat_service import ensure_minimax_dialogue, ensure_minimax_music, normalize_minimax_output
 from wildcard_util import expand_wildcard_tokens
 
 # Simple global variable to store last generated prompt
@@ -1022,6 +1022,7 @@ class QwenVLGGUFBase:
 
             text = normalize_minimax_output(text, preset_prompt, has_image=image is not None, duration=duration)
             text = ensure_minimax_dialogue(text, prompt, preset_prompt, has_image=image is not None)
+            text = ensure_minimax_music(text, prompt, preset_prompt)
 
             print(f"[QwenVL GGUF DEBUG] Generation completed. Text length: {len(text) if text else 0}")
             print(f"[QwenVL GGUF DEBUG] Generated text: {text[:100] if text else 'EMPTY'}...")
