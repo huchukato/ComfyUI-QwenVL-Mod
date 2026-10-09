@@ -93,7 +93,11 @@ def ensure_minimax_music(text, prompt, preset_name):
     content — the tag/prefix is routing syntax, never emitted verbatim."""
     if "minimax" not in str(preset_name or "").lower() or not prompt:
         return text
-    m = re.search(r"\[MUSIC\]\s*([^.\n]+)", prompt) or re.search(r"(?im)^\s*MUSIC:\s*(.+?)\s*$", prompt)
+    m = (
+        re.search(r"\[MUSIC\]\s*([^.\n]+)", prompt)
+        or re.search(r"(?im)^\s*(?:MUSIC|MUSICA):\s*(.+?)\s*$", prompt)
+        or re.search(r"(?im)^\s*--(?:MUSIC|MUSICA)--\s*\n+\s*([^\n-][^\n]*)", prompt)
+    )
     if not m:
         return text
     music = m.group(1).strip().rstrip(",;")
