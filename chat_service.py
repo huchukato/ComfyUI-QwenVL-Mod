@@ -56,6 +56,20 @@ def ensure_minimax_dialogue(text, prompt, preset_name, has_image=False):
             r"\((S\d+|VO)\)\s+[^\"\n:]{1,60}?\s*(?:\[([A-Za-z]{2})\])?\s*:?\s*[\"“]([^\"”\n]+)[\"”]",
             prompt)
     ]
+    # Wrap lines the model emitted but dropped the <d>[Lang] tag on.
+    for speaker, lang, dialogue in matches:
+        if not dialogue or dialogue not in text:
+            continue
+        langname = MINIMAX_LANG_NAMES.get(lang, "English")
+        if f"<d>[{langname}] {dialogue}</d>" in text:
+            continue
+        pat = re.compile(
+            r"(\(" + re.escape(speaker) + r"\)[^\"“”<>{}\n]{0,80}?)[\"“]"
+            + re.escape(dialogue) + r"[\"”]")
+        def _wrap(m, langname=langname, dialogue=dialogue):
+            prefix = m.group(1).rstrip()
+            return f"{prefix}{' ' if prefix.endswith(':') else ': '}<d>[{langname}] {dialogue}</d>"
+        text = pat.sub(_wrap, text, count=1)
     missing = [(speaker, lang, dialogue) for speaker, lang, dialogue in matches if dialogue and dialogue not in text]
     if not missing:
         return text
