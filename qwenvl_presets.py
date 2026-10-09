@@ -31,7 +31,7 @@ LEGACY_PATH = NODE_DIR / "AILab_System_Prompts.json"
 # synced into presets_remote/ at import so edits ship on ComfyUI restart
 # without waiting for a node release or image rebuild. Bundled presets stay
 # as offline fallback; remote files win per-key.
-_GARAGE_RAW_URL = "https://github.com/huchukato/ComfyUI-Garage/raw/master/presets"
+_GARAGE_RAW_URL = "https://raw.githubusercontent.com/huchukato/ComfyUI-Garage/master/presets"
 _GARAGE_TREE_URL = "https://api.github.com/repos/huchukato/ComfyUI-Garage/git/trees/master?recursive=1"
 _REMOTE_DIR = NODE_DIR / "presets_remote"
 _MANIFEST = _REMOTE_DIR / ".garage-manifest"
@@ -130,7 +130,15 @@ def _sync_garage_presets():
         if prev.get(rel) == sha and dest.is_file():
             continue
         try:
-            data = urllib.request.urlopen(f"{_GARAGE_RAW_URL}/{rel}", timeout=10).read()
+            data = None
+            for _ in range(2):
+                try:
+                    data = urllib.request.urlopen(f"{_GARAGE_RAW_URL}/{rel}", timeout=30).read()
+                    break
+                except Exception:
+                    data = None
+            if data is None:
+                raise TimeoutError(f"download failed: {rel}")
             if dest.exists() and dest.read_bytes() == data:
                 continue
             dest.parent.mkdir(parents=True, exist_ok=True)
