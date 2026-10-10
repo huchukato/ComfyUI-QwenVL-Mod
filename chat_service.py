@@ -67,9 +67,14 @@ def ensure_minimax_dialogue(text, prompt, preset_name, has_image=False):
             r"(\(" + re.escape(speaker) + r"\)[^\"“”<>{}\n]{0,80}?)[\"“]"
             + re.escape(dialogue) + r"[\"”]")
         def _wrap(m, langname=langname, dialogue=dialogue):
-            prefix = m.group(1).rstrip()
+            prefix = m.group(1).rstrip().rstrip(",;")
             return f"{prefix}{' ' if prefix.endswith(':') else ': '}<d>[{langname}] {dialogue}</d>"
         text = pat.sub(_wrap, text, count=1)
+        if f"<d>[{langname}] {dialogue}</d>" not in text:
+            # speaker parafrasato dal modello (es. "a voiceover intones,"):
+            # wrappa comunque la citazione così resta un dialogo <d>
+            qpat = re.compile(r"[\"“]" + re.escape(dialogue) + r"[\"”]")
+            text = qpat.sub(f"<d>[{langname}] {dialogue}</d>", text, count=1)
     missing = [(speaker, lang, dialogue) for speaker, lang, dialogue in matches if dialogue and dialogue not in text]
     if not missing:
         return text
@@ -105,6 +110,89 @@ def ensure_minimax_music(text, prompt, preset_name):
         r"(non_diegetic_music:\s*\n?\s*)N/?A\b",
         lambda mo: f"{mo.group(1)}{music}",
         text, count=1)
+
+
+_SECTION_BLOCK_RE = re.compile(r"^\s*--\s*([A-Z][A-Z0-9_]{2,})\s*--\s*$")
+_SECTION_INLINE_RE = re.compile(r"^\s*([A-Z][A-Z0-9_]{2,})\s*:\s*(.*)$")
+_BARE_TAG_RE = re.compile(r"\[([A-Z][A-Z0-9_]{2,})\](?=\s*[.,;:()\n]|\s*$)")
+_DIRECTIVE_TAGS = (
+    "MUSIC", "MUSICA", "VFX", "PROP", "STYLE", "STILE", "ENV", "SCENE", "SCENA",
+    "SOUND", "SUONO", "SUBJECTS", "SOGGETTI", "SUMMARY", "SOMMARIO", "LOCATION",
+    "MATCHREF1", "MATCHREF2", "CINEMATIC", "LIVEACTION", "ANIME2D", "CG3D",
+    "CLAYMATION", "WATERCOLOR", "VINTAGE", "PAPERCRAFT", "COLLAGE", "HANDDRAWN",
+)
+
+
+def _section_map(prompt):
+    """Parse `--NAME--` blocks and `NAME:` lines into {NAME: content}."""
+    sections = {}
+    cur = None
+    for line in (prompt or "").splitlines():
+        m = _SECTION_BLOCK_RE.match(line) or _SECTION_INLINE_RE.match(line)
+        if m:
+            cur = m.group(1)
+            sections.setdefault(cur, [])
+            inline = m.group(2) if m.re is _SECTION_INLINE_RE else ""
+            if inline and inline.strip():
+                sections[cur].append(inline.strip())
+            continue
+        if cur and line.strip():
+            sections[cur].append(line.strip())
+    return {name: " ".join(parts).strip() for name, parts in sections.items()}
+
+
+def expand_section_vars(prompt):
+    """Substitute bare `[NAME]` tags with the content of the matching
+    `--NAME--`/`NAME:` section (the tag marks WHERE the variable goes).
+    `[NAME] <text>` inline directives are left untouched."""
+    sections = _section_map(prompt)
+    if not sections or not prompt:
+        return prompt
+    strip_chars = ".,;:()\"'“”"
+    def _sub(m):
+        content = sections.get(m.group(1))
+        if not content:
+            return m.group(0)
+        # dedup: drop the shared prefix when the text before the tag already
+        # says it (e.g. "suona [MUSIC]" + section "suona a tense drone")
+        before = prompt[:m.start()].rstrip().split()
+        cwords = content.split()
+        overlap = 0
+        for i in range(1, min(len(before), len(cwords), 8) + 1):
+            if [w.strip(strip_chars).lower() for w in before[-i:]] == \
+               [w.strip(strip_chars).lower() for w in cwords[:i]]:
+                overlap = i
+        return " ".join(cwords[overlap:]) or content
+    return _BARE_TAG_RE.sub(_sub, prompt)
+
+
+def resolve_section_vars(text, prompt):
+    """Output post-pass: substitute leaked `[NAME]` tags with section content,
+    strip leftover directive tags, and backstop inline-directive content the
+    model dropped. Tags are routing syntax — they must never reach MiniMax."""
+    sections = _section_map(prompt)
+    if sections:
+        text = _BARE_TAG_RE.sub(
+            lambda m: sections.get(m.group(1), m.group(0)), text)
+    text = re.sub(
+        r"\s*\[(?:" + "|".join(_DIRECTIVE_TAGS) + r")\]", " ", text)
+    text = re.sub(r"[ \t]{2,}", " ", text)
+    # `[TAG] phrase` inline directives: if the phrase never made it into the
+    # output, append it to the last [Shot N] line rather than losing it.
+    missing = [
+        phrase.strip()
+        for _, phrase in re.findall(
+            r"\[([A-Z][A-Z0-9_]{2,})\][ \t]+([^\"\[\].,;\n]{2,80})", prompt or "")
+        if phrase.strip() and phrase.strip().lower() not in text.lower()
+    ]
+    for phrase in missing:
+        shots = list(re.finditer(r"\[Shot \d+\][^\n]*", text))
+        if shots:
+            last = shots[-1]
+            text = text[:last.end()] + f" {phrase}." + text[last.end():]
+        else:
+            text = text.rstrip() + f" {phrase}."
+    return text
 
 
 def _fl2va_alignment_line(text, duration):
