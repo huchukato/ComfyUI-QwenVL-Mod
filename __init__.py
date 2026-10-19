@@ -16,7 +16,7 @@ sys.path.insert(0, current_dir)
 # section — register our models/LLM dir so the GGUF nodes, the model list UI
 # and the Director's Analyze discovery all see the same folder key.
 if "LLM" not in folder_paths.folder_names_and_paths:
-    folder_paths.add_folder_for_models("LLM", os.path.join(folder_paths.models_dir, "LLM"))
+    folder_paths.add_model_folder_path("LLM", os.path.join(folder_paths.models_dir, "LLM"))
 
 NODE_CLASS_MAPPINGS = {}
 NODE_DISPLAY_NAME_MAPPINGS = {}
