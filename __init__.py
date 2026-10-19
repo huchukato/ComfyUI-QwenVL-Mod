@@ -12,6 +12,12 @@ from server import PromptServer
 current_dir = os.path.dirname(__file__)
 sys.path.insert(0, current_dir)
 
+# Vanilla installs (Vast.ai, bare ComfyUI) have no extra_model_paths.yaml LLM
+# section — register our models/LLM dir so the GGUF nodes, the model list UI
+# and the Director's Analyze discovery all see the same folder key.
+if "LLM" not in folder_paths.folder_names_and_paths:
+    folder_paths.add_folder_for_models("LLM", os.path.join(folder_paths.models_dir, "LLM"))
+
 NODE_CLASS_MAPPINGS = {}
 NODE_DISPLAY_NAME_MAPPINGS = {}
 WEB_DIRECTORY = "./web"
