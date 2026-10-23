@@ -85,6 +85,10 @@ def load_modules_from_directory(directory):
                     NODE_DISPLAY_NAME_MAPPINGS.update(module.NODE_DISPLAY_NAME_MAPPINGS)
             except Exception as e:
                 print(f"Error loading module {module_name}: {e}")
+                # Drop the half-initialized module: leaving it in sys.modules makes
+                # later `import` statements "succeed" and blow up with AttributeError
+                # on the missing class instead of failing cleanly.
+                sys.modules.pop(module_name, None)
 
 load_modules_from_directory(current_dir)
 

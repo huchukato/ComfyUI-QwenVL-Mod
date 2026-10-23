@@ -33,7 +33,7 @@ def _hf_model_list():
 
 
 def _gguf_model_list():
-    if _gguf is None:
+    if _gguf is None or getattr(_gguf, "Llama", None) is None:
         return []
     catalog = _gguf.AILab_QwenVL_GGUF_PromptEnhancer.load_gguf_models()
     return sorted(list((catalog.get("models") or {}).keys()))
@@ -76,7 +76,7 @@ class QwenVL_Unified_PromptEnhancer:
         styles = list(TEXT_STYLE_NAMES) or list(PROMPT_STYLES.keys())
         preferred_style = "Enhance"
         default_style = preferred_style if preferred_style in styles else (styles[0] if styles else "Enhance")
-        gguf_note = "" if _gguf else " (GGUF models hidden — llama-cpp-python not installed)"
+        gguf_note = "" if (_gguf and getattr(_gguf, "Llama", None)) else " (GGUF models hidden — llama-cpp-python not installed)"
         return {
             "required": {
                 "model_name": (_combined_model_list(), {"default": _default_model(), "tooltip": f"HF models are prefixed with 'HF: ', GGUF models with 'GGUF: '. The prefix selects the backend.{gguf_note}"}),

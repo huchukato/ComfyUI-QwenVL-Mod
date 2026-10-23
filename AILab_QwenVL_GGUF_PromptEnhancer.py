@@ -23,12 +23,11 @@ import torch
 from huggingface_hub import hf_hub_download, snapshot_download
 try:
     from llama_cpp import Llama
-except ImportError as exc:
-    raise ImportError(
-        "llama-cpp-python is not installed — GGUF nodes require a vision-capable "
-        "build. Local install: `pip install llama-cpp-python`; for CUDA/vision "
-        "wheels see github.com/abetlen/llama-cpp-python"
-    ) from exc
+except ImportError:
+    Llama = None
+    print("[QwenVL] llama-cpp-python is not installed — GGUF nodes register but need a "
+          "vision-capable build to run. Local install: `pip install llama-cpp-python`; "
+          "for CUDA/vision wheels see github.com/1038lab/ComfyUI-QwenVL/blob/main/docs/LLAMA_CPP_PYTHON_VISION_INSTALL.md")
 
 import folder_paths
 from AILab_OutputCleaner import OutputCleanConfig, clean_model_output, prompt_output_guard
@@ -458,6 +457,11 @@ class AILab_QwenVL_GGUF_PromptEnhancer:
         if self.is_qwen35:
             print(f"[QwenVL] Qwen3 family detected (arch={arch}): Will disable thinking via /no_think + chat_template_kwargs/reasoning.")
 
+        if Llama is None:
+            raise RuntimeError(
+                "llama-cpp-python is not installed — GGUF prompt enhancement cannot run. "
+                "Install a vision-capable build: local `pip install llama-cpp-python`, "
+                "CUDA/vision wheels: github.com/1038lab/ComfyUI-QwenVL/blob/main/docs/LLAMA_CPP_PYTHON_VISION_INSTALL.md")
         self.llm = Llama(**kwargs)
         self.current_signature = signature
 

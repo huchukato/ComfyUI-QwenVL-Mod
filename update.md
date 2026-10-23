@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.12.2 (2026/10/23)
+
+- Fixed "missing node type" / `AttributeError: module 'AILab_QwenVL_GGUF_PromptEnhancer' has no attribute ...`: the GGUF modules no longer raise at import when llama-cpp-python is missing — all nodes register, the Unified node hides GGUF models with an explanatory note, and a clear actionable error appears only when a GGUF model actually runs. The node loader also drops half-initialized modules so a failed import can no longer poison later imports.
+
 ## Version 2.11.1 (2026/10/06)
 
 - Cleaned the GGUF and HF model catalogs: three VL-capable DavidAU heretic models per backend (4B / 9B / 27B) — all verified `image-text-to-text` with working mmproj files; dropped text-only duplicates and the mislabeled "3.8-9B" entry. VL models cover text-only enhance too, so the separate text section is gone.

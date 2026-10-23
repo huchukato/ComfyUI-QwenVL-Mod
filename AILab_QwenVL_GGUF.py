@@ -27,12 +27,11 @@ import torch
 from huggingface_hub import hf_hub_download, snapshot_download
 try:
     from llama_cpp import Llama
-except ImportError as exc:
-    raise ImportError(
-        "llama-cpp-python is not installed — GGUF nodes require a vision-capable "
-        "build. Local install: `pip install llama-cpp-python`; for CUDA/vision "
-        "wheels see github.com/abetlen/llama-cpp-python"
-    ) from exc
+except ImportError:
+    Llama = None
+    print("[QwenVL] llama-cpp-python is not installed — GGUF nodes register but need a "
+          "vision-capable build to run. Local install: `pip install llama-cpp-python`; "
+          "for CUDA/vision wheels see github.com/1038lab/ComfyUI-QwenVL/blob/main/docs/LLAMA_CPP_PYTHON_VISION_INSTALL.md")
 from PIL import Image
 
 # Import cache functions from main module
@@ -733,6 +732,11 @@ class QwenVLGGUFBase:
             llm_kwargs["image_max_tokens"] = img_max
 
         print(f"[QwenVL] Loading GGUF: {model_path.name} (device={device_kind}, gpu_layers={n_gpu_layers}, ctx={n_ctx})")
+        if Llama is None:
+            raise RuntimeError(
+                "llama-cpp-python is not installed — GGUF vision cannot run. "
+                "Install a vision-capable build: local `pip install llama-cpp-python`, "
+                "CUDA/vision wheels: github.com/1038lab/ComfyUI-QwenVL/blob/main/docs/LLAMA_CPP_PYTHON_VISION_INSTALL.md")
         llm_kwargs_filtered = _filter_kwargs_for_callable(getattr(Llama, "__init__", Llama), llm_kwargs)
         if has_mmproj and self.chat_handler is not None and "chat_handler" not in llm_kwargs_filtered:
             print(
