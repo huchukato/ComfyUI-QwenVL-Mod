@@ -1130,7 +1130,7 @@ class ChatRuntime:
         if enable_thinking:
             # Thinking consumes tokens before the JSON reply; a small budget
             # truncates the response after the reasoning and no JSON is emitted.
-            options["max_tokens"] = max(int(options.get("max_tokens", 1024)), 4096)
+            options["max_tokens"] = max(int(options.get("max_tokens", 2048)), 4096)
         prompt = build_prompt(messages, graph, enable_thinking, bool(images), bool(video))
         with self._lock:
             text = self._generate(backend, model_name, prompt, options, enable_thinking, images, video)
@@ -1182,7 +1182,7 @@ class ChatRuntime:
         pil_frames = _decode_images(video or [])
         return instance.generate(
             prompt, image, image2, image3, len(pil_frames) or 1,
-            int(options.get("max_tokens", 1024)),
+            int(options.get("max_tokens", 2048)),
             float(options.get("temperature", 0.2)),
             float(options.get("top_p", 0.9)),
             1,
@@ -1214,7 +1214,7 @@ class ChatRuntime:
             SYSTEM_PROMPT,
             prompt,
             images_b64,
-            int(options.get("max_tokens", 1024)),
+            int(options.get("max_tokens", 2048)),
             float(options.get("temperature", 0.2)),
             float(options.get("top_p", 0.9)),
             float(options.get("repetition_penalty", 1.05)),

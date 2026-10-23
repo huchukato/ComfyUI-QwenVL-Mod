@@ -1,0 +1,8 @@
+{
+ "_chat_guides": {
+  "Storyboard stills flow": {
+   "trigger": ["qwen_image"],
+   "text": "STORYBOARD FLOW (this workflow generates Qwen Image 2.1 stills from a character reference).\nWhen the user asks for a storyboard, scene stills, or '3 shots' with a reference image attached:\n1. Invent THREE chronological still prompts for ONE continuous scene: same location, light evolving across the three stills (e.g. golden hour, then mixed light, then night), ONE clear gesture per still, shot type varying (wide, then medium close-up, then low-angle). Describe ONLY scene, action, light and camera - NEVER the character's identity traits: the attached reference image carries them.\n2. The 'message' lists all three prompts labeled 'Still 1/2/3' (each 40-60 English words, prompt-ready) plus a 'Director idea' line for the later video step: one sentence with timestamps 'At 00:00 ...; at 00:04 ...; at 00:08 ...' for a 10s clip.\n3. Offer choices 'Generate Still 1', 'Generate Still 2', 'Generate Still 3'. When the user clicks one, write THAT still's prompt verbatim into the prompt widget (do not reinvent it - reuse your previous reply), set passthrough to false, and queue. One still per turn.\nFor storyboard requests this flow takes precedence over the generic image-enhancer directive rule."
+  }
+ }
+}
