@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.12.6 (2026/10/24)
+
+- Storyboard routing: the generic image-enhancer enforcement no longer runs after the storyboard routing took over — it was re-writing the enhancer's prompt widget with a garbage "intent" cleaned from the bare Generate Still message ("till 1"). Storyboard mode now emits exactly: processor text+populated_text, passthrough false, queue.
+
 ## Version 2.12.5 (2026/10/24)
 
 - Chat **Flow dropdown** (next to Config MMH3): Auto / Storyboard stills. Storyboard mode injects the still-flow guide unconditionally and makes the routing deterministic in code — the still prompt always lands on the WildcardProcessor's text widgets (or the enhancer's prompt widget when the graph has no processor), passthrough stays false, queue only on a Generate Still choice. No more guide-vs-node-rule conflicts deciding the outcome.

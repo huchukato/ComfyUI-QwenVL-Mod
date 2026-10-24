@@ -511,6 +511,7 @@ def enforce_storyboard_routing(result, graph, messages, has_images, flow="auto")
             enhancer = (n, prompt_widget)
     if enhancer is None:
         return result
+    result["_storyboard_routed"] = True
     node, prompt_widget = enhancer
     node_id = node.get("id")
     proc_id = processor.get("id")
@@ -1256,7 +1257,8 @@ class ChatRuntime:
         result = parse_model_response(text)
         if result.pop("parsed"):
             result = enforce_storyboard_routing(result, graph, messages, bool(images), sel_flow)
-            result = enforce_image_enhancer_routing(result, graph, messages, bool(images))
+            if not result.pop("_storyboard_routed", False):
+                result = enforce_image_enhancer_routing(result, graph, messages, bool(images))
             result = _fix_minimax_preset_actions(result, graph)
             return enforce_image_reference_bindings(result, graph, bool(images))
         # The model ignored the JSON protocol (e.g. a conversational preamble
@@ -1272,7 +1274,8 @@ class ChatRuntime:
         retry_result = parse_model_response(retry_text)
         if retry_result.pop("parsed"):
             retry_result = enforce_storyboard_routing(retry_result, graph, messages, bool(images), sel_flow)
-            retry_result = enforce_image_enhancer_routing(retry_result, graph, messages, bool(images))
+            if not retry_result.pop("_storyboard_routed", False):
+                retry_result = enforce_image_enhancer_routing(retry_result, graph, messages, bool(images))
             retry_result = _fix_minimax_preset_actions(retry_result, graph)
             return enforce_image_reference_bindings(retry_result, graph, bool(images))
         return result
