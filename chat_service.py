@@ -486,6 +486,96 @@ def _storyboard_still_from_history(messages):
     return None
 
 
+STORYBOARD_SYSTEM_PROMPT = """You write storyboard still prompts for Qwen Image 2.1 from a character reference.
+Output RAW text only (no JSON, no markdown headers, no code blocks), exactly this structure:
+
+Still 1: <40-60 word prompt - wide shot, the opening moment>
+Still 2: <40-60 word prompt - medium close-up, the turn/reaction>
+Still 3: <40-60 word prompt - low-angle, the closing beat>
+Director idea: <one dense sentence with timestamps: At 00:00 ...; at 00:04 ...; at 00:08 ... - action + light + camera per beat, 60-90 words>
+
+Rules: ONE continuous scene, same location, light evolving across the stills (e.g. golden hour, then mixed light, then dusk), ONE clear gesture per still, shot type varying. Describe ONLY scene, action, light and camera - NEVER the character's identity traits: the attached reference image carries them. English only."""
+
+
+def _storyboard_generation_result(backend, model_name, messages, images, options, graph):
+    """The storyboard request handled OUTSIDE the JSON protocol.
+
+    The GGUF model kept summarizing the three stills away ('Still 1/2/3 ready')
+    no matter what the guide said — so the stills are generated as raw text by a
+    dedicated recipe prompt and the chat reply is composed in code. The still
+    choices then route through the normal path, where the enforcement recovers
+    each still from this very message.
+    """
+    request = _last_user_message(messages)
+    images_b64 = [base64.b64encode(data).decode("ascii") for data in images]
+    if backend == "hf":
+        module = sys.modules["AILab_QwenVL"]
+        instance = module.QwenVLBase()
+        instance.load_model(
+            model_name,
+            options.get("quantization", module.Quantization.Q8.value),
+            options.get("attention_mode", "auto"),
+            False,
+            options.get("device", "auto"),
+            True,
+        )
+        pil_images = _decode_images(images)
+        text = instance.generate(
+            STORYBOARD_SYSTEM_PROMPT + "\n\n" + request,
+            pil_images[0] if pil_images else None,
+            pil_images[1] if len(pil_images) > 1 else None,
+            pil_images[2] if len(pil_images) > 2 else None,
+            1,
+            int(options.get("max_tokens", 2048)),
+            float(options.get("temperature", 0.7)),
+            float(options.get("top_p", 0.9)),
+            1,
+            float(options.get("repetition_penalty", 1.05)),
+            model_name=model_name,
+            video=None,
+            enable_thinking=False,
+        )
+    else:
+        module = sys.modules["AILab_QwenVL_GGUF"]
+        instance = module.QwenVLGGUFBase()
+        instance._load_model(
+            model_name,
+            options.get("device", "auto"),
+            options.get("ctx"),
+            options.get("n_batch"),
+            options.get("gpu_layers"),
+            options.get("image_max_tokens"),
+            options.get("top_k"),
+            options.get("pool_size"),
+        )
+        text = instance._invoke(
+            STORYBOARD_SYSTEM_PROMPT,
+            request,
+            images_b64,
+            int(options.get("max_tokens", 2048)),
+            float(options.get("temperature", 0.7)),
+            float(options.get("top_p", 0.9)),
+            float(options.get("repetition_penalty", 1.05)),
+            int(options.get("seed", 1)),
+            model_name,
+            enable_thinking=False,
+        )
+    # the workflow is prepared for the still clicks: preset + passthrough, no queue
+    actions = []
+    for node in graph.get("nodes", []):
+        widgets = {w.get("name"): w.get("value") for w in node.get("widgets", []) if isinstance(w, dict)}
+        prompt_widget = next((name for name in ("prompt", "custom_prompt", "prompt_text") if name in widgets), None)
+        if prompt_widget and {"preset_prompt", "passthrough"}.issubset(widgets) and _is_image_enhancer_node(node):
+            actions.append({"type": "set_widget_value", "node_id": node.get("id"), "widget": "preset_prompt", "value": "IMG › Storyboard"})
+            actions.append({"type": "set_widget_value", "node_id": node.get("id"), "widget": "passthrough", "value": False})
+            break
+    return {
+        "message": (text or "").strip() or "Storyboard generation failed — retry.",
+        "actions": actions,
+        "choices": [{"label": f"Generate Still {n}", "send": f"Generate Still {n}"} for n in (1, 2, 3)],
+    }
+
+
 def enforce_storyboard_routing(result, graph, messages, has_images, flow="auto"):
     """Deterministic routing for the Edit21 storyboard-still flow.
 
@@ -1233,6 +1323,13 @@ class ChatRuntime:
         sel_flow = "storyboard" if str(directives.get("flow") or "auto") == "storyboard" else "auto"
         sel_config = str(directives.get("config") or "auto")
         sel_text = str(directives.get("text") or "")
+        # The storyboard request itself bypasses the JSON protocol entirely: the
+        # stills are generated raw and the reply composed in code. The Generate
+        # Still clicks keep the normal path (the enforcement routes them).
+        if sel_flow == "storyboard" and images \
+                and not re.search(r"still\s*\d", _last_user_message(messages), re.IGNORECASE):
+            return _storyboard_generation_result(
+                backend, model_name, messages, images, options, graph)
         explicit = None
         if sel_config in _MINIMAX_CONFIGS:
             explicit = _minimax_result(graph, sel_config, sel_text)

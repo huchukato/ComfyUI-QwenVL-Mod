@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.12.7 (2026/10/24)
+
+- Storyboard request handled OUTSIDE the JSON protocol: the GGUF model kept summarizing the stills away ('Still 1/2/3 ready') no matter what the guide said. Now the stills are generated as raw text by a dedicated recipe prompt (Still 1/2/3 + dense Director idea) and the chat reply is composed in code — preset IMG › Storyboard + passthrough=false applied, three Generate Still choices offered, zero queue on the request. The still clicks recover each still from this composed message.
+
 ## Version 2.12.6 (2026/10/24)
 
 - Storyboard routing: the generic image-enhancer enforcement no longer runs after the storyboard routing took over — it was re-writing the enhancer's prompt widget with a garbage "intent" cleaned from the bare Generate Still message ("till 1"). Storyboard mode now emits exactly: processor text+populated_text, passthrough false, queue.
