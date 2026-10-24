@@ -1,5 +1,10 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.12.8 (2026/10/24)
+
+- Chat defaults aligned with the QwenVL node: default GGUF model is the Q6_K (was Q8_0 — a second download users did not expect), and the chat's own max-tokens default is 2048 (the js always sent its own 1024, so the backend's raised default never applied).
+- Director Analyze: new /minimax_director/llm_models endpoint + a model dropdown in the Analyze settings when several GGUF models are found (the free-text field stays as fallback).
+
 ## Version 2.12.7 (2026/10/24)
 
 - Storyboard request handled OUTSIDE the JSON protocol: the GGUF model kept summarizing the stills away ('Still 1/2/3 ready') no matter what the guide said. Now the stills are generated as raw text by a dedicated recipe prompt (Still 1/2/3 + dense Director idea) and the chat reply is composed in code — preset IMG › Storyboard + passthrough=false applied, three Generate Still choices offered, zero queue on the request. The still clicks recover each still from this composed message.

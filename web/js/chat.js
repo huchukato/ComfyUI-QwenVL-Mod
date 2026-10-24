@@ -2,7 +2,7 @@ import { app } from "/scripts/app.js";
 import { api } from "/scripts/api.js";
 
 const STORAGE_KEY = "qwenvl.chat.v1";
-const DEFAULT_GGUF_MODEL = "Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q8_0.gguf";
+const DEFAULT_GGUF_MODEL = "Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf";
 const GGUF_PREFIX = "GGUF: ";
 const HF_PREFIX = "HF: ";
 const modelBackend = () => (state.model || "").startsWith(HF_PREFIX) ? "hf" : "gguf";
@@ -67,7 +67,7 @@ const DEFAULT_STATE = {
     language: "en",
     settingsOpen: false,
     model: "",
-    maxTokens: 1024,
+    maxTokens: 2048,
     temperature: 0.2,
     thinking: false,
     config: "auto",
