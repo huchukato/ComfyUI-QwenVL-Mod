@@ -473,12 +473,16 @@ def _storyboard_still_from_history(messages):
     if not match:
         return None
     wanted = match.group(1)
-    last_assistant = next((m.get("content", "") for m in reversed(messages) if m.get("role") == "assistant"), "")
-    blocks = re.findall(r"Still\s*(\d)\s*:\s*(.+?)(?=\nStill\s*\d\s*:|\nDirector idea:|\Z)",
-                        str(last_assistant), re.IGNORECASE | re.DOTALL)
-    for number, text in blocks:
-        if number == wanted:
-            return text.strip()
+    # the promised stills may sit in ANY earlier assistant reply (the latest one is
+    # often just the short "queued" summary) — scan them all, newest first
+    for message in reversed(messages):
+        if message.get("role") != "assistant":
+            continue
+        blocks = re.findall(r"Still\s*(\d)\s*:\s*(.+?)(?=\nStill\s*\d\s*:|\nDirector idea:|\Z)",
+                            str(message.get("content", "")), re.IGNORECASE | re.DOTALL)
+        for number, text in blocks:
+            if number == wanted:
+                return text.strip()
     return None
 
 
