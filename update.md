@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.12.4 (2026/10/24)
+
+- Chat storyboard flow fixes from live testing: the node snapshot now carries the input socket names (the enhancer routing never fired without them, so the chat set passthrough=true and bypassed the QwenVL); the storyboard guide now targets the WildcardProcessor's text widgets (the QwenVL's prompt input is WIRED from it — writing the QwenVL's prompt widget had no effect, which produced character sheets instead of stills); no queue on the storyboard request itself, only on a Generate Still choice.
+
 ## Version 2.12.3 (2026/10/24)
 
 - Fixed the chat crash (ComfyUI process aborted): the graph snapshot rode into the model context whole every turn — the Edit21 workflow's PixNote HTML alone is ~5.5KB, so the second chat turn overflowed the GGUF context and llama.cpp aborted (Fatal Python error). Widget values in the snapshot are now capped at 300 chars; operational widgets (prompt, preset, steps…) stay intact.

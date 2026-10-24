@@ -225,6 +225,7 @@ function serializeGraphNode(node, prefix) {
         type: node.type || node.comfyClass || "",
         title: node.title || "",
         mode: node.mode ?? 0,
+        inputs: (node.inputs || []).slice(0, 20).map((inp) => String(inp?.name || "")),
         widgets: (node.widgets || []).slice(0, 100).filter((widget) => widget?.name).map((widget) => ({
             name: widget.name,
             type: widget.type || typeof widget.value,
