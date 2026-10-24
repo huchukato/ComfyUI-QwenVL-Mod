@@ -458,6 +458,103 @@ def _clean_action_directive(text):
     return cleaned
 
 
+def _storyboard_still_from_history(messages):
+    """The still prompt the chat promised in its last storyboard reply.
+
+    The choice buttons send bare 'Generate Still N' texts; the model is supposed
+    to re-emit that still's prompt as an action but sometimes just queues. The
+    promised prompts are right there in the last assistant message — parse them
+    instead of looping the user.
+    """
+    if not isinstance(messages, list):
+        return None
+    last_user = next((m.get("content", "") for m in reversed(messages) if m.get("role") == "user"), "")
+    match = re.search(r"still\s*(\d)", str(last_user), re.IGNORECASE)
+    if not match:
+        return None
+    wanted = match.group(1)
+    last_assistant = next((m.get("content", "") for m in reversed(messages) if m.get("role") == "assistant"), "")
+    blocks = re.findall(r"Still\s*(\d)\s*:\s*(.+?)(?=\nStill\s*\d\s*:|\nDirector idea:|\Z)",
+                        str(last_assistant), re.IGNORECASE | re.DOTALL)
+    for number, text in blocks:
+        if number == wanted:
+            return text.strip()
+    return None
+
+
+def enforce_storyboard_routing(result, graph, messages, has_images, flow="auto"):
+    """Deterministic routing for the Edit21 storyboard-still flow.
+
+    The model's own action choices keep losing to the node-specific passthrough
+    rule: it writes the enhancer's prompt widget — which is WIRED from a
+    WildcardProcessor, so the write is dead — and flips passthrough on, bypassing
+    the VLM entirely (the user gets character sheets and raw-text images). This
+    pass fixes the routing in code: the still prompt goes to the processor's
+    text widgets, passthrough stays false, a queue with no still prompt set is
+    dropped, and a forgotten still is recovered from the chat's own last reply.
+    """
+    if not has_images:
+        return result
+    nodes = graph.get("nodes", [])
+    processor = next((n for n in nodes if str(n.get("type", "")).lower() == "wildcardprocessor"), None)
+    if processor is None:
+        return result
+    enhancer = None
+    for n in nodes:
+        widgets = {w.get("name"): w.get("value") for w in n.get("widgets", []) if isinstance(w, dict)}
+        if not {"preset_prompt", "passthrough"}.issubset(widgets):
+            continue
+        if flow != "storyboard" and "storyboard" not in str(widgets.get("preset_prompt", "")).lower():
+            continue
+        prompt_widget = next((name for name in ("prompt", "custom_prompt", "prompt_text") if name in widgets), None)
+        if prompt_widget and _is_image_enhancer_node(n):
+            enhancer = (n, prompt_widget)
+    if enhancer is None:
+        return result
+    node, prompt_widget = enhancer
+    node_id = node.get("id")
+    proc_id = processor.get("id")
+    actions = result.get("actions", [])
+    still_text = ""
+    for action in [a for a in actions if a.get("type") == "set_widget_value"
+                   and str(a.get("node_id")) == str(node_id)
+                   and a.get("widget") in {"prompt", "custom_prompt", "prompt_text"}]:
+        value = str(action.get("value") or "").strip()
+        if value and _is_enhancer_instruction(value):
+            still_text = value
+        actions.remove(action)
+    if not still_text:
+        still_text = _storyboard_still_from_history(messages) or ""
+    if still_text:
+        if processor is not None:
+            actions[:] = [a for a in actions if not (a.get("type") == "set_widget_value"
+                          and str(a.get("node_id")) == str(proc_id) and a.get("widget") in {"text", "populated_text"})]
+            queue_index = next((i for i, a in enumerate(actions) if a.get("type") == "queue_workflow"), len(actions))
+            actions.insert(queue_index, {"type": "set_widget_value", "node_id": proc_id, "widget": "text", "value": still_text})
+            actions.insert(queue_index + 1, {"type": "set_widget_value", "node_id": proc_id, "widget": "populated_text", "value": still_text})
+            result["message"] = f'{result.get("message", "").rstrip()}\n\nStill prompt → WildcardProcessor:\n{still_text}'.strip()
+        else:
+            # flow esplicito ma grafo senza processor: il prompt widget dell'enhancer è la via diretta
+            queue_index = next((i for i, a in enumerate(actions) if a.get("type") == "queue_workflow"), len(actions))
+            actions.insert(queue_index, {"type": "set_widget_value", "node_id": node_id, "widget": prompt_widget, "value": still_text})
+    passthrough = next((a for a in actions if a.get("type") == "set_widget_value"
+                        and str(a.get("node_id")) == str(node_id) and a.get("widget") == "passthrough"), None)
+    if passthrough:
+        passthrough["value"] = False
+    else:
+        queue_index = next((i for i, a in enumerate(actions) if a.get("type") == "queue_workflow"), len(actions))
+        actions.insert(queue_index, {"type": "set_widget_value", "node_id": node_id, "widget": "passthrough", "value": False})
+    if not still_text and any(a.get("type") == "queue_workflow" for a in actions):
+        has_proc_write = any(a.get("type") == "set_widget_value"
+                             and str(a.get("node_id")) == str(proc_id)
+                             and a.get("widget") in {"text", "populated_text"} for a in actions)
+        if not has_proc_write:
+            result["actions"] = [a for a in actions if a.get("type") != "queue_workflow"]
+        result["message"] = (result.get("message", "").rstrip()
+                             + "\n\n(Not queued — click a Generate Still choice to queue a still.)").strip()
+    return result
+
+
 def enforce_image_enhancer_routing(result, graph, messages, has_images):
     if not has_images or not any(action.get("type") == "queue_workflow" for action in result.get("actions", [])):
         return result
@@ -717,10 +814,16 @@ def _trim_snapshot(graph, cap=300):
     return trimmed
 
 
-def build_prompt(messages, graph, enable_thinking=False, has_images=False, has_video=False):
+def build_prompt(messages, graph, enable_thinking=False, has_images=False, has_video=False, flow="auto"):
     history = "\n".join(f"{item['role'].upper()}: {item['content']}" for item in messages)
     snapshot = json.dumps(_trim_snapshot(graph), ensure_ascii=False, separators=(",", ":"))
     instruction = BASE_SYSTEM_PROMPT + _preset_guides(graph, messages, has_images) + _chat_guides_for(graph, has_images)
+    if flow == "storyboard":
+        guides = _load_chat_guides()
+        entry = guides.get("Storyboard stills flow") or {}
+        text = entry.get("text") if isinstance(entry, dict) else None
+        instruction += "\n\nACTIVE FLOW: Storyboard stills — the user picked it in the chat settings.\n"
+        instruction += text or "Route every still prompt to the WildcardProcessor's text widgets, keep passthrough false, queue only on a Generate Still choice."
     instruction += THINKING_INSTRUCTION if enable_thinking else NO_THINKING_INSTRUCTION
     if has_video:
         instruction += "\nVIDEO INPUT: sampled frames from a video clip are attached to the latest user message. Treat them as the clip itself when the user asks to review, critique, or refine a generated video."
@@ -1122,6 +1225,7 @@ class ChatRuntime:
         images = validate_images(images or [])
         video = validate_images(video or [], MAX_VIDEO_FRAMES)
         directives = directives if isinstance(directives, dict) else {}
+        sel_flow = "storyboard" if str(directives.get("flow") or "auto") == "storyboard" else "auto"
         sel_config = str(directives.get("config") or "auto")
         sel_text = str(directives.get("text") or "")
         explicit = None
@@ -1146,11 +1250,12 @@ class ChatRuntime:
             # Thinking consumes tokens before the JSON reply; a small budget
             # truncates the response after the reasoning and no JSON is emitted.
             options["max_tokens"] = max(int(options.get("max_tokens", 2048)), 4096)
-        prompt = build_prompt(messages, graph, enable_thinking, bool(images), bool(video))
+        prompt = build_prompt(messages, graph, enable_thinking, bool(images), bool(video), sel_flow)
         with self._lock:
             text = self._generate(backend, model_name, prompt, options, enable_thinking, images, video)
         result = parse_model_response(text)
         if result.pop("parsed"):
+            result = enforce_storyboard_routing(result, graph, messages, bool(images), sel_flow)
             result = enforce_image_enhancer_routing(result, graph, messages, bool(images))
             result = _fix_minimax_preset_actions(result, graph)
             return enforce_image_reference_bindings(result, graph, bool(images))
@@ -1161,11 +1266,12 @@ class ChatRuntime:
             {"role": "assistant", "content": (text or "")[:2000]},
             {"role": "user", "content": "Your reply was not a JSON object. Return ONLY the JSON object described in the system instructions — no preamble, no extra text."},
         ]
-        retry_prompt = build_prompt(retry_messages, graph, enable_thinking, bool(images), bool(video))
+        retry_prompt = build_prompt(retry_messages, graph, enable_thinking, bool(images), bool(video), sel_flow)
         with self._lock:
             retry_text = self._generate(backend, model_name, retry_prompt, options, enable_thinking, images, video)
         retry_result = parse_model_response(retry_text)
         if retry_result.pop("parsed"):
+            retry_result = enforce_storyboard_routing(retry_result, graph, messages, bool(images), sel_flow)
             retry_result = enforce_image_enhancer_routing(retry_result, graph, messages, bool(images))
             retry_result = _fix_minimax_preset_actions(retry_result, graph)
             return enforce_image_reference_bindings(retry_result, graph, bool(images))

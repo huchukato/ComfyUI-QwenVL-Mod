@@ -33,6 +33,7 @@ const TRANSLATIONS = {
         assetChatOnly: "Asset selected for Qwen. Add a Load Image (from Outputs) node to sync it with the workflow.",
         assetSynced: "Asset selected for Qwen and loaded into node {node}.", settings: "Settings", showSettings: "Show settings", hideSettings: "Hide settings",
         config: "Config MMH3", configAuto: "Auto (chat decides)",
+        flow: "Flow", flowAuto: "Auto (chat decides)", flowStoryboard: "Storyboard stills",
     },
     it: {
         empty: "Chiedimi di analizzare o modificare i parametri del workflow aperto.", user: "Tu", thinking: "Pensiero",
@@ -59,6 +60,7 @@ const TRANSLATIONS = {
         assetChatOnly: "Risorsa selezionata per Qwen. Aggiungi un nodo Carica Immagine da Output per sincronizzarla con il workflow.",
         assetSynced: "Risorsa selezionata per Qwen e caricata nel nodo {node}.", settings: "Impostazioni", showSettings: "Mostra impostazioni", hideSettings: "Nascondi impostazioni",
         config: "Config MMH3", configAuto: "Auto (decide la chat)",
+        flow: "Flusso", flowAuto: "Auto (decide la chat)", flowStoryboard: "Still storyboard",
     },
 };
 const DEFAULT_STATE = {
@@ -69,6 +71,7 @@ const DEFAULT_STATE = {
     temperature: 0.2,
     thinking: false,
     config: "auto",
+    flow: "auto",
     messages: [],
 };
 
@@ -702,7 +705,7 @@ async function sendMessage() {
                 graph: snapshotGraph(),
                 images,
                 video: attachedVideo?.frames || [],
-                directives: { config, text: rawText },
+                directives: { config, text: rawText, flow: elements.flow?.value || "auto" },
                 options: {
                     max_tokens: state.maxTokens,
                     temperature: state.temperature,
@@ -908,6 +911,17 @@ function buildSidebar(container) {
     const configLabel = createElement("label");
     configLabel.append(createElement("span", "", t("config")), elements.config);
     selectors.append(configLabel);
+    elements.flow = createElement("select");
+    for (const [value, label] of [["auto", t("flowAuto")], ["storyboard", t("flowStoryboard")]]) {
+        const option = createElement("option", "", label);
+        option.value = value;
+        elements.flow.append(option);
+    }
+    elements.flow.value = state.flow;
+    elements.flow.title = "Chat flow — Storyboard stills routes every still prompt through the WildcardProcessor deterministically";
+    const flowLabel = createElement("label");
+    flowLabel.append(createElement("span", "", t("flow")), elements.flow);
+    selectors.append(flowLabel);
     const composerTools = createElement("div", "qwen-chat-composer-tools");
     elements.fileInput = createElement("input", "qwen-chat-file");
     elements.fileInput.type = "file";
@@ -945,6 +959,10 @@ function buildSidebar(container) {
         elements.settingsToggle.classList.toggle("active", state.settingsOpen);
         elements.settingsToggle.title = t(state.settingsOpen ? "hideSettings" : "showSettings");
         elements.settingsToggle.setAttribute("aria-expanded", String(state.settingsOpen));
+        saveState();
+    });
+    elements.flow.addEventListener("change", () => {
+        state.flow = elements.flow.value;
         saveState();
     });
     elements.config.addEventListener("change", () => {

@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.12.5 (2026/10/24)
+
+- Chat **Flow dropdown** (next to Config MMH3): Auto / Storyboard stills. Storyboard mode injects the still-flow guide unconditionally and makes the routing deterministic in code — the still prompt always lands on the WildcardProcessor's text widgets (or the enhancer's prompt widget when the graph has no processor), passthrough stays false, queue only on a Generate Still choice. No more guide-vs-node-rule conflicts deciding the outcome.
+
 ## Version 2.12.4 (2026/10/24)
 
 - Chat storyboard flow fixes from live testing: the node snapshot now carries the input socket names (the enhancer routing never fired without them, so the chat set passthrough=true and bypassed the QwenVL); the storyboard guide now targets the WildcardProcessor's text widgets (the QwenVL's prompt input is WIRED from it — writing the QwenVL's prompt widget had no effect, which produced character sheets instead of stills); no queue on the storyboard request itself, only on a Generate Still choice.
