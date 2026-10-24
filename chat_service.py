@@ -702,9 +702,24 @@ def _chat_guides_for(graph, has_images=False):
     )
 
 
+def _trim_snapshot(graph, cap=300):
+    """Widget values ride into the model's context on every turn; display-only
+    blobs (PixNote HTML, label JSON) are kilobytes the model never acts on.
+    Cap them so a multi-turn chat stays inside the GGUF context — an overflow
+    makes llama.cpp abort the whole ComfyUI process."""
+    trimmed = json.loads(json.dumps(graph))
+    for node in trimmed.get("nodes", []):
+        for widget in node.get("widgets", []) or []:
+            if isinstance(widget, dict):
+                value = widget.get("value")
+                if isinstance(value, str) and len(value) > cap:
+                    widget["value"] = value[:cap] + "…[trimmed]"
+    return trimmed
+
+
 def build_prompt(messages, graph, enable_thinking=False, has_images=False, has_video=False):
     history = "\n".join(f"{item['role'].upper()}: {item['content']}" for item in messages)
-    snapshot = json.dumps(graph, ensure_ascii=False, separators=(",", ":"))
+    snapshot = json.dumps(_trim_snapshot(graph), ensure_ascii=False, separators=(",", ":"))
     instruction = BASE_SYSTEM_PROMPT + _preset_guides(graph, messages, has_images) + _chat_guides_for(graph, has_images)
     instruction += THINKING_INSTRUCTION if enable_thinking else NO_THINKING_INSTRUCTION
     if has_video:
