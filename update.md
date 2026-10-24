@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.12.3 (2026/10/24)
+
+- Fixed the chat crash (ComfyUI process aborted): the graph snapshot rode into the model context whole every turn — the Edit21 workflow's PixNote HTML alone is ~5.5KB, so the second chat turn overflowed the GGUF context and llama.cpp aborted (Fatal Python error). Widget values in the snapshot are now capped at 300 chars; operational widgets (prompt, preset, steps…) stay intact.
+
 ## Version 2.12.2 (2026/10/23)
 
 - Fixed "missing node type" / `AttributeError: module 'AILab_QwenVL_GGUF_PromptEnhancer' has no attribute ...`: the GGUF modules no longer raise at import when llama-cpp-python is missing — all nodes register, the Unified node hides GGUF models with an explanatory note, and a clear actionable error appears only when a GGUF model actually runs. The node loader also drops half-initialized modules so a failed import can no longer poison later imports.
