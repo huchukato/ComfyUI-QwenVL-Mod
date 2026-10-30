@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.12.9 (2026/10/30)
+
+- New VL preset `LTX › NSFW Loop` for the LTX-2.5 pose-loop workflows (A→B→C→B→A keyframe loops): derived from the FL2VA guidance but framed for MULTIPLE keyframe images visited in order, with the loop-closure rule (final pose = first pose) instead of the two-frame transition framing. Source of truth is Garage presets/ltx.json — the bundled copy + chat alias ship with this release as offline fallback.
+
 ## Version 2.12.8 (2026/10/24)
 
 - Chat defaults aligned with the QwenVL node: default GGUF model is the Q6_K (was Q8_0 — a second download users did not expect), and the chat's own max-tokens default is 2048 (the js always sent its own 1024, so the backend's raised default never applied).

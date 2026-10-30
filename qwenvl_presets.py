@@ -55,6 +55,7 @@ VL_ALIASES = {
     "Wan 2.2 NSFW FL2V": "Wan22 › NSFW FL2V",
     "LTX 2.3 NSFW I2V": "LTX › NSFW I2V",
     "LTX 2.3 NSFW FL2VA": "LTX › NSFW FL2VA",
+    "LTX 2.3 NSFW Loop": "LTX › NSFW Loop",
     "LTX Audio-Input NSFW I2V": "LTX › Audio I2V",
     "Tags": "IMG › Tags",
     "Pony→Natural Language": "IMG › Pony→Natural",
