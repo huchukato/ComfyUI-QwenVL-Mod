@@ -43,7 +43,7 @@ from qwenvl_presets import (
 )
 
 import folder_paths
-from AILab_OutputCleaner import OutputCleanConfig, clean_model_output
+from AILab_OutputCleaner import OutputCleanConfig, clean_model_output, prompt_output_guard
 from chat_service import normalize_minimax_output
 from wildcard_util import expand_wildcard_tokens
 
@@ -899,11 +899,9 @@ class QwenVLGGUFBase:
         print(f"[QwenVL GGUF DEBUG] Cache disabled - proceeding with generation")
 
         prompt_template = add_danbooru_guidance(prompt_template, preset_prompt)
-        if prompt and prompt.strip():
-            # Combine user input with template - user prompt first for priority
-            full_prompt = f"{prompt.strip()}\n\n{prompt_template}"
-        else:
-            full_prompt = prompt_template
+        # User content stays separate from the preset template: the template
+        # rides in the system message, the request in the user message.
+        full_prompt = prompt.strip() or "Describe a scene vividly."
 
         # ── Camera tag injection (same logic as AILab_QwenVL) ─────────────
         CAMERA_TAGS = list(CAMERA_TAG_DESCRIPTIONS.keys())
@@ -1009,10 +1007,12 @@ class QwenVLGGUFBase:
             print(f"[QwenVL GGUF DEBUG] Starting generation...")
             # Prepend /no_think for Qwen3.5 models (enable_thinking is deprecated in recent llama.cpp)
             effective_prompt = ("/no_think\n" + full_prompt) if getattr(self, "is_qwen35", False) else full_prompt
+            # The preset template is the INSTRUCTION: it belongs in the system
+            # message, with the user's request as the user message. Putting it
+            # after the user text made imperative prompts echo back unchanged.
             text = self._invoke(
                 system_prompt=(
-                    "You are a helpful vision-language assistant. "
-                    "Answer directly with the final answer only. No <think> and no reasoning."
+                    f"{prompt_template}\n\n{prompt_output_guard()}"
                 ),
                 user_prompt=effective_prompt,
                 images_b64=images_b64 if self.chat_handler is not None else [],
