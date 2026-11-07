@@ -68,7 +68,6 @@ VL_ALIASES = {
     "Ultra Detailed Description": "IMG › Ultra",
     "Cinematic Description": "IMG › Cinematic",
     "Detailed Analysis": "IMG › Analysis",
-    "Video Summary": "VID › Summary",
 }
 
 TEXT_ALIASES = {
