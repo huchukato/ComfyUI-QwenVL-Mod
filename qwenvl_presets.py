@@ -140,7 +140,9 @@ def _sync_garage_presets():
             data = None
             for _ in range(2):
                 try:
-                    data = urllib.request.urlopen(f"{_GARAGE_RAW_URL}/{rel}", timeout=30).read()
+                    # cache-bust: GitHub's raw CDN serves ~5-min-stale copies
+                    data = urllib.request.urlopen(
+                        f"{_GARAGE_RAW_URL}/{rel}?v={sha[:12]}", timeout=30).read()
                     break
                 except Exception:
                     data = None
@@ -189,11 +191,21 @@ def _load_sections():
     return vl_entries, text_entries, translation_prompt
 
 
+_GROUP_ORDER = ("LTX ›", "MiniMax ›", "QWEN ›", "PONY ›", "Wan22 ›", "IMG ›", "VID ›")
+
+def _group_key(name):
+    for i, prefix in enumerate(_GROUP_ORDER):
+        if name.startswith(prefix):
+            return (i, name)
+    return (len(_GROUP_ORDER), name)  # generici in fondo
+
 def _flatten(entries):
     """Expand {"durations": {...}} entries into flat "Name (Ns)" keys.
-    Returns (ordered_base_names, flat_dict, base_durations)."""
+    Returns (ordered_base_names, flat_dict, base_durations) — grouped by model
+    prefix in _GROUP_ORDER, generics last."""
     base_names, flat, durations = [], {}, {}
-    for name, entry in entries.items():
+    for name in sorted(entries, key=_group_key):
+        entry = entries[name]
         base_names.append(name)
         if isinstance(entry, dict) and isinstance(entry.get("durations"), dict):
             durs = entry["durations"]
