@@ -57,8 +57,12 @@ VL_ALIASES = {
     "LTX 2.3 NSFW FL2VA": "LTX › NSFW FL2VA",
     "LTX 2.3 NSFW Loop": "LTX › NSFW Loop",
     "LTX Audio-Input NSFW I2V": "LTX › Audio I2V",
-    "Tags": "IMG › Tags",
-    "Pony→Natural Language": "IMG › Pony→Natural",
+    "Tags": "PONY › Danbooru Tags",
+    "Pony→Natural Language": "PONY › Natural Language",
+    "IMG › Tags": "PONY › Danbooru Tags",
+    "IMG › Pony→Natural": "PONY › Natural Language",
+    "IMG › Qwen Edit": "QWEN › Edit",
+    "IMG › Storyboard": "QWEN › Storyboard",
     "Simple Description": "IMG › Simple",
     "Detailed Description": "IMG › Detailed",
     "Ultra Detailed Description": "IMG › Ultra",
@@ -85,7 +89,10 @@ TEXT_ALIASES = {
     "Detailed Visual": "Detailed Visual",
     "Artistic Style": "Artistic Style",
     "Technical Specs": "Technical Specs",
-    "Pony→Natural Language": "Pony→Natural",
+    "Pony→Natural Language": "PONY › Natural Language",
+    "Pony→Natural": "PONY › Natural Language",
+    "Qwen Image Edit": "QWEN › Edit",
+    "Qwen Image T2I": "QWEN › Txt2img",
 }
 
 _EMOJI_PREFIX = re.compile(r"^[\U0001F000-\U0001FAFF☀-➿⬀-⯿️\u200d\ufe0f]+\s*")
@@ -162,7 +169,7 @@ def _load_sections():
     Bundled files load first; Garage-synced presets_remote/ wins per-key."""
     vl_entries, text_entries = {}, {}
     translation_prompt = ""
-    order = ["minimax.json", "wan.json", "ltx.json", "image.json", "text.json"]
+    order = ["minimax.json", "wan.json", "ltx.json", "qwen.json", "pony.json", "image.json", "text.json"]
     files = []
     for root in (PRESETS_DIR, _REMOTE_DIR):
         files += [root / name for name in order]
