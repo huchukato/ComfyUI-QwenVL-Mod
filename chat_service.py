@@ -140,6 +140,74 @@ NO_THINKING_INSTRUCTION = " Do not output reasoning tags; return only the JSON o
 
 SYSTEM_PROMPT = BASE_SYSTEM_PROMPT + NO_THINKING_INSTRUCTION
 
+# ── Prompt-writing bypass ─────────────────────────────────────────────────
+# "Scrivi un prompt per MMH3: <idea>" is a writing task, not a workflow command:
+# under the action-JSON protocol plus the workflow snapshot the small GGUF
+# models answer nothing usable. These requests skip the protocol entirely and
+# get the same compact per-family spec the ForgeHub assistant uses, with the
+# prompt coming back as plain text.
+
+PROMPT_WRITE_TRIGGER = re.compile(
+    r"(?:\b(?:scrivi|scrivimi|genera|generami|crea|creami|dammi|make|produce|enhance|migliora|"
+    r"espandi|expand|improve|write|give\s+me)\b[^.\n]{0,30}\bprompts?\b"
+    r"|\bprompts?\b\s+(?:per|for)\s+(?:un[ao]?\s+)?(?:video|mmh3|minimax|h3|ltx|wan|qwen|image|immagine)\b)",
+    re.IGNORECASE,
+)
+_WORKFLOW_COMMAND_HINT = re.compile(
+    r"\b(?:widget|nodo|node|queue|workflow|lancia|esegui|avvia|execute|run)\b", re.IGNORECASE)
+
+PROMPT_WRITER_SYSTEM = "You are a prompt assistant for AI video generation. You answer with the requested prompt text only."
+
+_MM3_PROMPT_SPEC = (
+    "For MiniMax H3 workflows, prompts follow this structured spec — produce it verbatim when asked for a prompt:\n"
+    "subject_definitions:\n"
+    "<Subject N> for people/characters (use 'the woman in <Picture N>' for reference images, preserving "
+    "face/hair/outfit), <Picture N> for artworks/objects that must be preserved exactly, <Environment N> for locations.\n\n"
+    "summary: one paragraph describing the whole sequence.\n\n"
+    "retention_analysis: one line per subject/picture/environment stating which shot it appears in and "
+    "'fully_preserved' or the allowed change.\n\n"
+    "detailed_description: [Shot N] blocks with precise action, camera movement and timestamps (00:00.000). "
+    "Spoken dialogue goes in <d>[Language] words</d> tags, kept short for clean lip sync.\n\n"
+    "overall_soundscape: diegetic sounds only (no music).\n\n"
+    "non_diegetic_music: score description or N/A."
+)
+
+_PROMPT_SPECS = {
+    "mmh3": _MM3_PROMPT_SPEC,
+    "ltx": "For LTX workflows, write one flowing cinematic paragraph: subject and action first, then camera "
+           "movement, lighting and mood. No section headers, no tags, no shot brackets.",
+    "wan": "For Wan workflows, write one flowing cinematic paragraph in present tense: subject and action, "
+           "camera movement, lighting and mood. No section headers, no tags.",
+    "qwen_image": "For Qwen Image generation, write one descriptive paragraph: subject, composition, style, "
+                  "lighting, detail. No tags, no weight syntax.",
+    "video": "For generic video workflows, write a concise cinematic prompt: subject, action, camera movement, "
+             "lighting, mood.",
+}
+
+
+def _prompt_family(text):
+    lowered = (text or "").lower()
+    if re.search(r"\b(?:mmh3|minimax|h3)\b", lowered):
+        return "mmh3"
+    if "ltx" in lowered:
+        return "ltx"
+    if re.search(r"\bwan\b", lowered):
+        return "wan"
+    if "qwen" in lowered and re.search(r"image|immagine|picture|2\.1", lowered):
+        return "qwen_image"
+    return "video"
+
+
+def _prompt_writer_prompt(messages, family, has_images):
+    history = "\n".join(f"{item['role'].upper()}: {item['content']}" for item in messages[-8:])
+    instruction = (
+        "You are a prompt assistant for AI video generation. " + _PROMPT_SPECS[family]
+        + "\nWrite the prompt the user asked for, in English, as plain text: no JSON, no explanations, "
+          "no preamble, no quotes around it."
+        + (" The attached pictures show the subjects and the place: describe them as they are." if has_images else "")
+    )
+    return f"{instruction}\n\nCONVERSATION:\n{history}\n\nRESPONSE:"
+
 
 def validate_messages(messages):
     if not isinstance(messages, list) or not messages:
@@ -1346,6 +1414,9 @@ class ChatRuntime:
             model_name = available[0]
         elif model_name not in available:
             raise ValueError(f"unknown model '{model_name}'")
+        last_user = _last_user_message(messages)
+        if PROMPT_WRITE_TRIGGER.search(last_user) and not _WORKFLOW_COMMAND_HINT.search(last_user):
+            return self._prompt_writer_result(backend, model_name, messages, options, images, video)
         enable_thinking = bool(options.get("thinking", False))
         options = dict(options)
         if enable_thinking:
@@ -1381,12 +1452,25 @@ class ChatRuntime:
             return enforce_image_reference_bindings(retry_result, graph, bool(images))
         return result
 
-    def _generate(self, backend, model_name, prompt, options, enable_thinking, images, video=None):
-        if backend == "hf":
-            return self._chat_hf(model_name, prompt, options, enable_thinking, images, video)
-        return self._chat_gguf(model_name, prompt, options, enable_thinking, images, video)
+    def _prompt_writer_result(self, backend, model_name, messages, options, images, video=None):
+        family = _prompt_family(_last_user_message(messages))
+        prompt = _prompt_writer_prompt(messages, family, bool(images) or bool(video))
+        opts = dict(options)
+        opts["max_tokens"] = max(int(opts.get("max_tokens", 2048)), 2048)
+        enable_thinking = bool(opts.get("thinking", False))
+        with self._lock:
+            text = self._generate(backend, model_name, prompt, opts, enable_thinking, images, video,
+                                  system=PROMPT_WRITER_SYSTEM)
+        thinking, clean = extract_thinking(text)
+        message = (clean or "").strip() or "The model returned an empty response."
+        return {"thinking": thinking, "message": message, "actions": [], "choices": []}
 
-    def _chat_hf(self, model_name, prompt, options, enable_thinking=False, images=None, video=None):
+    def _generate(self, backend, model_name, prompt, options, enable_thinking, images, video=None, system=None):
+        if backend == "hf":
+            return self._chat_hf(model_name, prompt, options, enable_thinking, images, video, system)
+        return self._chat_gguf(model_name, prompt, options, enable_thinking, images, video, system)
+
+    def _chat_hf(self, model_name, prompt, options, enable_thinking=False, images=None, video=None, system=None):
         module = sys.modules["AILab_QwenVL"]
         instance = self._instances.get("hf")
         if instance is None:
@@ -1406,7 +1490,8 @@ class ChatRuntime:
         image3 = pil_images[2] if len(pil_images) > 2 else None
         pil_frames = _decode_images(video or [])
         return instance.generate(
-            prompt, image, image2, image3, len(pil_frames) or 1,
+            (system + "\n\n" + prompt).strip() if system else prompt,
+            image, image2, image3, len(pil_frames) or 1,
             int(options.get("max_tokens", 2048)),
             float(options.get("temperature", 0.2)),
             float(options.get("top_p", 0.9)),
@@ -1417,7 +1502,7 @@ class ChatRuntime:
             enable_thinking=enable_thinking,
         )
 
-    def _chat_gguf(self, model_name, prompt, options, enable_thinking=False, images=None, video=None):
+    def _chat_gguf(self, model_name, prompt, options, enable_thinking=False, images=None, video=None, system=None):
         module = sys.modules["AILab_QwenVL_GGUF"]
         instance = self._instances.get("gguf")
         if instance is None:
@@ -1436,7 +1521,7 @@ class ChatRuntime:
         # `images`/`video` arrive already validated to bytes by chat()
         images_b64 = [base64.b64encode(data).decode("ascii") for data in (images or []) + (video or [])]
         return instance._invoke(
-            SYSTEM_PROMPT,
+            system if system is not None else SYSTEM_PROMPT,
             prompt,
             images_b64,
             int(options.get("max_tokens", 2048)),
