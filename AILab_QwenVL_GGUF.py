@@ -761,6 +761,7 @@ class QwenVLGGUFBase:
         seed: int,
         model_name: str = "",
         enable_thinking: bool = False,
+        response_format: dict | None = None,
     ) -> str:
         ensure_cuda_vram_headroom("QwenVL GGUF", min_free_gb=1.0, min_free_ratio=0.08)
         if self.llm is not None and hasattr(self.llm, "reset"):
@@ -790,7 +791,9 @@ class QwenVLGGUFBase:
         if getattr(self, "is_qwen35", False):
             extra_kwargs["chat_template_kwargs"] = {"enable_thinking": bool(enable_thinking)}
             extra_kwargs["reasoning"] = bool(enable_thinking)
-            extra_kwargs = _filter_kwargs_for_callable(self.llm.create_chat_completion, extra_kwargs)
+        if response_format is not None:
+            extra_kwargs["response_format"] = response_format
+        extra_kwargs = _filter_kwargs_for_callable(self.llm.create_chat_completion, extra_kwargs)
         result = self.llm.create_chat_completion(
             messages=messages,
             max_tokens=int(max_tokens),
