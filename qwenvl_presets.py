@@ -294,9 +294,19 @@ def resolve_prompt_key(name, duration, flat, durations, aliases):
         return base, key
     if base in flat:
         return base, base
-    fallback_dur = durations.get(base)
-    if fallback_dur and f"{base} ({fallback_dur})" in flat:
-        return base, f"{base} ({fallback_dur})"
+    # Requested duration not defined for this preset (e.g. MiniMax has no
+    # 20s): clamp to the closest available duration instead of the default.
+    prefix = f"{base} ("
+    avail = sorted(
+        (int(k[len(prefix):-2].rstrip("s")), k)
+        for k in flat
+        if k.startswith(prefix) and k.endswith(")")
+        and k[len(prefix):-2].rstrip("s").isdigit()
+    )
+    if avail:
+        want = dur[:-1] if isinstance(dur, str) and dur.endswith("s") else ""
+        pick = next((k for s, k in reversed(avail) if not want.isdigit() or s <= int(want)), avail[0][1])
+        return base, pick
     return base, name  # unknown preset: return raw (used as inline template)
 
 

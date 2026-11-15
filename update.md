@@ -1,5 +1,9 @@
 # ComfyUI-QwenVL Update Log
 
+## Version 2.12.12 (2026/11/15)
+
+- Duration clamp fix: selecting a duration a preset does not define (e.g. 20s on MiniMax presets — 20s is LTX-only) silently fell back to the preset's default (5s). `resolve_prompt_key` now clamps to the closest available duration instead (MiniMax 20s -> 15s, the model's real maximum).
+
 ## Version 2.12.9 (2026/10/30)
 
 - New VL preset `LTX › NSFW Loop` for the LTX-2.5 pose-loop workflows (A→B→C→B→A keyframe loops): derived from the FL2VA guidance but framed for MULTIPLE keyframe images visited in order, with the loop-closure rule (final pose = first pose) instead of the two-frame transition framing. Source of truth is Garage presets/ltx.json — the bundled copy + chat alias ship with this release as offline fallback.
