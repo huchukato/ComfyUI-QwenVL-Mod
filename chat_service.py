@@ -31,7 +31,7 @@ except Exception:
 
 def _is_minimax_i2va(preset_name, has_image=False):
     name = str(preset_name or "").lower()
-    return has_image and "minimax" in name and "r2va" not in name and "fl2va" not in name
+    return has_image and "minimax" in name and "r2va" not in name and "fl2va" not in name and "h3-image" not in name
 
 
 def ensure_i2va_binding(text, preset_name, has_image=False):

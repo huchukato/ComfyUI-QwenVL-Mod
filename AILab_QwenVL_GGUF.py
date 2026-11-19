@@ -1013,10 +1013,9 @@ class QwenVLGGUFBase:
             # The preset template is the INSTRUCTION: it belongs in the system
             # message, with the user's request as the user message. Putting it
             # after the user text made imperative prompts echo back unchanged.
+            guard = "" if "H3-Image" in preset_prompt else f"\n\n{prompt_output_guard()}"
             text = self._invoke(
-                system_prompt=(
-                    f"{prompt_template}\n\n{prompt_output_guard()}"
-                ),
+                system_prompt=f"{prompt_template}{guard}",
                 user_prompt=effective_prompt,
                 images_b64=images_b64 if self.chat_handler is not None else [],
                 max_tokens=max_tokens,

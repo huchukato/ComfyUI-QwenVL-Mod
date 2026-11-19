@@ -1465,7 +1465,7 @@ DANBOORU_INPUT_GUIDANCE = """INPUT TAG SUPPORT:
 
 def add_danbooru_guidance(prompt, preset_name):
     name = preset_name or ""
-    if "LTX" not in name and not ("MiniMax" in name and ("R2VA" in name or "FL2VA" in name)) and not ("Wan" in name and "T2V" in name):
+    if "LTX" not in name and not ("MiniMax" in name and ("R2VA" in name or "FL2VA" in name or "H3-Image" in name)) and not ("Wan" in name and "T2V" in name):
         return prompt
     if "INPUT TAG SUPPORT:" in prompt or "Danbooru-style tags" in prompt:
         return prompt
